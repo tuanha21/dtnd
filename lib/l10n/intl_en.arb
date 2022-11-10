@@ -1,0 +1,27 @@
+{
+    "hello": "Hello",
+    "login": "Login",
+    "login_upper": "LOGIN",
+
+    "home": "Home",
+    "market": "Market",
+    "order": "Order",
+    "bond": "Bond",
+    "asset": "Asset",
+
+    "account": "Account",
+    "password": "Password",
+    "fill_account": "Fill account",
+    "fill_password": "Fill password",
+    "fill_OTP": "Fill OTP",
+    "session_expired_in": "Session expired in ",
+    "minutes": " minutes",
+    "double_back_to_close_app": "Back again to exit",
+
+    "login_exception_required_OTP": "Login with OTP code sent to your phone",
+    "login_exception_invalid_account": "This account has not been registered or Internet trading feature is no longer available",
+    "login_exception_invalid_password": "Password is incorrect",
+
+    "timeout": "No response from server",
+    "no_internet": "No Internet connection"
+}

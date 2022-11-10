@@ -1,0 +1,28 @@
+{
+    "hello": "Chào bạn",
+    "login": "Đăng nhập",
+    "login_upper": "ĐĂNG NHẬP",
+
+    "home": "Trang chủ",
+    "market": "Thị trường",
+    "order": "Đặt lệnh",
+    "bond": "Trái phiếu",
+    "asset": "Tài sản",
+
+    "account": "Tài khoản",
+    "password": "Mật khẩu",
+    "fill_account": "Nhập tài khoản",
+    "fill_password": "Nhập mật khẩu",
+    "fill_OTP": "Nhập mã OTP",
+    "session_expired_in": "Hết phiên đăng nhập sau ",
+    "minutes": " phút",
+    "double_back_to_close_app": "Ấn thêm lần nữa để thoát",
+
+    "login_exception_required_OTP": "Hãy đăng nhập bằng mã OTP được gửi về máy của bạn",
+    "login_exception_invalid_account": "Tài khoản chưa đăng ký hoặc đã hết hiệu lực giao dịch Internet",
+    "login_exception_invalid_password": "Mật khẩu không chính xác",
+
+    "timeout": "Không nhận được phản hồi từ máy chủ",
+    "no_internet": "Không có kết nối Internet"
+
+}
