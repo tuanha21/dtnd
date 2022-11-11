@@ -1,11 +1,10 @@
 import 'package:dtnd/config/service/app_services.dart';
-import 'package:dtnd/logic/app_service_provider.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:get/get.dart';
 
-class LoginScaffold extends ConsumerWidget {
+class LoginScaffold extends StatelessWidget {
   const LoginScaffold({
     Key? key,
     this.appBar,
@@ -56,48 +55,53 @@ class LoginScaffold extends ConsumerWidget {
   final bool endDrawerEnableOpenDragGesture;
   final String? restorationId;
   @override
-  Widget build(BuildContext context, ref) {
-    final appThemeMode = ref.watch(themeProvider);
-    return Stack(
-      fit: StackFit.expand,
-      children: <Widget>[
-        Container(
-          color:
-              appThemeMode == ThemeMode.dark ? AppColors.bg_2 : AppColors.bg_1,
-        ),
-        Align(
-          alignment: Alignment.topRight,
-          child: Image.asset(
-            "assets/images/login_top_circle.png",
-            opacity: const AlwaysStoppedAnimation(0.3),
-            scale: 3.0,
-          ),
-        ),
-        Scaffold(
-          extendBody: extendBody,
-          extendBodyBehindAppBar: extendBodyBehindAppBar,
-          appBar: appBar,
-          body: body,
-          floatingActionButton: floatingActionButton,
-          floatingActionButtonLocation: floatingActionButtonLocation,
-          floatingActionButtonAnimator: floatingActionButtonAnimator,
-          persistentFooterButtons: persistentFooterButtons,
-          drawer: drawer,
-          onDrawerChanged: onDrawerChanged,
-          endDrawer: endDrawer,
-          onEndDrawerChanged: onEndDrawerChanged,
-          drawerScrimColor: drawerScrimColor,
-          backgroundColor: Colors.transparent,
-          bottomNavigationBar: bottomNavigationBar,
-          bottomSheet: bottomSheet,
-          resizeToAvoidBottomInset: resizeToAvoidBottomInset,
-          primary: primary,
-          drawerDragStartBehavior: drawerDragStartBehavior,
-          drawerEnableOpenDragGesture: drawerEnableOpenDragGesture,
-          endDrawerEnableOpenDragGesture: endDrawerEnableOpenDragGesture,
-          restorationId: restorationId,
-        ),
-      ],
+  Widget build(BuildContext context) {
+    return ObxValue<Rx<ThemeMode>>(
+      (data) {
+        return Stack(
+          fit: StackFit.expand,
+          children: <Widget>[
+            Container(
+              color: data.value == ThemeMode.dark
+                  ? AppColors.bg_2
+                  : AppColors.bg_1,
+            ),
+            Align(
+              alignment: Alignment.topRight,
+              child: Image.asset(
+                "assets/images/login_top_circle.png",
+                opacity: const AlwaysStoppedAnimation(0.3),
+                scale: 3.0,
+              ),
+            ),
+            Scaffold(
+              extendBody: extendBody,
+              extendBodyBehindAppBar: extendBodyBehindAppBar,
+              appBar: appBar,
+              body: body,
+              floatingActionButton: floatingActionButton,
+              floatingActionButtonLocation: floatingActionButtonLocation,
+              floatingActionButtonAnimator: floatingActionButtonAnimator,
+              persistentFooterButtons: persistentFooterButtons,
+              drawer: drawer,
+              onDrawerChanged: onDrawerChanged,
+              endDrawer: endDrawer,
+              onEndDrawerChanged: onEndDrawerChanged,
+              drawerScrimColor: drawerScrimColor,
+              backgroundColor: Colors.transparent,
+              bottomNavigationBar: bottomNavigationBar,
+              bottomSheet: bottomSheet,
+              resizeToAvoidBottomInset: resizeToAvoidBottomInset,
+              primary: primary,
+              drawerDragStartBehavior: drawerDragStartBehavior,
+              drawerEnableOpenDragGesture: drawerEnableOpenDragGesture,
+              endDrawerEnableOpenDragGesture: endDrawerEnableOpenDragGesture,
+              restorationId: restorationId,
+            ),
+          ],
+        );
+      },
+      AppService().themeMode,
     );
   }
 }

@@ -34,11 +34,12 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   flutter_dotenv: ^5.0.2
-
+  # State management
+  get: ^4.6.5
   http: ^0.13.5
   flutter_bloc: ^8.1.1
-  flutter_riverpod: ^2.0.2
-  riverpod_annotation: ^1.0.4
+  # flutter_riverpod: ^2.0.2
+  # riverpod_annotation: ^1.0.4
   equatable: ^2.0.5
   shared_preferences: ^2.0.15
   hive: ^2.2.3
@@ -47,6 +48,8 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
+  flutter_svg: ^1.1.6
+  logger: ^1.1.0
 
 dev_dependencies:
   flutter_test:
@@ -60,7 +63,7 @@ dev_dependencies:
   flutter_lints: ^2.0.0
   hive_generator: ^2.0.0
   build_runner: ^2.3.2
-  riverpod_generator: ^1.0.4
+  # riverpod_generator: ^1.0.4
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -77,8 +80,9 @@ flutter:
     # - images/a_dot_ham.jpeg
     - assets/
     - assets/images/
-    - environment/production_domain_config.env
-    - environment/test_domain_config.env
+    - assets/production_domain_config.env
+    - assets/test_domain_config.env
+    - assets/app_config.env
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
   # For details regarding adding assets from package dependencies, see

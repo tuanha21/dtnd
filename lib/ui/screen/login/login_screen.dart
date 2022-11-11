@@ -1,22 +1,24 @@
 import 'package:dtnd/config/service/app_services.dart';
-import 'package:dtnd/logic/app_service_provider.dart';
+import 'package:dtnd/ui/screen/login/login_controller.dart';
+import 'package:dtnd/ui/screen/login/widget/login_form.dart';
+import 'package:dtnd/ui/theme/app_color.dart';
+import 'package:dtnd/ui/theme/app_textstyle.dart';
 import 'package:dtnd/ui/widget/login_scaffold.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../generated/l10n.dart';
 
-class LoginScreen extends ConsumerStatefulWidget {
+class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
 
   @override
-  ConsumerState<LoginScreen> createState() => _LoginScreenState();
+  State<LoginScreen> createState() => _LoginScreenState();
 }
 
-class _LoginScreenState extends ConsumerState<LoginScreen> {
+class _LoginScreenState extends State<LoginScreen> {
+  final LoginController loginController = LoginController();
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
   }
 
@@ -24,28 +26,65 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   Widget build(BuildContext context) {
     return LoginScaffold(
       body: Center(
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              Consumer(
-                builder: (context, ref, child) => Text(S.of(context).hello),
-              ),
-              TextButton(
-                onPressed: () async {
-                  await ref
-                      .read(appServiceProvider.notifier)
-                      .state
-                      .switchTheme();
-                },
-                child: const Text("Change Theme"),
-              ),
-              TextButton(
-                onPressed: () {
-                  ref.read(appLocaleProvider.notifier).switchLanguage();
-                },
-                child: const Text("Change Language"),
-              ),
-            ],
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                Row(
+                  children: [
+                    Text(
+                      S.of(context).hello,
+                      style: AppTextStyle.headlineSmall_24
+                          .copyWith(fontWeight: FontWeight.w700),
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                Row(
+                  children: [
+                    Text.rich(
+                      TextSpan(children: [
+                        TextSpan(
+                          text: S.of(context).login_qoute1,
+                          style: Theme.of(context).textTheme.titleSmall,
+                        ),
+                        TextSpan(
+                          text: "DTND",
+                          style:
+                              Theme.of(context).textTheme.titleSmall!.copyWith(
+                                    color: AppColors.primary_01,
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                        ),
+                        TextSpan(
+                          text: S.of(context).login_qoute2,
+                          style: Theme.of(context).textTheme.titleSmall,
+                        ),
+                      ]),
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                const LoginForm(),
+                TextButton(
+                  onPressed: () async {
+                    await loginController.login("201016", "ajksbfj");
+                  },
+                  child: const Text("Login"),
+                ),
+                // TextButton(
+                //   onPressed: () {
+                //     appService.switchLanguage();
+                //   },
+                //   child: const Text("Change Language"),
+                // ),
+              ],
+            ),
           ),
         ),
       ),

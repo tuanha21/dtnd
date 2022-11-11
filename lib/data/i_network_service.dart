@@ -1,10 +1,12 @@
+import 'package:dtnd/config/service/environment.dart';
+
 import '../=models=/request/request_model.dart';
 import '../=models=/response/user_token.dart';
 
 abstract class INetworkService {
   //init service
-  Future<void> init(String config);
+  Future<void> init(Environment environment);
 
   //core api
-  Future<UserToken?> checkLogin(RequestModel requestModel);
+  Future<UserEntity?> checkLogin(RequestModel requestModel);
 }

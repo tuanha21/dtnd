@@ -3,7 +3,7 @@ import 'package:dtnd/ui/theme/app_textstyle.dart';
 import 'package:flutter/material.dart';
 
 ///================ TEXT ===================
-const _lightTextColor = Colors.black;
+const _lightTextColor = AppColors.neutral_01;
 const _darkTextColor = Colors.white;
 
 final TextTheme lightTextTheme = TextTheme(
@@ -16,7 +16,7 @@ final TextTheme lightTextTheme = TextTheme(
   headlineSmall: AppTextStyle.headlineSmall_24.copyWith(color: _lightTextColor),
   titleLarge: AppTextStyle.titleLarge_22.copyWith(color: _lightTextColor),
   titleMedium: AppTextStyle.titleMedium_16.copyWith(color: _lightTextColor),
-  titleSmall: AppTextStyle.titleSmall_14.copyWith(color: _lightTextColor),
+  titleSmall: AppTextStyle.titleSmall_14.copyWith(color: AppColors.neutral_02),
   bodyLarge: AppTextStyle.bodyLarge_16.copyWith(color: _lightTextColor),
   bodyMedium: AppTextStyle.bodyMedium_14.copyWith(color: _lightTextColor),
   bodySmall: AppTextStyle.bodySmall_12.copyWith(color: _lightTextColor),
@@ -35,7 +35,7 @@ final TextTheme darkTextTheme = TextTheme(
   headlineSmall: AppTextStyle.headlineSmall_24.copyWith(color: _darkTextColor),
   titleLarge: AppTextStyle.titleLarge_22.copyWith(color: _darkTextColor),
   titleMedium: AppTextStyle.titleMedium_16.copyWith(color: _darkTextColor),
-  titleSmall: AppTextStyle.titleSmall_14.copyWith(color: _darkTextColor),
+  titleSmall: AppTextStyle.titleSmall_14.copyWith(color: AppColors.neutral_03),
   bodyLarge: AppTextStyle.bodyLarge_16.copyWith(color: _darkTextColor),
   bodyMedium: AppTextStyle.bodyMedium_14.copyWith(color: _darkTextColor),
   bodySmall: AppTextStyle.bodySmall_12.copyWith(color: _darkTextColor),
@@ -47,21 +47,24 @@ final TextTheme darkTextTheme = TextTheme(
 ///================ INPUT DECORATION ===================
 
 const InputBorder _defaulBorder = OutlineInputBorder(
-  borderSide: BorderSide(color: AppColors.input_border, width: 1),
-  borderRadius: BorderRadius.all(
-    Radius.circular(30),
-  ),
+  borderSide: BorderSide(color: AppColors.neutral_03, width: 1),
+  borderRadius: BorderRadius.all(Radius.circular(12)),
 );
 
 final TextStyle labelStyle =
     AppTextStyle.labelLarge_18.copyWith(color: AppColors.text_main);
 
 final InputDecorationTheme lightInputDecorationTheme = InputDecorationTheme(
-  labelStyle: labelStyle,
+  labelStyle: AppTextStyle.labelMedium_12.copyWith(color: AppColors.neutral_01),
   filled: true,
-  fillColor: Colors.white,
-  focusColor: Colors.white,
+  fillColor: Colors.transparent,
+  focusColor: Colors.transparent,
   contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+  floatingLabelAlignment: FloatingLabelAlignment.start,
+  floatingLabelBehavior: FloatingLabelBehavior.always,
+  hintStyle: AppTextStyle.titleSmall_14.copyWith(
+    color: AppColors.neutral_03,
+  ),
   border: _defaulBorder,
   enabledBorder: _defaulBorder,
   disabledBorder: _defaulBorder,
@@ -76,7 +79,30 @@ final InputDecorationTheme lightInputDecorationTheme = InputDecorationTheme(
   ),
 );
 
-final InputDecorationTheme darkInputDecorationTheme = lightInputDecorationTheme;
+final InputDecorationTheme darkInputDecorationTheme = InputDecorationTheme(
+  labelStyle: AppTextStyle.labelMedium_12.copyWith(color: AppColors.neutral_05),
+  filled: true,
+  fillColor: Colors.transparent,
+  focusColor: Colors.transparent,
+  contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+  floatingLabelAlignment: FloatingLabelAlignment.start,
+  floatingLabelBehavior: FloatingLabelBehavior.always,
+  hintStyle: AppTextStyle.titleSmall_14.copyWith(
+    color: AppColors.neutral_02,
+  ),
+  border: _defaulBorder,
+  enabledBorder: _defaulBorder,
+  disabledBorder: _defaulBorder,
+  focusedBorder: _defaulBorder.copyWith(
+    borderSide: const BorderSide(color: AppColors.primary_01, width: 1),
+  ),
+  errorBorder: _defaulBorder.copyWith(
+    borderSide: const BorderSide(color: AppColors.error_input_border, width: 1),
+  ),
+  focusedErrorBorder: _defaulBorder.copyWith(
+    borderSide: const BorderSide(color: AppColors.error_input_border, width: 1),
+  ),
+);
 
 ///================ BottomAppBar ===================
 

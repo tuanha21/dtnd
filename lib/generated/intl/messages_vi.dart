@@ -39,6 +39,9 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Mật khẩu không chính xác"),
         "login_exception_required_OTP": MessageLookupByLibrary.simpleMessage(
             "Hãy đăng nhập bằng mã OTP được gửi về máy của bạn"),
+        "login_qoute1": MessageLookupByLibrary.simpleMessage(
+            "Cùng tham gia thị trường đầu tư đầy sôi động với ứng dụng "),
+        "login_qoute2": MessageLookupByLibrary.simpleMessage(" bạn nhé"),
         "login_upper": MessageLookupByLibrary.simpleMessage("ĐĂNG NHẬP"),
         "market": MessageLookupByLibrary.simpleMessage("Thị trường"),
         "minutes": MessageLookupByLibrary.simpleMessage(" phút"),
@@ -49,6 +52,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "session_expired_in":
             MessageLookupByLibrary.simpleMessage("Hết phiên đăng nhập sau "),
         "timeout": MessageLookupByLibrary.simpleMessage(
-            "Không nhận được phản hồi từ máy chủ")
+            "Không nhận được phản hồi từ máy chủ"),
+        "username": MessageLookupByLibrary.simpleMessage("Tên đăng nhập")
       };
 }

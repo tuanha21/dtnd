@@ -140,6 +140,16 @@ class S {
     );
   }
 
+  /// `Username`
+  String get username {
+    return Intl.message(
+      'Username',
+      name: 'username',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Password`
   String get password {
     return Intl.message(
@@ -235,6 +245,26 @@ class S {
     return Intl.message(
       'Password is incorrect',
       name: 'login_exception_invalid_password',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Let's join the exciting investment market with `
+  String get login_qoute1 {
+    return Intl.message(
+      'Let\'s join the exciting investment market with ',
+      name: 'login_qoute1',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// ` application`
+  String get login_qoute2 {
+    return Intl.message(
+      ' application',
+      name: 'login_qoute2',
       desc: '',
       args: [],
     );

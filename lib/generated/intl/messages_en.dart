@@ -39,6 +39,9 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Password is incorrect"),
         "login_exception_required_OTP": MessageLookupByLibrary.simpleMessage(
             "Login with OTP code sent to your phone"),
+        "login_qoute1": MessageLookupByLibrary.simpleMessage(
+            "Let\'s join the exciting investment market with "),
+        "login_qoute2": MessageLookupByLibrary.simpleMessage(" application"),
         "login_upper": MessageLookupByLibrary.simpleMessage("LOGIN"),
         "market": MessageLookupByLibrary.simpleMessage("Market"),
         "minutes": MessageLookupByLibrary.simpleMessage(" minutes"),
@@ -49,6 +52,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "session_expired_in":
             MessageLookupByLibrary.simpleMessage("Session expired in "),
         "timeout":
-            MessageLookupByLibrary.simpleMessage("No response from server")
+            MessageLookupByLibrary.simpleMessage("No response from server"),
+        "username": MessageLookupByLibrary.simpleMessage("Username")
       };
 }

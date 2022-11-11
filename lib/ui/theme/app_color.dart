@@ -16,7 +16,11 @@ class AppColors {
   static const color_secondary = Color(0xFF0067D3);
 
   //
+  static const neutral_01 = Color(0xFF23262F);
+  static const neutral_02 = Color(0xFF4A5568);
   static const neutral_03 = Color(0xFF8894AA);
+  static const neutral_05 = Color(0xFFEDF2F7);
+  static const neutral_07 = Color(0xFFFFFFFF);
 
   //
   static const bg_1 = Color(0xFFFFFFFF);

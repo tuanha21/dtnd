@@ -1,43 +1,63 @@
-// class UserToken {
-//   String? oID;
-//   int? rc;
-//   String? rs;
-//   UserToken? loginData;
+import 'package:hive_flutter/hive_flutter.dart';
+part 'user_token.g.dart';
 
-//   UserToken({this.oID, this.rc, this.rs, this.loginData});
+@HiveType(typeId: 0)
+class UserEntity {
+  @HiveField(0)
+  String? oID;
+  @HiveField(1)
+  int? rc;
+  @HiveField(2)
+  String? rs;
+  @HiveField(3)
+  UserToken? loginData;
 
-//   UserToken.fromJson(Map<String, dynamic> json) {
-//     oID = json['oID'];
-//     rc = json['rc'];
-//     rs = json['rs'];
-//     loginData = json['loginData'] != null
-//         ? UserToken.fromJson(json['loginData'])
-//         : null;
-//   }
+  UserEntity({this.oID, this.rc, this.rs, this.loginData});
 
-//   Map<String, dynamic> toJson() {
-//     final Map<String, dynamic> data = <String, dynamic>{};
-//     data['oID'] = oID;
-//     data['rc'] = rc;
-//     data['rs'] = rs;
-//     if (loginData != null) {
-//       data['loginData'] = loginData!.toJson();
-//     }
-//     return data;
-//   }
-// }
+  UserEntity.fromJson(Map<String, dynamic> json) {
+    oID = json['oID'];
+    rc = json['rc'];
+    rs = json['rs'];
+    loginData = json['loginData'] != null
+        ? UserToken.fromJson(json['loginData'])
+        : null;
+  }
 
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['oID'] = oID;
+    data['rc'] = rc;
+    data['rs'] = rs;
+    if (loginData != null) {
+      data['loginData'] = loginData!.toJson();
+    }
+    return data;
+  }
+}
+
+@HiveType(typeId: 1)
 class UserToken {
+  @HiveField(0)
   late final String user;
+  @HiveField(1)
   late final String name;
+  @HiveField(2)
   late final String sid;
+  @HiveField(3)
   late final String address;
+  @HiveField(4)
   late final String defaultAcc;
+  @HiveField(5)
   late final num iFlag;
+  @HiveField(6)
   late final num countLoginFail;
+  @HiveField(7)
   late final String authenType;
+  @HiveField(8)
   late final String? iP;
+  @HiveField(9)
   late final String authenFlag;
+  @HiveField(10)
   late final String customerCode;
 
   UserToken({

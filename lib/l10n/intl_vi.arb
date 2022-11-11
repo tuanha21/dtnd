@@ -10,6 +10,7 @@
     "asset": "Tài sản",
 
     "account": "Tài khoản",
+    "username": "Tên đăng nhập",
     "password": "Mật khẩu",
     "fill_account": "Nhập tài khoản",
     "fill_password": "Nhập mật khẩu",
@@ -21,6 +22,10 @@
     "login_exception_required_OTP": "Hãy đăng nhập bằng mã OTP được gửi về máy của bạn",
     "login_exception_invalid_account": "Tài khoản chưa đăng ký hoặc đã hết hiệu lực giao dịch Internet",
     "login_exception_invalid_password": "Mật khẩu không chính xác",
+
+    "login_qoute1": "Cùng tham gia thị trường đầu tư đầy sôi động với ứng dụng ",
+    "login_qoute2": " bạn nhé",
+
 
     "timeout": "Không nhận được phản hồi từ máy chủ",
     "no_internet": "Không có kết nối Internet"
