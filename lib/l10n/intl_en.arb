@@ -20,8 +20,10 @@
     "double_back_to_close_app": "Back again to exit",
 
     "login_exception_required_OTP": "Login with OTP code sent to your phone",
-    "login_exception_invalid_account": "This account has not been registered or Internet trading feature is no longer available",
-    "login_exception_invalid_password": "Password is incorrect",
+    "invalid_account": "This account has not been registered or Internet trading feature is no longer available",
+    "null_username": "Username requires at least 6 characters",
+    "null_password": "Password requires at least 8 characters",
+    "wrong_password": "Password is incorrect",
 
     "login_qoute1": "Let's join the exciting investment market with ",
     "login_qoute2": " application",

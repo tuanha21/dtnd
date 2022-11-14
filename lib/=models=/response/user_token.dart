@@ -1,22 +1,17 @@
 import 'package:hive_flutter/hive_flutter.dart';
 part 'user_token.g.dart';
 
-@HiveType(typeId: 0)
 class UserEntity {
-  @HiveField(0)
-  String? oID;
-  @HiveField(1)
-  int? rc;
-  @HiveField(2)
-  String? rs;
-  @HiveField(3)
+  late final String? oID;
+  late final int rc;
+  late final String? rs;
   UserToken? loginData;
 
-  UserEntity({this.oID, this.rc, this.rs, this.loginData});
+  UserEntity({this.oID, this.rc = 0, this.rs, this.loginData});
 
   UserEntity.fromJson(Map<String, dynamic> json) {
     oID = json['oID'];
-    rc = json['rc'];
+    rc = json['rc'] ?? 0;
     rs = json['rs'];
     loginData = json['loginData'] != null
         ? UserToken.fromJson(json['loginData'])
@@ -35,7 +30,7 @@ class UserEntity {
   }
 }
 
-@HiveType(typeId: 1)
+@HiveType(typeId: 0)
 class UserToken {
   @HiveField(0)
   late final String user;

@@ -16,9 +16,7 @@ class NetworkService implements INetworkService {
   static final _instance = NetworkService._internal();
   static NetworkService get instance => _instance;
 
-  factory NetworkService() {
-    return _instance;
-  }
+  factory NetworkService() => _instance;
 
   late Environment environment;
 

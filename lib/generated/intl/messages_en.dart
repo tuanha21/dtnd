@@ -32,11 +32,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "fill_password": MessageLookupByLibrary.simpleMessage("Fill password"),
         "hello": MessageLookupByLibrary.simpleMessage("Hello"),
         "home": MessageLookupByLibrary.simpleMessage("Home"),
-        "login": MessageLookupByLibrary.simpleMessage("Login"),
-        "login_exception_invalid_account": MessageLookupByLibrary.simpleMessage(
+        "invalid_account": MessageLookupByLibrary.simpleMessage(
             "This account has not been registered or Internet trading feature is no longer available"),
-        "login_exception_invalid_password":
-            MessageLookupByLibrary.simpleMessage("Password is incorrect"),
+        "login": MessageLookupByLibrary.simpleMessage("Login"),
         "login_exception_required_OTP": MessageLookupByLibrary.simpleMessage(
             "Login with OTP code sent to your phone"),
         "login_qoute1": MessageLookupByLibrary.simpleMessage(
@@ -47,12 +45,18 @@ class MessageLookup extends MessageLookupByLibrary {
         "minutes": MessageLookupByLibrary.simpleMessage(" minutes"),
         "no_internet":
             MessageLookupByLibrary.simpleMessage("No Internet connection"),
+        "null_password": MessageLookupByLibrary.simpleMessage(
+            "Password requires at least 8 characters"),
+        "null_username": MessageLookupByLibrary.simpleMessage(
+            "Username requires at least 6 characters"),
         "order": MessageLookupByLibrary.simpleMessage("Order"),
         "password": MessageLookupByLibrary.simpleMessage("Password"),
         "session_expired_in":
             MessageLookupByLibrary.simpleMessage("Session expired in "),
         "timeout":
             MessageLookupByLibrary.simpleMessage("No response from server"),
-        "username": MessageLookupByLibrary.simpleMessage("Username")
+        "username": MessageLookupByLibrary.simpleMessage("Username"),
+        "wrong_password":
+            MessageLookupByLibrary.simpleMessage("Password is incorrect")
       };
 }

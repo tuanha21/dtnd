@@ -32,11 +32,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "fill_password": MessageLookupByLibrary.simpleMessage("Nhập mật khẩu"),
         "hello": MessageLookupByLibrary.simpleMessage("Chào bạn"),
         "home": MessageLookupByLibrary.simpleMessage("Trang chủ"),
-        "login": MessageLookupByLibrary.simpleMessage("Đăng nhập"),
-        "login_exception_invalid_account": MessageLookupByLibrary.simpleMessage(
+        "invalid_account": MessageLookupByLibrary.simpleMessage(
             "Tài khoản chưa đăng ký hoặc đã hết hiệu lực giao dịch Internet"),
-        "login_exception_invalid_password":
-            MessageLookupByLibrary.simpleMessage("Mật khẩu không chính xác"),
+        "login": MessageLookupByLibrary.simpleMessage("Đăng nhập"),
         "login_exception_required_OTP": MessageLookupByLibrary.simpleMessage(
             "Hãy đăng nhập bằng mã OTP được gửi về máy của bạn"),
         "login_qoute1": MessageLookupByLibrary.simpleMessage(
@@ -47,12 +45,18 @@ class MessageLookup extends MessageLookupByLibrary {
         "minutes": MessageLookupByLibrary.simpleMessage(" phút"),
         "no_internet":
             MessageLookupByLibrary.simpleMessage("Không có kết nối Internet"),
+        "null_password": MessageLookupByLibrary.simpleMessage(
+            "Mật khẩu cần tối thiểu 8 ký tự"),
+        "null_username": MessageLookupByLibrary.simpleMessage(
+            "Tên đăng nhập cần tối thiểu 6 ký tự"),
         "order": MessageLookupByLibrary.simpleMessage("Đặt lệnh"),
         "password": MessageLookupByLibrary.simpleMessage("Mật khẩu"),
         "session_expired_in":
             MessageLookupByLibrary.simpleMessage("Hết phiên đăng nhập sau "),
         "timeout": MessageLookupByLibrary.simpleMessage(
             "Không nhận được phản hồi từ máy chủ"),
-        "username": MessageLookupByLibrary.simpleMessage("Tên đăng nhập")
+        "username": MessageLookupByLibrary.simpleMessage("Tên đăng nhập"),
+        "wrong_password":
+            MessageLookupByLibrary.simpleMessage("Mật khẩu không chính xác")
       };
 }

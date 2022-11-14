@@ -104,6 +104,40 @@ final InputDecorationTheme darkInputDecorationTheme = InputDecorationTheme(
   ),
 );
 
+final ButtonStyle _lightTextButtonThemeData = ButtonStyle(
+  backgroundColor: MaterialStateProperty.resolveWith<Color?>((states) {
+    if (states.contains(MaterialState.disabled)) {
+      return AppColors.neutral_05;
+    } else {
+      return AppColors.primary_01;
+    }
+  }),
+  foregroundColor: MaterialStateProperty.resolveWith<Color?>((states) {
+    if (states.contains(MaterialState.disabled)) {
+      return AppColors.neutral_03;
+    } else {
+      return AppColors.neutral_07;
+    }
+  }),
+  padding: const MaterialStatePropertyAll(EdgeInsets.all(20)),
+);
+
+final ButtonStyle _darkTextButtonThemeData = ButtonStyle(
+  shape: const MaterialStatePropertyAll(RoundedRectangleBorder(
+      borderRadius: BorderRadius.all(Radius.circular(8)))),
+  backgroundColor: MaterialStateProperty.resolveWith<Color?>((states) {
+    if (states.contains(MaterialState.disabled)) {
+      return AppColors.neutral_02;
+    } else {
+      return AppColors.primary_01;
+    }
+  }),
+  foregroundColor: MaterialStateProperty.resolveWith<Color?>((states) {
+    return AppColors.neutral_07;
+  }),
+  padding: const MaterialStatePropertyAll(EdgeInsets.all(20)),
+);
+
 ///================ BottomAppBar ===================
 
 const BottomAppBarTheme _lightBottomAppBarTheme = BottomAppBarTheme(
@@ -149,10 +183,12 @@ final ThemeData lightThemeData = ThemeData(
   textTheme: lightTextTheme,
   inputDecorationTheme: lightInputDecorationTheme,
   colorScheme: _lightColorScheme,
+  textButtonTheme: TextButtonThemeData(style: _lightTextButtonThemeData),
 );
 
 final ThemeData darkThemeData = ThemeData(
   textTheme: darkTextTheme,
   inputDecorationTheme: darkInputDecorationTheme,
   colorScheme: _darkColorScheme,
+  textButtonTheme: TextButtonThemeData(style: _darkTextButtonThemeData),
 );

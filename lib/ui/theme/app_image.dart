@@ -1,10 +1,8 @@
 // ignore_for_file: constant_identifier_names
 
 class AppImages {
-  static const String login_background = "assets/image/login_bg.png";
-  static const String login_background_dark = "assets/image/login_bg_dark.png";
-  static const String login_top_corner = "assets/image/login_top_corner.png";
-  static const String casc_banner = "assets/image/casc_logo.png";
+  static const String login_top_circle = "images/login_top_circle.png";
+  static const String login_face_id_icon = "svg/login_face_id_icon.svg";
 
   /// MAIN TAB ICON
   static const String unselected_home_icon =

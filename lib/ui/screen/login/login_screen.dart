@@ -2,9 +2,12 @@ import 'package:dtnd/config/service/app_services.dart';
 import 'package:dtnd/ui/screen/login/login_controller.dart';
 import 'package:dtnd/ui/screen/login/widget/login_form.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
+import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:dtnd/ui/theme/app_textstyle.dart';
 import 'package:dtnd/ui/widget/login_scaffold.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
 
 import '../../../generated/l10n.dart';
 
@@ -17,9 +20,54 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   final LoginController loginController = LoginController();
+
+  final GlobalKey<FormState> loginFormKey = GlobalKey<FormState>();
+
+  final GlobalKey<FormFieldState<String>> usernameFormKey =
+      GlobalKey<FormFieldState<String>>();
+
+  final GlobalKey<FormFieldState<String>> passwordFormKey =
+      GlobalKey<FormFieldState<String>>();
+  final Rx<bool> canCheckLogin = Rx<bool>(false);
+  bool invalidUsername = false;
+  bool invalidPassword = false;
+
   @override
   void initState() {
     super.initState();
+  }
+
+  String? usernameValidator(String? value) {
+    print("usernameValidator $value");
+    if ((value?.length ?? 0) < 6) {
+      return S.of(context).null_username;
+    }
+    if (invalidUsername) {
+      setState(() {
+        invalidUsername = false;
+      });
+      return S.of(context).invalid_account;
+    }
+    return null;
+  }
+
+  String? passwordValidator(String? value) {
+    if ((value?.length ?? 0) < 8) {
+      return S.of(context).null_password;
+    }
+    if (invalidPassword) {
+      setState(() {
+        invalidPassword = false;
+      });
+      return S.of(context).wrong_password;
+    }
+    if (invalidUsername) {
+      setState(() {
+        invalidUsername = false;
+      });
+      return S.of(context).invalid_account;
+    }
+    return null;
   }
 
   @override
@@ -70,13 +118,50 @@ class _LoginScreenState extends State<LoginScreen> {
                 const SizedBox(
                   height: 20,
                 ),
-                const LoginForm(),
-                TextButton(
-                  onPressed: () async {
-                    await loginController.login("201016", "ajksbfj");
-                  },
-                  child: const Text("Login"),
+                LoginForm(
+                  loginFormKey: loginFormKey,
+                  usernameFormKey: usernameFormKey,
+                  passwordFormKey: passwordFormKey,
+                  usernameValidator: usernameValidator,
+                  passwordValidator: passwordValidator,
+                  otpRequired: loginController.otpRequired,
+                  canCheckLogin: canCheckLogin,
                 ),
+                const SizedBox(
+                  height: 20,
+                ),
+                Row(
+                  children: [
+                    Expanded(
+                      child: ObxValue<Rx<bool>>(
+                        (value) {
+                          print(value.value);
+                          return TextButton(
+                            onPressed: value.value
+                                ? () => loginController.login(
+                                    usernameFormKey.currentState!.value!,
+                                    passwordFormKey.currentState!.value!)
+                                : null,
+                            child: const Text("Login"),
+                          );
+                        },
+                        canCheckLogin,
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 20,
+                    ),
+                    SizedBox.square(
+                      dimension: 40,
+                      child: SvgPicture.asset(AppImages.login_face_id_icon),
+                    ),
+                  ],
+                ),
+                TextButton(
+                  onPressed: () => AppService().switchTheme(),
+                  child: const Text("ChangeTheme"),
+                ),
+
                 // TextButton(
                 //   onPressed: () {
                 //     appService.switchLanguage();

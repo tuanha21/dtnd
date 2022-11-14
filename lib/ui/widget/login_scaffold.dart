@@ -1,5 +1,6 @@
 import 'package:dtnd/config/service/app_services.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
+import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -69,7 +70,7 @@ class LoginScaffold extends StatelessWidget {
             Align(
               alignment: Alignment.topRight,
               child: Image.asset(
-                "assets/images/login_top_circle.png",
+                AppImages.login_top_circle,
                 opacity: const AlwaysStoppedAnimation(0.3),
                 scale: 3.0,
               ),

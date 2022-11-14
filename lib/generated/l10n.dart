@@ -231,20 +231,40 @@ class S {
   }
 
   /// `This account has not been registered or Internet trading feature is no longer available`
-  String get login_exception_invalid_account {
+  String get invalid_account {
     return Intl.message(
       'This account has not been registered or Internet trading feature is no longer available',
-      name: 'login_exception_invalid_account',
+      name: 'invalid_account',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Username requires at least 6 characters`
+  String get null_username {
+    return Intl.message(
+      'Username requires at least 6 characters',
+      name: 'null_username',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Password requires at least 8 characters`
+  String get null_password {
+    return Intl.message(
+      'Password requires at least 8 characters',
+      name: 'null_password',
       desc: '',
       args: [],
     );
   }
 
   /// `Password is incorrect`
-  String get login_exception_invalid_password {
+  String get wrong_password {
     return Intl.message(
       'Password is incorrect',
-      name: 'login_exception_invalid_password',
+      name: 'wrong_password',
       desc: '',
       args: [],
     );

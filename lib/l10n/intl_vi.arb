@@ -20,8 +20,10 @@
     "double_back_to_close_app": "Ấn thêm lần nữa để thoát",
 
     "login_exception_required_OTP": "Hãy đăng nhập bằng mã OTP được gửi về máy của bạn",
-    "login_exception_invalid_account": "Tài khoản chưa đăng ký hoặc đã hết hiệu lực giao dịch Internet",
-    "login_exception_invalid_password": "Mật khẩu không chính xác",
+    "invalid_account": "Tài khoản chưa đăng ký hoặc đã hết hiệu lực giao dịch Internet",
+    "null_username": "Tên đăng nhập cần tối thiểu 6 ký tự",
+    "null_password": "Mật khẩu cần tối thiểu 8 ký tự",
+    "wrong_password": "Mật khẩu không chính xác",
 
     "login_qoute1": "Cùng tham gia thị trường đầu tư đầy sôi động với ứng dụng ",
     "login_qoute2": " bạn nhé",

@@ -67,6 +67,11 @@ class AppTextStyle {
     fontWeight: FontWeight.w500,
   );
 
+  static final textButtonTextStyle = _defaulTextStyle.copyWith(
+    fontSize: 14,
+    fontWeight: FontWeight.w700,
+  );
+
   static final inputErrorText = _defaulTextStyle.copyWith(
     fontSize: 14,
     fontWeight: FontWeight.w400,
