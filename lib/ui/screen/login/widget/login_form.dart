@@ -11,8 +11,8 @@ class LoginForm extends StatefulWidget {
   const LoginForm({
     Key? key,
     required this.loginFormKey,
-    this.usernameFormKey,
-    this.passwordFormKey,
+    required this.usernameFormKey,
+    required this.passwordFormKey,
     this.otpFormKey,
     this.onUsernameChanged,
     this.onPasswordChanged,
@@ -24,9 +24,9 @@ class LoginForm extends StatefulWidget {
   }) : super(key: key);
 
   final GlobalKey<FormState> loginFormKey;
-  final GlobalKey<FormFieldState<String>>? usernameFormKey;
-  final GlobalKey<FormFieldState<String>>? passwordFormKey;
-  final GlobalKey<FormFieldState<String>>? otpFormKey;
+  final GlobalKey<FormFieldState<String?>> usernameFormKey;
+  final GlobalKey<FormFieldState<String?>> passwordFormKey;
+  final GlobalKey<FormFieldState<String?>>? otpFormKey;
   final OnTextFormFieldChanged? onUsernameChanged;
   final OnTextFormFieldChanged? onPasswordChanged;
   final Rx<bool>? canCheckLogin;
@@ -49,23 +49,27 @@ class _LoginFormState extends State<LoginForm> {
   bool typingUsername = false;
   bool typingPassword = false;
 
+  late String _initUsernameValue = "";
+  late String _initPasswordValue = "";
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    // WidgetsBinding.instance.addPostFrameCallback((_) {
-    //   _userController.addListener(() {
-    //     print("_userController.addListener");
-    //     widget.usernameFormKey?.currentState!.didChange(_userController.text);
-    //   });
-    //   _passController.addListener(() {
-    //     widget.passwordFormKey?.currentState!.didChange(_passController.text);
-    //   });
-    // });
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _userController.addListener(() {
+        print(
+            "widget.usernameFormKey.currentState ${widget.usernameFormKey.currentState}");
+        widget.usernameFormKey.currentState!.didChange(_userController.text);
+      });
+      _passController.addListener(() {
+        widget.passwordFormKey.currentState!.didChange(_passController.text);
+      });
+    });
   }
 
-  void _onUsernameChangeHandler(FormFieldState<String?>? state, String value) {
-    state?.didChange(value);
+  void _onUsernameChangeHandler(String value) {
+    // state?.didChange(value);
     const duration = Duration(milliseconds: 500);
     if (onUsernameStoppedTyping != null) {
       setState(() {
@@ -78,13 +82,13 @@ class _LoginFormState extends State<LoginForm> {
         print(typingUsername);
         typingUsername = false;
         checkValidate();
-        state?.validate();
+        widget.usernameFormKey.currentState?.validate();
       }),
     );
   }
 
-  void _onPasswordChangeHandler(FormFieldState<String?>? state, String value) {
-    state?.didChange(value);
+  void _onPasswordChangeHandler(String value) {
+    // state?.didChange(value);
     const duration = Duration(milliseconds: 500);
     if (onPasswordStoppedTyping != null) {
       setState(() {
@@ -96,13 +100,13 @@ class _LoginFormState extends State<LoginForm> {
       () => onPasswordStoppedTyping = Timer(duration, () {
         typingPassword = false;
         checkValidate();
-        state?.validate();
+        widget.passwordFormKey.currentState?.validate();
       }),
     );
   }
 
   void checkValidate() {
-    print(widget.usernameFormKey?.currentState?.value);
+    print(widget.usernameFormKey.currentState?.value);
     if (usernameHasError || passwordHasError) {
       widget.canCheckLogin?.value = false;
     } else {
@@ -111,11 +115,11 @@ class _LoginFormState extends State<LoginForm> {
   }
 
   bool get usernameHasError =>
-      (widget.usernameFormKey?.currentState?.hasError ?? false) &&
+      (widget.usernameFormKey.currentState?.hasError ?? false) &&
       !typingUsername;
 
   bool get passwordHasError =>
-      (widget.passwordFormKey?.currentState?.hasError ?? false) &&
+      (widget.passwordFormKey.currentState?.hasError ?? false) &&
       !typingPassword;
 
   @override
@@ -124,39 +128,38 @@ class _LoginFormState extends State<LoginForm> {
         key: widget.loginFormKey,
         child: Column(
           children: [
-            TextFormField(
-              key: widget.usernameFormKey,
-              controller: _userController,
-              validator: widget.usernameValidator,
-              onChanged: (username) => _onUsernameChangeHandler(
-                widget.usernameFormKey?.currentState,
-                username,
-              ),
-              decoration: InputDecoration(
-                labelText: S.of(context).username,
-                hintText: S.of(context).username,
-                errorText: usernameHasError
-                    ? widget.usernameFormKey?.currentState?.errorText
-                    : null,
-              ),
-            ),
+            FormField<String?>(
+                key: widget.usernameFormKey,
+                initialValue: _initUsernameValue,
+                validator: widget.usernameValidator,
+                builder: (state) => TextField(
+                      controller: _userController,
+                      onChanged: _onUsernameChangeHandler,
+                      decoration: InputDecoration(
+                        labelText: S.of(context).username,
+                        hintText: S.of(context).username,
+                        errorText: usernameHasError
+                            ? widget.usernameFormKey.currentState?.errorText
+                            : null,
+                      ),
+                    )),
             const SizedBox(
               height: 20,
             ),
-            TextFormField(
+            FormField<String?>(
               key: widget.passwordFormKey,
+              initialValue: _initPasswordValue,
               validator: widget.passwordValidator,
-              controller: _passController,
-              onChanged: (password) => _onPasswordChangeHandler(
-                widget.passwordFormKey?.currentState,
-                password,
-              ),
-              decoration: InputDecoration(
-                labelText: S.of(context).password,
-                hintText: S.of(context).password,
-                errorText: passwordHasError
-                    ? widget.passwordFormKey?.currentState?.errorText
-                    : null,
+              builder: (state) => TextField(
+                controller: _passController,
+                onChanged: _onPasswordChangeHandler,
+                decoration: InputDecoration(
+                  labelText: S.of(context).password,
+                  hintText: S.of(context).password,
+                  errorText: passwordHasError
+                      ? widget.passwordFormKey.currentState?.errorText
+                      : null,
+                ),
               ),
             ),
             // ObxValue<Rx<bool>>((otpRequired) {

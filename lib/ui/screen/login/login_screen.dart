@@ -23,11 +23,11 @@ class _LoginScreenState extends State<LoginScreen> {
 
   final GlobalKey<FormState> loginFormKey = GlobalKey<FormState>();
 
-  final GlobalKey<FormFieldState<String>> usernameFormKey =
-      GlobalKey<FormFieldState<String>>();
+  final GlobalKey<FormFieldState<String?>> usernameFormKey =
+      GlobalKey<FormFieldState<String?>>();
 
-  final GlobalKey<FormFieldState<String>> passwordFormKey =
-      GlobalKey<FormFieldState<String>>();
+  final GlobalKey<FormFieldState<String?>> passwordFormKey =
+      GlobalKey<FormFieldState<String?>>();
   final Rx<bool> canCheckLogin = Rx<bool>(false);
   bool invalidUsername = false;
   bool invalidPassword = false;
