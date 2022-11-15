@@ -8,6 +8,7 @@ class AppService {
   AppService._internal();
 
   static final AppService _instance = AppService._internal();
+  static AppService get instance => _instance;
 
   late final SharedPreferences sharedPreferencesInstance;
 

@@ -138,6 +138,83 @@ final ButtonStyle _darkTextButtonThemeData = ButtonStyle(
   padding: const MaterialStatePropertyAll(EdgeInsets.all(20)),
 );
 
+final BottomNavigationBarThemeData _lightBottomNavigationBarThemeData =
+    BottomNavigationBarThemeData(
+  backgroundColor: AppColors.neutral_06,
+  elevation: 4.0,
+  type: BottomNavigationBarType.fixed,
+  showSelectedLabels: true,
+  showUnselectedLabels: true,
+  selectedIconTheme: const IconThemeData(
+    color: AppColors.primary_01,
+    opacity: 1.0,
+    size: 20,
+  ),
+  unselectedIconTheme: const IconThemeData(
+    color: AppColors.neutral_03,
+    opacity: 1.0,
+    size: 20,
+  ),
+  selectedLabelStyle:
+      AppTextStyle.bottomNavLabel.copyWith(color: AppColors.primary_01),
+  unselectedLabelStyle:
+      AppTextStyle.bottomNavLabel.copyWith(color: AppColors.neutral_03),
+);
+final BottomNavigationBarThemeData _darkBottomNavigationBarThemeData =
+    BottomNavigationBarThemeData(
+  backgroundColor: AppColors.neutral_02,
+  elevation: 4.0,
+  type: BottomNavigationBarType.fixed,
+  showSelectedLabels: true,
+  showUnselectedLabels: true,
+  selectedItemColor: AppColors.primary_01,
+  unselectedItemColor: AppColors.neutral_03,
+  selectedIconTheme: const IconThemeData(
+    color: AppColors.primary_01,
+    opacity: 1.0,
+    size: 20,
+  ),
+  unselectedIconTheme: const IconThemeData(
+    color: AppColors.neutral_03,
+    opacity: 1.0,
+    size: 20,
+  ),
+  selectedLabelStyle:
+      AppTextStyle.bottomNavLabel.copyWith(color: AppColors.primary_01),
+  unselectedLabelStyle:
+      AppTextStyle.bottomNavLabel.copyWith(color: AppColors.neutral_03),
+);
+
+final AppBarTheme _lightAppBarTheme = AppBarTheme(
+  elevation: 0.0,
+  titleSpacing: 16.0,
+  backgroundColor: AppColors.bg_1,
+  foregroundColor: AppColors.neutral_01,
+  centerTitle: false,
+  titleTextStyle: AppTextStyle.headlineSmall_24.copyWith(
+    color: AppColors.neutral_01,
+    fontWeight: FontWeight.w700,
+  ),
+);
+
+final AppBarTheme _darkAppBarTheme = AppBarTheme(
+  elevation: 0.0,
+  titleSpacing: 16.0,
+  backgroundColor: AppColors.bg_2,
+  foregroundColor: AppColors.neutral_07,
+  centerTitle: false,
+  titleTextStyle: AppTextStyle.headlineSmall_24.copyWith(
+    color: AppColors.neutral_07,
+    fontWeight: FontWeight.w700,
+  ),
+);
+
+const IconThemeData _lightIconThemeData =
+    IconThemeData(color: AppColors.primary_01);
+
+const IconThemeData _darkIconThemeData =
+    IconThemeData(color: AppColors.neutral_07);
+
 ///================ BottomAppBar ===================
 
 const BottomAppBarTheme _lightBottomAppBarTheme = BottomAppBarTheme(
@@ -180,15 +257,23 @@ const ColorScheme _darkColorScheme = ColorScheme(
 ///================ THEME DATA ===================
 
 final ThemeData lightThemeData = ThemeData(
+  scaffoldBackgroundColor: AppColors.bg_1,
   textTheme: lightTextTheme,
   inputDecorationTheme: lightInputDecorationTheme,
   colorScheme: _lightColorScheme,
   textButtonTheme: TextButtonThemeData(style: _lightTextButtonThemeData),
+  bottomNavigationBarTheme: _lightBottomNavigationBarThemeData,
+  appBarTheme: _lightAppBarTheme,
+  iconTheme: _lightIconThemeData,
 );
 
 final ThemeData darkThemeData = ThemeData(
+  scaffoldBackgroundColor: AppColors.bg_2,
   textTheme: darkTextTheme,
   inputDecorationTheme: darkInputDecorationTheme,
   colorScheme: _darkColorScheme,
   textButtonTheme: TextButtonThemeData(style: _darkTextButtonThemeData),
+  bottomNavigationBarTheme: _darkBottomNavigationBarThemeData,
+  appBarTheme: _darkAppBarTheme,
+  iconTheme: _darkIconThemeData,
 );

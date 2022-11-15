@@ -1,4 +1,5 @@
 import 'package:dtnd/generated/l10n.dart';
+import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:flutter/cupertino.dart';
 
 enum HomeNav {
@@ -32,6 +33,36 @@ extension HomeNavX on HomeNav {
         return S.of(context).community;
       case HomeNav.account:
         return S.of(context).account;
+    }
+  }
+
+  int get index {
+    switch (this) {
+      case HomeNav.home:
+        return 0;
+      case HomeNav.market:
+        return 1;
+      case HomeNav.asset:
+        return 2;
+      case HomeNav.community:
+        return 3;
+      case HomeNav.account:
+        return 4;
+    }
+  }
+
+  String get iconPath {
+    switch (this) {
+      case HomeNav.home:
+        return AppImages.home_nav_icon;
+      case HomeNav.market:
+        return AppImages.market_nav_icon;
+      case HomeNav.asset:
+        return AppImages.asset_nav_icon;
+      case HomeNav.community:
+        return AppImages.community_nav_icon;
+      case HomeNav.account:
+        return AppImages.account_nav_icon;
     }
   }
 }

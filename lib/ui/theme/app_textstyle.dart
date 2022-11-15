@@ -72,6 +72,11 @@ class AppTextStyle {
     fontWeight: FontWeight.w700,
   );
 
+  static final bottomNavLabel = _defaulTextStyle.copyWith(
+    fontSize: 10,
+    fontWeight: FontWeight.w500,
+  );
+
   static final inputErrorText = _defaulTextStyle.copyWith(
     fontSize: 14,
     fontWeight: FontWeight.w400,

@@ -1,5 +1,6 @@
 {
     "hello": "Hello",
+    "hi": "Hi",
     "login": "Login",
     "login_upper": "LOGIN",
 
@@ -10,6 +11,13 @@
     "asset": "Asset",
     "community": "Community",
 
+    "qa_money": "Cash deposits",
+    "qa_base": "Base",
+    "qa_derivative": "Derivative",
+    "qa_pack_enrol": "Pack enrollment",
+    "qa_bond": "Bond",
+    "qa_copytrade": "Copytrade",
+
     "account": "Account",
     "username": "Username",
     "password": "Password",
@@ -19,6 +27,8 @@
     "session_expired_in": "Session expired in ",
     "minutes": " minutes",
     "double_back_to_close_app": "Back again to exit",
+
+    "total_asset": "Total asset",
 
     "login_exception_required_OTP": "Login with OTP code sent to your phone",
     "invalid_account": "This account has not been registered or Internet trading feature is no longer available",

@@ -60,6 +60,16 @@ class S {
     );
   }
 
+  /// `Hi`
+  String get hi {
+    return Intl.message(
+      'Hi',
+      name: 'hi',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Login`
   String get login {
     return Intl.message(
@@ -135,6 +145,66 @@ class S {
     return Intl.message(
       'Community',
       name: 'community',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Cash deposits`
+  String get qa_money {
+    return Intl.message(
+      'Cash deposits',
+      name: 'qa_money',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Base`
+  String get qa_base {
+    return Intl.message(
+      'Base',
+      name: 'qa_base',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Derivative`
+  String get qa_derivative {
+    return Intl.message(
+      'Derivative',
+      name: 'qa_derivative',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Pack enrollment`
+  String get qa_pack_enrol {
+    return Intl.message(
+      'Pack enrollment',
+      name: 'qa_pack_enrol',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Bond`
+  String get qa_bond {
+    return Intl.message(
+      'Bond',
+      name: 'qa_bond',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Copytrade`
+  String get qa_copytrade {
+    return Intl.message(
+      'Copytrade',
+      name: 'qa_copytrade',
       desc: '',
       args: [],
     );
@@ -225,6 +295,16 @@ class S {
     return Intl.message(
       'Back again to exit',
       name: 'double_back_to_close_app',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Total asset`
+  String get total_asset {
+    return Intl.message(
+      'Total asset',
+      name: 'total_asset',
       desc: '',
       args: [],
     );

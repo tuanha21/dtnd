@@ -1,5 +1,6 @@
 {
     "hello": "Chào bạn",
+    "hi": "Xin chào",
     "login": "Đăng nhập",
     "login_upper": "ĐĂNG NHẬP",
 
@@ -10,6 +11,13 @@
     "asset": "Tài sản",
     "community": "Cộng đồng",
 
+    "qa_money": "Tiền gửi",
+    "qa_base": "Cơ sở",
+    "qa_derivative": "Phái sinh",
+    "qa_pack_enrol": "ĐK gói",
+    "qa_bond": "Trái phiếu",
+    "qa_copytrade": "Copytrade",
+
     "account": "Tài khoản",
     "username": "Tên đăng nhập",
     "password": "Mật khẩu",
@@ -19,6 +27,8 @@
     "session_expired_in": "Hết phiên đăng nhập sau ",
     "minutes": " phút",
     "double_back_to_close_app": "Ấn thêm lần nữa để thoát",
+
+    "total_asset": "Tổng tài sản",
 
     "login_exception_required_OTP": "Hãy đăng nhập bằng mã OTP được gửi về máy của bạn",
     "invalid_account": "Tài khoản chưa đăng ký hoặc đã hết hiệu lực giao dịch Internet",

@@ -8,6 +8,7 @@ import 'package:dtnd/ui/widget/login_scaffold.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../generated/l10n.dart';
 
@@ -132,18 +133,33 @@ class _LoginScreenState extends State<LoginScreen> {
                 Row(
                   children: [
                     Expanded(
-                      child: ObxValue<Rx<bool>>(
-                        (value) {
-                          return TextButton(
-                            onPressed: value.value
-                                ? () => loginController.login(
-                                    usernameFormKey.currentState!.value!,
-                                    passwordFormKey.currentState!.value!)
-                                : null,
-                            child: const Text("Login"),
-                          );
+                      child:
+                          // ObxValue<Rx<bool>>(
+                          //   (value) {
+                          //     return TextButton(
+                          //       // onPressed: value.value
+                          //       //     ? () => loginController.login(
+                          //       //         usernameFormKey.currentState!.value!,
+                          //       //         passwordFormKey.currentState!.value!)
+                          //       //     : null,
+                          //       onPressed: () {
+                          //         GoRouter.of(context).go('/');
+                          //       },
+                          //       child: const Text("Login"),
+                          //     );
+                          //   },
+                          //   canCheckLogin,
+                          // ),
+                          TextButton(
+                        // onPressed: value.value
+                        //     ? () => loginController.login(
+                        //         usernameFormKey.currentState!.value!,
+                        //         passwordFormKey.currentState!.value!)
+                        //     : null,
+                        onPressed: () {
+                          GoRouter.of(context).go('/');
                         },
-                        canCheckLogin,
+                        child: const Text("Login"),
                       ),
                     ),
                     const SizedBox(

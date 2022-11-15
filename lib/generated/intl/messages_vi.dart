@@ -32,6 +32,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "fill_account": MessageLookupByLibrary.simpleMessage("Nhập tài khoản"),
         "fill_password": MessageLookupByLibrary.simpleMessage("Nhập mật khẩu"),
         "hello": MessageLookupByLibrary.simpleMessage("Chào bạn"),
+        "hi": MessageLookupByLibrary.simpleMessage("Xin chào"),
         "home": MessageLookupByLibrary.simpleMessage("Trang chủ"),
         "invalid_account": MessageLookupByLibrary.simpleMessage(
             "Tài khoản chưa đăng ký hoặc đã hết hiệu lực giao dịch Internet"),
@@ -52,10 +53,17 @@ class MessageLookup extends MessageLookupByLibrary {
             "Tên đăng nhập cần tối thiểu 6 ký tự"),
         "order": MessageLookupByLibrary.simpleMessage("Đặt lệnh"),
         "password": MessageLookupByLibrary.simpleMessage("Mật khẩu"),
+        "qa_base": MessageLookupByLibrary.simpleMessage("Cơ sở"),
+        "qa_bond": MessageLookupByLibrary.simpleMessage("Trái phiếu"),
+        "qa_copytrade": MessageLookupByLibrary.simpleMessage("Copytrade"),
+        "qa_derivative": MessageLookupByLibrary.simpleMessage("Phái sinh"),
+        "qa_money": MessageLookupByLibrary.simpleMessage("Tiền gửi"),
+        "qa_pack_enrol": MessageLookupByLibrary.simpleMessage("ĐK gói"),
         "session_expired_in":
             MessageLookupByLibrary.simpleMessage("Hết phiên đăng nhập sau "),
         "timeout": MessageLookupByLibrary.simpleMessage(
             "Không nhận được phản hồi từ máy chủ"),
+        "total_asset": MessageLookupByLibrary.simpleMessage("Tổng tài sản"),
         "username": MessageLookupByLibrary.simpleMessage("Tên đăng nhập"),
         "wrong_password":
             MessageLookupByLibrary.simpleMessage("Mật khẩu không chính xác")

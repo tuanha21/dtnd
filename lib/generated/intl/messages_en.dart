@@ -32,6 +32,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "fill_account": MessageLookupByLibrary.simpleMessage("Fill account"),
         "fill_password": MessageLookupByLibrary.simpleMessage("Fill password"),
         "hello": MessageLookupByLibrary.simpleMessage("Hello"),
+        "hi": MessageLookupByLibrary.simpleMessage("Hi"),
         "home": MessageLookupByLibrary.simpleMessage("Home"),
         "invalid_account": MessageLookupByLibrary.simpleMessage(
             "This account has not been registered or Internet trading feature is no longer available"),
@@ -52,10 +53,18 @@ class MessageLookup extends MessageLookupByLibrary {
             "Username requires at least 6 characters"),
         "order": MessageLookupByLibrary.simpleMessage("Order"),
         "password": MessageLookupByLibrary.simpleMessage("Password"),
+        "qa_base": MessageLookupByLibrary.simpleMessage("Base"),
+        "qa_bond": MessageLookupByLibrary.simpleMessage("Bond"),
+        "qa_copytrade": MessageLookupByLibrary.simpleMessage("Copytrade"),
+        "qa_derivative": MessageLookupByLibrary.simpleMessage("Derivative"),
+        "qa_money": MessageLookupByLibrary.simpleMessage("Cash deposits"),
+        "qa_pack_enrol":
+            MessageLookupByLibrary.simpleMessage("Pack enrollment"),
         "session_expired_in":
             MessageLookupByLibrary.simpleMessage("Session expired in "),
         "timeout":
             MessageLookupByLibrary.simpleMessage("No response from server"),
+        "total_asset": MessageLookupByLibrary.simpleMessage("Total asset"),
         "username": MessageLookupByLibrary.simpleMessage("Username"),
         "wrong_password":
             MessageLookupByLibrary.simpleMessage("Password is incorrect")

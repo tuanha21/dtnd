@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 class AppColors {
   static const primary_01 = Color(0xFF256BFF);
+
   static const lighter_primary = Color(0xFFDFE7FF);
   static const secondary = Color(0xFFFCC927);
   static const light_bg = Color(0xFFFFFFFF);
@@ -20,7 +21,18 @@ class AppColors {
   static const neutral_02 = Color(0xFF4A5568);
   static const neutral_03 = Color(0xFF8894AA);
   static const neutral_05 = Color(0xFFEDF2F7);
+  static const neutral_06 = Color(0xFFF5F8FF);
   static const neutral_07 = Color(0xFFFFFFFF);
+
+  static const semantic_01 = Color(0xFF1CCD83);
+  static const semantic_04 = Color(0xFF3EAEFF);
+  static const semantic_05 = Color(0xFFB150FE);
+  static const semantic_06 = Color(0xFFF49A47);
+
+  static const accent_light_01 = Color(0xFFEAFFF6);
+  static const accent_light_02 = Color(0xFFFDEED9);
+  static const accent_light_04 = Color(0xFFD8EBFD);
+  static const accent_light_05 = Color(0xFFF1E8FD);
 
   //
   static const bg_1 = Color(0xFFFFFFFF);

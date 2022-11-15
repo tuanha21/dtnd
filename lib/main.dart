@@ -3,7 +3,7 @@ import 'package:dtnd/config/service/environment.dart';
 import 'package:dtnd/data/implementations/network_service.dart';
 import 'package:dtnd/data/local_storage_service.dart';
 import 'package:dtnd/generated/l10n.dart';
-import 'package:dtnd/ui/screen/home_base/home_base_screen.dart';
+import 'package:dtnd/ui/screen/home_base/home_base.dart';
 import 'package:dtnd/ui/screen/login/login_screen.dart';
 import 'package:dtnd/ui/theme/app_theme.dart';
 import 'package:flutter/material.dart';
