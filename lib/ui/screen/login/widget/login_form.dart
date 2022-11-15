@@ -1,8 +1,6 @@
 import 'dart:async';
 
 import 'package:dtnd/generated/l10n.dart';
-import 'package:dtnd/ui/theme/app_color.dart';
-import 'package:dtnd/ui/widget/expanded_widget.dart';
 import 'package:dtnd/utilities/typedef.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -49,17 +47,11 @@ class _LoginFormState extends State<LoginForm> {
   bool typingUsername = false;
   bool typingPassword = false;
 
-  late String _initUsernameValue = "";
-  late String _initPasswordValue = "";
-
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _userController.addListener(() {
-        print(
-            "widget.usernameFormKey.currentState ${widget.usernameFormKey.currentState}");
         widget.usernameFormKey.currentState!.didChange(_userController.text);
       });
       _passController.addListener(() {
@@ -106,8 +98,8 @@ class _LoginFormState extends State<LoginForm> {
   }
 
   void checkValidate() {
-    print(widget.usernameFormKey.currentState?.value);
-    if (usernameHasError || passwordHasError) {
+    if ((widget.usernameFormKey.currentState?.hasError ?? true) ||
+        (widget.passwordFormKey.currentState?.hasError ?? true)) {
       widget.canCheckLogin?.value = false;
     } else {
       widget.canCheckLogin?.value = true;
@@ -130,7 +122,6 @@ class _LoginFormState extends State<LoginForm> {
           children: [
             FormField<String?>(
                 key: widget.usernameFormKey,
-                initialValue: _initUsernameValue,
                 validator: widget.usernameValidator,
                 builder: (state) => TextField(
                       controller: _userController,
@@ -148,7 +139,6 @@ class _LoginFormState extends State<LoginForm> {
             ),
             FormField<String?>(
               key: widget.passwordFormKey,
-              initialValue: _initPasswordValue,
               validator: widget.passwordValidator,
               builder: (state) => TextField(
                 controller: _passController,

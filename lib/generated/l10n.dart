@@ -130,6 +130,16 @@ class S {
     );
   }
 
+  /// `Community`
+  String get community {
+    return Intl.message(
+      'Community',
+      name: 'community',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Account`
   String get account {
     return Intl.message(

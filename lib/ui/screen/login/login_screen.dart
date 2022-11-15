@@ -38,7 +38,6 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   String? usernameValidator(String? value) {
-    print("usernameValidator $value");
     if ((value?.length ?? 0) < 6) {
       return S.of(context).null_username;
     }
@@ -135,7 +134,6 @@ class _LoginScreenState extends State<LoginScreen> {
                     Expanded(
                       child: ObxValue<Rx<bool>>(
                         (value) {
-                          print(value.value);
                           return TextButton(
                             onPressed: value.value
                                 ? () => loginController.login(

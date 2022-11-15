@@ -25,6 +25,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "account": MessageLookupByLibrary.simpleMessage("Account"),
         "asset": MessageLookupByLibrary.simpleMessage("Asset"),
         "bond": MessageLookupByLibrary.simpleMessage("Bond"),
+        "community": MessageLookupByLibrary.simpleMessage("Community"),
         "double_back_to_close_app":
             MessageLookupByLibrary.simpleMessage("Back again to exit"),
         "fill_OTP": MessageLookupByLibrary.simpleMessage("Fill OTP"),

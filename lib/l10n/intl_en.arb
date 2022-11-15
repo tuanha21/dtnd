@@ -8,6 +8,7 @@
     "order": "Order",
     "bond": "Bond",
     "asset": "Asset",
+    "community": "Community",
 
     "account": "Account",
     "username": "Username",

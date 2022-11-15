@@ -25,6 +25,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "account": MessageLookupByLibrary.simpleMessage("Tài khoản"),
         "asset": MessageLookupByLibrary.simpleMessage("Tài sản"),
         "bond": MessageLookupByLibrary.simpleMessage("Trái phiếu"),
+        "community": MessageLookupByLibrary.simpleMessage("Cộng đồng"),
         "double_back_to_close_app":
             MessageLookupByLibrary.simpleMessage("Ấn thêm lần nữa để thoát"),
         "fill_OTP": MessageLookupByLibrary.simpleMessage("Nhập mã OTP"),
