@@ -29,6 +29,9 @@
     "double_back_to_close_app": "Ấn thêm lần nữa để thoát",
 
     "total_asset": "Tổng tài sản",
+    "interested_catalog": "Danh mục quan tâm",
+    "market_today": "Thị trường hôm nay",
+    "market_overview": "Tổng quan thị trường",
 
     "login_exception_required_OTP": "Hãy đăng nhập bằng mã OTP được gửi về máy của bạn",
     "invalid_account": "Tài khoản chưa đăng ký hoặc đã hết hiệu lực giao dịch Internet",
@@ -39,6 +42,7 @@
     "login_qoute1": "Cùng tham gia thị trường đầu tư đầy sôi động với ứng dụng ",
     "login_qoute2": " bạn nhé",
 
+    "see_more": "Xem thêm",
 
     "timeout": "Không nhận được phản hồi từ máy chủ",
     "no_internet": "Không có kết nối Internet"

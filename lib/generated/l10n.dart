@@ -310,6 +310,36 @@ class S {
     );
   }
 
+  /// `Interested catalog`
+  String get interested_catalog {
+    return Intl.message(
+      'Interested catalog',
+      name: 'interested_catalog',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Market today`
+  String get market_today {
+    return Intl.message(
+      'Market today',
+      name: 'market_today',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Market overview`
+  String get market_overview {
+    return Intl.message(
+      'Market overview',
+      name: 'market_overview',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Login with OTP code sent to your phone`
   String get login_exception_required_OTP {
     return Intl.message(
@@ -375,6 +405,16 @@ class S {
     return Intl.message(
       ' application',
       name: 'login_qoute2',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `See more`
+  String get see_more {
+    return Intl.message(
+      'See more',
+      name: 'see_more',
       desc: '',
       args: [],
     );

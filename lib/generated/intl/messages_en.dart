@@ -34,6 +34,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "hello": MessageLookupByLibrary.simpleMessage("Hello"),
         "hi": MessageLookupByLibrary.simpleMessage("Hi"),
         "home": MessageLookupByLibrary.simpleMessage("Home"),
+        "interested_catalog":
+            MessageLookupByLibrary.simpleMessage("Interested catalog"),
         "invalid_account": MessageLookupByLibrary.simpleMessage(
             "This account has not been registered or Internet trading feature is no longer available"),
         "login": MessageLookupByLibrary.simpleMessage("Login"),
@@ -44,6 +46,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "login_qoute2": MessageLookupByLibrary.simpleMessage(" application"),
         "login_upper": MessageLookupByLibrary.simpleMessage("LOGIN"),
         "market": MessageLookupByLibrary.simpleMessage("Market"),
+        "market_overview":
+            MessageLookupByLibrary.simpleMessage("Market overview"),
+        "market_today": MessageLookupByLibrary.simpleMessage("Market today"),
         "minutes": MessageLookupByLibrary.simpleMessage(" minutes"),
         "no_internet":
             MessageLookupByLibrary.simpleMessage("No Internet connection"),
@@ -60,6 +65,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "qa_money": MessageLookupByLibrary.simpleMessage("Cash deposits"),
         "qa_pack_enrol":
             MessageLookupByLibrary.simpleMessage("Pack enrollment"),
+        "see_more": MessageLookupByLibrary.simpleMessage("See more"),
         "session_expired_in":
             MessageLookupByLibrary.simpleMessage("Session expired in "),
         "timeout":

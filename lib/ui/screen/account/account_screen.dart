@@ -1,3 +1,4 @@
+import 'package:dtnd/config/service/app_services.dart';
 import 'package:flutter/material.dart';
 
 class AccountScreen extends StatefulWidget {
@@ -10,9 +11,12 @@ class AccountScreen extends StatefulWidget {
 class _AccountScreenState extends State<AccountScreen> {
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       body: Center(
-        child: Text("AccountScreen"),
+        child: TextButton(
+          onPressed: () => AppService().switchTheme(),
+          child: const Text("ChangeTheme"),
+        ),
       ),
     );
   }

@@ -8,7 +8,7 @@ part of 'user_token.dart';
 
 class UserTokenAdapter extends TypeAdapter<UserToken> {
   @override
-  final int typeId = 1;
+  final int typeId = 0;
 
   @override
   UserToken read(BinaryReader reader) {

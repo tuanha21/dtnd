@@ -35,4 +35,7 @@ class AppImages {
       "images/home_asset_card_light_bg.png";
   static const String home_asset_card_dark_bg =
       "images/home_asset_card_dark_bg.png";
+
+  /// Image
+  static const String home_banner = "images/home_banner.png";
 }

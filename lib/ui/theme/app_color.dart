@@ -25,14 +25,20 @@ class AppColors {
   static const neutral_07 = Color(0xFFFFFFFF);
 
   static const semantic_01 = Color(0xFF1CCD83);
+  static const semantic_02 = Color(0xFFFFC83A);
+  static const semantic_03 = Color(0xFFFE5353);
   static const semantic_04 = Color(0xFF3EAEFF);
   static const semantic_05 = Color(0xFFB150FE);
   static const semantic_06 = Color(0xFFF49A47);
 
   static const accent_light_01 = Color(0xFFEAFFF6);
   static const accent_light_02 = Color(0xFFFDEED9);
+  static const accent_light_03 = Color(0xFFFFDBE1);
   static const accent_light_04 = Color(0xFFD8EBFD);
   static const accent_light_05 = Color(0xFFF1E8FD);
+
+  static const accent_dark_01 = Color(0xFF1F3728);
+  static const accent_dark_03 = Color(0xFF483333);
 
   //
   static const bg_1 = Color(0xFFFFFFFF);

@@ -1,7 +1,8 @@
 import 'package:dtnd/config/service/app_services.dart';
 import 'package:dtnd/config/service/environment.dart';
+import 'package:dtnd/data/implementations/data_center_service.dart';
 import 'package:dtnd/data/implementations/network_service.dart';
-import 'package:dtnd/data/local_storage_service.dart';
+import 'package:dtnd/data/implementations/local_storage_service.dart';
 import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/screen/home_base/home_base.dart';
 import 'package:dtnd/ui/screen/login/login_screen.dart';
@@ -20,14 +21,13 @@ Future<void> main() async {
   await LocalStorageService().init();
   await AppService().initialize(LocalStorageService().sharedPreferences);
   await NetworkService().init(appEnvironment);
+  await DataCenterService().init();
   // print(dotenv.env['URL_DATA_FEED'].runtimeType);
   runApp(const MyApp());
 }
 
 class MyApp extends StatefulWidget {
-  const MyApp({
-    super.key,
-  });
+  const MyApp({super.key});
 
   @override
   State<MyApp> createState() => _MyAppState();
@@ -35,21 +35,23 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   final AppService appService = AppService();
-  final GoRouter _router =
-      GoRouter(initialLocation: "/SignIn", routes: <GoRoute>[
-    GoRoute(
-      path: '/',
-      builder: (BuildContext context, GoRouterState state) {
-        return const HomeBase();
-      },
-    ),
-    GoRoute(
-      path: '/SignIn',
-      builder: (BuildContext context, GoRouterState state) {
-        return const LoginScreen();
-      },
-    ),
-  ]);
+  final GoRouter _router = GoRouter(
+    initialLocation: "/",
+    routes: <GoRoute>[
+      GoRoute(
+        path: '/',
+        builder: (BuildContext context, GoRouterState state) {
+          return const HomeBase();
+        },
+      ),
+      GoRoute(
+        path: '/SignIn',
+        builder: (BuildContext context, GoRouterState state) {
+          return const LoginScreen();
+        },
+      ),
+    ],
+  );
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {

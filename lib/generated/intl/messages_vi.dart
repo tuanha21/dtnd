@@ -34,6 +34,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "hello": MessageLookupByLibrary.simpleMessage("Chào bạn"),
         "hi": MessageLookupByLibrary.simpleMessage("Xin chào"),
         "home": MessageLookupByLibrary.simpleMessage("Trang chủ"),
+        "interested_catalog":
+            MessageLookupByLibrary.simpleMessage("Danh mục quan tâm"),
         "invalid_account": MessageLookupByLibrary.simpleMessage(
             "Tài khoản chưa đăng ký hoặc đã hết hiệu lực giao dịch Internet"),
         "login": MessageLookupByLibrary.simpleMessage("Đăng nhập"),
@@ -44,6 +46,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "login_qoute2": MessageLookupByLibrary.simpleMessage(" bạn nhé"),
         "login_upper": MessageLookupByLibrary.simpleMessage("ĐĂNG NHẬP"),
         "market": MessageLookupByLibrary.simpleMessage("Thị trường"),
+        "market_overview":
+            MessageLookupByLibrary.simpleMessage("Tổng quan thị trường"),
+        "market_today":
+            MessageLookupByLibrary.simpleMessage("Thị trường hôm nay"),
         "minutes": MessageLookupByLibrary.simpleMessage(" phút"),
         "no_internet":
             MessageLookupByLibrary.simpleMessage("Không có kết nối Internet"),
@@ -59,6 +65,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "qa_derivative": MessageLookupByLibrary.simpleMessage("Phái sinh"),
         "qa_money": MessageLookupByLibrary.simpleMessage("Tiền gửi"),
         "qa_pack_enrol": MessageLookupByLibrary.simpleMessage("ĐK gói"),
+        "see_more": MessageLookupByLibrary.simpleMessage("Xem thêm"),
         "session_expired_in":
             MessageLookupByLibrary.simpleMessage("Hết phiên đăng nhập sau "),
         "timeout": MessageLookupByLibrary.simpleMessage(

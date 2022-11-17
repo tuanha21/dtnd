@@ -29,6 +29,9 @@
     "double_back_to_close_app": "Back again to exit",
 
     "total_asset": "Total asset",
+    "interested_catalog": "Interested catalog",
+    "market_today": "Market today",
+    "market_overview": "Market overview",
 
     "login_exception_required_OTP": "Login with OTP code sent to your phone",
     "invalid_account": "This account has not been registered or Internet trading feature is no longer available",
@@ -38,6 +41,8 @@
 
     "login_qoute1": "Let's join the exciting investment market with ",
     "login_qoute2": " application",
+
+    "see_more": "See more",
 
     "timeout": "No response from server",
     "no_internet": "No Internet connection"

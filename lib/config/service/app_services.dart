@@ -27,6 +27,7 @@ class AppService {
   Future<void> initialize(SharedPreferences sharedPreferences) async {
     sharedPreferencesInstance = sharedPreferences;
     final themeMode = sharedPreferencesInstance.getString("ThemeMode");
+    print("themeMode $themeMode");
     if (themeMode == null) {
       await sharedPreferencesInstance.setString(
           "ThemeMode", ThemeMode.dark.name);
@@ -56,7 +57,10 @@ class AppService {
 
   Future<ThemeMode> _changeThemeMode(ThemeMode themeMode) async {
     _themeMode.value = themeMode;
+    print(themeMode.name);
     await sharedPreferencesInstance.setString("ThemeMode", themeMode.name);
+    final getThemeMode = sharedPreferencesInstance.getString("ThemeMode");
+    print("getThemeMode $getThemeMode");
     return themeMode;
   }
 

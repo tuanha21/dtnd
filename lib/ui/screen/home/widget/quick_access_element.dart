@@ -63,9 +63,16 @@ class HomeQuickAccessElement extends StatelessWidget {
                   : AppColors.neutral_01,
             ),
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 SvgPicture.asset(value.path),
-                Text(value.name(context)),
+                const SizedBox(
+                  height: 6,
+                ),
+                Text(
+                  value.name(context),
+                  style: Theme.of(context).textTheme.labelMedium,
+                ),
               ],
             ),
           );
