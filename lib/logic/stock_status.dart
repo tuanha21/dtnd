@@ -7,6 +7,21 @@ enum SStatus { ref, up, down, ceil, floor }
 abstract class StockStatus {
   SStatus get sstatus;
 
+  String get prefix {
+    switch (sstatus) {
+      case SStatus.ref:
+        return "";
+      case SStatus.up:
+        return "+";
+      case SStatus.down:
+        return "-";
+      case SStatus.ceil:
+        return "+";
+      case SStatus.floor:
+        return "-";
+    }
+  }
+
   Color get color {
     switch (sstatus) {
       case SStatus.ref:

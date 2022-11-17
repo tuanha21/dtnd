@@ -9,12 +9,12 @@ class StockModel {
   late StockData? stockData;
   late StockInfoCore? stockDataCore;
   late List<StockTrade>? listStockTrade;
-  late List<StockTradingHistory>? listStockTradingHistory;
+  late StockTradingHistory? stockTradingHistory;
   StockModel({
     required this.stock,
     this.stockData,
     this.stockDataCore,
     this.listStockTrade,
-    this.listStockTradingHistory,
+    this.stockTradingHistory,
   });
 }

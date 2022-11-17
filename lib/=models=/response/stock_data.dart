@@ -1,4 +1,6 @@
-class StockData {
+import 'package:dtnd/logic/stock_status.dart';
+
+class StockData extends StockStatus {
   late final String sym;
   String? mc;
   num? c;
@@ -8,7 +10,7 @@ class StockData {
   num? lastVolume;
   num? lot;
   String? ot;
-  String? changePc;
+  num? changePc;
   String? avePrice;
   String? highPrice;
   String? lowPrice;
@@ -25,6 +27,33 @@ class StockData {
   String? g6;
   String? g7;
   String? mp;
+
+  @override
+  SStatus get sstatus {
+    try {
+      if (lastPrice == null || r == null || c == null || f == null) {
+        return SStatus.ref;
+      }
+      if (lastPrice! == r) {
+        return SStatus.ref;
+      }
+      if (lastPrice! >= c!) {
+        return SStatus.ceil;
+      }
+      if (lastPrice! <= f!) {
+        return SStatus.floor;
+      }
+      if (lastPrice! > r!) {
+        return SStatus.up;
+      }
+      if (lastPrice! < r!) {
+        return SStatus.down;
+      }
+      return SStatus.ref;
+    } catch (e) {
+      return SStatus.ref;
+    }
+  }
 
   StockData({
     required this.sym,
@@ -65,7 +94,7 @@ class StockData {
     lastVolume = json['lastVolume'];
     lot = json['lot'];
     ot = json['ot'];
-    changePc = json['changePc'];
+    changePc = num.parse(json['changePc']);
     avePrice = json['avePrice'];
     highPrice = json['highPrice'];
     lowPrice = json['lowPrice'];
@@ -84,7 +113,6 @@ class StockData {
     mp = json['mp'];
   }
 
-  @override
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['sym'] = sym;

@@ -3,11 +3,13 @@ import 'package:dtnd/=models=/response/index_model.dart';
 import 'package:dtnd/=models=/response/stock.dart';
 import 'package:dtnd/=models=/response/stock_data.dart';
 import 'package:dtnd/=models=/response/stock_model.dart';
+import 'package:dtnd/=models=/response/stock_trading_history.dart';
 import 'package:dtnd/data/i_data_center_service.dart';
 import 'package:dtnd/data/i_local_storage_service.dart';
 import 'package:dtnd/data/i_network_service.dart';
 import 'package:dtnd/data/implementations/local_storage_service.dart';
 import 'package:dtnd/data/implementations/network_service.dart';
+import 'package:dtnd/utilities/time_utils.dart';
 
 const List<String> defaultListStock = [
   'ACB',
@@ -78,15 +80,25 @@ class DataCenterService implements IDataCenterService {
   }
 
   @override
+  Future<StockTradingHistory> getStockIndayTradingHistory(String stockCode) {
+    const String resolution = "5";
+    final String from =
+        TimeUtilities.timeToEpoch(TimeUtilities.beginningOfDay).toString();
+    final String to = TimeUtilities.timeToEpoch(DateTime.now()).toString();
+    return networkService.getStockTradingHistory(
+        stockCode, resolution, from, to);
+  }
+
+  @override
   Future<void> getListInterestedStocks() async {
     final List<String> listInterestedString =
         localStorageService.getListInterestedStock() ?? defaultListStock;
     for (var stockCode in listInterestedString) {
       final stock =
           listAllStock.firstWhere((element) => element.stockCode == stockCode);
-      final listStockTrade = await networkService.getListStockTrade(stockCode);
-      _listInterestedStocks
-          .add(StockModel(stock: stock, listStockTrade: listStockTrade));
+      final stockTradingHistory = await getStockIndayTradingHistory(stockCode);
+      _listInterestedStocks.add(
+          StockModel(stock: stock, stockTradingHistory: stockTradingHistory));
     }
 
     final listStockData = await getListStockData(listInterestedString);
