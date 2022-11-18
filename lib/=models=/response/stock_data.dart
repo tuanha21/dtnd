@@ -11,7 +11,7 @@ class StockData extends StockStatus {
   num? lot;
   String? ot;
   num? changePc;
-  String? avePrice;
+  num? avePrice;
   String? highPrice;
   String? lowPrice;
   String? fBVol;
@@ -27,6 +27,26 @@ class StockData extends StockStatus {
   String? g6;
   String? g7;
   String? mp;
+
+  num? get value {
+    if (lot == null || !isValidAvePrice) {
+      return 0;
+    } else {
+      return lot! * avePrice!;
+    }
+  }
+
+  
+
+  bool get isValidAvePrice {
+    if (avePrice == null || c == null || f == null) {
+      return false;
+    }
+    if ((avePrice! < f!) || (avePrice! > c!)) {
+      return false;
+    }
+    return true;
+  }
 
   @override
   SStatus get sstatus {
@@ -95,7 +115,7 @@ class StockData extends StockStatus {
     lot = json['lot'];
     ot = json['ot'];
     changePc = num.parse(json['changePc']);
-    avePrice = json['avePrice'];
+    avePrice = num.tryParse(json['avePrice']) ?? 0;
     highPrice = json['highPrice'];
     lowPrice = json['lowPrice'];
     fBVol = json['fBVol'];

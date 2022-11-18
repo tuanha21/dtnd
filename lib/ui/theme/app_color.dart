@@ -20,6 +20,7 @@ class AppColors {
   static const neutral_01 = Color(0xFF23262F);
   static const neutral_02 = Color(0xFF4A5568);
   static const neutral_03 = Color(0xFF8894AA);
+  static const neutral_04 = Color(0xFFA0AEC0);
   static const neutral_05 = Color(0xFFEDF2F7);
   static const neutral_06 = Color(0xFFF5F8FF);
   static const neutral_07 = Color(0xFFFFFFFF);

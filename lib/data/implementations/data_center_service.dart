@@ -80,7 +80,7 @@ class DataCenterService implements IDataCenterService {
   }
 
   @override
-  Future<StockTradingHistory> getStockIndayTradingHistory(String stockCode) {
+  Future<StockTradingHistory?> getStockIndayTradingHistory(String stockCode) {
     const String resolution = "5";
     final String from =
         TimeUtilities.timeToEpoch(TimeUtilities.beginningOfDay).toString();

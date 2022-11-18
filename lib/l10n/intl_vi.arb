@@ -28,6 +28,10 @@
     "minutes": " phút",
     "double_back_to_close_app": "Ấn thêm lần nữa để thoát",
 
+    "ceil": "Trần",
+    "floor": "Sàn",
+    "ref": "TC",
+
     "total_asset": "Tổng tài sản",
     "interested_catalog": "Danh mục quan tâm",
     "market_today": "Thị trường hôm nay",

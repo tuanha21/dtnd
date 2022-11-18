@@ -24,7 +24,7 @@ abstract class INetworkService {
   /// Should not call, too many data
   Future<List<StockTrade>> getListStockTrade(String stockCode);
 
-  Future<StockTradingHistory> getStockTradingHistory(
+  Future<StockTradingHistory?> getStockTradingHistory(
       String symbol, resolution, from, to);
 
   Future<List<IndexDetailResponse>> getListIndexDetail();

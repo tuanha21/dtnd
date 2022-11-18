@@ -85,9 +85,11 @@ flutter:
     # - images/a_dot_burr.jpeg
     # - images/a_dot_ham.jpeg
     - assets/
-    - assets/production_domain_config.env
-    - assets/test_domain_config.env
-    - assets/app_config.env
+    - assets/svg/
+    - assets/images/
+    - .env
+    - production_domain_config.env
+    - test_domain_config.env
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
   # For details regarding adding assets from package dependencies, see

@@ -43,7 +43,13 @@ class NetworkService implements INetworkService {
   final Utf8Codec utf8Codec = const Utf8Codec();
 
   dynamic decode(Uint8List data) {
-    return jsonDecode(utf8Codec.decode(data));
+    try {
+      return jsonDecode(utf8Codec.decode(data));
+    } catch (e) {
+      logger.v(data);
+      logger.e(e);
+      return null;
+    }
   }
 
   @override
@@ -105,7 +111,7 @@ class NetworkService implements INetworkService {
   }
 
   @override
-  Future<StockTradingHistory> getStockTradingHistory(
+  Future<StockTradingHistory?> getStockTradingHistory(
       String symbol, resolution, from, to) async {
     final Map<String, dynamic> queryParameters = {
       "symbol": symbol,
@@ -116,6 +122,9 @@ class NetworkService implements INetworkService {
     final http.Response response =
         await client.get(url_board_data_feed(queryParameters));
     final responseBody = decode(response.bodyBytes);
+    if (responseBody == null) {
+      return null;
+    }
     if (responseBody == null) throw Exception();
     final StockTradingHistory data = StockTradingHistory.fromJson(responseBody);
     return data;

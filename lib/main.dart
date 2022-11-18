@@ -15,7 +15,7 @@ import 'package:go_router/go_router.dart';
 
 Future<void> main() async {
   // load .env file
-  await dotenv.load(fileName: "app_config.env");
+  await dotenv.load(fileName: ".env");
   WidgetsFlutterBinding.ensureInitialized();
   final Environment appEnvironment = E.fromString(dotenv.env['ENVIRONMENT']);
   await LocalStorageService().init();
@@ -57,6 +57,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return Obx(() {
       return MaterialApp.router(
+        debugShowCheckedModeBanner: false,
         themeMode: appService.themeMode.value,
         darkTheme: darkThemeData,
         theme: lightThemeData,

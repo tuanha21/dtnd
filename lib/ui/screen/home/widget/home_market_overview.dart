@@ -7,6 +7,7 @@ import 'package:dtnd/data/implementations/data_center_service.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_textstyle.dart';
 import 'package:dtnd/utilities/extension.dart';
+import 'package:dtnd/utilities/num_utils.dart';
 import 'package:dtnd/utilities/responsive.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -74,7 +75,7 @@ class HomeMarketOverviewItem extends StatelessWidget {
                             .copyWith(fontWeight: FontWeight.w600),
                       ),
                       Text(
-                        "${data.stockData?.lastVolume} CP",
+                        "${NumUtils.formatInteger(data.stockData?.lastVolume)} CP",
                         style: AppTextStyle.labelMedium_12.copyWith(
                           fontWeight: FontWeight.w500,
                           color: AppColors.neutral_03,
@@ -88,8 +89,9 @@ class HomeMarketOverviewItem extends StatelessWidget {
                     return Container();
                   } else {
                     return Container(
-                      constraints: const BoxConstraints(maxWidth: 200),
-                      padding: const EdgeInsets.symmetric(horizontal: 30),
+                      constraints: BoxConstraints(
+                          minWidth: MediaQuery.of(context).size.width / 5,
+                          maxWidth: MediaQuery.of(context).size.width / 4),
                       child: HomeMarketOverviewItemChart(data: data),
                     );
                   }
@@ -115,6 +117,7 @@ class HomeMarketOverviewItem extends StatelessWidget {
                         ),
                         child: Text(
                           "${data.stockData?.prefix} ${data.stockData?.ot} (${data.stockData?.prefix} ${data.stockData?.changePc}%)",
+                          maxLines: 1,
                           style: AppTextStyle.labelMedium_12.copyWith(
                             fontWeight: FontWeight.w600,
                             color:
@@ -157,10 +160,10 @@ class HomeMarketOverviewItemChart extends StatelessWidget {
       toSeries(data.stockTradingHistory!),
       animate: true,
       layoutConfig: charts.LayoutConfig(
-        leftMarginSpec: charts.MarginSpec.fixedPixel(0),
-        topMarginSpec: charts.MarginSpec.fixedPixel(0),
-        rightMarginSpec: charts.MarginSpec.fixedPixel(0),
-        bottomMarginSpec: charts.MarginSpec.fixedPixel(0),
+        leftMarginSpec: charts.MarginSpec.fixedPixel(3),
+        topMarginSpec: charts.MarginSpec.fixedPixel(3),
+        rightMarginSpec: charts.MarginSpec.fixedPixel(3),
+        bottomMarginSpec: charts.MarginSpec.fixedPixel(3),
       ),
       primaryMeasureAxis: charts.NumericAxisSpec(
         showAxisLine: false,
@@ -172,14 +175,29 @@ class HomeMarketOverviewItemChart extends StatelessWidget {
           zeroBound: false,
         ),
       ),
-      domainAxis: const charts.NumericAxisSpec(
+      domainAxis: charts.NumericAxisSpec(
         showAxisLine: false,
-        renderSpec: charts.NoneRenderSpec(),
-        tickProviderSpec: charts.BasicNumericTickProviderSpec(
+        renderSpec: const charts.NoneRenderSpec(),
+        viewport:
+            charts.NumericExtents(0, data.stockTradingHistory?.c?.length ?? 0),
+        tickProviderSpec: const charts.BasicNumericTickProviderSpec(
           zeroBound: false,
         ),
       ),
       defaultRenderer: charts.LineRendererConfig(smoothLine: true),
+      behaviors: [
+        charts.RangeAnnotation([
+          charts.LineAnnotationSegment(
+            data.stockTradingHistory?.c?.first ?? 0,
+            charts.RangeAnnotationAxisType.measure,
+            color: charts.ColorUtil.fromDartColor(
+              AppColors.neutral_02,
+            ),
+            dashPattern: [5, 5],
+            strokeWidthPx: 0.3,
+          )
+        ])
+      ],
     );
   }
 }

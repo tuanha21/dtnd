@@ -1,4 +1,5 @@
 import 'package:dtnd/ui/theme/app_color.dart';
+import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:dtnd/utilities/extension.dart';
 import 'package:flutter/material.dart';
 
@@ -20,6 +21,36 @@ abstract class StockStatus {
       case SStatus.floor:
         return "-";
     }
+  }
+
+  Widget prefixIcon({double? size}) {
+    String path;
+    Color? color;
+    switch (sstatus) {
+      case SStatus.ref:
+        path = AppImages.prefix_ref_icon;
+        break;
+      case SStatus.up:
+        path = AppImages.prefix_up_icon;
+        break;
+      case SStatus.down:
+        path = AppImages.prefix_down_icon;
+        break;
+      case SStatus.ceil:
+        path = AppImages.prefix_ref_icon;
+        color = AppColors.semantic_05;
+        break;
+      case SStatus.floor:
+        path = AppImages.prefix_ref_icon;
+        color = AppColors.semantic_04;
+        break;
+    }
+    return Image.asset(
+      path,
+      color: color,
+      width: size,
+      height: size,
+    );
   }
 
   Color get color {

@@ -16,7 +16,7 @@ abstract class IDataCenterService {
 
   Future<List<StockData>> getListStockData(List<String> listStock);
 
-  Future<StockTradingHistory> getStockIndayTradingHistory(String stockCode);
+  Future<StockTradingHistory?> getStockIndayTradingHistory(String stockCode);
 
   Future<void> getListInterestedStocks();
 

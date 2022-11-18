@@ -28,6 +28,10 @@
     "minutes": " minutes",
     "double_back_to_close_app": "Back again to exit",
 
+    "ceil": "Ceil",
+    "floor": "Floor",
+    "ref": "Ref",
+
     "total_asset": "Total asset",
     "interested_catalog": "Interested catalog",
     "market_today": "Market today",

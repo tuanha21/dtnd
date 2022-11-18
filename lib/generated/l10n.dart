@@ -300,6 +300,36 @@ class S {
     );
   }
 
+  /// `Ceil`
+  String get ceil {
+    return Intl.message(
+      'Ceil',
+      name: 'ceil',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Floor`
+  String get floor {
+    return Intl.message(
+      'Floor',
+      name: 'floor',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Ref`
+  String get ref {
+    return Intl.message(
+      'Ref',
+      name: 'ref',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Total asset`
   String get total_asset {
     return Intl.message(

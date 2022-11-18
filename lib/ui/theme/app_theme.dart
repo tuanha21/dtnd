@@ -230,7 +230,7 @@ const BottomAppBarTheme _darkBottomAppBarTheme = BottomAppBarTheme(
 const ColorScheme _lightColorScheme = ColorScheme(
   brightness: Brightness.light,
   primary: AppColors.primary_01,
-  onPrimary: Colors.white,
+  onPrimary: AppColors.neutral_01,
   secondary: AppColors.secondary,
   onSecondary: Colors.white,
   error: AppColors.error_text,
@@ -243,7 +243,7 @@ const ColorScheme _lightColorScheme = ColorScheme(
 const ColorScheme _darkColorScheme = ColorScheme(
   brightness: Brightness.light,
   primary: AppColors.primary_01,
-  onPrimary: Colors.white,
+  onPrimary: AppColors.neutral_07,
   secondary: AppColors.secondary,
   onSecondary: Colors.white,
   error: AppColors.error_text,

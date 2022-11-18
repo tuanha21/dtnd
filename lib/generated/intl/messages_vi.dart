@@ -25,12 +25,14 @@ class MessageLookup extends MessageLookupByLibrary {
         "account": MessageLookupByLibrary.simpleMessage("Tài khoản"),
         "asset": MessageLookupByLibrary.simpleMessage("Tài sản"),
         "bond": MessageLookupByLibrary.simpleMessage("Trái phiếu"),
+        "ceil": MessageLookupByLibrary.simpleMessage("Trần"),
         "community": MessageLookupByLibrary.simpleMessage("Cộng đồng"),
         "double_back_to_close_app":
             MessageLookupByLibrary.simpleMessage("Ấn thêm lần nữa để thoát"),
         "fill_OTP": MessageLookupByLibrary.simpleMessage("Nhập mã OTP"),
         "fill_account": MessageLookupByLibrary.simpleMessage("Nhập tài khoản"),
         "fill_password": MessageLookupByLibrary.simpleMessage("Nhập mật khẩu"),
+        "floor": MessageLookupByLibrary.simpleMessage("Sàn"),
         "hello": MessageLookupByLibrary.simpleMessage("Chào bạn"),
         "hi": MessageLookupByLibrary.simpleMessage("Xin chào"),
         "home": MessageLookupByLibrary.simpleMessage("Trang chủ"),
@@ -65,6 +67,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "qa_derivative": MessageLookupByLibrary.simpleMessage("Phái sinh"),
         "qa_money": MessageLookupByLibrary.simpleMessage("Tiền gửi"),
         "qa_pack_enrol": MessageLookupByLibrary.simpleMessage("ĐK gói"),
+        "ref": MessageLookupByLibrary.simpleMessage("TC"),
         "see_more": MessageLookupByLibrary.simpleMessage("Xem thêm"),
         "session_expired_in":
             MessageLookupByLibrary.simpleMessage("Hết phiên đăng nhập sau "),

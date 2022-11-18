@@ -25,12 +25,14 @@ class MessageLookup extends MessageLookupByLibrary {
         "account": MessageLookupByLibrary.simpleMessage("Account"),
         "asset": MessageLookupByLibrary.simpleMessage("Asset"),
         "bond": MessageLookupByLibrary.simpleMessage("Bond"),
+        "ceil": MessageLookupByLibrary.simpleMessage("Ceil"),
         "community": MessageLookupByLibrary.simpleMessage("Community"),
         "double_back_to_close_app":
             MessageLookupByLibrary.simpleMessage("Back again to exit"),
         "fill_OTP": MessageLookupByLibrary.simpleMessage("Fill OTP"),
         "fill_account": MessageLookupByLibrary.simpleMessage("Fill account"),
         "fill_password": MessageLookupByLibrary.simpleMessage("Fill password"),
+        "floor": MessageLookupByLibrary.simpleMessage("Floor"),
         "hello": MessageLookupByLibrary.simpleMessage("Hello"),
         "hi": MessageLookupByLibrary.simpleMessage("Hi"),
         "home": MessageLookupByLibrary.simpleMessage("Home"),
@@ -65,6 +67,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "qa_money": MessageLookupByLibrary.simpleMessage("Cash deposits"),
         "qa_pack_enrol":
             MessageLookupByLibrary.simpleMessage("Pack enrollment"),
+        "ref": MessageLookupByLibrary.simpleMessage("Ref"),
         "see_more": MessageLookupByLibrary.simpleMessage("See more"),
         "session_expired_in":
             MessageLookupByLibrary.simpleMessage("Session expired in "),
