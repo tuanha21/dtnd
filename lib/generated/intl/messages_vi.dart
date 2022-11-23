@@ -25,6 +25,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "account": MessageLookupByLibrary.simpleMessage("Tài khoản"),
         "asset": MessageLookupByLibrary.simpleMessage("Tài sản"),
         "bond": MessageLookupByLibrary.simpleMessage("Trái phiếu"),
+        "buy": MessageLookupByLibrary.simpleMessage("Mua"),
         "ceil": MessageLookupByLibrary.simpleMessage("Trần"),
         "community": MessageLookupByLibrary.simpleMessage("Cộng đồng"),
         "double_back_to_close_app":
@@ -52,6 +53,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Tổng quan thị trường"),
         "market_today":
             MessageLookupByLibrary.simpleMessage("Thị trường hôm nay"),
+        "matched_order_detail":
+            MessageLookupByLibrary.simpleMessage("Chi tiết khớp lệnh"),
         "minutes": MessageLookupByLibrary.simpleMessage(" phút"),
         "no_internet":
             MessageLookupByLibrary.simpleMessage("Không có kết nối Internet"),
@@ -69,12 +72,15 @@ class MessageLookup extends MessageLookupByLibrary {
         "qa_pack_enrol": MessageLookupByLibrary.simpleMessage("ĐK gói"),
         "ref": MessageLookupByLibrary.simpleMessage("TC"),
         "see_more": MessageLookupByLibrary.simpleMessage("Xem thêm"),
+        "sell": MessageLookupByLibrary.simpleMessage("Bán"),
         "session_expired_in":
             MessageLookupByLibrary.simpleMessage("Hết phiên đăng nhập sau "),
         "timeout": MessageLookupByLibrary.simpleMessage(
             "Không nhận được phản hồi từ máy chủ"),
         "total_asset": MessageLookupByLibrary.simpleMessage("Tổng tài sản"),
+        "trading_board": MessageLookupByLibrary.simpleMessage("Bảng giá"),
         "username": MessageLookupByLibrary.simpleMessage("Tên đăng nhập"),
+        "volumn": MessageLookupByLibrary.simpleMessage("Khối lượng"),
         "wrong_password":
             MessageLookupByLibrary.simpleMessage("Mật khẩu không chính xác")
       };

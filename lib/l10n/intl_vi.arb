@@ -31,11 +31,16 @@
     "ceil": "Trần",
     "floor": "Sàn",
     "ref": "TC",
+    "buy": "Mua",
+    "sell": "Bán",
+    "volumn": "Khối lượng",
 
     "total_asset": "Tổng tài sản",
     "interested_catalog": "Danh mục quan tâm",
     "market_today": "Thị trường hôm nay",
     "market_overview": "Tổng quan thị trường",
+    "trading_board": "Bảng giá",
+    "matched_order_detail": "Chi tiết khớp lệnh",
 
     "login_exception_required_OTP": "Hãy đăng nhập bằng mã OTP được gửi về máy của bạn",
     "invalid_account": "Tài khoản chưa đăng ký hoặc đã hết hiệu lực giao dịch Internet",

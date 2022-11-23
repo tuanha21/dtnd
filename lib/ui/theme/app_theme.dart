@@ -209,6 +209,36 @@ final AppBarTheme _darkAppBarTheme = AppBarTheme(
   ),
 );
 
+final TabBarTheme _lightTabBarTheme = TabBarTheme(
+  indicator: const UnderlineTabIndicator(
+    borderSide: BorderSide(
+      width: 2.0,
+      color: AppColors.primary_01,
+    ),
+  ),
+  indicatorSize: TabBarIndicatorSize.tab,
+  labelColor: AppColors.neutral_01,
+  unselectedLabelColor: AppColors.neutral_04,
+  labelStyle: AppTextStyle.titleSmall_14.copyWith(fontWeight: FontWeight.w600),
+  unselectedLabelStyle:
+      AppTextStyle.titleSmall_14.copyWith(fontWeight: FontWeight.w600),
+);
+
+final TabBarTheme _darkTabBarTheme = TabBarTheme(
+  indicator: const UnderlineTabIndicator(
+    borderSide: BorderSide(
+      width: 2.0,
+      color: AppColors.primary_01,
+    ),
+  ),
+  indicatorSize: TabBarIndicatorSize.tab,
+  labelColor: AppColors.neutral_07,
+  unselectedLabelColor: AppColors.neutral_04,
+  labelStyle: AppTextStyle.titleSmall_14.copyWith(fontWeight: FontWeight.w600),
+  unselectedLabelStyle:
+      AppTextStyle.titleSmall_14.copyWith(fontWeight: FontWeight.w600),
+);
+
 const IconThemeData _lightIconThemeData =
     IconThemeData(color: AppColors.primary_01);
 
@@ -265,6 +295,7 @@ final ThemeData lightThemeData = ThemeData(
   bottomNavigationBarTheme: _lightBottomNavigationBarThemeData,
   appBarTheme: _lightAppBarTheme,
   iconTheme: _lightIconThemeData,
+  tabBarTheme: _lightTabBarTheme,
 );
 
 final ThemeData darkThemeData = ThemeData(
@@ -276,4 +307,5 @@ final ThemeData darkThemeData = ThemeData(
   bottomNavigationBarTheme: _darkBottomNavigationBarThemeData,
   appBarTheme: _darkAppBarTheme,
   iconTheme: _darkIconThemeData,
+  tabBarTheme: _darkTabBarTheme,
 );

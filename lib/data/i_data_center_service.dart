@@ -1,3 +1,5 @@
+// ignore_for_file: library_prefixes
+
 import 'package:dtnd/=models=/response/index_model.dart';
 import 'package:dtnd/=models=/response/stock_data.dart';
 import 'package:dtnd/=models=/response/stock_model.dart';
@@ -10,6 +12,8 @@ abstract class IDataCenterService {
 
   Future<void> init();
 
+  Future<void> startSocket();
+
   Future<void> fetchData();
 
   Future<void> getListAllStock();
@@ -17,6 +21,9 @@ abstract class IDataCenterService {
   Future<List<StockData>> getListStockData(List<String> listStock);
 
   Future<StockTradingHistory?> getStockIndayTradingHistory(String stockCode);
+
+  Future<StockTradingHistory?> getStockTradingHistory(
+      String stockCode, String resolution, int from, int to);
 
   Future<void> getListInterestedStocks();
 

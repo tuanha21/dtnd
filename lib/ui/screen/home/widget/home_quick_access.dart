@@ -69,8 +69,9 @@ class _HomeQuickAccessState extends State<HomeQuickAccess> {
   @override
   Widget build(BuildContext context) {
     return Wrap(
-      runSpacing: 16,
-      spacing: 16,
+      runSpacing: 8,
+      spacing: 8,
+      runAlignment: WrapAlignment.spaceBetween,
       children: [
         for (QuickAccess element in QuickAccess.values)
           HomeQuickAccessElement(value: element)

@@ -37,6 +37,7 @@ dependencies:
   # State management
   get: ^4.6.5
   http: ^0.13.5
+  socket_io_client: ^1.0.2
   flutter_bloc: ^8.1.1
   # flutter_riverpod: ^2.0.2
   # riverpod_annotation: ^1.0.4
@@ -56,6 +57,10 @@ dependencies:
     git:
       url: https://github.com/tuanha21/charts.git
       path: charts_flutter
+  k_chart:
+    git:
+      url: https://github.com/tuanha21/k_chart.git
+  syncfusion_flutter_charts: ^20.3.57
 
 dev_dependencies:
   flutter_test:

@@ -61,10 +61,15 @@ class StockDetailOverview extends StatelessWidget {
                 ),
                 Row(
                   children: [
-                    Text(
-                      "${NumUtils.formatInteger10(stockModel.stockData?.lot, "-")} CP",
-                      style: AppTextStyle.bodySmall_8
-                          .copyWith(color: AppColors.neutral_04),
+                    ObxValue<Rx<num?>>(
+                      (lot) {
+                        return Text(
+                          "${NumUtils.formatInteger10(lot.value, "-")} CP",
+                          style: AppTextStyle.bodySmall_8
+                              .copyWith(color: AppColors.neutral_04),
+                        );
+                      },
+                      stockModel.stockData?.lot ?? Rxn(),
                     ),
                     const SizedBox(width: 10),
                     Text(

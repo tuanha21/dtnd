@@ -330,6 +330,36 @@ class S {
     );
   }
 
+  /// `Buy`
+  String get buy {
+    return Intl.message(
+      'Buy',
+      name: 'buy',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Sell`
+  String get sell {
+    return Intl.message(
+      'Sell',
+      name: 'sell',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Volumn`
+  String get volumn {
+    return Intl.message(
+      'Volumn',
+      name: 'volumn',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Total asset`
   String get total_asset {
     return Intl.message(
@@ -365,6 +395,26 @@ class S {
     return Intl.message(
       'Market overview',
       name: 'market_overview',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Trading board`
+  String get trading_board {
+    return Intl.message(
+      'Trading board',
+      name: 'trading_board',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Matched order detail`
+  String get matched_order_detail {
+    return Intl.message(
+      'Matched order detail',
+      name: 'matched_order_detail',
       desc: '',
       args: [],
     );

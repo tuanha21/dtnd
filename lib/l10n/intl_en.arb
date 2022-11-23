@@ -31,11 +31,16 @@
     "ceil": "Ceil",
     "floor": "Floor",
     "ref": "Ref",
+    "buy": "Buy",
+    "sell": "Sell",
+    "volumn": "Volumn",
 
     "total_asset": "Total asset",
     "interested_catalog": "Interested catalog",
     "market_today": "Market today",
     "market_overview": "Market overview",
+    "trading_board": "Trading board",
+    "matched_order_detail": "Matched order detail",
 
     "login_exception_required_OTP": "Login with OTP code sent to your phone",
     "invalid_account": "This account has not been registered or Internet trading feature is no longer available",

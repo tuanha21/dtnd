@@ -29,3 +29,18 @@ extension IndexX on Index {
     }
   }
 }
+
+class IndexUtil {
+  static fromCode(String code) {
+    switch (code) {
+      case "10":
+        return Index.VNI;
+      case "11":
+        return Index.VN30;
+      case "02":
+        return Index.HNI;
+      default:
+        return Index.UPCOM;
+    }
+  }
+}

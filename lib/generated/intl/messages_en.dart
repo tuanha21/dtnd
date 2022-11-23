@@ -25,6 +25,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "account": MessageLookupByLibrary.simpleMessage("Account"),
         "asset": MessageLookupByLibrary.simpleMessage("Asset"),
         "bond": MessageLookupByLibrary.simpleMessage("Bond"),
+        "buy": MessageLookupByLibrary.simpleMessage("Buy"),
         "ceil": MessageLookupByLibrary.simpleMessage("Ceil"),
         "community": MessageLookupByLibrary.simpleMessage("Community"),
         "double_back_to_close_app":
@@ -51,6 +52,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "market_overview":
             MessageLookupByLibrary.simpleMessage("Market overview"),
         "market_today": MessageLookupByLibrary.simpleMessage("Market today"),
+        "matched_order_detail":
+            MessageLookupByLibrary.simpleMessage("Matched order detail"),
         "minutes": MessageLookupByLibrary.simpleMessage(" minutes"),
         "no_internet":
             MessageLookupByLibrary.simpleMessage("No Internet connection"),
@@ -69,12 +72,15 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Pack enrollment"),
         "ref": MessageLookupByLibrary.simpleMessage("Ref"),
         "see_more": MessageLookupByLibrary.simpleMessage("See more"),
+        "sell": MessageLookupByLibrary.simpleMessage("Sell"),
         "session_expired_in":
             MessageLookupByLibrary.simpleMessage("Session expired in "),
         "timeout":
             MessageLookupByLibrary.simpleMessage("No response from server"),
         "total_asset": MessageLookupByLibrary.simpleMessage("Total asset"),
+        "trading_board": MessageLookupByLibrary.simpleMessage("Trading board"),
         "username": MessageLookupByLibrary.simpleMessage("Username"),
+        "volumn": MessageLookupByLibrary.simpleMessage("Volumn"),
         "wrong_password":
             MessageLookupByLibrary.simpleMessage("Password is incorrect")
       };

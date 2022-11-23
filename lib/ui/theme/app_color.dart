@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 class AppColors {
   static const primary_01 = Color(0xFF256BFF);
+  static const primary_03 = Color(0xFFECF1FD);
 
   static const lighter_primary = Color(0xFFDFE7FF);
   static const secondary = Color(0xFFFCC927);
@@ -45,13 +46,10 @@ class AppColors {
   static const bg_1 = Color(0xFFFFFFFF);
   static const bg_2 = Color(0xFF1C1C20);
 
-  static const purpil_price = Color(0xFFBE3EDE);
-  static const green_price = Color(0xFF03CA6B);
-  static const yellow_price = Color(0xFFFCC927);
-  static const red_price = Color(0xFFF5465C);
-  static const floor_price = Color(0xFF49D8DF);
-
-  static const input_border = Color(0xFFBBC4D0);
+  static const List<Color> chartArea = [
+    Color(0x261877F2),
+    Color(0x051877F2),
+  ];
   static const error_input_border = Color(0xFFFB0000);
 
   ///Text

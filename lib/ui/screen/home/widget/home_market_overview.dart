@@ -74,12 +74,17 @@ class HomeMarketOverviewItem extends StatelessWidget {
                             .titleSmall!
                             .copyWith(fontWeight: FontWeight.w600),
                       ),
-                      Text(
-                        "${NumUtils.formatInteger(data.stockData?.lastVolume)} CP",
-                        style: AppTextStyle.labelMedium_12.copyWith(
-                          fontWeight: FontWeight.w500,
-                          color: AppColors.neutral_03,
-                        ),
+                      ObxValue<Rx<num?>>(
+                        (lastVolume) {
+                          return Text(
+                            "${NumUtils.formatInteger(lastVolume.value)} CP",
+                            style: AppTextStyle.labelMedium_12.copyWith(
+                              fontWeight: FontWeight.w500,
+                              color: AppColors.neutral_03,
+                            ),
+                          );
+                        },
+                        data.stockData?.lastVolume ?? Rxn(),
                       ),
                     ],
                   ),

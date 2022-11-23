@@ -17,6 +17,10 @@ import 'package:dtnd/utilities/logger.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
+import 'package:socket_io_client/socket_io_client.dart';
+import 'package:socket_io_client/src/socket.dart';
+
+
 
 class NetworkService implements INetworkService {
   final http.Client client = http.Client();
@@ -42,6 +46,9 @@ class NetworkService implements INetworkService {
 
   final Utf8Codec utf8Codec = const Utf8Codec();
 
+  @override
+  late Socket socket;
+
   dynamic decode(Uint8List data) {
     try {
       return jsonDecode(utf8Codec.decode(data));
@@ -60,7 +67,24 @@ class NetworkService implements INetworkService {
     core_endpoint = dotenv.env['core_endpoint']!;
     data_feed_url = dotenv.env['data_feed_domain']!;
     board_data_feed_url = dotenv.env['board_data_feed_domain']!;
+    initSocket(board_data_feed_url);
     return;
+  }
+
+  @override
+  void initSocket(String url) {
+    socket = io(
+        'https://$url/ps',
+        OptionBuilder()
+            .setTransports(['websocket']) // for Flutter or Dart VM
+            .disableAutoConnect() // disable auto-connection
+            .build());
+    return;
+  }
+
+  @override
+  Future<void> startSocket() async {
+    throw UnimplementedError();
   }
 
   @override
@@ -84,14 +108,14 @@ class NetworkService implements INetworkService {
   }
 
   @override
-  Future<List<StockData>> getListStockData(String listStock) async {
+  Future<List<StockDataResponse>> getListStockData(String listStock) async {
     final String path = "getliststockdata/$listStock";
     final http.Response response = await client.get(url_data_feed(path));
     final List<dynamic> responseBody = decode(response.bodyBytes);
     if (responseBody.isEmpty) throw Exception();
-    List<StockData>? data = [];
+    List<StockDataResponse>? data = [];
     for (var element in responseBody) {
-      data.add(StockData.fromJson(element));
+      data.add(StockDataResponse.fromJson(element));
     }
     return data;
   }
