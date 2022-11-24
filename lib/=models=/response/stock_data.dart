@@ -4,9 +4,9 @@ import 'package:get/get.dart';
 class StockData extends StockStatus {
   late final String sym;
   late final String? mc;
-  late final num? c;
-  late final num? f;
-  late final num? r;
+  final Rx<num?> c = Rxn();
+  final Rx<num?> f = Rxn();
+  final Rx<num?> r = Rxn();
   final Rx<num?> lastPrice = Rxn();
   final Rx<num?> lastVolume = Rxn();
   final Rx<num?> lot = Rxn();
@@ -38,10 +38,10 @@ class StockData extends StockStatus {
   }
 
   bool get isValidAvePrice {
-    if (avePrice.value == null || c == null || f == null) {
+    if (avePrice.value == null || c.value == null || f.value == null) {
       return false;
     }
-    if ((avePrice.value! < f!) || (avePrice.value! > c!)) {
+    if ((avePrice.value! < f.value!) || (avePrice.value! > c.value!)) {
       return false;
     }
     return true;
@@ -50,22 +50,25 @@ class StockData extends StockStatus {
   @override
   SStatus get sstatus {
     try {
-      if (lastPrice.value == null || r == null || c == null || f == null) {
+      if (lastPrice.value == null ||
+          r.value == null ||
+          c.value == null ||
+          f.value == null) {
         return SStatus.ref;
       }
-      if (lastPrice.value! == r) {
+      if (lastPrice.value! == r.value) {
         return SStatus.ref;
       }
-      if (lastPrice.value! >= c!) {
+      if (lastPrice.value! >= c.value!) {
         return SStatus.ceil;
       }
-      if (lastPrice.value! <= f!) {
+      if (lastPrice.value! <= f.value!) {
         return SStatus.floor;
       }
-      if (lastPrice.value! > r!) {
+      if (lastPrice.value! > r.value!) {
         return SStatus.up;
       }
-      if (lastPrice.value! < r!) {
+      if (lastPrice.value! < r.value!) {
         return SStatus.down;
       }
       return SStatus.ref;
@@ -77,9 +80,9 @@ class StockData extends StockStatus {
   StockData({
     required this.sym,
     this.mc,
-    this.c,
-    this.f,
-    this.r,
+    num? c,
+    num? f,
+    num? r,
     num? lastPrice,
     num? lastVolume,
     num? lot,
@@ -102,6 +105,9 @@ class StockData extends StockStatus {
     String? g7,
     this.mp,
   }) {
+    this.c.value = c;
+    this.f.value = f;
+    this.r.value = r;
     this.lastPrice.value = lastPrice;
     this.lastVolume.value = lastVolume;
     this.lot.value = lot;
@@ -119,9 +125,9 @@ class StockData extends StockStatus {
 
   StockData.fromResponse(StockDataResponse response) {
     sym = response.sym;
-    r = response.r;
-    c = response.c;
-    f = response.f;
+    r.value = response.r;
+    c.value = response.c;
+    f.value = response.f;
     lastPrice.value = response.lastPrice;
     lastVolume.value = response.lastVolume;
     lot.value = response.lot;
@@ -144,12 +150,16 @@ class StockData extends StockStatus {
     g7.value = response.g7;
   }
 
+  StockData.getDefault(String stockCode) {
+    sym = stockCode;
+  }
+
   StockData.fromJson(Map<String, dynamic> json) {
     sym = json['sym'];
     mc = json['mc'];
-    c = json['c'];
-    f = json['f'];
-    r = json['r'];
+    c.value = json['c'];
+    f.value = json['f'];
+    r.value = json['r'];
     lastPrice.value = json['lastPrice'];
     lastVolume.value = json['lastVolume'];
     lot.value = json['lot'];

@@ -52,6 +52,7 @@
     "login_qoute2": " application",
 
     "see_more": "See more",
+    "loading": "Loading...",
 
     "timeout": "No response from server",
     "no_internet": "No Internet connection"

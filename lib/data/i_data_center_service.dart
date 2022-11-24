@@ -6,15 +6,18 @@ import 'package:dtnd/=models=/response/stock_model.dart';
 import 'package:dtnd/=models=/response/stock_trading_history.dart';
 
 abstract class IDataCenterService {
-  List<StockModel> get listInterestedStocks;
-
   Set<IndexModel> get listIndexs;
 
   Future<void> init();
 
   Future<void> startSocket();
 
-  Future<void> fetchData();
+  Future<List<StockModel>> getStockModelsFromStockCodes(
+      List<String> stockCodes);
+
+  Future<void> removeStockModelsFromStockCodes(List<String> stockCodes);
+
+  Future<StockData> getStockData(String stockCode);
 
   Future<void> getListAllStock();
 
@@ -25,7 +28,5 @@ abstract class IDataCenterService {
   Future<StockTradingHistory?> getStockTradingHistory(
       String stockCode, String resolution, int from, int to);
 
-  Future<void> getListInterestedStocks();
-
-  Future<void> getListIndex();
+  Future<Set<IndexModel>> getListIndex();
 }

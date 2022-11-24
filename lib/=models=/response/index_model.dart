@@ -25,6 +25,14 @@ class IndexModel {
       ..time.value = data.time;
   }
 
+  void onSocketData(dynamic data) {
+    _indexDetail
+      ..cIndex.value = data["data"]["cIndex"]
+      ..vol.value = data['data']['vol']
+      ..ot.value = data["data"]["ot"].split('|')
+      ..value.value = data['data']['value'];
+  }
+
   void replaceChartData(List<IndexChartData> data) {
     _indexChartData.clear();
     return _indexChartData.addAll(data);

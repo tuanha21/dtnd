@@ -41,6 +41,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Interested catalog"),
         "invalid_account": MessageLookupByLibrary.simpleMessage(
             "This account has not been registered or Internet trading feature is no longer available"),
+        "loading": MessageLookupByLibrary.simpleMessage("Loading..."),
         "login": MessageLookupByLibrary.simpleMessage("Login"),
         "login_exception_required_OTP": MessageLookupByLibrary.simpleMessage(
             "Login with OTP code sent to your phone"),

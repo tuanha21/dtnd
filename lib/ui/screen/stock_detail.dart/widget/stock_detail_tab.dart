@@ -1,9 +1,14 @@
+import 'package:dtnd/=models=/response/stock_model.dart';
 import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/screen/stock_detail.dart/widget/tab_trading_board.dart';
 import 'package:flutter/material.dart';
 
 class StockDetailTab extends StatefulWidget {
-  const StockDetailTab({super.key});
+  const StockDetailTab({
+    super.key,
+    required this.stockModel,
+  });
+  final StockModel stockModel;
 
   @override
   State<StockDetailTab> createState() => _StockDetailTabState();
@@ -45,11 +50,13 @@ class _StockDetailTabState extends State<StockDetailTab>
           height: 500,
           child: TabBarView(
             controller: _tabController,
-            children: const <Widget>[
+            children: <Widget>[
               Center(
-                child: TabTradingBoard(),
+                child: TabTradingBoard(
+                  stockModel: widget.stockModel,
+                ),
               ),
-              Center(
+              const Center(
                 child: Text("Chi tiết kl"),
               )
             ],

@@ -61,7 +61,9 @@ class _StockDetailScreenState extends State<StockDetailScreen> {
                   return Container();
                 }
               }),
-              StockDetailTab(),
+              StockDetailTab(
+                stockModel: widget.stockModel,
+              ),
             ],
           ),
         ),

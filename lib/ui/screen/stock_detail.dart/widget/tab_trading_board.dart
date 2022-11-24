@@ -1,9 +1,13 @@
+import 'package:dtnd/=models=/response/stock_model.dart';
 import 'package:dtnd/ui/screen/stock_detail.dart/widget/three_price.dart';
 import 'package:flutter/material.dart';
 
 class TabTradingBoard extends StatefulWidget {
-  const TabTradingBoard({super.key});
-
+  const TabTradingBoard({
+    super.key,
+    required this.stockModel,
+  });
+  final StockModel stockModel;
   @override
   State<TabTradingBoard> createState() => _TabTradingBoardState();
 }
@@ -12,11 +16,13 @@ class _TabTradingBoardState extends State<TabTradingBoard> {
   @override
   Widget build(BuildContext context) {
     return Column(
-      children: const <Widget>[
-        SizedBox(
+      children: <Widget>[
+        const SizedBox(
           height: 20,
         ),
-        ThreePrices(),
+        ThreePrices(
+          stockModel: widget.stockModel,
+        ),
       ],
     );
   }

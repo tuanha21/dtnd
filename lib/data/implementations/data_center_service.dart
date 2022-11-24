@@ -1,6 +1,5 @@
 import 'package:dtnd/=models=/index.dart';
 import 'package:dtnd/=models=/response/index_model.dart';
-import 'package:dtnd/=models=/response/socket_stock_change_model.dart';
 import 'package:dtnd/=models=/response/stock.dart';
 import 'package:dtnd/=models=/response/stock_data.dart';
 import 'package:dtnd/=models=/response/stock_model.dart';
@@ -10,7 +9,9 @@ import 'package:dtnd/data/i_local_storage_service.dart';
 import 'package:dtnd/data/i_network_service.dart';
 import 'package:dtnd/data/implementations/local_storage_service.dart';
 import 'package:dtnd/data/implementations/network_service.dart';
+import 'package:dtnd/utilities/logger.dart';
 import 'package:dtnd/utilities/time_utils.dart';
+import 'package:flutter/material.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 const List<String> defaultListStock = [
@@ -37,12 +38,15 @@ class DataCenterService implements IDataCenterService {
 
   /// Other [Service]
   late final INetworkService networkService;
+
   late final ILocalStorageService localStorageService;
 
   /// Data
   late IO.Socket socket;
 
-  final List<String> listStockReg = [];
+  final Map<String, int> listStockStringReg = <String, int>{};
+
+  final List<StockModel> listStockReg = <StockModel>[];
 
   late final List<Stock> listAllStock;
 
@@ -51,15 +55,11 @@ class DataCenterService implements IDataCenterService {
   final Set<IndexModel> _listIndex = {};
 
   @override
-  List<StockModel> get listInterestedStocks => _listInterestedStocks;
-
-  @override
   Set<IndexModel> get listIndexs => _listIndex;
 
   @override
   Future<void> init() async {
     await getListAllStock();
-    await fetchData();
     await startSocket();
   }
 
@@ -74,19 +74,142 @@ class DataCenterService implements IDataCenterService {
         return processStockData(data);
       }
     });
+    socket.onPing((data) {
+      const String pingMsg =
+          "{\"action\":\"ping\",\"mode\":\"sync\",\"data\":\"\"}";
+      socket.emit("regs", pingMsg);
+    });
+    socket.connect();
+    regStocks(_listInterestedStocks.map((e) => e.stock.stockCode).toList());
     return;
   }
 
   void processIndexData(dynamic data) {
     if (_listIndex.isEmpty) return;
-    final Index _index = IndexUtil.fromCode(data['data']['mc']);
-    _listIndex.firstWhere((element) => element.index == _index);
+    final Index index = IndexUtil.fromCode(data['data']['mc']);
+    final indexModel =
+        _listIndex.firstWhere((element) => element.index == index);
+    indexModel.onSocketData(data);
+  }
+
+  //
+  void processStockData(dynamic data) {
+    final stockModel = listStockReg.firstWhere(
+        (element) => element.stock.stockCode == data['data']['sym']);
+    stockModel.onSocketData(data);
+    // _listIndex.firstWhere((element) => element.index == _index);
+  }
+
+  void regStocks(List<String> stocks) {
+    final List<String> join = getUnregisteredCodes(
+      stocks,
+      onRegisteredCode: (stock) =>
+          listStockStringReg.update(stock, (value) => ++value),
+      onUnregisteredCode: (stock) => listStockStringReg[stock] = 1,
+    );
+    regSocketStocks(join);
+  }
+
+  Future<List<String>> leaveStocks(List<String> stocks) async {
+    for (final String stock in stocks) {
+      if (listStockStringReg.containsKey(stock)) {
+        listStockStringReg.update(stock, (value) => --value);
+      } else {
+        continue;
+      }
+    }
+    final List<String> leave = getOneRegisteredCodes(
+      stocks,
+      onOneRegisteredCode: (stockCode) => listStockStringReg.remove(stockCode),
+      onUnregisteredCode: (stockCode) =>
+          listStockStringReg.update(stockCode, (value) => --value),
+    );
+    leaveSocketStocks(leave);
+    return leave;
+  }
+
+  /// Join socket
+  void regSocketStocks(List<String> stocks) {
+    final String codes = stocks.join(",");
+    String joinMsg = "{\"action\":\"join\",\"data\":\"$codes\"}";
+    socket.emit("regs", joinMsg);
+    return;
+  }
+
+  /// Leave socket
+  void leaveSocketStocks(List<String> stocks) {
+    final String codes = stocks.join(",");
+    String leaveMsg = "{\"action\":\"leave\",\"data\":\"$codes\"}";
+    socket.emit("regs", leaveMsg);
+    return;
+  }
+
+  List<String> getUnregisteredCodes(List<String> codes,
+      {ValueChanged<String>? onRegisteredCode,
+      ValueChanged<String>? onUnregisteredCode}) {
+    final List<String> unregisteredCodes = [];
+    if (listStockStringReg.isEmpty) {
+      for (final String stockCode in codes) {
+        unregisteredCodes.add(stockCode);
+        onUnregisteredCode?.call(stockCode);
+      }
+    } else {
+      for (final String stockCode in codes) {
+        if (listStockStringReg.containsKey(stockCode)) {
+          onRegisteredCode?.call(stockCode);
+        } else {
+          unregisteredCodes.add(stockCode);
+          onUnregisteredCode?.call(stockCode);
+        }
+      }
+    }
+    return unregisteredCodes;
+  }
+
+  List<String> getOneRegisteredCodes(List<String> codes,
+      {ValueChanged<String>? onOneRegisteredCode,
+      ValueChanged<String>? onUnregisteredCode}) {
+    final List<String> oneRegisteredCodes = [];
+    for (final String stockCode in codes) {
+      if (listStockStringReg[stockCode]! <= 1) {
+        oneRegisteredCodes.add(stockCode);
+        onOneRegisteredCode?.call(stockCode);
+      } else {
+        onUnregisteredCode?.call(stockCode);
+      }
+    }
+    return oneRegisteredCodes;
   }
 
   @override
-  Future<void> fetchData() async {
-    await getListInterestedStocks();
-    await getListIndex();
+  Future<List<StockModel>> getStockModelsFromStockCodes(
+      List<String> stockCodes) async {
+    final List<StockModel> listReturn = [];
+    final unregisteredCodes = getUnregisteredCodes(
+      stockCodes,
+      onRegisteredCode: (stockCode) {
+        listReturn.add(listStockReg
+            .firstWhere((element) => element.stock.stockCode == stockCode));
+      },
+    );
+    logger.v(unregisteredCodes);
+    if (unregisteredCodes.isNotEmpty) {
+      for (final String code in unregisteredCodes) {
+        final stock =
+            listAllStock.firstWhere((element) => element.stockCode == code);
+        final stockData = await getStockData(code);
+        final stockModel = StockModel(stock: stock, stockData: stockData);
+        listStockReg.add(stockModel);
+        listReturn.add(stockModel);
+      }
+    }
+    regStocks(stockCodes);
+    return listReturn;
+  }
+
+  @override
+  Future<void> removeStockModelsFromStockCodes(List<String> stockCodes) {
+    throw UnimplementedError();
   }
 
   @override
@@ -115,6 +238,16 @@ class DataCenterService implements IDataCenterService {
   }
 
   @override
+  Future<StockData> getStockData(String stockCode) async {
+    final List<StockDataResponse> listResponse =
+        await networkService.getListStockData(stockCode);
+    if (listResponse.isEmpty) return StockData.getDefault(stockCode);
+
+    final StockData result = StockData.fromResponse(listResponse.first);
+    return result;
+  }
+
+  @override
   Future<StockTradingHistory?> getStockIndayTradingHistory(String stockCode) {
     const String resolution = "5";
     final String from =
@@ -139,24 +272,20 @@ class DataCenterService implements IDataCenterService {
       final stock =
           listAllStock.firstWhere((element) => element.stockCode == stockCode);
       final stockTradingHistory = await getStockIndayTradingHistory(stockCode);
-      _listInterestedStocks.add(
-          StockModel(stock: stock, stockTradingHistory: stockTradingHistory));
-    }
-
-    final listStockData = await getListStockData(listInterestedString);
-    for (var stockModel in _listInterestedStocks) {
-      stockModel.stockData = listStockData.firstWhere(
-        (element) => element.sym == stockModel.stock.stockCode,
-        orElse: () => StockData(sym: stockModel.stock.stockCode),
-      );
+      final stockData = await getStockData(stockCode);
+      _listInterestedStocks.add(StockModel(
+          stock: stock,
+          stockData: stockData,
+          stockTradingHistory: stockTradingHistory));
     }
   }
 
   @override
-  Future<void> getListIndex() async {
+  Future<Set<IndexModel>> getListIndex() async {
     for (var index in Index.values) {
       final response = await networkService.getIndexDetail(index);
       _listIndex.add(IndexModel(index: index, indexDetailResponse: response));
     }
+    return _listIndex;
   }
 }

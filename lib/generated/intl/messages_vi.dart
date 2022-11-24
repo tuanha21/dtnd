@@ -41,6 +41,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Danh mục quan tâm"),
         "invalid_account": MessageLookupByLibrary.simpleMessage(
             "Tài khoản chưa đăng ký hoặc đã hết hiệu lực giao dịch Internet"),
+        "loading": MessageLookupByLibrary.simpleMessage("Đang tải..."),
         "login": MessageLookupByLibrary.simpleMessage("Đăng nhập"),
         "login_exception_required_OTP": MessageLookupByLibrary.simpleMessage(
             "Hãy đăng nhập bằng mã OTP được gửi về máy của bạn"),

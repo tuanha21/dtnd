@@ -500,6 +500,16 @@ class S {
     );
   }
 
+  /// `Loading...`
+  String get loading {
+    return Intl.message(
+      'Loading...',
+      name: 'loading',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `No response from server`
   String get timeout {
     return Intl.message(

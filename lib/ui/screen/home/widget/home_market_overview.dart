@@ -3,7 +3,10 @@ import 'package:dtnd/=models=/response/stock_trade.dart';
 import 'package:dtnd/=models=/response/stock_trading_history.dart';
 import 'package:dtnd/config/service/app_services.dart';
 import 'package:dtnd/data/i_data_center_service.dart';
+import 'package:dtnd/data/i_local_storage_service.dart';
 import 'package:dtnd/data/implementations/data_center_service.dart';
+import 'package:dtnd/data/implementations/local_storage_service.dart';
+import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_textstyle.dart';
 import 'package:dtnd/utilities/extension.dart';
@@ -21,18 +24,43 @@ class HomeMarketOverview extends StatefulWidget {
 }
 
 class _HomeMarketOverviewState extends State<HomeMarketOverview> {
+  final ILocalStorageService localStorageService = LocalStorageService();
   final IDataCenterService dataCenterService = DataCenterService();
+  late final List<StockModel> interestedCatalog;
+  bool initialized = false;
+
+  @override
+  void initState() {
+    super.initState();
+    getListInterestedStocks();
+  }
+
+  Future<void> getListInterestedStocks() async {
+    interestedCatalog = await dataCenterService.getStockModelsFromStockCodes(
+        localStorageService.getListInterestedStock() ?? defaultListStock);
+    setState(() {
+      initialized = true;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: List<Widget>.generate(
-        dataCenterService.listInterestedStocks.length,
-        (index) => HomeMarketOverviewItem(
-          index: index,
-          data: dataCenterService.listInterestedStocks[index],
+    return Builder(builder: (context) {
+      if (!initialized) {
+        return Center(
+          child: Text(S.of(context).loading),
+        );
+      }
+      return Column(
+        children: List<Widget>.generate(
+          interestedCatalog.length,
+          (index) => HomeMarketOverviewItem(
+            index: index,
+            data: interestedCatalog[index],
+          ),
         ),
-      ),
-    );
+      );
+    });
   }
 }
 
@@ -84,7 +112,7 @@ class HomeMarketOverviewItem extends StatelessWidget {
                             ),
                           );
                         },
-                        data.stockData?.lastVolume ?? Rxn(),
+                        data.stockData.lastVolume,
                       ),
                     ],
                   ),
@@ -107,26 +135,25 @@ class HomeMarketOverviewItem extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        "${data.stockData?.lastPrice}",
+                        "${data.stockData.lastPrice}",
                         style: AppTextStyle.labelMedium_12.copyWith(
                           fontWeight: FontWeight.w600,
-                          color: data.stockData?.color ?? AppColors.semantic_02,
+                          color: data.stockData.color,
                         ),
                       ),
                       Container(
                         padding: const EdgeInsets.all(4.0),
                         decoration: BoxDecoration(
-                          color: data.stockData?.bgColor(themeMode.value),
+                          color: data.stockData.bgColor(themeMode.value),
                           borderRadius:
                               const BorderRadius.all(Radius.circular(2)),
                         ),
                         child: Text(
-                          "${data.stockData?.prefix} ${data.stockData?.ot} (${data.stockData?.prefix} ${data.stockData?.changePc}%)",
+                          "${data.stockData.prefix} ${data.stockData.ot} (${data.stockData.prefix} ${data.stockData.changePc}%)",
                           maxLines: 1,
                           style: AppTextStyle.labelMedium_12.copyWith(
                             fontWeight: FontWeight.w600,
-                            color:
-                                data.stockData?.color ?? AppColors.semantic_02,
+                            color: data.stockData.color,
                           ),
                         ),
                       ),
@@ -154,8 +181,7 @@ class HomeMarketOverviewItemChart extends StatelessWidget {
           domainFn: (_, index) => index ?? 0,
           measureFn: (datum, index) => datum,
           data: data.stockTradingHistory!.c!,
-          seriesColor: charts.ColorUtil.fromDartColor(
-              data.stockData?.color ?? AppColors.semantic_02),
+          seriesColor: charts.ColorUtil.fromDartColor(data.stockData.color),
         ),
       ];
 

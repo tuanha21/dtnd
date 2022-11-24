@@ -6,6 +6,7 @@ import 'package:dtnd/=models=/response/stock_model.dart';
 import 'package:dtnd/config/service/app_services.dart';
 import 'package:dtnd/data/i_data_center_service.dart';
 import 'package:dtnd/data/implementations/data_center_service.dart';
+import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_textstyle.dart';
 import 'package:dtnd/utilities/extension.dart';
@@ -22,6 +23,24 @@ class HomeMarketToday extends StatefulWidget {
 
 class _HomeMarketTodayState extends State<HomeMarketToday> {
   final IDataCenterService dataCenterService = DataCenterService();
+
+  late final Set<IndexModel> listIndexs;
+
+  bool initialized = false;
+
+  @override
+  void initState() {
+    super.initState();
+    getListIndexs();
+  }
+
+  Future<void> getListIndexs() async {
+    listIndexs = await dataCenterService.getListIndex();
+    setState(() {
+      initialized = true;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return SizedBox.fromSize(
@@ -33,17 +52,25 @@ class _HomeMarketTodayState extends State<HomeMarketToday> {
             PointerDeviceKind.mouse,
           },
         ),
-        child: ListView.separated(
-          scrollDirection: Axis.horizontal,
-          physics: const AlwaysScrollableScrollPhysics(),
-          itemCount: dataCenterService.listIndexs.length,
-          itemBuilder: (context, index) => HomeIndexItem(
-            data: dataCenterService.listIndexs.elementAt(index),
-          ),
-          separatorBuilder: (BuildContext context, int index) => const SizedBox(
-            width: 8,
-          ),
-        ),
+        child: Builder(builder: (context) {
+          if (!initialized) {
+            return Center(
+              child: Text(S.of(context).loading),
+            );
+          }
+          return ListView.separated(
+            scrollDirection: Axis.horizontal,
+            physics: const AlwaysScrollableScrollPhysics(),
+            itemCount: listIndexs.length,
+            itemBuilder: (context, index) => HomeIndexItem(
+              data: listIndexs.elementAt(index),
+            ),
+            separatorBuilder: (BuildContext context, int index) =>
+                const SizedBox(
+              width: 8,
+            ),
+          );
+        }),
       ),
     );
   }

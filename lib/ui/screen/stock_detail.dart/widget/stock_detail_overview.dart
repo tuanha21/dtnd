@@ -16,19 +16,19 @@ class StockDetailOverview extends StatelessWidget {
     List<_StockDetailPriceElementData> listPrices = [
       _StockDetailPriceElementData(
         title: S.of(context).floor,
-        value: stockModel.stockData?.f.toString(),
+        value: stockModel.stockData.f.toString(),
         valueColor: AppColors.semantic_04,
         bgColor: AppColors.accent_light_04,
       ),
       _StockDetailPriceElementData(
         title: S.of(context).ref,
-        value: stockModel.stockData?.r.toString(),
+        value: stockModel.stockData.r.toString(),
         valueColor: AppColors.semantic_02,
         bgColor: AppColors.accent_light_02,
       ),
       _StockDetailPriceElementData(
         title: S.of(context).ceil,
-        value: stockModel.stockData?.c.toString(),
+        value: stockModel.stockData.c.toString(),
         valueColor: AppColors.semantic_05,
         bgColor: AppColors.accent_light_05,
       )
@@ -43,19 +43,18 @@ class StockDetailOverview extends StatelessWidget {
                 Row(
                   children: [
                     Text(
-                      stockModel.stockData?.lastPrice.toString() ?? "-",
+                      stockModel.stockData.lastPrice.toString(),
                       style: AppTextStyle.headlineSmall_24
                           .copyWith(fontWeight: FontWeight.w700),
                     ),
                     const SizedBox(width: 10),
-                    stockModel.stockData?.prefixIcon(size: 10) ?? Container(),
+                    stockModel.stockData.prefixIcon(size: 10),
                     const SizedBox(width: 3),
                     Text(
-                      "${stockModel.stockData?.ot} (${stockModel.stockData?.changePc}%)",
+                      "${stockModel.stockData.ot} (${stockModel.stockData.changePc}%)",
                       style: AppTextStyle.bodySmall_8.copyWith(
                           fontWeight: FontWeight.w500,
-                          color: stockModel.stockData?.color ??
-                              AppColors.semantic_02),
+                          color: stockModel.stockData.color),
                     ),
                   ],
                 ),
@@ -69,11 +68,11 @@ class StockDetailOverview extends StatelessWidget {
                               .copyWith(color: AppColors.neutral_04),
                         );
                       },
-                      stockModel.stockData?.lot ?? Rxn(),
+                      stockModel.stockData.lot,
                     ),
                     const SizedBox(width: 10),
                     Text(
-                      NumUtils.formatInteger(stockModel.stockData?.value, "-"),
+                      NumUtils.formatInteger(stockModel.stockData.value, "-"),
                       style: AppTextStyle.bodySmall_8
                           .copyWith(color: AppColors.neutral_04),
                     ),
