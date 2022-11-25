@@ -11,6 +11,7 @@ import 'package:dtnd/ui/screen/stock_detail.dart/stock_detail_screen.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_textstyle.dart';
 import 'package:dtnd/utilities/extension.dart';
+import 'package:dtnd/utilities/num_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -112,7 +113,7 @@ class HomeInterestedCatalogItem extends StatelessWidget {
                             .copyWith(fontWeight: FontWeight.w600),
                       ),
                       Text(
-                        "${data.stockData.lastPrice}",
+                        "${data.stockData.lastPrice.value}",
                         style: AppTextStyle.labelMedium_12.copyWith(
                           fontWeight: FontWeight.w600,
                           color: data.stockData.color,
@@ -124,7 +125,7 @@ class HomeInterestedCatalogItem extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        "${data.stockData.lastVolume}",
+                        NumUtils.formatInteger10(data.stockData.lot.value, "-"),
                         style: AppTextStyle.labelMedium_12.copyWith(
                           fontWeight: FontWeight.w500,
                           color: AppColors.neutral_03,
@@ -138,7 +139,7 @@ class HomeInterestedCatalogItem extends StatelessWidget {
                               const BorderRadius.all(Radius.circular(2)),
                         ),
                         child: Text(
-                          "${data.stockData.prefix} ${data.stockData.ot}",
+                          "${data.stockData.prefix} ${data.stockData.ot.value}",
                           style: AppTextStyle.labelMedium_12.copyWith(
                             fontWeight: FontWeight.w600,
                             color: data.stockData.color,

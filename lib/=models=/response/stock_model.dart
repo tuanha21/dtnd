@@ -3,6 +3,7 @@ import 'package:dtnd/=models=/response/stock_data.dart';
 import 'package:dtnd/=models=/response/stock_info_core.dart';
 import 'package:dtnd/=models=/response/stock_trade.dart';
 import 'package:dtnd/=models=/response/stock_trading_history.dart';
+import 'package:dtnd/utilities/logger.dart';
 
 class StockModel {
   late final Stock stock;
@@ -20,11 +21,12 @@ class StockModel {
 
   void onSocketData(dynamic data) {
     if (data["data"]["id"] == 3220) {
+      logger.v(data);
       stockData
         ..lastPrice.value = data["data"]["lastPrice"]
-        ..lastVolume.value = data["data"]["totalVol"]
-        ..changePc.value = data["data"]["changePc"]
-        ..ot.value = data["data"]["change"]
+        ..lot.value = data["data"]["totalVol"]
+        ..changePc.value = num.tryParse(data["data"]["changePc"]) ?? 0
+        ..ot.value = num.tryParse(data["data"]["change"]) ?? 0
         ..highPrice.value = data["data"]["hp"]
         ..lowPrice.value = data["data"]["lp"]
         ..avePrice.value = data["data"]["ap"];

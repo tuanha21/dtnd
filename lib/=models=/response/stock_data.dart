@@ -1,3 +1,4 @@
+import 'package:dtnd/=models=/side.dart';
 import 'package:dtnd/logic/stock_status.dart';
 import 'package:get/get.dart';
 
@@ -45,6 +46,27 @@ class StockData extends StockStatus {
       return false;
     }
     return true;
+  }
+
+  num getTotalVol(Side side) {
+    switch (side) {
+      case Side.buy:
+        final g1Vol =
+            num.tryParse(g1.value?.split("|").elementAt(1) ?? "0") ?? 0;
+        final g2Vol =
+            num.tryParse(g2.value?.split("|").elementAt(1) ?? "0") ?? 0;
+        final g3Vol =
+            num.tryParse(g3.value?.split("|").elementAt(1) ?? "0") ?? 0;
+        return g1Vol + g2Vol + g3Vol;
+      case Side.sell:
+        final g1Vol =
+            num.tryParse(g4.value?.split("|").elementAt(1) ?? "0") ?? 0;
+        final g2Vol =
+            num.tryParse(g5.value?.split("|").elementAt(1) ?? "0") ?? 0;
+        final g3Vol =
+            num.tryParse(g6.value?.split("|").elementAt(1) ?? "0") ?? 0;
+        return g1Vol + g2Vol + g3Vol;
+    }
   }
 
   @override

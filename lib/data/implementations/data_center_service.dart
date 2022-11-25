@@ -188,8 +188,8 @@ class DataCenterService implements IDataCenterService {
     final unregisteredCodes = getUnregisteredCodes(
       stockCodes,
       onRegisteredCode: (stockCode) {
-        listReturn.add(listStockReg
-            .firstWhere((element) => element.stock.stockCode == stockCode));
+        listReturn.add(listStockReg[listStockReg
+            .indexWhere((element) => element.stock.stockCode == stockCode)]);
       },
     );
     logger.v(unregisteredCodes);
