@@ -1,5 +1,6 @@
 import 'package:dtnd/=models=/response/stock_model.dart';
 import 'package:dtnd/data/implementations/data_center_service.dart';
+import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/screen/stock_detail.dart/widget/stock_detail_appbar.dart';
 import 'package:dtnd/ui/screen/stock_detail.dart/widget/stock_detail_chart.dart';
 import 'package:dtnd/ui/screen/stock_detail.dart/widget/stock_detail_overview.dart';
@@ -48,24 +49,25 @@ class _StockDetailScreenState extends State<StockDetailScreen> {
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
-          child: Column(
-            children: [
-              StockDetailOverview(stockModel: widget.stockModel),
-              Builder(builder: (context) {
-                if (initialized) {
-                  return SizedBox(
-                      height: 200,
-                      width: MediaQuery.of(context).size.width,
-                      child: StockDetailChart(stockModel: widget.stockModel));
-                } else {
-                  return Container();
-                }
-              }),
-              StockDetailTab(
-                stockModel: widget.stockModel,
-              ),
-            ],
-          ),
+          child: Builder(builder: (context) {
+            if (!initialized) {
+              return Center(
+                child: Text(S.of(context).loading),
+              );
+            }
+            return Column(
+              children: [
+                StockDetailOverview(stockModel: widget.stockModel),
+                SizedBox(
+                    height: 200,
+                    width: MediaQuery.of(context).size.width,
+                    child: StockDetailChart(stockModel: widget.stockModel)),
+                StockDetailTab(
+                  stockModel: widget.stockModel,
+                ),
+              ],
+            );
+          }),
         ),
       ),
     );

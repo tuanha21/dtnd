@@ -16,30 +16,6 @@ class StockDetailChart extends StatefulWidget {
 }
 
 class _StockDetailChartState extends State<StockDetailChart> {
-  final List<KLineEntity> datas = <KLineEntity>[];
-
-  @override
-  void initState() {
-    super.initState();
-    if (widget.stockModel.stockTradingHistory?.c?.isNotEmpty ?? false) {
-      final stockTradingHistory = widget.stockModel.stockTradingHistory!;
-      for (var i = 0;
-          i < widget.stockModel.stockTradingHistory!.c!.length;
-          i++) {
-        datas.add(
-          KLineEntity.fromCustom(
-            open: stockTradingHistory.o!.elementAt(i).toDouble(),
-            close: stockTradingHistory.c!.elementAt(i).toDouble(),
-            high: stockTradingHistory.h!.elementAt(i).toDouble(),
-            low: stockTradingHistory.l!.elementAt(i).toDouble(),
-            vol: stockTradingHistory.v!.elementAt(i).toDouble(),
-            time: stockTradingHistory.t!.elementAt(i).toInt(),
-          ),
-        );
-      }
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return _StockChart(

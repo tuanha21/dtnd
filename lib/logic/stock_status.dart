@@ -5,6 +5,40 @@ import 'package:flutter/material.dart';
 
 enum SStatus { ref, up, down, ceil, floor }
 
+extension SStatusX on SStatus {
+  Color get color {
+    switch (this) {
+      case SStatus.ref:
+        return AppColors.semantic_02;
+      case SStatus.up:
+        return AppColors.semantic_01;
+      case SStatus.down:
+        return AppColors.semantic_03;
+      case SStatus.ceil:
+        return AppColors.semantic_05;
+      case SStatus.floor:
+        return AppColors.semantic_04;
+    }
+  }
+}
+
+class SStatusHelper {
+  static SStatus fromString(String string) {
+    switch (string) {
+      case "i":
+        return SStatus.up;
+      case "d":
+        return SStatus.down;
+      case "f":
+        return SStatus.floor;
+      case "c":
+        return SStatus.ceil;
+      default:
+        return SStatus.ref;
+    }
+  }
+}
+
 abstract class StockStatus {
   SStatus get sstatus;
 

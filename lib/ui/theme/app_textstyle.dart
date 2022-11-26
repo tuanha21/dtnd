@@ -71,6 +71,11 @@ class AppTextStyle {
     fontWeight: FontWeight.w500,
   );
 
+  static final labelSmall_10 = _defaulTextStyle.copyWith(
+    fontSize: 10,
+    fontWeight: FontWeight.w600,
+  );
+
   static final textButtonTextStyle = _defaulTextStyle.copyWith(
     fontSize: 14,
     fontWeight: FontWeight.w700,

@@ -192,7 +192,6 @@ class DataCenterService implements IDataCenterService {
             .indexWhere((element) => element.stock.stockCode == stockCode)]);
       },
     );
-    logger.v(unregisteredCodes);
     if (unregisteredCodes.isNotEmpty) {
       for (final String code in unregisteredCodes) {
         final stock =

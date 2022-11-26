@@ -1,5 +1,8 @@
 import 'package:dtnd/=models=/side.dart';
 import 'package:dtnd/logic/stock_status.dart';
+import 'package:dtnd/ui/theme/app_color.dart';
+import 'package:dtnd/utilities/logger.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class StockData extends StockStatus {
@@ -49,23 +52,47 @@ class StockData extends StockStatus {
   }
 
   num getTotalVol(Side side) {
-    switch (side) {
-      case Side.buy:
-        final g1Vol =
-            num.tryParse(g1.value?.split("|").elementAt(1) ?? "0") ?? 0;
-        final g2Vol =
-            num.tryParse(g2.value?.split("|").elementAt(1) ?? "0") ?? 0;
-        final g3Vol =
-            num.tryParse(g3.value?.split("|").elementAt(1) ?? "0") ?? 0;
-        return g1Vol + g2Vol + g3Vol;
-      case Side.sell:
-        final g1Vol =
-            num.tryParse(g4.value?.split("|").elementAt(1) ?? "0") ?? 0;
-        final g2Vol =
-            num.tryParse(g5.value?.split("|").elementAt(1) ?? "0") ?? 0;
-        final g3Vol =
-            num.tryParse(g6.value?.split("|").elementAt(1) ?? "0") ?? 0;
-        return g1Vol + g2Vol + g3Vol;
+    try {
+      switch (side) {
+        case Side.buy:
+          final g1Vol =
+              num.tryParse(g1.value?.split("|").elementAt(1) ?? "0") ?? 0;
+          final g2Vol =
+              num.tryParse(g2.value?.split("|").elementAt(1) ?? "0") ?? 0;
+          final g3Vol =
+              num.tryParse(g3.value?.split("|").elementAt(1) ?? "0") ?? 0;
+          return g1Vol + g2Vol + g3Vol;
+        case Side.sell:
+          final g1Vol =
+              num.tryParse(g4.value?.split("|").elementAt(1) ?? "0") ?? 0;
+          final g2Vol =
+              num.tryParse(g5.value?.split("|").elementAt(1) ?? "0") ?? 0;
+          final g3Vol =
+              num.tryParse(g6.value?.split("|").elementAt(1) ?? "0") ?? 0;
+          return g1Vol + g2Vol + g3Vol;
+      }
+    } catch (e) {
+      logger.v(e);
+      return 0;
+    }
+  }
+
+  Color getPriceColor(num price) {
+    if (price <= 0 || c.value == null || r.value == null || f.value == null) {
+      return AppColors.semantic_02;
+    }
+    if (c.value == 0 || r.value == 0 || f.value == 0) {}
+    switch (sstatus) {
+      case SStatus.ref:
+        return AppColors.semantic_02;
+      case SStatus.up:
+        return AppColors.semantic_01;
+      case SStatus.down:
+        return AppColors.semantic_03;
+      case SStatus.ceil:
+        return AppColors.semantic_05;
+      case SStatus.floor:
+        return AppColors.semantic_04;
     }
   }
 

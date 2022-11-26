@@ -20,8 +20,6 @@ import 'package:http/http.dart' as http;
 import 'package:socket_io_client/socket_io_client.dart';
 import 'package:socket_io_client/src/socket.dart';
 
-
-
 class NetworkService implements INetworkService {
   final http.Client client = http.Client();
 

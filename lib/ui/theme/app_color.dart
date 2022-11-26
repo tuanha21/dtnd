@@ -45,6 +45,8 @@ class AppColors {
   //
   static const bg_1 = Color(0xFFFFFFFF);
   static const bg_2 = Color(0xFF1C1C20);
+  static const three_prices_buy_bg = Color(0xFFD6FAEB);
+  static const three_prices_sell_bg = Color(0xFFFBE3E3);
 
   static const List<Color> chartArea = [
     Color(0x261877F2),

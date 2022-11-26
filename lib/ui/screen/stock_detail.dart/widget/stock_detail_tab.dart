@@ -46,7 +46,7 @@ class _StockDetailTabState extends State<StockDetailTab>
           ),
         ),
         SizedBox(
-          width: 300,
+          width: MediaQuery.of(context).size.width,
           height: 500,
           child: TabBarView(
             controller: _tabController,
