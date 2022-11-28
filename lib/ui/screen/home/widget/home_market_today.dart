@@ -90,9 +90,7 @@ class _HomeMarketTodayState extends State<HomeMarketToday> {
             }
             return SizedBox.fromSize(
               size: Size(MediaQuery.of(context).size.width, 300),
-              child: KChart(
-                  stockTradingHistory:
-                      currentIndexModel.stockTradingHistory.value!),
+              child: KChart(indexModel: currentIndexModel),
             );
           },
         )

@@ -33,7 +33,9 @@ class _HomeMarketOverviewState extends State<HomeMarketOverview> {
   @override
   void initState() {
     super.initState();
-    getListInterestedStocks();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      getListInterestedStocks();
+    });
   }
 
   Future<void> getListInterestedStocks() async {
