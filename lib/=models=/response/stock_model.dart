@@ -4,24 +4,26 @@ import 'package:dtnd/=models=/response/stock_info_core.dart';
 import 'package:dtnd/=models=/response/stock_trade.dart';
 import 'package:dtnd/=models=/response/stock_trading_history.dart';
 import 'package:dtnd/utilities/logger.dart';
+import 'package:get/get.dart';
 
 class StockModel {
   late final Stock stock;
   late final StockData stockData;
   late StockInfoCore? stockDataCore;
   late List<StockTrade>? listStockTrade;
-  late StockTradingHistory? stockTradingHistory;
+  final Rx<StockTradingHistory?> stockTradingHistory = Rxn();
   StockModel({
     required this.stock,
     required this.stockData,
     this.stockDataCore,
     this.listStockTrade,
-    this.stockTradingHistory,
-  });
+    StockTradingHistory? stockTradingHistory,
+  }) {
+    this.stockTradingHistory.value = stockTradingHistory;
+  }
 
   void onSocketData(dynamic data) {
     if (data["data"]["id"] == 3220) {
-      logger.v(data);
       stockData
         ..lastPrice.value = data["data"]["lastPrice"]
         ..lot.value = data["data"]["totalVol"]
@@ -42,6 +44,19 @@ class StockModel {
           ..g2.value = data["data"]["g2"]
           ..g3.value = data["data"]["g3"];
       }
+    } else if (data["data"]["id"] == 3250) {
+      print(data);
     }
   }
+
+  @override
+  bool operator ==(Object other) {
+    if (other is StockModel && other.stock == stock) {
+      return true;
+    }
+    return false;
+  }
+
+  @override
+  int get hashCode => stock.hashCode;
 }

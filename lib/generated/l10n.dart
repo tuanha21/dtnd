@@ -330,6 +330,66 @@ class S {
     );
   }
 
+  /// `Low`
+  String get low {
+    return Intl.message(
+      'Low',
+      name: 'low',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Average`
+  String get average {
+    return Intl.message(
+      'Average',
+      name: 'average',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `High`
+  String get high {
+    return Intl.message(
+      'High',
+      name: 'high',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `FR buy`
+  String get fbuy {
+    return Intl.message(
+      'FR buy',
+      name: 'fbuy',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Room FR`
+  String get froom {
+    return Intl.message(
+      'Room FR',
+      name: 'froom',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `FR sell`
+  String get fsell {
+    return Intl.message(
+      'FR sell',
+      name: 'fsell',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Buy`
   String get buy {
     return Intl.message(

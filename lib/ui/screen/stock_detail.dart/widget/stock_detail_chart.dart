@@ -18,8 +18,11 @@ class StockDetailChart extends StatefulWidget {
 class _StockDetailChartState extends State<StockDetailChart> {
   @override
   Widget build(BuildContext context) {
+    if (widget.stockModel.stockTradingHistory.value?.c?.isEmpty ?? true) {
+      return Container();
+    }
     return _StockChart(
-      datas: widget.stockModel.stockTradingHistory!.c!,
+      datas: widget.stockModel.stockTradingHistory.value!.c!,
     );
   }
 }

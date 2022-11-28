@@ -8,6 +8,8 @@ import 'package:dtnd/logic/stock_status.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_textstyle.dart';
 import 'package:dtnd/utilities/extension.dart';
+import 'package:dtnd/utilities/num_utils.dart';
+import 'package:dtnd/utilities/typedef.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -24,8 +26,8 @@ class ThreePrices extends StatelessWidget {
         return Container(
           decoration: BoxDecoration(
             color: themeMode.value.isDark
-                ? AppColors.neutral_06
-                : Colors.transparent,
+                ? Colors.transparent
+                : AppColors.neutral_06,
             borderRadius: const BorderRadius.all(
               Radius.circular(4),
             ),
@@ -46,7 +48,7 @@ class ThreePrices extends StatelessWidget {
                       themeMode: themeMode.value,
                       side: Side.buy,
                       totalVol: stockModel.stockData.getTotalVol(Side.buy),
-                      data: stockModel.stockData.g1.value?.split("|"),
+                      data: stockModel.stockData.g1.value,
                     ),
                     const SizedBox(
                       height: 8,
@@ -55,7 +57,7 @@ class ThreePrices extends StatelessWidget {
                       themeMode: themeMode.value,
                       side: Side.buy,
                       totalVol: stockModel.stockData.getTotalVol(Side.buy),
-                      data: stockModel.stockData.g2.value?.split("|"),
+                      data: stockModel.stockData.g2.value,
                     ),
                     const SizedBox(
                       height: 8,
@@ -64,7 +66,7 @@ class ThreePrices extends StatelessWidget {
                       themeMode: themeMode.value,
                       side: Side.buy,
                       totalVol: stockModel.stockData.getTotalVol(Side.buy),
-                      data: stockModel.stockData.g3.value?.split("|"),
+                      data: stockModel.stockData.g3.value,
                     ),
                     const SizedBox(
                       height: 8,
@@ -89,7 +91,7 @@ class ThreePrices extends StatelessWidget {
                       themeMode: themeMode.value,
                       side: Side.sell,
                       totalVol: stockModel.stockData.getTotalVol(Side.sell),
-                      data: stockModel.stockData.g4.value?.split("|"),
+                      data: stockModel.stockData.g4.value,
                     ),
                     const SizedBox(
                       height: 8,
@@ -98,7 +100,7 @@ class ThreePrices extends StatelessWidget {
                       themeMode: themeMode.value,
                       side: Side.sell,
                       totalVol: stockModel.stockData.getTotalVol(Side.sell),
-                      data: stockModel.stockData.g5.value?.split("|"),
+                      data: stockModel.stockData.g5.value,
                     ),
                     const SizedBox(
                       height: 8,
@@ -107,7 +109,7 @@ class ThreePrices extends StatelessWidget {
                       themeMode: themeMode.value,
                       side: Side.sell,
                       totalVol: stockModel.stockData.getTotalVol(Side.sell),
-                      data: stockModel.stockData.g6.value?.split("|"),
+                      data: stockModel.stockData.g6.value,
                     ),
                     const SizedBox(
                       height: 8,
@@ -175,8 +177,14 @@ class ThreePriceElement extends StatefulWidget {
   final Side side;
   final ThemeMode themeMode;
   final num totalVol;
-  final List<String?>? data;
-  double get vol => double.tryParse(data?.elementAt(1) ?? "0") ?? 0;
+  final String? data;
+
+  String get price => data?.split('|').elementAt(0) ?? "0";
+
+  double get vol => double.tryParse(data?.split('|').elementAt(1) ?? "0") ?? 0;
+
+  String get status => data?.split('|').elementAt(2) ?? "r";
+
   double get ratio => totalVol == 0 ? 0 : vol / totalVol;
 
   @override
@@ -186,76 +194,94 @@ class ThreePriceElement extends StatefulWidget {
 class _ThreePriceElementState extends State<ThreePriceElement>
     with SingleTickerProviderStateMixin {
   late final AnimationController controller;
+  Duration duration = const Duration(milliseconds: 500);
   late Animation<double> animation;
   late Color color;
-
-  double getBeginValue(ThreePriceElement oldWidget) {
-    if (widget.totalVol == 0 || widget.vol == 0) return oldWidget.ratio;
-    return widget.ratio;
-  }
-
-  double get endValue {
-    if (widget.totalVol == 0 || widget.vol == 0) return 0;
-    return widget.ratio;
-  }
 
   @override
   void initState() {
     controller =
         AnimationController(vsync: this, duration: const Duration(seconds: 1));
-    animation = Tween<double>(begin: 0, end: endValue).animate(controller);
-    color = SStatusHelper.fromString(widget.data?.elementAt(2) ?? "r").color;
+    animation = Tween<double>(begin: 0, end: 1).animate(controller);
+    color = SStatusHelper.fromString(widget.status).color;
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      controller.forward();
+      controller.animateTo(widget.ratio, duration: const Duration(seconds: 1));
     });
   }
 
   @override
   void didUpdateWidget(ThreePriceElement oldWidget) {
+    if (oldWidget.totalVol != widget.totalVol || oldWidget.vol != widget.vol) {
+      if (controller.isAnimating) {
+        controller.stop();
+        controller.animateTo(widget.ratio, duration: duration);
+      } else if (controller.isCompleted) {
+        controller.animateBack(widget.ratio, duration: duration);
+      } else {
+        controller.animateTo(widget.ratio, duration: duration);
+      }
+    }
+    if (oldWidget.status != widget.status) {
+      color = SStatusHelper.fromString(widget.status).color;
+    }
     super.didUpdateWidget(oldWidget);
-    if (oldWidget.totalVol != widget.totalVol ||
-        oldWidget.data?.elementAt(1) != widget.data?.elementAt(1)) {
-      animation = Tween<double>(begin: getBeginValue(oldWidget), end: endValue)
-          .animate(controller);
-      controller.forward();
-    }
-    if (oldWidget.data?.elementAt(2) != widget.data?.elementAt(2)) {
-      color = SStatusHelper.fromString(widget.data?.elementAt(2) ?? "r").color;
-    }
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    final themeMode = AppService.instance.themeMode.value;
     List<Widget> rowChildren;
-    if (widget.side.isBuy) {
+    if (double.tryParse(widget.price) == 0) {
       rowChildren = [
         Text(
-          widget.data?.elementAt(1) ?? "-",
+          "",
+          style:
+              AppTextStyle.labelSmall_10.copyWith(color: AppColors.neutral_04),
+        ),
+      ];
+    } else if (widget.side.isBuy) {
+      rowChildren = [
+        Text(
+          NumUtils.formatInteger10(widget.vol),
           style:
               AppTextStyle.labelSmall_10.copyWith(color: AppColors.neutral_04),
         ),
         Text(
-          widget.data?.first ?? "-",
+          widget.price.toString(),
           style: AppTextStyle.labelSmall_10.copyWith(color: color),
         ),
       ];
     } else {
       rowChildren = [
         Text(
-          widget.data?.first ?? "-",
+          widget.price.toString(),
           style: AppTextStyle.labelSmall_10.copyWith(color: color),
         ),
         Text(
-          widget.data?.elementAt(1) ?? "-",
+          NumUtils.formatInteger10(widget.vol),
           style:
               AppTextStyle.labelSmall_10.copyWith(color: AppColors.neutral_04),
         )
       ];
     }
+    final Color volColor = themeMode.isDark
+        ? (widget.side.isBuy
+            ? AppColors.accent_dark_01
+            : AppColors.accent_dark_03)
+        : (widget.side.isBuy
+            ? AppColors.three_prices_buy_bg
+            : AppColors.three_prices_sell_bg);
     return AnimatedContainer(
       side: widget.side,
       animation: animation,
+      color: volColor,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 4),
         child: Row(
@@ -271,16 +297,15 @@ class VolBGPainter extends CustomPainter {
   const VolBGPainter({
     required this.side,
     required this.ratio,
+    required this.color,
   });
   final Side side;
   final double ratio;
+  final Color color;
 
   @override
   void paint(Canvas canvas, Size size) {
-    Paint paint = Paint()
-      ..color = side.isBuy
-          ? AppColors.three_prices_buy_bg
-          : AppColors.three_prices_sell_bg;
+    Paint paint = Paint()..color = color;
     if (side.isBuy) {
       canvas.translate(size.width, size.height);
       canvas.rotate(pi);
@@ -305,14 +330,16 @@ class AnimatedContainer extends AnimatedWidget {
     required Animation<double> animation,
     required this.child,
     required this.side,
+    required this.color,
   }) : super(listenable: animation);
   final Side side;
   final Widget? child;
+  final Color color;
   @override
   Widget build(BuildContext context) {
     final animation = listenable as Animation<double>;
     return CustomPaint(
-      painter: VolBGPainter(side: side, ratio: animation.value),
+      painter: VolBGPainter(side: side, ratio: animation.value, color: color),
       child: child,
     );
   }

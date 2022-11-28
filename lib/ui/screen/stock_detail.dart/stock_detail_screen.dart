@@ -6,7 +6,10 @@ import 'package:dtnd/ui/screen/stock_detail.dart/widget/stock_detail_chart.dart'
 import 'package:dtnd/ui/screen/stock_detail.dart/widget/stock_detail_overview.dart';
 import 'package:dtnd/ui/screen/stock_detail.dart/widget/stock_detail_tab.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
+import 'package:dtnd/ui/theme/app_image.dart';
+import 'package:dtnd/ui/widget/svg_icon_button.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 
 class StockDetailScreen extends StatefulWidget {
   const StockDetailScreen({
@@ -35,7 +38,7 @@ class _StockDetailScreenState extends State<StockDetailScreen> {
   }
 
   void getStockIndayTradingHistory() async {
-    widget.stockModel.stockTradingHistory = await dataCenterService
+    widget.stockModel.stockTradingHistory.value = await dataCenterService
         .getStockIndayTradingHistory(widget.stockModel.stock.stockCode);
     setState(() {
       initialized = true;
@@ -46,6 +49,24 @@ class _StockDetailScreenState extends State<StockDetailScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: StockDetailAppbar(stock: widget.stockModel.stock),
+      floatingActionButton: SizedBox.square(
+        dimension: 40,
+        child: InkWell(
+          onTap: () => Navigator.of(context).pop(),
+          borderRadius: const BorderRadius.all(Radius.circular(6)),
+          child: Ink(
+            padding: const EdgeInsets.all(8),
+            decoration: const BoxDecoration(
+              borderRadius: BorderRadius.all(Radius.circular(6)),
+              color: AppColors.primary_01,
+            ),
+            child: SvgPicture.asset(
+              AppImages.arrange_circle,
+            ),
+          ),
+        ),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(16.0),

@@ -12,6 +12,7 @@ import 'package:dtnd/data/implementations/network_service.dart';
 import 'package:dtnd/utilities/logger.dart';
 import 'package:dtnd/utilities/time_utils.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 const List<String> defaultListStock = [
@@ -44,6 +45,8 @@ class DataCenterService implements IDataCenterService {
   /// Data
   late IO.Socket socket;
 
+  bool registering = false;
+
   final Map<String, int> listStockStringReg = <String, int>{};
 
   final List<StockModel> listStockReg = <StockModel>[];
@@ -70,7 +73,9 @@ class DataCenterService implements IDataCenterService {
       if (data['data']['id'] == 1101) {
         return processIndexData(data);
       }
-      if (data['data']['id'] == 3220) {
+      if (data['data']['id'] == 3220 ||
+          data['data']['id'] == 3210 ||
+          data['data']['id'] == 3250) {
         return processStockData(data);
       }
     });
@@ -166,6 +171,20 @@ class DataCenterService implements IDataCenterService {
     return unregisteredCodes;
   }
 
+  List<String> getRegisteredCodes(List<String> codes) {
+    final List<String> registeredCodes = [];
+    if (listStockStringReg.isEmpty) {
+      registeredCodes.addAll(codes);
+    } else {
+      for (final String stockCode in codes) {
+        if (listStockStringReg.containsKey(stockCode)) {
+          registeredCodes.add(stockCode);
+        }
+      }
+    }
+    return registeredCodes;
+  }
+
   List<String> getOneRegisteredCodes(List<String> codes,
       {ValueChanged<String>? onOneRegisteredCode,
       ValueChanged<String>? onUnregisteredCode}) {
@@ -184,14 +203,23 @@ class DataCenterService implements IDataCenterService {
   @override
   Future<List<StockModel>> getStockModelsFromStockCodes(
       List<String> stockCodes) async {
-    final List<StockModel> listReturn = [];
-    final unregisteredCodes = getUnregisteredCodes(
-      stockCodes,
-      onRegisteredCode: (stockCode) {
-        listReturn.add(listStockReg[listStockReg
-            .indexWhere((element) => element.stock.stockCode == stockCode)]);
-      },
-    );
+    if (registering) {
+      await 1.delay();
+      return getStockModelsFromStockCodes(stockCodes);
+    }
+    registering = true;
+    final List<StockModel> listReturn = <StockModel>[];
+    final registeredCode = getRegisteredCodes(stockCodes);
+    if (registeredCode.isNotEmpty) {
+      for (final String stockCode in registeredCode) {
+        final int index = listStockReg
+            .indexWhere((element) => element.stock.stockCode == stockCode);
+        if (index != -1) {
+          listReturn.add(listStockReg[index]);
+        }
+      }
+    }
+    final unregisteredCodes = getUnregisteredCodes(stockCodes);
     if (unregisteredCodes.isNotEmpty) {
       for (final String code in unregisteredCodes) {
         final stock =
@@ -203,6 +231,7 @@ class DataCenterService implements IDataCenterService {
       }
     }
     regStocks(stockCodes);
+    registering = false;
     return listReturn;
   }
 
@@ -216,7 +245,7 @@ class DataCenterService implements IDataCenterService {
     List<Stock>? listAllStockSaved = localStorageService.getSavedListAllStock();
     listAllStockSaved ??= await networkService.getListAllStock();
     listAllStock = <Stock>[];
-    for (var stock in listAllStockSaved) {
+    for (final Stock stock in listAllStockSaved) {
       listAllStock.add(stock);
     }
   }
@@ -264,26 +293,15 @@ class DataCenterService implements IDataCenterService {
   }
 
   @override
-  Future<void> getListInterestedStocks() async {
-    final List<String> listInterestedString =
-        localStorageService.getListInterestedStock() ?? defaultListStock;
-    for (var stockCode in listInterestedString) {
-      final stock =
-          listAllStock.firstWhere((element) => element.stockCode == stockCode);
-      final stockTradingHistory = await getStockIndayTradingHistory(stockCode);
-      final stockData = await getStockData(stockCode);
-      _listInterestedStocks.add(StockModel(
-          stock: stock,
-          stockData: stockData,
-          stockTradingHistory: stockTradingHistory));
-    }
-  }
-
-  @override
   Future<Set<IndexModel>> getListIndex() async {
-    for (var index in Index.values) {
+    for (final Index index in Index.values) {
       final response = await networkService.getIndexDetail(index);
-      _listIndex.add(IndexModel(index: index, indexDetailResponse: response));
+      final chartResponse = await getStockIndayTradingHistory(index.chartCode);
+      _listIndex.add(IndexModel(
+        index: index,
+        indexDetailResponse: response,
+        stockTradingHistory: chartResponse,
+      ));
     }
     return _listIndex;
   }

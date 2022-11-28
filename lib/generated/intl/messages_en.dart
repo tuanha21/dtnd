@@ -24,18 +24,23 @@ class MessageLookup extends MessageLookupByLibrary {
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "account": MessageLookupByLibrary.simpleMessage("Account"),
         "asset": MessageLookupByLibrary.simpleMessage("Asset"),
+        "average": MessageLookupByLibrary.simpleMessage("Average"),
         "bond": MessageLookupByLibrary.simpleMessage("Bond"),
         "buy": MessageLookupByLibrary.simpleMessage("Buy"),
         "ceil": MessageLookupByLibrary.simpleMessage("Ceil"),
         "community": MessageLookupByLibrary.simpleMessage("Community"),
         "double_back_to_close_app":
             MessageLookupByLibrary.simpleMessage("Back again to exit"),
+        "fbuy": MessageLookupByLibrary.simpleMessage("FR buy"),
         "fill_OTP": MessageLookupByLibrary.simpleMessage("Fill OTP"),
         "fill_account": MessageLookupByLibrary.simpleMessage("Fill account"),
         "fill_password": MessageLookupByLibrary.simpleMessage("Fill password"),
         "floor": MessageLookupByLibrary.simpleMessage("Floor"),
+        "froom": MessageLookupByLibrary.simpleMessage("Room FR"),
+        "fsell": MessageLookupByLibrary.simpleMessage("FR sell"),
         "hello": MessageLookupByLibrary.simpleMessage("Hello"),
         "hi": MessageLookupByLibrary.simpleMessage("Hi"),
+        "high": MessageLookupByLibrary.simpleMessage("High"),
         "home": MessageLookupByLibrary.simpleMessage("Home"),
         "interested_catalog":
             MessageLookupByLibrary.simpleMessage("Interested catalog"),
@@ -49,6 +54,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Let\'s join the exciting investment market with "),
         "login_qoute2": MessageLookupByLibrary.simpleMessage(" application"),
         "login_upper": MessageLookupByLibrary.simpleMessage("LOGIN"),
+        "low": MessageLookupByLibrary.simpleMessage("Low"),
         "market": MessageLookupByLibrary.simpleMessage("Market"),
         "market_overview":
             MessageLookupByLibrary.simpleMessage("Market overview"),

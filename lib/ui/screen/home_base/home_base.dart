@@ -19,6 +19,14 @@ class HomeBase extends StatefulWidget {
 class _HomeBaseState extends State<HomeBase> {
   final Rx<HomeNav> currentHomeNav = Rx<HomeNav>(HomeNav.home);
 
+  final Map<HomeNav, Widget> routeBuilders = const {
+    HomeNav.home: HomeScreen(),
+    HomeNav.market: MarketScreen(),
+    HomeNav.asset: AssetScreen(),
+    HomeNav.community: CommunityScreen(),
+    HomeNav.account: AccountScreen(),
+  };
+
   void _selectTab(HomeNav homeNav) {
     if (homeNav == currentHomeNav.value) {
       homeNavKeys[homeNav]!.currentState!.popUntil((route) => route.isFirst);
@@ -31,11 +39,11 @@ class _HomeBaseState extends State<HomeBase> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: homeBaseKey,
-      body: Stack(
-        children: [
-          for (HomeNav homeNav in HomeNav.values)
-            OffStageNavigator(homeNav: homeNav, currentHomeNav: currentHomeNav)
-        ],
+      body: ObxValue<Rx<HomeNav>>(
+        (currentHomeNav) {
+          return routeBuilders[currentHomeNav.value] ?? const HomeScreen();
+        },
+        currentHomeNav,
       ),
       bottomNavigationBar: HomeBaseBottomNav(
         currentHomeNav: currentHomeNav,
@@ -56,9 +64,9 @@ class OffStageNavigator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ObxValue<Rx<HomeNav>>(
-      (_currentHomeNav) {
+      (currentHomeNav) {
         return Offstage(
-          offstage: _currentHomeNav.value != homeNav,
+          offstage: currentHomeNav.value != homeNav,
           child: TabNavigator(
             navigatorKey: homeNavKeys[homeNav],
             tabItem: homeNav,

@@ -81,19 +81,23 @@ class StockData extends StockStatus {
     if (price <= 0 || c.value == null || r.value == null || f.value == null) {
       return AppColors.semantic_02;
     }
-    if (c.value == 0 || r.value == 0 || f.value == 0) {}
-    switch (sstatus) {
-      case SStatus.ref:
-        return AppColors.semantic_02;
-      case SStatus.up:
-        return AppColors.semantic_01;
-      case SStatus.down:
-        return AppColors.semantic_03;
-      case SStatus.ceil:
-        return AppColors.semantic_05;
-      case SStatus.floor:
-        return AppColors.semantic_04;
+    if (c.value == 0 || r.value == 0 || f.value == 0 || price == r.value) {
+      return AppColors.semantic_02;
     }
+    if (price <= f.value!) {
+      return AppColors.semantic_04;
+    }
+    if (price >= c.value!) {
+      return AppColors.semantic_05;
+    }
+
+    if (price < r.value!) {
+      return AppColors.semantic_03;
+    }
+    if (price > r.value!) {
+      return AppColors.semantic_01;
+    }
+    return AppColors.semantic_02;
   }
 
   @override

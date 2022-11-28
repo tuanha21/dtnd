@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:dtnd/=models=/side.dart';
 import 'package:flutter/material.dart';
 
 typedef OnTextFormFieldChanged = void Function(
@@ -7,3 +8,4 @@ typedef OnTextFormFieldChanged = void Function(
 
 typedef OnSocket = dynamic Function(dynamic);
 typedef OnRegisteredCode = FutureOr<void> Function(String);
+typedef GetTotalVol = num Function(Side);

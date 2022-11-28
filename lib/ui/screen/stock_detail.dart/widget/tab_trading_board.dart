@@ -1,4 +1,5 @@
 import 'package:dtnd/=models=/response/stock_model.dart';
+import 'package:dtnd/ui/screen/stock_detail.dart/widget/bounce_price.dart';
 import 'package:dtnd/ui/screen/stock_detail.dart/widget/three_price.dart';
 import 'package:flutter/material.dart';
 
@@ -21,6 +22,12 @@ class _TabTradingBoardState extends State<TabTradingBoard> {
           height: 20,
         ),
         ThreePrices(
+          stockModel: widget.stockModel,
+        ),
+        const SizedBox(
+          height: 20,
+        ),
+        BoundPrice(
           stockModel: widget.stockModel,
         ),
       ],

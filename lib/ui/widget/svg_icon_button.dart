@@ -8,11 +8,13 @@ class SvgIconButton extends StatelessWidget {
     this.onPressed,
     this.iconSize,
     this.color,
+    this.bgColor,
   });
   final String asset;
   final VoidCallback? onPressed;
   final double? iconSize;
   final Color? color;
+  final Color? bgColor;
 
   @override
   Widget build(BuildContext context) {
@@ -22,6 +24,8 @@ class SvgIconButton extends StatelessWidget {
       iconSize: iconSize,
       splashRadius: splashRadius,
       onPressed: onPressed,
+      color: bgColor,
+      hoverColor: bgColor,
       icon: SvgPicture.asset(
         asset,
         color: color,

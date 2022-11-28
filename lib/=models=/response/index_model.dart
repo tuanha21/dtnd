@@ -1,18 +1,21 @@
 import 'package:dtnd/=models=/index.dart';
-import 'package:dtnd/=models=/response/index_chart_data.dart';
 import 'package:dtnd/=models=/response/index_detail.dart';
+import 'package:dtnd/=models=/response/stock_trading_history.dart';
+import 'package:get/get.dart';
 
 class IndexModel {
   late final Index index;
   late final IndexDetail _indexDetail;
-  final List<IndexChartData> _indexChartData = <IndexChartData>[];
+  final Rx<StockTradingHistory?> stockTradingHistory = Rxn();
 
   IndexDetail get indexDetail => _indexDetail;
-  List<IndexChartData> get indexChartData => _indexChartData;
 
   IndexModel(
-      {required this.index, required IndexDetailResponse indexDetailResponse}) {
+      {required this.index,
+      required IndexDetailResponse indexDetailResponse,
+      StockTradingHistory? stockTradingHistory}) {
     _indexDetail = IndexDetail.fromResponse(indexDetailResponse);
+    this.stockTradingHistory.value = stockTradingHistory;
   }
 
   void updateIndexDetail(IndexDetailResponse data) {
@@ -33,18 +36,9 @@ class IndexModel {
       ..value.value = data['data']['value'];
   }
 
-  void replaceChartData(List<IndexChartData> data) {
-    _indexChartData.clear();
-    return _indexChartData.addAll(data);
-  }
-
-  void addChartData(IndexChartData data) {
-    return _indexChartData.add(data);
-  }
-
   @override
   bool operator ==(Object other) => other is IndexModel && index == other.index;
 
   @override
-  int get hashCode => Object.hash(index, _indexDetail);
+  int get hashCode => index.hashCode;
 }

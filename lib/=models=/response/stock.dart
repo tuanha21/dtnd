@@ -41,4 +41,15 @@ class Stock {
     data['name_short'] = nameShort;
     return data;
   }
+
+  @override
+  bool operator ==(Object other) {
+    if (other is Stock && stockCode == other.stockCode) {
+      return true;
+    }
+    return false;
+  }
+
+  @override
+  int get hashCode => stockCode.hashCode;
 }

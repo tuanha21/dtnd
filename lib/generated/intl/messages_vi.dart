@@ -24,18 +24,23 @@ class MessageLookup extends MessageLookupByLibrary {
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "account": MessageLookupByLibrary.simpleMessage("Tài khoản"),
         "asset": MessageLookupByLibrary.simpleMessage("Tài sản"),
+        "average": MessageLookupByLibrary.simpleMessage("Trung bình"),
         "bond": MessageLookupByLibrary.simpleMessage("Trái phiếu"),
         "buy": MessageLookupByLibrary.simpleMessage("Mua"),
         "ceil": MessageLookupByLibrary.simpleMessage("Trần"),
         "community": MessageLookupByLibrary.simpleMessage("Cộng đồng"),
         "double_back_to_close_app":
             MessageLookupByLibrary.simpleMessage("Ấn thêm lần nữa để thoát"),
+        "fbuy": MessageLookupByLibrary.simpleMessage("NN mua"),
         "fill_OTP": MessageLookupByLibrary.simpleMessage("Nhập mã OTP"),
         "fill_account": MessageLookupByLibrary.simpleMessage("Nhập tài khoản"),
         "fill_password": MessageLookupByLibrary.simpleMessage("Nhập mật khẩu"),
         "floor": MessageLookupByLibrary.simpleMessage("Sàn"),
+        "froom": MessageLookupByLibrary.simpleMessage("Room NN"),
+        "fsell": MessageLookupByLibrary.simpleMessage("NN bán"),
         "hello": MessageLookupByLibrary.simpleMessage("Chào bạn"),
         "hi": MessageLookupByLibrary.simpleMessage("Xin chào"),
+        "high": MessageLookupByLibrary.simpleMessage("Cao"),
         "home": MessageLookupByLibrary.simpleMessage("Trang chủ"),
         "interested_catalog":
             MessageLookupByLibrary.simpleMessage("Danh mục quan tâm"),
@@ -49,6 +54,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Cùng tham gia thị trường đầu tư đầy sôi động với ứng dụng "),
         "login_qoute2": MessageLookupByLibrary.simpleMessage(" bạn nhé"),
         "login_upper": MessageLookupByLibrary.simpleMessage("ĐĂNG NHẬP"),
+        "low": MessageLookupByLibrary.simpleMessage("Thấp"),
         "market": MessageLookupByLibrary.simpleMessage("Thị trường"),
         "market_overview":
             MessageLookupByLibrary.simpleMessage("Tổng quan thị trường"),

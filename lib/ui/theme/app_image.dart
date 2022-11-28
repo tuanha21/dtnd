@@ -26,6 +26,7 @@ class AppImages {
       "assets/svg/notification_appbar_icon.svg";
   static const String home_asset_card_wallet =
       "assets/svg/home_asset_card_wallet.svg";
+  static const String arrange_circle = "assets/svg/arrange_circle.svg";
 
   static const String qa_base = "assets/svg/qa_base.svg";
   static const String qa_bond = "assets/svg/qa_bond.svg";

@@ -82,77 +82,83 @@ class HomeInterestedCatalogItem extends StatelessWidget {
   final StockModel data;
   @override
   Widget build(BuildContext context) {
+    final themeMode = AppService.instance.themeMode.value;
     return GestureDetector(
       onTap: () => Navigator.of(context).push(MaterialPageRoute(
         builder: (context) => StockDetailScreen(stockModel: data),
       )),
       child: SizedBox.fromSize(
         size: const Size(168, 72),
-        child: ObxValue<Rx<ThemeMode>>(
-          (themeMode) {
-            return Container(
-              alignment: Alignment.center,
-              padding: const EdgeInsets.all(12.0),
-              decoration: BoxDecoration(
-                borderRadius: const BorderRadius.all(Radius.circular(8)),
-                color: themeMode.value.isLight
-                    ? AppColors.neutral_06
-                    : AppColors.neutral_01,
-              ),
-              child: Column(
+        child: Container(
+          alignment: Alignment.center,
+          padding: const EdgeInsets.all(12.0),
+          decoration: BoxDecoration(
+            borderRadius: const BorderRadius.all(Radius.circular(8)),
+            color:
+                themeMode.isLight ? AppColors.neutral_06 : AppColors.neutral_01,
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        data.stock.stockCode,
-                        style: Theme.of(context)
-                            .textTheme
-                            .titleSmall!
-                            .copyWith(fontWeight: FontWeight.w600),
-                      ),
-                      Text(
-                        "${data.stockData.lastPrice.value}",
+                  Text(
+                    data.stock.stockCode,
+                    style: Theme.of(context)
+                        .textTheme
+                        .titleSmall!
+                        .copyWith(fontWeight: FontWeight.w600),
+                  ),
+                  ObxValue<Rx<num?>>(
+                    (lastPrice) {
+                      return Text(
+                        "${lastPrice.value}",
                         style: AppTextStyle.labelMedium_12.copyWith(
                           fontWeight: FontWeight.w600,
                           color: data.stockData.color,
                         ),
-                      ),
-                    ],
+                      );
+                    },
+                    data.stockData.lastPrice,
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        NumUtils.formatInteger10(data.stockData.lot.value, "-"),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  ObxValue<Rx<num?>>(
+                    (lot) {
+                      return Text(
+                        NumUtils.formatInteger10(lot.value, "-"),
                         style: AppTextStyle.labelMedium_12.copyWith(
                           fontWeight: FontWeight.w500,
                           color: AppColors.neutral_03,
                         ),
-                      ),
-                      Container(
-                        padding: const EdgeInsets.all(4.0),
-                        decoration: BoxDecoration(
-                          color: data.stockData.bgColor(themeMode.value),
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(2)),
+                      );
+                    },
+                    data.stockData.lot,
+                  ),
+                  Container(
+                    padding: const EdgeInsets.all(4.0),
+                    decoration: BoxDecoration(
+                      color: data.stockData.bgColor(themeMode),
+                      borderRadius: const BorderRadius.all(Radius.circular(2)),
+                    ),
+                    child: Obx(() {
+                      return Text(
+                        "${data.stockData.prefix} ${data.stockData.ot.value}",
+                        style: AppTextStyle.labelMedium_12.copyWith(
+                          fontWeight: FontWeight.w600,
+                          color: data.stockData.color,
                         ),
-                        child: Text(
-                          "${data.stockData.prefix} ${data.stockData.ot.value}",
-                          style: AppTextStyle.labelMedium_12.copyWith(
-                            fontWeight: FontWeight.w600,
-                            color: data.stockData.color,
-                          ),
-                        ),
-                      ),
-                    ],
+                      );
+                    }),
                   ),
                 ],
               ),
-            );
-          },
-          AppService.instance.themeMode,
+            ],
+          ),
         ),
       ),
     );

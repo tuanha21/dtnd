@@ -2,17 +2,17 @@ import 'dart:ui';
 
 import 'package:dtnd/=models=/index.dart';
 import 'package:dtnd/=models=/response/index_model.dart';
-import 'package:dtnd/=models=/response/stock_model.dart';
 import 'package:dtnd/config/service/app_services.dart';
 import 'package:dtnd/data/i_data_center_service.dart';
 import 'package:dtnd/data/implementations/data_center_service.dart';
-import 'package:dtnd/generated/l10n.dart';
+import 'package:dtnd/generated/l10n.dart' as s;
+import 'package:dtnd/ui/screen/stock_detail.dart/widget/k_chart.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_textstyle.dart';
-import 'package:dtnd/utilities/extension.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
+import 'package:k_chart/flutter_k_chart.dart';
 
 class HomeMarketToday extends StatefulWidget {
   const HomeMarketToday({super.key});
@@ -25,6 +25,7 @@ class _HomeMarketTodayState extends State<HomeMarketToday> {
   final IDataCenterService dataCenterService = DataCenterService();
 
   late final Set<IndexModel> listIndexs;
+  late IndexModel currentIndexModel;
 
   bool initialized = false;
 
@@ -36,42 +37,66 @@ class _HomeMarketTodayState extends State<HomeMarketToday> {
 
   Future<void> getListIndexs() async {
     listIndexs = await dataCenterService.getListIndex();
+
     setState(() {
+      currentIndexModel = listIndexs.first;
       initialized = true;
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox.fromSize(
-      size: Size(MediaQuery.of(context).size.width, 64),
-      child: ScrollConfiguration(
-        behavior: ScrollConfiguration.of(context).copyWith(
-          dragDevices: {
-            PointerDeviceKind.touch,
-            PointerDeviceKind.mouse,
-          },
+    return Column(
+      children: [
+        SizedBox.fromSize(
+          size: Size(MediaQuery.of(context).size.width, 64),
+          child: ScrollConfiguration(
+            behavior: ScrollConfiguration.of(context).copyWith(
+              dragDevices: {
+                PointerDeviceKind.touch,
+                PointerDeviceKind.mouse,
+              },
+            ),
+            child: Builder(builder: (context) {
+              if (!initialized) {
+                return Center(
+                  child: Text(s.S.of(context).loading),
+                );
+              }
+              return ListView.separated(
+                scrollDirection: Axis.horizontal,
+                physics: const AlwaysScrollableScrollPhysics(),
+                itemCount: listIndexs.length,
+                itemBuilder: (context, index) => HomeIndexItem(
+                  data: listIndexs.elementAt(index),
+                ),
+                separatorBuilder: (BuildContext context, int index) =>
+                    const SizedBox(
+                  width: 8,
+                ),
+              );
+            }),
+          ),
         ),
-        child: Builder(builder: (context) {
-          if (!initialized) {
-            return Center(
-              child: Text(S.of(context).loading),
+        Builder(
+          builder: (context) {
+            if (!initialized) {
+              return Center(
+                child: Text(s.S.of(context).loading),
+              );
+            }
+            if (currentIndexModel.stockTradingHistory.value == null) {
+              return Container();
+            }
+            return SizedBox.fromSize(
+              size: Size(MediaQuery.of(context).size.width, 300),
+              child: KChart(
+                  stockTradingHistory:
+                      currentIndexModel.stockTradingHistory.value!),
             );
-          }
-          return ListView.separated(
-            scrollDirection: Axis.horizontal,
-            physics: const AlwaysScrollableScrollPhysics(),
-            itemCount: listIndexs.length,
-            itemBuilder: (context, index) => HomeIndexItem(
-              data: listIndexs.elementAt(index),
-            ),
-            separatorBuilder: (BuildContext context, int index) =>
-                const SizedBox(
-              width: 8,
-            ),
-          );
-        }),
-      ),
+          },
+        )
+      ],
     );
   }
 }

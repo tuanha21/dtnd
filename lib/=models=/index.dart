@@ -28,6 +28,19 @@ extension IndexX on Index {
         return "UPCOM";
     }
   }
+
+  String get chartCode {
+    switch (this) {
+      case Index.VNI:
+        return "VNINDEX";
+      case Index.VN30:
+        return "VN30";
+      case Index.HNI:
+        return "HNX";
+      case Index.UPCOM:
+        return "UPCOM";
+    }
+  }
 }
 
 class IndexUtil {
