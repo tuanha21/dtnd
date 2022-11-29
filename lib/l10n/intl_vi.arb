@@ -40,6 +40,7 @@
     "buy": "Mua",
     "sell": "Bán",
     "volumn": "Khối lượng",
+    "dividend": "Cổ tức",
 
     "total_asset": "Tổng tài sản",
     "interested_catalog": "Danh mục quan tâm",
@@ -47,6 +48,8 @@
     "market_overview": "Tổng quan thị trường",
     "trading_board": "Bảng giá",
     "matched_order_detail": "Chi tiết khớp lệnh",
+    "financial_index": "Chỉ số tài chính",
+    "news_and_events": "Tin tức, sự kiện",
 
     "login_exception_required_OTP": "Hãy đăng nhập bằng mã OTP được gửi về máy của bạn",
     "invalid_account": "Tài khoản chưa đăng ký hoặc đã hết hiệu lực giao dịch Internet",
@@ -56,6 +59,8 @@
 
     "login_qoute1": "Cùng tham gia thị trường đầu tư đầy sôi động với ứng dụng ",
     "login_qoute2": " bạn nhé",
+    "technical_trading_newbie": "Bạn là 1 newbie và muốn giao dịch dễ dàng hơn",
+    "technical_trading_pro": "Bạn giao dịch như 1 nhà đầu tư Chuyên nghiệp",
 
     "see_more": "Xem thêm",
     "loading": "Đang tải...",

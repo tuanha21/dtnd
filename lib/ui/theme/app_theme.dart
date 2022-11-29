@@ -255,6 +255,24 @@ const BottomAppBarTheme _darkBottomAppBarTheme = BottomAppBarTheme(
   color: Colors.black,
 );
 
+const BottomSheetThemeData _lightBottomSheetTheme = BottomSheetThemeData(
+  modalBackgroundColor: AppColors.bg_1,
+  shape: RoundedRectangleBorder(
+    borderRadius: BorderRadiusDirectional.vertical(
+      top: Radius.circular(24),
+    ),
+  ),
+);
+
+const BottomSheetThemeData _darkBottomSheetTheme = BottomSheetThemeData(
+  modalBackgroundColor: AppColors.bg_2,
+  shape: RoundedRectangleBorder(
+    borderRadius: BorderRadiusDirectional.vertical(
+      top: Radius.circular(24),
+    ),
+  ),
+);
+
 ///================ Color Scheme ===================
 
 const ColorScheme _lightColorScheme = ColorScheme(
@@ -296,6 +314,7 @@ final ThemeData lightThemeData = ThemeData(
   appBarTheme: _lightAppBarTheme,
   iconTheme: _lightIconThemeData,
   tabBarTheme: _lightTabBarTheme,
+  bottomSheetTheme: _lightBottomSheetTheme,
 );
 
 final ThemeData darkThemeData = ThemeData(
@@ -308,4 +327,5 @@ final ThemeData darkThemeData = ThemeData(
   appBarTheme: _darkAppBarTheme,
   iconTheme: _darkIconThemeData,
   tabBarTheme: _darkTabBarTheme,
+  bottomSheetTheme: _darkBottomSheetTheme,
 );

@@ -2,10 +2,6 @@ import 'dart:ui';
 
 import 'package:dtnd/=models=/response/stock_model.dart';
 import 'package:dtnd/config/service/app_services.dart';
-import 'package:dtnd/data/i_data_center_service.dart';
-import 'package:dtnd/data/i_local_storage_service.dart';
-import 'package:dtnd/data/implementations/data_center_service.dart';
-import 'package:dtnd/data/implementations/local_storage_service.dart';
 import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/screen/stock_detail.dart/stock_detail_screen.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
@@ -15,6 +11,8 @@ import 'package:dtnd/utilities/num_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../home_controller.dart';
+
 class HomeInterestedCatalog extends StatefulWidget {
   const HomeInterestedCatalog({super.key});
 
@@ -23,24 +21,7 @@ class HomeInterestedCatalog extends StatefulWidget {
 }
 
 class _HomeInterestedCatalogState extends State<HomeInterestedCatalog> {
-  final ILocalStorageService localStorageService = LocalStorageService();
-  final IDataCenterService dataCenterService = DataCenterService();
-  late final List<StockModel> interestedCatalog;
-  bool initialized = false;
-
-  @override
-  void initState() {
-    super.initState();
-    getListInterestedStocks();
-  }
-
-  Future<void> getListInterestedStocks() async {
-    interestedCatalog = await dataCenterService.getStockModelsFromStockCodes(
-        localStorageService.getListInterestedStock() ?? defaultListStock);
-    setState(() {
-      initialized = true;
-    });
-  }
+  final HomeController homeController = HomeController();
 
   @override
   Widget build(BuildContext context) {
@@ -53,8 +34,8 @@ class _HomeInterestedCatalogState extends State<HomeInterestedCatalog> {
             PointerDeviceKind.mouse,
           },
         ),
-        child: Builder(builder: (context) {
-          if (!initialized) {
+        child: ObxValue<Rx<bool>>((initialized) {
+          if (!initialized.value) {
             return Center(
               child: Text(S.of(context).loading),
             );
@@ -62,16 +43,16 @@ class _HomeInterestedCatalogState extends State<HomeInterestedCatalog> {
           return ListView.separated(
             scrollDirection: Axis.horizontal,
             physics: const AlwaysScrollableScrollPhysics(),
-            itemCount: interestedCatalog.length,
+            itemCount: homeController.interestedCatalog.length,
             itemBuilder: (context, index) => HomeInterestedCatalogItem(
-              data: interestedCatalog[index],
+              data: homeController.interestedCatalog[index],
             ),
             separatorBuilder: (BuildContext context, int index) =>
                 const SizedBox(
               width: 8,
             ),
           );
-        }),
+        }, homeController.initialized),
       ),
     );
   }

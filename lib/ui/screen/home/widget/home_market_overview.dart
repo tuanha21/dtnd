@@ -1,11 +1,6 @@
 import 'package:dtnd/=models=/response/stock_model.dart';
-import 'package:dtnd/=models=/response/stock_trade.dart';
 import 'package:dtnd/=models=/response/stock_trading_history.dart';
 import 'package:dtnd/config/service/app_services.dart';
-import 'package:dtnd/data/i_data_center_service.dart';
-import 'package:dtnd/data/i_local_storage_service.dart';
-import 'package:dtnd/data/implementations/data_center_service.dart';
-import 'package:dtnd/data/implementations/local_storage_service.dart';
 import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/screen/stock_detail.dart/stock_detail_screen.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
@@ -18,6 +13,8 @@ import 'package:get/get.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'dart:math';
 
+import '../home_controller.dart';
+
 class HomeMarketOverview extends StatefulWidget {
   const HomeMarketOverview({super.key});
   @override
@@ -25,39 +22,12 @@ class HomeMarketOverview extends StatefulWidget {
 }
 
 class _HomeMarketOverviewState extends State<HomeMarketOverview> {
-  final ILocalStorageService localStorageService = LocalStorageService();
-  final IDataCenterService dataCenterService = DataCenterService();
-  late final List<StockModel> marketToday;
-  bool initialized = false;
-
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      getListInterestedStocks();
-    });
-  }
-
-  Future<void> getListInterestedStocks() async {
-    marketToday = await dataCenterService.getStockModelsFromStockCodes(
-        localStorageService.getListInterestedStock() ?? defaultListStock);
-    for (var element in marketToday) {
-      await getStockIndayTradingHistory(element);
-    }
-    setState(() {
-      initialized = true;
-    });
-  }
-
-  Future<void> getStockIndayTradingHistory(StockModel stockModel) async {
-    stockModel.stockTradingHistory.value = await dataCenterService
-        .getStockIndayTradingHistory(stockModel.stock.stockCode);
-  }
+  final HomeController homeController = HomeController();
 
   @override
   Widget build(BuildContext context) {
-    return Builder(builder: (context) {
-      if (!initialized) {
+    return ObxValue<Rx<bool>>((initialized) {
+      if (!initialized.value) {
         return Center(
           child: Text(S.of(context).loading),
         );
@@ -73,14 +43,14 @@ class _HomeMarketOverviewState extends State<HomeMarketOverview> {
       // );
       return Column(
         children: List<Widget>.generate(
-          marketToday.length,
+          homeController.marketToday.length,
           (index) => HomeMarketOverviewItem(
             index: index,
-            data: marketToday[index],
+            data: homeController.marketToday[index],
           ),
         ),
       );
-    });
+    }, homeController.initialized);
   }
 }
 

@@ -38,6 +38,8 @@ class AppImages {
   static const String prefix_up_icon = "assets/images/prefix_up_icon.png";
   static const String prefix_ref_icon = "assets/images/prefix_ref_icon.png";
   static const String prefix_down_icon = "assets/images/prefix_down_icon.png";
+  static const String wallet = "assets/svg/wallet.svg";
+  static const String wallet_search = "assets/svg/wallet_search.svg";
 
   /// BG
   static const String home_asset_card_light_bg =

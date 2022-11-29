@@ -19,9 +19,7 @@ class LocalStorageService implements ILocalStorageService {
 
   static LocalStorageService get instance => _instance;
 
-  factory LocalStorageService() {
-    return _instance;
-  }
+  factory LocalStorageService() => _instance;
 
   late final SharedPreferences sharedPreferences;
   late final Box box;

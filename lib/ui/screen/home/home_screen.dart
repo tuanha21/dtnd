@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:dtnd/generated/l10n.dart';
+import 'package:dtnd/ui/screen/home/home_controller.dart';
 import 'package:dtnd/ui/screen/home/widget/asset_card.dart';
 import 'package:dtnd/ui/screen/home/widget/home_interested_catalog.dart';
 import 'package:dtnd/ui/screen/home/widget/home_market_overview.dart';
@@ -19,6 +20,14 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  final HomeController homeController = HomeController();
+
+  @override
+  void initState() {
+    homeController.init();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

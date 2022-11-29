@@ -6,6 +6,7 @@ import 'package:dtnd/config/service/app_services.dart';
 import 'package:dtnd/data/i_data_center_service.dart';
 import 'package:dtnd/data/implementations/data_center_service.dart';
 import 'package:dtnd/generated/l10n.dart' as s;
+import 'package:dtnd/ui/screen/home/home_controller.dart';
 import 'package:dtnd/ui/screen/stock_detail.dart/widget/k_chart.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_textstyle.dart';
@@ -22,80 +23,56 @@ class HomeMarketToday extends StatefulWidget {
 }
 
 class _HomeMarketTodayState extends State<HomeMarketToday> {
-  final IDataCenterService dataCenterService = DataCenterService();
-
-  late final Set<IndexModel> listIndexs;
-  late IndexModel currentIndexModel;
-
-  bool initialized = false;
-
-  @override
-  void initState() {
-    super.initState();
-    getListIndexs();
-  }
-
-  Future<void> getListIndexs() async {
-    listIndexs = await dataCenterService.getListIndex();
-
-    setState(() {
-      currentIndexModel = listIndexs.first;
-      initialized = true;
-    });
-  }
+  final HomeController homeController = HomeController();
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        SizedBox.fromSize(
-          size: Size(MediaQuery.of(context).size.width, 64),
-          child: ScrollConfiguration(
-            behavior: ScrollConfiguration.of(context).copyWith(
-              dragDevices: {
-                PointerDeviceKind.touch,
-                PointerDeviceKind.mouse,
-              },
-            ),
-            child: Builder(builder: (context) {
-              if (!initialized) {
-                return Center(
-                  child: Text(s.S.of(context).loading),
-                );
-              }
-              return ListView.separated(
+    return ObxValue<Rx<bool>>((initialized) {
+      if (!initialized.value) {
+        return Center(
+          child: Text(s.S.of(context).loading),
+        );
+      }
+      return Column(
+        children: [
+          SizedBox.fromSize(
+            size: Size(MediaQuery.of(context).size.width, 64),
+            child: ScrollConfiguration(
+              behavior: ScrollConfiguration.of(context).copyWith(
+                dragDevices: {
+                  PointerDeviceKind.touch,
+                  PointerDeviceKind.mouse,
+                },
+              ),
+              child: ListView.separated(
                 scrollDirection: Axis.horizontal,
                 physics: const AlwaysScrollableScrollPhysics(),
-                itemCount: listIndexs.length,
+                itemCount: homeController.listIndexs.length,
                 itemBuilder: (context, index) => HomeIndexItem(
-                  data: listIndexs.elementAt(index),
+                  data: homeController.listIndexs.elementAt(index),
                 ),
                 separatorBuilder: (BuildContext context, int index) =>
                     const SizedBox(
                   width: 8,
                 ),
-              );
-            }),
+              ),
+            ),
           ),
-        ),
-        Builder(
-          builder: (context) {
-            if (!initialized) {
-              return Center(
-                child: Text(s.S.of(context).loading),
+          Builder(
+            builder: (context) {
+              if (homeController.currentIndexModel.stockTradingHistory.value ==
+                  null) {
+                return Container();
+              }
+              return SizedBox.fromSize(
+                size: Size(MediaQuery.of(context).size.width, 350),
+                child: KChart(indexModel: homeController.currentIndexModel),
               );
-            }
-            if (currentIndexModel.stockTradingHistory.value == null) {
-              return Container();
-            }
-            return SizedBox.fromSize(
-              size: Size(MediaQuery.of(context).size.width, 300),
-              child: KChart(indexModel: currentIndexModel),
-            );
-          },
-        )
-      ],
-    );
+            },
+          )
+        ],
+      );
+    }, homeController.initialized);
   }
 }
 

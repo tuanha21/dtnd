@@ -29,12 +29,15 @@ class MessageLookup extends MessageLookupByLibrary {
         "buy": MessageLookupByLibrary.simpleMessage("Buy"),
         "ceil": MessageLookupByLibrary.simpleMessage("Ceil"),
         "community": MessageLookupByLibrary.simpleMessage("Community"),
+        "dividend": MessageLookupByLibrary.simpleMessage("Dividend"),
         "double_back_to_close_app":
             MessageLookupByLibrary.simpleMessage("Back again to exit"),
         "fbuy": MessageLookupByLibrary.simpleMessage("FR buy"),
         "fill_OTP": MessageLookupByLibrary.simpleMessage("Fill OTP"),
         "fill_account": MessageLookupByLibrary.simpleMessage("Fill account"),
         "fill_password": MessageLookupByLibrary.simpleMessage("Fill password"),
+        "financial_index":
+            MessageLookupByLibrary.simpleMessage("Financial index"),
         "floor": MessageLookupByLibrary.simpleMessage("Floor"),
         "froom": MessageLookupByLibrary.simpleMessage("Room FR"),
         "fsell": MessageLookupByLibrary.simpleMessage("FR sell"),
@@ -62,6 +65,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "matched_order_detail":
             MessageLookupByLibrary.simpleMessage("Matched order detail"),
         "minutes": MessageLookupByLibrary.simpleMessage(" minutes"),
+        "news_and_events":
+            MessageLookupByLibrary.simpleMessage("News and events"),
         "no_internet":
             MessageLookupByLibrary.simpleMessage("No Internet connection"),
         "null_password": MessageLookupByLibrary.simpleMessage(
@@ -82,6 +87,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "sell": MessageLookupByLibrary.simpleMessage("Sell"),
         "session_expired_in":
             MessageLookupByLibrary.simpleMessage("Session expired in "),
+        "technical_trading_newbie": MessageLookupByLibrary.simpleMessage(
+            "You are a newbie and want to make trading easier"),
+        "technical_trading_pro": MessageLookupByLibrary.simpleMessage(
+            "You trade like a Professional Investor"),
         "timeout":
             MessageLookupByLibrary.simpleMessage("No response from server"),
         "total_asset": MessageLookupByLibrary.simpleMessage("Total asset"),

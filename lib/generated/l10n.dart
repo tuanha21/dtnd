@@ -420,6 +420,16 @@ class S {
     );
   }
 
+  /// `Dividend`
+  String get dividend {
+    return Intl.message(
+      'Dividend',
+      name: 'dividend',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Total asset`
   String get total_asset {
     return Intl.message(
@@ -475,6 +485,26 @@ class S {
     return Intl.message(
       'Matched order detail',
       name: 'matched_order_detail',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Financial index`
+  String get financial_index {
+    return Intl.message(
+      'Financial index',
+      name: 'financial_index',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `News and events`
+  String get news_and_events {
+    return Intl.message(
+      'News and events',
+      name: 'news_and_events',
       desc: '',
       args: [],
     );
@@ -545,6 +575,26 @@ class S {
     return Intl.message(
       ' application',
       name: 'login_qoute2',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You are a newbie and want to make trading easier`
+  String get technical_trading_newbie {
+    return Intl.message(
+      'You are a newbie and want to make trading easier',
+      name: 'technical_trading_newbie',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You trade like a Professional Investor`
+  String get technical_trading_pro {
+    return Intl.message(
+      'You trade like a Professional Investor',
+      name: 'technical_trading_pro',
       desc: '',
       args: [],
     );

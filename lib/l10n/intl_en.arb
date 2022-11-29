@@ -40,6 +40,7 @@
     "buy": "Buy",
     "sell": "Sell",
     "volumn": "Volumn",
+    "dividend": "Dividend",
 
     "total_asset": "Total asset",
     "interested_catalog": "Interested catalog",
@@ -47,6 +48,8 @@
     "market_overview": "Market overview",
     "trading_board": "Trading board",
     "matched_order_detail": "Matched order detail",
+    "financial_index": "Financial index",
+    "news_and_events": "News and events",
 
     "login_exception_required_OTP": "Login with OTP code sent to your phone",
     "invalid_account": "This account has not been registered or Internet trading feature is no longer available",
@@ -56,6 +59,8 @@
 
     "login_qoute1": "Let's join the exciting investment market with ",
     "login_qoute2": " application",
+    "technical_trading_newbie": "You are a newbie and want to make trading easier",
+    "technical_trading_pro": "You trade like a Professional Investor",
 
     "see_more": "See more",
     "loading": "Loading...",

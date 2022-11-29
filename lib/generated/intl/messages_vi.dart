@@ -29,12 +29,15 @@ class MessageLookup extends MessageLookupByLibrary {
         "buy": MessageLookupByLibrary.simpleMessage("Mua"),
         "ceil": MessageLookupByLibrary.simpleMessage("Trần"),
         "community": MessageLookupByLibrary.simpleMessage("Cộng đồng"),
+        "dividend": MessageLookupByLibrary.simpleMessage("Cổ tức"),
         "double_back_to_close_app":
             MessageLookupByLibrary.simpleMessage("Ấn thêm lần nữa để thoát"),
         "fbuy": MessageLookupByLibrary.simpleMessage("NN mua"),
         "fill_OTP": MessageLookupByLibrary.simpleMessage("Nhập mã OTP"),
         "fill_account": MessageLookupByLibrary.simpleMessage("Nhập tài khoản"),
         "fill_password": MessageLookupByLibrary.simpleMessage("Nhập mật khẩu"),
+        "financial_index":
+            MessageLookupByLibrary.simpleMessage("Chỉ số tài chính"),
         "floor": MessageLookupByLibrary.simpleMessage("Sàn"),
         "froom": MessageLookupByLibrary.simpleMessage("Room NN"),
         "fsell": MessageLookupByLibrary.simpleMessage("NN bán"),
@@ -63,6 +66,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "matched_order_detail":
             MessageLookupByLibrary.simpleMessage("Chi tiết khớp lệnh"),
         "minutes": MessageLookupByLibrary.simpleMessage(" phút"),
+        "news_and_events":
+            MessageLookupByLibrary.simpleMessage("Tin tức, sự kiện"),
         "no_internet":
             MessageLookupByLibrary.simpleMessage("Không có kết nối Internet"),
         "null_password": MessageLookupByLibrary.simpleMessage(
@@ -82,6 +87,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "sell": MessageLookupByLibrary.simpleMessage("Bán"),
         "session_expired_in":
             MessageLookupByLibrary.simpleMessage("Hết phiên đăng nhập sau "),
+        "technical_trading_newbie": MessageLookupByLibrary.simpleMessage(
+            "Bạn là 1 newbie và muốn giao dịch dễ dàng hơn"),
+        "technical_trading_pro": MessageLookupByLibrary.simpleMessage(
+            "Bạn giao dịch như 1 nhà đầu tư Chuyên nghiệp"),
         "timeout": MessageLookupByLibrary.simpleMessage(
             "Không nhận được phản hồi từ máy chủ"),
         "total_asset": MessageLookupByLibrary.simpleMessage("Tổng tài sản"),

@@ -45,22 +45,18 @@ class _StockDetailTabState extends State<StockDetailTab>
             ),
           ),
         ),
-        SizedBox(
-          width: MediaQuery.of(context).size.width,
-          height: 500,
-          child: TabBarView(
-            controller: _tabController,
-            children: <Widget>[
-              Center(
-                child: TabTradingBoard(
-                  stockModel: widget.stockModel,
-                ),
+        TabBarView(
+          controller: _tabController,
+          children: <Widget>[
+            Center(
+              child: TabTradingBoard(
+                stockModel: widget.stockModel,
               ),
-              const Center(
-                child: Text("Chi tiết kl"),
-              )
-            ],
-          ),
+            ),
+            const Center(
+              child: Text("Chi tiết kl"),
+            )
+          ],
         )
       ],
     );

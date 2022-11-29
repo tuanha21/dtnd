@@ -3,8 +3,10 @@
 import 'package:dtnd/=models=/index.dart';
 import 'package:dtnd/=models=/response/index_chart_data.dart';
 import 'package:dtnd/=models=/response/index_detail.dart';
+import 'package:dtnd/=models=/response/news_detail.dart';
 import 'package:dtnd/=models=/response/stock.dart';
 import 'package:dtnd/=models=/response/stock_data.dart';
+import 'package:dtnd/=models=/response/stock_news.dart';
 import 'package:dtnd/=models=/response/stock_trade.dart';
 import 'package:dtnd/=models=/response/stock_trading_history.dart';
 import 'package:dtnd/config/service/environment.dart';
@@ -41,4 +43,8 @@ abstract class INetworkService {
   Future<IndexDetailResponse> getIndexDetail(Index index);
 
   Future<List<IndexChartData>> getListIndexChartData(Index index);
+
+  Future<List<StockNews>> getStockNews(String stockCode);
+
+  Future<NewsDetail?> getNewsDetail(int id);
 }

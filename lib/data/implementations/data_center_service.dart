@@ -1,8 +1,10 @@
 import 'package:dtnd/=models=/index.dart';
 import 'package:dtnd/=models=/response/index_model.dart';
+import 'package:dtnd/=models=/response/news_detail.dart';
 import 'package:dtnd/=models=/response/stock.dart';
 import 'package:dtnd/=models=/response/stock_data.dart';
 import 'package:dtnd/=models=/response/stock_model.dart';
+import 'package:dtnd/=models=/response/stock_news.dart';
 import 'package:dtnd/=models=/response/stock_trading_history.dart';
 import 'package:dtnd/data/i_data_center_service.dart';
 import 'package:dtnd/data/i_local_storage_service.dart';
@@ -90,18 +92,25 @@ class DataCenterService implements IDataCenterService {
   }
 
   void processIndexData(dynamic data) {
-    if (_listIndex.isEmpty) return;
+    if (_listIndex.toList().isEmpty) return;
     final Index index = IndexUtil.fromCode(data['data']['mc']);
-    final indexModel =
-        _listIndex.firstWhere((element) => element.index == index);
+    final indexModel = _listIndex.firstWhere(
+      (element) => element.index == index,
+    );
     indexModel.onSocketData(data);
   }
 
   //
   void processStockData(dynamic data) {
-    final stockModel = listStockReg.firstWhere(
-        (element) => element.stock.stockCode == data['data']['sym']);
-    stockModel.onSocketData(data);
+    try {
+      final sym = data['data']['sym'] ?? data['data']['symbol'];
+      final stockModel =
+          listStockReg.firstWhere((element) => element.stock.stockCode == sym);
+      stockModel.onSocketData(data);
+    } catch (e) {
+      logger.v(e);
+    }
+
     // _listIndex.firstWhere((element) => element.index == _index);
   }
 
@@ -296,7 +305,11 @@ class DataCenterService implements IDataCenterService {
   Future<Set<IndexModel>> getListIndex() async {
     for (final Index index in Index.values) {
       final response = await networkService.getIndexDetail(index);
-      final chartResponse = await getStockIndayTradingHistory(index.chartCode);
+      final int from = TimeUtilities.timeToEpoch(
+          TimeUtilities.getPreviousDateTime(TimeUtilities.week(1)));
+      final int to = TimeUtilities.timeToEpoch(DateTime.now());
+      final chartResponse =
+          await getStockTradingHistory(index.chartCode, "5", from, to);
       _listIndex.add(IndexModel(
         index: index,
         indexDetailResponse: response,
@@ -304,5 +317,15 @@ class DataCenterService implements IDataCenterService {
       ));
     }
     return _listIndex;
+  }
+
+  @override
+  Future<List<StockNews>> getStockNews(String stockCode) {
+    return networkService.getStockNews(stockCode);
+  }
+
+  @override
+  Future<NewsDetail?> getNewsDetail(int id) {
+    throw UnimplementedError();
   }
 }

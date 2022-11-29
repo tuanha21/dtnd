@@ -1,8 +1,10 @@
 // ignore_for_file: library_prefixes
 
 import 'package:dtnd/=models=/response/index_model.dart';
+import 'package:dtnd/=models=/response/news_detail.dart';
 import 'package:dtnd/=models=/response/stock_data.dart';
 import 'package:dtnd/=models=/response/stock_model.dart';
+import 'package:dtnd/=models=/response/stock_news.dart';
 import 'package:dtnd/=models=/response/stock_trading_history.dart';
 
 abstract class IDataCenterService {
@@ -29,4 +31,8 @@ abstract class IDataCenterService {
       String stockCode, String resolution, int from, int to);
 
   Future<Set<IndexModel>> getListIndex();
+
+  Future<List<StockNews>> getStockNews(String stockCode);
+
+  Future<NewsDetail?> getNewsDetail(int id);
 }

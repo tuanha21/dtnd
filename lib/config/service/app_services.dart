@@ -20,9 +20,7 @@ class AppService {
 
   Rx<Locale> get locale => _locale;
 
-  factory AppService() {
-    return _instance;
-  }
+  factory AppService() => _instance;
 
   Future<void> initialize(SharedPreferences sharedPreferences) async {
     sharedPreferencesInstance = sharedPreferences;

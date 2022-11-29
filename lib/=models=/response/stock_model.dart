@@ -45,7 +45,12 @@ class StockModel {
           ..g3.value = data["data"]["g3"];
       }
     } else if (data["data"]["id"] == 3250) {
-      print(data);
+      stockData
+        ..fBVol.value = num.tryParse(data["data"]["fBVol"])
+        ..fBValue.value = num.tryParse(data["data"]["fBValue"])
+        ..fSVolume.value = num.tryParse(data["data"]["fSVolume"])
+        ..fSValue.value = num.tryParse(data["data"]["fSValue"])
+        ..fRoom.value = num.tryParse(data["data"]["fRoom"]);
     }
   }
 

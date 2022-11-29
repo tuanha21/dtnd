@@ -5,8 +5,10 @@ import 'dart:convert';
 import 'package:dtnd/=models=/response/index_detail.dart';
 import 'package:dtnd/=models=/response/index_chart_data.dart';
 import 'package:dtnd/=models=/index.dart';
+import 'package:dtnd/=models=/response/news_detail.dart';
 import 'package:dtnd/=models=/response/stock.dart';
 import 'package:dtnd/=models=/response/stock_data.dart';
+import 'package:dtnd/=models=/response/stock_news.dart';
 import 'package:dtnd/=models=/response/stock_trade.dart';
 import 'package:dtnd/=models=/response/stock_trading_history.dart';
 import 'package:dtnd/=models=/response/user_token.dart';
@@ -18,7 +20,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import 'package:socket_io_client/socket_io_client.dart';
-import 'package:socket_io_client/src/socket.dart';
 
 class NetworkService implements INetworkService {
   final http.Client client = http.Client();
@@ -36,11 +37,14 @@ class NetworkService implements INetworkService {
   late String core_endpoint;
   late String data_feed_url;
   late String board_data_feed_url;
+  late String stock_url;
 
   Uri get url_core => Uri.https(core_url, core_endpoint);
   Uri url_data_feed(String path) => Uri.https(data_feed_url, path);
   Uri url_board_data_feed(Map<String, dynamic> queryParameters) =>
       Uri.https(board_data_feed_url, "datafeed/history", queryParameters);
+  Uri url_stock(String path, Map<String, dynamic> queryParameters) =>
+      Uri.https(stock_url, path, queryParameters);
 
   final Utf8Codec utf8Codec = const Utf8Codec();
 
@@ -51,8 +55,8 @@ class NetworkService implements INetworkService {
     try {
       return jsonDecode(utf8Codec.decode(data));
     } catch (e) {
-      logger.v(data);
-      logger.e(e);
+      print(data);
+      print(e.toString());
       return null;
     }
   }
@@ -65,6 +69,7 @@ class NetworkService implements INetworkService {
     core_endpoint = dotenv.env['core_endpoint']!;
     data_feed_url = dotenv.env['data_feed_domain']!;
     board_data_feed_url = dotenv.env['board_data_feed_domain']!;
+    stock_url = dotenv.env['stock_domain']!;
     initSocket(board_data_feed_url);
     return;
   }
@@ -182,7 +187,7 @@ class NetworkService implements INetworkService {
     final http.Response response = await client.get(url_data_feed(path));
     final responseBody = decode(response.bodyBytes);
     final List<dynamic> responseData = responseBody['data'];
-    List<IndexChartData>? data = [];
+    List<IndexChartData> data = [];
     for (var element in responseData) {
       try {
         data.add(IndexChartData.fromJson(element));
@@ -191,5 +196,40 @@ class NetworkService implements INetworkService {
       }
     }
     return data;
+  }
+
+  @override
+  Future<List<StockNews>> getStockNews(String stockCode) async {
+    final Map<String, dynamic> queryParameters = {
+      "symbol": stockCode,
+    };
+    final http.Response response =
+        await client.get(url_stock("stockNews.pt", queryParameters));
+    final List<dynamic> responseBody = decode(response.bodyBytes);
+    List<StockNews> data = [];
+    for (var element in responseBody) {
+      try {
+        data.add(StockNews.fromJson(element));
+      } catch (e) {
+        continue;
+      }
+    }
+    return data;
+  }
+
+  @override
+  Future<NewsDetail?> getNewsDetail(int id) async {
+    final Map<String, dynamic> queryParameters = {
+      "id": id,
+    };
+    final http.Response response =
+        await client.get(url_stock("stockNews.pt", queryParameters));
+    final responseBody = decode(response.bodyBytes);
+    try {
+      return NewsDetail.fromJson(responseBody);
+    } catch (e) {
+      logger.e(e);
+      return null;
+    }
   }
 }

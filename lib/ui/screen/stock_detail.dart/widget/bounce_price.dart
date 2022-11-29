@@ -6,7 +6,6 @@ import 'package:dtnd/ui/theme/app_textstyle.dart';
 import 'package:dtnd/utilities/extension.dart';
 import 'package:dtnd/utilities/num_utils.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class BoundPrice extends StatelessWidget {
   const BoundPrice({
@@ -16,79 +15,73 @@ class BoundPrice extends StatelessWidget {
   final StockModel stockModel;
   @override
   Widget build(BuildContext context) {
-    return ObxValue<Rx<ThemeMode>>(
-      (themeMode) {
-        return Container(
-          padding: const EdgeInsets.symmetric(vertical: 6),
-          decoration: BoxDecoration(
-            color: themeMode.value.isDark
-                ? AppColors.neutral_01
-                : AppColors.neutral_06,
-            borderRadius: const BorderRadius.all(
-              Radius.circular(4),
+    final themeMode = AppService.instance.themeMode.value;
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 6),
+      decoration: BoxDecoration(
+        color: themeMode.isDark ? AppColors.neutral_01 : AppColors.neutral_06,
+        borderRadius: const BorderRadius.all(
+          Radius.circular(4),
+        ),
+      ),
+      child: Row(
+        children: [
+          Expanded(
+            child: Column(
+              children: [
+                BoundPriceElement(
+                  title: S.of(context).low,
+                  value: stockModel.stockData.lowPrice.value.toString(),
+                  valueColor: stockModel.stockData
+                      .getPriceColor(stockModel.stockData.lowPrice.value ?? 0),
+                ),
+                const SizedBox(height: 6),
+                BoundPriceElement(
+                  title: S.of(context).fbuy,
+                  value: NumUtils.formatInteger10(
+                      stockModel.stockData.fBVol.value, "-"),
+                ),
+              ],
             ),
           ),
-          child: Row(
-            children: [
-              Expanded(
-                child: Column(
-                  children: [
-                    BoundPriceElement(
-                      title: S.of(context).low,
-                      value: stockModel.stockData.lowPrice.value.toString(),
-                      valueColor: stockModel.stockData.getPriceColor(
-                          stockModel.stockData.lowPrice.value ?? 0),
-                    ),
-                    const SizedBox(height: 6),
-                    BoundPriceElement(
-                      title: S.of(context).fbuy,
-                      value: NumUtils.formatInteger10(
-                          stockModel.stockData.fBVol.value, "-"),
-                    ),
-                  ],
+          Expanded(
+            child: Column(
+              children: [
+                BoundPriceElement(
+                  title: S.of(context).average,
+                  value: stockModel.stockData.avePrice.value.toString(),
+                  valueColor: stockModel.stockData
+                      .getPriceColor(stockModel.stockData.avePrice.value ?? 0),
                 ),
-              ),
-              Expanded(
-                child: Column(
-                  children: [
-                    BoundPriceElement(
-                      title: S.of(context).average,
-                      value: stockModel.stockData.avePrice.value.toString(),
-                      valueColor: stockModel.stockData.getPriceColor(
-                          stockModel.stockData.avePrice.value ?? 0),
-                    ),
-                    const SizedBox(height: 6),
-                    BoundPriceElement(
-                      title: S.of(context).froom,
-                      value: NumUtils.formatInteger(
-                          stockModel.stockData.fRoom.value, "-"),
-                    ),
-                  ],
+                const SizedBox(height: 6),
+                BoundPriceElement(
+                  title: S.of(context).froom,
+                  value: NumUtils.formatInteger(
+                      stockModel.stockData.fRoom.value, "-"),
                 ),
-              ),
-              Expanded(
-                child: Column(
-                  children: [
-                    BoundPriceElement(
-                      title: S.of(context).high,
-                      value: stockModel.stockData.highPrice.value.toString(),
-                      valueColor: stockModel.stockData.getPriceColor(
-                          stockModel.stockData.highPrice.value ?? 0),
-                    ),
-                    const SizedBox(height: 6),
-                    BoundPriceElement(
-                      title: S.of(context).fsell,
-                      value: NumUtils.formatInteger10(
-                          stockModel.stockData.fSVolume.value, "-"),
-                    ),
-                  ],
-                ),
-              ),
-            ],
+              ],
+            ),
           ),
-        );
-      },
-      AppService.instance.themeMode,
+          Expanded(
+            child: Column(
+              children: [
+                BoundPriceElement(
+                  title: S.of(context).high,
+                  value: stockModel.stockData.highPrice.value.toString(),
+                  valueColor: stockModel.stockData
+                      .getPriceColor(stockModel.stockData.highPrice.value ?? 0),
+                ),
+                const SizedBox(height: 6),
+                BoundPriceElement(
+                  title: S.of(context).fsell,
+                  value: NumUtils.formatInteger10(
+                      stockModel.stockData.fSVolume.value, "-"),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
