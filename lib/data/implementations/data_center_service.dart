@@ -1,4 +1,5 @@
 import 'package:dtnd/=models=/index.dart';
+import 'package:dtnd/=models=/response/deep_model.dart';
 import 'package:dtnd/=models=/response/index_model.dart';
 import 'package:dtnd/=models=/response/news_detail.dart';
 import 'package:dtnd/=models=/response/stock.dart';
@@ -48,6 +49,8 @@ class DataCenterService implements IDataCenterService {
   late IO.Socket socket;
 
   bool registering = false;
+
+  bool initingListIndex = false;
 
   final Map<String, int> listStockStringReg = <String, int>{};
 
@@ -303,6 +306,14 @@ class DataCenterService implements IDataCenterService {
 
   @override
   Future<Set<IndexModel>> getListIndex() async {
+    if (_listIndex.isNotEmpty) {
+      return _listIndex;
+    }
+    if (initingListIndex) {
+      await 1.delay();
+      return getListIndex();
+    }
+    initingListIndex = true;
     for (final Index index in Index.values) {
       final response = await networkService.getIndexDetail(index);
       final int from = TimeUtilities.timeToEpoch(
@@ -316,6 +327,7 @@ class DataCenterService implements IDataCenterService {
         stockTradingHistory: chartResponse,
       ));
     }
+    initingListIndex = false;
     return _listIndex;
   }
 
@@ -327,5 +339,10 @@ class DataCenterService implements IDataCenterService {
   @override
   Future<NewsDetail?> getNewsDetail(int id) {
     throw UnimplementedError();
+  }
+
+  @override
+  Future<List<DeepModel>> getMarketDepth() {
+    return networkService.getMarketDepth();
   }
 }

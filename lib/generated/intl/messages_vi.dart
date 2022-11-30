@@ -20,9 +20,16 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'vi';
 
+  static String m0(value) => "Tăng ${value}";
+
+  static String m1(value) => "Giảm ${value}";
+
+  static String m2(value) => "Tổng ${value}";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "account": MessageLookupByLibrary.simpleMessage("Tài khoản"),
+        "analysis": MessageLookupByLibrary.simpleMessage("Phân tích"),
         "asset": MessageLookupByLibrary.simpleMessage("Tài sản"),
         "average": MessageLookupByLibrary.simpleMessage("Trung bình"),
         "bond": MessageLookupByLibrary.simpleMessage("Trái phiếu"),
@@ -32,6 +39,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "dividend": MessageLookupByLibrary.simpleMessage("Cổ tức"),
         "double_back_to_close_app":
             MessageLookupByLibrary.simpleMessage("Ấn thêm lần nữa để thoát"),
+        "event": MessageLookupByLibrary.simpleMessage("Sự kiện"),
         "fbuy": MessageLookupByLibrary.simpleMessage("NN mua"),
         "fill_OTP": MessageLookupByLibrary.simpleMessage("Nhập mã OTP"),
         "fill_account": MessageLookupByLibrary.simpleMessage("Nhập tài khoản"),
@@ -41,10 +49,13 @@ class MessageLookup extends MessageLookupByLibrary {
         "floor": MessageLookupByLibrary.simpleMessage("Sàn"),
         "froom": MessageLookupByLibrary.simpleMessage("Room NN"),
         "fsell": MessageLookupByLibrary.simpleMessage("NN bán"),
+        "gain_wvalue": m0,
         "hello": MessageLookupByLibrary.simpleMessage("Chào bạn"),
         "hi": MessageLookupByLibrary.simpleMessage("Xin chào"),
         "high": MessageLookupByLibrary.simpleMessage("Cao"),
         "home": MessageLookupByLibrary.simpleMessage("Trang chủ"),
+        "industry": MessageLookupByLibrary.simpleMessage("Ngành"),
+        "interested": MessageLookupByLibrary.simpleMessage("Quan tâm"),
         "interested_catalog":
             MessageLookupByLibrary.simpleMessage("Danh mục quan tâm"),
         "invalid_account": MessageLookupByLibrary.simpleMessage(
@@ -57,8 +68,11 @@ class MessageLookup extends MessageLookupByLibrary {
             "Cùng tham gia thị trường đầu tư đầy sôi động với ứng dụng "),
         "login_qoute2": MessageLookupByLibrary.simpleMessage(" bạn nhé"),
         "login_upper": MessageLookupByLibrary.simpleMessage("ĐĂNG NHẬP"),
+        "loss_wvalue": m1,
         "low": MessageLookupByLibrary.simpleMessage("Thấp"),
         "market": MessageLookupByLibrary.simpleMessage("Thị trường"),
+        "market_deep":
+            MessageLookupByLibrary.simpleMessage("Độ sâu thị trường"),
         "market_overview":
             MessageLookupByLibrary.simpleMessage("Tổng quan thị trường"),
         "market_today":
@@ -66,6 +80,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "matched_order_detail":
             MessageLookupByLibrary.simpleMessage("Chi tiết khớp lệnh"),
         "minutes": MessageLookupByLibrary.simpleMessage(" phút"),
+        "news": MessageLookupByLibrary.simpleMessage("Tin tức"),
         "news_and_events":
             MessageLookupByLibrary.simpleMessage("Tin tức, sự kiện"),
         "no_internet":
@@ -75,6 +90,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "null_username": MessageLookupByLibrary.simpleMessage(
             "Tên đăng nhập cần tối thiểu 6 ký tự"),
         "order": MessageLookupByLibrary.simpleMessage("Đặt lệnh"),
+        "overview": MessageLookupByLibrary.simpleMessage("Tổng quan"),
         "password": MessageLookupByLibrary.simpleMessage("Mật khẩu"),
         "qa_base": MessageLookupByLibrary.simpleMessage("Cơ sở"),
         "qa_bond": MessageLookupByLibrary.simpleMessage("Trái phiếu"),
@@ -94,6 +110,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "timeout": MessageLookupByLibrary.simpleMessage(
             "Không nhận được phản hồi từ máy chủ"),
         "total_asset": MessageLookupByLibrary.simpleMessage("Tổng tài sản"),
+        "total_wvalue": m2,
         "trading_board": MessageLookupByLibrary.simpleMessage("Bảng giá"),
         "username": MessageLookupByLibrary.simpleMessage("Tên đăng nhập"),
         "volumn": MessageLookupByLibrary.simpleMessage("Khối lượng"),

@@ -7,6 +7,7 @@ import 'package:dtnd/data/i_network_service.dart';
 import 'package:dtnd/data/implementations/data_center_service.dart';
 import 'package:dtnd/data/implementations/local_storage_service.dart';
 import 'package:dtnd/data/implementations/network_service.dart';
+import 'package:dtnd/utilities/logger.dart';
 import 'package:get/get.dart';
 
 class HomeController {
@@ -36,9 +37,27 @@ class HomeController {
   final Rx<bool> initialized = false.obs;
 
   void init() async {
-    if (initialized.value) {
-      return;
+    try {
+      if (initialized.value) {
+        return;
+      }
+      interestedCatalog = await dataCenterService.getStockModelsFromStockCodes(
+          localStorageService.getListInterestedStock() ?? defaultListStock);
+      marketToday = await dataCenterService.getStockModelsFromStockCodes(
+          localStorageService.getListInterestedStock() ?? defaultListStock);
+      for (var element in marketToday) {
+        await getStockIndayTradingHistory(element);
+      }
+      listIndexs = await dataCenterService.getListIndex();
+      currentIndexModel = listIndexs.first;
+      initialized.value = true;
+    } catch (e) {
+      logger.v(e);
     }
+  }
+
+  void refresh() async {
+    initialized.value = false;
     interestedCatalog = await dataCenterService.getStockModelsFromStockCodes(
         localStorageService.getListInterestedStock() ?? defaultListStock);
     marketToday = await dataCenterService.getStockModelsFromStockCodes(

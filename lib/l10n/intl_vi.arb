@@ -41,6 +41,9 @@
     "sell": "Bán",
     "volumn": "Khối lượng",
     "dividend": "Cổ tức",
+    "total_wvalue": "Tổng {value}",
+    "gain_wvalue": "Tăng {value}",
+    "loss_wvalue": "Giảm {value}",
 
     "total_asset": "Tổng tài sản",
     "interested_catalog": "Danh mục quan tâm",
@@ -50,6 +53,13 @@
     "matched_order_detail": "Chi tiết khớp lệnh",
     "financial_index": "Chỉ số tài chính",
     "news_and_events": "Tin tức, sự kiện",
+    "news": "Tin tức",
+    "event": "Sự kiện",
+    "interested": "Quan tâm",
+    "overview": "Tổng quan",
+    "analysis": "Phân tích",
+    "industry": "Ngành",
+    "market_deep": "Độ sâu thị trường",
 
     "login_exception_required_OTP": "Hãy đăng nhập bằng mã OTP được gửi về máy của bạn",
     "invalid_account": "Tài khoản chưa đăng ký hoặc đã hết hiệu lực giao dịch Internet",

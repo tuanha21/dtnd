@@ -16,7 +16,6 @@ class UserService implements IUserService {
 
   @override
   Future<void> logout() {
-    // TODO: implement logout
     throw UnimplementedError();
   }
 }

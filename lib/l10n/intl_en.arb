@@ -41,6 +41,9 @@
     "sell": "Sell",
     "volumn": "Volumn",
     "dividend": "Dividend",
+    "total_wvalue": "Total {value}",
+    "gain_wvalue": "Gain {value}",
+    "loss_wvalue": "Loss {value}",
 
     "total_asset": "Total asset",
     "interested_catalog": "Interested catalog",
@@ -50,6 +53,13 @@
     "matched_order_detail": "Matched order detail",
     "financial_index": "Financial index",
     "news_and_events": "News and events",
+    "news": "News",
+    "event": "Event",
+    "interested": "Interested",
+    "overview": "Overview",
+    "analysis": "Analysis",
+    "industry": "Industry",
+    "market_deep": "Market deep",
 
     "login_exception_required_OTP": "Login with OTP code sent to your phone",
     "invalid_account": "This account has not been registered or Internet trading feature is no longer available",

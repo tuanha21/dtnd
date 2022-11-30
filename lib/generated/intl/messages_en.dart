@@ -20,9 +20,16 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'en';
 
+  static String m0(value) => "Gain ${value}";
+
+  static String m1(value) => "Loss ${value}";
+
+  static String m2(value) => "Total ${value}";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "account": MessageLookupByLibrary.simpleMessage("Account"),
+        "analysis": MessageLookupByLibrary.simpleMessage("Analysis"),
         "asset": MessageLookupByLibrary.simpleMessage("Asset"),
         "average": MessageLookupByLibrary.simpleMessage("Average"),
         "bond": MessageLookupByLibrary.simpleMessage("Bond"),
@@ -32,6 +39,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "dividend": MessageLookupByLibrary.simpleMessage("Dividend"),
         "double_back_to_close_app":
             MessageLookupByLibrary.simpleMessage("Back again to exit"),
+        "event": MessageLookupByLibrary.simpleMessage("Event"),
         "fbuy": MessageLookupByLibrary.simpleMessage("FR buy"),
         "fill_OTP": MessageLookupByLibrary.simpleMessage("Fill OTP"),
         "fill_account": MessageLookupByLibrary.simpleMessage("Fill account"),
@@ -41,10 +49,13 @@ class MessageLookup extends MessageLookupByLibrary {
         "floor": MessageLookupByLibrary.simpleMessage("Floor"),
         "froom": MessageLookupByLibrary.simpleMessage("Room FR"),
         "fsell": MessageLookupByLibrary.simpleMessage("FR sell"),
+        "gain_wvalue": m0,
         "hello": MessageLookupByLibrary.simpleMessage("Hello"),
         "hi": MessageLookupByLibrary.simpleMessage("Hi"),
         "high": MessageLookupByLibrary.simpleMessage("High"),
         "home": MessageLookupByLibrary.simpleMessage("Home"),
+        "industry": MessageLookupByLibrary.simpleMessage("Industry"),
+        "interested": MessageLookupByLibrary.simpleMessage("Interested"),
         "interested_catalog":
             MessageLookupByLibrary.simpleMessage("Interested catalog"),
         "invalid_account": MessageLookupByLibrary.simpleMessage(
@@ -57,14 +68,17 @@ class MessageLookup extends MessageLookupByLibrary {
             "Let\'s join the exciting investment market with "),
         "login_qoute2": MessageLookupByLibrary.simpleMessage(" application"),
         "login_upper": MessageLookupByLibrary.simpleMessage("LOGIN"),
+        "loss_wvalue": m1,
         "low": MessageLookupByLibrary.simpleMessage("Low"),
         "market": MessageLookupByLibrary.simpleMessage("Market"),
+        "market_deep": MessageLookupByLibrary.simpleMessage("Market deep"),
         "market_overview":
             MessageLookupByLibrary.simpleMessage("Market overview"),
         "market_today": MessageLookupByLibrary.simpleMessage("Market today"),
         "matched_order_detail":
             MessageLookupByLibrary.simpleMessage("Matched order detail"),
         "minutes": MessageLookupByLibrary.simpleMessage(" minutes"),
+        "news": MessageLookupByLibrary.simpleMessage("News"),
         "news_and_events":
             MessageLookupByLibrary.simpleMessage("News and events"),
         "no_internet":
@@ -74,6 +88,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "null_username": MessageLookupByLibrary.simpleMessage(
             "Username requires at least 6 characters"),
         "order": MessageLookupByLibrary.simpleMessage("Order"),
+        "overview": MessageLookupByLibrary.simpleMessage("Overview"),
         "password": MessageLookupByLibrary.simpleMessage("Password"),
         "qa_base": MessageLookupByLibrary.simpleMessage("Base"),
         "qa_bond": MessageLookupByLibrary.simpleMessage("Bond"),
@@ -94,6 +109,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "timeout":
             MessageLookupByLibrary.simpleMessage("No response from server"),
         "total_asset": MessageLookupByLibrary.simpleMessage("Total asset"),
+        "total_wvalue": m2,
         "trading_board": MessageLookupByLibrary.simpleMessage("Trading board"),
         "username": MessageLookupByLibrary.simpleMessage("Username"),
         "volumn": MessageLookupByLibrary.simpleMessage("Volumn"),

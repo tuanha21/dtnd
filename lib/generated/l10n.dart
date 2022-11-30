@@ -430,6 +430,36 @@ class S {
     );
   }
 
+  /// `Total {value}`
+  String total_wvalue(Object value) {
+    return Intl.message(
+      'Total $value',
+      name: 'total_wvalue',
+      desc: '',
+      args: [value],
+    );
+  }
+
+  /// `Gain {value}`
+  String gain_wvalue(Object value) {
+    return Intl.message(
+      'Gain $value',
+      name: 'gain_wvalue',
+      desc: '',
+      args: [value],
+    );
+  }
+
+  /// `Loss {value}`
+  String loss_wvalue(Object value) {
+    return Intl.message(
+      'Loss $value',
+      name: 'loss_wvalue',
+      desc: '',
+      args: [value],
+    );
+  }
+
   /// `Total asset`
   String get total_asset {
     return Intl.message(
@@ -505,6 +535,76 @@ class S {
     return Intl.message(
       'News and events',
       name: 'news_and_events',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `News`
+  String get news {
+    return Intl.message(
+      'News',
+      name: 'news',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Event`
+  String get event {
+    return Intl.message(
+      'Event',
+      name: 'event',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Interested`
+  String get interested {
+    return Intl.message(
+      'Interested',
+      name: 'interested',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Overview`
+  String get overview {
+    return Intl.message(
+      'Overview',
+      name: 'overview',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Analysis`
+  String get analysis {
+    return Intl.message(
+      'Analysis',
+      name: 'analysis',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Industry`
+  String get industry {
+    return Intl.message(
+      'Industry',
+      name: 'industry',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Market deep`
+  String get market_deep {
+    return Intl.message(
+      'Market deep',
+      name: 'market_deep',
       desc: '',
       args: [],
     );

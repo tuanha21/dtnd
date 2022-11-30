@@ -2,6 +2,7 @@
 
 import 'dart:convert';
 
+import 'package:dtnd/=models=/response/deep_model.dart';
 import 'package:dtnd/=models=/response/index_detail.dart';
 import 'package:dtnd/=models=/response/index_chart_data.dart';
 import 'package:dtnd/=models=/index.dart';
@@ -43,7 +44,7 @@ class NetworkService implements INetworkService {
   Uri url_data_feed(String path) => Uri.https(data_feed_url, path);
   Uri url_board_data_feed(Map<String, dynamic> queryParameters) =>
       Uri.https(board_data_feed_url, "datafeed/history", queryParameters);
-  Uri url_stock(String path, Map<String, dynamic> queryParameters) =>
+  Uri url_stock(String path, [Map<String, dynamic>? queryParameters]) =>
       Uri.https(stock_url, path, queryParameters);
 
   final Utf8Codec utf8Codec = const Utf8Codec();
@@ -55,8 +56,8 @@ class NetworkService implements INetworkService {
     try {
       return jsonDecode(utf8Codec.decode(data));
     } catch (e) {
-      print(data);
-      print(e.toString());
+      // print(data);
+      logger.e(e.toString());
       return null;
     }
   }
@@ -230,6 +231,29 @@ class NetworkService implements INetworkService {
     } catch (e) {
       logger.e(e);
       return null;
+    }
+  }
+
+  @override
+  Future<List<DeepModel>> getMarketDepth() async {
+    try {
+      final http.Response response = await client.get(url_stock("marketDepth"));
+
+      final List<dynamic> responseBody = decode(response.bodyBytes);
+      List<DeepModel> data = [];
+      for (var element in responseBody) {
+        try {
+          data.add(DeepModel.fromJson(element));
+        } catch (e) {
+          continue;
+        }
+      }
+      data.sort((a, b) => a.sortValue.compareTo(b.sortValue));
+      logger.v(responseBody);
+      return data;
+    } catch (e) {
+      logger.e(e);
+      return [];
     }
   }
 }

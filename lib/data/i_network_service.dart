@@ -1,6 +1,7 @@
 // ignore_for_file: library_prefixes
 
 import 'package:dtnd/=models=/index.dart';
+import 'package:dtnd/=models=/response/deep_model.dart';
 import 'package:dtnd/=models=/response/index_chart_data.dart';
 import 'package:dtnd/=models=/response/index_detail.dart';
 import 'package:dtnd/=models=/response/news_detail.dart';
@@ -47,4 +48,6 @@ abstract class INetworkService {
   Future<List<StockNews>> getStockNews(String stockCode);
 
   Future<NewsDetail?> getNewsDetail(int id);
+
+  Future<List<DeepModel>> getMarketDepth();
 }
