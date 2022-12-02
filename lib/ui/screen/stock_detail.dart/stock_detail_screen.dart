@@ -116,6 +116,7 @@ class _StockDetailScreenState extends State<StockDetailScreen>
       floatingActionButton: SizedBox.square(
         dimension: 40,
         child: Material(
+          borderRadius: const BorderRadius.all(Radius.circular(6)),
           child: InkWell(
             borderRadius: const BorderRadius.all(Radius.circular(6)),
             child: Ink(

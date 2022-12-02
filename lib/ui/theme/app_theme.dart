@@ -119,7 +119,7 @@ final ButtonStyle _lightTextButtonThemeData = ButtonStyle(
       return AppColors.neutral_07;
     }
   }),
-  padding: const MaterialStatePropertyAll(EdgeInsets.all(20)),
+  padding: const MaterialStatePropertyAll(EdgeInsets.all(8)),
 );
 
 final ButtonStyle _darkTextButtonThemeData = ButtonStyle(
@@ -135,7 +135,7 @@ final ButtonStyle _darkTextButtonThemeData = ButtonStyle(
   foregroundColor: MaterialStateProperty.resolveWith<Color?>((states) {
     return AppColors.neutral_07;
   }),
-  padding: const MaterialStatePropertyAll(EdgeInsets.all(20)),
+  padding: const MaterialStatePropertyAll(EdgeInsets.all(8)),
 );
 
 final BottomNavigationBarThemeData _lightBottomNavigationBarThemeData =

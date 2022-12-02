@@ -1,7 +1,9 @@
 import 'package:dtnd/=models=/request/request_model.dart';
 import 'package:dtnd/=models=/response/user_token.dart';
 import 'package:dtnd/data/i_network_service.dart';
+import 'package:dtnd/data/i_user_service.dart';
 import 'package:dtnd/data/implementations/network_service.dart';
+import 'package:dtnd/data/implementations/user_service.dart';
 import 'package:get/get.dart';
 
 enum LoginStatus {
@@ -20,6 +22,7 @@ class LoginController {
   static final LoginController _instance = LoginController._internal();
   factory LoginController() => _instance;
   final INetworkService networkService = NetworkService();
+  final IUserService userService = UserService();
 
   final Rx<bool> loading = Rx<bool>(false);
   final Rx<bool> otpRequired = Rx<bool>(false);

@@ -3,6 +3,7 @@ import 'package:dtnd/config/service/environment.dart';
 import 'package:dtnd/data/implementations/data_center_service.dart';
 import 'package:dtnd/data/implementations/network_service.dart';
 import 'package:dtnd/data/implementations/local_storage_service.dart';
+import 'package:dtnd/data/implementations/user_service.dart';
 import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/screen/home_base/home_base.dart';
 import 'package:dtnd/ui/screen/login/login_screen.dart';
@@ -22,6 +23,7 @@ Future<void> main() async {
   await AppService().initialize(LocalStorageService().sharedPreferences);
   await NetworkService().init(appEnvironment);
   await DataCenterService().init();
+
   // print(dotenv.env['URL_DATA_FEED'].runtimeType);
   runApp(const MyApp());
 }
@@ -36,7 +38,7 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   final AppService appService = AppService();
   final GoRouter _router = GoRouter(
-    initialLocation: "/",
+    initialLocation: "/SignIn",
     routes: <GoRoute>[
       GoRoute(
         path: '/',

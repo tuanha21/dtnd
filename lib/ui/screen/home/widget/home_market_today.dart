@@ -84,7 +84,6 @@ class HomeIndexItem extends StatelessWidget {
   final ValueChanged<Index>? onSelected;
   @override
   Widget build(BuildContext context) {
-    print("rebuikt");
     final themeMode = AppService.instance.themeMode.value;
     BoxBorder? border;
     if (selectedIndex != null && data.index == selectedIndex) {
@@ -94,66 +93,70 @@ class HomeIndexItem extends StatelessWidget {
     if (onSelected != null) {
       onTap = () => onSelected?.call(data.index);
     }
-    return Material(
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: const BorderRadius.all(Radius.circular(8)),
-        child: Ink(
-          width: 148,
-          height: 64,
-          padding: const EdgeInsets.all(12.0),
-          decoration: BoxDecoration(
-            border: border,
-            borderRadius: const BorderRadius.all(Radius.circular(8)),
-            color: data.indexDetail.bgColor(themeMode),
-          ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    data.index.exchangeName,
-                    style: Theme.of(context)
-                        .textTheme
-                        .titleSmall!
-                        .copyWith(fontWeight: FontWeight.w600),
-                  ),
-                  SizedBox.square(
-                    dimension: 20,
-                    child: HomeIndexItemChart(data: [
-                      data.indexDetail.upQuant.toInt(),
-                      data.indexDetail.downQuant.toInt(),
-                      data.indexDetail.refQuant.toInt(),
-                    ]),
-                  ),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "${data.indexDetail.cIndex.value}",
-                    style: AppTextStyle.labelMedium_12.copyWith(
-                      fontWeight: FontWeight.w600,
-                      color: data.indexDetail.color,
+    return Obx(() {
+      return Material(
+        child: InkWell(
+          onTap: onTap,
+          borderRadius: const BorderRadius.all(Radius.circular(8)),
+          child: Ink(
+            width: 148,
+            height: 64,
+            padding: const EdgeInsets.all(12.0),
+            decoration: BoxDecoration(
+              border: border,
+              borderRadius: const BorderRadius.all(Radius.circular(8)),
+              color: data.indexDetail.bgColor(themeMode),
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      data.index.exchangeName,
+                      style: Theme.of(context)
+                          .textTheme
+                          .titleSmall!
+                          .copyWith(fontWeight: FontWeight.w600),
                     ),
-                  ),
-                  Text(
-                    "${data.indexDetail.change} (${data.indexDetail.changePc})",
-                    style: AppTextStyle.bodySmall_8.copyWith(
-                      fontWeight: FontWeight.w600,
-                      color: data.indexDetail.color,
+                    Builder(builder: (context) {
+                      return SizedBox.square(
+                        dimension: 20,
+                        child: HomeIndexItemChart(data: [
+                          data.indexDetail.upQuant.toInt(),
+                          data.indexDetail.downQuant.toInt(),
+                          data.indexDetail.refQuant.toInt(),
+                        ]),
+                      );
+                    }),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "${data.indexDetail.cIndex.value}",
+                      style: AppTextStyle.labelMedium_12.copyWith(
+                        fontWeight: FontWeight.w600,
+                        color: data.indexDetail.color,
+                      ),
                     ),
-                  ),
-                ],
-              ),
-            ],
+                    Text(
+                      "${data.indexDetail.change} (${data.indexDetail.changePc})",
+                      style: AppTextStyle.bodySmall_8.copyWith(
+                        fontWeight: FontWeight.w600,
+                        color: data.indexDetail.color,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
-      ),
-    );
+      );
+    });
   }
 }
 

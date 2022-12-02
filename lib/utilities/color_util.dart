@@ -1,3 +1,4 @@
+import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:flutter/material.dart';
 
 class ColorUtil {
@@ -32,5 +33,20 @@ class ColorUtil {
       800: (hslColor.withLightness(lightness - (highStep * 3))).toColor(),
       900: (hslColor.withLightness(lightness - (highStep * 4))).toColor(),
     };
+  }
+
+  static Color fromString(String string) {
+    switch (string.toLowerCase()) {
+      case "green":
+        return AppColors.semantic_01;
+      case "red":
+        return AppColors.semantic_03;
+      case "purpil":
+        return AppColors.semantic_05;
+      case "blue":
+        return AppColors.semantic_04;
+      default:
+        return AppColors.semantic_02;
+    }
   }
 }

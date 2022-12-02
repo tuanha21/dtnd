@@ -136,23 +136,27 @@ class HomeMarketOverviewItem extends StatelessWidget {
                       },
                       data.stockData.lastPrice,
                     ),
-                    Container(
-                      padding: const EdgeInsets.all(4.0),
-                      decoration: BoxDecoration(
-                        color: data.stockData.bgColor(themeMode),
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(2)),
-                      ),
-                      child: Obx(() {
-                        return Text(
-                          "${data.stockData.prefix} ${data.stockData.ot} (${data.stockData.prefix} ${data.stockData.changePc}%)",
-                          maxLines: 1,
-                          style: AppTextStyle.labelMedium_12.copyWith(
-                            fontWeight: FontWeight.w600,
-                            color: data.stockData.color,
+                    ObxValue<Rx<num?>>(
+                      (lastPrice) {
+                        print("rebuilt lastPrice");
+                        return Container(
+                          padding: const EdgeInsets.all(4.0),
+                          decoration: BoxDecoration(
+                            color: data.stockData.bgColor(themeMode),
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(2)),
+                          ),
+                          child: Text(
+                            "${data.stockData.prefix} ${data.stockData.ot} (${data.stockData.prefix} ${data.stockData.changePc}%)",
+                            maxLines: 1,
+                            style: AppTextStyle.labelMedium_12.copyWith(
+                              fontWeight: FontWeight.w600,
+                              color: data.stockData.color,
+                            ),
                           ),
                         );
-                      }),
+                      },
+                      data.stockData.lastPrice,
                     ),
                   ],
                 ),

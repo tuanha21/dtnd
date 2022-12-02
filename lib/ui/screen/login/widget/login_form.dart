@@ -117,62 +117,63 @@ class _LoginFormState extends State<LoginForm> {
   @override
   Widget build(BuildContext context) {
     return Form(
-        key: widget.loginFormKey,
-        child: Column(
-          children: [
-            FormField<String?>(
-                key: widget.usernameFormKey,
-                validator: widget.usernameValidator,
-                builder: (state) => TextField(
-                      controller: _userController,
-                      onChanged: _onUsernameChangeHandler,
-                      decoration: InputDecoration(
-                        labelText: S.of(context).username,
-                        hintText: S.of(context).username,
-                        errorText: usernameHasError
-                            ? widget.usernameFormKey.currentState?.errorText
-                            : null,
-                      ),
-                    )),
-            const SizedBox(
-              height: 20,
-            ),
-            FormField<String?>(
-              key: widget.passwordFormKey,
-              validator: widget.passwordValidator,
+      key: widget.loginFormKey,
+      child: Column(
+        children: [
+          FormField<String?>(
+              key: widget.usernameFormKey,
+              validator: widget.usernameValidator,
               builder: (state) => TextField(
-                controller: _passController,
-                onChanged: _onPasswordChangeHandler,
-                decoration: InputDecoration(
-                  labelText: S.of(context).password,
-                  hintText: S.of(context).password,
-                  errorText: passwordHasError
-                      ? widget.passwordFormKey.currentState?.errorText
-                      : null,
-                ),
+                    controller: _userController,
+                    onChanged: _onUsernameChangeHandler,
+                    decoration: InputDecoration(
+                      labelText: S.of(context).username,
+                      hintText: S.of(context).username,
+                      errorText: usernameHasError
+                          ? widget.usernameFormKey.currentState?.errorText
+                          : null,
+                    ),
+                  )),
+          const SizedBox(
+            height: 20,
+          ),
+          FormField<String?>(
+            key: widget.passwordFormKey,
+            validator: widget.passwordValidator,
+            builder: (state) => TextField(
+              controller: _passController,
+              onChanged: _onPasswordChangeHandler,
+              decoration: InputDecoration(
+                labelText: S.of(context).password,
+                hintText: S.of(context).password,
+                errorText: passwordHasError
+                    ? widget.passwordFormKey.currentState?.errorText
+                    : null,
               ),
             ),
-            // ObxValue<Rx<bool>>((otpRequired) {
-            //   if (!otpRequired.value) {
-            //     return Container();
-            //   }
-            //   return FormField<String?>(
-            //     key: widget.otpFormKey,
-            //     validator: widget.otpValidator,
-            //     builder: (otpFieldState) {
-            //       return TextFormField(
-            //         controller: _passController,
-            //         onChanged: (otp) =>
-            //             _onChangeHandler(otpFieldState, null, otp, null),
-            //         decoration: InputDecoration(
-            //           labelText: "OTP",
-            //           hintText: S.of(context).fill_OTP,
-            //         ),
-            //       );
-            //     },
-            //   );
-            // }, widget.otpRequired),
-          ],
-        ));
+          ),
+          // ObxValue<Rx<bool>>((otpRequired) {
+          //   if (!otpRequired.value) {
+          //     return Container();
+          //   }
+          //   return FormField<String?>(
+          //     key: widget.otpFormKey,
+          //     validator: widget.otpValidator,
+          //     builder: (otpFieldState) {
+          //       return TextFormField(
+          //         controller: _passController,
+          //         onChanged: (otp) =>
+          //             _onChangeHandler(otpFieldState, null, otp, null),
+          //         decoration: InputDecoration(
+          //           labelText: "OTP",
+          //           hintText: S.of(context).fill_OTP,
+          //         ),
+          //       );
+          //     },
+          //   );
+          // }, widget.otpRequired),
+        ],
+      ),
+    );
   }
 }
