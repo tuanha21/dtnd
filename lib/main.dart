@@ -38,7 +38,7 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   final AppService appService = AppService();
   final GoRouter _router = GoRouter(
-    initialLocation: "/SignIn",
+    initialLocation: "/",
     routes: <GoRoute>[
       GoRoute(
         path: '/',
@@ -48,6 +48,12 @@ class _MyAppState extends State<MyApp> {
       ),
       GoRoute(
         path: '/SignIn',
+        builder: (BuildContext context, GoRouterState state) {
+          return const LoginScreen();
+        },
+      ),
+      GoRoute(
+        path: '/VirtualAssistant',
         builder: (BuildContext context, GoRouterState state) {
           return const LoginScreen();
         },

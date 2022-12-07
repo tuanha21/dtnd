@@ -24,11 +24,18 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m1(value) => "Giảm ${value}";
 
-  static String m2(value) => "Tổng ${value}";
+  static String m2(value) =>
+      "Mã OTP đã được gửi về số điện thoại đuôi ${value} của bạn. Nhập mã 6 số để tiếp tục.";
+
+  static String m3(value) => "Tổng ${value}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+        "DTND_assistant": MessageLookupByLibrary.simpleMessage("Trợ lý DTND"),
+        "DTNDs_virtual_assistant":
+            MessageLookupByLibrary.simpleMessage(" của trợ lý ảo DTND"),
         "account": MessageLookupByLibrary.simpleMessage("Tài khoản"),
+        "agree_with": MessageLookupByLibrary.simpleMessage("Đồng ý với "),
         "analysis": MessageLookupByLibrary.simpleMessage("Phân tích"),
         "asset": MessageLookupByLibrary.simpleMessage("Tài sản"),
         "average": MessageLookupByLibrary.simpleMessage("Trung bình"),
@@ -36,6 +43,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "buy": MessageLookupByLibrary.simpleMessage("Mua"),
         "ceil": MessageLookupByLibrary.simpleMessage("Trần"),
         "community": MessageLookupByLibrary.simpleMessage("Cộng đồng"),
+        "confirm": MessageLookupByLibrary.simpleMessage("Xác nhận"),
+        "create_account": MessageLookupByLibrary.simpleMessage("Tạo tài khoản"),
         "dividend": MessageLookupByLibrary.simpleMessage("Cổ tức"),
         "double_back_to_close_app":
             MessageLookupByLibrary.simpleMessage("Ấn thêm lần nữa để thoát"),
@@ -83,6 +92,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "news": MessageLookupByLibrary.simpleMessage("Tin tức"),
         "news_and_events":
             MessageLookupByLibrary.simpleMessage("Tin tức, sự kiện"),
+        "next": MessageLookupByLibrary.simpleMessage("Tiếp tục"),
         "no_internet":
             MessageLookupByLibrary.simpleMessage("Không có kết nối Internet"),
         "null_password": MessageLookupByLibrary.simpleMessage(
@@ -90,6 +100,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "null_username": MessageLookupByLibrary.simpleMessage(
             "Tên đăng nhập cần tối thiểu 6 ký tự"),
         "order": MessageLookupByLibrary.simpleMessage("Đặt lệnh"),
+        "otp_code_sent_to_phone_number": m2,
         "overview": MessageLookupByLibrary.simpleMessage("Tổng quan"),
         "password": MessageLookupByLibrary.simpleMessage("Mật khẩu"),
         "qa_base": MessageLookupByLibrary.simpleMessage("Cơ sở"),
@@ -103,16 +114,26 @@ class MessageLookup extends MessageLookupByLibrary {
         "sell": MessageLookupByLibrary.simpleMessage("Bán"),
         "session_expired_in":
             MessageLookupByLibrary.simpleMessage("Hết phiên đăng nhập sau "),
+        "successfully_create_assistant_account":
+            MessageLookupByLibrary.simpleMessage(
+                "Tạo tài khoản\ntrợ lý ảo thành công"),
         "technical_trading_newbie": MessageLookupByLibrary.simpleMessage(
             "Bạn là 1 newbie và muốn giao dịch dễ dàng hơn"),
         "technical_trading_pro": MessageLookupByLibrary.simpleMessage(
             "Bạn giao dịch như 1 nhà đầu tư Chuyên nghiệp"),
+        "term": MessageLookupByLibrary.simpleMessage("điều khoản"),
+        "the_DTND_virtual_assistant_will_help_you_with_successful_transaction":
+            MessageLookupByLibrary.simpleMessage(
+                "Trợ lý ảo DTND sẽ giúp bạn có những\ngiao dịch thành công"),
         "timeout": MessageLookupByLibrary.simpleMessage(
             "Không nhận được phản hồi từ máy chủ"),
         "total_asset": MessageLookupByLibrary.simpleMessage("Tổng tài sản"),
-        "total_wvalue": m2,
+        "total_wvalue": m3,
         "trading_board": MessageLookupByLibrary.simpleMessage("Bảng giá"),
         "username": MessageLookupByLibrary.simpleMessage("Tên đăng nhập"),
+        "virtual_assistant": MessageLookupByLibrary.simpleMessage("Trợ lý ảo"),
+        "virtual_assistant_available":
+            MessageLookupByLibrary.simpleMessage("Trợ lý ảo đã sẵn sàng"),
         "volumn": MessageLookupByLibrary.simpleMessage("Khối lượng"),
         "wrong_password":
             MessageLookupByLibrary.simpleMessage("Mật khẩu không chính xác")

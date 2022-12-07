@@ -138,7 +138,6 @@ class HomeMarketOverviewItem extends StatelessWidget {
                     ),
                     ObxValue<Rx<num?>>(
                       (lastPrice) {
-                        print("rebuilt lastPrice");
                         return Container(
                           padding: const EdgeInsets.all(4.0),
                           decoration: BoxDecoration(

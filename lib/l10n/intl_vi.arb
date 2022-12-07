@@ -27,6 +27,7 @@
     "session_expired_in": "Hết phiên đăng nhập sau ",
     "minutes": " phút",
     "double_back_to_close_app": "Ấn thêm lần nữa để thoát",
+    "create_account": "Tạo tài khoản",
 
     "ceil": "Trần",
     "floor": "Sàn",
@@ -61,6 +62,17 @@
     "industry": "Ngành",
     "market_deep": "Độ sâu thị trường",
 
+    "DTND_assistant": "Trợ lý DTND",
+    "virtual_assistant": "Trợ lý ảo",
+    "virtual_assistant_available": "Trợ lý ảo đã sẵn sàng",
+    "term": "điều khoản",
+    "agree_with": "Đồng ý với ",
+    "confirm": "Xác nhận",
+    "DTNDs_virtual_assistant": " của trợ lý ảo DTND",
+    "otp_code_sent_to_phone_number": "Mã OTP đã được gửi về số điện thoại đuôi {value} của bạn. Nhập mã 6 số để tiếp tục.",
+    "successfully_create_assistant_account": "Tạo tài khoản\ntrợ lý ảo thành công",
+    "the_DTND_virtual_assistant_will_help_you_with_successful_transaction": "Trợ lý ảo DTND sẽ giúp bạn có những\ngiao dịch thành công",
+
     "login_exception_required_OTP": "Hãy đăng nhập bằng mã OTP được gửi về máy của bạn",
     "invalid_account": "Tài khoản chưa đăng ký hoặc đã hết hiệu lực giao dịch Internet",
     "null_username": "Tên đăng nhập cần tối thiểu 6 ký tự",
@@ -74,6 +86,7 @@
 
     "see_more": "Xem thêm",
     "loading": "Đang tải...",
+    "next": "Tiếp tục",
 
     "timeout": "Không nhận được phản hồi từ máy chủ",
     "no_internet": "Không có kết nối Internet"

@@ -50,15 +50,18 @@ class HomeQuickAccessElement extends StatelessWidget {
   final QuickAccess value;
   @override
   Widget build(BuildContext context) {
+    final themeMode = AppService.instance.themeMode.value;
     return SizedBox.fromSize(
       size: const Size(80, 56),
-      child: ObxValue<Rx<ThemeMode>>(
-        (themeMode) {
-          return Container(
-            alignment: Alignment.center,
+      child: Material(
+        borderRadius: const BorderRadius.all(Radius.circular(8)),
+        child: InkWell(
+          onTap: value.route(context),
+          borderRadius: const BorderRadius.all(Radius.circular(8)),
+          child: Ink(
             decoration: BoxDecoration(
               borderRadius: const BorderRadius.all(Radius.circular(8)),
-              color: themeMode.value.isLight
+              color: themeMode.isLight
                   ? value.theme.bgColor
                   : AppColors.neutral_01,
             ),
@@ -75,9 +78,8 @@ class HomeQuickAccessElement extends StatelessWidget {
                 ),
               ],
             ),
-          );
-        },
-        AppService.instance.themeMode,
+          ),
+        ),
       ),
     );
   }

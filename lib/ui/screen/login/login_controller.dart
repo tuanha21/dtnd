@@ -4,6 +4,7 @@ import 'package:dtnd/data/i_network_service.dart';
 import 'package:dtnd/data/i_user_service.dart';
 import 'package:dtnd/data/implementations/network_service.dart';
 import 'package:dtnd/data/implementations/user_service.dart';
+import 'package:dtnd/utilities/logger.dart';
 import 'package:get/get.dart';
 
 enum LoginStatus {
@@ -27,7 +28,7 @@ class LoginController {
   final Rx<bool> loading = Rx<bool>(false);
   final Rx<bool> otpRequired = Rx<bool>(false);
 
-  Future<void> login(String username, String password) async {
+  Future<LoginStatus> login(String username, String password) async {
     loading.value = true;
     final requestDataModel = RequestDataModel(
         type: RequestType.string,
@@ -42,8 +43,11 @@ class LoginController {
       data: requestDataModel,
     );
     final userEntity = await networkService.checkLogin(requestModel);
+    logger.v(userEntity?.toJson());
     final loginStatus = await verifyEntity(userEntity);
+
     loading.value = false;
+    return loginStatus;
   }
 
   Future<LoginStatus> verifyEntity(UserEntity? entity) async {

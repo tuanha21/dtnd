@@ -8,4 +8,5 @@ typedef OnTextFormFieldChanged = void Function(
 
 typedef OnSocket = dynamic Function(dynamic);
 typedef OnRegisteredCode = FutureOr<void> Function(String);
+typedef OnAsyncButtonPressed = Future<void> Function();
 typedef GetTotalVol = num Function(Side);

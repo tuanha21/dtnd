@@ -300,6 +300,16 @@ class S {
     );
   }
 
+  /// `Create account`
+  String get create_account {
+    return Intl.message(
+      'Create account',
+      name: 'create_account',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Ceil`
   String get ceil {
     return Intl.message(
@@ -610,6 +620,108 @@ class S {
     );
   }
 
+  /// `DTND assistant`
+  String get DTND_assistant {
+    return Intl.message(
+      'DTND assistant',
+      name: 'DTND_assistant',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Virtual assistant`
+  String get virtual_assistant {
+    return Intl.message(
+      'Virtual assistant',
+      name: 'virtual_assistant',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Virtual assistant available`
+  String get virtual_assistant_available {
+    return Intl.message(
+      'Virtual assistant available',
+      name: 'virtual_assistant_available',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `terms`
+  String get term {
+    return Intl.message(
+      'terms',
+      name: 'term',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Agree with `
+  String get agree_with {
+    return Intl.message(
+      'Agree with ',
+      name: 'agree_with',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Confirm`
+  String get confirm {
+    return Intl.message(
+      'Confirm',
+      name: 'confirm',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// ` of DTND's virtual assistant`
+  String get DTNDs_virtual_assistant {
+    return Intl.message(
+      ' of DTND\'s virtual assistant',
+      name: 'DTNDs_virtual_assistant',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `The OTP has been sent to your {value} extension phone number. Enter the 6-digit code to continue.`
+  String otp_code_sent_to_phone_number(Object value) {
+    return Intl.message(
+      'The OTP has been sent to your $value extension phone number. Enter the 6-digit code to continue.',
+      name: 'otp_code_sent_to_phone_number',
+      desc: '',
+      args: [value],
+    );
+  }
+
+  /// `Create virtual assistant successfully`
+  String get successfully_create_assistant_account {
+    return Intl.message(
+      'Create virtual assistant successfully',
+      name: 'successfully_create_assistant_account',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `The DTND virtual assistant will help you with successful transaction`
+  String
+      get the_DTND_virtual_assistant_will_help_you_with_successful_transaction {
+    return Intl.message(
+      'The DTND virtual assistant will help you with successful transaction',
+      name:
+          'the_DTND_virtual_assistant_will_help_you_with_successful_transaction',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Login with OTP code sent to your phone`
   String get login_exception_required_OTP {
     return Intl.message(
@@ -715,6 +827,16 @@ class S {
     return Intl.message(
       'Loading...',
       name: 'loading',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Next`
+  String get next {
+    return Intl.message(
+      'Next',
+      name: 'next',
       desc: '',
       args: [],
     );

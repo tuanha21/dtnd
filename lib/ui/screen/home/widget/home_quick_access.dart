@@ -1,9 +1,21 @@
 import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/screen/home/widget/quick_access_element.dart';
+import 'package:dtnd/ui/screen/virtual_assistant/virtual_assistant_controller.dart';
+import 'package:dtnd/ui/screen/virtual_assistant/virtual_assistant_register/virtual_assistant_register.dart';
+import 'package:dtnd/ui/screen/virtual_assistant/virtual_assistant_screen.dart';
+import 'package:dtnd/ui/screen/virtual_assistant/virtual_assistant_util.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:flutter/material.dart';
 
-enum QuickAccess { money, base, derivative, packEnrol, bond, coppytrade }
+enum QuickAccess {
+  money,
+  base,
+  derivative,
+  packEnrol,
+  bond,
+  coppytrade,
+  virtualAssistant,
+}
 
 extension QuickAccessX on QuickAccess {
   String get path {
@@ -20,6 +32,8 @@ extension QuickAccessX on QuickAccess {
         return AppImages.qa_bond;
       case QuickAccess.coppytrade:
         return AppImages.qa_copytrade;
+      case QuickAccess.virtualAssistant:
+        return AppImages.qa_virtual_assistant;
     }
   }
 
@@ -37,6 +51,8 @@ extension QuickAccessX on QuickAccess {
         return S.of(context).qa_bond;
       case QuickAccess.coppytrade:
         return S.of(context).qa_copytrade;
+      case QuickAccess.virtualAssistant:
+        return S.of(context).virtual_assistant;
     }
   }
 
@@ -54,6 +70,17 @@ extension QuickAccessX on QuickAccess {
         return HomeQuickAccessElementTheme.green;
       case QuickAccess.coppytrade:
         return HomeQuickAccessElementTheme.orange;
+      case QuickAccess.virtualAssistant:
+        return HomeQuickAccessElementTheme.purple;
+    }
+  }
+
+  VoidCallback route(BuildContext context) {
+    switch (this) {
+      case QuickAccess.virtualAssistant:
+        return () => VirtualAsisstantUtil.toVirtualAssistantScreen(context);
+      default:
+        return () {};
     }
   }
 }

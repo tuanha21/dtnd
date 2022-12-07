@@ -24,11 +24,19 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m1(value) => "Loss ${value}";
 
-  static String m2(value) => "Total ${value}";
+  static String m2(value) =>
+      "The OTP has been sent to your ${value} extension phone number. Enter the 6-digit code to continue.";
+
+  static String m3(value) => "Total ${value}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+        "DTND_assistant":
+            MessageLookupByLibrary.simpleMessage("DTND assistant"),
+        "DTNDs_virtual_assistant": MessageLookupByLibrary.simpleMessage(
+            " of DTND\'s virtual assistant"),
         "account": MessageLookupByLibrary.simpleMessage("Account"),
+        "agree_with": MessageLookupByLibrary.simpleMessage("Agree with "),
         "analysis": MessageLookupByLibrary.simpleMessage("Analysis"),
         "asset": MessageLookupByLibrary.simpleMessage("Asset"),
         "average": MessageLookupByLibrary.simpleMessage("Average"),
@@ -36,6 +44,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "buy": MessageLookupByLibrary.simpleMessage("Buy"),
         "ceil": MessageLookupByLibrary.simpleMessage("Ceil"),
         "community": MessageLookupByLibrary.simpleMessage("Community"),
+        "confirm": MessageLookupByLibrary.simpleMessage("Confirm"),
+        "create_account":
+            MessageLookupByLibrary.simpleMessage("Create account"),
         "dividend": MessageLookupByLibrary.simpleMessage("Dividend"),
         "double_back_to_close_app":
             MessageLookupByLibrary.simpleMessage("Back again to exit"),
@@ -81,6 +92,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "news": MessageLookupByLibrary.simpleMessage("News"),
         "news_and_events":
             MessageLookupByLibrary.simpleMessage("News and events"),
+        "next": MessageLookupByLibrary.simpleMessage("Next"),
         "no_internet":
             MessageLookupByLibrary.simpleMessage("No Internet connection"),
         "null_password": MessageLookupByLibrary.simpleMessage(
@@ -88,6 +100,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "null_username": MessageLookupByLibrary.simpleMessage(
             "Username requires at least 6 characters"),
         "order": MessageLookupByLibrary.simpleMessage("Order"),
+        "otp_code_sent_to_phone_number": m2,
         "overview": MessageLookupByLibrary.simpleMessage("Overview"),
         "password": MessageLookupByLibrary.simpleMessage("Password"),
         "qa_base": MessageLookupByLibrary.simpleMessage("Base"),
@@ -102,16 +115,27 @@ class MessageLookup extends MessageLookupByLibrary {
         "sell": MessageLookupByLibrary.simpleMessage("Sell"),
         "session_expired_in":
             MessageLookupByLibrary.simpleMessage("Session expired in "),
+        "successfully_create_assistant_account":
+            MessageLookupByLibrary.simpleMessage(
+                "Create virtual assistant successfully"),
         "technical_trading_newbie": MessageLookupByLibrary.simpleMessage(
             "You are a newbie and want to make trading easier"),
         "technical_trading_pro": MessageLookupByLibrary.simpleMessage(
             "You trade like a Professional Investor"),
+        "term": MessageLookupByLibrary.simpleMessage("terms"),
+        "the_DTND_virtual_assistant_will_help_you_with_successful_transaction":
+            MessageLookupByLibrary.simpleMessage(
+                "The DTND virtual assistant will help you with successful transaction"),
         "timeout":
             MessageLookupByLibrary.simpleMessage("No response from server"),
         "total_asset": MessageLookupByLibrary.simpleMessage("Total asset"),
-        "total_wvalue": m2,
+        "total_wvalue": m3,
         "trading_board": MessageLookupByLibrary.simpleMessage("Trading board"),
         "username": MessageLookupByLibrary.simpleMessage("Username"),
+        "virtual_assistant":
+            MessageLookupByLibrary.simpleMessage("Virtual assistant"),
+        "virtual_assistant_available":
+            MessageLookupByLibrary.simpleMessage("Virtual assistant available"),
         "volumn": MessageLookupByLibrary.simpleMessage("Volumn"),
         "wrong_password":
             MessageLookupByLibrary.simpleMessage("Password is incorrect")

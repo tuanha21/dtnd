@@ -34,6 +34,8 @@ class AppImages {
   static const String qa_derivative = "assets/svg/qa_derivative.svg";
   static const String qa_money = "assets/svg/qa_money.svg";
   static const String qa_pack_enrol = "assets/svg/qa_pack_enrol.svg";
+  static const String qa_virtual_assistant =
+      "assets/svg/qa_virtual_assistant.svg";
 
   static const String prefix_up_icon = "assets/images/prefix_up_icon.png";
   static const String prefix_ref_icon = "assets/images/prefix_ref_icon.png";
@@ -49,4 +51,8 @@ class AppImages {
 
   /// Image
   static const String home_banner = "assets/images/home_banner.png";
+  static const String virtual_assistant_register =
+      "assets/images/virtual_assistant_register.png";
+  static const String virtual_assistant_registered =
+      "assets/images/virtual_assistant_registered.png";
 }

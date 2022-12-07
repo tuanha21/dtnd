@@ -1,6 +1,8 @@
 import 'dart:async';
 
 import 'package:dtnd/generated/l10n.dart';
+import 'package:dtnd/ui/screen/login/login_controller.dart';
+import 'package:dtnd/ui/widget/button/async_button.dart';
 import 'package:dtnd/utilities/typedef.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -37,6 +39,7 @@ class LoginForm extends StatefulWidget {
 }
 
 class _LoginFormState extends State<LoginForm> {
+  final LoginController loginController = LoginController();
   final GlobalKey<FormState> loginFormKey = GlobalKey<FormState>();
   final TextEditingController _userController = TextEditingController();
   final TextEditingController _passController = TextEditingController();
@@ -121,26 +124,27 @@ class _LoginFormState extends State<LoginForm> {
       child: Column(
         children: [
           FormField<String?>(
-              key: widget.usernameFormKey,
-              validator: widget.usernameValidator,
-              builder: (state) => TextField(
-                    controller: _userController,
-                    onChanged: _onUsernameChangeHandler,
-                    decoration: InputDecoration(
-                      labelText: S.of(context).username,
-                      hintText: S.of(context).username,
-                      errorText: usernameHasError
-                          ? widget.usernameFormKey.currentState?.errorText
-                          : null,
-                    ),
-                  )),
+            key: widget.usernameFormKey,
+            validator: widget.usernameValidator,
+            builder: (usernameState) => TextField(
+              controller: _userController,
+              onChanged: _onUsernameChangeHandler,
+              decoration: InputDecoration(
+                labelText: S.of(context).username,
+                hintText: S.of(context).username,
+                errorText: usernameHasError
+                    ? widget.usernameFormKey.currentState?.errorText
+                    : null,
+              ),
+            ),
+          ),
           const SizedBox(
             height: 20,
           ),
           FormField<String?>(
             key: widget.passwordFormKey,
             validator: widget.passwordValidator,
-            builder: (state) => TextField(
+            builder: (passwordState) => TextField(
               controller: _passController,
               onChanged: _onPasswordChangeHandler,
               decoration: InputDecoration(
@@ -172,8 +176,38 @@ class _LoginFormState extends State<LoginForm> {
           //     },
           //   );
           // }, widget.otpRequired),
+          const SizedBox(
+            height: 20,
+          ),
+          Row(
+            children: [
+              Expanded(
+                child: AsyncButton(
+                  onPressed: () async {
+                    await 1.delay();
+                    if (widget.loginFormKey.currentState!.validate()) {
+                      final loginStatus = await loginController.login(
+                          widget.usernameFormKey.currentState!.value!,
+                          widget.passwordFormKey.currentState!.value!);
+                    }
+                  },
+                  // onPressed: () {
+                  //   GoRouter.of(context).go('/');
+                  // },
+                  padding: const EdgeInsets.all(8),
+                  borderRadius: const BorderRadius.all(Radius.circular(4)),
+                  child: Text(S.of(context).login),
+                ),
+              ),
+            ],
+          ),
         ],
       ),
     );
+  }
+
+  Future<void> onPressed() {
+    return loginController.login(widget.usernameFormKey.currentState!.value!,
+        widget.passwordFormKey.currentState!.value!);
   }
 }

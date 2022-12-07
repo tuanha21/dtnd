@@ -27,6 +27,7 @@
     "session_expired_in": "Session expired in ",
     "minutes": " minutes",
     "double_back_to_close_app": "Back again to exit",
+    "create_account": "Create account",
 
     "ceil": "Ceil",
     "floor": "Floor",
@@ -61,6 +62,17 @@
     "industry": "Industry",
     "market_deep": "Market deep",
 
+    "DTND_assistant": "DTND assistant",
+    "virtual_assistant": "Virtual assistant",
+    "virtual_assistant_available": "Virtual assistant available",
+    "term": "terms",
+    "agree_with": "Agree with ",
+    "confirm": "Confirm",
+    "DTNDs_virtual_assistant": " of DTND's virtual assistant",
+    "otp_code_sent_to_phone_number": "The OTP has been sent to your {value} extension phone number. Enter the 6-digit code to continue.",
+    "successfully_create_assistant_account": "Create virtual assistant successfully",
+    "the_DTND_virtual_assistant_will_help_you_with_successful_transaction": "The DTND virtual assistant will help you with successful transaction",
+
     "login_exception_required_OTP": "Login with OTP code sent to your phone",
     "invalid_account": "This account has not been registered or Internet trading feature is no longer available",
     "null_username": "Username requires at least 6 characters",
@@ -74,6 +86,7 @@
 
     "see_more": "See more",
     "loading": "Loading...",
+    "next": "Next",
 
     "timeout": "No response from server",
     "no_internet": "No Internet connection"

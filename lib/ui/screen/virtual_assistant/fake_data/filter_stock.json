@@ -1,0 +1,53 @@
+[{
+    "id": 1,
+    "name": "Thông tin chung",
+    "list": [{
+        "id": 11,
+        "sub_name": "Vốn hoá"
+    }, {
+        "id": 12,
+        "sub_name": "Thị giá"
+    }, {
+        "id": 13,
+        "sub_name": "% Sở hữu NN"
+    }, {
+        "id": 14,
+        "sub_name": "Alpha"
+    }, {
+        "id": 15,
+        "sub_name": "Alpha"
+    }, {
+        "id": 16,
+        "sub_name": "Tỷ lệ chuyển nhượng tự do"
+    }]
+
+}, {
+    "id": 2,
+    "name": "Tăng trưởng",
+    "list": [{
+        "id": 21,
+        "sub_name": "% DT 1 năm"
+    }, {
+        "id": 22,
+        "sub_name": "% DT 5 năm"
+    }, {
+        "id": 23,
+        "sub_name": "% EPS 1 năm"
+    }, {
+        "id": 24,
+        "sub_name": "% EPS 5 năm"
+    }, {
+        "id": 25,
+        "sub_name": "Tăng trưởng doanh thu quý gần nhất"
+    }, {
+        "id": 26,
+        "sub_name": "Tăng trưởng doanh thu quý gần nhì"
+    }, {
+        "id": 27,
+        "sub_name": "Tăng trưởng lợi nhuận quý gần nhất"
+    }, {
+        "id": 28,
+        "sub_name": "Tăng trưởng lợi nhuận quý gần nhì"
+    }]
+
+}]
