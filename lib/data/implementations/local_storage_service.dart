@@ -40,9 +40,9 @@ class LocalStorageService implements ILocalStorageService {
     Hive.registerAdapter(UserTokenAdapter());
     Hive.registerAdapter(ExchangeAdapter());
     Hive.registerAdapter(StockAdapter());
-    box = await Hive.openBox(_boxName);
-    _appAccessTime = box.get(appAccessTimeKey) ?? 1;
-    box.put(appAccessTimeKey, _appAccessTime);
+    box = await getBox(_boxName);
+    _appAccessTime = box.get(appAccessTimeKey) ?? 0;
+    box.put(appAccessTimeKey, _appAccessTime + 1);
     // savedUserToken = box.get(_savedUserTokenBoxName);
     // listAllStock = box.get(_savedAllListStock);
   }
@@ -63,5 +63,10 @@ class LocalStorageService implements ILocalStorageService {
   @override
   List<String>? getListInterestedStock() {
     return box.get(savedInterestedStocksBoxKey);
+  }
+
+  @override
+  Future<Box<E>> getBox<E>(String boxName) {
+    return Hive.openBox(boxName);
   }
 }

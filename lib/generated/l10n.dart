@@ -620,6 +620,16 @@ class S {
     );
   }
 
+  /// `Add stock`
+  String get add_stock {
+    return Intl.message(
+      'Add stock',
+      name: 'add_stock',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `DTND assistant`
   String get DTND_assistant {
     return Intl.message(
@@ -717,6 +727,116 @@ class S {
       'The DTND virtual assistant will help you with successful transaction',
       name:
           'the_DTND_virtual_assistant_will_help_you_with_successful_transaction',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Stocks you are interested in`
+  String get stocks_you_interested {
+    return Intl.message(
+      'Stocks you are interested in',
+      name: 'stocks_you_interested',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Select the stocks you are interested in. You can update later`
+  String get choose_stocks_you_interested {
+    return Intl.message(
+      'Select the stocks you are interested in. You can update later',
+      name: 'choose_stocks_you_interested',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Following catalog`
+  String get following_catalog {
+    return Intl.message(
+      'Following catalog',
+      name: 'following_catalog',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Catalog is empty`
+  String get empty_catalog {
+    return Intl.message(
+      'Catalog is empty',
+      name: 'empty_catalog',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Add following stocks`
+  String get add_following_stock {
+    return Intl.message(
+      'Add following stocks',
+      name: 'add_following_stock',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `This stock is already exist`
+  String get stock_already_exist {
+    return Intl.message(
+      'This stock is already exist',
+      name: 'stock_already_exist',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Something went erong`
+  String get something_went_wrong {
+    return Intl.message(
+      'Something went erong',
+      name: 'something_went_wrong',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Search stock`
+  String get search_stock {
+    return Intl.message(
+      'Search stock',
+      name: 'search_stock',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Filter stocks`
+  String get filter_stock {
+    return Intl.message(
+      'Filter stocks',
+      name: 'filter_stock',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Filter stocks figure`
+  String get filter_stock_figure {
+    return Intl.message(
+      'Filter stocks figure',
+      name: 'filter_stock_figure',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Create`
+  String get create {
+    return Intl.message(
+      'Create',
+      name: 'create',
       desc: '',
       args: [],
     );

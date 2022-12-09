@@ -278,6 +278,38 @@ class DataCenterService implements IDataCenterService {
   }
 
   @override
+  Future<List<StockModel>> getList30Stock(String code) async {
+    final listStocks = await networkService.getList30Stocks(code);
+    if (listStocks.isEmpty) {
+      return [];
+    }
+
+    final List<StockModel> results =
+        await getStockModelsFromStockCodes(listStocks);
+    return results;
+  }
+
+  @override
+  Future<List<Stock>> searchStocksBySym(String sym,
+      {int maxSuggestions = 10}) async {
+    if (sym.isEmpty) {
+      return [];
+    }
+    final List<Stock> searchedStocks = <Stock>[];
+
+    final _sym = sym.toUpperCase();
+    for (final Stock stock in listAllStock) {
+      if (stock.stockCode.contains(_sym)) {
+        searchedStocks.add(stock);
+        if (_sym.length == maxSuggestions) {
+          return searchedStocks;
+        }
+      }
+    }
+    return searchedStocks;
+  }
+
+  @override
   Future<StockData> getStockData(String stockCode) async {
     final List<StockDataResponse> listResponse =
         await networkService.getListStockData(stockCode);

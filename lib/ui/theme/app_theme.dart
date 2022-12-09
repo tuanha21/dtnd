@@ -77,6 +77,9 @@ final InputDecorationTheme lightInputDecorationTheme = InputDecorationTheme(
   focusedErrorBorder: _defaulBorder.copyWith(
     borderSide: const BorderSide(color: AppColors.error_input_border, width: 1),
   ),
+  suffixStyle: AppTextStyle.labelSmall_10.copyWith(
+    color: AppColors.neutral_03,
+  ),
 );
 
 final InputDecorationTheme darkInputDecorationTheme = InputDecorationTheme(
@@ -101,6 +104,9 @@ final InputDecorationTheme darkInputDecorationTheme = InputDecorationTheme(
   ),
   focusedErrorBorder: _defaulBorder.copyWith(
     borderSide: const BorderSide(color: AppColors.error_input_border, width: 1),
+  ),
+  suffixStyle: AppTextStyle.labelSmall_10.copyWith(
+    color: AppColors.neutral_03,
   ),
 );
 

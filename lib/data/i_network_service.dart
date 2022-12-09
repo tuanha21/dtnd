@@ -31,6 +31,8 @@ abstract class INetworkService {
 
   Future<List<Stock>> getListAllStock();
 
+  Future<List<String>> getList30Stocks(String code);
+
   Future<List<StockDataResponse>> getListStockData(String listStock);
 
   /// Should not call, too many data

@@ -64,6 +64,9 @@ dependencies:
   syncfusion_flutter_charts: ^20.3.57
   pinput: ^2.2.16
   web_socket_channel: ^2.2.0
+  messagepack: ^0.2.1
+  flutter_typeahead: ^4.1.1
+  msgpack_dart: ^1.0.0
 
 dev_dependencies:
   flutter_test:

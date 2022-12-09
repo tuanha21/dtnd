@@ -57,9 +57,9 @@ abstract class StockStatus {
     }
   }
 
-  Widget prefixIcon({double? size}) {
+  Widget prefixIcon({double? size, Color? color}) {
     String path;
-    Color? color;
+    Color? _color;
     switch (sstatus) {
       case SStatus.ref:
         path = AppImages.prefix_ref_icon;
@@ -72,16 +72,16 @@ abstract class StockStatus {
         break;
       case SStatus.ceil:
         path = AppImages.prefix_ref_icon;
-        color = AppColors.semantic_05;
+        _color = AppColors.semantic_05;
         break;
       case SStatus.floor:
         path = AppImages.prefix_ref_icon;
-        color = AppColors.semantic_04;
+        _color = AppColors.semantic_04;
         break;
     }
     return Image.asset(
       path,
-      color: color,
+      color: color ?? _color,
       width: size,
       height: size,
     );

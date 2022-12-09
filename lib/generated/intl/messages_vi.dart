@@ -35,6 +35,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "DTNDs_virtual_assistant":
             MessageLookupByLibrary.simpleMessage(" của trợ lý ảo DTND"),
         "account": MessageLookupByLibrary.simpleMessage("Tài khoản"),
+        "add_following_stock":
+            MessageLookupByLibrary.simpleMessage("Thêm mã theo dõi"),
+        "add_stock": MessageLookupByLibrary.simpleMessage("Thêm mã"),
         "agree_with": MessageLookupByLibrary.simpleMessage("Đồng ý với "),
         "analysis": MessageLookupByLibrary.simpleMessage("Phân tích"),
         "asset": MessageLookupByLibrary.simpleMessage("Tài sản"),
@@ -42,20 +45,29 @@ class MessageLookup extends MessageLookupByLibrary {
         "bond": MessageLookupByLibrary.simpleMessage("Trái phiếu"),
         "buy": MessageLookupByLibrary.simpleMessage("Mua"),
         "ceil": MessageLookupByLibrary.simpleMessage("Trần"),
+        "choose_stocks_you_interested": MessageLookupByLibrary.simpleMessage(
+            "Chọn các mã CK mà bạn đang quan tâm. Bạn có thể cập nhật thêm các mã CK sau"),
         "community": MessageLookupByLibrary.simpleMessage("Cộng đồng"),
         "confirm": MessageLookupByLibrary.simpleMessage("Xác nhận"),
+        "create": MessageLookupByLibrary.simpleMessage("Tạo"),
         "create_account": MessageLookupByLibrary.simpleMessage("Tạo tài khoản"),
         "dividend": MessageLookupByLibrary.simpleMessage("Cổ tức"),
         "double_back_to_close_app":
             MessageLookupByLibrary.simpleMessage("Ấn thêm lần nữa để thoát"),
+        "empty_catalog": MessageLookupByLibrary.simpleMessage("Danh mục rỗng"),
         "event": MessageLookupByLibrary.simpleMessage("Sự kiện"),
         "fbuy": MessageLookupByLibrary.simpleMessage("NN mua"),
         "fill_OTP": MessageLookupByLibrary.simpleMessage("Nhập mã OTP"),
         "fill_account": MessageLookupByLibrary.simpleMessage("Nhập tài khoản"),
         "fill_password": MessageLookupByLibrary.simpleMessage("Nhập mật khẩu"),
+        "filter_stock": MessageLookupByLibrary.simpleMessage("Lọc cổ phiếu"),
+        "filter_stock_figure":
+            MessageLookupByLibrary.simpleMessage("Chỉ số lọc cổ phiếu"),
         "financial_index":
             MessageLookupByLibrary.simpleMessage("Chỉ số tài chính"),
         "floor": MessageLookupByLibrary.simpleMessage("Sàn"),
+        "following_catalog":
+            MessageLookupByLibrary.simpleMessage("Danh mục theo dõi"),
         "froom": MessageLookupByLibrary.simpleMessage("Room NN"),
         "fsell": MessageLookupByLibrary.simpleMessage("NN bán"),
         "gain_wvalue": m0,
@@ -110,10 +122,17 @@ class MessageLookup extends MessageLookupByLibrary {
         "qa_money": MessageLookupByLibrary.simpleMessage("Tiền gửi"),
         "qa_pack_enrol": MessageLookupByLibrary.simpleMessage("ĐK gói"),
         "ref": MessageLookupByLibrary.simpleMessage("TC"),
+        "search_stock": MessageLookupByLibrary.simpleMessage("Tìm mã CP"),
         "see_more": MessageLookupByLibrary.simpleMessage("Xem thêm"),
         "sell": MessageLookupByLibrary.simpleMessage("Bán"),
         "session_expired_in":
             MessageLookupByLibrary.simpleMessage("Hết phiên đăng nhập sau "),
+        "something_went_wrong":
+            MessageLookupByLibrary.simpleMessage("Đã có lỗi xảy ra"),
+        "stock_already_exist": MessageLookupByLibrary.simpleMessage(
+            "Mã đã tồn tại trong danh mục"),
+        "stocks_you_interested":
+            MessageLookupByLibrary.simpleMessage("Các mã CK mà bạn quan tâm"),
         "successfully_create_assistant_account":
             MessageLookupByLibrary.simpleMessage(
                 "Tạo tài khoản\ntrợ lý ảo thành công"),

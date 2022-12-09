@@ -51,6 +51,10 @@ class AppImages {
 
   /// Image
   static const String home_banner = "assets/images/home_banner.png";
+  static const String empty_holder = "assets/images/empty_holder.png";
+  static const String search_icon = "assets/images/search_icon.png";
+  static const String tune_icon = "assets/images/tune_icon.png";
+  static const String add_icon = "assets/images/add_icon.png";
   static const String virtual_assistant_register =
       "assets/images/virtual_assistant_register.png";
   static const String virtual_assistant_registered =

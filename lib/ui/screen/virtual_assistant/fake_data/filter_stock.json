@@ -3,21 +3,28 @@
     "name": "Thông tin chung",
     "list": [{
         "id": 11,
+        "value_type": "Tỷ",
         "sub_name": "Vốn hoá"
     }, {
         "id": 12,
+        "value_type": "Tỷ",
         "sub_name": "Thị giá"
     }, {
         "id": 13,
+
+        "value_type": "%",
         "sub_name": "% Sở hữu NN"
     }, {
         "id": 14,
+        "value_type": "Tỷ",
         "sub_name": "Alpha"
     }, {
         "id": 15,
+        "value_type": "Tỷ",
         "sub_name": "Alpha"
     }, {
         "id": 16,
+        "value_type": "%",
         "sub_name": "Tỷ lệ chuyển nhượng tự do"
     }]
 
@@ -26,27 +33,35 @@
     "name": "Tăng trưởng",
     "list": [{
         "id": 21,
+        "value_type": "%",
         "sub_name": "% DT 1 năm"
     }, {
         "id": 22,
+        "value_type": "%",
         "sub_name": "% DT 5 năm"
     }, {
         "id": 23,
+        "value_type": "%",
         "sub_name": "% EPS 1 năm"
     }, {
         "id": 24,
+        "value_type": "%",
         "sub_name": "% EPS 5 năm"
     }, {
         "id": 25,
+        "value_type": "%",
         "sub_name": "Tăng trưởng doanh thu quý gần nhất"
     }, {
         "id": 26,
+        "value_type": "%",
         "sub_name": "Tăng trưởng doanh thu quý gần nhì"
     }, {
         "id": 27,
+        "value_type": "%",
         "sub_name": "Tăng trưởng lợi nhuận quý gần nhất"
     }, {
         "id": 28,
+        "value_type": "%",
         "sub_name": "Tăng trưởng lợi nhuận quý gần nhì"
     }]
 

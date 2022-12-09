@@ -3,6 +3,7 @@
 import 'package:dtnd/=models=/response/deep_model.dart';
 import 'package:dtnd/=models=/response/index_model.dart';
 import 'package:dtnd/=models=/response/news_detail.dart';
+import 'package:dtnd/=models=/response/stock.dart';
 import 'package:dtnd/=models=/response/stock_data.dart';
 import 'package:dtnd/=models=/response/stock_model.dart';
 import 'package:dtnd/=models=/response/stock_news.dart';
@@ -25,6 +26,10 @@ abstract class IDataCenterService {
   Future<void> getListAllStock();
 
   Future<List<StockData>> getListStockData(List<String> listStock);
+
+  Future<List<StockModel>> getList30Stock(String code);
+
+  Future<List<Stock>> searchStocksBySym(String sym, {int maxSuggestions});
 
   Future<StockTradingHistory?> getStockIndayTradingHistory(String stockCode);
 

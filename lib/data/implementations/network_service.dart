@@ -112,6 +112,19 @@ class NetworkService implements INetworkService {
   }
 
   @override
+  Future<List<String>> getList30Stocks(String code) async {
+    const String path = "list30.pt";
+    final Map<String, dynamic> param = {"market": code};
+    final http.Response response = await client.get(url_stock(path, param));
+    final String responseBody = decode(response.bodyBytes)['list'];
+
+    if (responseBody.isEmpty) throw Exception();
+    final List<String> data = responseBody.split(",");
+
+    return data;
+  }
+
+  @override
   Future<List<StockDataResponse>> getListStockData(String listStock) async {
     final String path = "getliststockdata/$listStock";
     final http.Response response = await client.get(url_data_feed(path));
@@ -249,7 +262,6 @@ class NetworkService implements INetworkService {
         }
       }
       data.sort((a, b) => a.sortValue.compareTo(b.sortValue));
-      logger.v(responseBody);
       return data;
     } catch (e) {
       logger.e(e);

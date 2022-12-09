@@ -36,6 +36,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "DTNDs_virtual_assistant": MessageLookupByLibrary.simpleMessage(
             " of DTND\'s virtual assistant"),
         "account": MessageLookupByLibrary.simpleMessage("Account"),
+        "add_following_stock":
+            MessageLookupByLibrary.simpleMessage("Add following stocks"),
+        "add_stock": MessageLookupByLibrary.simpleMessage("Add stock"),
         "agree_with": MessageLookupByLibrary.simpleMessage("Agree with "),
         "analysis": MessageLookupByLibrary.simpleMessage("Analysis"),
         "asset": MessageLookupByLibrary.simpleMessage("Asset"),
@@ -43,21 +46,31 @@ class MessageLookup extends MessageLookupByLibrary {
         "bond": MessageLookupByLibrary.simpleMessage("Bond"),
         "buy": MessageLookupByLibrary.simpleMessage("Buy"),
         "ceil": MessageLookupByLibrary.simpleMessage("Ceil"),
+        "choose_stocks_you_interested": MessageLookupByLibrary.simpleMessage(
+            "Select the stocks you are interested in. You can update later"),
         "community": MessageLookupByLibrary.simpleMessage("Community"),
         "confirm": MessageLookupByLibrary.simpleMessage("Confirm"),
+        "create": MessageLookupByLibrary.simpleMessage("Create"),
         "create_account":
             MessageLookupByLibrary.simpleMessage("Create account"),
         "dividend": MessageLookupByLibrary.simpleMessage("Dividend"),
         "double_back_to_close_app":
             MessageLookupByLibrary.simpleMessage("Back again to exit"),
+        "empty_catalog":
+            MessageLookupByLibrary.simpleMessage("Catalog is empty"),
         "event": MessageLookupByLibrary.simpleMessage("Event"),
         "fbuy": MessageLookupByLibrary.simpleMessage("FR buy"),
         "fill_OTP": MessageLookupByLibrary.simpleMessage("Fill OTP"),
         "fill_account": MessageLookupByLibrary.simpleMessage("Fill account"),
         "fill_password": MessageLookupByLibrary.simpleMessage("Fill password"),
+        "filter_stock": MessageLookupByLibrary.simpleMessage("Filter stocks"),
+        "filter_stock_figure":
+            MessageLookupByLibrary.simpleMessage("Filter stocks figure"),
         "financial_index":
             MessageLookupByLibrary.simpleMessage("Financial index"),
         "floor": MessageLookupByLibrary.simpleMessage("Floor"),
+        "following_catalog":
+            MessageLookupByLibrary.simpleMessage("Following catalog"),
         "froom": MessageLookupByLibrary.simpleMessage("Room FR"),
         "fsell": MessageLookupByLibrary.simpleMessage("FR sell"),
         "gain_wvalue": m0,
@@ -111,10 +124,17 @@ class MessageLookup extends MessageLookupByLibrary {
         "qa_pack_enrol":
             MessageLookupByLibrary.simpleMessage("Pack enrollment"),
         "ref": MessageLookupByLibrary.simpleMessage("Ref"),
+        "search_stock": MessageLookupByLibrary.simpleMessage("Search stock"),
         "see_more": MessageLookupByLibrary.simpleMessage("See more"),
         "sell": MessageLookupByLibrary.simpleMessage("Sell"),
         "session_expired_in":
             MessageLookupByLibrary.simpleMessage("Session expired in "),
+        "something_went_wrong":
+            MessageLookupByLibrary.simpleMessage("Something went erong"),
+        "stock_already_exist":
+            MessageLookupByLibrary.simpleMessage("This stock is already exist"),
+        "stocks_you_interested": MessageLookupByLibrary.simpleMessage(
+            "Stocks you are interested in"),
         "successfully_create_assistant_account":
             MessageLookupByLibrary.simpleMessage(
                 "Create virtual assistant successfully"),
