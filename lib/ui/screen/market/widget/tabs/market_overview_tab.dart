@@ -36,20 +36,25 @@ class _MarketOverviewTabState extends State<MarketOverviewTab> {
         },
         labelAccessorFn: (data, _) => '${data.sL}',
         outsideLabelStyleAccessorFn: (data, _) {
-          charts.Color _textColor;
-          final int _size = data.sL > 100 ? 10 : 12;
+          charts.Color textColor;
+          final int size;
+          if (data.sL > 100) {
+            size = 10;
+          } else {
+            size = 12;
+          }
           if (data.tYPE == "0%") {
-            _textColor = charts.ColorUtil.fromDartColor(AppColors.semantic_02);
+            textColor = charts.ColorUtil.fromDartColor(AppColors.semantic_02);
           } else if (_spaceTypeRegex.hasMatch(data.tYPE) ||
               _upTypeRegex.hasMatch(data.tYPE)) {
-            _textColor = charts.ColorUtil.fromDartColor(AppColors.semantic_01);
+            textColor = charts.ColorUtil.fromDartColor(AppColors.semantic_01);
           } else {
-            _textColor = charts.ColorUtil.fromDartColor(AppColors.semantic_03);
+            textColor = charts.ColorUtil.fromDartColor(AppColors.semantic_03);
           }
           return charts.TextStyleSpec(
-            fontSize: _size,
+            fontSize: size,
             fontWeight: "600",
-            color: _textColor,
+            color: textColor,
           );
         },
       ),

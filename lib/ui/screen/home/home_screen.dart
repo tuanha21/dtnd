@@ -34,52 +34,49 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: const MyAppBar(title: "DTND"),
       body: RefreshIndicator(
         onRefresh: () async => homeController.init(),
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: ScrollConfiguration(
-            behavior: ScrollConfiguration.of(context).copyWith(
-              dragDevices: {
-                PointerDeviceKind.touch,
-                PointerDeviceKind.mouse,
-              },
-            ),
-            child: ListView(
-              // crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                const HomeAssetCard(),
-                const SizedBox(
-                  height: 20,
-                ),
-                const HomeQuickAccess(),
-                const SizedBox(
-                  height: 20,
-                ),
-                HomeSection(
-                  title: S.of(context).interested_catalog,
-                  onMore: () {},
-                  child: const HomeInterestedCatalog(),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                HomeSection(
-                  title: S.of(context).market_overview,
-                  child: const HomeMarketToday(),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                HomeSection(
-                  title: S.of(context).market_today,
-                  onMore: () {},
-                  child: const HomeMarketOverview(),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                Image.asset(AppImages.home_banner),
-              ],
-            ),
+        child: ScrollConfiguration(
+          behavior: ScrollConfiguration.of(context).copyWith(
+            dragDevices: {
+              PointerDeviceKind.touch,
+              PointerDeviceKind.mouse,
+            },
+          ),
+          child: ListView(
+            // crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              const HomeAssetCard(),
+              const SizedBox(
+                height: 20,
+              ),
+              const HomeQuickAccess(),
+              const SizedBox(
+                height: 20,
+              ),
+              HomeSection(
+                title: S.of(context).market_today,
+                child: const HomeMarketToday(),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              HomeSection(
+                title: S.of(context).market_overview,
+                onMore: () {},
+                child: const HomeMarketOverview(),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              HomeSection(
+                title: S.of(context).interested_catalog,
+                onMore: () {},
+                child: const HomeInterestedCatalog(),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              Image.asset(AppImages.home_banner),
+            ],
           ),
         ),
       ),

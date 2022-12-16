@@ -3,6 +3,7 @@
 import 'dart:convert';
 
 import 'package:dtnd/=models=/response/deep_model.dart';
+import 'package:dtnd/=models=/response/inday_matched_order.dart';
 import 'package:dtnd/=models=/response/index_detail.dart';
 import 'package:dtnd/=models=/response/index_chart_data.dart';
 import 'package:dtnd/=models=/index.dart';
@@ -34,18 +35,26 @@ class NetworkService implements INetworkService {
 
   late Environment environment;
 
-  late String core_url;
-  late String core_endpoint;
-  late String data_feed_url;
-  late String board_data_feed_url;
-  late String stock_url;
+  late final String core_url;
+  late final String core_endpoint;
+  late final String board_url;
+  late final String sbboard_url;
+  late final String info_sbsi_url;
+  late final String algo_url;
 
-  Uri get url_core => Uri.https(core_url, core_endpoint);
-  Uri url_data_feed(String path) => Uri.https(data_feed_url, path);
+  Uri get url_core => Uri.http(core_url, core_endpoint);
+  Uri url_board(String path) => Uri.https(board_url, path);
   Uri url_board_data_feed(Map<String, dynamic> queryParameters) =>
-      Uri.https(board_data_feed_url, "datafeed/history", queryParameters);
-  Uri url_stock(String path, [Map<String, dynamic>? queryParameters]) =>
-      Uri.https(stock_url, path, queryParameters);
+      Uri.https(sbboard_url, "datafeed/history", queryParameters);
+  Uri url_info_sbsi(String path, [Map<String, dynamic>? queryParameters]) =>
+      Uri.https(info_sbsi_url, path, queryParameters);
+  Uri url_algo(
+    String path, [
+    Map<String, dynamic>? queryParameters,
+  ]) {
+    final unencodedPath = "algo/pbapi/api/$path";
+    return Uri.https(algo_url, unencodedPath);
+  }
 
   final Utf8Codec utf8Codec = const Utf8Codec();
 
@@ -68,10 +77,11 @@ class NetworkService implements INetworkService {
     await dotenv.load(fileName: environment.envFileName);
     core_url = dotenv.env['core_domain']!;
     core_endpoint = dotenv.env['core_endpoint']!;
-    data_feed_url = dotenv.env['data_feed_domain']!;
-    board_data_feed_url = dotenv.env['board_data_feed_domain']!;
-    stock_url = dotenv.env['stock_domain']!;
-    initSocket(board_data_feed_url);
+    board_url = dotenv.env['board_domain']!;
+    sbboard_url = dotenv.env['sbboard_domain']!;
+    info_sbsi_url = dotenv.env['info_sbsi_domain']!;
+    algo_url = dotenv.env['algo_domain']!;
+    initSocket(sbboard_url);
     return;
   }
 
@@ -95,13 +105,14 @@ class NetworkService implements INetworkService {
   Future<UserEntity?> checkLogin(RequestModel requestModel) async {
     final http.Response response =
         await client.post(url_core, body: requestModel.toString());
+    logger.v(response.body);
     return UserEntity.fromJson(decode(response.bodyBytes));
   }
 
   @override
   Future<List<Stock>> getListAllStock() async {
     const String path = "getlistallstock";
-    final http.Response response = await client.get(url_data_feed(path));
+    final http.Response response = await client.get(url_board(path));
     final List<dynamic> responseBody = decode(response.bodyBytes);
     if (responseBody.isEmpty) throw Exception();
     List<Stock> data = [];
@@ -115,7 +126,7 @@ class NetworkService implements INetworkService {
   Future<List<String>> getList30Stocks(String code) async {
     const String path = "list30.pt";
     final Map<String, dynamic> param = {"market": code};
-    final http.Response response = await client.get(url_stock(path, param));
+    final http.Response response = await client.get(url_info_sbsi(path, param));
     final String responseBody = decode(response.bodyBytes)['list'];
 
     if (responseBody.isEmpty) throw Exception();
@@ -127,7 +138,7 @@ class NetworkService implements INetworkService {
   @override
   Future<List<StockDataResponse>> getListStockData(String listStock) async {
     final String path = "getliststockdata/$listStock";
-    final http.Response response = await client.get(url_data_feed(path));
+    final http.Response response = await client.get(url_board(path));
     final List<dynamic> responseBody = decode(response.bodyBytes);
     if (responseBody.isEmpty) throw Exception();
     List<StockDataResponse>? data = [];
@@ -141,7 +152,7 @@ class NetworkService implements INetworkService {
   @override
   Future<List<StockTrade>> getListStockTrade(String stockCode) async {
     final String path = "getliststocktrade/$stockCode";
-    final http.Response response = await client.get(url_data_feed(path));
+    final http.Response response = await client.get(url_board(path));
     final List<dynamic> responseBody = decode(response.bodyBytes);
     if (responseBody.isEmpty) throw Exception();
     List<StockTrade>? data = [];
@@ -174,7 +185,7 @@ class NetworkService implements INetworkService {
   @override
   Future<List<IndexDetailResponse>> getListIndexDetail() async {
     const String path = "getlistindexdetail/10,11,02,03";
-    final http.Response response = await client.get(url_data_feed(path));
+    final http.Response response = await client.get(url_board(path));
     final List<dynamic> responseBody = decode(response.bodyBytes);
     if (responseBody.isEmpty) throw Exception();
     List<IndexDetailResponse>? data = [];
@@ -187,7 +198,7 @@ class NetworkService implements INetworkService {
   @override
   Future<IndexDetailResponse> getIndexDetail(Index index) async {
     final String path = "getlistindexdetail/${index.code}";
-    final http.Response response = await client.get(url_data_feed(path));
+    final http.Response response = await client.get(url_board(path));
     final List<dynamic> responseBody = decode(response.bodyBytes);
     if (responseBody.isEmpty) throw Exception();
     final IndexDetailResponse data =
@@ -198,7 +209,7 @@ class NetworkService implements INetworkService {
   @override
   Future<List<IndexChartData>> getListIndexChartData(Index index) async {
     final String path = "getlistindexdetail/${index.code}";
-    final http.Response response = await client.get(url_data_feed(path));
+    final http.Response response = await client.get(url_board(path));
     final responseBody = decode(response.bodyBytes);
     final List<dynamic> responseData = responseBody['data'];
     List<IndexChartData> data = [];
@@ -218,7 +229,7 @@ class NetworkService implements INetworkService {
       "symbol": stockCode,
     };
     final http.Response response =
-        await client.get(url_stock("stockNews.pt", queryParameters));
+        await client.get(url_info_sbsi("stockNews.pt", queryParameters));
     final List<dynamic> responseBody = decode(response.bodyBytes);
     List<StockNews> data = [];
     for (var element in responseBody) {
@@ -237,7 +248,7 @@ class NetworkService implements INetworkService {
       "id": id,
     };
     final http.Response response =
-        await client.get(url_stock("stockNews.pt", queryParameters));
+        await client.get(url_info_sbsi("stockNews.pt", queryParameters));
     final responseBody = decode(response.bodyBytes);
     try {
       return NewsDetail.fromJson(responseBody);
@@ -250,7 +261,8 @@ class NetworkService implements INetworkService {
   @override
   Future<List<DeepModel>> getMarketDepth() async {
     try {
-      final http.Response response = await client.get(url_stock("marketDepth"));
+      final http.Response response =
+          await client.get(url_info_sbsi("marketDepth"));
 
       final List<dynamic> responseBody = decode(response.bodyBytes);
       List<DeepModel> data = [];
@@ -267,5 +279,24 @@ class NetworkService implements INetworkService {
       logger.e(e);
       return [];
     }
+  }
+
+  @override
+  Future<List<IndayMatchedOrder>> getIndayMatchedOrders(String symbol) async {
+    dynamic response =
+        await client.get(url_algo("stockBoard/chart/stock/$symbol"));
+    response = decode(response.bodyBytes);
+    if (response['status'] != 200) {
+      throw response['message'];
+    }
+    response = response['data'];
+    if (response.isEmpty ?? true) {
+      throw NullThrownError();
+    }
+    final List<IndayMatchedOrder> result = <IndayMatchedOrder>[];
+    for (var element in response) {
+      result.add(IndayMatchedOrder.fromJson(element));
+    }
+    return result;
   }
 }

@@ -43,7 +43,7 @@ class AppColors {
   static const accent_dark_03 = Color(0xFF483333);
 
   //
-  static const bg_1 = Color(0xFFFFFFFF);
+  static const bg_1 = Color(0xFFFAFAFA);
   static const bg_light_1 = Color(0xFFFEFEFE);
   static const bg_2 = Color(0xFF1C1C20);
   static const three_prices_buy_bg = Color(0xFFD6FAEB);

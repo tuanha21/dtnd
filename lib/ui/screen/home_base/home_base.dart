@@ -45,7 +45,8 @@ class _HomeBaseState extends State<HomeBase> {
         },
         currentHomeNav,
       ),
-      bottomNavigationBar: HomeBaseBottomNav(
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButton: HomeBaseBottomNav(
         currentHomeNav: currentHomeNav,
         onTapped: _selectTab,
       ),

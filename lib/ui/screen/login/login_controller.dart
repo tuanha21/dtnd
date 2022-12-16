@@ -18,6 +18,10 @@ enum LoginStatus {
   somethingWhenWrong,
 }
 
+extension LoginStatusX on LoginStatus {
+  bool get isSuccess => this == LoginStatus.success;
+}
+
 class LoginController {
   LoginController._internal();
   static final LoginController _instance = LoginController._internal();
@@ -29,25 +33,37 @@ class LoginController {
   final Rx<bool> otpRequired = Rx<bool>(false);
 
   Future<LoginStatus> login(String username, String password) async {
-    loading.value = true;
-    final requestDataModel = RequestDataModel(
-        type: RequestType.string,
-        cmd: "Web.sCheckLogin",
-        p1: username,
-        p2: password,
-        p3: "M",
-        p4: "");
-    final requestModel = RequestModel(
-      group: "L",
-      user: username,
-      data: requestDataModel,
-    );
-    final userEntity = await networkService.checkLogin(requestModel);
-    logger.v(userEntity?.toJson());
-    final loginStatus = await verifyEntity(userEntity);
-
-    loading.value = false;
-    return loginStatus;
+    try {
+      loading.value = true;
+      print("logining");
+      final requestDataModel = RequestDataModel(
+          type: RequestType.string,
+          cmd: "Web.sCheckLogin",
+          p1: username,
+          p2: password,
+          p3: "M",
+          p4: "");
+      final requestModel = RequestModel(
+        group: "L",
+        user: username,
+        data: requestDataModel,
+      );
+      final userEntity = await networkService.checkLogin(requestModel);
+      print("userEntity");
+      logger.v(userEntity?.toJson());
+      print("toJson");
+      final loginStatus = await verifyEntity(userEntity);
+      print("loginStatus");
+      if (loginStatus.isSuccess) {
+        await userService.saveToken(userEntity!.loginData!);
+      }
+      print(loginStatus);
+      loading.value = false;
+      return loginStatus;
+    } catch (e) {
+      logger.e(e);
+      return LoginStatus.somethingWhenWrong;
+    }
   }
 
   Future<LoginStatus> verifyEntity(UserEntity? entity) async {

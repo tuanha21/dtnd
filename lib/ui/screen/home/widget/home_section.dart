@@ -9,39 +9,42 @@ class HomeSection extends StatelessWidget {
     required this.title,
     this.onMore,
     this.child,
+    this.padding = 16,
   });
   final String title;
   final VoidCallback? onMore;
   final Widget? child;
+  final double padding;
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              title,
-              style: Theme.of(context)
-                  .textTheme
-                  .titleMedium!
-                  .copyWith(fontWeight: FontWeight.w700),
-            ),
-            onMore != null
-                ? InkWell(
-                    onTap: onMore,
-                    child: Text(
-                      S.of(context).see_more,
-                      style: AppTextStyle.labelMedium_12
-                          .copyWith(color: AppColors.primary_01),
-                    ),
-                  )
-                : Container(),
-          ],
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: padding),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                title,
+                style: Theme.of(context)
+                    .textTheme
+                    .titleMedium!
+                    .copyWith(fontWeight: FontWeight.w700),
+              ),
+              onMore != null
+                  ? InkWell(
+                      onTap: onMore,
+                      child: Text(
+                        S.of(context).see_more,
+                        style: AppTextStyle.labelMedium_12
+                            .copyWith(color: AppColors.primary_01),
+                      ),
+                    )
+                  : Container(),
+            ],
+          ),
         ),
-        const SizedBox(
-          height: 16,
-        ),
+        const SizedBox(height: 16),
         child ?? Container(),
       ],
     );

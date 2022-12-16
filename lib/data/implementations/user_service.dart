@@ -1,20 +1,17 @@
 import 'package:dtnd/=models=/response/user_token.dart';
-import 'package:dtnd/=models=/request/request_model.dart';
-import 'package:dtnd/data/i_network_service.dart';
+import 'package:dtnd/data/i_local_storage_service.dart';
 import 'package:dtnd/data/i_user_service.dart';
-import 'package:dtnd/data/implementations/network_service.dart';
+import 'package:dtnd/data/implementations/local_storage_service.dart';
 
 class UserService implements IUserService {
-  final INetworkService networkService = NetworkService();
-
+  final ILocalStorageService localStorageService = LocalStorageService();
   UserService._internal();
 
   static final UserService _instance = UserService._internal();
 
-  @override
-  UserToken? userToken;
-
   factory UserService() => _instance;
+
+  UserToken? userToken;
 
   @override
   Future<void> init() {
@@ -22,12 +19,22 @@ class UserService implements IUserService {
   }
 
   @override
-  Future<UserToken?> login(RequestModel model) async {
-    return null;
+  Future<void> deleteToken() async {
+    userToken = null;
+    return;
   }
 
   @override
-  Future<void> logout() {
-    throw UnimplementedError();
+  Future<bool> saveToken(UserToken token) async {
+    try {
+      userToken = token;
+      await localStorageService.saveUserToken(token);
+      return true;
+    } catch (e) {
+      return false;
+    }
   }
+
+  @override
+  bool get isLogin => userToken != null;
 }

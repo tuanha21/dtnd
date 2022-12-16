@@ -8,7 +8,7 @@ import '../i_local_storage_service.dart';
 
 const String _boxName = "dtnd_hive_box";
 const String appAccessTimeKey = "appAccessTimeKey";
-const String savedUserTokenBoxKey = "savedUserTokenBoxName";
+const String savedUserTokenBoxKey = "savedUserTokenBoxKey";
 const String savedAllListStockBoxKey = "savedAllListStock";
 const String savedInterestedStocksBoxKey = "savedInterestedStocksBoxKey";
 
@@ -68,5 +68,10 @@ class LocalStorageService implements ILocalStorageService {
   @override
   Future<Box<E>> getBox<E>(String boxName) {
     return Hive.openBox(boxName);
+  }
+
+  @override
+  Future<void> saveUserToken(UserToken token) {
+    return box.put(savedUserTokenBoxKey, token);
   }
 }

@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dtnd/=models=/response/stock_model.dart';
 import 'package:dtnd/=models=/response/stock_trading_history.dart';
 import 'package:dtnd/config/service/app_services.dart';
@@ -32,15 +33,27 @@ class _HomeMarketOverviewState extends State<HomeMarketOverview> {
           child: Text(S.of(context).loading),
         );
       }
-      // return ListView.builder(
-      //   shrinkWrap: true,
-      //   physics: const NeverScrollableScrollPhysics(),
-      //   itemCount: marketToday.length,
-      //   itemBuilder: (context, index) => HomeMarketOverviewItem(
-      //     index: index,
-      //     data: marketToday[index],
-      //   ),
-      // );
+      final width = MediaQuery.of(context).size.width;
+
+      Widget grid = SizedBox(
+        height: 72 * 3 + 16 * 2,
+        child: GridView.builder(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          itemCount: homeController.marketToday.length,
+          scrollDirection: Axis.horizontal,
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 3,
+            mainAxisSpacing: 16,
+            crossAxisSpacing: 16,
+            childAspectRatio: 72 / (width - 32),
+          ),
+          itemBuilder: (context, index) => HomeMarketOverviewItem(
+            index: index,
+            data: homeController.marketToday[index],
+          ),
+        ),
+      );
+      return grid;
       return Column(
         children: List<Widget>.generate(
           homeController.marketToday.length,
@@ -67,47 +80,53 @@ class HomeMarketOverviewItem extends StatelessWidget {
       onTap: () => Navigator.of(context).push(MaterialPageRoute(
         builder: (context) => StockDetailScreen(stockModel: data),
       )),
-      child: SizedBox.fromSize(
-        size: Size(width, 56),
-        child: Container(
-          alignment: Alignment.center,
-          padding: const EdgeInsets.all(8.0),
-          decoration: BoxDecoration(
-            borderRadius: const BorderRadius.all(Radius.circular(8)),
-            color: themeMode.isDark
-                ? AppColors.bg_2
-                : index.isEven
-                    ? AppColors.neutral_06
-                    : AppColors.bg_1,
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      data.stock.stockCode,
-                      style: Theme.of(context)
-                          .textTheme
-                          .titleSmall!
-                          .copyWith(fontWeight: FontWeight.w600),
-                    ),
-                    Obx(() {
-                      return Text(
-                        "${NumUtils.formatInteger10(data.stockData.lot.value)} CP",
-                        style: AppTextStyle.labelMedium_12.copyWith(
-                          fontWeight: FontWeight.w500,
-                          color: AppColors.neutral_03,
+      child: Container(
+        alignment: Alignment.center,
+        padding: const EdgeInsets.all(8.0),
+        decoration: BoxDecoration(
+          borderRadius: const BorderRadius.all(Radius.circular(8)),
+          color: themeMode.isDark ? AppColors.bg_2 : AppColors.neutral_07,
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            SizedBox(
+              width: 32,
+              child: Center(
+                child: ClipOval(
+                  child: SizedBox.square(
+                    dimension: 32.0,
+                    child: CachedNetworkImage(
+                      imageUrl:
+                          "https://info.sbsi.vn/logo/${data.stock.stockCode}",
+                      imageBuilder: (context, imageProvider) => Container(
+                        width: 32.0,
+                        height: 32.0,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          image: DecorationImage(
+                              image: imageProvider, fit: BoxFit.scaleDown),
                         ),
-                      );
-                    }),
-                  ],
+                      ),
+                      placeholder: (context, url) =>
+                          const CircularProgressIndicator(),
+                      errorWidget: (context, url, error) =>
+                          const Icon(Icons.error),
+                    ),
+                  ),
                 ),
               ),
-              Obx(() {
+            ),
+            const SizedBox(width: 8),
+            Text(
+              data.stock.stockCode,
+              style: Theme.of(context)
+                  .textTheme
+                  .titleSmall!
+                  .copyWith(fontWeight: FontWeight.w600),
+            ),
+            Expanded(
+              child: Obx(() {
                 if (data.stockTradingHistory.value?.c?.isEmpty ?? true) {
                   return Container();
                 } else {
@@ -119,49 +138,54 @@ class HomeMarketOverviewItem extends StatelessWidget {
                   );
                 }
               }),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    ObxValue<Rx<num?>>(
-                      (lastPrice) {
-                        return Text(
-                          "${lastPrice.value}",
-                          style: AppTextStyle.labelMedium_12.copyWith(
-                            fontWeight: FontWeight.w600,
-                            color: data.stockData.color,
-                          ),
-                        );
-                      },
-                      data.stockData.lastPrice,
-                    ),
-                    ObxValue<Rx<num?>>(
-                      (lastPrice) {
-                        return Container(
-                          padding: const EdgeInsets.all(4.0),
-                          decoration: BoxDecoration(
-                            color: data.stockData.bgColor(themeMode),
-                            borderRadius:
-                                const BorderRadius.all(Radius.circular(2)),
-                          ),
-                          child: Text(
-                            "${data.stockData.prefix} ${data.stockData.ot} (${data.stockData.prefix} ${data.stockData.changePc}%)",
-                            maxLines: 1,
-                            style: AppTextStyle.labelMedium_12.copyWith(
-                              fontWeight: FontWeight.w600,
-                              color: data.stockData.color,
-                            ),
-                          ),
-                        );
-                      },
-                      data.stockData.lastPrice,
-                    ),
-                  ],
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                // ObxValue<Rx<num?>>(
+                //   (lastPrice) {
+                //     return Text(
+                //       "${lastPrice.value}",
+                //       style: AppTextStyle.labelMedium_12.copyWith(
+                //         fontWeight: FontWeight.w600,
+                //         color: data.stockData.color,
+                //       ),
+                //     );
+                //   },
+                //   data.stockData.lastPrice,
+                // ),
+
+                ObxValue<Rx<num?>>(
+                  (lastPrice) {
+                    return Text.rich(
+                      TextSpan(children: [
+                        WidgetSpan(child: data.stockData.prefixIcon(size: 12)),
+                        TextSpan(
+                          text: " ${data.stockData.changePc}%",
+                        )
+                      ]),
+                      maxLines: 1,
+                      style: AppTextStyle.labelMedium_12.copyWith(
+                        fontWeight: FontWeight.w600,
+                        color: data.stockData.color,
+                      ),
+                    );
+                  },
+                  data.stockData.lastPrice,
                 ),
-              ),
-            ],
-          ),
+                Obx(() {
+                  return Text(
+                    "${NumUtils.formatInteger10(data.stockData.lot.value)} CP",
+                    style: AppTextStyle.labelMedium_12.copyWith(
+                      fontWeight: FontWeight.w500,
+                      color: AppColors.neutral_03,
+                    ),
+                  );
+                }),
+              ],
+            ),
+          ],
         ),
       ),
     );

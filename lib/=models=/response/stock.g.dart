@@ -18,10 +18,10 @@ class StockAdapter extends TypeAdapter<Stock> {
     };
     return Stock(
       stockCode: fields[0] as String,
-      postTo: fields[1] as Exchange,
-      nameVn: fields[2] as String,
-      nameEn: fields[3] as String,
-      nameShort: fields[4] as String,
+      postTo: fields[1] as Exchange?,
+      nameVn: fields[2] as String?,
+      nameEn: fields[3] as String?,
+      nameShort: fields[4] as String?,
     );
   }
 

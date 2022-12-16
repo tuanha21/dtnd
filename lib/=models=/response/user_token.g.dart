@@ -26,15 +26,13 @@ class UserTokenAdapter extends TypeAdapter<UserToken> {
       countLoginFail: fields[6] as num,
       authenType: fields[7] as String,
       iP: fields[8] as String?,
-      authenFlag: fields[9] as String,
-      customerCode: fields[10] as String,
     );
   }
 
   @override
   void write(BinaryWriter writer, UserToken obj) {
     writer
-      ..writeByte(11)
+      ..writeByte(9)
       ..writeByte(0)
       ..write(obj.user)
       ..writeByte(1)
@@ -52,11 +50,7 @@ class UserTokenAdapter extends TypeAdapter<UserToken> {
       ..writeByte(7)
       ..write(obj.authenType)
       ..writeByte(8)
-      ..write(obj.iP)
-      ..writeByte(9)
-      ..write(obj.authenFlag)
-      ..writeByte(10)
-      ..write(obj.customerCode);
+      ..write(obj.iP);
   }
 
   @override

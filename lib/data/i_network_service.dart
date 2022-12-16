@@ -2,6 +2,7 @@
 
 import 'package:dtnd/=models=/index.dart';
 import 'package:dtnd/=models=/response/deep_model.dart';
+import 'package:dtnd/=models=/response/inday_matched_order.dart';
 import 'package:dtnd/=models=/response/index_chart_data.dart';
 import 'package:dtnd/=models=/response/index_detail.dart';
 import 'package:dtnd/=models=/response/news_detail.dart';
@@ -52,4 +53,6 @@ abstract class INetworkService {
   Future<NewsDetail?> getNewsDetail(int id);
 
   Future<List<DeepModel>> getMarketDepth();
+
+  Future<List<IndayMatchedOrder>> getIndayMatchedOrders(String symbol);
 }

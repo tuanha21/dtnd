@@ -3,36 +3,24 @@ import 'dart:async';
 import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/screen/login/login_controller.dart';
 import 'package:dtnd/ui/widget/button/async_button.dart';
+import 'package:dtnd/utilities/logger.dart';
 import 'package:dtnd/utilities/typedef.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+
+import '../../../theme/app_image.dart';
 
 class LoginForm extends StatefulWidget {
   const LoginForm({
     Key? key,
     required this.loginFormKey,
-    required this.usernameFormKey,
-    required this.passwordFormKey,
-    this.otpFormKey,
-    this.onUsernameChanged,
-    this.onPasswordChanged,
-    this.canCheckLogin,
-    this.usernameValidator,
-    this.passwordValidator,
-    this.otpValidator,
     required this.otpRequired,
+    required this.onSuccess,
   }) : super(key: key);
 
   final GlobalKey<FormState> loginFormKey;
-  final GlobalKey<FormFieldState<String?>> usernameFormKey;
-  final GlobalKey<FormFieldState<String?>> passwordFormKey;
-  final GlobalKey<FormFieldState<String?>>? otpFormKey;
-  final OnTextFormFieldChanged? onUsernameChanged;
-  final OnTextFormFieldChanged? onPasswordChanged;
-  final Rx<bool>? canCheckLogin;
-  final FormFieldValidator<String?>? usernameValidator;
-  final FormFieldValidator<String?>? passwordValidator;
-  final FormFieldValidator<String?>? otpValidator;
+  final VoidCallback onSuccess;
   final Rx<bool> otpRequired;
   @override
   State<LoginForm> createState() => _LoginFormState();
@@ -44,28 +32,45 @@ class _LoginFormState extends State<LoginForm> {
   final TextEditingController _userController = TextEditingController();
   final TextEditingController _passController = TextEditingController();
 
+  final GlobalKey<FormFieldState<String?>> usernameFormKey =
+      GlobalKey<FormFieldState<String?>>();
+  final GlobalKey<FormFieldState<String?>> passwordFormKey =
+      GlobalKey<FormFieldState<String?>>();
+  final GlobalKey<FormFieldState<String?>>? otpFormKey =
+      GlobalKey<FormFieldState<String?>>();
+
+  final FocusNode usernameFocusNode = FocusNode();
+  final FocusNode passwordFocusNode = FocusNode();
+
+  final Duration duration = const Duration(milliseconds: 500);
+
   Timer? onUsernameStoppedTyping;
   Timer? onPasswordStoppedTyping;
   bool hasChanged = false;
   bool typingUsername = false;
   bool typingPassword = false;
+  bool invalidUsername = false;
+  bool invalidPassword = false;
 
+  FutureVoidCallback? login;
+
+  bool canCheckLogin = false;
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      _userController.addListener(() {
-        widget.usernameFormKey.currentState!.didChange(_userController.text);
-      });
-      _passController.addListener(() {
-        widget.passwordFormKey.currentState!.didChange(_passController.text);
-      });
-    });
+    // WidgetsBinding.instance.addPostFrameCallback((_) {
+    //   _userController.addListener(() {
+    //     usernameFormKey.currentState!.didChange(_userController.text);
+    //   });
+    //   _passController.addListener(() {
+    //     passwordFormKey.currentState!.didChange(_passController.text);
+    //   });
+    // });
   }
 
-  void _onUsernameChangeHandler(String value) {
-    // state?.didChange(value);
-    const duration = Duration(milliseconds: 500);
+  void _onUsernameChangeHandler(
+      FormFieldState<String?> usernameState, String value) {
+    usernameState.didChange(value);
     if (onUsernameStoppedTyping != null) {
       setState(() {
         typingUsername = true;
@@ -74,17 +79,16 @@ class _LoginFormState extends State<LoginForm> {
     }
     setState(
       () => onUsernameStoppedTyping = Timer(duration, () {
-        print(typingUsername);
         typingUsername = false;
+        usernameState.validate();
         checkValidate();
-        widget.usernameFormKey.currentState?.validate();
       }),
     );
   }
 
-  void _onPasswordChangeHandler(String value) {
-    // state?.didChange(value);
-    const duration = Duration(milliseconds: 500);
+  void _onPasswordChangeHandler(
+      FormFieldState<String?> passwordState, String value) {
+    passwordState.didChange(value);
     if (onPasswordStoppedTyping != null) {
       setState(() {
         typingPassword = true;
@@ -94,28 +98,64 @@ class _LoginFormState extends State<LoginForm> {
     setState(
       () => onPasswordStoppedTyping = Timer(duration, () {
         typingPassword = false;
+        passwordState.validate();
         checkValidate();
-        widget.passwordFormKey.currentState?.validate();
       }),
     );
   }
 
-  void checkValidate() {
-    if ((widget.usernameFormKey.currentState?.hasError ?? true) ||
-        (widget.passwordFormKey.currentState?.hasError ?? true)) {
-      widget.canCheckLogin?.value = false;
-    } else {
-      widget.canCheckLogin?.value = true;
+  String? usernameValidator(String? value) {
+    if ((value?.length ?? 0) < 6) {
+      return S.of(context).null_username;
     }
+    if (invalidUsername) {
+      setState(() {
+        invalidUsername = false;
+      });
+      return S.of(context).invalid_account;
+    }
+    return null;
+  }
+
+  String? passwordValidator(String? value) {
+    if ((value?.length ?? 0) < 6) {
+      return S.of(context).null_password;
+    }
+    if (invalidPassword) {
+      setState(() {
+        invalidPassword = false;
+      });
+      return S.of(context).wrong_password;
+    }
+    if (invalidUsername) {
+      setState(() {
+        invalidUsername = false;
+      });
+      return S.of(context).invalid_account;
+    }
+    return null;
+  }
+
+  void checkValidate() {
+    print(usernameFormKey.currentState!.value);
+    print(passwordFormKey.currentState!.value);
+    setState(() {
+      if (usernameHasError || passwordHasError) {
+        if (login == null) {
+          return;
+        }
+        login = null;
+      } else {
+        login = checkLogin;
+      }
+    });
   }
 
   bool get usernameHasError =>
-      (widget.usernameFormKey.currentState?.hasError ?? false) &&
-      !typingUsername;
+      (usernameFormKey.currentState?.hasError ?? true) && !typingUsername;
 
   bool get passwordHasError =>
-      (widget.passwordFormKey.currentState?.hasError ?? false) &&
-      !typingPassword;
+      (passwordFormKey.currentState?.hasError ?? true) && !typingPassword;
 
   @override
   Widget build(BuildContext context) {
@@ -124,16 +164,19 @@ class _LoginFormState extends State<LoginForm> {
       child: Column(
         children: [
           FormField<String?>(
-            key: widget.usernameFormKey,
-            validator: widget.usernameValidator,
+            key: usernameFormKey,
+            validator: usernameValidator,
             builder: (usernameState) => TextField(
+              autocorrect: false,
+              focusNode: usernameFocusNode,
               controller: _userController,
-              onChanged: _onUsernameChangeHandler,
+              onChanged: (value) =>
+                  _onUsernameChangeHandler(usernameState, value),
               decoration: InputDecoration(
                 labelText: S.of(context).username,
                 hintText: S.of(context).username,
                 errorText: usernameHasError
-                    ? widget.usernameFormKey.currentState?.errorText
+                    ? usernameFormKey.currentState?.errorText
                     : null,
               ),
             ),
@@ -142,16 +185,19 @@ class _LoginFormState extends State<LoginForm> {
             height: 20,
           ),
           FormField<String?>(
-            key: widget.passwordFormKey,
-            validator: widget.passwordValidator,
+            key: passwordFormKey,
+            validator: passwordValidator,
             builder: (passwordState) => TextField(
+              autocorrect: false,
+              focusNode: passwordFocusNode,
               controller: _passController,
-              onChanged: _onPasswordChangeHandler,
+              onChanged: (value) =>
+                  _onPasswordChangeHandler(passwordState, value),
               decoration: InputDecoration(
                 labelText: S.of(context).password,
                 hintText: S.of(context).password,
                 errorText: passwordHasError
-                    ? widget.passwordFormKey.currentState?.errorText
+                    ? passwordFormKey.currentState?.errorText
                     : null,
               ),
             ),
@@ -183,14 +229,7 @@ class _LoginFormState extends State<LoginForm> {
             children: [
               Expanded(
                 child: AsyncButton(
-                  onPressed: () async {
-                    await 1.delay();
-                    if (widget.loginFormKey.currentState!.validate()) {
-                      final loginStatus = await loginController.login(
-                          widget.usernameFormKey.currentState!.value!,
-                          widget.passwordFormKey.currentState!.value!);
-                    }
-                  },
+                  onPressed: login,
                   // onPressed: () {
                   //   GoRouter.of(context).go('/');
                   // },
@@ -199,6 +238,13 @@ class _LoginFormState extends State<LoginForm> {
                   child: Text(S.of(context).login),
                 ),
               ),
+              const SizedBox(
+                width: 20,
+              ),
+              SizedBox.square(
+                dimension: 40,
+                child: SvgPicture.asset(AppImages.login_face_id_icon),
+              ),
             ],
           ),
         ],
@@ -206,8 +252,26 @@ class _LoginFormState extends State<LoginForm> {
     );
   }
 
-  Future<void> onPressed() {
-    return loginController.login(widget.usernameFormKey.currentState!.value!,
-        widget.passwordFormKey.currentState!.value!);
+  Future<void> checkLogin() async {
+    usernameFocusNode.unfocus();
+    passwordFocusNode.unfocus();
+
+    try {
+      await 1.delay();
+      if (widget.loginFormKey.currentState!.validate()) {
+        print("widget.loginFormKey.currentState");
+        final loginStatus = await loginController.login(
+            usernameFormKey.currentState!.value!,
+            passwordFormKey.currentState!.value!);
+        print(loginStatus);
+        if (loginStatus.isSuccess) {
+          print(loginStatus);
+          widget.onSuccess.call();
+        }
+      }
+    } catch (e) {
+      logger.e(e);
+      return;
+    }
   }
 }

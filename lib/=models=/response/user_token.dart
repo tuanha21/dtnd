@@ -13,9 +13,7 @@ class UserEntity {
     oID = json['oID'];
     rc = json['rc'] ?? 0;
     rs = json['rs'];
-    loginData = json['loginData'] != null
-        ? UserToken.fromJson(json['loginData'])
-        : null;
+    loginData = json['data'] != null ? UserToken.fromJson(json['data']) : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -24,7 +22,7 @@ class UserEntity {
     data['rc'] = rc;
     data['rs'] = rs;
     if (loginData != null) {
-      data['loginData'] = loginData!.toJson();
+      data['data'] = loginData!.toJson();
     }
     return data;
   }
@@ -50,10 +48,10 @@ class UserToken {
   late final String authenType;
   @HiveField(8)
   late final String? iP;
-  @HiveField(9)
-  late final String authenFlag;
-  @HiveField(10)
-  late final String customerCode;
+  // @HiveField(9)
+  // late final String authenFlag;
+  // @HiveField(10)
+  // late final String customerCode;
 
   UserToken({
     required this.user,
@@ -65,8 +63,8 @@ class UserToken {
     required this.countLoginFail,
     required this.authenType,
     required this.iP,
-    required this.authenFlag,
-    required this.customerCode,
+    // required this.authenFlag,
+    // required this.customerCode,
   });
 
   UserToken.fromJson(Map<String, dynamic> json) {
@@ -79,8 +77,8 @@ class UserToken {
     countLoginFail = json['CountLoginFail'];
     authenType = json['AuthenType'];
     iP = json['IP'];
-    authenFlag = json['AuthenFlag'];
-    customerCode = json['CustomerCode'];
+    // authenFlag = json['AuthenFlag'];
+    // customerCode = json['CustomerCode'];
   }
 
   Map<String, dynamic> toJson() {
@@ -94,8 +92,8 @@ class UserToken {
     data['CountLoginFail'] = countLoginFail;
     data['AuthenType'] = authenType;
     data['IP'] = iP;
-    data['AuthenFlag'] = authenFlag;
-    data['CustomerCode'] = customerCode;
+    // data['AuthenFlag'] = authenFlag;
+    // data['CustomerCode'] = customerCode;
     return data;
   }
 }

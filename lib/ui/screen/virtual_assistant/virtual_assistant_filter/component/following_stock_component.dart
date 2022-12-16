@@ -1,7 +1,6 @@
 import 'package:dtnd/=models=/response/stock_model.dart';
 import 'package:dtnd/config/service/app_services.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
-import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:dtnd/ui/theme/app_textstyle.dart';
 import 'package:dtnd/utilities/extension.dart';
 import 'package:dtnd/utilities/num_utils.dart';
@@ -29,7 +28,7 @@ class FollowingStockComponent extends StatelessWidget {
           decoration: BoxDecoration(
             borderRadius: const BorderRadius.all(Radius.circular(8)),
             color:
-                themeMode.isLight ? AppColors.neutral_06 : AppColors.neutral_01,
+                themeMode.isLight ? AppColors.neutral_07 : AppColors.neutral_01,
           ),
           child: Row(
             children: [

@@ -3,8 +3,6 @@ import 'dart:ui';
 import 'package:dtnd/=models=/index.dart';
 import 'package:dtnd/=models=/response/index_model.dart';
 import 'package:dtnd/config/service/app_services.dart';
-import 'package:dtnd/data/i_data_center_service.dart';
-import 'package:dtnd/data/implementations/data_center_service.dart';
 import 'package:dtnd/generated/l10n.dart' as s;
 import 'package:dtnd/ui/screen/home/home_controller.dart';
 import 'package:dtnd/ui/screen/stock_detail.dart/widget/k_chart.dart';
@@ -13,7 +11,6 @@ import 'package:dtnd/ui/theme/app_textstyle.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
-import 'package:k_chart/flutter_k_chart.dart';
 
 class HomeMarketToday extends StatefulWidget {
   const HomeMarketToday({super.key});
@@ -45,6 +42,7 @@ class _HomeMarketTodayState extends State<HomeMarketToday> {
                 },
               ),
               child: ListView.separated(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
                 scrollDirection: Axis.horizontal,
                 physics: const AlwaysScrollableScrollPhysics(),
                 itemCount: homeController.listIndexs.length,
@@ -64,9 +62,12 @@ class _HomeMarketTodayState extends State<HomeMarketToday> {
                   null) {
                 return Container();
               }
-              return SizedBox.fromSize(
-                size: Size(MediaQuery.of(context).size.width, 350),
-                child: KChart(indexModel: homeController.currentIndexModel),
+              return Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: SizedBox.fromSize(
+                  size: Size(MediaQuery.of(context).size.width, 250),
+                  child: KChart(indexModel: homeController.currentIndexModel),
+                ),
               );
             },
           )

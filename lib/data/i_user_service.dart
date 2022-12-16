@@ -1,12 +1,11 @@
-import 'package:dtnd/=models=/request/request_model.dart';
 import 'package:dtnd/=models=/response/user_token.dart';
 
 abstract class IUserService {
-  UserToken? userToken;
+  bool get isLogin;
 
   Future<void> init();
 
-  Future<UserToken?> login(RequestModel model);
+  Future<void> deleteToken();
 
-  Future<void> logout();
+  Future<bool> saveToken(UserToken token);
 }

@@ -13,7 +13,7 @@ class AsyncButton extends StatefulWidget {
   final BorderRadius? borderRadius;
   final EdgeInsetsGeometry? padding;
   final Widget child;
-  final OnAsyncButtonPressed onPressed;
+  final FutureVoidCallback? onPressed;
   final ButtonStyle? style;
   @override
   State<AsyncButton> createState() => _AsyncButtonState();
@@ -24,24 +24,29 @@ class _AsyncButtonState extends State<AsyncButton> {
   @override
   Widget build(BuildContext context) {
     Widget button = TextButton(
-      onPressed: () async {
-        if (loading) {
-          return;
-        } else {
-          setState(() {
-            loading = true;
-          });
-          await widget.onPressed.call();
-          setState(() {
-            loading = false;
-          });
-        }
-      },
+      onPressed: widget.onPressed == null
+          ? null
+          : () async {
+              if (loading) {
+                return;
+              } else {
+                setState(() {
+                  loading = true;
+                });
+                await widget.onPressed!.call();
+                setState(() {
+                  loading = false;
+                });
+              }
+            },
       child: Builder(
         builder: (context) {
           if (loading) {
-            return const CircularProgressIndicator(
-              color: Colors.white,
+            return const SizedBox.square(
+              dimension: 24,
+              child: CircularProgressIndicator(
+                color: Colors.white,
+              ),
             );
           }
           return widget.child;

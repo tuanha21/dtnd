@@ -146,7 +146,7 @@ final ButtonStyle _darkTextButtonThemeData = ButtonStyle(
 
 final BottomNavigationBarThemeData _lightBottomNavigationBarThemeData =
     BottomNavigationBarThemeData(
-  backgroundColor: AppColors.neutral_06,
+  backgroundColor: AppColors.neutral_07,
   elevation: 4.0,
   type: BottomNavigationBarType.fixed,
   showSelectedLabels: true,
@@ -311,7 +311,7 @@ const ColorScheme _darkColorScheme = ColorScheme(
 ///================ THEME DATA ===================
 
 final ThemeData lightThemeData = ThemeData(
-  scaffoldBackgroundColor: AppColors.bg_light_1,
+  scaffoldBackgroundColor: AppColors.bg_1,
   textTheme: lightTextTheme,
   inputDecorationTheme: lightInputDecorationTheme,
   colorScheme: _lightColorScheme,
