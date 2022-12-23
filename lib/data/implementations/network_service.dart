@@ -53,7 +53,7 @@ class NetworkService implements INetworkService {
     Map<String, dynamic>? queryParameters,
   ]) {
     final unencodedPath = "algo/pbapi/api/$path";
-    return Uri.https(algo_url, unencodedPath);
+    return Uri.http(algo_url, unencodedPath);
   }
 
   final Utf8Codec utf8Codec = const Utf8Codec();

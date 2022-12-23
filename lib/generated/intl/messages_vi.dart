@@ -44,6 +44,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "average": MessageLookupByLibrary.simpleMessage("Trung bình"),
         "bond": MessageLookupByLibrary.simpleMessage("Trái phiếu"),
         "buy": MessageLookupByLibrary.simpleMessage("Mua"),
+        "cancel": MessageLookupByLibrary.simpleMessage("Huỷ"),
         "ceil": MessageLookupByLibrary.simpleMessage("Trần"),
         "choose_stocks_you_interested": MessageLookupByLibrary.simpleMessage(
             "Chọn các mã CK mà bạn đang quan tâm. Bạn có thể cập nhật thêm các mã CK sau"),
@@ -100,6 +101,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Thị trường hôm nay"),
         "matched_order_detail":
             MessageLookupByLibrary.simpleMessage("Chi tiết khớp lệnh"),
+        "matched_price": MessageLookupByLibrary.simpleMessage("Giá khớp"),
+        "matched_vol": MessageLookupByLibrary.simpleMessage("KL khớp"),
         "minutes": MessageLookupByLibrary.simpleMessage(" phút"),
         "news": MessageLookupByLibrary.simpleMessage("Tin tức"),
         "news_and_events":
@@ -115,6 +118,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "otp_code_sent_to_phone_number": m2,
         "overview": MessageLookupByLibrary.simpleMessage("Tổng quan"),
         "password": MessageLookupByLibrary.simpleMessage("Mật khẩu"),
+        "price_alert": MessageLookupByLibrary.simpleMessage("Cảnh báo giá"),
         "qa_base": MessageLookupByLibrary.simpleMessage("Cơ sở"),
         "qa_bond": MessageLookupByLibrary.simpleMessage("Trái phiếu"),
         "qa_copytrade": MessageLookupByLibrary.simpleMessage("Copytrade"),
@@ -136,6 +140,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "successfully_create_assistant_account":
             MessageLookupByLibrary.simpleMessage(
                 "Tạo tài khoản\ntrợ lý ảo thành công"),
+        "technical_analysis":
+            MessageLookupByLibrary.simpleMessage("Phân tích kỹ thuật"),
         "technical_trading_newbie": MessageLookupByLibrary.simpleMessage(
             "Bạn là 1 newbie và muốn giao dịch dễ dàng hơn"),
         "technical_trading_pro": MessageLookupByLibrary.simpleMessage(
@@ -144,6 +150,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "the_DTND_virtual_assistant_will_help_you_with_successful_transaction":
             MessageLookupByLibrary.simpleMessage(
                 "Trợ lý ảo DTND sẽ giúp bạn có những\ngiao dịch thành công"),
+        "time": MessageLookupByLibrary.simpleMessage("Thời gian"),
         "timeout": MessageLookupByLibrary.simpleMessage(
             "Không nhận được phản hồi từ máy chủ"),
         "total_asset": MessageLookupByLibrary.simpleMessage("Tổng tài sản"),
@@ -153,6 +160,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "virtual_assistant": MessageLookupByLibrary.simpleMessage("Trợ lý ảo"),
         "virtual_assistant_available":
             MessageLookupByLibrary.simpleMessage("Trợ lý ảo đã sẵn sàng"),
+        "vol_analysis": MessageLookupByLibrary.simpleMessage("Phân tích KL"),
         "volumn": MessageLookupByLibrary.simpleMessage("Khối lượng"),
         "wrong_password":
             MessageLookupByLibrary.simpleMessage("Mật khẩu không chính xác")

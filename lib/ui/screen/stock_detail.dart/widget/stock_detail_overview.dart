@@ -33,64 +33,65 @@ class StockDetailOverview extends StatelessWidget {
         bgColor: AppColors.accent_light_05,
       )
     ];
-    return ObxValue<Rx<ThemeMode>>((themeMode) {
-      return Row(
-        children: [
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    Text(
-                      stockModel.stockData.lastPrice.toString(),
-                      style: AppTextStyle.headlineSmall_24
-                          .copyWith(fontWeight: FontWeight.w700),
-                    ),
-                    const SizedBox(width: 10),
-                    stockModel.stockData.prefixIcon(size: 10),
-                    const SizedBox(width: 3),
-                    Text(
-                      "${stockModel.stockData.ot} (${stockModel.stockData.changePc}%)",
-                      style: AppTextStyle.bodySmall_8.copyWith(
-                          fontWeight: FontWeight.w500,
-                          color: stockModel.stockData.color),
-                    ),
-                  ],
-                ),
-                Row(
-                  children: [
-                    ObxValue<Rx<num?>>(
-                      (lot) {
-                        return Text(
-                          "${NumUtils.formatInteger10(lot.value, "-")} CP",
-                          style: AppTextStyle.bodySmall_8
-                              .copyWith(color: AppColors.neutral_04),
-                        );
-                      },
-                      stockModel.stockData.lot,
-                    ),
-                    const SizedBox(width: 10),
-                    Text(
-                      NumUtils.formatInteger(stockModel.stockData.value, "-"),
-                      style: AppTextStyle.bodySmall_8
-                          .copyWith(color: AppColors.neutral_04),
-                    ),
-                  ],
-                )
-              ],
-            ),
+    final themeMode = AppService.instance.themeMode.value;
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Row(
+                children: [
+                  Text(
+                    stockModel.stockData.lastPrice.toString(),
+                    style: AppTextStyle.headlineSmall_24
+                        .copyWith(fontWeight: FontWeight.w700),
+                  ),
+                  const SizedBox(width: 10),
+                  stockModel.stockData.prefixIcon(size: 10),
+                  const SizedBox(width: 3),
+                  Text(
+                    "${stockModel.stockData.ot} (${stockModel.stockData.changePc}%)",
+                    style: AppTextStyle.bodySmall_8.copyWith(
+                        fontWeight: FontWeight.w500,
+                        color: stockModel.stockData.color),
+                  ),
+                ],
+              ),
+              Row(
+                children: [
+                  ObxValue<Rx<num?>>(
+                    (lot) {
+                      return Text(
+                        "${NumUtils.formatInteger10(lot.value, "-")} CP",
+                        style: AppTextStyle.bodySmall_8
+                            .copyWith(color: AppColors.neutral_04),
+                      );
+                    },
+                    stockModel.stockData.lot,
+                  ),
+                  const SizedBox(width: 10),
+                  Text(
+                    NumUtils.formatInteger(stockModel.stockData.value, "-"),
+                    style: AppTextStyle.bodySmall_8
+                        .copyWith(color: AppColors.neutral_04),
+                  ),
+                ],
+              )
+            ],
           ),
-          ...List<Widget>.generate(
-              3,
-              (index) => Padding(
-                    padding: const EdgeInsets.only(left: 8),
-                    child: _StockDetailPriceElement(
-                        data: listPrices[index], themeMode: themeMode.value),
-                  ))
-        ],
-      );
-    }, AppService.instance.themeMode);
+        ),
+        ...List<Widget>.generate(
+            3,
+            (index) => Padding(
+                  padding: const EdgeInsets.only(left: 8),
+                  child: _StockDetailPriceElement(
+                      data: listPrices[index], themeMode: themeMode),
+                ))
+      ],
+    );
   }
 }
 

@@ -832,11 +832,81 @@ class S {
     );
   }
 
+  /// `Technical analysis`
+  String get technical_analysis {
+    return Intl.message(
+      'Technical analysis',
+      name: 'technical_analysis',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Create`
   String get create {
     return Intl.message(
       'Create',
       name: 'create',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Cancel`
+  String get cancel {
+    return Intl.message(
+      'Cancel',
+      name: 'cancel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Time`
+  String get time {
+    return Intl.message(
+      'Time',
+      name: 'time',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Matched vol`
+  String get matched_vol {
+    return Intl.message(
+      'Matched vol',
+      name: 'matched_vol',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Matched price`
+  String get matched_price {
+    return Intl.message(
+      'Matched price',
+      name: 'matched_price',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Vol analysis`
+  String get vol_analysis {
+    return Intl.message(
+      'Vol analysis',
+      name: 'vol_analysis',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Price alert`
+  String get price_alert {
+    return Intl.message(
+      'Price alert',
+      name: 'price_alert',
       desc: '',
       args: [],
     );

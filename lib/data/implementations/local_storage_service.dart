@@ -1,4 +1,5 @@
 import 'package:dtnd/=models=/exchange.dart';
+import 'package:dtnd/=models=/local/saved_catalog.dart';
 import 'package:dtnd/=models=/response/stock.dart';
 import 'package:dtnd/=models=/response/user_token.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -11,6 +12,7 @@ const String appAccessTimeKey = "appAccessTimeKey";
 const String savedUserTokenBoxKey = "savedUserTokenBoxKey";
 const String savedAllListStockBoxKey = "savedAllListStock";
 const String savedInterestedStocksBoxKey = "savedInterestedStocksBoxKey";
+const String listSavedCatalogKey = "listSavedCatalogKey";
 
 class LocalStorageService implements ILocalStorageService {
   LocalStorageService._internal();
@@ -73,5 +75,16 @@ class LocalStorageService implements ILocalStorageService {
   @override
   Future<void> saveUserToken(UserToken token) {
     return box.put(savedUserTokenBoxKey, token);
+  }
+
+  @override
+  Future<SavedCatalog> getSavedCatalog(String user) async {
+    final SavedCatalog? savedCatalog = box.get("${user}_saved_catalog");
+    if (savedCatalog == null) {
+      final SavedCatalog newSavedCatalog = SavedCatalog(user: user);
+      await box.put("${user}_saved_catalog", newSavedCatalog);
+      return newSavedCatalog;
+    }
+    return savedCatalog;
   }
 }

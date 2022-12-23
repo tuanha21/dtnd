@@ -1,19 +1,27 @@
+// ignore_for_file: constant_identifier_names
+
 import 'dart:async';
-import 'dart:math';
 
 import 'package:dtnd/=models=/response/stock_model.dart';
+import 'package:dtnd/config/service/app_services.dart';
+import 'package:dtnd/data/i_data_center_service.dart';
 import 'package:dtnd/data/implementations/data_center_service.dart';
 import 'package:dtnd/generated/l10n.dart';
+import 'package:dtnd/ui/screen/stock_detail.dart/enum/detail_tab_enum.dart';
 import 'package:dtnd/ui/screen/stock_detail.dart/widget/choose_technical_trading.dart';
-import 'package:dtnd/ui/screen/stock_detail.dart/widget/stock_detail_appbar.dart';
+import 'package:dtnd/ui/screen/stock_detail.dart/widget/component/price_alert.dart';
+import 'package:dtnd/ui/screen/stock_detail.dart/widget/component/stock_detail_appbar.dart';
+import 'package:dtnd/ui/screen/stock_detail.dart/widget/financial_index.dart';
 import 'package:dtnd/ui/screen/stock_detail.dart/widget/stock_detail_chart.dart';
 import 'package:dtnd/ui/screen/stock_detail.dart/widget/stock_detail_news.dart';
 import 'package:dtnd/ui/screen/stock_detail.dart/widget/stock_detail_overview.dart';
 import 'package:dtnd/ui/screen/stock_detail.dart/widget/tab_trading_board.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
+import 'package:dtnd/utilities/extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:sliding_up_panel2/sliding_up_panel2.dart';
 
 import '../home/widget/home_section.dart';
 
@@ -29,311 +37,305 @@ class StockDetailScreen extends StatefulWidget {
 
 class _StockDetailScreenState extends State<StockDetailScreen>
     with SingleTickerProviderStateMixin {
-  final DataCenterService dataCenterService = DataCenterService();
+  final IDataCenterService dataCenterService = DataCenterService();
   late final TabController _tabController;
 
-  final DraggableScrollableController controller =
-      DraggableScrollableController();
+  late final ScrollController scrollController;
+  late final PanelController panelController;
+
   bool initialized = false;
   @override
   void initState() {
-    _tabController = TabController(length: 2, vsync: this);
+    _tabController = TabController(length: 3, vsync: this);
+    scrollController = ScrollController();
+    panelController = PanelController();
     super.initState();
-    if (widget.stockModel.listStockTrade == null) {
-      getStockIndayTradingHistory();
-    } else {
-      setState(() {
-        initialized = true;
-      });
-    }
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      fake();
-    });
+    initData();
   }
 
-  void getStockIndayTradingHistory() async {
-    widget.stockModel.stockTradingHistory.value = await dataCenterService
-        .getStockIndayTradingHistory(widget.stockModel.stock.stockCode);
+  void initData() async {
+    await getStockIndayTradingHistory();
+    // await getIndayMatchedOrders();
     setState(() {
       initialized = true;
     });
   }
 
-  void fake() {
-    final Timer timer = Timer.periodic(const Duration(seconds: 2), (tick) {
-      controller.animateTo(Random().nextDouble(),
-          duration: const Duration(milliseconds: 200),
-          curve: Curves.easeInCubic);
-    });
+  Future<void> getStockIndayTradingHistory() async {
+    widget.stockModel.stockTradingHistory.value = await dataCenterService
+        .getStockIndayTradingHistory(widget.stockModel.stock.stockCode);
+  }
+
+  Future<void> getIndayMatchedOrders() async {
+    final listMatchedOrder = await dataCenterService
+        .getIndayMatchedOrders(widget.stockModel.stock.stockCode);
+    widget.stockModel.updateListMatchedOrder(listMatchedOrder);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: StockDetailAppbar(stock: widget.stockModel.stock),
+      // appBar: StockDetailAppbar(stock: widget.stockModel.stock),
       body: Builder(builder: (context) {
         if (!initialized) {
           return Center(
             child: Text(S.of(context).loading),
           );
         }
+        final themeMode = AppService.instance.themeMode.value;
+        return NestedScrollView(
+          // physics: PanelScrollPhysics(controller: panelController),
+          // controller: ScrollController(),
+          headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+            return [
+              SliverOverlapAbsorber(
+                handle:
+                    NestedScrollView.sliverOverlapAbsorberHandleFor(context),
+                sliver: SliverPersistentHeader(
+                    pinned: true,
+                    delegate: StockDetailAppbar(stockModel: widget.stockModel)),
+              ),
+            ];
+          },
+          body: SizedBox.expand(
+            child: SlidingUpPanel(
+              minHeight: 60,
+              parallaxEnabled: false,
+              // parallaxOffset: .9,
+              // renderPanelSheet: false,
+              maxHeight:
+                  MediaQuery.of(context).size.height - kToolbarHeight - 80,
+              color: themeMode.isLight ? Colors.white : Colors.black,
+              scrollController: scrollController,
+              controller: panelController,
+              body: Builder(builder: (context) {
+                return Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: CustomScrollView(
+                    slivers: [
+                      SliverOverlapInjector(
+                        // This is the flip side of the SliverOverlapAbsorber
+                        // above.
+                        handle: NestedScrollView.sliverOverlapAbsorberHandleFor(
+                            context),
+                      ),
+                      SliverToBoxAdapter(
+                        child: SizedBox(
+                            height: 200,
+                            width: MediaQuery.of(context).size.width,
+                            child: StockDetailChart(
+                                stockModel: widget.stockModel)),
+                      ),
+                      const SliverToBoxAdapter(child: PriceAlert()),
+                      const SliverToBoxAdapter(child: SizedBox(height: 15)),
+                      SliverToBoxAdapter(
+                        child: HomeSection(
+                          title: S.of(context).news_and_events,
+                          child: StockDetailNews(
+                            stockCode: widget.stockModel.stock.stockCode,
+                          ),
+                        ),
+                      ),
+                      const SliverToBoxAdapter(child: SizedBox(height: 120)),
+                    ],
+                  ),
+                );
+              }),
+              header: SizedBox(
+                width: MediaQuery.of(context).size.width,
+                height: 60,
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 6),
+                      child: ForceDraggableWidget(
+                        child: SizedBox(
+                          width: 39,
+                          height: 4,
+                          child: Container(
+                            decoration: const BoxDecoration(
+                              color: AppColors.neutral_03,
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(2),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    ForceDraggableWidget(
+                      child: TabBar(
+                        controller: _tabController,
+                        isScrollable: true,
+                        labelPadding: const EdgeInsets.symmetric(
+                            horizontal: 10, vertical: 6),
+                        padding: EdgeInsets.zero,
+                        // indicatorSize: TabBarIndicatorSize.label,
+                        tabs: DetailTab.values
+                            .map((e) => Text(e.getName(context)))
+                            .toList(),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              panelBuilder: () {
+                return Padding(
+                  padding: const EdgeInsets.only(top: 60),
+                  child: TabBarView(
+                    controller: _tabController,
+                    // physics: PanelScrollPhysics(controller: panelController),
+                    // controller: scrollController,
+                    children: <Widget>[
+                      // ListView(
+                      //   physics:
+                      //       PanelScrollPhysics(controller: panelController),
+                      //   controller: scrollController,
+                      //   shrinkWrap: true,
+                      //   children: [
+                      //     TabTradingBoard(
+                      //       stockModel: widget.stockModel,
+                      //       scrollController: scrollController,
+                      //       panelController: panelController,
+                      //     ),
+                      //   ],
+                      // ),
+                      TabTradingBoard(
+                        stockModel: widget.stockModel,
+                        scrollController: scrollController,
+                        panelController: panelController,
+                      ),
+                      const Center(
+                        child: Text("Chi tiết kl"),
+                      ),
+                      MediaQuery.removePadding(
+                        context: context,
+                        removeTop: true,
+                        child: ListView(
+                          physics:
+                              PanelScrollPhysics(controller: panelController),
+                          controller: scrollController,
+                          shrinkWrap: true,
+                          children: <Widget>[
+                            const SizedBox(
+                              height: 20,
+                            ),
+                            HomeSection(
+                              title: S.of(context).financial_index,
+                              child: const FinancialIndex(),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              },
+            ),
+          ),
+        );
+
         return SizedBox.expand(
-          child: Stack(
-            children: [
-              Padding(
+          child: SlidingUpPanel(
+            minHeight: 60,
+            parallaxEnabled: true,
+            parallaxOffset: .5,
+            maxHeight: MediaQuery.of(context).size.height,
+            color: themeMode.isLight ? Colors.white : Colors.black,
+            scrollController: scrollController,
+            controller: panelController,
+            body: NestedScrollView(
+              headerSliverBuilder:
+                  (BuildContext context, bool innerBoxIsScrolled) {
+                return [
+                  SliverPersistentHeader(
+                      pinned: true,
+                      delegate:
+                          StockDetailAppbar(stockModel: widget.stockModel))
+                ];
+              },
+              body: Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: ListView(
                   children: [
-                    StockDetailOverview(stockModel: widget.stockModel),
                     SizedBox(
                         height: 200,
                         width: MediaQuery.of(context).size.width,
                         child: StockDetailChart(stockModel: widget.stockModel)),
-                    // PreferredSize(
-                    //   preferredSize: const Size.fromHeight(kToolbarHeight),
-                    //   child: Align(
-                    //     alignment: Alignment.centerLeft,
-                    //     child: TabBar(
-                    //       controller: _tabController,
-                    //       isScrollable: true,
-                    //       labelPadding: const EdgeInsets.symmetric(
-                    //           horizontal: 18, vertical: 6),
-                    //       padding: EdgeInsets.zero,
-                    //       tabs: <Widget>[
-                    //         Text(S.of(context).trading_board),
-                    //         Text(S.of(context).matched_order_detail),
-                    //       ],
-                    //     ),
-                    //   ),
-                    // ),
+                    PriceAlert(),
+                    const SizedBox(height: 15),
                     HomeSection(
                       title: S.of(context).news_and_events,
                       child: StockDetailNews(
                         stockCode: widget.stockModel.stock.stockCode,
                       ),
                     ),
-                    // DraggableScrollableSheet(
-                    //   initialChildSize: 0.2,
-                    //   minChildSize: 0.2,
-                    //   maxChildSize: 0.6,
-                    //   builder: (context, scrollController) {
-                    //     return SingleChildScrollView(
-                    //       controller: scrollController,
-                    //       child: Column(
-                    //         children: [
-                    //           TabBar(
-                    //             controller: _tabController,
-                    //             isScrollable: true,
-                    //             labelPadding: const EdgeInsets.symmetric(
-                    //                 horizontal: 18, vertical: 6),
-                    //             padding: EdgeInsets.zero,
-                    //             tabs: <Widget>[
-                    //               Text(S.of(context).trading_board),
-                    //               Text(S.of(context).matched_order_detail),
-                    //             ],
-                    //           ),
-                    //           TabBarView(
-                    //             controller: _tabController,
-                    //             children: <Widget>[
-                    //               CustomScrollView(
-                    //                 slivers: [
-                    //                   SliverToBoxAdapter(
-                    //                     child: TabTradingBoard(
-                    //                       stockModel: widget.stockModel,
-                    //                     ),
-                    //                   ),
-                    //                 ],
-                    //               ),
-                    //               const Center(
-                    //                 child: Text("Chi tiết kl"),
-                    //               )
-                    //             ],
-                    //           ),
-                    //         ],
-                    //       ),
-                    //     );
-                    //   },
-                    // ),
+                    const SizedBox(height: 120),
                   ],
-                  // headerSliverBuilder: (context, innerBoxIsScrolled) {
-                  //   return [
-                  //     SliverToBoxAdapter(
-                  //       child: StockDetailOverview(stockModel: widget.stockModel),
-                  //     ),
-                  //     SliverToBoxAdapter(
-                  //       child: SizedBox(
-                  //           height: 200,
-                  //           width: MediaQuery.of(context).size.width,
-                  //           child:
-                  //               StockDetailChart(stockModel: widget.stockModel)),
-                  //     ),
-                  //     SliverToBoxAdapter(
-                  //       child: PreferredSize(
-                  //         preferredSize: const Size.fromHeight(kToolbarHeight),
-                  //         child: Align(
-                  //           alignment: Alignment.centerLeft,
-                  //           child: TabBar(
-                  //             controller: _tabController,
-                  //             isScrollable: true,
-                  //             labelPadding: const EdgeInsets.symmetric(
-                  //                 horizontal: 18, vertical: 6),
-                  //             padding: EdgeInsets.zero,
-                  //             tabs: <Widget>[
-                  //               Text(S.of(context).trading_board),
-                  //               Text(S.of(context).matched_order_detail),
-                  //             ],
-                  //           ),
-                  //         ),
-                  //       ),
-                  //     ),
-                  //   ];
-                  // },
-                  // body: TabBarView(
-                  //   controller: _tabController,
-                  //   children: <Widget>[
-                  //     CustomScrollView(
-                  //       slivers: [
-                  //         SliverToBoxAdapter(
-                  //           child: TabTradingBoard(
-                  //             stockModel: widget.stockModel,
-                  //           ),
-                  //         ),
-                  //       ],
-                  //     ),
-                  //     const Center(
-                  //       child: Text("Chi tiết kl"),
-                  //     )
-                  //   ],
-                  // ),
                 ),
               ),
-              DraggableScrollableSheet(
-                initialChildSize: 0.2,
-                minChildSize: 0.2,
-                maxChildSize: 1.0,
-                snap: true,
-                controller: controller,
-                builder: (context, scrollController) {
-                  return Scaffold(
-                    // color: Colors.white,
-
-                    body: NestedScrollView(
-                      // physics: const NeverScrollableScrollPhysics(),
-                      // controller: scrollController,
-                      headerSliverBuilder: (context, innerBoxIsScrolled) {
-                        return [
-                          SliverOverlapAbsorber(
-                            handle:
-                                NestedScrollView.sliverOverlapAbsorberHandleFor(
-                                    context),
-                            sliver: SliverToBoxAdapter(
-                              child: Column(
-                                children: [
-                                  GestureDetector(
-                                    child: SizedBox(
-                                      width: 39,
-                                      height: 3,
-                                      child: Container(
-                                        decoration: const BoxDecoration(
-                                          color: AppColors.neutral_03,
-                                          borderRadius: BorderRadius.all(
-                                            Radius.circular(2),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  PreferredSize(
-                                    preferredSize:
-                                        const Size.fromHeight(kToolbarHeight),
-                                    child: Align(
-                                      alignment: Alignment.centerLeft,
-                                      child: TabBar(
-                                        controller: _tabController,
-                                        isScrollable: true,
-                                        labelPadding:
-                                            const EdgeInsets.symmetric(
-                                                horizontal: 18, vertical: 6),
-                                        padding: EdgeInsets.zero,
-                                        tabs: <Widget>[
-                                          Text(S.of(context).trading_board),
-                                          Text(S
-                                              .of(context)
-                                              .matched_order_detail),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
+            ),
+            header: SizedBox(
+              width: MediaQuery.of(context).size.width,
+              height: 60,
+              child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 6),
+                    child: ForceDraggableWidget(
+                      child: SizedBox(
+                        width: 39,
+                        height: 4,
+                        child: Container(
+                          decoration: const BoxDecoration(
+                            color: AppColors.neutral_03,
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(2),
                             ),
                           ),
-                        ];
-                      },
-                      body: TabBarView(
-                        controller: _tabController,
-                        children: <Widget>[
-                          Builder(builder: (context) {
-                            return CustomScrollView(
-                              // physics: const NeverScrollableScrollPhysics(),
-                              controller: scrollController,
-                              slivers: [
-                                SliverOverlapInjector(
-                                  // This is the flip side of the SliverOverlapAbsorber
-                                  // above.
-                                  handle: NestedScrollView
-                                      .sliverOverlapAbsorberHandleFor(context),
-                                ),
-                                SliverToBoxAdapter(
-                                  child: TabTradingBoard(
-                                    stockModel: widget.stockModel,
-                                  ),
-                                ),
-                              ],
-                            );
-                          }),
-                          const Center(
-                            child: Text("Chi tiết kl"),
-                          )
-                        ],
+                        ),
                       ),
                     ),
-                  );
-                  return Column(
-                    children: [
-                      TabBar(
-                        controller: _tabController,
-                        isScrollable: true,
-                        labelPadding: const EdgeInsets.symmetric(
-                            horizontal: 18, vertical: 6),
-                        padding: EdgeInsets.zero,
-                        tabs: <Widget>[
-                          Text(S.of(context).trading_board),
-                          Text(S.of(context).matched_order_detail),
-                        ],
-                      ),
-                      TabBarView(
-                        controller: _tabController,
-                        children: <Widget>[
-                          CustomScrollView(
-                            slivers: [
-                              SliverToBoxAdapter(
-                                child: TabTradingBoard(
-                                  stockModel: widget.stockModel,
-                                ),
-                              ),
-                            ],
-                          ),
-                          const Center(
-                            child: Text("Chi tiết kl"),
-                          )
-                        ],
-                      ),
-                    ],
-                  );
-                },
+                  ),
+                  ForceDraggableWidget(
+                    child: TabBar(
+                      controller: _tabController,
+                      isScrollable: true,
+                      labelPadding: const EdgeInsets.symmetric(
+                          horizontal: 10, vertical: 6),
+                      padding: EdgeInsets.zero,
+                      // indicatorSize: TabBarIndicatorSize.label,
+                      tabs: DetailTab.values
+                          .map((e) => Text(e.getName(context)))
+                          .toList(),
+                    ),
+                  ),
+                ],
               ),
-            ],
+            ),
+            panelBuilder: () {
+              return Padding(
+                padding: const EdgeInsets.only(top: 60),
+                child: TabBarView(
+                  controller: _tabController,
+                  physics: PanelScrollPhysics(controller: panelController),
+                  // controller: scrollController,
+                  children: <Widget>[
+                    TabTradingBoard(
+                      stockModel: widget.stockModel,
+                      scrollController: scrollController,
+                      panelController: panelController,
+                    ),
+                    const Center(
+                      child: Text("Chi tiết kl"),
+                    ),
+                    const Center(
+                      child: Text("Chỉ số tài chính"),
+                    )
+                  ],
+                ),
+              );
+            },
           ),
         );
       }),

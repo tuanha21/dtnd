@@ -43,6 +43,8 @@ class AppImages {
   static const String wallet = "assets/svg/wallet.svg";
   static const String wallet_search = "assets/svg/wallet_search.svg";
 
+  static const String notification_icon = "assets/images/notification_icon.png";
+
   /// BG
   static const String home_asset_card_light_bg =
       "assets/images/home_asset_card_light_bg.png";

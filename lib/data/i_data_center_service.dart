@@ -1,6 +1,7 @@
 // ignore_for_file: library_prefixes
 
 import 'package:dtnd/=models=/response/deep_model.dart';
+import 'package:dtnd/=models=/response/inday_matched_order.dart';
 import 'package:dtnd/=models=/response/index_model.dart';
 import 'package:dtnd/=models=/response/news_detail.dart';
 import 'package:dtnd/=models=/response/stock.dart';
@@ -43,4 +44,6 @@ abstract class IDataCenterService {
   Future<NewsDetail?> getNewsDetail(int id);
 
   Future<List<DeepModel>> getMarketDepth();
+
+  Future<List<IndayMatchedOrder>> getIndayMatchedOrders(String symbol);
 }

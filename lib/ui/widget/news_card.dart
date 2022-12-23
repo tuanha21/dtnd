@@ -1,10 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dtnd/=models=/response/stock_news.dart';
-import 'package:dtnd/config/service/app_services.dart';
 import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_textstyle.dart';
-import 'package:dtnd/utilities/extension.dart';
 import 'package:flutter/material.dart';
 
 class NewsCard extends StatelessWidget {
@@ -15,18 +13,17 @@ class NewsCard extends StatelessWidget {
   final StockNews stockNews;
   @override
   Widget build(BuildContext context) {
-    final themeMode = AppService.instance.themeMode.value;
     return Material(
+      color: Colors.transparent,
       child: InkWell(
         onTap: () {},
         borderRadius: const BorderRadius.all(Radius.circular(8)),
         child: Ink(
           padding: const EdgeInsets.all(8.0),
           height: 88.0,
-          decoration: BoxDecoration(
-            borderRadius: const BorderRadius.all(Radius.circular(8)),
-            color:
-                themeMode.isDark ? AppColors.neutral_01 : AppColors.neutral_06,
+          decoration: const BoxDecoration(
+            borderRadius: BorderRadius.all(Radius.circular(8)),
+            color: Colors.transparent,
           ),
           child: Row(
             children: [
@@ -63,6 +60,7 @@ class NewsCard extends StatelessWidget {
                       child: Text(
                         stockNews.title ?? "Title",
                         maxLines: 2,
+                        textAlign: TextAlign.left,
                         style: Theme.of(context).textTheme.titleSmall,
                       ),
                     ),

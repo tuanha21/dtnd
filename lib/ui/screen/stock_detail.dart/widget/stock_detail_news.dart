@@ -2,6 +2,7 @@ import 'package:dtnd/=models=/response/stock_news.dart';
 import 'package:dtnd/data/i_network_service.dart';
 import 'package:dtnd/data/implementations/network_service.dart';
 import 'package:dtnd/generated/l10n.dart';
+import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/widget/news_card.dart';
 import 'package:flutter/material.dart';
 
@@ -18,6 +19,7 @@ class StockDetailNews extends StatefulWidget {
 class _StockDetailNewsState extends State<StockDetailNews> {
   final INetworkService networkService = NetworkService();
   late final List<StockNews> stockNews;
+  late final List<StockNews> shortStockNews;
 
   bool initialized = false;
   @override
@@ -28,6 +30,7 @@ class _StockDetailNewsState extends State<StockDetailNews> {
 
   void getStockNews() async {
     stockNews = await networkService.getStockNews(widget.stockCode);
+    shortStockNews = stockNews.getRange(0, 3).toList();
     setState(() {
       initialized = true;
     });
@@ -43,14 +46,20 @@ class _StockDetailNewsState extends State<StockDetailNews> {
         ),
       );
     }
-    return Column(
-      children: [
-        for (final StockNews news in stockNews)
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 5),
-            child: NewsCard(stockNews: news),
-          )
-      ],
+    return Container(
+      decoration: const BoxDecoration(
+        borderRadius: BorderRadius.all(Radius.circular(12)),
+        color: AppColors.neutral_07,
+      ),
+      child: Column(
+        children: [
+          for (final StockNews news in shortStockNews)
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 5),
+              child: NewsCard(stockNews: news),
+            )
+        ],
+      ),
     );
   }
 }

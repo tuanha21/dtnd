@@ -8,8 +8,10 @@ class KChart extends StatefulWidget {
   const KChart({
     super.key,
     required this.indexModel,
+    this.isLine = false,
   });
   final IndexModel indexModel;
+  final bool isLine;
   @override
   State<KChart> createState() => _KChartState();
 }
@@ -56,7 +58,7 @@ class _KChartState extends State<KChart> {
           upColor: AppColors.semantic_01,
           dnColor: AppColors.semantic_03),
       isTrendLine: false,
-      isLine: false,
+      isLine: widget.isLine,
       secondaryState: SecondaryState.NONE,
       hideGrid: true,
     );

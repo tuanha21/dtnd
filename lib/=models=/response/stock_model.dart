@@ -1,3 +1,4 @@
+import 'package:dtnd/=models=/response/inday_matched_order.dart';
 import 'package:dtnd/=models=/response/stock.dart';
 import 'package:dtnd/=models=/response/stock_data.dart';
 import 'package:dtnd/=models=/response/stock_info_core.dart';
@@ -12,6 +13,16 @@ class StockModel {
   late StockInfoCore? stockDataCore;
   late List<StockTrade>? listStockTrade;
   final Rx<StockTradingHistory?> stockTradingHistory = Rxn();
+  final List<IndayMatchedOrder> _listMatchedOrder = [];
+
+  List<IndayMatchedOrder> get listMatchedOrder => _listMatchedOrder;
+
+  void updateListMatchedOrder(List<IndayMatchedOrder> newList) {
+    _listMatchedOrder.clear();
+    _listMatchedOrder.addAll(newList);
+    return;
+  }
+
   StockModel({
     required this.stock,
     required this.stockData,

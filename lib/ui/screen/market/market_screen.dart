@@ -36,45 +36,6 @@ class _MarketScreenState extends State<MarketScreen>
         appBar: const MyAppBar(title: "DTND"),
         body: Column(
           children: [
-            ObxValue<Rx<bool>>((initialized) {
-              print("rebuilt");
-              if (!initialized.value) {
-                return Center(
-                  child: Text(S.of(context).loading),
-                );
-              }
-              return Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: SizedBox.fromSize(
-                  size: Size(MediaQuery.of(context).size.width, 64),
-                  child: ScrollConfiguration(
-                    behavior: ScrollConfiguration.of(context).copyWith(
-                      dragDevices: {
-                        PointerDeviceKind.touch,
-                        PointerDeviceKind.mouse,
-                      },
-                    ),
-                    child: ListView.separated(
-                      scrollDirection: Axis.horizontal,
-                      physics: const AlwaysScrollableScrollPhysics(),
-                      itemCount: marketController.listIndexs.length,
-                      itemBuilder: (context, index) =>
-                          ObxValue<Rx<IndexModel?>>((currentIndexModel) {
-                        return HomeIndexItem(
-                          data: marketController.listIndexs.elementAt(index),
-                          selectedIndex: currentIndexModel.value?.index,
-                          onSelected: marketController.changeSelectedIndex,
-                        );
-                      }, marketController.currentIndexModel),
-                      separatorBuilder: (BuildContext context, int index) =>
-                          const SizedBox(
-                        width: 8,
-                      ),
-                    ),
-                  ),
-                ),
-              );
-            }, marketController.initialized),
             PreferredSize(
               preferredSize: const Size.fromHeight(kToolbarHeight),
               child: Align(
@@ -96,10 +57,10 @@ class _MarketScreenState extends State<MarketScreen>
             Expanded(
               child: TabBarView(
                 controller: _tabController,
-                children: [
+                children: const [
                   MarketOverviewTab(),
-                  const MarketAnalysisTab(),
-                  const MarketIndustryTab(),
+                  MarketAnalysisTab(),
+                  MarketIndustryTab(),
                 ],
               ),
             )

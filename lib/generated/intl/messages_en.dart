@@ -45,6 +45,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "average": MessageLookupByLibrary.simpleMessage("Average"),
         "bond": MessageLookupByLibrary.simpleMessage("Bond"),
         "buy": MessageLookupByLibrary.simpleMessage("Buy"),
+        "cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
         "ceil": MessageLookupByLibrary.simpleMessage("Ceil"),
         "choose_stocks_you_interested": MessageLookupByLibrary.simpleMessage(
             "Select the stocks you are interested in. You can update later"),
@@ -101,6 +102,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "market_today": MessageLookupByLibrary.simpleMessage("Market today"),
         "matched_order_detail":
             MessageLookupByLibrary.simpleMessage("Matched order detail"),
+        "matched_price": MessageLookupByLibrary.simpleMessage("Matched price"),
+        "matched_vol": MessageLookupByLibrary.simpleMessage("Matched vol"),
         "minutes": MessageLookupByLibrary.simpleMessage(" minutes"),
         "news": MessageLookupByLibrary.simpleMessage("News"),
         "news_and_events":
@@ -116,6 +119,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "otp_code_sent_to_phone_number": m2,
         "overview": MessageLookupByLibrary.simpleMessage("Overview"),
         "password": MessageLookupByLibrary.simpleMessage("Password"),
+        "price_alert": MessageLookupByLibrary.simpleMessage("Price alert"),
         "qa_base": MessageLookupByLibrary.simpleMessage("Base"),
         "qa_bond": MessageLookupByLibrary.simpleMessage("Bond"),
         "qa_copytrade": MessageLookupByLibrary.simpleMessage("Copytrade"),
@@ -138,6 +142,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "successfully_create_assistant_account":
             MessageLookupByLibrary.simpleMessage(
                 "Create virtual assistant successfully"),
+        "technical_analysis":
+            MessageLookupByLibrary.simpleMessage("Technical analysis"),
         "technical_trading_newbie": MessageLookupByLibrary.simpleMessage(
             "You are a newbie and want to make trading easier"),
         "technical_trading_pro": MessageLookupByLibrary.simpleMessage(
@@ -146,6 +152,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "the_DTND_virtual_assistant_will_help_you_with_successful_transaction":
             MessageLookupByLibrary.simpleMessage(
                 "The DTND virtual assistant will help you with successful transaction"),
+        "time": MessageLookupByLibrary.simpleMessage("Time"),
         "timeout":
             MessageLookupByLibrary.simpleMessage("No response from server"),
         "total_asset": MessageLookupByLibrary.simpleMessage("Total asset"),
@@ -156,6 +163,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Virtual assistant"),
         "virtual_assistant_available":
             MessageLookupByLibrary.simpleMessage("Virtual assistant available"),
+        "vol_analysis": MessageLookupByLibrary.simpleMessage("Vol analysis"),
         "volumn": MessageLookupByLibrary.simpleMessage("Volumn"),
         "wrong_password":
             MessageLookupByLibrary.simpleMessage("Password is incorrect")

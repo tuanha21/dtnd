@@ -1,5 +1,6 @@
 import 'package:dtnd/=models=/index.dart';
 import 'package:dtnd/=models=/response/deep_model.dart';
+import 'package:dtnd/=models=/response/inday_matched_order.dart';
 import 'package:dtnd/=models=/response/index_model.dart';
 import 'package:dtnd/=models=/response/news_detail.dart';
 import 'package:dtnd/=models=/response/stock.dart';
@@ -216,7 +217,9 @@ class DataCenterService implements IDataCenterService {
   Future<List<StockModel>> getStockModelsFromStockCodes(
       List<String> stockCodes) async {
     if (registering) {
+      // Wait to recall
       await 1.delay();
+      // Recall
       return getStockModelsFromStockCodes(stockCodes);
     }
     registering = true;
@@ -342,7 +345,9 @@ class DataCenterService implements IDataCenterService {
       return _listIndex;
     }
     if (initingListIndex) {
+      // Wait to recall
       await 1.delay();
+      // Recall
       return getListIndex();
     }
     initingListIndex = true;
@@ -376,5 +381,10 @@ class DataCenterService implements IDataCenterService {
   @override
   Future<List<DeepModel>> getMarketDepth() {
     return networkService.getMarketDepth();
+  }
+
+  @override
+  Future<List<IndayMatchedOrder>> getIndayMatchedOrders(String symbol) {
+    return networkService.getIndayMatchedOrders(symbol);
   }
 }

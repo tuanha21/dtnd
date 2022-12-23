@@ -32,20 +32,21 @@ class IndayMatchedOrder {
   });
 
   IndayMatchedOrder.fromJson(Map<String, dynamic> json) {
+    // logger.v(json);
     time = json['Time'];
     matchPrice = json['MatchPrice'];
     priceChange = json['PriceChange'];
-    matchVolume = json['MatchVolume'];
-    totalVolume = json['TotalVolume'];
-    buyPct1 = json['BuyPct1'];
-    orderType = json['OrderType'];
-    buyPct = json['BuyPct'];
-    sellPct = json['SellPct'];
-    nAPct = json['NAPct'];
-    totalBuyVolume = json['TotalBuyVolume'];
-    totalSellVolume = json['TotalSellVolume'];
-    buyForeignQtty = json['BuyForeignQtty'];
-    buyForeignValue = json['BuyForeignValue'];
+    matchVolume = json['MatchVolume'] ?? 0;
+    totalVolume = json['TotalVolume'] ?? 0;
+    buyPct1 = json['BuyPct1'] ?? 0;
+    orderType = json['OrderType'] ?? "B";
+    buyPct = json['BuyPct'] ?? 0;
+    sellPct = json['SellPct'] ?? 0;
+    nAPct = json['NAPct'] ?? 0;
+    totalBuyVolume = json['TotalBuyVolume'] ?? 0;
+    totalSellVolume = json['TotalSellVolume'] ?? 0;
+    buyForeignQtty = json['BuyForeignQtty'] ?? 0;
+    buyForeignValue = json['BuyForeignValue'] ?? 0;
   }
 
   Map<String, dynamic> toJson() {

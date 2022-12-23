@@ -37,4 +37,7 @@ class UserService implements IUserService {
 
   @override
   bool get isLogin => userToken != null;
+
+  @override
+  UserToken? get token => userToken;
 }

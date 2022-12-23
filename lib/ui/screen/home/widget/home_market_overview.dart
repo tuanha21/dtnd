@@ -48,7 +48,6 @@ class _HomeMarketOverviewState extends State<HomeMarketOverview> {
             childAspectRatio: 72 / (width - 32),
           ),
           itemBuilder: (context, index) => HomeMarketOverviewItem(
-            index: index,
             data: homeController.marketToday[index],
           ),
         ),
@@ -58,7 +57,6 @@ class _HomeMarketOverviewState extends State<HomeMarketOverview> {
         children: List<Widget>.generate(
           homeController.marketToday.length,
           (index) => HomeMarketOverviewItem(
-            index: index,
             data: homeController.marketToday[index],
           ),
         ),
@@ -68,9 +66,7 @@ class _HomeMarketOverviewState extends State<HomeMarketOverview> {
 }
 
 class HomeMarketOverviewItem extends StatelessWidget {
-  const HomeMarketOverviewItem(
-      {super.key, required this.index, required this.data});
-  final int index;
+  const HomeMarketOverviewItem({super.key, required this.data});
   final StockModel data;
   @override
   Widget build(BuildContext context) {

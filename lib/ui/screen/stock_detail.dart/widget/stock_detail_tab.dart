@@ -45,19 +45,20 @@ class _StockDetailTabState extends State<StockDetailTab>
             ),
           ),
         ),
-        TabBarView(
-          controller: _tabController,
-          children: <Widget>[
-            Center(
-              child: TabTradingBoard(
-                stockModel: widget.stockModel,
-              ),
-            ),
-            const Center(
-              child: Text("Chi tiết kl"),
-            )
-          ],
-        )
+        // TabBarView(
+        //   controller: _tabController,
+        //   children: <Widget>[
+        //     Center(
+        //       child: TabTradingBoard(
+        //         stockModel: widget.stockModel,
+        //         scrollController: ScrollController(),
+        //       ),
+        //     ),
+        //     const Center(
+        //       child: Text("Chi tiết kl"),
+        //     )
+        //   ],
+        // )
       ],
     );
   }
