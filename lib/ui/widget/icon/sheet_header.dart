@@ -1,0 +1,53 @@
+import 'package:flutter/material.dart';
+
+import 'back_button.dart';
+import 'close_button.dart';
+
+class SheetHeader extends StatelessWidget {
+  const SheetHeader({
+    super.key,
+    this.title,
+    this.implementBackButton = true,
+    this.backData,
+  });
+  final String? title;
+  final bool implementBackButton;
+  final dynamic backData;
+
+  @override
+  Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
+    final titleTextStyle =
+        textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.w700);
+    return Column(
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            implementBackButton
+                ? Row(
+                    children: [
+                      SheetBackButton(
+                        onTap: backData,
+                      ),
+                      const SizedBox(width: 10),
+                      Text(
+                        title ?? "",
+                        style: titleTextStyle,
+                      ),
+                    ],
+                  )
+                : Text(
+                    title ?? "",
+                    style: titleTextStyle,
+                  ),
+            const SheetCloseButton(),
+          ],
+        ),
+        const Divider(
+          thickness: 1,
+        ),
+      ],
+    );
+  }
+}

@@ -48,7 +48,10 @@ class _HomeScreenState extends State<HomeScreen> {
               const SizedBox(
                 height: 20,
               ),
-              const HomeQuickAccess(),
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 16.0),
+                child: HomeQuickAccess(),
+              ),
               const SizedBox(
                 height: 20,
               ),

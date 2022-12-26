@@ -44,6 +44,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "average": MessageLookupByLibrary.simpleMessage("Trung bình"),
         "bond": MessageLookupByLibrary.simpleMessage("Trái phiếu"),
         "buy": MessageLookupByLibrary.simpleMessage("Mua"),
+        "buy_price": MessageLookupByLibrary.simpleMessage("Giá mua vào"),
         "cancel": MessageLookupByLibrary.simpleMessage("Huỷ"),
         "ceil": MessageLookupByLibrary.simpleMessage("Trần"),
         "choose_stocks_you_interested": MessageLookupByLibrary.simpleMessage(
@@ -57,6 +58,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Ấn thêm lần nữa để thoát"),
         "empty_catalog": MessageLookupByLibrary.simpleMessage("Danh mục rỗng"),
         "event": MessageLookupByLibrary.simpleMessage("Sự kiện"),
+        "exchange_total":
+            MessageLookupByLibrary.simpleMessage("Tổng giao dịch"),
         "fbuy": MessageLookupByLibrary.simpleMessage("NN mua"),
         "fill_OTP": MessageLookupByLibrary.simpleMessage("Nhập mã OTP"),
         "fill_account": MessageLookupByLibrary.simpleMessage("Nhập tài khoản"),
@@ -89,6 +92,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "login_qoute1": MessageLookupByLibrary.simpleMessage(
             "Cùng tham gia thị trường đầu tư đầy sôi động với ứng dụng "),
         "login_qoute2": MessageLookupByLibrary.simpleMessage(" bạn nhé"),
+        "login_required":
+            MessageLookupByLibrary.simpleMessage("Yêu cầu đăng nhập"),
+        "login_to_continue":
+            MessageLookupByLibrary.simpleMessage("Hãy đăng nhập để tiếp tục"),
         "login_upper": MessageLookupByLibrary.simpleMessage("ĐĂNG NHẬP"),
         "loss_wvalue": m1,
         "low": MessageLookupByLibrary.simpleMessage("Thấp"),
@@ -115,9 +122,14 @@ class MessageLookup extends MessageLookupByLibrary {
         "null_username": MessageLookupByLibrary.simpleMessage(
             "Tên đăng nhập cần tối thiểu 6 ký tự"),
         "order": MessageLookupByLibrary.simpleMessage("Đặt lệnh"),
+        "order_confirm": MessageLookupByLibrary.simpleMessage("Xác nhận lệnh"),
+        "order_type": MessageLookupByLibrary.simpleMessage("Loại lệnh"),
         "otp_code_sent_to_phone_number": m2,
         "overview": MessageLookupByLibrary.simpleMessage("Tổng quan"),
         "password": MessageLookupByLibrary.simpleMessage("Mật khẩu"),
+        "period_of_validity":
+            MessageLookupByLibrary.simpleMessage("Thời gian hiệu lực"),
+        "price": MessageLookupByLibrary.simpleMessage("Giá"),
         "price_alert": MessageLookupByLibrary.simpleMessage("Cảnh báo giá"),
         "qa_base": MessageLookupByLibrary.simpleMessage("Cơ sở"),
         "qa_bond": MessageLookupByLibrary.simpleMessage("Trái phiếu"),
@@ -129,6 +141,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "search_stock": MessageLookupByLibrary.simpleMessage("Tìm mã CP"),
         "see_more": MessageLookupByLibrary.simpleMessage("Xem thêm"),
         "sell": MessageLookupByLibrary.simpleMessage("Bán"),
+        "sell_price": MessageLookupByLibrary.simpleMessage("Giá bán ra"),
         "session_expired_in":
             MessageLookupByLibrary.simpleMessage("Hết phiên đăng nhập sau "),
         "something_went_wrong":
@@ -155,6 +168,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Không nhận được phản hồi từ máy chủ"),
         "total_asset": MessageLookupByLibrary.simpleMessage("Tổng tài sản"),
         "total_wvalue": m3,
+        "trading": MessageLookupByLibrary.simpleMessage("Giao dịch"),
         "trading_board": MessageLookupByLibrary.simpleMessage("Bảng giá"),
         "username": MessageLookupByLibrary.simpleMessage("Tên đăng nhập"),
         "virtual_assistant": MessageLookupByLibrary.simpleMessage("Trợ lý ảo"),

@@ -3,10 +3,17 @@
 import 'dart:async';
 
 import 'package:dtnd/=models=/response/stock_model.dart';
+import 'package:dtnd/=models=/ui_model/user_cmd.dart';
 import 'package:dtnd/config/service/app_services.dart';
 import 'package:dtnd/data/i_data_center_service.dart';
+import 'package:dtnd/data/i_user_service.dart';
 import 'package:dtnd/data/implementations/data_center_service.dart';
+import 'package:dtnd/data/implementations/user_service.dart';
 import 'package:dtnd/generated/l10n.dart';
+import 'package:dtnd/ui/screen/exchange_stock/stock_order/data/order_data.dart';
+import 'package:dtnd/ui/screen/exchange_stock/stock_order/stock_order_confirm_sheet.dart';
+import 'package:dtnd/ui/screen/exchange_stock/stock_order/stock_order_sheet.dart';
+import 'package:dtnd/ui/screen/login/login_screen.dart';
 import 'package:dtnd/ui/screen/stock_detail.dart/enum/detail_tab_enum.dart';
 import 'package:dtnd/ui/screen/stock_detail.dart/widget/choose_technical_trading.dart';
 import 'package:dtnd/ui/screen/stock_detail.dart/widget/component/price_alert.dart';
@@ -14,13 +21,14 @@ import 'package:dtnd/ui/screen/stock_detail.dart/widget/component/stock_detail_a
 import 'package:dtnd/ui/screen/stock_detail.dart/widget/financial_index.dart';
 import 'package:dtnd/ui/screen/stock_detail.dart/widget/stock_detail_chart.dart';
 import 'package:dtnd/ui/screen/stock_detail.dart/widget/stock_detail_news.dart';
-import 'package:dtnd/ui/screen/stock_detail.dart/widget/stock_detail_overview.dart';
 import 'package:dtnd/ui/screen/stock_detail.dart/widget/tab_trading_board.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
+import 'package:dtnd/ui/widget/overlay/login_first_dialog.dart';
 import 'package:dtnd/utilities/extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:sliding_up_panel2/sliding_up_panel2.dart';
 
 import '../home/widget/home_section.dart';
@@ -38,6 +46,7 @@ class StockDetailScreen extends StatefulWidget {
 class _StockDetailScreenState extends State<StockDetailScreen>
     with SingleTickerProviderStateMixin {
   final IDataCenterService dataCenterService = DataCenterService();
+  final IUserService userService = UserService();
   late final TabController _tabController;
 
   late final ScrollController scrollController;
@@ -70,6 +79,60 @@ class _StockDetailScreenState extends State<StockDetailScreen>
     final listMatchedOrder = await dataCenterService
         .getIndayMatchedOrders(widget.stockModel.stock.stockCode);
     widget.stockModel.updateListMatchedOrder(listMatchedOrder);
+  }
+
+  void _onFABTapped() async {
+    print("userService.isLogin ${userService.isLogin}");
+    if (!userService.isLogin) {
+      final toLogin = await showDialog<bool>(
+        context: context,
+        builder: (context) {
+          return const LoginFirstCatalog();
+        },
+      );
+      if (toLogin ?? false) {
+        if (!mounted) return;
+        final result = await Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => const LoginScreen(),
+        ));
+        if (result) {
+          return _onFABTapped();
+        }
+      }
+    } else {
+      return orderProcess();
+    }
+  }
+
+  void orderProcess() async {
+    dynamic result =
+        await showSheet(child: StockOrderSheet(stockModel: widget.stockModel));
+    if (result is OrderData) {
+      result = await showSheet(
+        child: StockOrderConfirmSheet(
+          stockModel: widget.stockModel,
+          orderData: result,
+        ),
+      );
+    }
+  }
+
+  Future<T?> showSheet<T>({required Widget child}) {
+    return showModalBottomSheet(
+      context: context,
+      shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(top: Radius.circular(20))),
+      builder: (BuildContext context) {
+        return Wrap(
+          children: [
+            // TechnicalTradings(
+            //   onChoosen: (value) => Navigator.of(context).pop(value),
+            // ),
+            child
+          ],
+        );
+      },
+    );
   }
 
   @override
@@ -345,6 +408,7 @@ class _StockDetailScreenState extends State<StockDetailScreen>
           borderRadius: const BorderRadius.all(Radius.circular(6)),
           child: InkWell(
             borderRadius: const BorderRadius.all(Radius.circular(6)),
+            onTap: _onFABTapped,
             child: Ink(
               padding: const EdgeInsets.all(8),
               decoration: const BoxDecoration(
@@ -354,21 +418,6 @@ class _StockDetailScreenState extends State<StockDetailScreen>
               child: SvgPicture.asset(
                 AppImages.arrange_circle,
               ),
-            ),
-            onTap: () => showModalBottomSheet<TechnicalTrading>(
-              context: context,
-              shape: const RoundedRectangleBorder(
-                  borderRadius:
-                      BorderRadius.vertical(top: Radius.circular(20))),
-              builder: (BuildContext context) {
-                return Wrap(
-                  children: [
-                    TechnicalTradings(
-                      onChoosen: (value) => Navigator.of(context).pop(value),
-                    ),
-                  ],
-                );
-              },
             ),
           ),
         ),

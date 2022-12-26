@@ -45,6 +45,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "average": MessageLookupByLibrary.simpleMessage("Average"),
         "bond": MessageLookupByLibrary.simpleMessage("Bond"),
         "buy": MessageLookupByLibrary.simpleMessage("Buy"),
+        "buy_price": MessageLookupByLibrary.simpleMessage("Buy price"),
         "cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
         "ceil": MessageLookupByLibrary.simpleMessage("Ceil"),
         "choose_stocks_you_interested": MessageLookupByLibrary.simpleMessage(
@@ -60,6 +61,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "empty_catalog":
             MessageLookupByLibrary.simpleMessage("Catalog is empty"),
         "event": MessageLookupByLibrary.simpleMessage("Event"),
+        "exchange_total":
+            MessageLookupByLibrary.simpleMessage("Exchange total"),
         "fbuy": MessageLookupByLibrary.simpleMessage("FR buy"),
         "fill_OTP": MessageLookupByLibrary.simpleMessage("Fill OTP"),
         "fill_account": MessageLookupByLibrary.simpleMessage("Fill account"),
@@ -92,6 +95,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "login_qoute1": MessageLookupByLibrary.simpleMessage(
             "Let\'s join the exciting investment market with "),
         "login_qoute2": MessageLookupByLibrary.simpleMessage(" application"),
+        "login_required":
+            MessageLookupByLibrary.simpleMessage("Login required"),
+        "login_to_continue":
+            MessageLookupByLibrary.simpleMessage("Login to continue"),
         "login_upper": MessageLookupByLibrary.simpleMessage("LOGIN"),
         "loss_wvalue": m1,
         "low": MessageLookupByLibrary.simpleMessage("Low"),
@@ -116,9 +123,14 @@ class MessageLookup extends MessageLookupByLibrary {
         "null_username": MessageLookupByLibrary.simpleMessage(
             "Username requires at least 6 characters"),
         "order": MessageLookupByLibrary.simpleMessage("Order"),
+        "order_confirm": MessageLookupByLibrary.simpleMessage("Confirm order"),
+        "order_type": MessageLookupByLibrary.simpleMessage("Loại lệnh"),
         "otp_code_sent_to_phone_number": m2,
         "overview": MessageLookupByLibrary.simpleMessage("Overview"),
         "password": MessageLookupByLibrary.simpleMessage("Password"),
+        "period_of_validity":
+            MessageLookupByLibrary.simpleMessage("Period of validity"),
+        "price": MessageLookupByLibrary.simpleMessage("Price"),
         "price_alert": MessageLookupByLibrary.simpleMessage("Price alert"),
         "qa_base": MessageLookupByLibrary.simpleMessage("Base"),
         "qa_bond": MessageLookupByLibrary.simpleMessage("Bond"),
@@ -131,6 +143,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "search_stock": MessageLookupByLibrary.simpleMessage("Search stock"),
         "see_more": MessageLookupByLibrary.simpleMessage("See more"),
         "sell": MessageLookupByLibrary.simpleMessage("Sell"),
+        "sell_price": MessageLookupByLibrary.simpleMessage("Sell price"),
         "session_expired_in":
             MessageLookupByLibrary.simpleMessage("Session expired in "),
         "something_went_wrong":
@@ -157,6 +170,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("No response from server"),
         "total_asset": MessageLookupByLibrary.simpleMessage("Total asset"),
         "total_wvalue": m3,
+        "trading": MessageLookupByLibrary.simpleMessage("Trading"),
         "trading_board": MessageLookupByLibrary.simpleMessage("Trading board"),
         "username": MessageLookupByLibrary.simpleMessage("Username"),
         "virtual_assistant":

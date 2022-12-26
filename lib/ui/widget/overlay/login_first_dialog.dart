@@ -9,16 +9,17 @@ class LoginFirstCatalog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AppDialog(
-      icon: Icon(Icons.warning_amber_rounded),
-      title: Text("Yêu cầu đăng nhập"),
-      content: Text("Hãy đăng nhập để tiếp tục!"),
+      icon: const Icon(Icons.warning_amber_rounded),
+      title: Text(S.of(context).login_required),
+      content: Text(S.of(context).login_to_continue),
       actions: [
         InkWell(
-            onTap: () => Navigator.of(context).pop(),
+            onTap: () => Navigator.of(context).pop(false),
             child: Text(S.of(context).cancel)),
-        Text("OK")
+        InkWell(
+            onTap: () => Navigator.of(context).pop(true),
+            child: const Text("OK"))
       ],
     );
   }
-  
 }

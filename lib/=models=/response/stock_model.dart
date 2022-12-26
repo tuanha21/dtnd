@@ -4,7 +4,6 @@ import 'package:dtnd/=models=/response/stock_data.dart';
 import 'package:dtnd/=models=/response/stock_info_core.dart';
 import 'package:dtnd/=models=/response/stock_trade.dart';
 import 'package:dtnd/=models=/response/stock_trading_history.dart';
-import 'package:dtnd/utilities/logger.dart';
 import 'package:get/get.dart';
 
 class StockModel {

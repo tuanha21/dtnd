@@ -9,7 +9,6 @@ import 'package:dtnd/ui/screen/virtual_assistant/virtual_assistant_filter/virtua
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:dtnd/ui/widget/input/search_stock.dart';
-import 'package:dtnd/utilities/extension.dart';
 import 'package:flutter/material.dart';
 
 class AddFilterStock extends StatefulWidget {

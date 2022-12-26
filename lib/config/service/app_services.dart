@@ -4,6 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+extension ThemeModeX on ThemeMode {
+  bool get isLight => this == ThemeMode.light;
+  bool get isDark => this == ThemeMode.dark;
+}
+
 class AppService {
   AppService._internal();
 

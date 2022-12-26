@@ -18,6 +18,7 @@ import 'package:dtnd/ui/screen/market/widget/components/deep_market_chart.dart';
 import 'package:dtnd/ui/screen/stock_detail.dart/widget/k_chart.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/widget/overlay/app_dialog.dart';
+import 'package:dtnd/ui/widget/overlay/login_first_dialog.dart';
 import 'package:dtnd/ui/widget/section/section_with_title.dart';
 import 'package:dtnd/ui/widget/slidable_action/catalog_slidable_action.dart';
 import 'package:flutter/material.dart';
@@ -239,15 +240,10 @@ class _MarketOverviewTabState extends State<MarketOverviewTab> {
 
   void _onAddingStock(StockModel stockModel) async {
     if (!userService.isLogin) {
-      await showDialog(
+      await showDialog<bool>(
         context: context,
         builder: (context) {
-          return AppDialog(
-            icon: Icon(Icons.warning_amber_rounded),
-            title: Text("Yêu cầu đăng nhập"),
-            content: Text("Hãy đăng nhập để tiếp tục!"),
-            actions: [Text("Huỷ"), Text("OK")],
-          );
+          return const LoginFirstCatalog();
         },
       );
     }

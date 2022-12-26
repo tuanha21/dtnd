@@ -1,5 +1,6 @@
 import 'package:dtnd/=models=/exchange.dart';
 import 'package:dtnd/=models=/local/saved_catalog.dart';
+import 'package:dtnd/=models=/local/user_catalog.dart';
 import 'package:dtnd/=models=/response/stock.dart';
 import 'package:dtnd/=models=/response/user_token.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -42,6 +43,8 @@ class LocalStorageService implements ILocalStorageService {
     Hive.registerAdapter(UserTokenAdapter());
     Hive.registerAdapter(ExchangeAdapter());
     Hive.registerAdapter(StockAdapter());
+    Hive.registerAdapter(SavedCatalogAdapter());
+    Hive.registerAdapter(UserCatalogAdapter());
     box = await getBox(_boxName);
     _appAccessTime = box.get(appAccessTimeKey) ?? 0;
     box.put(appAccessTimeKey, _appAccessTime + 1);
@@ -81,7 +84,7 @@ class LocalStorageService implements ILocalStorageService {
   Future<SavedCatalog> getSavedCatalog(String user) async {
     final SavedCatalog? savedCatalog = box.get("${user}_saved_catalog");
     if (savedCatalog == null) {
-      final SavedCatalog newSavedCatalog = SavedCatalog(user: user);
+      final SavedCatalog newSavedCatalog = SavedCatalog(user);
       await box.put("${user}_saved_catalog", newSavedCatalog);
       return newSavedCatalog;
     }

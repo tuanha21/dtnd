@@ -410,11 +410,31 @@ class S {
     );
   }
 
+  /// `Buy price`
+  String get buy_price {
+    return Intl.message(
+      'Buy price',
+      name: 'buy_price',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Sell`
   String get sell {
     return Intl.message(
       'Sell',
       name: 'sell',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Sell price`
+  String get sell_price {
+    return Intl.message(
+      'Sell price',
+      name: 'sell_price',
       desc: '',
       args: [],
     );
@@ -467,6 +487,16 @@ class S {
       name: 'loss_wvalue',
       desc: '',
       args: [value],
+    );
+  }
+
+  /// `Price`
+  String get price {
+    return Intl.message(
+      'Price',
+      name: 'price',
+      desc: '',
+      args: [],
     );
   }
 
@@ -625,6 +655,46 @@ class S {
     return Intl.message(
       'Add stock',
       name: 'add_stock',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Confirm order`
+  String get order_confirm {
+    return Intl.message(
+      'Confirm order',
+      name: 'order_confirm',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Loại lệnh`
+  String get order_type {
+    return Intl.message(
+      'Loại lệnh',
+      name: 'order_type',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Exchange total`
+  String get exchange_total {
+    return Intl.message(
+      'Exchange total',
+      name: 'exchange_total',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Period of validity`
+  String get period_of_validity {
+    return Intl.message(
+      'Period of validity',
+      name: 'period_of_validity',
       desc: '',
       args: [],
     );
@@ -907,6 +977,36 @@ class S {
     return Intl.message(
       'Price alert',
       name: 'price_alert',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Trading`
+  String get trading {
+    return Intl.message(
+      'Trading',
+      name: 'trading',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Login required`
+  String get login_required {
+    return Intl.message(
+      'Login required',
+      name: 'login_required',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Login to continue`
+  String get login_to_continue {
+    return Intl.message(
+      'Login to continue',
+      name: 'login_to_continue',
       desc: '',
       args: [],
     );

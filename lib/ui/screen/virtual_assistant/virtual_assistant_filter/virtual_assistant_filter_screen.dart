@@ -1,11 +1,7 @@
-import 'package:dtnd/=models=/response/filter_criterion.dart';
-import 'package:dtnd/=models=/response/stock.dart';
-import 'package:dtnd/=models=/response/stock_model.dart';
 import 'package:dtnd/config/service/app_services.dart';
 import 'package:dtnd/data/i_data_center_service.dart';
 import 'package:dtnd/data/implementations/data_center_service.dart';
 import 'package:dtnd/generated/l10n.dart';
-import 'package:dtnd/ui/screen/home/widget/home_market_overview.dart';
 import 'package:dtnd/ui/screen/virtual_assistant/virtual_assistant_filter/bottom_sheet/add_filter_stock.dart';
 import 'package:dtnd/ui/screen/virtual_assistant/virtual_assistant_filter/bottom_sheet/filter_stocks.dart';
 import 'package:dtnd/ui/screen/virtual_assistant/virtual_assistant_filter/bottom_sheet/filter_stocks_figure.dart';
@@ -13,9 +9,6 @@ import 'package:dtnd/ui/screen/virtual_assistant/virtual_assistant_filter/virtua
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:dtnd/ui/widget/bottom_sheet/modal_bottom_sheet.dart';
-import 'package:dtnd/ui/widget/input/search_stock.dart';
-import 'package:dtnd/utilities/extension.dart';
-import 'package:dtnd/utilities/logger.dart';
 import 'package:flutter/material.dart';
 
 import 'component/following_stock_component.dart';

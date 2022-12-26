@@ -29,6 +29,10 @@ class _LoginScreenState extends State<LoginScreen> {
       GlobalKey<FormFieldState<String?>>();
 
   void loginSuccess() {
+    final NavigatorState? navigator = Navigator.maybeOf(context);
+    if (navigator != null && navigator.canPop()) {
+      return navigator.pop(true);
+    }
     context.go("/");
   }
 
