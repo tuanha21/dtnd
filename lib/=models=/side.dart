@@ -9,6 +9,8 @@ extension SideX on Side {
   bool get isSell => this == Side.sell;
   bool get isBuy => this == Side.buy;
 
+  String get code => isBuy ? "B" : "S";
+
   String name(BuildContext context) {
     switch (this) {
       case Side.sell:

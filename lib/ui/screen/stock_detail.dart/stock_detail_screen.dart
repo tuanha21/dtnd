@@ -3,19 +3,15 @@
 import 'dart:async';
 
 import 'package:dtnd/=models=/response/stock_model.dart';
-import 'package:dtnd/=models=/ui_model/user_cmd.dart';
 import 'package:dtnd/config/service/app_services.dart';
 import 'package:dtnd/data/i_data_center_service.dart';
 import 'package:dtnd/data/i_user_service.dart';
 import 'package:dtnd/data/implementations/data_center_service.dart';
 import 'package:dtnd/data/implementations/user_service.dart';
 import 'package:dtnd/generated/l10n.dart';
-import 'package:dtnd/ui/screen/exchange_stock/stock_order/data/order_data.dart';
-import 'package:dtnd/ui/screen/exchange_stock/stock_order/stock_order_confirm_sheet.dart';
-import 'package:dtnd/ui/screen/exchange_stock/stock_order/stock_order_sheet.dart';
+import 'package:dtnd/ui/screen/exchange_stock/stock_order/sheet/stock_order_sheet.dart';
 import 'package:dtnd/ui/screen/login/login_screen.dart';
 import 'package:dtnd/ui/screen/stock_detail.dart/enum/detail_tab_enum.dart';
-import 'package:dtnd/ui/screen/stock_detail.dart/widget/choose_technical_trading.dart';
 import 'package:dtnd/ui/screen/stock_detail.dart/widget/component/price_alert.dart';
 import 'package:dtnd/ui/screen/stock_detail.dart/widget/component/stock_detail_appbar.dart';
 import 'package:dtnd/ui/screen/stock_detail.dart/widget/financial_index.dart';
@@ -25,12 +21,11 @@ import 'package:dtnd/ui/screen/stock_detail.dart/widget/tab_trading_board.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:dtnd/ui/widget/overlay/login_first_dialog.dart';
-import 'package:dtnd/utilities/extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:go_router/go_router.dart';
 import 'package:sliding_up_panel2/sliding_up_panel2.dart';
 
+import '../exchange_stock/stock_order/business/stock_order_cmd.dart';
 import '../home/widget/home_section.dart';
 
 class StockDetailScreen extends StatefulWidget {
@@ -82,7 +77,7 @@ class _StockDetailScreenState extends State<StockDetailScreen>
   }
 
   void _onFABTapped() async {
-    print("userService.isLogin ${userService.isLogin}");
+    // print("userService.isLogin ${userService.isLogin}");
     if (!userService.isLogin) {
       final toLogin = await showDialog<bool>(
         context: context,
@@ -100,40 +95,59 @@ class _StockDetailScreenState extends State<StockDetailScreen>
         }
       }
     } else {
-      return orderProcess();
+      // return StockOrderISheet(widget.stockModel).showSheet(context, );
+      StockOrderISheet(widget.stockModel).showSheet(
+          context,
+          StockOrderSheet(
+            stockModel: widget.stockModel,
+            orderData: null,
+          ));
     }
   }
 
-  void orderProcess() async {
-    dynamic result =
-        await showSheet(child: StockOrderSheet(stockModel: widget.stockModel));
-    if (result is OrderData) {
-      result = await showSheet(
-        child: StockOrderConfirmSheet(
-          stockModel: widget.stockModel,
-          orderData: result,
-        ),
-      );
-    }
-  }
+  // void orderProcess() async {
+  //   dynamic result =
+  //       await showSheet(child: StockOrderSheet(stockModel: widget.stockModel));
+  //   if (result is NextCmd) {
+  //     result = await showSheet(
+  //       child: StockOrderConfirmSheet(
+  //         stockModel: widget.stockModel,
+  //         orderData: result.data,
+  //       ),
+  //     );
+  //   }
+  // }
 
-  Future<T?> showSheet<T>({required Widget child}) {
-    return showModalBottomSheet(
-      context: context,
-      shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.vertical(top: Radius.circular(20))),
-      builder: (BuildContext context) {
-        return Wrap(
-          children: [
-            // TechnicalTradings(
-            //   onChoosen: (value) => Navigator.of(context).pop(value),
-            // ),
-            child
-          ],
-        );
-      },
-    );
-  }
+  // Future<T?> nextSheet<T>({
+  //   required Widget from,
+  //   required Widget to,
+  // }) async {
+  //   var result = await showSheet(child: from);
+  //   if (result == null) {
+  //     return null;
+  //   }
+  //   if (result is NextCmd) {
+  //     result = await showSheet(child: to);
+  //   }
+  // }
+
+  // Future<T?> showSheet<T>({required Widget child}) {
+  //   return showModalBottomSheet(
+  //     context: context,
+  //     shape: const RoundedRectangleBorder(
+  //         borderRadius: BorderRadius.vertical(top: Radius.circular(20))),
+  //     builder: (BuildContext context) {
+  //       return Wrap(
+  //         children: [
+  //           // TechnicalTradings(
+  //           //   onChoosen: (value) => Navigator.of(context).pop(value),
+  //           // ),
+  //           child
+  //         ],
+  //       );
+  //     },
+  //   );
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -295,110 +309,6 @@ class _StockDetailScreenState extends State<StockDetailScreen>
                 );
               },
             ),
-          ),
-        );
-
-        return SizedBox.expand(
-          child: SlidingUpPanel(
-            minHeight: 60,
-            parallaxEnabled: true,
-            parallaxOffset: .5,
-            maxHeight: MediaQuery.of(context).size.height,
-            color: themeMode.isLight ? Colors.white : Colors.black,
-            scrollController: scrollController,
-            controller: panelController,
-            body: NestedScrollView(
-              headerSliverBuilder:
-                  (BuildContext context, bool innerBoxIsScrolled) {
-                return [
-                  SliverPersistentHeader(
-                      pinned: true,
-                      delegate:
-                          StockDetailAppbar(stockModel: widget.stockModel))
-                ];
-              },
-              body: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: ListView(
-                  children: [
-                    SizedBox(
-                        height: 200,
-                        width: MediaQuery.of(context).size.width,
-                        child: StockDetailChart(stockModel: widget.stockModel)),
-                    PriceAlert(),
-                    const SizedBox(height: 15),
-                    HomeSection(
-                      title: S.of(context).news_and_events,
-                      child: StockDetailNews(
-                        stockCode: widget.stockModel.stock.stockCode,
-                      ),
-                    ),
-                    const SizedBox(height: 120),
-                  ],
-                ),
-              ),
-            ),
-            header: SizedBox(
-              width: MediaQuery.of(context).size.width,
-              height: 60,
-              child: Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 6),
-                    child: ForceDraggableWidget(
-                      child: SizedBox(
-                        width: 39,
-                        height: 4,
-                        child: Container(
-                          decoration: const BoxDecoration(
-                            color: AppColors.neutral_03,
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(2),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  ForceDraggableWidget(
-                    child: TabBar(
-                      controller: _tabController,
-                      isScrollable: true,
-                      labelPadding: const EdgeInsets.symmetric(
-                          horizontal: 10, vertical: 6),
-                      padding: EdgeInsets.zero,
-                      // indicatorSize: TabBarIndicatorSize.label,
-                      tabs: DetailTab.values
-                          .map((e) => Text(e.getName(context)))
-                          .toList(),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            panelBuilder: () {
-              return Padding(
-                padding: const EdgeInsets.only(top: 60),
-                child: TabBarView(
-                  controller: _tabController,
-                  physics: PanelScrollPhysics(controller: panelController),
-                  // controller: scrollController,
-                  children: <Widget>[
-                    TabTradingBoard(
-                      stockModel: widget.stockModel,
-                      scrollController: scrollController,
-                      panelController: panelController,
-                    ),
-                    const Center(
-                      child: Text("Chi tiết kl"),
-                    ),
-                    const Center(
-                      child: Text("Chỉ số tài chính"),
-                    )
-                  ],
-                ),
-              );
-            },
           ),
         );
       }),

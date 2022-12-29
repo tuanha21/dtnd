@@ -7,7 +7,9 @@ import 'package:dtnd/=models=/response/inday_matched_order.dart';
 import 'package:dtnd/=models=/response/index_detail.dart';
 import 'package:dtnd/=models=/response/index_chart_data.dart';
 import 'package:dtnd/=models=/index.dart';
+import 'package:dtnd/=models=/response/new_order.dart';
 import 'package:dtnd/=models=/response/news_detail.dart';
+import 'package:dtnd/=models=/response/s_cash_balance.dart';
 import 'package:dtnd/=models=/response/stock.dart';
 import 'package:dtnd/=models=/response/stock_data.dart';
 import 'package:dtnd/=models=/response/stock_news.dart';
@@ -298,5 +300,21 @@ class NetworkService implements INetworkService {
       result.add(IndayMatchedOrder.fromJson(element));
     }
     return result;
+  }
+
+  @override
+  Future<SCashBalance> getSCashBalance(RequestModel requestModel) async {
+    final http.Response response =
+        await client.post(url_core, body: requestModel.toString());
+    logger.v(response.body);
+    return SCashBalance.fromJson(decode(response.bodyBytes));
+  }
+
+  @override
+  Future<NewOrderResponse?> createNewOrder(RequestModel requestModel) async {
+    final http.Response response =
+        await client.post(url_core, body: requestModel.toString());
+    logger.v(response.body);
+    return NewOrderResponse.fromJson(decode(response.bodyBytes));
   }
 }

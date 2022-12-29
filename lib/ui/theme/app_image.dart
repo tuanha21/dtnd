@@ -44,6 +44,21 @@ class AppImages {
   static const String wallet_search = "assets/svg/wallet_search.svg";
 
   static const String notification_icon = "assets/images/notification_icon.png";
+  static const String document_text_icon =
+      "assets/images/document_text_icon.png";
+  static const String directbox_receive_icon =
+      "assets/images/directbox_receive_icon.png";
+  static const String chart2_icon = "assets/images/chart2_icon.png";
+  static const String percentage_square_icon =
+      "assets/images/percentage_square_icon.png";
+  static const String expand_more_icon = "assets/images/expand_more_icon.png";
+  static const String vnd_icon = "assets/images/vnd_icon.png";
+  static const String equal_icon = "assets/images/equal_icon.png";
+  static const String more_or_equal_icon =
+      "assets/images/more_or_equal_icon.png";
+  static const String less_or_equal_icon =
+      "assets/images/less_or_equal_icon.png";
+  static const String additem_icon = "assets/images/additem_icon.png";
 
   /// BG
   static const String home_asset_card_light_bg =
@@ -61,4 +76,5 @@ class AppImages {
       "assets/images/virtual_assistant_register.png";
   static const String virtual_assistant_registered =
       "assets/images/virtual_assistant_registered.png";
+  static const String illust06 = "assets/images/illust06.png";
 }

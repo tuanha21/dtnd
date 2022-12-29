@@ -1,3 +1,7 @@
+import 'dart:math';
+import 'dart:convert';
+import 'package:crypto/crypto.dart';
+
 import 'package:intl/intl.dart';
 
 final NumberFormat integerFormat = NumberFormat("###,###,###,###,###", "en_US");
@@ -14,7 +18,6 @@ class NumUtils {
     try {
       return doubleFormat.format(integer);
     } catch (e) {
-      print(e);
       return nullString ?? "";
     }
   }
@@ -24,7 +27,6 @@ class NumUtils {
     try {
       return integerFormat.format(integer);
     } catch (e) {
-      print(e);
       return nullString ?? "";
     }
   }
@@ -34,7 +36,6 @@ class NumUtils {
     try {
       return integerFormat10.format(integer);
     } catch (e) {
-      print(e);
       return nullString ?? "";
     }
   }
@@ -45,7 +46,6 @@ class NumUtils {
       final num integer = num.parse(string!);
       return doubleFormat.format(integer);
     } catch (e) {
-      print(e);
       return nullString ?? "";
     }
   }
@@ -56,7 +56,6 @@ class NumUtils {
       final num integer = num.parse(string!);
       return integerFormat.format(integer);
     } catch (e) {
-      print(e);
       return nullString ?? "";
     }
   }
@@ -67,10 +66,24 @@ class NumUtils {
       final num integer = num.parse(string!);
       return integerFormat10.format(integer);
     } catch (e) {
-      print(e);
       return nullString ?? "";
     }
   }
 
   static bool _invalidInput(dynamic data) => data == null;
+
+  static String getRandom() {
+    String text = "";
+    String possible =
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    Random random = Random();
+    for (int i = 0; i < 23; i++) {
+      text += possible[(random.nextDouble() * possible.length).toInt()];
+    }
+    return text;
+  }
+
+  static String generateMd5(String input) {
+    return md5.convert(utf8.encode(input)).toString();
+  }
 }

@@ -35,7 +35,6 @@ class LoginController {
   Future<LoginStatus> login(String username, String password) async {
     try {
       loading.value = true;
-      print("logining");
       final requestDataModel = RequestDataModel(
           type: RequestType.string,
           cmd: "Web.sCheckLogin",
@@ -43,21 +42,17 @@ class LoginController {
           p2: password,
           p3: "M",
           p4: "");
-      final requestModel = RequestModel(
+      final requestModel = RequestModel.login(
         group: "L",
         user: username,
         data: requestDataModel,
       );
       final userEntity = await networkService.checkLogin(requestModel);
-      print("userEntity");
       logger.v(userEntity?.toJson());
-      print("toJson");
       final loginStatus = await verifyEntity(userEntity);
-      print("loginStatus");
       if (loginStatus.isSuccess) {
         await userService.saveToken(userEntity!.loginData!);
       }
-      print(loginStatus);
       loading.value = false;
       return loginStatus;
     } catch (e) {

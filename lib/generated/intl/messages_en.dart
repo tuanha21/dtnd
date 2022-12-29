@@ -36,6 +36,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "DTNDs_virtual_assistant": MessageLookupByLibrary.simpleMessage(
             " of DTND\'s virtual assistant"),
         "account": MessageLookupByLibrary.simpleMessage("Account"),
+        "account_notice":
+            MessageLookupByLibrary.simpleMessage("Account notice"),
+        "add_catalog": MessageLookupByLibrary.simpleMessage("Add catalog"),
         "add_following_stock":
             MessageLookupByLibrary.simpleMessage("Add following stocks"),
         "add_stock": MessageLookupByLibrary.simpleMessage("Add stock"),
@@ -47,6 +50,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "buy": MessageLookupByLibrary.simpleMessage("Buy"),
         "buy_price": MessageLookupByLibrary.simpleMessage("Buy price"),
         "cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
+        "catalog_name": MessageLookupByLibrary.simpleMessage("Catalog name"),
+        "catalog_notice":
+            MessageLookupByLibrary.simpleMessage("Catalog notice"),
         "ceil": MessageLookupByLibrary.simpleMessage("Ceil"),
         "choose_stocks_you_interested": MessageLookupByLibrary.simpleMessage(
             "Select the stocks you are interested in. You can update later"),
@@ -55,6 +61,12 @@ class MessageLookup extends MessageLookupByLibrary {
         "create": MessageLookupByLibrary.simpleMessage("Create"),
         "create_account":
             MessageLookupByLibrary.simpleMessage("Create account"),
+        "create_catalog":
+            MessageLookupByLibrary.simpleMessage("Create catalog"),
+        "create_new_order":
+            MessageLookupByLibrary.simpleMessage("Create new order"),
+        "create_order_successfully":
+            MessageLookupByLibrary.simpleMessage("Create order successfully"),
         "dividend": MessageLookupByLibrary.simpleMessage("Dividend"),
         "double_back_to_close_app":
             MessageLookupByLibrary.simpleMessage("Back again to exit"),
@@ -112,6 +124,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "matched_price": MessageLookupByLibrary.simpleMessage("Matched price"),
         "matched_vol": MessageLookupByLibrary.simpleMessage("Matched vol"),
         "minutes": MessageLookupByLibrary.simpleMessage(" minutes"),
+        "net_assets": MessageLookupByLibrary.simpleMessage("Net assets"),
         "news": MessageLookupByLibrary.simpleMessage("News"),
         "news_and_events":
             MessageLookupByLibrary.simpleMessage("News and events"),
@@ -124,12 +137,16 @@ class MessageLookup extends MessageLookupByLibrary {
             "Username requires at least 6 characters"),
         "order": MessageLookupByLibrary.simpleMessage("Order"),
         "order_confirm": MessageLookupByLibrary.simpleMessage("Confirm order"),
-        "order_type": MessageLookupByLibrary.simpleMessage("Loại lệnh"),
+        "order_type": MessageLookupByLibrary.simpleMessage("Order type"),
+        "order_will_appear_in_ur_order_note":
+            MessageLookupByLibrary.simpleMessage(
+                "Order will appear in your order note"),
         "otp_code_sent_to_phone_number": m2,
         "overview": MessageLookupByLibrary.simpleMessage("Overview"),
         "password": MessageLookupByLibrary.simpleMessage("Password"),
         "period_of_validity":
             MessageLookupByLibrary.simpleMessage("Period of validity"),
+        "pin_code": MessageLookupByLibrary.simpleMessage("Pin code"),
         "price": MessageLookupByLibrary.simpleMessage("Price"),
         "price_alert": MessageLookupByLibrary.simpleMessage("Price alert"),
         "qa_base": MessageLookupByLibrary.simpleMessage("Base"),
@@ -140,6 +157,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "qa_pack_enrol":
             MessageLookupByLibrary.simpleMessage("Pack enrollment"),
         "ref": MessageLookupByLibrary.simpleMessage("Ref"),
+        "save": MessageLookupByLibrary.simpleMessage("Save"),
         "search_stock": MessageLookupByLibrary.simpleMessage("Search stock"),
         "see_more": MessageLookupByLibrary.simpleMessage("See more"),
         "sell": MessageLookupByLibrary.simpleMessage("Sell"),
@@ -172,12 +190,19 @@ class MessageLookup extends MessageLookupByLibrary {
         "total_wvalue": m3,
         "trading": MessageLookupByLibrary.simpleMessage("Trading"),
         "trading_board": MessageLookupByLibrary.simpleMessage("Trading board"),
+        "unknown_error": MessageLookupByLibrary.simpleMessage("Unknown error"),
         "username": MessageLookupByLibrary.simpleMessage("Username"),
         "virtual_assistant":
             MessageLookupByLibrary.simpleMessage("Virtual assistant"),
         "virtual_assistant_available":
             MessageLookupByLibrary.simpleMessage("Virtual assistant available"),
         "vol_analysis": MessageLookupByLibrary.simpleMessage("Vol analysis"),
+        "volatility_notice":
+            MessageLookupByLibrary.simpleMessage("Volatility notice"),
+        "volatility_notice_quote1": MessageLookupByLibrary.simpleMessage(
+            "Set up fluctuations alerts for your account and interest catalogs"),
+        "volatility_warning":
+            MessageLookupByLibrary.simpleMessage("Volatility warning"),
         "volumn": MessageLookupByLibrary.simpleMessage("Volumn"),
         "wrong_password":
             MessageLookupByLibrary.simpleMessage("Password is incorrect")

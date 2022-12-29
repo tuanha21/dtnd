@@ -28,6 +28,7 @@
     "minutes": " phút",
     "double_back_to_close_app": "Ấn thêm lần nữa để thoát",
     "create_account": "Tạo tài khoản",
+    "create_catalog": "Tạo danh mục",
 
     "ceil": "Trần",
     "floor": "Sàn",
@@ -48,6 +49,7 @@
     "gain_wvalue": "Tăng {value}",
     "loss_wvalue": "Giảm {value}",
     "price": "Giá",
+    "net_assets": "Tài sản ròng",
 
     "total_asset": "Tổng tài sản",
     "interested_catalog": "Danh mục quan tâm",
@@ -69,6 +71,7 @@
     "order_type": "Loại lệnh",
     "exchange_total": "Tổng giao dịch",
     "period_of_validity": "Thời gian hiệu lực",
+    "pin_code": "Mã pin",
 
     "DTND_assistant": "Trợ lý DTND",
     "virtual_assistant": "Trợ lý ảo",
@@ -101,6 +104,17 @@
     "trading": "Giao dịch",
     "login_required": "Yêu cầu đăng nhập",
     "login_to_continue": "Hãy đăng nhập để tiếp tục",
+    "create_new_order": "Đặt lệnh mới",
+    "create_order_successfully": "Đặt lệnh thành công",
+    "order_will_appear_in_ur_order_note": "Lệnh đặt sẽ xuất hiện trong sổ lệnh của bạn",
+    "volatility_warning": "Cảnh báo biến động",
+    "volatility_notice": "Thông báo biến động",
+    "account_notice": "Thông báo tài khoản",
+    "catalog_notice": "Thông báo danh mục",
+    "volatility_notice_quote1": "Cài đặt thống báo biến động tài khoản và danh mục quan tâm của bạn",
+    "add_catalog": "Thêm danh mục",
+    "catalog_name": "Tên danh mục",
+    "save": "Lưu",
 
     "login_exception_required_OTP": "Hãy đăng nhập bằng mã OTP được gửi về máy của bạn",
     "invalid_account": "Tài khoản chưa đăng ký hoặc đã hết hiệu lực giao dịch Internet",
@@ -118,6 +132,7 @@
     "next": "Tiếp tục",
 
     "timeout": "Không nhận được phản hồi từ máy chủ",
+    "unknown_error": "Lỗi không xác định",
     "no_internet": "Không có kết nối Internet"
 
 }

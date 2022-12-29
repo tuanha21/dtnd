@@ -1,28 +1,39 @@
 import 'dart:async';
-import 'dart:convert';
 
 import 'package:dtnd/config/service/app_services.dart';
 import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/screen/virtual_assistant/virtual_assistant_filter/virtual_assistant_filter_screen.dart';
 import 'package:dtnd/ui/screen/virtual_assistant/virtual_assistant_register/virtual_assistant_register.dart';
+import 'package:dtnd/ui/screen/virtual_assistant/virtual_assistant_volatolity_warning/virtual_assistant_volatolity_warning_screen.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
-import 'package:dtnd/utilities/extension.dart';
+import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:dtnd/utilities/logger.dart';
 import 'package:dtnd/utilities/responsive.dart';
 import 'package:flutter/material.dart';
-import 'package:messagepack/messagepack.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 import 'package:msgpack_dart/msgpack_dart.dart' as msgp;
 
 enum VirtualAssistantFeature {
   stockFilter,
+  volatilityWarning,
 }
 
 extension VirtualAssistantFeatureX on VirtualAssistantFeature {
   String get name {
     switch (this) {
       case VirtualAssistantFeature.stockFilter:
-        return "Lọc cổ phiếu";
+        return S.current.filter_stock;
+      case VirtualAssistantFeature.volatilityWarning:
+        return S.current.volatility_warning;
+    }
+  }
+
+  String get iconPath {
+    switch (this) {
+      case VirtualAssistantFeature.stockFilter:
+        return AppImages.chart2_icon;
+      case VirtualAssistantFeature.volatilityWarning:
+        return AppImages.directbox_receive_icon;
     }
   }
 
@@ -31,6 +42,11 @@ extension VirtualAssistantFeatureX on VirtualAssistantFeature {
       case VirtualAssistantFeature.stockFilter:
         return () => Navigator.of(context).push(MaterialPageRoute(
               builder: (context) => const AssistantStockFilterScreen(),
+            ));
+      case VirtualAssistantFeature.volatilityWarning:
+        return () => Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) =>
+                  const VirtualAssistantVolatilityWarningScreen(),
             ));
     }
   }
@@ -104,15 +120,52 @@ class _VirtualAssistantScreenState extends State<VirtualAssistantScreen> {
         child: Column(
           children: [
             SizedBox(
-              height: 50,
-              child: ListView.builder(
+              height: 52,
+              child: ListView.separated(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
                 itemCount: VirtualAssistantFeature.values.length,
                 scrollDirection: Axis.horizontal,
-                shrinkWrap: true,
-                itemBuilder: (context, index) => TextButton(
-                    onPressed: VirtualAssistantFeature.values[index]
+                // shrinkWrap: true,
+                itemBuilder: (context, index) {
+                  Widget child = Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      SizedBox.square(
+                        dimension: 24,
+                        child: Image.asset(
+                            VirtualAssistantFeature.values[index].iconPath),
+                      ),
+                      Text(
+                        VirtualAssistantFeature.values[index].name,
+                      )
+                    ],
+                  );
+                  child = InkWell(
+                    onTap: VirtualAssistantFeature.values[index]
                         .onPressed(context),
-                    child: Text(VirtualAssistantFeature.values[index].name)),
+                    child: Ink(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 8, vertical: 4),
+                      // width: 102,
+                      // height: 52,
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(8))),
+                      child: child,
+                    ),
+                  );
+
+                  // TextButton(
+                  //     onPressed: VirtualAssistantFeature.values[index]
+                  //         .onPressed(context),
+                  //     child: Text(VirtualAssistantFeature.values[index].name));
+                  return child;
+                },
+                separatorBuilder: (BuildContext context, int index) =>
+                    const SizedBox(
+                  width: 8,
+                ),
               ),
             ),
             Text(S.of(context).virtual_assistant),

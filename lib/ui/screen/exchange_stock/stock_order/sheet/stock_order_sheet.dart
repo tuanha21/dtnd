@@ -1,7 +1,7 @@
 import 'package:dtnd/=models=/exchange.dart';
 import 'package:dtnd/=models=/response/stock_model.dart';
 import 'package:dtnd/=models=/side.dart';
-import 'package:dtnd/config/service/app_services.dart';
+import 'package:dtnd/=models=/ui_model/user_cmd.dart';
 import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/screen/exchange_stock/stock_order/data/order_data.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
@@ -80,12 +80,13 @@ class _StockOrderSheetState extends State<StockOrderSheet> {
 
   void toConfirmPanel(Side side) async {
     final OrderData orderData = OrderData(
+      stockModel: widget.stockModel,
       side: side,
       orderType: selectedOrderType,
       volumn: num.parse(volumnController.text),
       price: priceController.text,
     );
-    Navigator.of(context).pop(orderData);
+    Navigator.of(context).pop(NextCmd(orderData));
     // await showModalBottomSheet(
     //   context: context,
     //   shape: const RoundedRectangleBorder(

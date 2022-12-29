@@ -162,42 +162,23 @@ class AppDialog extends AlertDialog {
     if (actions != null) {
       final double spacing = (buttonPadding?.horizontal ?? 16) / 2;
       actionsWidget = Container(
+        height: 40,
         decoration: const BoxDecoration(
           border: Border(
             top: BorderSide(color: AppColors.neutral_05),
           ),
         ),
-        child: Padding(
-          padding: actionsPadding ??
-              dialogTheme.actionsPadding ??
-              (theme.useMaterial3
-                  ? defaults.actionsPadding!
-                  : defaults.actionsPadding!.add(EdgeInsets.all(spacing))),
-          child: Row(
-            // alignment: actionsAlignment ?? MainAxisAlignment.end,
-            // spacing: spacing,
-            // overflowAlignment:
-            //     actionsOverflowAlignment ?? OverflowBarAlignment.end,
-            // overflowDirection:
-            //     actionsOverflowDirection ?? VerticalDirection.down,
-            // overflowSpacing: actionsOverflowButtonSpacing ?? 0,
-            children: [
-              for (int i = 0; i < actions!.length; i++)
-                Expanded(
-                  child: Container(
-                    alignment: Alignment.center,
-                    decoration: i != 0
-                        ? const BoxDecoration(
-                            border: Border(
-                              left: BorderSide(color: AppColors.neutral_05),
-                            ),
-                          )
-                        : null,
-                    child: actions![i],
-                  ),
-                )
-            ],
-          ),
+        child: Row(
+          // alignment: actionsAlignment ?? MainAxisAlignment.end,
+          // spacing: spacing,
+          // overflowAlignment:
+          //     actionsOverflowAlignment ?? OverflowBarAlignment.end,
+          // overflowDirection:
+          //     actionsOverflowDirection ?? VerticalDirection.down,
+          // overflowSpacing: actionsOverflowButtonSpacing ?? 0,
+          children: [
+            for (int i = 0; i < actions!.length; i++) actions![i],
+          ],
         ),
       );
     }

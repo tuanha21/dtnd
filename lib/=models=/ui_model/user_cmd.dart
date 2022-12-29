@@ -1,3 +1,5 @@
+import 'package:dtnd/=models=/ui_model/sheet_data.dart';
+
 abstract class UserCmd {
   const UserCmd([this.data]);
   final dynamic data;
@@ -9,4 +11,8 @@ class BackCmd extends UserCmd {
 
 class NextCmd extends UserCmd {
   const NextCmd([super.data]);
+}
+
+class ToOptionCmd extends UserCmd {
+  const ToOptionCmd([super.data]);
 }

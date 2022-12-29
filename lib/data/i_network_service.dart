@@ -5,7 +5,9 @@ import 'package:dtnd/=models=/response/deep_model.dart';
 import 'package:dtnd/=models=/response/inday_matched_order.dart';
 import 'package:dtnd/=models=/response/index_chart_data.dart';
 import 'package:dtnd/=models=/response/index_detail.dart';
+import 'package:dtnd/=models=/response/new_order.dart';
 import 'package:dtnd/=models=/response/news_detail.dart';
+import 'package:dtnd/=models=/response/s_cash_balance.dart';
 import 'package:dtnd/=models=/response/stock.dart';
 import 'package:dtnd/=models=/response/stock_data.dart';
 import 'package:dtnd/=models=/response/stock_news.dart';
@@ -55,4 +57,8 @@ abstract class INetworkService {
   Future<List<DeepModel>> getMarketDepth();
 
   Future<List<IndayMatchedOrder>> getIndayMatchedOrders(String symbol);
+
+  Future<SCashBalance> getSCashBalance(RequestModel requestModel);
+
+  Future<NewOrderResponse?> createNewOrder(RequestModel requestModel);
 }

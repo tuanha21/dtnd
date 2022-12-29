@@ -1,6 +1,6 @@
-abstract class LocalCatalog {
+abstract class LocalCatalog<T> {
   String get name;
-  List<String>? get stocks;
+  List<T>? get stocks;
   // void add(String stock);
   // void addAll(List<String> stocks);
   // String remove(String stock);

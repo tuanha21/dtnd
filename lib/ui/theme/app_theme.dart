@@ -311,7 +311,7 @@ const ColorScheme _darkColorScheme = ColorScheme(
 ///================ THEME DATA ===================
 
 final ThemeData lightThemeData = ThemeData(
-  scaffoldBackgroundColor: AppColors.neutral_06,
+  scaffoldBackgroundColor: AppColors.bg_1,
   textTheme: lightTextTheme,
   inputDecorationTheme: lightInputDecorationTheme,
   colorScheme: _lightColorScheme,

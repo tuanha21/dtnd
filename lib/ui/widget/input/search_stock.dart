@@ -6,10 +6,12 @@ import 'package:flutter_typeahead/flutter_typeahead.dart';
 class SearchStockField<T> extends StatelessWidget {
   const SearchStockField({
     super.key,
+    this.focusNode,
     required this.suggestionsCallback,
     required this.itemBuilder,
     required this.onSuggestionSelected,
   });
+  final FocusNode? focusNode;
   final SuggestionsCallback<T> suggestionsCallback;
   final ItemBuilder<T> itemBuilder;
   final SuggestionSelectionCallback<T> onSuggestionSelected;
@@ -22,6 +24,7 @@ class SearchStockField<T> extends StatelessWidget {
       onSuggestionSelected: onSuggestionSelected,
       keepSuggestionsOnLoading: false,
       textFieldConfiguration: TextFieldConfiguration(
+        focusNode: focusNode,
         decoration: InputDecoration(
             hintText: S.of(context).search_stock,
             suffixIcon: Padding(

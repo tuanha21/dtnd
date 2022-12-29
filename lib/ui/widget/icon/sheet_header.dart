@@ -8,10 +8,12 @@ class SheetHeader extends StatelessWidget {
     super.key,
     this.title,
     this.implementBackButton = true,
+    this.implementDivider = true,
     this.backData,
   });
   final String? title;
   final bool implementBackButton;
+  final bool implementDivider;
   final dynamic backData;
 
   @override
@@ -44,9 +46,11 @@ class SheetHeader extends StatelessWidget {
             const SheetCloseButton(),
           ],
         ),
-        const Divider(
-          thickness: 1,
-        ),
+        implementDivider
+            ? const Divider(
+                thickness: 1,
+              )
+            : Container(),
       ],
     );
   }

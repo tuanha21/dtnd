@@ -28,6 +28,7 @@
     "minutes": " minutes",
     "double_back_to_close_app": "Back again to exit",
     "create_account": "Create account",
+    "create_catalog": "Create catalog",
 
     "ceil": "Ceil",
     "floor": "Floor",
@@ -48,6 +49,7 @@
     "gain_wvalue": "Gain {value}",
     "loss_wvalue": "Loss {value}",
     "price": "Price",
+    "net_assets": "Net assets",
 
     "total_asset": "Total asset",
     "interested_catalog": "Interested catalog",
@@ -66,9 +68,10 @@
     "market_deep": "Market deep",
     "add_stock": "Add stock",
     "order_confirm": "Confirm order",
-    "order_type": "Loại lệnh",
+    "order_type": "Order type",
     "exchange_total": "Exchange total",
     "period_of_validity": "Period of validity",
+    "pin_code": "Pin code",
 
     "DTND_assistant": "DTND assistant",
     "virtual_assistant": "Virtual assistant",
@@ -101,6 +104,17 @@
     "trading": "Trading",
     "login_required": "Login required",
     "login_to_continue": "Login to continue",
+    "create_new_order": "Create new order",
+    "create_order_successfully": "Create order successfully",
+    "order_will_appear_in_ur_order_note": "Order will appear in your order note",
+    "volatility_warning": "Volatility warning",
+    "volatility_notice": "Volatility notice",
+    "account_notice": "Account notice",
+    "catalog_notice": "Catalog notice",
+    "volatility_notice_quote1": "Set up fluctuations alerts for your account and interest catalogs",
+    "add_catalog": "Add catalog",
+    "catalog_name": "Catalog name",
+    "save": "Save",
 
     "login_exception_required_OTP": "Login with OTP code sent to your phone",
     "invalid_account": "This account has not been registered or Internet trading feature is no longer available",
@@ -118,5 +132,6 @@
     "next": "Next",
 
     "timeout": "No response from server",
+    "unknown_error": "Unknown error",
     "no_internet": "No Internet connection"
 }

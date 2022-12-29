@@ -310,6 +310,16 @@ class S {
     );
   }
 
+  /// `Create catalog`
+  String get create_catalog {
+    return Intl.message(
+      'Create catalog',
+      name: 'create_catalog',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Ceil`
   String get ceil {
     return Intl.message(
@@ -500,6 +510,16 @@ class S {
     );
   }
 
+  /// `Net assets`
+  String get net_assets {
+    return Intl.message(
+      'Net assets',
+      name: 'net_assets',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Total asset`
   String get total_asset {
     return Intl.message(
@@ -670,10 +690,10 @@ class S {
     );
   }
 
-  /// `Loại lệnh`
+  /// `Order type`
   String get order_type {
     return Intl.message(
-      'Loại lệnh',
+      'Order type',
       name: 'order_type',
       desc: '',
       args: [],
@@ -695,6 +715,16 @@ class S {
     return Intl.message(
       'Period of validity',
       name: 'period_of_validity',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Pin code`
+  String get pin_code {
+    return Intl.message(
+      'Pin code',
+      name: 'pin_code',
       desc: '',
       args: [],
     );
@@ -1012,6 +1042,116 @@ class S {
     );
   }
 
+  /// `Create new order`
+  String get create_new_order {
+    return Intl.message(
+      'Create new order',
+      name: 'create_new_order',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Create order successfully`
+  String get create_order_successfully {
+    return Intl.message(
+      'Create order successfully',
+      name: 'create_order_successfully',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Order will appear in your order note`
+  String get order_will_appear_in_ur_order_note {
+    return Intl.message(
+      'Order will appear in your order note',
+      name: 'order_will_appear_in_ur_order_note',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Volatility warning`
+  String get volatility_warning {
+    return Intl.message(
+      'Volatility warning',
+      name: 'volatility_warning',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Volatility notice`
+  String get volatility_notice {
+    return Intl.message(
+      'Volatility notice',
+      name: 'volatility_notice',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Account notice`
+  String get account_notice {
+    return Intl.message(
+      'Account notice',
+      name: 'account_notice',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Catalog notice`
+  String get catalog_notice {
+    return Intl.message(
+      'Catalog notice',
+      name: 'catalog_notice',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Set up fluctuations alerts for your account and interest catalogs`
+  String get volatility_notice_quote1 {
+    return Intl.message(
+      'Set up fluctuations alerts for your account and interest catalogs',
+      name: 'volatility_notice_quote1',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Add catalog`
+  String get add_catalog {
+    return Intl.message(
+      'Add catalog',
+      name: 'add_catalog',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Catalog name`
+  String get catalog_name {
+    return Intl.message(
+      'Catalog name',
+      name: 'catalog_name',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Save`
+  String get save {
+    return Intl.message(
+      'Save',
+      name: 'save',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Login with OTP code sent to your phone`
   String get login_exception_required_OTP {
     return Intl.message(
@@ -1137,6 +1277,16 @@ class S {
     return Intl.message(
       'No response from server',
       name: 'timeout',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Unknown error`
+  String get unknown_error {
+    return Intl.message(
+      'Unknown error',
+      name: 'unknown_error',
       desc: '',
       args: [],
     );

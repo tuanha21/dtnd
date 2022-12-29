@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:dtnd/=models=/local/local_catalog.dart';
 import 'package:dtnd/=models=/local/saved_catalog.dart';
+import 'package:dtnd/=models=/local/user_catalog.dart';
 import 'package:dtnd/=models=/response/deep_model.dart';
 import 'package:dtnd/=models=/response/stock_model.dart';
 import 'package:dtnd/data/i_data_center_service.dart';
@@ -60,9 +61,14 @@ class _MarketOverviewTabState extends State<MarketOverviewTab> {
       });
       return;
     }
-    final SavedCatalog savedCatalog =
+    SavedCatalog<String>? savedCatalog =
         await localStorageService.getSavedCatalog(userService.token!.user);
-    final LocalCatalog localCatalog = savedCatalog.catalogs.first;
+    if (savedCatalog == null || savedCatalog.catalogs.isEmpty) {
+      savedCatalog = SavedCatalog<String>(userService.token!.user);
+      savedCatalog.catalogs.add(UserCatalog("Default", defaultListStock));
+      await localStorageService.putSavedCatalog(savedCatalog);
+    }
+    final LocalCatalog<String> localCatalog = savedCatalog.catalogs.first;
     listCatalog = await dataCenterService
         .getStockModelsFromStockCodes(localCatalog.stocks!);
     setState(() {

@@ -4,7 +4,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 part 'user_catalog.g.dart';
 
 @HiveType(typeId: 4)
-class UserCatalog extends HiveObject implements LocalCatalog {
+class UserCatalog extends HiveObject implements LocalCatalog<String> {
   UserCatalog(this._name, this._stocks);
 
   @HiveField(0)

@@ -1,8 +1,11 @@
 import 'package:dtnd/=models=/exchange.dart';
+import 'package:dtnd/=models=/local/local_catalog.dart';
 import 'package:dtnd/=models=/local/saved_catalog.dart';
 import 'package:dtnd/=models=/local/user_catalog.dart';
+import 'package:dtnd/=models=/local/volatility_warning_catalog.dart';
 import 'package:dtnd/=models=/response/stock.dart';
 import 'package:dtnd/=models=/response/user_token.dart';
+import 'package:dtnd/data/implementations/data_center_service.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -80,14 +83,50 @@ class LocalStorageService implements ILocalStorageService {
     return box.put(savedUserTokenBoxKey, token);
   }
 
+  void createDefault(SavedCatalog savedCatalog) {
+    savedCatalog.catalogs.add(UserCatalog("Default catalog", defaultListStock));
+    savedCatalog.save();
+    return;
+  }
+
   @override
-  Future<SavedCatalog> getSavedCatalog(String user) async {
-    final SavedCatalog? savedCatalog = box.get("${user}_saved_catalog");
-    if (savedCatalog == null) {
-      final SavedCatalog newSavedCatalog = SavedCatalog(user);
-      await box.put("${user}_saved_catalog", newSavedCatalog);
-      return newSavedCatalog;
+  Future<SavedCatalog<String>?> getSavedCatalog(String user) async {
+    try {
+      return box.get("${user}_saved_catalog");
+    } catch (e) {
+      return null;
     }
-    return savedCatalog;
+    // final SavedCatalog? savedCatalog = box.get("${user}_saved_catalog");
+    // if (savedCatalog == null) {
+    //   final SavedCatalog newSavedCatalog = SavedCatalog(user);
+    //   createDefault(newSavedCatalog);
+    //   await box.put("${user}_saved_catalog", newSavedCatalog);
+    //   return newSavedCatalog;
+    // }
+    // if (savedCatalog.catalogs.isEmpty) {
+    //   createDefault(savedCatalog);
+    // }
+    // return savedCatalog;
+  }
+
+  @override
+  Future<void> putSavedCatalog(SavedCatalog savedCatalog) {
+    return box.put("${savedCatalog.user}_saved_catalog", savedCatalog);
+  }
+
+  @override
+  Future<SavedCatalog<VolatilityWarningCatalogStock>?>
+      getSavedVolatilityWarningCatalog(String user) async {
+    try {
+      return box.get("${user}_saved_volatility_warning_catalog");
+    } catch (e) {
+      return null;
+    }
+  }
+
+  @override
+  Future<void> putSavedVolatilityWarningCatalog(SavedCatalog savedCatalog) {
+    return box.put(
+        "${savedCatalog.user}_saved_volatility_warning_catalog", savedCatalog);
   }
 }
