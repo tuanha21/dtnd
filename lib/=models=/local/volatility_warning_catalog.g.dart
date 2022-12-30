@@ -57,7 +57,6 @@ class VolatilityWarningCatalogAdapter
     };
     return VolatilityWarningCatalog(
       fields[0] as String,
-      (fields[1] as List?)?.cast<VolatilityWarningCatalogStock>(),
     );
   }
 
@@ -93,8 +92,9 @@ class VolatilityWarningCatalogStockAdapter
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return VolatilityWarningCatalogStock()
-      ..stockModel = fields[0] as StockModel?;
+    return VolatilityWarningCatalogStock(
+      fields[0] as StockModel?,
+    );
   }
 
   @override

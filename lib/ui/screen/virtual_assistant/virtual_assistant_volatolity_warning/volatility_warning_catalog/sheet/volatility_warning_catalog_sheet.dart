@@ -3,23 +3,23 @@ import 'package:dtnd/=models=/local/volatility_warning_catalog.dart';
 import 'package:dtnd/data/i_local_storage_service.dart';
 import 'package:dtnd/data/implementations/local_storage_service.dart';
 import 'package:dtnd/generated/l10n.dart';
-import 'package:dtnd/ui/screen/virtual_assistant/virtual_assistant_volatolity_warning/component/user_warning_catalog_widget.dart';
+import 'package:dtnd/ui/screen/virtual_assistant/virtual_assistant_volatolity_warning/volatility_warning_catalog/component/user_warning_catalog_widget.dart';
 import 'package:dtnd/ui/widget/icon/sheet_header.dart';
 import 'package:flutter/material.dart';
 
-class VolatilityWarningAddCatalogSheet extends StatefulWidget {
-  const VolatilityWarningAddCatalogSheet({
+class VolatilityWarningCatalogSheet extends StatefulWidget {
+  const VolatilityWarningCatalogSheet({
     super.key,
     required this.savedCatalog,
   });
   final SavedCatalog<VolatilityWarningCatalogStock> savedCatalog;
   @override
-  State<VolatilityWarningAddCatalogSheet> createState() =>
-      _VolatilityWarningAddCatalogSheetState();
+  State<VolatilityWarningCatalogSheet> createState() =>
+      _VolatilityWarningCatalogSheetState();
 }
 
-class _VolatilityWarningAddCatalogSheetState
-    extends State<VolatilityWarningAddCatalogSheet> {
+class _VolatilityWarningCatalogSheetState
+    extends State<VolatilityWarningCatalogSheet> {
   final ILocalStorageService localStorageService = LocalStorageService();
 
   @override

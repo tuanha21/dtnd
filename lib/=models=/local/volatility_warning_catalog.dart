@@ -62,23 +62,24 @@ class VolatilityWarningFigure {
 @HiveType(typeId: 7)
 class VolatilityWarningCatalog extends HiveObject
     implements LocalCatalog<VolatilityWarningCatalogStock> {
-  VolatilityWarningCatalog(this._name, this._stocks);
+  VolatilityWarningCatalog(this._name);
 
   @HiveField(0)
   final String _name;
 
   @HiveField(1)
-  final List<VolatilityWarningCatalogStock>? _stocks;
+  final List<VolatilityWarningCatalogStock> _stocks = [];
 
   @override
   String get name => _name;
 
   @override
-  List<VolatilityWarningCatalogStock>? get stocks => _stocks;
+  List<VolatilityWarningCatalogStock> get stocks => _stocks;
 }
 
 @HiveType(typeId: 8)
 class VolatilityWarningCatalogStock extends HiveObject {
+  VolatilityWarningCatalogStock(this.stockModel);
   @HiveField(0)
   StockModel? stockModel;
 

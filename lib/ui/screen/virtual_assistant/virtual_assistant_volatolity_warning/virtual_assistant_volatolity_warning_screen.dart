@@ -16,7 +16,7 @@ import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
 
-import 'volatility_warning_catalog/sheet/volatility_warning_add_catalog_sheet.dart';
+import 'volatility_warning_catalog/sheet/volatility_warning_catalog_sheet.dart';
 
 class VirtualAssistantVolatilityWarningScreen extends StatefulWidget {
   const VirtualAssistantVolatilityWarningScreen({super.key});
@@ -180,7 +180,7 @@ class _VirtualAssistantVolatilityWarningScreenState
                 onTap: () {
                   AddCatalogISheet(savedCatalog!).showSheet(
                       context,
-                      VolatilityWarningAddCatalogSheet(
+                      VolatilityWarningCatalogSheet(
                           savedCatalog: savedCatalog!));
                 },
                 borderRadius: const BorderRadius.all(Radius.circular(8)),

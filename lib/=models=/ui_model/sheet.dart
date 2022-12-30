@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 
 abstract class ISheet {
   const ISheet();
-  Future<void>? onResultBack([dynamic data]);
-  Future<void>? onResultNext([dynamic data]);
-  Widget? backWidget([dynamic data]);
-  Widget? nextWidget([dynamic data]);
-  ISheet? back([dynamic data]);
-  ISheet? next([dynamic data]);
+  Future<void>? onResultBack([UserCmd? cmd]);
+  Future<void>? onResultNext([UserCmd? cmd]);
+  Widget? backWidget([UserCmd? cmd]);
+  Widget? nextWidget([UserCmd? cmd]);
+  ISheet? back([UserCmd? cmd]);
+  ISheet? next([UserCmd? cmd]);
 
   Future<UserCmd?> showSheet(BuildContext context, Widget? child) {
     if (child == null) {
@@ -35,33 +35,31 @@ abstract class ISheet {
   }
 
   Future<UserCmd?> cmd(BuildContext context, UserCmd? cmd) {
+    print(cmd);
     if (cmd is BackCmd) {
-      return onResultBack.call(cmd.data)?.then((_) => back
-              .call(cmd.data)
-              ?.showSheet(context, backWidget.call(cmd.data))) ??
-          back.call(cmd.data)?.showSheet(context, backWidget.call(cmd.data)) ??
+      return onResultBack.call(cmd)?.then((_) =>
+              back.call(cmd)?.showSheet(context, backWidget.call(cmd))) ??
+          back.call(cmd)?.showSheet(context, backWidget.call(cmd)) ??
           Future(
             () => null,
           );
-    }
-    if (cmd is NextCmd) {
-      return onResultNext.call(cmd.data)?.then((_) => next
-              .call(cmd.data)
-              ?.showSheet(context, nextWidget.call(cmd.data))) ??
-          next.call(cmd.data)?.showSheet(context, nextWidget.call(cmd.data)) ??
+    } else if (cmd is NextCmd) {
+      return onResultNext.call(cmd)?.then((_) =>
+              next.call(cmd)?.showSheet(context, nextWidget.call(cmd))) ??
+          next.call(cmd)?.showSheet(context, nextWidget.call(cmd)) ??
           Future(
             () => null,
           );
     }
     // if (cmd is ToOptionCmd) {
     //   for (var element in options!) {
-    //     if (element.runtimeType == cmd.data.runtimeType) {
-    //       return toOption(element, cmd.data)!.showSheet(context);
+    //     if (element.runtimeType == cmd.runtimeType) {
+    //       return toOption(element, cmd)!.showSheet(context);
     //     }
     //   }
     // }
     return Future(() {
-      return null;
+      return cmd;
     });
   }
 }

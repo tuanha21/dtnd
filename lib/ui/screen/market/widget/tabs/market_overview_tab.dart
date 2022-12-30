@@ -65,12 +65,14 @@ class _MarketOverviewTabState extends State<MarketOverviewTab> {
         await localStorageService.getSavedCatalog(userService.token!.user);
     if (savedCatalog == null || savedCatalog.catalogs.isEmpty) {
       savedCatalog = SavedCatalog<String>(userService.token!.user);
-      savedCatalog.catalogs.add(UserCatalog("Default", defaultListStock));
+      final catalog = UserCatalog("Default");
+      catalog.stocks.addAll(defaultListStock);
+      savedCatalog.catalogs.add(catalog);
       await localStorageService.putSavedCatalog(savedCatalog);
     }
     final LocalCatalog<String> localCatalog = savedCatalog.catalogs.first;
     listCatalog = await dataCenterService
-        .getStockModelsFromStockCodes(localCatalog.stocks!);
+        .getStockModelsFromStockCodes(localCatalog.stocks);
     setState(() {
       listCatalogInitialized = true;
     });

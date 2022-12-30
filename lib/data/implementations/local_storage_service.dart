@@ -48,6 +48,11 @@ class LocalStorageService implements ILocalStorageService {
     Hive.registerAdapter(StockAdapter());
     Hive.registerAdapter(SavedCatalogAdapter());
     Hive.registerAdapter(UserCatalogAdapter());
+    Hive.registerAdapter(VolatilityWarningFigureTypeAdapter());
+    Hive.registerAdapter(VolatilityWarningFigureAdapter());
+    Hive.registerAdapter(VolatilityWarningCatalogAdapter());
+    Hive.registerAdapter(VolatilityWarningCatalogStockAdapter());
+
     box = await getBox(_boxName);
     _appAccessTime = box.get(appAccessTimeKey) ?? 0;
     box.put(appAccessTimeKey, _appAccessTime + 1);
@@ -83,11 +88,12 @@ class LocalStorageService implements ILocalStorageService {
     return box.put(savedUserTokenBoxKey, token);
   }
 
-  void createDefault(SavedCatalog savedCatalog) {
-    savedCatalog.catalogs.add(UserCatalog("Default catalog", defaultListStock));
-    savedCatalog.save();
-    return;
-  }
+  // void createDefault(SavedCatalog savedCatalog) {
+  //   savedCatalog.catalogs.add(UserCatalog("Default catalog", defaultListStock));
+  //   savedCatalog.catalogs.addAll(defaultListStock);
+  //   savedCatalog.save();
+  //   return;
+  // }
 
   @override
   Future<SavedCatalog<String>?> getSavedCatalog(String user) async {

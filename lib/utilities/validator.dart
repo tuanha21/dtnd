@@ -10,4 +10,11 @@ class AppValidator {
     }
     return null;
   }
+
+  static String? catalogNameValidator(String? name) {
+    if (name?.isEmpty ?? true) {
+      return "Không được bỏ trống";
+    }
+    return null;
+  }
 }

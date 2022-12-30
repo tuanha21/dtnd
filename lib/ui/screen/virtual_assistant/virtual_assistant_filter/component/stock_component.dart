@@ -87,7 +87,7 @@ class StockComponent extends StatelessWidget {
             InkWell(
               onTap: () => onSelected?.call(model.stock),
               child: Image.asset(
-                AppImages.add_icon,
+                AppImages.add_rounded_icon,
                 scale: 4,
               ),
             )
