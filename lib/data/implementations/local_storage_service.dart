@@ -2,7 +2,7 @@ import 'package:dtnd/=models=/exchange.dart';
 import 'package:dtnd/=models=/local/local_catalog.dart';
 import 'package:dtnd/=models=/local/saved_catalog.dart';
 import 'package:dtnd/=models=/local/user_catalog.dart';
-import 'package:dtnd/=models=/local/volatility_warning_catalog.dart';
+import 'package:dtnd/=models=/local/volatility_warning_stock.dart';
 import 'package:dtnd/=models=/response/stock.dart';
 import 'package:dtnd/=models=/response/user_token.dart';
 import 'package:dtnd/data/implementations/data_center_service.dart';
@@ -48,9 +48,8 @@ class LocalStorageService implements ILocalStorageService {
     Hive.registerAdapter(StockAdapter());
     Hive.registerAdapter(SavedCatalogAdapter());
     Hive.registerAdapter(UserCatalogAdapter());
-    Hive.registerAdapter(VolatilityWarningFigureTypeAdapter());
+    // Hive.registerAdapter(VolatilityWarningFigureTypeAdapter());
     Hive.registerAdapter(VolatilityWarningFigureAdapter());
-    Hive.registerAdapter(VolatilityWarningCatalogAdapter());
     Hive.registerAdapter(VolatilityWarningCatalogStockAdapter());
 
     box = await getBox(_boxName);
@@ -96,7 +95,7 @@ class LocalStorageService implements ILocalStorageService {
   // }
 
   @override
-  Future<SavedCatalog<String>?> getSavedCatalog(String user) async {
+  Future<SavedCatalog?> getSavedCatalog(String user) async {
     try {
       return box.get("${user}_saved_catalog");
     } catch (e) {
@@ -118,21 +117,5 @@ class LocalStorageService implements ILocalStorageService {
   @override
   Future<void> putSavedCatalog(SavedCatalog savedCatalog) {
     return box.put("${savedCatalog.user}_saved_catalog", savedCatalog);
-  }
-
-  @override
-  Future<SavedCatalog<VolatilityWarningCatalogStock>?>
-      getSavedVolatilityWarningCatalog(String user) async {
-    try {
-      return box.get("${user}_saved_volatility_warning_catalog");
-    } catch (e) {
-      return null;
-    }
-  }
-
-  @override
-  Future<void> putSavedVolatilityWarningCatalog(SavedCatalog savedCatalog) {
-    return box.put(
-        "${savedCatalog.user}_saved_volatility_warning_catalog", savedCatalog);
   }
 }

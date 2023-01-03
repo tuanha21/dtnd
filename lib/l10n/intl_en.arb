@@ -86,6 +86,7 @@
     "stocks_you_interested": "Stocks you are interested in",
     "choose_stocks_you_interested": "Select the stocks you are interested in. You can update later",
     "following_catalog": "Following catalog",
+    "following_catalog_with": "Following catalog \"{name}\"",
     "empty_catalog": "Catalog is empty",
     "add_following_stock": "Add following stocks",
     "stock_already_exist": "This stock is already exist",
@@ -114,6 +115,10 @@
     "volatility_notice_quote1": "Set up fluctuations alerts for your account and interest catalogs",
     "add_catalog": "Add catalog",
     "catalog_name": "Catalog name",
+    "edit_catalog_name": "Edit catalog name",
+    "rename_catalog_to": "Rename catalog “{name}” to",
+    "delete_catalog": "Delete catalog",
+    "are_you_sure_to_delete_catalog": "Are you sure to delete the “{name}” category?",
     "save": "Save",
 
     "login_exception_required_OTP": "Login with OTP code sent to your phone",

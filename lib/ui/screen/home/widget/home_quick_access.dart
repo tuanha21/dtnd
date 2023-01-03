@@ -1,9 +1,6 @@
 import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/screen/home/widget/quick_access_element.dart';
-import 'package:dtnd/ui/screen/virtual_assistant/virtual_assistant_controller.dart';
-import 'package:dtnd/ui/screen/virtual_assistant/virtual_assistant_register/virtual_assistant_register.dart';
-import 'package:dtnd/ui/screen/virtual_assistant/virtual_assistant_screen.dart';
-import 'package:dtnd/ui/screen/virtual_assistant/virtual_assistant_util.dart';
+import 'package:dtnd/ui/screen/virtual_assistant/va_util.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:flutter/material.dart';
 
@@ -78,7 +75,7 @@ extension QuickAccessX on QuickAccess {
   VoidCallback route(BuildContext context) {
     switch (this) {
       case QuickAccess.virtualAssistant:
-        return () => VirtualAsisstantUtil.toVirtualAssistantScreen(context);
+        return () => VAUtil.toVirtualAssistantScreen(context);
       default:
         return () {};
     }

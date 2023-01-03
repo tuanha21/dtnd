@@ -1,5 +1,6 @@
+import 'package:dtnd/=models=/local/local_catalog.dart';
 import 'package:dtnd/=models=/local/saved_catalog.dart';
-import 'package:dtnd/=models=/local/volatility_warning_catalog.dart';
+import 'package:dtnd/=models=/local/user_catalog.dart';
 import 'package:dtnd/=models=/ui_model/user_cmd.dart';
 import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/widget/icon/sheet_header.dart';
@@ -7,19 +8,19 @@ import 'package:dtnd/utilities/validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-class VolatilityWarningCreateCatalogSheet extends StatefulWidget {
-  const VolatilityWarningCreateCatalogSheet({
+class RenameCatalogSheet extends StatefulWidget {
+  const RenameCatalogSheet({
     super.key,
     required this.savedCatalog,
+    required this.catalog,
   });
-  final SavedCatalog<VolatilityWarningCatalogStock> savedCatalog;
+  final SavedCatalog savedCatalog;
+  final LocalCatalog catalog;
   @override
-  State<VolatilityWarningCreateCatalogSheet> createState() =>
-      _VolatilityWarningCreateCatalogSheetState();
+  State<RenameCatalogSheet> createState() => _RenameCatalogSheetState();
 }
 
-class _VolatilityWarningCreateCatalogSheetState
-    extends State<VolatilityWarningCreateCatalogSheet> {
+class _RenameCatalogSheetState extends State<RenameCatalogSheet> {
   final TextEditingController controller = TextEditingController();
   final GlobalKey<FormState> key = GlobalKey<FormState>();
   final FocusNode node = FocusNode();
@@ -37,7 +38,7 @@ class _VolatilityWarningCreateCatalogSheetState
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SheetHeader(
-              title: S.of(context).create_catalog,
+              title: S.of(context).edit_catalog_name,
             ),
             Form(
               key: key,
@@ -59,9 +60,7 @@ class _VolatilityWarningCreateCatalogSheetState
                   onPressed: () {
                     if (key.currentState?.validate() ?? false) {
                       try {
-                        final VolatilityWarningCatalog newCatalog =
-                            VolatilityWarningCatalog(controller.text);
-                        widget.savedCatalog.catalogs.add(newCatalog);
+                        widget.catalog.rename(controller.text);
                         widget.savedCatalog.save();
                       } catch (e) {
                         Navigator.of(context).pop(const BackCmd());

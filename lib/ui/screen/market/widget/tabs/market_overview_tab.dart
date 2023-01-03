@@ -1,9 +1,6 @@
 import 'dart:ui';
 
 import 'package:charts_flutter/flutter.dart' as charts;
-import 'package:dtnd/=models=/local/local_catalog.dart';
-import 'package:dtnd/=models=/local/saved_catalog.dart';
-import 'package:dtnd/=models=/local/user_catalog.dart';
 import 'package:dtnd/=models=/response/deep_model.dart';
 import 'package:dtnd/=models=/response/stock_model.dart';
 import 'package:dtnd/data/i_data_center_service.dart';
@@ -13,17 +10,13 @@ import 'package:dtnd/data/implementations/data_center_service.dart';
 import 'package:dtnd/data/implementations/local_storage_service.dart';
 import 'package:dtnd/data/implementations/user_service.dart';
 import 'package:dtnd/generated/l10n.dart';
-import 'package:dtnd/ui/screen/home/widget/home_market_overview.dart';
 import 'package:dtnd/ui/screen/market/market_controller.dart';
 import 'package:dtnd/ui/screen/market/widget/components/deep_market_chart.dart';
+import 'package:dtnd/ui/screen/market/widget/components/user_catalog_widget.dart';
 import 'package:dtnd/ui/screen/stock_detail.dart/widget/k_chart.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
-import 'package:dtnd/ui/widget/overlay/app_dialog.dart';
-import 'package:dtnd/ui/widget/overlay/login_first_dialog.dart';
 import 'package:dtnd/ui/widget/section/section_with_title.dart';
-import 'package:dtnd/ui/widget/slidable_action/catalog_slidable_action.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
 
 import '../../../../../=models=/response/index_model.dart';
@@ -49,33 +42,6 @@ class _MarketOverviewTabState extends State<MarketOverviewTab> {
   @override
   void initState() {
     super.initState();
-    initListCatalog();
-  }
-
-  void initListCatalog() async {
-    if (!userService.isLogin) {
-      listCatalog = await dataCenterService
-          .getStockModelsFromStockCodes(defaultListStock);
-      setState(() {
-        listCatalogInitialized = true;
-      });
-      return;
-    }
-    SavedCatalog<String>? savedCatalog =
-        await localStorageService.getSavedCatalog(userService.token!.user);
-    if (savedCatalog == null || savedCatalog.catalogs.isEmpty) {
-      savedCatalog = SavedCatalog<String>(userService.token!.user);
-      final catalog = UserCatalog("Default");
-      catalog.stocks.addAll(defaultListStock);
-      savedCatalog.catalogs.add(catalog);
-      await localStorageService.putSavedCatalog(savedCatalog);
-    }
-    final LocalCatalog<String> localCatalog = savedCatalog.catalogs.first;
-    listCatalog = await dataCenterService
-        .getStockModelsFromStockCodes(localCatalog.stocks);
-    setState(() {
-      listCatalogInitialized = true;
-    });
   }
 
   List<charts.Series<DeepModel, String>> _generateData(List<DeepModel> datas) {
@@ -147,7 +113,6 @@ class _MarketOverviewTabState extends State<MarketOverviewTab> {
           },
         ),
         ObxValue<Rx<bool>>((initialized) {
-          print("rebuilt");
           if (!initialized.value) {
             return Center(
               child: Text(S.of(context).loading),
@@ -191,70 +156,21 @@ class _MarketOverviewTabState extends State<MarketOverviewTab> {
               child: Text(S.of(context).loading),
             );
           }
-          final _seriesList = _generateData(marketController.listDeepMarket);
+          final seriesList = _generateData(marketController.listDeepMarket);
           return Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: DeepMarketChart(_seriesList),
+            child: DeepMarketChart(seriesList),
           );
         }, marketController.loadingDeepModel),
         SectionWithTitle(
           title: S.of(context).interested_catalog,
-          child: Builder(
-            builder: (context) {
-              if (listCatalogInitialized) {
-                return Column(
-                  children: [
-                    for (final StockModel data in listCatalog)
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 16, vertical: 6),
-                        child: SizedBox(
-                          height: 85,
-                          child: Slidable(
-                            endActionPane: ActionPane(
-                              extentRatio: 0.3,
-                              motion: const DrawerMotion(),
-                              children: [
-                                CatalogSlidableAction(
-                                  onPressed: (context) {
-                                    return _onAddingStock(data);
-                                  },
-                                  backgroundColor: AppColors.neutral_06,
-                                  foregroundColor: AppColors.primary_01,
-                                  icon: Icons.add_box_rounded,
-                                  label: 'Thêm vào danh mục',
-                                  padding: const EdgeInsets.all(8),
-                                ),
-                              ],
-                            ),
-                            child: HomeMarketOverviewItem(
-                              data: data,
-                            ),
-                          ),
-                        ),
-                      ),
-                  ],
-                );
-              }
-              return Center(
-                child: Text(S.of(context).loading),
-              );
-            },
+          child: const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16),
+            child: UserCatalogWidget(),
           ),
         ),
       ],
     );
-  }
-
-  void _onAddingStock(StockModel stockModel) async {
-    if (!userService.isLogin) {
-      await showDialog<bool>(
-        context: context,
-        builder: (context) {
-          return const LoginFirstCatalog();
-        },
-      );
-    }
   }
 }
 

@@ -1,23 +1,19 @@
 import 'package:dtnd/config/service/app_services.dart';
 import 'package:dtnd/generated/l10n.dart';
-import 'package:dtnd/ui/screen/virtual_assistant/virtual_assistant_register/register_fill_otp.dart';
-import 'package:dtnd/ui/screen/virtual_assistant/virtual_assistant_register/register_intro.dart';
-import 'package:dtnd/ui/screen/virtual_assistant/virtual_assistant_register/register_registered.dart';
+import 'package:dtnd/ui/screen/virtual_assistant/va_register/register_fill_otp.dart';
+import 'package:dtnd/ui/screen/virtual_assistant/va_register/register_intro.dart';
+import 'package:dtnd/ui/screen/virtual_assistant/va_register/register_registered.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
-import 'package:dtnd/ui/theme/app_image.dart';
-import 'package:dtnd/utilities/extension.dart';
-import 'package:dtnd/utilities/responsive.dart';
 import 'package:flutter/material.dart';
 
-class VirtualAssistantRegister extends StatefulWidget {
-  const VirtualAssistantRegister({super.key});
+class VARegister extends StatefulWidget {
+  const VARegister({super.key});
 
   @override
-  State<VirtualAssistantRegister> createState() =>
-      _VirtualAssistantRegisterState();
+  State<VARegister> createState() => _VARegisterState();
 }
 
-class _VirtualAssistantRegisterState extends State<VirtualAssistantRegister> {
+class _VARegisterState extends State<VARegister> {
   final PageController pageController = PageController();
   bool initialized = false;
   bool accepted = false;

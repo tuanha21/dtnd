@@ -1,5 +1,3 @@
-import 'package:dtnd/=models=/ui_model/sheet_data.dart';
-
 abstract class UserCmd {
   const UserCmd([this.data]);
   final dynamic data;

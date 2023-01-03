@@ -59,6 +59,8 @@ class AppImages {
   static const String less_or_equal_icon =
       "assets/images/less_or_equal_icon.png";
   static const String additem_icon = "assets/images/additem_icon.png";
+  static const String edit_icon = "assets/images/edit_icon.png";
+  static const String trash_icon = "assets/images/trash_icon.png";
 
   /// BG
   static const String home_asset_card_light_bg =

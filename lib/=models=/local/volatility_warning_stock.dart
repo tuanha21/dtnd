@@ -1,8 +1,6 @@
-import 'package:dtnd/=models=/local/local_catalog.dart';
-import 'package:dtnd/=models=/response/stock_model.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
-part 'volatility_warning_catalog.g.dart';
+part 'volatility_warning_stock.g.dart';
 
 @HiveType(typeId: 5)
 enum VolatilityWarningFigureType {
@@ -60,28 +58,10 @@ class VolatilityWarningFigure {
 }
 
 @HiveType(typeId: 7)
-class VolatilityWarningCatalog extends HiveObject
-    implements LocalCatalog<VolatilityWarningCatalogStock> {
-  VolatilityWarningCatalog(this._name);
-
-  @HiveField(0)
-  final String _name;
-
-  @HiveField(1)
-  final List<VolatilityWarningCatalogStock> _stocks = [];
-
-  @override
-  String get name => _name;
-
-  @override
-  List<VolatilityWarningCatalogStock> get stocks => _stocks;
-}
-
-@HiveType(typeId: 8)
 class VolatilityWarningCatalogStock extends HiveObject {
-  VolatilityWarningCatalogStock(this.stockModel);
+  VolatilityWarningCatalogStock(this.stock);
   @HiveField(0)
-  StockModel? stockModel;
+  String stock;
 
   @HiveField(1)
   final Set<VolatilityWarningFigure> _listFigures = <VolatilityWarningFigure>{

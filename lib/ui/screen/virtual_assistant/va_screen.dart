@@ -2,9 +2,9 @@ import 'dart:async';
 
 import 'package:dtnd/config/service/app_services.dart';
 import 'package:dtnd/generated/l10n.dart';
-import 'package:dtnd/ui/screen/virtual_assistant/virtual_assistant_filter/virtual_assistant_filter_screen.dart';
-import 'package:dtnd/ui/screen/virtual_assistant/virtual_assistant_register/virtual_assistant_register.dart';
-import 'package:dtnd/ui/screen/virtual_assistant/virtual_assistant_volatolity_warning/virtual_assistant_volatolity_warning_screen.dart';
+import 'package:dtnd/ui/screen/virtual_assistant/va_filter/virtual_assistant_filter_screen.dart';
+import 'package:dtnd/ui/screen/virtual_assistant/va_register/va_register.dart';
+import 'package:dtnd/ui/screen/virtual_assistant/va_volatolity_warning/va_volatolity_warning_screen.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:dtnd/utilities/logger.dart';
@@ -13,53 +13,52 @@ import 'package:flutter/material.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 import 'package:msgpack_dart/msgpack_dart.dart' as msgp;
 
-enum VirtualAssistantFeature {
+enum VAFeature {
   stockFilter,
   volatilityWarning,
 }
 
-extension VirtualAssistantFeatureX on VirtualAssistantFeature {
+extension VirtualAssistantFeatureX on VAFeature {
   String get name {
     switch (this) {
-      case VirtualAssistantFeature.stockFilter:
+      case VAFeature.stockFilter:
         return S.current.filter_stock;
-      case VirtualAssistantFeature.volatilityWarning:
+      case VAFeature.volatilityWarning:
         return S.current.volatility_warning;
     }
   }
 
   String get iconPath {
     switch (this) {
-      case VirtualAssistantFeature.stockFilter:
+      case VAFeature.stockFilter:
         return AppImages.chart2_icon;
-      case VirtualAssistantFeature.volatilityWarning:
+      case VAFeature.volatilityWarning:
         return AppImages.directbox_receive_icon;
     }
   }
 
   VoidCallback onPressed(BuildContext context) {
     switch (this) {
-      case VirtualAssistantFeature.stockFilter:
+      case VAFeature.stockFilter:
         return () => Navigator.of(context).push(MaterialPageRoute(
               builder: (context) => const AssistantStockFilterScreen(),
             ));
-      case VirtualAssistantFeature.volatilityWarning:
+      case VAFeature.volatilityWarning:
         return () => Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) =>
-                  const VirtualAssistantVolatilityWarningScreen(),
+              builder: (context) => const VAVolatilityWarningScreen(),
             ));
     }
   }
 }
 
-class VirtualAssistantScreen extends StatefulWidget {
-  const VirtualAssistantScreen({super.key});
+class VAScreen extends StatefulWidget {
+  const VAScreen({super.key});
 
   @override
-  State<VirtualAssistantScreen> createState() => _VirtualAssistantScreenState();
+  State<VAScreen> createState() => _VAScreenState();
 }
 
-class _VirtualAssistantScreenState extends State<VirtualAssistantScreen> {
+class _VAScreenState extends State<VAScreen> {
   bool initialized = false;
   WebSocketChannel? channel;
   Timer? timer;
@@ -71,7 +70,7 @@ class _VirtualAssistantScreenState extends State<VirtualAssistantScreen> {
 
   Future<void> init() async {
     final registered = await Navigator.of(context).push(MaterialPageRoute(
-      builder: (context) => const VirtualAssistantRegister(),
+      builder: (context) => const VARegister(),
     ));
     if (registered) {
       print("setState");
@@ -123,7 +122,7 @@ class _VirtualAssistantScreenState extends State<VirtualAssistantScreen> {
               height: 52,
               child: ListView.separated(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
-                itemCount: VirtualAssistantFeature.values.length,
+                itemCount: VAFeature.values.length,
                 scrollDirection: Axis.horizontal,
                 // shrinkWrap: true,
                 itemBuilder: (context, index) {
@@ -132,17 +131,15 @@ class _VirtualAssistantScreenState extends State<VirtualAssistantScreen> {
                     children: [
                       SizedBox.square(
                         dimension: 24,
-                        child: Image.asset(
-                            VirtualAssistantFeature.values[index].iconPath),
+                        child: Image.asset(VAFeature.values[index].iconPath),
                       ),
                       Text(
-                        VirtualAssistantFeature.values[index].name,
+                        VAFeature.values[index].name,
                       )
                     ],
                   );
                   child = InkWell(
-                    onTap: VirtualAssistantFeature.values[index]
-                        .onPressed(context),
+                    onTap: VAFeature.values[index].onPressed(context),
                     child: Ink(
                       padding: const EdgeInsets.symmetric(
                           horizontal: 8, vertical: 4),

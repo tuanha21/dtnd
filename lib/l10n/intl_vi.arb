@@ -86,6 +86,7 @@
     "stocks_you_interested": "Các mã CK mà bạn quan tâm",
     "choose_stocks_you_interested": "Chọn các mã CK mà bạn đang quan tâm. Bạn có thể cập nhật thêm các mã CK sau",
     "following_catalog": "Danh mục theo dõi",
+    "following_catalog_with": "Danh mục theo dõi \"{name}\"",
     "empty_catalog": "Danh mục rỗng",
     "add_following_stock": "Thêm mã theo dõi",
     "stock_already_exist": "Mã đã tồn tại trong danh mục",
@@ -114,6 +115,10 @@
     "volatility_notice_quote1": "Cài đặt thống báo biến động tài khoản và danh mục quan tâm của bạn",
     "add_catalog": "Thêm danh mục",
     "catalog_name": "Tên danh mục",
+    "edit_catalog_name": "Sửa tên danh mục",
+    "rename_catalog_to": "Sửa tên danh mục “{name}” thành",
+    "delete_catalog": "Xoá danh mục",
+    "are_you_sure_to_delete_catalog": "Bạn có chắc chắn muốn xóa danh mục “{name}” không ?",
     "save": "Lưu",
 
     "login_exception_required_OTP": "Hãy đăng nhập bằng mã OTP được gửi về máy của bạn",

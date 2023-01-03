@@ -1,7 +1,6 @@
-import 'package:dtnd/=models=/local/volatility_warning_catalog.dart';
+import 'package:dtnd/=models=/local/volatility_warning_stock.dart';
 import 'package:dtnd/data/i_local_storage_service.dart';
 import 'package:dtnd/data/implementations/local_storage_service.dart';
-import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/widget/icon/sheet_header.dart';
 import 'package:flutter/material.dart';
 
@@ -36,7 +35,7 @@ class _VolatilityWarningChangeStockFigureSheetState
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SheetHeader(
-              title: widget.stock.stockModel!.stock.stockCode,
+              title: widget.stock.stock,
             ),
             const SizedBox(height: 20),
           ],

@@ -1,12 +1,12 @@
 import 'package:dtnd/=models=/local/saved_catalog.dart';
-import 'package:dtnd/=models=/local/volatility_warning_catalog.dart';
+import 'package:dtnd/=models=/local/volatility_warning_stock.dart';
 import 'package:dtnd/data/i_local_storage_service.dart';
 import 'package:dtnd/data/i_user_service.dart';
 import 'package:dtnd/data/implementations/local_storage_service.dart';
 import 'package:dtnd/data/implementations/user_service.dart';
-import 'package:dtnd/ui/screen/virtual_assistant/virtual_assistant_volatolity_warning/component/asset_chart.dart';
-import 'package:dtnd/ui/screen/virtual_assistant/virtual_assistant_volatolity_warning/component/config_input.dart';
-import 'package:dtnd/ui/screen/virtual_assistant/virtual_assistant_volatolity_warning/volatility_warning_catalog/logic/add_catalog_process.dart';
+import 'package:dtnd/ui/screen/virtual_assistant/va_volatolity_warning/component/asset_chart.dart';
+import 'package:dtnd/ui/screen/virtual_assistant/va_volatolity_warning/component/config_input.dart';
+import 'package:dtnd/ui/screen/virtual_assistant/va_volatolity_warning/volatility_warning_catalog/logic/add_catalog_process.dart';
 import 'package:flutter/material.dart';
 
 import 'package:dtnd/config/service/app_services.dart';
@@ -18,20 +18,19 @@ import 'package:dtnd/ui/theme/app_image.dart';
 
 import 'volatility_warning_catalog/sheet/volatility_warning_catalog_sheet.dart';
 
-class VirtualAssistantVolatilityWarningScreen extends StatefulWidget {
-  const VirtualAssistantVolatilityWarningScreen({super.key});
+class VAVolatilityWarningScreen extends StatefulWidget {
+  const VAVolatilityWarningScreen({super.key});
 
   @override
-  State<VirtualAssistantVolatilityWarningScreen> createState() =>
-      _VirtualAssistantVolatilityWarningScreenState();
+  State<VAVolatilityWarningScreen> createState() =>
+      _VAVolatilityWarningScreenState();
 }
 
-class _VirtualAssistantVolatilityWarningScreenState
-    extends State<VirtualAssistantVolatilityWarningScreen> {
+class _VAVolatilityWarningScreenState extends State<VAVolatilityWarningScreen> {
   final IDataCenterService dataCenterService = DataCenterService();
   final IUserService userService = UserService();
   final ILocalStorageService localStorageService = LocalStorageService();
-  late final SavedCatalog<VolatilityWarningCatalogStock>? savedCatalog;
+  late final SavedCatalog? savedCatalog;
   bool initialized = false;
   @override
   void initState() {
@@ -40,12 +39,11 @@ class _VirtualAssistantVolatilityWarningScreenState
   }
 
   void init() async {
-    final result = await localStorageService
-        .getSavedVolatilityWarningCatalog(userService.token!.user);
+    final result =
+        await localStorageService.getSavedCatalog(userService.token!.user);
     if (result == null || result.catalogs.isEmpty) {
-      savedCatalog =
-          SavedCatalog<VolatilityWarningCatalogStock>(userService.token!.user);
-      await localStorageService.putSavedVolatilityWarningCatalog(savedCatalog!);
+      savedCatalog = SavedCatalog(userService.token!.user);
+      await localStorageService.putSavedCatalog(savedCatalog!);
     } else {
       savedCatalog = result;
     }
@@ -178,7 +176,7 @@ class _VirtualAssistantVolatilityWarningScreenState
               height: 100,
               child: InkWell(
                 onTap: () {
-                  AddCatalogISheet(savedCatalog!).showSheet(
+                  AddCatalogISheet(savedCatalog!).show(
                       context,
                       VolatilityWarningCatalogSheet(
                           savedCatalog: savedCatalog!));

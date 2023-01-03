@@ -1,5 +1,3 @@
-import 'package:dtnd/generated/l10n.dart';
-
 class AppValidator {
   static String? pinValidator(String? pin) {
     if (pin?.isEmpty ?? true) {

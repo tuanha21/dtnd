@@ -1,13 +1,13 @@
 import 'package:dtnd/data/i_user_service.dart';
 import 'package:dtnd/data/implementations/user_service.dart';
 import 'package:dtnd/ui/screen/login/login_screen.dart';
-import 'package:dtnd/ui/screen/virtual_assistant/virtual_assistant_controller.dart';
-import 'package:dtnd/ui/screen/virtual_assistant/virtual_assistant_register/virtual_assistant_register.dart';
-import 'package:dtnd/ui/screen/virtual_assistant/virtual_assistant_screen.dart';
+import 'package:dtnd/ui/screen/virtual_assistant/va_controller.dart';
+import 'package:dtnd/ui/screen/virtual_assistant/va_register/va_register.dart';
+import 'package:dtnd/ui/screen/virtual_assistant/va_screen.dart';
 import 'package:dtnd/ui/widget/overlay/login_first_dialog.dart';
 import 'package:flutter/material.dart';
 
-class VirtualAsisstantUtil {
+class VAUtil {
   static final IUserService userService = UserService();
   static void toVirtualAssistantScreen(BuildContext context) async {
     if (!userService.isLogin) {
@@ -27,17 +27,17 @@ class VirtualAsisstantUtil {
   }
 
   static void _afterLogin(BuildContext context) {
-    if (VirtualAssistantController.instance.registered) {
-      Navigator.of(context).push<void>(MaterialPageRoute(
-          builder: (context) => const VirtualAssistantScreen()));
+    if (VAController.instance.registered) {
+      Navigator.of(context).push<void>(
+          MaterialPageRoute(builder: (context) => const VAScreen()));
     } else {
       Navigator.of(context)
-          .push<bool>(MaterialPageRoute(
-              builder: (context) => const VirtualAssistantRegister()))
+          .push<bool>(
+              MaterialPageRoute(builder: (context) => const VARegister()))
           .then((registered) {
         if (registered ?? false) {
-          Navigator.of(context).push<void>(MaterialPageRoute(
-              builder: (context) => const VirtualAssistantScreen()));
+          Navigator.of(context).push<void>(
+              MaterialPageRoute(builder: (context) => const VAScreen()));
         }
       });
     }

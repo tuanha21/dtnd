@@ -862,6 +862,16 @@ class S {
     );
   }
 
+  /// `Following catalog "{name}"`
+  String following_catalog_with(Object name) {
+    return Intl.message(
+      'Following catalog "$name"',
+      name: 'following_catalog_with',
+      desc: '',
+      args: [name],
+    );
+  }
+
   /// `Catalog is empty`
   String get empty_catalog {
     return Intl.message(
@@ -1139,6 +1149,46 @@ class S {
       name: 'catalog_name',
       desc: '',
       args: [],
+    );
+  }
+
+  /// `Edit catalog name`
+  String get edit_catalog_name {
+    return Intl.message(
+      'Edit catalog name',
+      name: 'edit_catalog_name',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Rename catalog “{name}” to`
+  String rename_catalog_to(Object name) {
+    return Intl.message(
+      'Rename catalog “$name” to',
+      name: 'rename_catalog_to',
+      desc: '',
+      args: [name],
+    );
+  }
+
+  /// `Delete catalog`
+  String get delete_catalog {
+    return Intl.message(
+      'Delete catalog',
+      name: 'delete_catalog',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Are you sure to delete the “{name}” category?`
+  String are_you_sure_to_delete_catalog(Object name) {
+    return Intl.message(
+      'Are you sure to delete the “$name” category?',
+      name: 'are_you_sure_to_delete_catalog',
+      desc: '',
+      args: [name],
     );
   }
 

@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'volatility_warning_catalog.dart';
+part of 'volatility_warning_stock.dart';
 
 // **************************************************************************
 // TypeAdapterGenerator
@@ -44,47 +44,10 @@ class VolatilityWarningFigureAdapter
           typeId == other.typeId;
 }
 
-class VolatilityWarningCatalogAdapter
-    extends TypeAdapter<VolatilityWarningCatalog> {
-  @override
-  final int typeId = 7;
-
-  @override
-  VolatilityWarningCatalog read(BinaryReader reader) {
-    final numOfFields = reader.readByte();
-    final fields = <int, dynamic>{
-      for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
-    };
-    return VolatilityWarningCatalog(
-      fields[0] as String,
-    );
-  }
-
-  @override
-  void write(BinaryWriter writer, VolatilityWarningCatalog obj) {
-    writer
-      ..writeByte(2)
-      ..writeByte(0)
-      ..write(obj._name)
-      ..writeByte(1)
-      ..write(obj._stocks);
-  }
-
-  @override
-  int get hashCode => typeId.hashCode;
-
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is VolatilityWarningCatalogAdapter &&
-          runtimeType == other.runtimeType &&
-          typeId == other.typeId;
-}
-
 class VolatilityWarningCatalogStockAdapter
     extends TypeAdapter<VolatilityWarningCatalogStock> {
   @override
-  final int typeId = 8;
+  final int typeId = 7;
 
   @override
   VolatilityWarningCatalogStock read(BinaryReader reader) {
@@ -93,7 +56,7 @@ class VolatilityWarningCatalogStockAdapter
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return VolatilityWarningCatalogStock(
-      fields[0] as StockModel?,
+      fields[0] as String,
     );
   }
 
@@ -102,7 +65,7 @@ class VolatilityWarningCatalogStockAdapter
     writer
       ..writeByte(2)
       ..writeByte(0)
-      ..write(obj.stockModel)
+      ..write(obj.stock)
       ..writeByte(1)
       ..write(obj._listFigures.toList());
   }

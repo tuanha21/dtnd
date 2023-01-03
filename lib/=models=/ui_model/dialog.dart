@@ -2,29 +2,20 @@ import 'package:dtnd/=models=/ui_model/overlay.dart';
 import 'package:dtnd/=models=/ui_model/user_cmd.dart';
 import 'package:flutter/material.dart';
 
-abstract class ISheet implements IOverlay {
-  const ISheet();
+abstract class IDialog implements IOverlay {
+  const IDialog({this.barrierDismissible = true});
+  final bool barrierDismissible;
+
   @override
-  Future<UserCmd?> show(BuildContext context, Widget? child) {
+  Future<UserCmd?> show(BuildContext context, Widget? child) async {
     if (child == null) {
-      return Future(
-        () => null,
-      );
+      return null;
     }
-    return showModalBottomSheet<UserCmd>(
+    return showDialog<UserCmd>(
       context: context,
-      isScrollControlled: true,
-      shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.vertical(top: Radius.circular(20))),
+      barrierDismissible: barrierDismissible,
       builder: (BuildContext context) {
-        return Wrap(
-          children: [
-            // TechnicalTradings(
-            //   onChoosen: (value) => Navigator.of(context).pop(value),
-            // ),
-            child
-          ],
-        );
+        return child;
       },
     ).then((result) => cmd(context, result));
   }

@@ -1,9 +1,8 @@
 import 'package:dtnd/=models=/local/saved_catalog.dart';
-import 'package:dtnd/=models=/local/volatility_warning_catalog.dart';
 import 'package:dtnd/data/i_local_storage_service.dart';
 import 'package:dtnd/data/implementations/local_storage_service.dart';
 import 'package:dtnd/generated/l10n.dart';
-import 'package:dtnd/ui/screen/virtual_assistant/virtual_assistant_volatolity_warning/volatility_warning_catalog/component/user_warning_catalog_widget.dart';
+import 'package:dtnd/ui/screen/virtual_assistant/va_volatolity_warning/volatility_warning_catalog/component/user_warning_catalog_widget.dart';
 import 'package:dtnd/ui/widget/icon/sheet_header.dart';
 import 'package:flutter/material.dart';
 
@@ -12,7 +11,7 @@ class VolatilityWarningCatalogSheet extends StatefulWidget {
     super.key,
     required this.savedCatalog,
   });
-  final SavedCatalog<VolatilityWarningCatalogStock> savedCatalog;
+  final SavedCatalog savedCatalog;
   @override
   State<VolatilityWarningCatalogSheet> createState() =>
       _VolatilityWarningCatalogSheetState();

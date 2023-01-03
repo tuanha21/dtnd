@@ -4,11 +4,11 @@ import 'package:hive_flutter/hive_flutter.dart';
 part 'user_catalog.g.dart';
 
 @HiveType(typeId: 4)
-class UserCatalog extends HiveObject implements LocalCatalog<String> {
+class UserCatalog extends LocalCatalog {
   UserCatalog(this._name);
 
   @HiveField(0)
-  final String _name;
+  String _name;
 
   @HiveField(1)
   final List<String> _stocks = [];
@@ -18,4 +18,13 @@ class UserCatalog extends HiveObject implements LocalCatalog<String> {
 
   @override
   List<String> get stocks => _stocks;
+
+  @override
+  void rename(String name) {
+    if (name.isEmpty || name.length > 30) {
+      return;
+    }
+    _name = name;
+    save();
+  }
 }
