@@ -27,6 +27,17 @@ class AppImages {
   static const String home_asset_card_wallet =
       "assets/svg/home_asset_card_wallet.svg";
   static const String arrange_circle = "assets/svg/arrange_circle.svg";
+  static const String arrow_right = "assets/svg/arrow-right.svg";
+  static const String clock = "assets/svg/clock.svg";
+  static const String eyes = "assets/svg/eye.svg";
+  static const String archive_add = "assets/svg/archive-add.svg";
+  static const String arrowUp = "assets/svg/arrow-up.svg";
+  static const String message2 = "assets/svg/message-2.svg";
+  static const String share = "assets/svg/Share remake.svg";
+  static const String heart = "assets/svg/heart.svg";
+  static const String more = "assets/svg/more.svg";
+
+
 
   static const String qa_base = "assets/svg/qa_base.svg";
   static const String qa_bond = "assets/svg/qa_bond.svg";

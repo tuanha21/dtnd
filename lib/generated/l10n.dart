@@ -1301,6 +1301,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Copytrade`
+  String get copytrade {
+    return Intl.message(
+      'Copytrade',
+      name: 'copytrade',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

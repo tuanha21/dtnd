@@ -57,6 +57,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Chọn các mã CK mà bạn đang quan tâm. Bạn có thể cập nhật thêm các mã CK sau"),
         "community": MessageLookupByLibrary.simpleMessage("Cộng đồng"),
         "confirm": MessageLookupByLibrary.simpleMessage("Xác nhận"),
+        "copytrade": MessageLookupByLibrary.simpleMessage("Copytrade"),
         "create": MessageLookupByLibrary.simpleMessage("Tạo"),
         "create_account": MessageLookupByLibrary.simpleMessage("Tạo tài khoản"),
         "create_catalog": MessageLookupByLibrary.simpleMessage("Tạo danh mục"),

@@ -58,4 +58,6 @@ class AppColors {
   ///Text
   static const error_text = Color(0xFFFB0000);
   static const text_main = Color(0xFF062046);
+  static const text_blue = Color(0xFF004DF0);
+
 }

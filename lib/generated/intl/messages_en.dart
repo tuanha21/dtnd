@@ -58,6 +58,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Select the stocks you are interested in. You can update later"),
         "community": MessageLookupByLibrary.simpleMessage("Community"),
         "confirm": MessageLookupByLibrary.simpleMessage("Confirm"),
+        "copytrade": MessageLookupByLibrary.simpleMessage("Copytrade"),
         "create": MessageLookupByLibrary.simpleMessage("Create"),
         "create_account":
             MessageLookupByLibrary.simpleMessage("Create account"),

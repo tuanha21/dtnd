@@ -74,4 +74,9 @@ class StockModel {
 
   @override
   int get hashCode => stock.hashCode;
+
+  @override
+  String toString() {
+    return 'StockModel{stock: $stock, stockData: $stockData, stockDataCore: $stockDataCore, listStockTrade: $listStockTrade, stockTradingHistory: $stockTradingHistory, _listMatchedOrder: $_listMatchedOrder}';
+  }
 }

@@ -133,6 +133,9 @@
 
     "timeout": "Không nhận được phản hồi từ máy chủ",
     "unknown_error": "Lỗi không xác định",
-    "no_internet": "Không có kết nối Internet"
+    "no_internet": "Không có kết nối Internet",
+
+    "copytrade" : "Copytrade"
+
 
 }

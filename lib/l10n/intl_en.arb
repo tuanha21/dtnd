@@ -133,5 +133,7 @@
 
     "timeout": "No response from server",
     "unknown_error": "Unknown error",
-    "no_internet": "No Internet connection"
+    "no_internet": "No Internet connection",
+
+    "copytrade" : "Copytrade"
 }

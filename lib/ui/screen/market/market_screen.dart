@@ -9,7 +9,10 @@ import 'package:dtnd/ui/screen/market/widget/tabs/market_industry_tab.dart';
 import 'package:dtnd/ui/screen/market/widget/tabs/market_overview_tab.dart';
 import 'package:dtnd/ui/widget/my_appbar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+
+import '../../theme/app_image.dart';
 
 class MarketScreen extends StatefulWidget {
   const MarketScreen({super.key});
@@ -33,7 +36,19 @@ class _MarketScreenState extends State<MarketScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: const MyAppBar(title: "DTND"),
+        appBar: MyAppBar(
+          title: "DTND",
+          actions: [
+            SvgPicture.asset(AppImages.search_appbar_icon),
+            const SizedBox(
+              width: 20,
+            ),
+            SvgPicture.asset(AppImages.notification_appbar_icon),
+            const SizedBox(
+              width: 16,
+            ),
+          ],
+        ),
         body: Column(
           children: [
             PreferredSize(
