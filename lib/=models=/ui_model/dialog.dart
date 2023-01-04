@@ -30,7 +30,7 @@ abstract class IDialog implements IOverlay {
           Future(
             () => null,
           );
-    } else if (cmd is NextCmd) {
+    } else {
       return onResultNext.call(cmd)?.then(
               (_) => next.call(cmd)?.show(context, nextWidget.call(cmd))) ??
           next.call(cmd)?.show(context, nextWidget.call(cmd)) ??
@@ -45,8 +45,5 @@ abstract class IDialog implements IOverlay {
     //     }
     //   }
     // }
-    return Future(() {
-      return cmd;
-    });
   }
 }

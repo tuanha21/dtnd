@@ -9,9 +9,11 @@ class KChart extends StatefulWidget {
     super.key,
     required this.indexModel,
     this.isLine = false,
+    this.showNowPrice = false,
   });
   final IndexModel indexModel;
   final bool isLine;
+  final bool showNowPrice;
   @override
   State<KChart> createState() => _KChartState();
 }
@@ -23,6 +25,13 @@ class _KChartState extends State<KChart> {
   @override
   void initState() {
     super.initState();
+    initData();
+  }
+
+  void initData() {
+    setState(() {
+      initializing = true;
+    });
     for (int i = 0;
         i < widget.indexModel.stockTradingHistory.value!.t!.length;
         i++) {
@@ -41,6 +50,15 @@ class _KChartState extends State<KChart> {
   }
 
   @override
+  void didUpdateWidget(covariant KChart oldWidget) {
+    print("didUpdateWidget called");
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.indexModel.index != widget.indexModel.index) {
+      initData();
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     final themeMode = AppService.instance.themeMode.value;
     final bgColor = <Color>[
@@ -51,12 +69,16 @@ class _KChartState extends State<KChart> {
       datas,
       ChartStyle(dateTimeFormat: <String>[h, ":", nn]),
       ChartColors(
-          bgColor: bgColor,
-          kLineColor: widget.indexModel.indexDetail.color,
-          lineFillColor: Colors.transparent,
-          volColor: AppColors.neutral_06,
-          upColor: AppColors.semantic_01,
-          dnColor: AppColors.semantic_03),
+        bgColor: bgColor,
+        kLineColor: widget.indexModel.indexDetail.color,
+        lineFillColor: Colors.transparent,
+        volColor: AppColors.neutral_06,
+        upColor: AppColors.semantic_01,
+        dnColor: AppColors.semantic_03,
+        nowPriceUpColor: AppColors.semantic_01,
+        nowPriceDnColor: AppColors.semantic_03,
+      ),
+      showNowPrice: widget.showNowPrice,
       isTrendLine: false,
       isLine: widget.isLine,
       secondaryState: SecondaryState.NONE,

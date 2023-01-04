@@ -80,4 +80,5 @@ class AppImages {
   static const String virtual_assistant_registered =
       "assets/images/virtual_assistant_registered.png";
   static const String illust06 = "assets/images/illust06.png";
+  static const String scene = "assets/images/scene.png";
 }

@@ -105,6 +105,7 @@
     "trading": "Trading",
     "login_required": "Login required",
     "login_to_continue": "Login to continue",
+    "you_are_not_logged_in": "You are not yet logged in",
     "create_new_order": "Create new order",
     "create_order_successfully": "Create order successfully",
     "order_will_appear_in_ur_order_note": "Order will appear in your order note",
@@ -131,6 +132,11 @@
     "login_qoute2": " application",
     "technical_trading_newbie": "You are a newbie and want to make trading easier",
     "technical_trading_pro": "You trade like a Professional Investor",
+
+    "top_influence": "Top influence",
+    "liquidity": "Liquidity",
+    "cash_flow": "Cash flow",
+    "market_breadth": "Market breadth",
 
     "see_more": "See more",
     "loading": "Loading...",

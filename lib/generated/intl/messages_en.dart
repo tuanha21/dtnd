@@ -57,6 +57,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "buy": MessageLookupByLibrary.simpleMessage("Buy"),
         "buy_price": MessageLookupByLibrary.simpleMessage("Buy price"),
         "cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
+        "cash_flow": MessageLookupByLibrary.simpleMessage("Cash flow"),
         "catalog_name": MessageLookupByLibrary.simpleMessage("Catalog name"),
         "catalog_notice":
             MessageLookupByLibrary.simpleMessage("Catalog notice"),
@@ -112,6 +113,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Interested catalog"),
         "invalid_account": MessageLookupByLibrary.simpleMessage(
             "This account has not been registered or Internet trading feature is no longer available"),
+        "liquidity": MessageLookupByLibrary.simpleMessage("Liquidity"),
         "loading": MessageLookupByLibrary.simpleMessage("Loading..."),
         "login": MessageLookupByLibrary.simpleMessage("Login"),
         "login_exception_required_OTP": MessageLookupByLibrary.simpleMessage(
@@ -127,6 +129,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "loss_wvalue": m3,
         "low": MessageLookupByLibrary.simpleMessage("Low"),
         "market": MessageLookupByLibrary.simpleMessage("Market"),
+        "market_breadth":
+            MessageLookupByLibrary.simpleMessage("Market breadth"),
         "market_deep": MessageLookupByLibrary.simpleMessage("Market deep"),
         "market_overview":
             MessageLookupByLibrary.simpleMessage("Market overview"),
@@ -199,6 +203,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "time": MessageLookupByLibrary.simpleMessage("Time"),
         "timeout":
             MessageLookupByLibrary.simpleMessage("No response from server"),
+        "top_influence": MessageLookupByLibrary.simpleMessage("Top influence"),
         "total_asset": MessageLookupByLibrary.simpleMessage("Total asset"),
         "total_wvalue": m6,
         "trading": MessageLookupByLibrary.simpleMessage("Trading"),
@@ -218,6 +223,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Volatility warning"),
         "volumn": MessageLookupByLibrary.simpleMessage("Volumn"),
         "wrong_password":
-            MessageLookupByLibrary.simpleMessage("Password is incorrect")
+            MessageLookupByLibrary.simpleMessage("Password is incorrect"),
+        "you_are_not_logged_in":
+            MessageLookupByLibrary.simpleMessage("You are not yet logged in")
       };
 }

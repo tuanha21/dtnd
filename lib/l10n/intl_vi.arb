@@ -105,6 +105,7 @@
     "trading": "Giao dịch",
     "login_required": "Yêu cầu đăng nhập",
     "login_to_continue": "Hãy đăng nhập để tiếp tục",
+    "you_are_not_logged_in": "Bạn chưa đăng nhập",
     "create_new_order": "Đặt lệnh mới",
     "create_order_successfully": "Đặt lệnh thành công",
     "order_will_appear_in_ur_order_note": "Lệnh đặt sẽ xuất hiện trong sổ lệnh của bạn",
@@ -131,6 +132,11 @@
     "login_qoute2": " bạn nhé",
     "technical_trading_newbie": "Bạn là 1 newbie và muốn giao dịch dễ dàng hơn",
     "technical_trading_pro": "Bạn giao dịch như 1 nhà đầu tư Chuyên nghiệp",
+
+    "top_influence": "Top ảnh hưởng",
+    "liquidity": "Thanh khoản",
+    "cash_flow": "Dòng tiền",
+    "market_breadth": "Độ rộng thị trường",
 
     "see_more": "Xem thêm",
     "loading": "Đang tải...",

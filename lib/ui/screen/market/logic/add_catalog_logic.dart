@@ -43,10 +43,9 @@ class CatalogOptionsISheet extends ISheet {
 
   @override
   IOverlay? next([cmd]) {
-    print(cmd);
-    if (cmd?.data is DeleteCatalogCmd) {
+    if (cmd is DeleteCatalogCmd) {
       return DeleteCatalogIDialog(savedCatalog, catalog);
-    } else if (cmd?.data is RenameCatalogCmd) {
+    } else if (cmd is RenameCatalogCmd) {
       return RenameCatalogISheet(savedCatalog, catalog);
     }
     return null;
@@ -54,9 +53,9 @@ class CatalogOptionsISheet extends ISheet {
 
   @override
   Widget? nextWidget([cmd]) {
-    if (cmd?.data is DeleteCatalogCmd) {
+    if (cmd is DeleteCatalogCmd) {
       return DeleteCatalogDialog(savedCatalog: savedCatalog, catalog: catalog);
-    } else if (cmd?.data is RenameCatalogCmd) {
+    } else if (cmd is RenameCatalogCmd) {
       return RenameCatalogSheet(savedCatalog: savedCatalog, catalog: catalog);
     }
     return null;
@@ -98,10 +97,11 @@ class RenameCatalogISheet extends ISheet {
   final SavedCatalog savedCatalog;
   final LocalCatalog catalog;
   @override
-  IOverlay? back([cmd]) => null;
+  IOverlay? back([cmd]) => CatalogOptionsISheet(savedCatalog, catalog);
 
   @override
-  Widget? backWidget([cmd]) => null;
+  Widget? backWidget([cmd]) =>
+      CatalogOptionsSheet(savedCatalog: savedCatalog, catalog: catalog);
 
   @override
   IOverlay? next([cmd]) => null;

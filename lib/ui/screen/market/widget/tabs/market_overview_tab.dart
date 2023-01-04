@@ -12,15 +12,13 @@ import 'package:dtnd/data/implementations/user_service.dart';
 import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/screen/market/market_controller.dart';
 import 'package:dtnd/ui/screen/market/widget/components/deep_market_chart.dart';
+import 'package:dtnd/ui/screen/market/widget/components/index_chart.dart';
+import 'package:dtnd/ui/screen/market/widget/components/not_signin_catalog_widget.dart';
 import 'package:dtnd/ui/screen/market/widget/components/user_catalog_widget.dart';
-import 'package:dtnd/ui/screen/stock_detail.dart/widget/k_chart.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/widget/section/section_with_title.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
-import '../../../../../=models=/response/index_model.dart';
-import '../../../home/widget/home_market_today.dart';
 
 class MarketOverviewTab extends StatefulWidget {
   const MarketOverviewTab({super.key});
@@ -42,6 +40,10 @@ class _MarketOverviewTabState extends State<MarketOverviewTab> {
   @override
   void initState() {
     super.initState();
+  }
+
+  void rebuild() {
+    return setState(() {});
   }
 
   List<charts.Series<DeepModel, String>> _generateData(List<DeepModel> datas) {
@@ -91,65 +93,17 @@ class _MarketOverviewTabState extends State<MarketOverviewTab> {
 
   @override
   Widget build(BuildContext context) {
+    Widget catalog;
+    if (!userService.isLogin) {
+      catalog = NotSigninCatalogWidget(
+        afterLogin: rebuild,
+      );
+    } else {
+      catalog = const UserCatalogWidget();
+    }
     return ListView(
       children: [
-        Obx(
-          () {
-            if (marketController
-                    .currentIndexModel.value?.stockTradingHistory.value ==
-                null) {
-              return Container();
-            }
-            return Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: SizedBox.fromSize(
-                size: Size(MediaQuery.of(context).size.width, 250),
-                child: KChart(
-                  indexModel: marketController.currentIndexModel.value!,
-                  isLine: true,
-                ),
-              ),
-            );
-          },
-        ),
-        ObxValue<Rx<bool>>((initialized) {
-          if (!initialized.value) {
-            return Center(
-              child: Text(S.of(context).loading),
-            );
-          }
-          return Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: SizedBox.fromSize(
-              size: Size(MediaQuery.of(context).size.width, 64),
-              child: ScrollConfiguration(
-                behavior: ScrollConfiguration.of(context).copyWith(
-                  dragDevices: {
-                    PointerDeviceKind.touch,
-                    PointerDeviceKind.mouse,
-                  },
-                ),
-                child: ListView.separated(
-                  scrollDirection: Axis.horizontal,
-                  physics: const AlwaysScrollableScrollPhysics(),
-                  itemCount: marketController.listIndexs.length,
-                  itemBuilder: (context, index) =>
-                      ObxValue<Rx<IndexModel?>>((currentIndexModel) {
-                    return HomeIndexItem(
-                      data: marketController.listIndexs.elementAt(index),
-                      selectedIndex: currentIndexModel.value?.index,
-                      onSelected: marketController.changeSelectedIndex,
-                    );
-                  }, marketController.currentIndexModel),
-                  separatorBuilder: (BuildContext context, int index) =>
-                      const SizedBox(
-                    width: 8,
-                  ),
-                ),
-              ),
-            ),
-          );
-        }, marketController.initialized),
+        const IndexChart(),
         ObxValue<Rx<bool>>((loading) {
           if (loading.value) {
             return Center(
@@ -164,11 +118,12 @@ class _MarketOverviewTabState extends State<MarketOverviewTab> {
         }, marketController.loadingDeepModel),
         SectionWithTitle(
           title: S.of(context).interested_catalog,
-          child: const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16),
-            child: UserCatalogWidget(),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: catalog,
           ),
         ),
+        const SizedBox(height: 100),
       ],
     );
   }

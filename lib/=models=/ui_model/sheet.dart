@@ -39,7 +39,7 @@ abstract class ISheet implements IOverlay {
           Future(
             () => null,
           );
-    } else if (cmd is NextCmd) {
+    } else {
       return onResultNext.call(cmd)?.then(
               (_) => next.call(cmd)?.show(context, nextWidget.call(cmd))) ??
           next.call(cmd)?.show(context, nextWidget.call(cmd)) ??
@@ -54,8 +54,5 @@ abstract class ISheet implements IOverlay {
     //     }
     //   }
     // }
-    return Future(() {
-      return cmd;
-    });
   }
 }

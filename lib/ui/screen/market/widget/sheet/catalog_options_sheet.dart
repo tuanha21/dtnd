@@ -36,11 +36,9 @@ extension CatalogOptionX on CatalogOption {
   VoidCallback onTap(BuildContext context) {
     switch (this) {
       case CatalogOption.edit:
-        return () =>
-            Navigator.of(context).pop(const NextCmd(RenameCatalogCmd()));
+        return () => Navigator.of(context).pop(const RenameCatalogCmd());
       case CatalogOption.delete:
-        return () =>
-            Navigator.of(context).pop(const NextCmd(DeleteCatalogCmd()));
+        return () => Navigator.of(context).pop(const DeleteCatalogCmd());
     }
   }
 }

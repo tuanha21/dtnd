@@ -1052,6 +1052,16 @@ class S {
     );
   }
 
+  /// `You are not yet logged in`
+  String get you_are_not_logged_in {
+    return Intl.message(
+      'You are not yet logged in',
+      name: 'you_are_not_logged_in',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Create new order`
   String get create_new_order {
     return Intl.message(
@@ -1287,6 +1297,46 @@ class S {
     return Intl.message(
       'You trade like a Professional Investor',
       name: 'technical_trading_pro',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Top influence`
+  String get top_influence {
+    return Intl.message(
+      'Top influence',
+      name: 'top_influence',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Liquidity`
+  String get liquidity {
+    return Intl.message(
+      'Liquidity',
+      name: 'liquidity',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Cash flow`
+  String get cash_flow {
+    return Intl.message(
+      'Cash flow',
+      name: 'cash_flow',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Market breadth`
+  String get market_breadth {
+    return Intl.message(
+      'Market breadth',
+      name: 'market_breadth',
       desc: '',
       args: [],
     );

@@ -7,6 +7,7 @@ import 'package:dtnd/=models=/response/inday_matched_order.dart';
 import 'package:dtnd/=models=/response/index_detail.dart';
 import 'package:dtnd/=models=/response/index_chart_data.dart';
 import 'package:dtnd/=models=/index.dart';
+import 'package:dtnd/=models=/response/liquidity_model.dart';
 import 'package:dtnd/=models=/response/new_order.dart';
 import 'package:dtnd/=models=/response/news_detail.dart';
 import 'package:dtnd/=models=/response/s_cash_balance.dart';
@@ -15,6 +16,7 @@ import 'package:dtnd/=models=/response/stock_data.dart';
 import 'package:dtnd/=models=/response/stock_news.dart';
 import 'package:dtnd/=models=/response/stock_trade.dart';
 import 'package:dtnd/=models=/response/stock_trading_history.dart';
+import 'package:dtnd/=models=/response/top_influence_model.dart';
 import 'package:dtnd/=models=/response/user_token.dart';
 import 'package:dtnd/=models=/request/request_model.dart';
 import 'package:dtnd/config/service/environment.dart';
@@ -55,7 +57,8 @@ class NetworkService implements INetworkService {
     Map<String, dynamic>? queryParameters,
   ]) {
     final unencodedPath = "algo/pbapi/api/$path";
-    return Uri.http(algo_url, unencodedPath);
+    print(Uri.http(algo_url, unencodedPath, queryParameters).toString());
+    return Uri.http(algo_url, unencodedPath, queryParameters);
   }
 
   final Utf8Codec utf8Codec = const Utf8Codec();
@@ -284,6 +287,22 @@ class NetworkService implements INetworkService {
   }
 
   @override
+  Future<SCashBalance> getSCashBalance(RequestModel requestModel) async {
+    final http.Response response =
+        await client.post(url_core, body: requestModel.toString());
+    logger.v(response.body);
+    return SCashBalance.fromJson(decode(response.bodyBytes));
+  }
+
+  @override
+  Future<NewOrderResponse?> createNewOrder(RequestModel requestModel) async {
+    final http.Response response =
+        await client.post(url_core, body: requestModel.toString());
+    logger.v(response.body);
+    return NewOrderResponse.fromJson(decode(response.bodyBytes));
+  }
+
+  @override
   Future<List<IndayMatchedOrder>> getIndayMatchedOrders(String symbol) async {
     dynamic response =
         await client.get(url_algo("stockBoard/chart/stock/$symbol"));
@@ -303,18 +322,39 @@ class NetworkService implements INetworkService {
   }
 
   @override
-  Future<SCashBalance> getSCashBalance(RequestModel requestModel) async {
-    final http.Response response =
-        await client.post(url_core, body: requestModel.toString());
-    logger.v(response.body);
-    return SCashBalance.fromJson(decode(response.bodyBytes));
+  Future<List<TopInfluenceModel>> getTopInfluence(String index) async {
+    dynamic response = await client.get(url_algo("Contrib", {"id": index}));
+    if (response.statusCode != 200) {
+      throw response;
+    }
+    response = decode(response.bodyBytes);
+    if (response["name"].isEmpty ?? true) {
+      throw NullThrownError();
+    }
+    final List<dynamic> val = response["upVal"];
+    val.addAll(response["downVal"]);
+    final List<dynamic> point = response["upPoint"];
+    point.addAll(response["downPoint"]);
+    final List<TopInfluenceModel> result = <TopInfluenceModel>[];
+    for (var i = 0; i < response["name"].length; i++) {
+      result.add(TopInfluenceModel(
+        stockCode: response["name"][i],
+        val: val[i],
+        point: point[i],
+      ));
+    }
+
+    return result;
   }
 
   @override
-  Future<NewOrderResponse?> createNewOrder(RequestModel requestModel) async {
-    final http.Response response =
-        await client.post(url_core, body: requestModel.toString());
-    logger.v(response.body);
-    return NewOrderResponse.fromJson(decode(response.bodyBytes));
+  Future<LiquidityModel> getLiquidity(String index) async {
+    dynamic response = await client.get(url_algo("MarketValue", {"id": index}));
+    if (response.statusCode != 200) {
+      throw response;
+    }
+    response = decode(response.bodyBytes);
+    final LiquidityModel result = LiquidityModel.fromJson(response);
+    return result;
   }
 }

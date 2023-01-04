@@ -57,6 +57,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "buy": MessageLookupByLibrary.simpleMessage("Mua"),
         "buy_price": MessageLookupByLibrary.simpleMessage("Giá mua vào"),
         "cancel": MessageLookupByLibrary.simpleMessage("Huỷ"),
+        "cash_flow": MessageLookupByLibrary.simpleMessage("Dòng tiền"),
         "catalog_name": MessageLookupByLibrary.simpleMessage("Tên danh mục"),
         "catalog_notice":
             MessageLookupByLibrary.simpleMessage("Thông báo danh mục"),
@@ -108,6 +109,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Danh mục quan tâm"),
         "invalid_account": MessageLookupByLibrary.simpleMessage(
             "Tài khoản chưa đăng ký hoặc đã hết hiệu lực giao dịch Internet"),
+        "liquidity": MessageLookupByLibrary.simpleMessage("Thanh khoản"),
         "loading": MessageLookupByLibrary.simpleMessage("Đang tải..."),
         "login": MessageLookupByLibrary.simpleMessage("Đăng nhập"),
         "login_exception_required_OTP": MessageLookupByLibrary.simpleMessage(
@@ -123,6 +125,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "loss_wvalue": m3,
         "low": MessageLookupByLibrary.simpleMessage("Thấp"),
         "market": MessageLookupByLibrary.simpleMessage("Thị trường"),
+        "market_breadth":
+            MessageLookupByLibrary.simpleMessage("Độ rộng thị trường"),
         "market_deep":
             MessageLookupByLibrary.simpleMessage("Độ sâu thị trường"),
         "market_overview":
@@ -196,6 +200,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "time": MessageLookupByLibrary.simpleMessage("Thời gian"),
         "timeout": MessageLookupByLibrary.simpleMessage(
             "Không nhận được phản hồi từ máy chủ"),
+        "top_influence": MessageLookupByLibrary.simpleMessage("Top ảnh hưởng"),
         "total_asset": MessageLookupByLibrary.simpleMessage("Tổng tài sản"),
         "total_wvalue": m6,
         "trading": MessageLookupByLibrary.simpleMessage("Giao dịch"),
@@ -215,6 +220,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Cảnh báo biến động"),
         "volumn": MessageLookupByLibrary.simpleMessage("Khối lượng"),
         "wrong_password":
-            MessageLookupByLibrary.simpleMessage("Mật khẩu không chính xác")
+            MessageLookupByLibrary.simpleMessage("Mật khẩu không chính xác"),
+        "you_are_not_logged_in":
+            MessageLookupByLibrary.simpleMessage("Bạn chưa đăng nhập")
       };
 }

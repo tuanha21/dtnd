@@ -1,3 +1,5 @@
+import 'package:dtnd/ui/screen/market/widget/components/liquidity_chart.dart';
+import 'package:dtnd/ui/screen/market/widget/components/top_influence_chart.dart';
 import 'package:flutter/material.dart';
 
 class MarketAnalysisTab extends StatefulWidget {
@@ -10,8 +12,10 @@ class MarketAnalysisTab extends StatefulWidget {
 class _MarketAnalysisTabState extends State<MarketAnalysisTab> {
   @override
   Widget build(BuildContext context) {
-    return const Center(
-      child: Text("MarketAnalysisTab"),
+    return Center(
+      child: Column(
+        children: const [TopInfluenceChart(), LiquidityChart()],
+      ),
     );
   }
 }
