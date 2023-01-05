@@ -108,6 +108,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "high": MessageLookupByLibrary.simpleMessage("High"),
         "home": MessageLookupByLibrary.simpleMessage("Home"),
         "industry": MessageLookupByLibrary.simpleMessage("Industry"),
+        "industry_list": MessageLookupByLibrary.simpleMessage("Industry list"),
         "interested": MessageLookupByLibrary.simpleMessage("Interested"),
         "interested_catalog":
             MessageLookupByLibrary.simpleMessage("Interested catalog"),

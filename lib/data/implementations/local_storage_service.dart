@@ -1,11 +1,10 @@
 import 'package:dtnd/=models=/exchange.dart';
-import 'package:dtnd/=models=/local/local_catalog.dart';
 import 'package:dtnd/=models=/local/saved_catalog.dart';
 import 'package:dtnd/=models=/local/user_catalog.dart';
 import 'package:dtnd/=models=/local/volatility_warning_stock.dart';
 import 'package:dtnd/=models=/response/stock.dart';
 import 'package:dtnd/=models=/response/user_token.dart';
-import 'package:dtnd/data/implementations/data_center_service.dart';
+import 'package:dtnd/utilities/logger.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -28,6 +27,7 @@ class LocalStorageService implements ILocalStorageService {
   factory LocalStorageService() => _instance;
 
   late final SharedPreferences sharedPreferences;
+  @override
   late final Box box;
 
   /// Local Storage data
@@ -48,11 +48,12 @@ class LocalStorageService implements ILocalStorageService {
     Hive.registerAdapter(StockAdapter());
     Hive.registerAdapter(SavedCatalogAdapter());
     Hive.registerAdapter(UserCatalogAdapter());
-    // Hive.registerAdapter(VolatilityWarningFigureTypeAdapter());
+    Hive.registerAdapter(VolatilityWarningFigureTypeAdapter());
     Hive.registerAdapter(VolatilityWarningFigureAdapter());
     Hive.registerAdapter(VolatilityWarningCatalogStockAdapter());
 
-    box = await getBox(_boxName);
+    box = await Hive.openBox(_boxName);
+
     _appAccessTime = box.get(appAccessTimeKey) ?? 0;
     box.put(appAccessTimeKey, _appAccessTime + 1);
     // savedUserToken = box.get(_savedUserTokenBoxName);
@@ -78,11 +79,6 @@ class LocalStorageService implements ILocalStorageService {
   }
 
   @override
-  Future<Box<E>> getBox<E>(String boxName) {
-    return Hive.openBox(boxName);
-  }
-
-  @override
   Future<void> saveUserToken(UserToken token) {
     return box.put(savedUserTokenBoxKey, token);
   }
@@ -97,8 +93,10 @@ class LocalStorageService implements ILocalStorageService {
   @override
   Future<SavedCatalog?> getSavedCatalog(String user) async {
     try {
+      print("${user}_saved_catalog");
       return box.get("${user}_saved_catalog");
     } catch (e) {
+      logger.e(e);
       return null;
     }
     // final SavedCatalog? savedCatalog = box.get("${user}_saved_catalog");
@@ -116,6 +114,7 @@ class LocalStorageService implements ILocalStorageService {
 
   @override
   Future<void> putSavedCatalog(SavedCatalog savedCatalog) {
+    print("${savedCatalog.user}_saved_catalog");
     return box.put("${savedCatalog.user}_saved_catalog", savedCatalog);
   }
 }

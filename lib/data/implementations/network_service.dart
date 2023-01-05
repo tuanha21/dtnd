@@ -19,6 +19,7 @@ import 'package:dtnd/=models=/response/stock_trading_history.dart';
 import 'package:dtnd/=models=/response/top_influence_model.dart';
 import 'package:dtnd/=models=/response/user_token.dart';
 import 'package:dtnd/=models=/request/request_model.dart';
+import 'package:dtnd/=models=/ui_model/field_tree_element_model.dart';
 import 'package:dtnd/config/service/environment.dart';
 import 'package:dtnd/data/i_network_service.dart';
 import 'package:dtnd/utilities/logger.dart';
@@ -355,6 +356,27 @@ class NetworkService implements INetworkService {
     }
     response = decode(response.bodyBytes);
     final LiquidityModel result = LiquidityModel.fromJson(response);
+    return result;
+  }
+
+  @override
+  Future<List<FieldTreeModel>> getListIndustryHeatMap(
+      int top, String type) async {
+    final param = {
+      "top": top.toString(),
+      "type": type,
+    };
+    dynamic response =
+        await client.get(url_info_sbsi("listIndustryHeatMap", param));
+    if (response.statusCode != 200) {
+      throw response;
+    }
+    response = decode(response.bodyBytes);
+    response = response["data"];
+    final List<FieldTreeModel> result = [];
+    for (var element in response) {
+      result.add(FieldTreeModel.fromJson(element));
+    }
     return result;
   }
 }

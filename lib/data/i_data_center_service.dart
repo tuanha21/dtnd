@@ -12,6 +12,7 @@ import 'package:dtnd/=models=/response/stock_model.dart';
 import 'package:dtnd/=models=/response/stock_news.dart';
 import 'package:dtnd/=models=/response/stock_trading_history.dart';
 import 'package:dtnd/=models=/response/top_influence_model.dart';
+import 'package:dtnd/=models=/ui_model/field_tree_element_model.dart';
 
 abstract class IDataCenterService {
   Set<IndexModel> get listIndexs;
@@ -53,4 +54,7 @@ abstract class IDataCenterService {
   Future<List<TopInfluenceModel>> getTopInfluence(Index index);
 
   Future<LiquidityModel> getLiquidity(Index index);
+
+  Future<List<FieldTreeModel>> getListIndustryHeatMap(
+      {int top = 8, String type = "KL"});
 }

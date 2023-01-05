@@ -37,4 +37,9 @@ class SavedCatalog extends HiveObject {
   }
 
   String get user => _user;
+
+  @override
+  String toString() {
+    return "$_user \n ${catalogs.toString()}";
+  }
 }

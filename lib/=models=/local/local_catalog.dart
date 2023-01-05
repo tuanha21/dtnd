@@ -16,4 +16,9 @@ abstract class LocalCatalog extends HiveObject {
 
   @override
   int get hashCode => name.hashCode;
+
+  @override
+  String toString() {
+    return "{\n\t$name\n\t${stocks.toString()}\n}";
+  }
 }

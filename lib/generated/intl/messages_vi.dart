@@ -104,6 +104,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "high": MessageLookupByLibrary.simpleMessage("Cao"),
         "home": MessageLookupByLibrary.simpleMessage("Trang chủ"),
         "industry": MessageLookupByLibrary.simpleMessage("Ngành"),
+        "industry_list":
+            MessageLookupByLibrary.simpleMessage("Danh sách ngành"),
         "interested": MessageLookupByLibrary.simpleMessage("Quan tâm"),
         "interested_catalog":
             MessageLookupByLibrary.simpleMessage("Danh mục quan tâm"),

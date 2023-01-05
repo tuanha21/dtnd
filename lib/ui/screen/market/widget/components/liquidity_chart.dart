@@ -31,35 +31,35 @@ class _LiquidityChartState extends State<LiquidityChart> {
       charts.Series<num, String>(
         id: 'Hiện tại',
         colorFn: (_, __) => charts.ColorUtil.fromDartColor(AppColors.graph_2),
-        domainFn: (num val, index) => (index ?? 0).toString(),
+        domainFn: (num val, index) => liquidityModel.time.elementAt(index ?? 0),
         measureFn: (num val, _) => val,
         data: liquidityModel.currVal,
       ),
       charts.Series<num, String>(
         id: 'Phiên trước',
         colorFn: (_, __) => charts.ColorUtil.fromDartColor(AppColors.graph_1),
-        domainFn: (num val, index) => (index ?? 0).toString(),
+        domainFn: (num val, index) => liquidityModel.time.elementAt(index ?? 0),
         measureFn: (num val, _) => val,
         data: liquidityModel.prevVal,
       )..setAttribute(charts.rendererIdKey, 'customLine'),
       charts.Series<num, String>(
         id: '1 tuần',
         colorFn: (_, __) => charts.ColorUtil.fromDartColor(AppColors.graph_5),
-        domainFn: (num val, index) => (index ?? 0).toString(),
+        domainFn: (num val, index) => liquidityModel.time.elementAt(index ?? 0),
         measureFn: (num val, _) => val,
         data: liquidityModel.week1Val,
       )..setAttribute(charts.rendererIdKey, 'customLine'),
       charts.Series<num, String>(
         id: '2 tuần',
         colorFn: (_, __) => charts.ColorUtil.fromDartColor(AppColors.graph_4),
-        domainFn: (num val, index) => (index ?? 0).toString(),
+        domainFn: (num val, index) => liquidityModel.time.elementAt(index ?? 0),
         measureFn: (num val, _) => val,
         data: liquidityModel.week2Val,
       )..setAttribute(charts.rendererIdKey, 'customLine'),
       charts.Series<num, String>(
         id: '1 tháng',
         colorFn: (_, __) => charts.ColorUtil.fromDartColor(AppColors.graph_3),
-        domainFn: (num val, index) => (index ?? 0).toString(),
+        domainFn: (num val, index) => liquidityModel.time.elementAt(index ?? 0),
         measureFn: (num val, _) => val,
         data: liquidityModel.monthVal,
       )..setAttribute(charts.rendererIdKey, 'customLine'),
@@ -132,9 +132,23 @@ class _LiquidityChartState extends State<LiquidityChart> {
         domainAxis: const charts.OrdinalAxisSpec(
           renderSpec: charts.SmallTickRendererSpec(
             labelRotation: 270,
-            labelOffsetFromAxisPx: 20,
+            labelOffsetFromAxisPx: 38,
             minimumPaddingBetweenLabelsPx: 20,
           ),
+        ),
+        primaryMeasureAxis: const charts.NumericAxisSpec(
+          tickProviderSpec: charts.StaticNumericTickProviderSpec(
+            // Create the ticks to be used the domain axis.
+            <charts.TickSpec<num>>[
+              charts.TickSpec(-2, label: ''),
+              charts.TickSpec(-1, label: ''),
+              charts.TickSpec(0, label: ''),
+              charts.TickSpec(1, label: ''),
+              charts.TickSpec(2, label: ''),
+            ],
+          ),
+
+          // showAxisLine: false,
         ),
       );
     }

@@ -33,9 +33,9 @@ class _UserCatalogWidgetState extends State<UserCatalogWidget> {
   final IUserService userService = UserService();
   final TextEditingController addStockController = TextEditingController();
   final FocusNode focusNode = FocusNode();
-  SavedCatalog? userCatalog;
+  late final SavedCatalog userCatalog;
   LocalCatalog? currentCatalog;
-  List<StockModel>? listStocks;
+  List<StockModel> listStocks = [];
   bool showInput = false;
   bool initialized = false;
   @override
@@ -52,37 +52,27 @@ class _UserCatalogWidgetState extends State<UserCatalogWidget> {
   }
 
   void initCatalog() async {
-    if (!userService.isLogin) {
-      print("userService.isLogin ${userService.isLogin}");
-      listStocks = await dataCenterService
-          .getStockModelsFromStockCodes(defaultListStock);
-      setState(() {
-        initialized = true;
-      });
-      return;
-    }
-    print("userService.isLogin ${userService.isLogin}");
-    SavedCatalog? savedCatalog =
-        await localStorageService.getSavedCatalog(userService.token!.user);
-    if (savedCatalog == null) {
+    try {
+      userCatalog =
+          (await localStorageService.getSavedCatalog(userService.token!.user))!;
+    } catch (e) {
       setState(() {
         userCatalog = SavedCatalog(userService.token!.user);
       });
-      await localStorageService.putSavedCatalog(userCatalog!);
-    } else {
-      setState(() {
-        userCatalog = savedCatalog;
-      });
+      await localStorageService.putSavedCatalog(userCatalog);
     }
-    if (userCatalog!.catalogs.isEmpty) {
-      final catalog = UserCatalog("Default");
-      catalog.stocks.addAll(defaultListStock);
-      userCatalog!.catalogs.add(catalog);
-      userCatalog!.save();
+    // if (userCatalog.catalogs.isEmpty) {
+    //   final catalog = UserCatalog("Default");
+    //   catalog.stocks.addAll(defaultListStock);
+    //   userCatalog.catalogs.add(catalog);
+    //   userCatalog.save();
+    // }
+    if (userCatalog.catalogs.isNotEmpty) {
+      currentCatalog = userCatalog.catalogs.first;
+      listStocks = await dataCenterService
+          .getStockModelsFromStockCodes(currentCatalog!.stocks);
     }
-    currentCatalog = userCatalog!.catalogs.first;
-    listStocks = await dataCenterService
-        .getStockModelsFromStockCodes(currentCatalog!.stocks);
+
     setState(() {
       initialized = true;
     });
@@ -96,16 +86,16 @@ class _UserCatalogWidgetState extends State<UserCatalogWidget> {
     if (!initialized) {
       return Container();
     }
-    if (userCatalog?.catalogs.isEmpty ?? true) {
+    if (userCatalog.catalogs.isEmpty) {
       listCatalogsWidget = Container();
     } else {
       listCatalogsWidget = ListView.separated(
         scrollDirection: Axis.horizontal,
         shrinkWrap: true,
         itemCount:
-            userCatalog!.catalogs.length > 5 ? 5 : userCatalog!.catalogs.length,
+            userCatalog.catalogs.length > 5 ? 5 : userCatalog.catalogs.length,
         itemBuilder: (context, index) {
-          final catalog = userCatalog!.catalogs.elementAt(index);
+          final catalog = userCatalog.catalogs.elementAt(index);
           bool selected = false;
           if (currentCatalog!.name == catalog.name) {
             selected = true;
@@ -118,15 +108,16 @@ class _UserCatalogWidgetState extends State<UserCatalogWidget> {
                     .getStockModelsFromStockCodes(catalog.stocks);
                 setState(() {
                   currentCatalog = catalog;
-                  listStocks?.clear();
-                  listStocks?.addAll(stocks);
+                  listStocks.clear();
+                  listStocks.addAll(stocks);
                 });
+                print(userCatalog.toString());
               },
               onLongPress: () {
-                CatalogOptionsISheet(userCatalog!, catalog).show(
+                CatalogOptionsISheet(userCatalog, catalog).show(
                     context,
                     CatalogOptionsSheet(
-                        savedCatalog: userCatalog!, catalog: catalog));
+                        savedCatalog: userCatalog, catalog: catalog));
               },
               child: Ink(
                 padding:
@@ -152,44 +143,50 @@ class _UserCatalogWidgetState extends State<UserCatalogWidget> {
         separatorBuilder: (context, index) => const SizedBox(width: 10),
       );
     }
-    if (userService.isLogin) {
-      listCatalogsWidget = Row(
-        children: [
-          Material(
-            child: InkWell(
-              onTap: () async {
-                // Navigator.of(context).pop(CreateCatalogCmd());
-                await CreateCatalogISheet(userCatalog!).show(
-                    context,
-                    CreateCatalogSheet(
-                      savedCatalog: userCatalog!,
-                    ));
-                setState(() {});
-              },
-              borderRadius: const BorderRadius.all(Radius.circular(4)),
-              child: Ink(
-                padding: const EdgeInsets.all(9),
-                decoration: const BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(4)),
-                  color: AppColors.neutral_06,
-                ),
-                child: SizedBox.square(
-                  dimension: 10,
-                  child: Image.asset(
-                    AppImages.add_icon,
-                    color: AppColors.primary_01,
-                  ),
+    listCatalogsWidget = Row(
+      children: [
+        Material(
+          child: InkWell(
+            onTap: () async {
+              // Navigator.of(context).pop(CreateCatalogCmd());
+              await CreateCatalogISheet(userCatalog).show(
+                  context,
+                  CreateCatalogSheet(
+                    savedCatalog: userCatalog,
+                  ));
+              final stocks =
+                  await dataCenterService.getStockModelsFromStockCodes(
+                      userCatalog.catalogs.last.stocks);
+              setState(() {
+                currentCatalog = userCatalog.catalogs.last;
+                listStocks.clear();
+                listStocks.addAll(stocks);
+              });
+              localStorageService.putSavedCatalog(userCatalog);
+            },
+            borderRadius: const BorderRadius.all(Radius.circular(4)),
+            child: Ink(
+              padding: const EdgeInsets.all(9),
+              decoration: const BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(4)),
+                color: AppColors.neutral_06,
+              ),
+              child: SizedBox.square(
+                dimension: 10,
+                child: Image.asset(
+                  AppImages.add_icon,
+                  color: AppColors.primary_01,
                 ),
               ),
             ),
           ),
-          const SizedBox(width: 10),
-          SizedBox(height: 28, child: listCatalogsWidget),
-        ],
-      );
-    }
+        ),
+        const SizedBox(width: 10),
+        SizedBox(height: 28, child: listCatalogsWidget),
+      ],
+    );
 
-    if (currentCatalog == null || listStocks == null) {
+    if (currentCatalog == null) {
       listStocksWidget = Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -225,11 +222,13 @@ class _UserCatalogWidgetState extends State<UserCatalogWidget> {
             },
             onSuggestionSelected: (suggestion) async {
               currentCatalog!.stocks.add(suggestion.stockCode);
-              userCatalog!.save();
+              userCatalog.save();
+              // localStorageService.putSavedCatalog(userCatalog);
+
               final StockModel model = (await dataCenterService
                       .getStockModelsFromStockCodes([suggestion.stockCode]))
                   .first;
-              listStocks!.add(model);
+              listStocks.add(model);
               setState(() {});
             },
           );
@@ -279,14 +278,14 @@ class _UserCatalogWidgetState extends State<UserCatalogWidget> {
               return SizedBox(
                 height: 85,
                 child: HomeMarketOverviewItem(
-                  data: listStocks!.elementAt(index),
+                  data: listStocks.elementAt(index),
                 ),
               );
             },
             separatorBuilder: (context, index) => const Divider(
               thickness: 2,
             ),
-            itemCount: currentCatalog!.stocks.length,
+            itemCount: listStocks.length,
           ),
         ],
       );

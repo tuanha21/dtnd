@@ -13,7 +13,7 @@ class _MarketAnalysisTabState extends State<MarketAnalysisTab> {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Column(
+      child: ListView(
         children: const [TopInfluenceChart(), LiquidityChart()],
       ),
     );

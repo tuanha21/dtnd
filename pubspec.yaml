@@ -62,7 +62,7 @@ dependencies:
   k_chart:
     git:
       url: https://github.com/tuanha21/k_chart.git
-  syncfusion_flutter_charts: ^20.3.57
+  syncfusion_flutter_charts: ^20.4.42
   pinput: ^2.2.16
   web_socket_channel: ^2.2.0
   messagepack: ^0.2.1
@@ -73,6 +73,7 @@ dependencies:
   flutter_slidable: ^2.0.0
   table_calendar: ^3.0.8
   fluttertoast: ^8.1.2
+  syncfusion_flutter_treemap: ^20.4.42-beta
 
 dev_dependencies:
   flutter_test:

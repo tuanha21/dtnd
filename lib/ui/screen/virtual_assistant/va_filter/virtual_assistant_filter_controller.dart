@@ -29,7 +29,7 @@ class VirtualAssistantFilterController {
   final ILocalStorageService localStorageService = LocalStorageService();
   final IDataCenterService dataCenterService = DataCenterService();
   final INetworkService networkService = NetworkService();
-  late final Box<List> followingCatalogBox;
+  late final Box followingCatalogBox;
   final List<Stock> followingStocks = [];
   final List<StockModel> followingCatalog = [];
   final List<FilterCriterion> filterCriterions = [];
@@ -58,8 +58,7 @@ class VirtualAssistantFilterController {
   }
 
   Future<List<Stock>?> getFollowingCatalog() async {
-    followingCatalogBox =
-        await localStorageService.getBox<List>("stock_filter");
+    followingCatalogBox = localStorageService.box;
     final followingCatalog =
         followingCatalogBox.get("following_catalog")?.cast<Stock>() ?? [];
     return followingCatalog;

@@ -660,6 +660,16 @@ class S {
     );
   }
 
+  /// `Industry list`
+  String get industry_list {
+    return Intl.message(
+      'Industry list',
+      name: 'industry_list',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Market deep`
   String get market_deep {
     return Intl.message(
