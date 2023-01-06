@@ -38,9 +38,17 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+        "Banking": MessageLookupByLibrary.simpleMessage("Ngân hàng"),
+        "Carriage": MessageLookupByLibrary.simpleMessage("Vận tải"),
+        "Chemistry": MessageLookupByLibrary.simpleMessage("Hóa chất"),
+        "Cigarette": MessageLookupByLibrary.simpleMessage("Thuốc lá"),
         "DTND_assistant": MessageLookupByLibrary.simpleMessage("Trợ lý DTND"),
         "DTNDs_virtual_assistant":
             MessageLookupByLibrary.simpleMessage(" của trợ lý ảo DTND"),
+        "Extractive": MessageLookupByLibrary.simpleMessage("Khai khoáng"),
+        "Medicine": MessageLookupByLibrary.simpleMessage("Dược phẩm"),
+        "Metal": MessageLookupByLibrary.simpleMessage("Kim loại"),
+        "Retail": MessageLookupByLibrary.simpleMessage("Bán lẻ"),
         "account": MessageLookupByLibrary.simpleMessage("Tài khoản"),
         "account_notice":
             MessageLookupByLibrary.simpleMessage("Thông báo tài khoản"),

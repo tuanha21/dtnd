@@ -33,6 +33,14 @@ class FieldTreeModel {
     }
     return data;
   }
+
+  @override
+  bool operator ==(Object other) {
+    return other is FieldTreeModel && other.iNDUSTRY == iNDUSTRY;
+  }
+
+  @override
+  int get hashCode => iNDUSTRY.hashCode;
 }
 
 class FieldTreeElementModel {
@@ -41,22 +49,22 @@ class FieldTreeElementModel {
   String? sTOCKNAME;
   String? iNDUSTRY;
   String? sECONDINDUSTRY;
-  num? dEVIEND;
-  num? gTGD;
-  num? pERCENTCHANGE;
-  num? uPDATEDTIME;
-  num? cHANGE;
-  String? cOLOR;
-  String? qEPS;
-  String? qPE;
-  String? qPB;
-  String? qROE;
-  String? qROA;
   num? kLGD;
   num? lASTPRICE;
-  num? iNTERESTED;
-  String? cHARTNOTIME;
-  String? cATID;
+  num? gTGD;
+  num? pERCENTCHANGE;
+  num? cHANGE;
+  String? cOLOR;
+  // num? dEVIEND;
+  // num? uPDATEDTIME;
+  // String? qEPS;
+  // String? qPE;
+  // String? qPB;
+  // String? qROE;
+  // String? qROA;
+  // num? iNTERESTED;
+  // String? cHARTNOTIME;
+  // String? cATID;
 
   Color get stockColor {
     switch (cOLOR) {
@@ -82,28 +90,29 @@ class FieldTreeElementModel {
     // return AppColors.yellow_price;
   }
 
-  FieldTreeElementModel(
-      {this.sTOCKCODE,
-      this.vHTT,
-      this.sTOCKNAME,
-      this.iNDUSTRY,
-      this.sECONDINDUSTRY,
-      this.dEVIEND,
-      this.gTGD,
-      this.pERCENTCHANGE,
-      this.uPDATEDTIME,
-      this.cHANGE,
-      this.cOLOR,
-      this.qEPS,
-      this.qPE,
-      this.qPB,
-      this.qROE,
-      this.qROA,
-      this.kLGD,
-      this.lASTPRICE,
-      this.iNTERESTED,
-      this.cHARTNOTIME,
-      this.cATID});
+  FieldTreeElementModel({
+    this.sTOCKCODE,
+    this.vHTT,
+    this.sTOCKNAME,
+    this.iNDUSTRY,
+    this.sECONDINDUSTRY,
+    this.gTGD,
+    this.kLGD,
+    this.pERCENTCHANGE,
+    this.lASTPRICE,
+    this.cHANGE,
+    this.cOLOR,
+    // this.uPDATEDTIME,
+    // this.qEPS,
+    // this.qPE,
+    // this.qPB,
+    // this.qROE,
+    // this.qROA,
+    // this.dEVIEND,
+    // this.iNTERESTED,
+    // this.cHARTNOTIME,
+    // this.cATID,
+  });
 
   FieldTreeElementModel.fromJson(Map<String, dynamic> json) {
     sTOCKCODE = json['STOCK_CODE'];
@@ -111,22 +120,22 @@ class FieldTreeElementModel {
     sTOCKNAME = json['STOCK_NAME'];
     iNDUSTRY = json['INDUSTRY'];
     sECONDINDUSTRY = json['SECOND_INDUSTRY'];
-    dEVIEND = json['DEVIEND'];
     gTGD = (json['GTGD'] ?? 0);
     pERCENTCHANGE = json['PERCENT_CHANGE'];
-    uPDATEDTIME = json['UPDATED_TIME'];
     cHANGE = json['CHANGE'];
     cOLOR = json['COLOR'];
-    qEPS = json['Q_EPS'];
-    qPE = json['Q_PE'];
-    qPB = json['Q_PB'];
-    qROE = json['Q_ROE'];
-    qROA = json['Q_ROA'];
     kLGD = json['KLGD'];
     lASTPRICE = json['LAST_PRICE'];
-    iNTERESTED = json['INTERESTED'];
-    cHARTNOTIME = json['CHART_NO_TIME'];
-    cATID = json['CATID'];
+    // iNTERESTED = json['INTERESTED'];
+    // cHARTNOTIME = json['CHART_NO_TIME'];
+    // dEVIEND = json['DEVIEND'];
+    // uPDATEDTIME = json['UPDATED_TIME'];
+    // cATID = json['CATID'];
+    // qEPS = json['Q_EPS'];
+    // qPE = json['Q_PE'];
+    // qPB = json['Q_PB'];
+    // qROE = json['Q_ROE'];
+    // qROA = json['Q_ROA'];
   }
 
   Map<String, dynamic> toJson() {
@@ -136,22 +145,22 @@ class FieldTreeElementModel {
     data['STOCK_NAME'] = sTOCKNAME;
     data['INDUSTRY'] = iNDUSTRY;
     data['SECOND_INDUSTRY'] = sECONDINDUSTRY;
-    data['DEVIEND'] = dEVIEND;
+    data['LAST_PRICE'] = lASTPRICE;
     data['GTGD'] = gTGD;
+    data['KLGD'] = kLGD;
     data['PERCENT_CHANGE'] = pERCENTCHANGE;
-    data['UPDATED_TIME'] = uPDATEDTIME;
     data['CHANGE'] = cHANGE;
     data['COLOR'] = cOLOR;
-    data['Q_EPS'] = qEPS;
-    data['Q_PE'] = qPE;
-    data['Q_PB'] = qPB;
-    data['Q_ROE'] = qROE;
-    data['Q_ROA'] = qROA;
-    data['KLGD'] = kLGD;
-    data['LAST_PRICE'] = lASTPRICE;
-    data['INTERESTED'] = iNTERESTED;
-    data['CHART_NO_TIME'] = cHARTNOTIME;
-    data['CATID'] = cATID;
+    // data['Q_EPS'] = qEPS;
+    // data['Q_PE'] = qPE;
+    // data['Q_PB'] = qPB;
+    // data['Q_ROE'] = qROE;
+    // data['Q_ROA'] = qROA;
+    // data['UPDATED_TIME'] = uPDATEDTIME;
+    // data['INTERESTED'] = iNTERESTED;
+    // data['CHART_NO_TIME'] = cHARTNOTIME;
+    // data['CATID'] = cATID;
+    // data['DEVIEND'] = dEVIEND;
     return data;
   }
 }

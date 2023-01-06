@@ -1382,6 +1382,146 @@ class S {
     );
   }
 
+  // skipped getter for the 'Petroleum Production' key
+
+  // skipped getter for the 'Oil and Gas Equipment, Service and Distribution' key
+
+  /// `Chemistry`
+  String get Chemistry {
+    return Intl.message(
+      'Chemistry',
+      name: 'Chemistry',
+      desc: '',
+      args: [],
+    );
+  }
+
+  // skipped getter for the 'Forestry and Paper' key
+
+  /// `Metal`
+  String get Metal {
+    return Intl.message(
+      'Metal',
+      name: 'Metal',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Extractive`
+  String get Extractive {
+    return Intl.message(
+      'Extractive',
+      name: 'Extractive',
+      desc: '',
+      args: [],
+    );
+  }
+
+  // skipped getter for the 'Construction and Materials' key
+
+  // skipped getter for the 'Aviation and Defense' key
+
+  // skipped getter for the 'Industrial goods' key
+
+  // skipped getter for the 'Electronics and Electrical Equipment' key
+
+  // skipped getter for the 'Heavy industry' key
+
+  /// `Carriage`
+  String get Carriage {
+    return Intl.message(
+      'Carriage',
+      name: 'Carriage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  // skipped getter for the 'Business Consulting and Support' key
+
+  // skipped getter for the 'Cars and spare parts' key
+
+  // skipped getter for the 'Beer and drinks' key
+
+  // skipped getter for the 'Food production' key
+
+  // skipped getter for the 'Household appliances' key
+
+  // skipped getter for the 'Leisure goods' key
+
+  // skipped getter for the 'Personal goods' key
+
+  /// `Cigarette`
+  String get Cigarette {
+    return Intl.message(
+      'Cigarette',
+      name: 'Cigarette',
+      desc: '',
+      args: [],
+    );
+  }
+
+  // skipped getter for the 'Medical Equipment and Services' key
+
+  /// `Medicine`
+  String get Medicine {
+    return Intl.message(
+      'Medicine',
+      name: 'Medicine',
+      desc: '',
+      args: [],
+    );
+  }
+
+  // skipped getter for the 'Food and pharmaceutical distribution' key
+
+  /// `Retail`
+  String get Retail {
+    return Intl.message(
+      'Retail',
+      name: 'Retail',
+      desc: '',
+      args: [],
+    );
+  }
+
+  // skipped getter for the 'The media' key
+
+  // skipped getter for the 'Travel and Leisure' key
+
+  // skipped getter for the 'Fixed telecommunications' key
+
+  // skipped getter for the 'Mobile telecommunications' key
+
+  // skipped getter for the 'Water and Gas' key
+
+  /// `Banking`
+  String get Banking {
+    return Intl.message(
+      'Banking',
+      name: 'Banking',
+      desc: '',
+      args: [],
+    );
+  }
+
+  // skipped getter for the 'Non-life insurance' key
+
+  // skipped getter for the 'Life insurance' key
+
+  // skipped getter for the 'Real estate' key
+
+  // skipped getter for the 'Financial services' key
+
+  // skipped getter for the 'Investment funds' key
+
+  // skipped getter for the 'Venture capital funds' key
+
+  // skipped getter for the 'Computer Software and Services' key
+
+  // skipped getter for the 'Equipment and Hardware' key
+
   /// `No response from server`
   String get timeout {
     return Intl.message(

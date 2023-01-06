@@ -1,6 +1,5 @@
 import 'package:dtnd/=models=/ui_model/field_tree_element_model.dart';
-import 'package:dtnd/data/i_data_center_service.dart';
-import 'package:dtnd/data/implementations/data_center_service.dart';
+import 'package:dtnd/ui/screen/market/controller/industry_tab_controller.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_treemap/treemap.dart';
@@ -35,8 +34,7 @@ class HeapMapWidget extends StatefulWidget {
 }
 
 class _HeapMapWidgetState extends State<HeapMapWidget> {
-  final IDataCenterService dataCenterService = DataCenterService();
-  final List<FieldTreeModel> model = [];
+  final IndustryTabController controller = IndustryTabController();
   final List<FieldTreeElementModel> _datas = [];
 
   double _total = 0;
@@ -60,8 +58,7 @@ class _HeapMapWidgetState extends State<HeapMapWidget> {
   }
 
   void init() async {
-    model.addAll(
-        await dataCenterService.getListIndustryHeatMap(top: 8, type: "KL"));
+    await controller.getListIndustry();
     await newData();
     setState(() {
       initialized = true;
@@ -74,18 +71,18 @@ class _HeapMapWidgetState extends State<HeapMapWidget> {
     _total = 0;
 
     if (chartType == _Type.kl) {
-      await Future.forEach<FieldTreeModel>(model, (element) {
+      await Future.forEach<FieldTreeModel>(controller.model, (element) {
         _datas.addAll(element.stocks);
         _total += element.tOTALKLGD;
       });
     } else {
       final _list = [];
       num __total = 0;
-      await Future.forEach<FieldTreeModel>(model, (element) {
+      await Future.forEach<FieldTreeModel>(controller.model, (element) {
         __total += element.tOTALKLGD;
         _list.add(element.tOTALKLGD);
       });
-      await Future.forEach<FieldTreeModel>(model, (element) {
+      await Future.forEach<FieldTreeModel>(controller.model, (element) {
         if (element.tOTALKLGD > __total / 1000) {
           _datas.addAll(element.stocks);
           _total += element.tOTALKLGD;
@@ -132,14 +129,6 @@ class _HeapMapWidgetState extends State<HeapMapWidget> {
           //   );
           // }
         },
-        // colorMappers: <TreemapColorMapper>[
-        //   TreemapColorMapper.value(
-        //       from: -100, to: -0.001, color: AppColors.red_price),
-        //   TreemapColorMapper.range(
-        //       from: 0, to: 0, color: AppColors.yellow_price),
-        //   TreemapColorMapper.range(
-        //       from: 0.001, to: 100, color: AppColors.green_price),
-        // ],
         selectionSettings:
             const TreemapSelectionSettings(color: Colors.transparent),
         levels: [

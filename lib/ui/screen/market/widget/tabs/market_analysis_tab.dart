@@ -14,7 +14,10 @@ class _MarketAnalysisTabState extends State<MarketAnalysisTab> {
   Widget build(BuildContext context) {
     return Center(
       child: ListView(
-        children: const [TopInfluenceChart(), LiquidityChart()],
+        children: const [
+          TopInfluenceChart(),
+          LiquidityChart(),
+        ],
       ),
     );
   }
