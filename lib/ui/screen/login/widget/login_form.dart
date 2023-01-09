@@ -223,27 +223,24 @@ class _LoginFormState extends State<LoginForm> {
           const SizedBox(
             height: 20,
           ),
-          Row(
-            children: [
-              Expanded(
-                child: AsyncButton(
-                  onPressed: login,
-                  // onPressed: () {
-                  //   GoRouter.of(context).go('/');
-                  // },
-                  padding: const EdgeInsets.all(8),
-                  borderRadius: const BorderRadius.all(Radius.circular(4)),
-                  child: Text(S.of(context).login),
+          IntrinsicHeight(
+            child: Row(
+              children: [
+                Expanded(
+                  child: AsyncButton(
+                    onPressed: login,
+                    borderRadius: const BorderRadius.all(Radius.circular(4)),
+                    child: Text(S.of(context).login),
+                  ),
                 ),
-              ),
-              const SizedBox(
-                width: 20,
-              ),
-              SizedBox.square(
-                dimension: 40,
-                child: SvgPicture.asset(AppImages.login_face_id_icon),
-              ),
-            ],
+                const SizedBox(
+                  width: 20,
+                ),
+                SizedBox.square(
+                  child: SvgPicture.asset(AppImages.login_face_id_icon),
+                ),
+              ],
+            ),
           ),
         ],
       ),

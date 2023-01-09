@@ -75,6 +75,7 @@ dependencies:
   fluttertoast: ^8.1.2
   fl_chart: ^0.55.2
   syncfusion_flutter_treemap: ^20.4.42-beta
+  firebase_core: ^2.4.1
 
 dev_dependencies:
   flutter_test:
