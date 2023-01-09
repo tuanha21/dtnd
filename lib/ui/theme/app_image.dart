@@ -64,6 +64,15 @@ class AppImages {
   static const String element_3 = "assets/images/element_3.png";
   static const String textalign_justifycenter =
       "assets/images/textalign_justifycenter.png";
+  static const String chart = "assets/images/chart.png";
+  static const String timer = "assets/images/timer.png";
+  static const String money_recive = "assets/images/money_recive.png";
+  static const String money_send = "assets/images/money_send.png";
+
+  static const String money_2 = "assets/images/money_2.png";
+  static const String money_change = "assets/images/money_change.png";
+  static const String timer_2 = "assets/images/timer_2.png";
+  static const String wallet_3 = "assets/images/wallet_3.png";
 
   /// BG
   static const String home_asset_card_light_bg =

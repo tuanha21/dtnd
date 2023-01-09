@@ -27,6 +27,16 @@ class StockModel {
     return;
   }
 
+  num get maxVolumnMatchedOrder {
+    num max = 0;
+    for (final IndayMatchedOrder element in _listMatchedOrder) {
+      if (element.matchVolume > max) {
+        max = element.matchVolume;
+      }
+    }
+    return max;
+  }
+
   StockModel({
     required this.stock,
     required this.stockData,

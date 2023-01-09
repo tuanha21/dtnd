@@ -50,6 +50,15 @@
     "loss_wvalue": "Giảm {value}",
     "price": "Giá",
     "net_assets": "Tài sản ròng",
+    "net_profit": "Lợi nhuận ròng",
+    "revenue": "Doanh thu",
+    "investment_value": "Tổng giá trị đầu tư",
+    "cash": "Tiền mặt",
+    "sold_returning_money": "Tiền bán chờ về",
+    "withdrawable_money": "Tiền có thể rút",
+
+    "million_short": "Tr",
+    "billion_short": "T",
 
     "total_asset": "Tổng tài sản",
     "interested_catalog": "Danh mục quan tâm",
@@ -74,6 +83,8 @@
     "exchange_total": "Tổng giao dịch",
     "period_of_validity": "Thời gian hiệu lực",
     "pin_code": "Mã pin",
+    "matched_order_by_time": "Khớp lệnh theo thời gian",
+    "matched_order_by_price_step": "Khớp lệnh theo bước giá",
 
     "DTND_assistant": "Trợ lý DTND",
     "virtual_assistant": "Trợ lý ảo",
@@ -124,6 +135,8 @@
     "delete_catalog": "Xoá danh mục",
     "are_you_sure_to_delete_catalog": "Bạn có chắc chắn muốn xóa danh mục “{name}” không ?",
     "save": "Lưu",
+    "deposite_money": "Nộp tiền",
+    "withdraw_money": "Rút tiền",
 
     "login_exception_required_OTP": "Hãy đăng nhập bằng mã OTP được gửi về máy của bạn",
     "invalid_account": "Tài khoản chưa đăng ký hoặc đã hết hiệu lực giao dịch Internet",

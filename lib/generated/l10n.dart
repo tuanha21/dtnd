@@ -520,6 +520,86 @@ class S {
     );
   }
 
+  /// `Net profit`
+  String get net_profit {
+    return Intl.message(
+      'Net profit',
+      name: 'net_profit',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Revenue`
+  String get revenue {
+    return Intl.message(
+      'Revenue',
+      name: 'revenue',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Investment value`
+  String get investment_value {
+    return Intl.message(
+      'Investment value',
+      name: 'investment_value',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Cash`
+  String get cash {
+    return Intl.message(
+      'Cash',
+      name: 'cash',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Sold returning money`
+  String get sold_returning_money {
+    return Intl.message(
+      'Sold returning money',
+      name: 'sold_returning_money',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Withdrawable money`
+  String get withdrawable_money {
+    return Intl.message(
+      'Withdrawable money',
+      name: 'withdrawable_money',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `M`
+  String get million_short {
+    return Intl.message(
+      'M',
+      name: 'million_short',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `B`
+  String get billion_short {
+    return Intl.message(
+      'B',
+      name: 'billion_short',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Total asset`
   String get total_asset {
     return Intl.message(
@@ -745,6 +825,26 @@ class S {
     return Intl.message(
       'Pin code',
       name: 'pin_code',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Matched order by time`
+  String get matched_order_by_time {
+    return Intl.message(
+      'Matched order by time',
+      name: 'matched_order_by_time',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Matched order by price steps`
+  String get matched_order_by_price_step {
+    return Intl.message(
+      'Matched order by price steps',
+      name: 'matched_order_by_price_step',
       desc: '',
       args: [],
     );
@@ -1237,6 +1337,46 @@ class S {
     return Intl.message(
       'Save',
       name: 'save',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Deposite money`
+  String get deposite_money {
+    return Intl.message(
+      'Deposite money',
+      name: 'deposite_money',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Withdraw money`
+  String get withdraw_money {
+    return Intl.message(
+      'Withdraw money',
+      name: 'withdraw_money',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Base`
+  String get base {
+    return Intl.message(
+      'Base',
+      name: 'base',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Derivative`
+  String get derivative {
+    return Intl.message(
+      'Derivative',
+      name: 'derivative',
       desc: '',
       args: [],
     );

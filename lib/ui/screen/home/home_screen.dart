@@ -31,7 +31,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const MyAppBar(title: "DTND"),
+      appBar: const MyAppBar(),
       body: RefreshIndicator(
         onRefresh: () async => homeController.init(),
         child: ScrollConfiguration(

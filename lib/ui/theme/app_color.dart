@@ -60,6 +60,7 @@ class AppColors {
   static const graph_3 = Color(0xFF9C90FA);
   static const graph_4 = Color(0xFFFF754C);
   static const graph_5 = Color(0xFF8F95B2);
+  static const graph_7 = Color(0xFF69E0C7);
 
   ///Text
   static const error_text = Color(0xFFFB0000);

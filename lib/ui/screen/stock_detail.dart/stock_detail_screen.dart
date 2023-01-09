@@ -13,6 +13,7 @@ import 'package:dtnd/ui/screen/exchange_stock/stock_order/sheet/stock_order_shee
 import 'package:dtnd/ui/screen/login/login_screen.dart';
 import 'package:dtnd/ui/screen/stock_detail.dart/enum/detail_tab_enum.dart';
 import 'package:dtnd/ui/screen/stock_detail.dart/tab/finance_index_tab.dart';
+import 'package:dtnd/ui/screen/stock_detail.dart/tab/overview_tab.dart';
 import 'package:dtnd/ui/screen/stock_detail.dart/widget/component/price_alert.dart';
 import 'package:dtnd/ui/screen/stock_detail.dart/widget/component/stock_detail_appbar.dart';
 import 'package:dtnd/ui/screen/stock_detail.dart/widget/financial_index.dart';
@@ -61,7 +62,7 @@ class _StockDetailScreenState extends State<StockDetailScreen>
   void initData() async {
     await getStockIndayTradingHistory();
     // await getIndayMatchedOrders();
-    await getStockRankingFinancialIndex();
+    // await getStockRankingFinancialIndex();
     await getSecurityBasicInfo();
     setState(() {
       initialized = true;
@@ -118,50 +119,6 @@ class _StockDetailScreenState extends State<StockDetailScreen>
     }
   }
 
-  // void orderProcess() async {
-  //   dynamic result =
-  //       await showSheet(child: StockOrderSheet(stockModel: widget.stockModel));
-  //   if (result is NextCmd) {
-  //     result = await showSheet(
-  //       child: StockOrderConfirmSheet(
-  //         stockModel: widget.stockModel,
-  //         orderData: result.data,
-  //       ),
-  //     );
-  //   }
-  // }
-
-  // Future<T?> nextSheet<T>({
-  //   required Widget from,
-  //   required Widget to,
-  // }) async {
-  //   var result = await showSheet(child: from);
-  //   if (result == null) {
-  //     return null;
-  //   }
-  //   if (result is NextCmd) {
-  //     result = await showSheet(child: to);
-  //   }
-  // }
-
-  // Future<T?> showSheet<T>({required Widget child}) {
-  //   return showModalBottomSheet(
-  //     context: context,
-  //     shape: const RoundedRectangleBorder(
-  //         borderRadius: BorderRadius.vertical(top: Radius.circular(20))),
-  //     builder: (BuildContext context) {
-  //       return Wrap(
-  //         children: [
-  //           // TechnicalTradings(
-  //           //   onChoosen: (value) => Navigator.of(context).pop(value),
-  //           // ),
-  //           child
-  //         ],
-  //       );
-  //     },
-  //   );
-  // }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -191,8 +148,6 @@ class _StockDetailScreenState extends State<StockDetailScreen>
             child: SlidingUpPanel(
               minHeight: 60,
               parallaxEnabled: false,
-              // parallaxOffset: .9,
-              // renderPanelSheet: false,
               maxHeight:
                   MediaQuery.of(context).size.height - kToolbarHeight - 80,
               color: themeMode.isLight ? Colors.white : Colors.black,
@@ -204,8 +159,6 @@ class _StockDetailScreenState extends State<StockDetailScreen>
                   child: CustomScrollView(
                     slivers: [
                       SliverOverlapInjector(
-                        // This is the flip side of the SliverOverlapAbsorber
-                        // above.
                         handle: NestedScrollView.sliverOverlapAbsorberHandleFor(
                             context),
                       ),
@@ -260,7 +213,6 @@ class _StockDetailScreenState extends State<StockDetailScreen>
                         labelPadding: const EdgeInsets.symmetric(
                             horizontal: 10, vertical: 6),
                         padding: EdgeInsets.zero,
-                        // indicatorSize: TabBarIndicatorSize.label,
                         tabs: DetailTab.values
                             .map((e) => Text(e.getName(context)))
                             .toList(),
@@ -290,7 +242,7 @@ class _StockDetailScreenState extends State<StockDetailScreen>
                       //     ),
                       //   ],
                       // ),
-                      TabTradingBoard(
+                      OverviewTab(
                         stockModel: widget.stockModel,
                         scrollController: scrollController,
                         panelController: panelController,

@@ -50,6 +50,15 @@
     "loss_wvalue": "Loss {value}",
     "price": "Price",
     "net_assets": "Net assets",
+    "net_profit": "Net profit",
+    "revenue": "Revenue",
+    "investment_value": "Investment value",
+    "cash": "Cash",
+    "sold_returning_money": "Sold returning money",
+    "withdrawable_money": "Withdrawable money",
+
+    "million_short": "M",
+    "billion_short": "B",
 
     "total_asset": "Total asset",
     "interested_catalog": "Interested catalog",
@@ -74,6 +83,8 @@
     "exchange_total": "Exchange total",
     "period_of_validity": "Period of validity",
     "pin_code": "Pin code",
+    "matched_order_by_time": "Matched order by time",
+    "matched_order_by_price_step": "Matched order by price steps",
 
     "DTND_assistant": "DTND assistant",
     "virtual_assistant": "Virtual assistant",
@@ -124,6 +135,10 @@
     "delete_catalog": "Delete catalog",
     "are_you_sure_to_delete_catalog": "Are you sure to delete the “{name}” category?",
     "save": "Save",
+    "deposite_money": "Deposite money",
+    "withdraw_money": "Withdraw money",
+    "base": "Base",
+    "derivative": "Derivative",
 
     "login_exception_required_OTP": "Login with OTP code sent to your phone",
     "invalid_account": "This account has not been registered or Internet trading feature is no longer available",

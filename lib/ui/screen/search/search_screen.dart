@@ -20,7 +20,6 @@ class _SearchScreenState extends State<SearchScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: MyAppBar(
-        title: S.of(context).search,
         showActions: false,
       ),
       body: Column(

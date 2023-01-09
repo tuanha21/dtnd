@@ -28,7 +28,7 @@ class _MarketScreenState extends State<MarketScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: const MyAppBar(title: "DTND"),
+        appBar: const MyAppBar(),
         body: Column(
           children: [
             PreferredSize(

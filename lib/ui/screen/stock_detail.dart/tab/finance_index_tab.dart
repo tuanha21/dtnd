@@ -58,35 +58,36 @@ class _FinanceIndexTabState extends State<FinanceIndexTab> {
     return MediaQuery.removePadding(
       context: context,
       removeTop: true,
-      child: ListView(
-        physics: PanelScrollPhysics(controller: widget.panelController),
-        controller: widget.scrollController,
-        shrinkWrap: true,
-        children: <Widget>[
-          const SizedBox(height: 20),
-          FinancialIndex(
-            stockModel: widget.stockModel,
-          ),
-          const SizedBox(height: 20),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                S.of(context).index,
-                style: Theme.of(context)
-                    .textTheme
-                    .titleMedium!
-                    .copyWith(fontWeight: FontWeight.w700),
-              ),
-              Container()
-            ],
-          ),
-          const SizedBox(height: 20),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: benefitChart,
-          ),
-        ],
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16),
+        child: ListView(
+          physics: PanelScrollPhysics(controller: widget.panelController),
+          controller: widget.scrollController,
+          shrinkWrap: true,
+          children: <Widget>[
+            const SizedBox(height: 20),
+            FinancialIndex(
+              stockModel: widget.stockModel,
+            ),
+            const SizedBox(height: 20),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  S.of(context).index,
+                  style: Theme.of(context)
+                      .textTheme
+                      .titleMedium!
+                      .copyWith(fontWeight: FontWeight.w700),
+                ),
+                Container()
+              ],
+            ),
+            const SizedBox(height: 20),
+            benefitChart,
+            const SizedBox(height: 20),
+          ],
+        ),
       ),
     );
   }
