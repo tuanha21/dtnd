@@ -1,9 +1,9 @@
 import 'package:dtnd/config/service/app_services.dart';
 import 'package:dtnd/config/service/environment.dart';
+import 'package:dtnd/data/i_local_storage_service.dart';
 import 'package:dtnd/data/implementations/data_center_service.dart';
 import 'package:dtnd/data/implementations/network_service.dart';
 import 'package:dtnd/data/implementations/local_storage_service.dart';
-import 'package:dtnd/data/implementations/user_service.dart';
 import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/screen/home_base/home_base.dart';
 import 'package:dtnd/ui/screen/login/login_screen.dart';
@@ -19,8 +19,9 @@ Future<void> main() async {
   await dotenv.load(fileName: ".env");
   WidgetsFlutterBinding.ensureInitialized();
   final Environment appEnvironment = E.fromString(dotenv.env['ENVIRONMENT']);
-  await LocalStorageService().init();
-  await AppService().initialize(LocalStorageService().sharedPreferences);
+  final ILocalStorageService localStorageService = LocalStorageService();
+  await localStorageService.init();
+  await AppService().initialize(localStorageService.sharedPreferences);
   await NetworkService().init(appEnvironment);
   await DataCenterService().init();
 

@@ -11,9 +11,12 @@ import 'package:dtnd/=models=/response/liquidity_model.dart';
 import 'package:dtnd/=models=/response/new_order.dart';
 import 'package:dtnd/=models=/response/news_detail.dart';
 import 'package:dtnd/=models=/response/s_cash_balance.dart';
+import 'package:dtnd/=models=/response/security_basic_info_model.dart';
 import 'package:dtnd/=models=/response/stock.dart';
 import 'package:dtnd/=models=/response/stock_data.dart';
+import 'package:dtnd/=models=/response/stock_financial_index_model.dart';
 import 'package:dtnd/=models=/response/stock_news.dart';
+import 'package:dtnd/=models=/response/stock_ranking_financial_index_model.dart';
 import 'package:dtnd/=models=/response/stock_trade.dart';
 import 'package:dtnd/=models=/response/stock_trading_history.dart';
 import 'package:dtnd/=models=/response/top_influence_model.dart';
@@ -67,9 +70,13 @@ class NetworkService implements INetworkService {
   @override
   late Socket socket;
 
-  dynamic decode(Uint8List data) {
+  dynamic decode(dynamic data) {
     try {
-      return jsonDecode(utf8Codec.decode(data));
+      if (data is Uint8List) {
+        return jsonDecode(utf8Codec.decode(data));
+      } else {
+        return jsonDecode(data);
+      }
     } catch (e) {
       // print(data);
       logger.e(e.toString());
@@ -377,6 +384,63 @@ class NetworkService implements INetworkService {
     for (var element in response) {
       result.add(FieldTreeModel.fromJson(element));
     }
+    return result;
+  }
+
+  @override
+  Future<List<StockFinancialIndex>> getStockFinancialIndex(String body) async {
+    dynamic response = await client.post(url_algo("secFSRatios"), body: body);
+    if (response.statusCode != 200) {
+      throw response;
+    }
+    response = decode(response.bodyBytes);
+    if (response["status"] != 200) {
+      throw response["message"];
+    }
+    response = decode(response["data"]);
+    logger.v(response);
+    final List<StockFinancialIndex> result = [];
+    for (final element in response) {
+      result.add(StockFinancialIndex.fromJson(element));
+    }
+
+    return result;
+  }
+
+  @override
+  Future<StockRankingFinancialIndex?> getStockRankingFinancialIndex(
+      String body) async {
+    dynamic response =
+        await client.post(url_algo("secRankingFSRatios"), body: body);
+    if (response.statusCode != 200) {
+      throw response;
+    }
+    response = decode(response.bodyBytes);
+    if (response["status"] != 200) {
+      throw response["message"];
+    }
+    response = decode(response["data"]);
+    logger.v(response);
+    final StockRankingFinancialIndex result =
+        StockRankingFinancialIndex.fromJson(response);
+    return result;
+  }
+
+  @override
+  Future<SecurityBasicInfo?> getSecurityBasicInfo(String body) async {
+    dynamic response =
+        await client.post(url_algo("securityBasicInfo"), body: body);
+    if (response.statusCode != 200) {
+      throw response;
+    }
+    response = decode(response.bodyBytes);
+    logger.v(response);
+    if (response["status"] != 200) {
+      throw response["message"];
+    }
+    response = response["data"].first;
+    logger.v(response);
+    final SecurityBasicInfo result = SecurityBasicInfo.fromJson(response);
     return result;
   }
 }

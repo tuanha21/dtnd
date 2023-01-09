@@ -111,6 +111,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "hi": MessageLookupByLibrary.simpleMessage("Xin chào"),
         "high": MessageLookupByLibrary.simpleMessage("Cao"),
         "home": MessageLookupByLibrary.simpleMessage("Trang chủ"),
+        "index": MessageLookupByLibrary.simpleMessage("Chỉ số"),
         "industry": MessageLookupByLibrary.simpleMessage("Ngành"),
         "industry_list":
             MessageLookupByLibrary.simpleMessage("Danh sách ngành"),
@@ -182,6 +183,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "ref": MessageLookupByLibrary.simpleMessage("TC"),
         "rename_catalog_to": m5,
         "save": MessageLookupByLibrary.simpleMessage("Lưu"),
+        "search": MessageLookupByLibrary.simpleMessage("Tìm kiếm"),
         "search_stock": MessageLookupByLibrary.simpleMessage("Tìm mã CP"),
         "see_more": MessageLookupByLibrary.simpleMessage("Xem thêm"),
         "sell": MessageLookupByLibrary.simpleMessage("Bán"),

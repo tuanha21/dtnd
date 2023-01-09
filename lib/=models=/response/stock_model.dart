@@ -1,7 +1,10 @@
 import 'package:dtnd/=models=/response/inday_matched_order.dart';
+import 'package:dtnd/=models=/response/security_basic_info_model.dart';
 import 'package:dtnd/=models=/response/stock.dart';
 import 'package:dtnd/=models=/response/stock_data.dart';
+import 'package:dtnd/=models=/response/stock_financial_index_model.dart';
 import 'package:dtnd/=models=/response/stock_info_core.dart';
+import 'package:dtnd/=models=/response/stock_ranking_financial_index_model.dart';
 import 'package:dtnd/=models=/response/stock_trade.dart';
 import 'package:dtnd/=models=/response/stock_trading_history.dart';
 import 'package:get/get.dart';
@@ -13,7 +16,9 @@ class StockModel {
   late List<StockTrade>? listStockTrade;
   final Rx<StockTradingHistory?> stockTradingHistory = Rxn();
   final List<IndayMatchedOrder> _listMatchedOrder = [];
-
+  final Rx<SecurityBasicInfo?> securityBasicInfo = Rxn();
+  final List<StockFinancialIndex> stockFinancialIndex = [];
+  final Rx<StockRankingFinancialIndex?> stockRankingFinancialIndex = Rxn();
   List<IndayMatchedOrder> get listMatchedOrder => _listMatchedOrder;
 
   void updateListMatchedOrder(List<IndayMatchedOrder> newList) {
@@ -28,8 +33,22 @@ class StockModel {
     this.stockDataCore,
     this.listStockTrade,
     StockTradingHistory? stockTradingHistory,
+    List<StockFinancialIndex>? stockFinancialIndex,
+    SecurityBasicInfo? securityBasicInfo,
+    StockRankingFinancialIndex? stockRankingFinancialIndex,
   }) {
     this.stockTradingHistory.value = stockTradingHistory;
+    this.stockRankingFinancialIndex.value = stockRankingFinancialIndex;
+    this.securityBasicInfo.value = securityBasicInfo;
+    if (stockFinancialIndex != null) {
+      this.stockFinancialIndex.addAll(stockFinancialIndex);
+    }
+  }
+
+  void changeStockFinancialIndex(
+      List<StockFinancialIndex> stockFinancialIndex) {
+    this.stockFinancialIndex.clear();
+    this.stockFinancialIndex.addAll(stockFinancialIndex);
   }
 
   void onSocketData(dynamic data) {

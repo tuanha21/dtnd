@@ -9,9 +9,12 @@ import 'package:dtnd/=models=/response/liquidity_model.dart';
 import 'package:dtnd/=models=/response/new_order.dart';
 import 'package:dtnd/=models=/response/news_detail.dart';
 import 'package:dtnd/=models=/response/s_cash_balance.dart';
+import 'package:dtnd/=models=/response/security_basic_info_model.dart';
 import 'package:dtnd/=models=/response/stock.dart';
 import 'package:dtnd/=models=/response/stock_data.dart';
+import 'package:dtnd/=models=/response/stock_financial_index_model.dart';
 import 'package:dtnd/=models=/response/stock_news.dart';
+import 'package:dtnd/=models=/response/stock_ranking_financial_index_model.dart';
 import 'package:dtnd/=models=/response/stock_trade.dart';
 import 'package:dtnd/=models=/response/stock_trading_history.dart';
 import 'package:dtnd/=models=/response/top_influence_model.dart';
@@ -70,4 +73,11 @@ abstract class INetworkService {
   Future<LiquidityModel> getLiquidity(String index);
 
   Future<List<FieldTreeModel>> getListIndustryHeatMap(int top, String type);
+
+  Future<List<StockFinancialIndex>> getStockFinancialIndex(String body);
+
+  Future<StockRankingFinancialIndex?> getStockRankingFinancialIndex(
+      String body);
+
+  Future<SecurityBasicInfo?> getSecurityBasicInfo(String body);
 }

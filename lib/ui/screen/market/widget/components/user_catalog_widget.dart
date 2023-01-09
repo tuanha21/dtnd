@@ -54,7 +54,7 @@ class _UserCatalogWidgetState extends State<UserCatalogWidget> {
   void initCatalog() async {
     try {
       userCatalog =
-          (await localStorageService.getSavedCatalog(userService.token!.user))!;
+          localStorageService.getSavedCatalog(userService.token!.user)!;
     } catch (e) {
       setState(() {
         userCatalog = SavedCatalog(userService.token!.user);
@@ -223,6 +223,7 @@ class _UserCatalogWidgetState extends State<UserCatalogWidget> {
             onSuggestionSelected: (suggestion) async {
               currentCatalog!.stocks.add(suggestion.stockCode);
               userCatalog.save();
+              localStorageService.putSavedCatalog(userCatalog);
               // localStorageService.putSavedCatalog(userCatalog);
 
               final StockModel model = (await dataCenterService

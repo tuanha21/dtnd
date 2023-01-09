@@ -26,9 +26,12 @@ class LocalStorageService implements ILocalStorageService {
 
   factory LocalStorageService() => _instance;
 
-  late final SharedPreferences sharedPreferences;
+  late final SharedPreferences _sharedPreferences;
+  late final Box _box;
   @override
-  late final Box box;
+  SharedPreferences get sharedPreferences => _sharedPreferences;
+  @override
+  Box get box => _box;
 
   /// Local Storage data
 
@@ -41,7 +44,7 @@ class LocalStorageService implements ILocalStorageService {
   @override
   Future<void> init() async {
     await Hive.initFlutter();
-    sharedPreferences = await SharedPreferences.getInstance();
+    _sharedPreferences = await SharedPreferences.getInstance();
 
     Hive.registerAdapter(UserTokenAdapter());
     Hive.registerAdapter(ExchangeAdapter());
@@ -52,10 +55,10 @@ class LocalStorageService implements ILocalStorageService {
     Hive.registerAdapter(VolatilityWarningFigureAdapter());
     Hive.registerAdapter(VolatilityWarningCatalogStockAdapter());
 
-    box = await Hive.openBox(_boxName);
+    _box = await Hive.openBox(_boxName);
 
-    _appAccessTime = box.get(appAccessTimeKey) ?? 0;
-    box.put(appAccessTimeKey, _appAccessTime + 1);
+    _appAccessTime = _box.get(appAccessTimeKey) ?? 0;
+    _box.put(appAccessTimeKey, _appAccessTime + 1);
     // savedUserToken = box.get(_savedUserTokenBoxName);
     // listAllStock = box.get(_savedAllListStock);
   }
@@ -65,22 +68,22 @@ class LocalStorageService implements ILocalStorageService {
 
   @override
   UserToken? getSavedUserToken() {
-    return box.get(savedUserTokenBoxKey);
+    return _box.get(savedUserTokenBoxKey);
   }
 
   @override
   List<Stock>? getSavedListAllStock() {
-    return box.get(savedAllListStockBoxKey);
+    return _box.get(savedAllListStockBoxKey);
   }
 
   @override
   List<String>? getListInterestedStock() {
-    return box.get(savedInterestedStocksBoxKey);
+    return _box.get(savedInterestedStocksBoxKey);
   }
 
   @override
   Future<void> saveUserToken(UserToken token) {
-    return box.put(savedUserTokenBoxKey, token);
+    return _box.put(savedUserTokenBoxKey, token);
   }
 
   // void createDefault(SavedCatalog savedCatalog) {
@@ -91,10 +94,10 @@ class LocalStorageService implements ILocalStorageService {
   // }
 
   @override
-  Future<SavedCatalog?> getSavedCatalog(String user) async {
+  SavedCatalog? getSavedCatalog(String user) {
     try {
-      print("${user}_saved_catalog");
-      return box.get("${user}_saved_catalog");
+      print("saved_catalog_$user");
+      return _box.get("saved_catalog_$user");
     } catch (e) {
       logger.e(e);
       return null;
@@ -114,7 +117,12 @@ class LocalStorageService implements ILocalStorageService {
 
   @override
   Future<void> putSavedCatalog(SavedCatalog savedCatalog) {
-    print("${savedCatalog.user}_saved_catalog");
-    return box.put("${savedCatalog.user}_saved_catalog", savedCatalog);
+    print("saved_catalog_${savedCatalog.user}");
+    return _box.put("saved_catalog_${savedCatalog.user}", savedCatalog);
+  }
+
+  @override
+  Future<void> flush() {
+    return _box.flush();
   }
 }

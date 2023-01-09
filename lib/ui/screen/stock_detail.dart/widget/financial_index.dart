@@ -1,8 +1,8 @@
+import 'package:dtnd/=models=/response/stock_model.dart';
 import 'package:dtnd/config/service/app_services.dart';
 import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_textstyle.dart';
-import 'package:dtnd/utilities/extension.dart';
 import 'package:flutter/material.dart';
 
 enum _RowType { esp, ppe, ppb, dividend }
@@ -17,14 +17,30 @@ extension _RowTypeX on _RowType {
       case _RowType.ppe:
         return "P/E (Price/EPS)";
       case _RowType.ppb:
-        return "P/B (Price/Book";
+        return "P/B (Price/Book)";
+    }
+  }
+
+  String value(StockModel model) {
+    switch (this) {
+      case _RowType.dividend:
+        return "0 đ";
+      case _RowType.esp:
+        return "${model.securityBasicInfo.value?.ePS ?? 0} lần";
+      case _RowType.ppe:
+        return "${model.securityBasicInfo.value?.pE ?? 0} lần";
+      case _RowType.ppb:
+        return "${model.securityBasicInfo.value?.pB ?? 0} lần";
     }
   }
 }
 
 class FinancialIndex extends StatelessWidget {
-  const FinancialIndex({super.key});
-
+  const FinancialIndex({
+    super.key,
+    required this.stockModel,
+  });
+  final StockModel stockModel;
   @override
   Widget build(BuildContext context) {
     final themeMode = AppService.instance.themeMode.value;
@@ -41,7 +57,7 @@ class FinancialIndex extends StatelessWidget {
             for (final _RowType type in _RowType.values)
               _RowData(
                 type: type,
-                value: "0",
+                stockModel: stockModel,
               )
           ],
         ));
@@ -51,10 +67,10 @@ class FinancialIndex extends StatelessWidget {
 class _RowData extends StatelessWidget {
   const _RowData({
     required this.type,
-    required this.value,
+    required this.stockModel,
   });
   final _RowType type;
-  final String value;
+  final StockModel stockModel;
   @override
   Widget build(BuildContext context) {
     final themeMode = AppService.instance.themeMode.value;
@@ -89,7 +105,7 @@ class _RowData extends StatelessWidget {
           Expanded(
             child: Container(),
           ),
-          Text(value)
+          Text(type.value(stockModel))
         ],
       ),
     );

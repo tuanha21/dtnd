@@ -590,6 +590,16 @@ class S {
     );
   }
 
+  /// `Index`
+  String get index {
+    return Intl.message(
+      'Index',
+      name: 'index',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `News and events`
   String get news_and_events {
     return Intl.message(
@@ -927,6 +937,16 @@ class S {
     return Intl.message(
       'Search stock',
       name: 'search_stock',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Search`
+  String get search {
+    return Intl.message(
+      'Search',
+      name: 'search',
       desc: '',
       args: [],
     );

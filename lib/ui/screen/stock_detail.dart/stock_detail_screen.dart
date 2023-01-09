@@ -12,6 +12,7 @@ import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/screen/exchange_stock/stock_order/sheet/stock_order_sheet.dart';
 import 'package:dtnd/ui/screen/login/login_screen.dart';
 import 'package:dtnd/ui/screen/stock_detail.dart/enum/detail_tab_enum.dart';
+import 'package:dtnd/ui/screen/stock_detail.dart/tab/finance_index_tab.dart';
 import 'package:dtnd/ui/screen/stock_detail.dart/widget/component/price_alert.dart';
 import 'package:dtnd/ui/screen/stock_detail.dart/widget/component/stock_detail_appbar.dart';
 import 'package:dtnd/ui/screen/stock_detail.dart/widget/financial_index.dart';
@@ -60,6 +61,8 @@ class _StockDetailScreenState extends State<StockDetailScreen>
   void initData() async {
     await getStockIndayTradingHistory();
     // await getIndayMatchedOrders();
+    await getStockRankingFinancialIndex();
+    await getSecurityBasicInfo();
     setState(() {
       initialized = true;
     });
@@ -68,6 +71,16 @@ class _StockDetailScreenState extends State<StockDetailScreen>
   Future<void> getStockIndayTradingHistory() async {
     widget.stockModel.stockTradingHistory.value = await dataCenterService
         .getStockIndayTradingHistory(widget.stockModel.stock.stockCode);
+  }
+
+  Future<void> getSecurityBasicInfo() async {
+    widget.stockModel.securityBasicInfo.value = await dataCenterService
+        .getSecurityBasicInfo(widget.stockModel.stock.stockCode);
+  }
+
+  Future<void> getStockRankingFinancialIndex() async {
+    widget.stockModel.stockRankingFinancialIndex.value = await dataCenterService
+        .getStockRankingFinancialIndex(widget.stockModel.stock.stockCode);
   }
 
   Future<void> getIndayMatchedOrders() async {
@@ -285,24 +298,10 @@ class _StockDetailScreenState extends State<StockDetailScreen>
                       const Center(
                         child: Text("Chi tiết kl"),
                       ),
-                      MediaQuery.removePadding(
-                        context: context,
-                        removeTop: true,
-                        child: ListView(
-                          physics:
-                              PanelScrollPhysics(controller: panelController),
-                          controller: scrollController,
-                          shrinkWrap: true,
-                          children: <Widget>[
-                            const SizedBox(
-                              height: 20,
-                            ),
-                            HomeSection(
-                              title: S.of(context).financial_index,
-                              child: const FinancialIndex(),
-                            ),
-                          ],
-                        ),
+                      FinanceIndexTab(
+                        scrollController: scrollController,
+                        panelController: panelController,
+                        stockModel: widget.stockModel,
                       ),
                     ],
                   ),
