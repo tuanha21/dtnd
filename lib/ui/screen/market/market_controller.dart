@@ -38,7 +38,6 @@ class MarketController {
   void changeSelectedIndex(Index index) {
     currentIndexModel.value =
         listIndexs.firstWhere((element) => element.index == index);
-    print("changed ${index.exchangeName}");
   }
 
   Future<void> getDeepMarket() async {

@@ -253,11 +253,11 @@ const IconThemeData _darkIconThemeData =
 
 ///================ BottomAppBar ===================
 
-const BottomAppBarTheme _lightBottomAppBarTheme = BottomAppBarTheme(
+const BottomAppBarTheme lightBottomAppBarTheme = BottomAppBarTheme(
   color: Colors.white,
 );
 
-const BottomAppBarTheme _darkBottomAppBarTheme = BottomAppBarTheme(
+const BottomAppBarTheme darkBottomAppBarTheme = BottomAppBarTheme(
   color: Colors.black,
 );
 

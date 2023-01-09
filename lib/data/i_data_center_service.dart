@@ -1,14 +1,18 @@
 // ignore_for_file: library_prefixes
 
+import 'package:dtnd/=models=/index.dart';
 import 'package:dtnd/=models=/response/deep_model.dart';
 import 'package:dtnd/=models=/response/inday_matched_order.dart';
 import 'package:dtnd/=models=/response/index_model.dart';
+import 'package:dtnd/=models=/response/liquidity_model.dart';
 import 'package:dtnd/=models=/response/news_detail.dart';
 import 'package:dtnd/=models=/response/stock.dart';
 import 'package:dtnd/=models=/response/stock_data.dart';
 import 'package:dtnd/=models=/response/stock_model.dart';
 import 'package:dtnd/=models=/response/stock_news.dart';
 import 'package:dtnd/=models=/response/stock_trading_history.dart';
+import 'package:dtnd/=models=/response/top_influence_model.dart';
+import 'package:dtnd/=models=/ui_model/field_tree_element_model.dart';
 
 abstract class IDataCenterService {
   Set<IndexModel> get listIndexs;
@@ -46,4 +50,11 @@ abstract class IDataCenterService {
   Future<List<DeepModel>> getMarketDepth();
 
   Future<List<IndayMatchedOrder>> getIndayMatchedOrders(String symbol);
+
+  Future<List<TopInfluenceModel>> getTopInfluence(Index index);
+
+  Future<LiquidityModel> getLiquidity(Index index);
+
+  Future<List<FieldTreeModel>> getListIndustryHeatMap(
+      {int top = 8, String type = "KL"});
 }

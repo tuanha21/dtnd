@@ -1,11 +1,9 @@
 import 'package:dtnd/ui/screen/login/login_controller.dart';
 import 'package:dtnd/ui/screen/login/widget/login_form.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
-import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:dtnd/ui/theme/app_textstyle.dart';
 import 'package:dtnd/ui/widget/login_scaffold.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../generated/l10n.dart';

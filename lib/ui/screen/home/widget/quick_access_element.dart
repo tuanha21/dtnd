@@ -1,9 +1,7 @@
 import 'package:dtnd/config/service/app_services.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
-import 'package:dtnd/utilities/extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:get/get.dart';
 
 import 'home_quick_access.dart';
 

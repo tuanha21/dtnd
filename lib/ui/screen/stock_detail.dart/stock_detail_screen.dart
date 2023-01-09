@@ -96,7 +96,7 @@ class _StockDetailScreenState extends State<StockDetailScreen>
       }
     } else {
       // return StockOrderISheet(widget.stockModel).showSheet(context, );
-      StockOrderISheet(widget.stockModel).showSheet(
+      StockOrderISheet(widget.stockModel).show(
           context,
           StockOrderSheet(
             stockModel: widget.stockModel,

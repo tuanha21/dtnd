@@ -20,20 +20,35 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'vi';
 
-  static String m0(value) => "Tăng ${value}";
+  static String m0(name) =>
+      "Bạn có chắc chắn muốn xóa danh mục “${name}” không ?";
 
-  static String m1(value) => "Giảm ${value}";
+  static String m1(name) => "Danh mục theo dõi \"${name}\"";
 
-  static String m2(value) =>
+  static String m2(value) => "Tăng ${value}";
+
+  static String m3(value) => "Giảm ${value}";
+
+  static String m4(value) =>
       "Mã OTP đã được gửi về số điện thoại đuôi ${value} của bạn. Nhập mã 6 số để tiếp tục.";
 
-  static String m3(value) => "Tổng ${value}";
+  static String m5(name) => "Sửa tên danh mục “${name}” thành";
+
+  static String m6(value) => "Tổng ${value}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+        "Banking": MessageLookupByLibrary.simpleMessage("Ngân hàng"),
+        "Carriage": MessageLookupByLibrary.simpleMessage("Vận tải"),
+        "Chemistry": MessageLookupByLibrary.simpleMessage("Hóa chất"),
+        "Cigarette": MessageLookupByLibrary.simpleMessage("Thuốc lá"),
         "DTND_assistant": MessageLookupByLibrary.simpleMessage("Trợ lý DTND"),
         "DTNDs_virtual_assistant":
             MessageLookupByLibrary.simpleMessage(" của trợ lý ảo DTND"),
+        "Extractive": MessageLookupByLibrary.simpleMessage("Khai khoáng"),
+        "Medicine": MessageLookupByLibrary.simpleMessage("Dược phẩm"),
+        "Metal": MessageLookupByLibrary.simpleMessage("Kim loại"),
+        "Retail": MessageLookupByLibrary.simpleMessage("Bán lẻ"),
         "account": MessageLookupByLibrary.simpleMessage("Tài khoản"),
         "account_notice":
             MessageLookupByLibrary.simpleMessage("Thông báo tài khoản"),
@@ -43,12 +58,14 @@ class MessageLookup extends MessageLookupByLibrary {
         "add_stock": MessageLookupByLibrary.simpleMessage("Thêm mã"),
         "agree_with": MessageLookupByLibrary.simpleMessage("Đồng ý với "),
         "analysis": MessageLookupByLibrary.simpleMessage("Phân tích"),
+        "are_you_sure_to_delete_catalog": m0,
         "asset": MessageLookupByLibrary.simpleMessage("Tài sản"),
         "average": MessageLookupByLibrary.simpleMessage("Trung bình"),
         "bond": MessageLookupByLibrary.simpleMessage("Trái phiếu"),
         "buy": MessageLookupByLibrary.simpleMessage("Mua"),
         "buy_price": MessageLookupByLibrary.simpleMessage("Giá mua vào"),
         "cancel": MessageLookupByLibrary.simpleMessage("Huỷ"),
+        "cash_flow": MessageLookupByLibrary.simpleMessage("Dòng tiền"),
         "catalog_name": MessageLookupByLibrary.simpleMessage("Tên danh mục"),
         "catalog_notice":
             MessageLookupByLibrary.simpleMessage("Thông báo danh mục"),
@@ -65,9 +82,12 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Đặt lệnh mới"),
         "create_order_successfully":
             MessageLookupByLibrary.simpleMessage("Đặt lệnh thành công"),
+        "delete_catalog": MessageLookupByLibrary.simpleMessage("Xoá danh mục"),
         "dividend": MessageLookupByLibrary.simpleMessage("Cổ tức"),
         "double_back_to_close_app":
             MessageLookupByLibrary.simpleMessage("Ấn thêm lần nữa để thoát"),
+        "edit_catalog_name":
+            MessageLookupByLibrary.simpleMessage("Sửa tên danh mục"),
         "empty_catalog": MessageLookupByLibrary.simpleMessage("Danh mục rỗng"),
         "event": MessageLookupByLibrary.simpleMessage("Sự kiện"),
         "exchange_total":
@@ -84,19 +104,23 @@ class MessageLookup extends MessageLookupByLibrary {
         "floor": MessageLookupByLibrary.simpleMessage("Sàn"),
         "following_catalog":
             MessageLookupByLibrary.simpleMessage("Danh mục theo dõi"),
+        "following_catalog_with": m1,
         "froom": MessageLookupByLibrary.simpleMessage("Room NN"),
         "fsell": MessageLookupByLibrary.simpleMessage("NN bán"),
-        "gain_wvalue": m0,
+        "gain_wvalue": m2,
         "hello": MessageLookupByLibrary.simpleMessage("Chào bạn"),
         "hi": MessageLookupByLibrary.simpleMessage("Xin chào"),
         "high": MessageLookupByLibrary.simpleMessage("Cao"),
         "home": MessageLookupByLibrary.simpleMessage("Trang chủ"),
         "industry": MessageLookupByLibrary.simpleMessage("Ngành"),
+        "industry_list":
+            MessageLookupByLibrary.simpleMessage("Danh sách ngành"),
         "interested": MessageLookupByLibrary.simpleMessage("Quan tâm"),
         "interested_catalog":
             MessageLookupByLibrary.simpleMessage("Danh mục quan tâm"),
         "invalid_account": MessageLookupByLibrary.simpleMessage(
             "Tài khoản chưa đăng ký hoặc đã hết hiệu lực giao dịch Internet"),
+        "liquidity": MessageLookupByLibrary.simpleMessage("Thanh khoản"),
         "loading": MessageLookupByLibrary.simpleMessage("Đang tải..."),
         "login": MessageLookupByLibrary.simpleMessage("Đăng nhập"),
         "login_exception_required_OTP": MessageLookupByLibrary.simpleMessage(
@@ -109,9 +133,11 @@ class MessageLookup extends MessageLookupByLibrary {
         "login_to_continue":
             MessageLookupByLibrary.simpleMessage("Hãy đăng nhập để tiếp tục"),
         "login_upper": MessageLookupByLibrary.simpleMessage("ĐĂNG NHẬP"),
-        "loss_wvalue": m1,
+        "loss_wvalue": m3,
         "low": MessageLookupByLibrary.simpleMessage("Thấp"),
         "market": MessageLookupByLibrary.simpleMessage("Thị trường"),
+        "market_breadth":
+            MessageLookupByLibrary.simpleMessage("Độ rộng thị trường"),
         "market_deep":
             MessageLookupByLibrary.simpleMessage("Độ sâu thị trường"),
         "market_overview":
@@ -140,7 +166,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "order_will_appear_in_ur_order_note":
             MessageLookupByLibrary.simpleMessage(
                 "Lệnh đặt sẽ xuất hiện trong sổ lệnh của bạn"),
-        "otp_code_sent_to_phone_number": m2,
+        "otp_code_sent_to_phone_number": m4,
         "overview": MessageLookupByLibrary.simpleMessage("Tổng quan"),
         "password": MessageLookupByLibrary.simpleMessage("Mật khẩu"),
         "period_of_validity":
@@ -155,6 +181,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "qa_money": MessageLookupByLibrary.simpleMessage("Tiền gửi"),
         "qa_pack_enrol": MessageLookupByLibrary.simpleMessage("ĐK gói"),
         "ref": MessageLookupByLibrary.simpleMessage("TC"),
+        "rename_catalog_to": m5,
         "save": MessageLookupByLibrary.simpleMessage("Lưu"),
         "search_stock": MessageLookupByLibrary.simpleMessage("Tìm mã CP"),
         "see_more": MessageLookupByLibrary.simpleMessage("Xem thêm"),
@@ -184,8 +211,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "time": MessageLookupByLibrary.simpleMessage("Thời gian"),
         "timeout": MessageLookupByLibrary.simpleMessage(
             "Không nhận được phản hồi từ máy chủ"),
+        "top_influence": MessageLookupByLibrary.simpleMessage("Top ảnh hưởng"),
         "total_asset": MessageLookupByLibrary.simpleMessage("Tổng tài sản"),
-        "total_wvalue": m3,
+        "total_wvalue": m6,
         "trading": MessageLookupByLibrary.simpleMessage("Giao dịch"),
         "trading_board": MessageLookupByLibrary.simpleMessage("Bảng giá"),
         "unknown_error":
@@ -203,6 +231,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Cảnh báo biến động"),
         "volumn": MessageLookupByLibrary.simpleMessage("Khối lượng"),
         "wrong_password":
-            MessageLookupByLibrary.simpleMessage("Mật khẩu không chính xác")
+            MessageLookupByLibrary.simpleMessage("Mật khẩu không chính xác"),
+        "you_are_not_logged_in":
+            MessageLookupByLibrary.simpleMessage("Bạn chưa đăng nhập")
       };
 }

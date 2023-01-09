@@ -15,9 +15,8 @@ class ThemeModeHelper {
 
 class LocaleHelper {
   static Locale fromLanguageCode(String? code) {
-    final String _code = code ?? "vi";
-    final String _countryCode = _codeMap[_code] ?? "VN";
-    return Locale(_code, _countryCode);
+    final String? countryCode = _codeMap[code ?? "vi"];
+    return Locale(code ?? "vi", countryCode ?? "VN");
   }
 
   static const Map<String, String> _codeMap = {

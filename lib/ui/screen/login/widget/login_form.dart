@@ -137,8 +137,6 @@ class _LoginFormState extends State<LoginForm> {
   }
 
   void checkValidate() {
-    print(usernameFormKey.currentState!.value);
-    print(passwordFormKey.currentState!.value);
     setState(() {
       if (usernameHasError || passwordHasError) {
         if (login == null) {
@@ -259,13 +257,10 @@ class _LoginFormState extends State<LoginForm> {
     try {
       await 1.delay();
       if (widget.loginFormKey.currentState!.validate()) {
-        print("widget.loginFormKey.currentState");
         final loginStatus = await loginController.login(
             usernameFormKey.currentState!.value!,
             passwordFormKey.currentState!.value!);
-        print(loginStatus);
         if (loginStatus.isSuccess) {
-          print(loginStatus);
           widget.onSuccess.call();
         }
       }

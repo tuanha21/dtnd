@@ -660,6 +660,16 @@ class S {
     );
   }
 
+  /// `Industry list`
+  String get industry_list {
+    return Intl.message(
+      'Industry list',
+      name: 'industry_list',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Market deep`
   String get market_deep {
     return Intl.message(
@@ -862,6 +872,16 @@ class S {
     );
   }
 
+  /// `Following catalog "{name}"`
+  String following_catalog_with(Object name) {
+    return Intl.message(
+      'Following catalog "$name"',
+      name: 'following_catalog_with',
+      desc: '',
+      args: [name],
+    );
+  }
+
   /// `Catalog is empty`
   String get empty_catalog {
     return Intl.message(
@@ -1042,6 +1062,16 @@ class S {
     );
   }
 
+  /// `You are not yet logged in`
+  String get you_are_not_logged_in {
+    return Intl.message(
+      'You are not yet logged in',
+      name: 'you_are_not_logged_in',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Create new order`
   String get create_new_order {
     return Intl.message(
@@ -1139,6 +1169,46 @@ class S {
       name: 'catalog_name',
       desc: '',
       args: [],
+    );
+  }
+
+  /// `Edit catalog name`
+  String get edit_catalog_name {
+    return Intl.message(
+      'Edit catalog name',
+      name: 'edit_catalog_name',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Rename catalog “{name}” to`
+  String rename_catalog_to(Object name) {
+    return Intl.message(
+      'Rename catalog “$name” to',
+      name: 'rename_catalog_to',
+      desc: '',
+      args: [name],
+    );
+  }
+
+  /// `Delete catalog`
+  String get delete_catalog {
+    return Intl.message(
+      'Delete catalog',
+      name: 'delete_catalog',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Are you sure to delete the “{name}” category?`
+  String are_you_sure_to_delete_catalog(Object name) {
+    return Intl.message(
+      'Are you sure to delete the “$name” category?',
+      name: 'are_you_sure_to_delete_catalog',
+      desc: '',
+      args: [name],
     );
   }
 
@@ -1242,6 +1312,46 @@ class S {
     );
   }
 
+  /// `Top influence`
+  String get top_influence {
+    return Intl.message(
+      'Top influence',
+      name: 'top_influence',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Liquidity`
+  String get liquidity {
+    return Intl.message(
+      'Liquidity',
+      name: 'liquidity',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Cash flow`
+  String get cash_flow {
+    return Intl.message(
+      'Cash flow',
+      name: 'cash_flow',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Market breadth`
+  String get market_breadth {
+    return Intl.message(
+      'Market breadth',
+      name: 'market_breadth',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `See more`
   String get see_more {
     return Intl.message(
@@ -1271,6 +1381,146 @@ class S {
       args: [],
     );
   }
+
+  // skipped getter for the 'Petroleum Production' key
+
+  // skipped getter for the 'Oil and Gas Equipment, Service and Distribution' key
+
+  /// `Chemistry`
+  String get Chemistry {
+    return Intl.message(
+      'Chemistry',
+      name: 'Chemistry',
+      desc: '',
+      args: [],
+    );
+  }
+
+  // skipped getter for the 'Forestry and Paper' key
+
+  /// `Metal`
+  String get Metal {
+    return Intl.message(
+      'Metal',
+      name: 'Metal',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Extractive`
+  String get Extractive {
+    return Intl.message(
+      'Extractive',
+      name: 'Extractive',
+      desc: '',
+      args: [],
+    );
+  }
+
+  // skipped getter for the 'Construction and Materials' key
+
+  // skipped getter for the 'Aviation and Defense' key
+
+  // skipped getter for the 'Industrial goods' key
+
+  // skipped getter for the 'Electronics and Electrical Equipment' key
+
+  // skipped getter for the 'Heavy industry' key
+
+  /// `Carriage`
+  String get Carriage {
+    return Intl.message(
+      'Carriage',
+      name: 'Carriage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  // skipped getter for the 'Business Consulting and Support' key
+
+  // skipped getter for the 'Cars and spare parts' key
+
+  // skipped getter for the 'Beer and drinks' key
+
+  // skipped getter for the 'Food production' key
+
+  // skipped getter for the 'Household appliances' key
+
+  // skipped getter for the 'Leisure goods' key
+
+  // skipped getter for the 'Personal goods' key
+
+  /// `Cigarette`
+  String get Cigarette {
+    return Intl.message(
+      'Cigarette',
+      name: 'Cigarette',
+      desc: '',
+      args: [],
+    );
+  }
+
+  // skipped getter for the 'Medical Equipment and Services' key
+
+  /// `Medicine`
+  String get Medicine {
+    return Intl.message(
+      'Medicine',
+      name: 'Medicine',
+      desc: '',
+      args: [],
+    );
+  }
+
+  // skipped getter for the 'Food and pharmaceutical distribution' key
+
+  /// `Retail`
+  String get Retail {
+    return Intl.message(
+      'Retail',
+      name: 'Retail',
+      desc: '',
+      args: [],
+    );
+  }
+
+  // skipped getter for the 'The media' key
+
+  // skipped getter for the 'Travel and Leisure' key
+
+  // skipped getter for the 'Fixed telecommunications' key
+
+  // skipped getter for the 'Mobile telecommunications' key
+
+  // skipped getter for the 'Water and Gas' key
+
+  /// `Banking`
+  String get Banking {
+    return Intl.message(
+      'Banking',
+      name: 'Banking',
+      desc: '',
+      args: [],
+    );
+  }
+
+  // skipped getter for the 'Non-life insurance' key
+
+  // skipped getter for the 'Life insurance' key
+
+  // skipped getter for the 'Real estate' key
+
+  // skipped getter for the 'Financial services' key
+
+  // skipped getter for the 'Investment funds' key
+
+  // skipped getter for the 'Venture capital funds' key
+
+  // skipped getter for the 'Computer Software and Services' key
+
+  // skipped getter for the 'Equipment and Hardware' key
 
   /// `No response from server`
   String get timeout {

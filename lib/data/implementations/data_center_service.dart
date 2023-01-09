@@ -2,12 +2,15 @@ import 'package:dtnd/=models=/index.dart';
 import 'package:dtnd/=models=/response/deep_model.dart';
 import 'package:dtnd/=models=/response/inday_matched_order.dart';
 import 'package:dtnd/=models=/response/index_model.dart';
+import 'package:dtnd/=models=/response/liquidity_model.dart';
 import 'package:dtnd/=models=/response/news_detail.dart';
 import 'package:dtnd/=models=/response/stock.dart';
 import 'package:dtnd/=models=/response/stock_data.dart';
 import 'package:dtnd/=models=/response/stock_model.dart';
 import 'package:dtnd/=models=/response/stock_news.dart';
 import 'package:dtnd/=models=/response/stock_trading_history.dart';
+import 'package:dtnd/=models=/response/top_influence_model.dart';
+import 'package:dtnd/=models=/ui_model/field_tree_element_model.dart';
 import 'package:dtnd/data/i_data_center_service.dart';
 import 'package:dtnd/data/i_local_storage_service.dart';
 import 'package:dtnd/data/i_network_service.dart';
@@ -77,6 +80,7 @@ class DataCenterService implements IDataCenterService {
     socket = networkService.socket;
     socket.on("public", (data) {
       if (data['data']['id'] == 1101) {
+        // print(data);
         return processIndexData(data);
       }
       if (data['data']['id'] == 3220 ||
@@ -84,6 +88,7 @@ class DataCenterService implements IDataCenterService {
           data['data']['id'] == 3250) {
         return processStockData(data);
       }
+      // print(data);
     });
     socket.onPing((data) {
       const String pingMsg =
@@ -386,5 +391,21 @@ class DataCenterService implements IDataCenterService {
   @override
   Future<List<IndayMatchedOrder>> getIndayMatchedOrders(String symbol) {
     return networkService.getIndayMatchedOrders(symbol);
+  }
+
+  @override
+  Future<List<TopInfluenceModel>> getTopInfluence(Index index) {
+    return networkService.getTopInfluence(index.exchangeCode);
+  }
+
+  @override
+  Future<LiquidityModel> getLiquidity(Index index) {
+    return networkService.getLiquidity(index.exchangeCode);
+  }
+
+  @override
+  Future<List<FieldTreeModel>> getListIndustryHeatMap(
+      {int top = 8, String type = "KL"}) {
+    return networkService.getListIndustryHeatMap(top, type);
   }
 }

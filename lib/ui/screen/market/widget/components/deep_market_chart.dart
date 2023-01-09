@@ -27,6 +27,7 @@ class _DeepMarketChartState extends State<DeepMarketChart> {
   }
 
   void analyze() {
+    // ignore: no_leading_underscores_for_local_identifiers
     int _sum = 0;
     for (var element in widget.seriesList.first.data) {
       _sum += element.sL;
@@ -43,7 +44,7 @@ class _DeepMarketChartState extends State<DeepMarketChart> {
 
   @override
   Widget build(BuildContext context) {
-    if (widget.seriesList == null || widget.seriesList.isEmpty) {
+    if (widget.seriesList.isEmpty) {
       return Container();
     }
     return Column(
@@ -60,7 +61,7 @@ class _DeepMarketChartState extends State<DeepMarketChart> {
           style: const TextStyle(
               fontSize: 12,
               fontWeight: FontWeight.w400,
-              color: Color(0xffccccccc)),
+              color: Color(0xffcccccc)),
         ),
         Center(
           child: Padding(
@@ -137,7 +138,7 @@ class _DeepMarketChartState extends State<DeepMarketChart> {
   }
 
   Widget buildQuantity(Color color, int size) {
-    if (size == null || size < 1) {
+    if (size < 1) {
       return Container();
     } else {
       return Expanded(

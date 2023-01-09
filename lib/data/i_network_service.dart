@@ -5,6 +5,7 @@ import 'package:dtnd/=models=/response/deep_model.dart';
 import 'package:dtnd/=models=/response/inday_matched_order.dart';
 import 'package:dtnd/=models=/response/index_chart_data.dart';
 import 'package:dtnd/=models=/response/index_detail.dart';
+import 'package:dtnd/=models=/response/liquidity_model.dart';
 import 'package:dtnd/=models=/response/new_order.dart';
 import 'package:dtnd/=models=/response/news_detail.dart';
 import 'package:dtnd/=models=/response/s_cash_balance.dart';
@@ -13,6 +14,8 @@ import 'package:dtnd/=models=/response/stock_data.dart';
 import 'package:dtnd/=models=/response/stock_news.dart';
 import 'package:dtnd/=models=/response/stock_trade.dart';
 import 'package:dtnd/=models=/response/stock_trading_history.dart';
+import 'package:dtnd/=models=/response/top_influence_model.dart';
+import 'package:dtnd/=models=/ui_model/field_tree_element_model.dart';
 import 'package:dtnd/config/service/environment.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
@@ -61,4 +64,10 @@ abstract class INetworkService {
   Future<SCashBalance> getSCashBalance(RequestModel requestModel);
 
   Future<NewOrderResponse?> createNewOrder(RequestModel requestModel);
+
+  Future<List<TopInfluenceModel>> getTopInfluence(String index);
+
+  Future<LiquidityModel> getLiquidity(String index);
+
+  Future<List<FieldTreeModel>> getListIndustryHeatMap(int top, String type);
 }

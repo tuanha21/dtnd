@@ -14,76 +14,76 @@ class StockOrderISheet extends IStockOrderSheet {
   StockOrderISheet(super.stockModel);
 
   @override
-  ISheet? back([dynamic data]) => null;
+  ISheet? back([dynamic cmd]) => null;
 
   @override
-  ISheet? next([dynamic data]) => StockOrderConfirmISheet(stockModel);
+  ISheet? next([dynamic cmd]) => StockOrderConfirmISheet(stockModel);
 
   @override
-  Widget? backWidget([data]) => null;
+  Widget? backWidget([cmd]) => null;
 
   @override
-  Widget? nextWidget([data]) => StockOrderConfirmSheet(
+  Widget? nextWidget([cmd]) => StockOrderConfirmSheet(
         stockModel: stockModel,
-        orderData: data,
+        orderData: cmd!.data,
       );
 
   @override
-  Future<void>? onResultBack([dynamic data]) => null;
+  Future<void>? onResultBack([dynamic cmd]) => null;
 
   @override
-  Future<void>? onResultNext([dynamic data]) => null;
+  Future<void>? onResultNext([dynamic cmd]) => null;
 }
 
 class StockOrderConfirmISheet extends IStockOrderSheet {
   StockOrderConfirmISheet(super.stockModel);
 
   @override
-  ISheet? back([dynamic data]) => StockOrderISheet(stockModel);
+  ISheet? back([dynamic cmd]) => StockOrderISheet(stockModel);
 
   @override
-  ISheet? next([dynamic data]) => StockOrderSuccessISheet(stockModel);
+  ISheet? next([dynamic cmd]) => StockOrderSuccessISheet(stockModel);
 
   @override
-  Widget? backWidget([data]) => StockOrderSheet(
+  Widget? backWidget([cmd]) => StockOrderSheet(
         stockModel: stockModel,
-        orderData: data,
+        orderData: cmd!.data,
       );
 
   @override
-  Widget? nextWidget([data]) => const StockOrderSuccessSheet();
+  Widget? nextWidget([cmd]) => const StockOrderSuccessSheet();
 
   @override
-  Future<void>? onResultBack([data]) => null;
+  Future<void>? onResultBack([cmd]) => null;
 
   @override
-  Future<void>? onResultNext([data]) => null;
+  Future<void>? onResultNext([cmd]) => null;
 }
 
 class StockOrderSuccessISheet extends IStockOrderSheet {
   StockOrderSuccessISheet(super.stockModel);
 
   @override
-  ISheet? back([dynamic data]) => null;
+  ISheet? back([dynamic cmd]) => null;
 
   @override
-  ISheet? next([dynamic data]) => StockOrderISheet(stockModel);
+  ISheet? next([dynamic cmd]) => StockOrderISheet(stockModel);
 
   @override
-  Widget? backWidget([data]) => StockOrderSheet(
+  Widget? backWidget([cmd]) => StockOrderSheet(
         stockModel: stockModel,
-        orderData: data,
+        orderData: cmd!.data,
       );
 
   @override
-  Widget? nextWidget([data]) => StockOrderSheet(
+  Widget? nextWidget([cmd]) => StockOrderSheet(
         stockModel: stockModel,
         orderData: null,
       );
 
   @override
-  Future<void>? onResultBack([data]) => null;
+  Future<void>? onResultBack([cmd]) => null;
 
   @override
-  Future<void>? onResultNext([data]) => null;
+  Future<void>? onResultNext([cmd]) => null;
 }

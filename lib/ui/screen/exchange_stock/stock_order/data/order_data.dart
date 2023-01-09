@@ -1,10 +1,9 @@
 import 'package:dtnd/=models=/exchange.dart';
 import 'package:dtnd/=models=/response/stock_model.dart';
 import 'package:dtnd/=models=/side.dart';
-import 'package:dtnd/=models=/ui_model/sheet_data.dart';
 import 'package:dtnd/utilities/string_util.dart';
 
-class OrderData extends SheetData {
+class OrderData {
   OrderData({
     required this.stockModel,
     required this.orderType,

@@ -1,8 +1,4 @@
-import 'dart:ui';
-
-import 'package:dtnd/=models=/response/index_model.dart';
 import 'package:dtnd/generated/l10n.dart';
-import 'package:dtnd/ui/screen/home/widget/home_market_today.dart';
 import 'package:dtnd/ui/screen/market/market_controller.dart';
 import 'package:dtnd/ui/screen/market/widget/tabs/market_analysis_tab.dart';
 import 'package:dtnd/ui/screen/market/widget/tabs/market_industry_tab.dart';
@@ -10,8 +6,6 @@ import 'package:dtnd/ui/screen/market/widget/tabs/market_overview_tab.dart';
 import 'package:dtnd/ui/widget/my_appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:get/get.dart';
-
 import '../../theme/app_image.dart';
 
 class MarketScreen extends StatefulWidget {

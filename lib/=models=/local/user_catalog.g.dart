@@ -18,7 +18,6 @@ class UserCatalogAdapter extends TypeAdapter<UserCatalog> {
     };
     return UserCatalog(
       fields[0] as String,
-      (fields[1] as List?)?.cast<String>(),
     );
   }
 

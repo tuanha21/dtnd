@@ -855,7 +855,7 @@ class _Circle {
     required this.index,
     required this.color,
     required TickerProvider vsync,
-  }) : assert(color != null) {
+  }) {
     controller = AnimationController(
       duration: kThemeAnimationDuration,
       vsync: vsync,

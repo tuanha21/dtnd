@@ -70,6 +70,11 @@ class AppImages {
   static const String less_or_equal_icon =
       "assets/images/less_or_equal_icon.png";
   static const String additem_icon = "assets/images/additem_icon.png";
+  static const String edit_icon = "assets/images/edit_icon.png";
+  static const String trash_icon = "assets/images/trash_icon.png";
+  static const String element_3 = "assets/images/element_3.png";
+  static const String textalign_justifycenter =
+      "assets/images/textalign_justifycenter.png";
 
   /// BG
   static const String home_asset_card_light_bg =
@@ -83,9 +88,11 @@ class AppImages {
   static const String search_icon = "assets/images/search_icon.png";
   static const String tune_icon = "assets/images/tune_icon.png";
   static const String add_icon = "assets/images/add_icon.png";
+  static const String add_rounded_icon = "assets/images/add_rounded_icon.png";
   static const String virtual_assistant_register =
       "assets/images/virtual_assistant_register.png";
   static const String virtual_assistant_registered =
       "assets/images/virtual_assistant_registered.png";
   static const String illust06 = "assets/images/illust06.png";
+  static const String scene = "assets/images/scene.png";
 }

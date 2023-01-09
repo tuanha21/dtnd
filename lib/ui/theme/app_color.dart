@@ -56,6 +56,11 @@ class AppColors {
     Color(0x051877F2),
   ];
   static const error_input_border = Color(0xFFFB0000);
+  static const graph_1 = Color(0xFFFF9A7B);
+  static const graph_2 = Color(0xFF1C78FF);
+  static const graph_3 = Color(0xFF9C90FA);
+  static const graph_4 = Color(0xFFFF754C);
+  static const graph_5 = Color(0xFF8F95B2);
 
   ///Text
   static const error_text = Color(0xFFFB0000);
