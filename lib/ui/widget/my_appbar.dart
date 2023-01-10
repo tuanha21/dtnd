@@ -8,13 +8,13 @@ import '../theme/app_color.dart';
 class MyAppBar extends StatefulWidget implements PreferredSizeWidget {
   const MyAppBar({
     super.key,
-    required this.title,
+     this.title,
     this.leading,
     this.titleWidget,
     this.actions,
   });
 
-  final String title;
+  final String? title;
   final Widget? leading;
   final Widget? titleWidget;
   final List<Widget>? actions;
@@ -68,19 +68,24 @@ class _MyAppBarState extends State<MyAppBar> {
     return null;
   }
 
+  Widget? get title {
+    if(widget.title == null) return null;
+    return widget.titleWidget ??
+        Text(
+          widget.title!,
+          style: Theme
+              .of(context)
+              .textTheme
+              .labelLarge
+              ?.copyWith(fontWeight: FontWeight.w700),
+        );
+  }
+
   @override
   Widget build(BuildContext context) {
     return AppBar(
       leading: widget.leading ?? backButton,
-      title: widget.titleWidget ??
-          Text(
-            widget.title,
-            style: Theme
-                .of(context)
-                .textTheme
-                .labelLarge
-                ?.copyWith(fontWeight: FontWeight.w700),
-          ),
+      title: title,
       actions: _actions,
     );
   }

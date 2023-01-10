@@ -6,6 +6,7 @@ import 'package:dtnd/data/implementations/local_storage_service.dart';
 import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/screen/home_base/home_base.dart';
 import 'package:dtnd/ui/screen/login/login_screen.dart';
+import 'package:dtnd/ui/screen/sign_up/sign_up_view.dart';
 import 'package:dtnd/ui/theme/app_theme.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -52,6 +53,12 @@ class _MyAppState extends State<MyApp> {
         },
       ),
       GoRoute(
+        path: '/SignUp',
+        builder: (BuildContext context, GoRouterState state) {
+          return const SignUpPage();
+        },
+      ),
+      GoRoute(
         path: '/SignIn',
         builder: (BuildContext context, GoRouterState state) {
           return const LoginScreen();
@@ -69,24 +76,33 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return Obx(() {
-      return MaterialApp.router(
-        debugShowCheckedModeBanner: false,
-        themeMode: appService.themeMode.value,
-        darkTheme: darkThemeData,
-        theme: lightThemeData,
-        locale: appService.locale.value,
-        localizationsDelegates: const [
-          S.delegate,
-          GlobalMaterialLocalizations.delegate,
-          GlobalWidgetsLocalizations.delegate,
-          GlobalCupertinoLocalizations.delegate,
-        ],
-        supportedLocales: S.delegate.supportedLocales,
-        // routeInformationParser: _router.routeInformationParser,
-        // routeInformationProvider: _router.routeInformationProvider,
-        // routerDelegate: _router.routerDelegate,
-        routerConfig: _router,
+      return GestureDetector(
+        onTap: hideKeyboard,
+        child: MaterialApp.router(
+          debugShowCheckedModeBanner: false,
+          themeMode: appService.themeMode.value,
+          darkTheme: darkThemeData,
+          theme: lightThemeData,
+          locale: appService.locale.value,
+          localizationsDelegates: const [
+            S.delegate,
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+          ],
+          supportedLocales: S.delegate.supportedLocales,
+          // routeInformationParser: _router.routeInformationParser,
+          // routeInformationProvider: _router.routeInformationProvider,
+          // routerDelegate: _router.routerDelegate,
+          routerConfig: _router,
+        ),
       );
     });
+  }
+  void hideKeyboard() {
+    FocusScopeNode currentFocus = FocusScope.of(context);
+    if (!currentFocus.hasPrimaryFocus && currentFocus.focusedChild != null) {
+      FocusManager.instance.primaryFocus?.unfocus();
+    }
   }
 }

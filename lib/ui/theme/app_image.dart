@@ -36,6 +36,10 @@ class AppImages {
   static const String share = "assets/svg/Share remake.svg";
   static const String heart = "assets/svg/heart.svg";
   static const String more = "assets/svg/more.svg";
+  static const String google = "assets/svg/Google svg.svg";
+  static const String facebook = "assets/svg/logos_facebook.svg";
+  static const String icon_error = "assets/svg/Icon_error.svg";
+  static const String icon_success = "assets/svg/icon_success.svg";
 
 
 

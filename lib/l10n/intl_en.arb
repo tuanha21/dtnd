@@ -3,6 +3,11 @@
     "hi": "Hi",
     "login": "Login",
     "login_upper": "LOGIN",
+    "login_with_google": "Login with Google",
+    "login_with_facebook": "Login with Facebook",
+    "sign_up" : "Sign up",
+    "hi_you" : "Hi you",
+
 
     "home": "Home",
     "market": "Market",
@@ -21,6 +26,9 @@
     "account": "Account",
     "username": "Username",
     "password": "Password",
+    "full_name" : "Full name",
+    "phone_number" : "Phone number",
+    "email" : "Email",
     "fill_account": "Fill account",
     "fill_password": "Fill password",
     "fill_OTP": "Fill OTP",
@@ -107,6 +115,8 @@
     "login_required": "Login required",
     "login_to_continue": "Login to continue",
     "you_are_not_logged_in": "You are not yet logged in",
+    "you_are_not_account": "You are not account?",
+
     "create_new_order": "Create new order",
     "create_order_successfully": "Create order successfully",
     "order_will_appear_in_ur_order_note": "Order will appear in your order note",

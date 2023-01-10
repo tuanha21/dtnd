@@ -90,6 +90,46 @@ class S {
     );
   }
 
+  /// `Login with Google`
+  String get login_with_google {
+    return Intl.message(
+      'Login with Google',
+      name: 'login_with_google',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Login with Facebook`
+  String get login_with_facebook {
+    return Intl.message(
+      'Login with Facebook',
+      name: 'login_with_facebook',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Sign up`
+  String get sign_up {
+    return Intl.message(
+      'Sign up',
+      name: 'sign_up',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Hi you`
+  String get hi_you {
+    return Intl.message(
+      'Hi you',
+      name: 'hi_you',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Home`
   String get home {
     return Intl.message(
@@ -235,6 +275,36 @@ class S {
     return Intl.message(
       'Password',
       name: 'password',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Full name`
+  String get full_name {
+    return Intl.message(
+      'Full name',
+      name: 'full_name',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Phone number`
+  String get phone_number {
+    return Intl.message(
+      'Phone number',
+      name: 'phone_number',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Email`
+  String get email {
+    return Intl.message(
+      'Email',
+      name: 'email',
       desc: '',
       args: [],
     );
@@ -1067,6 +1137,16 @@ class S {
     return Intl.message(
       'You are not yet logged in',
       name: 'you_are_not_logged_in',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You are not account?`
+  String get you_are_not_account {
+    return Intl.message(
+      'You are not account?',
+      name: 'you_are_not_account',
       desc: '',
       args: [],
     );

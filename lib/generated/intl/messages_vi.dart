@@ -88,6 +88,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Ấn thêm lần nữa để thoát"),
         "edit_catalog_name":
             MessageLookupByLibrary.simpleMessage("Sửa tên danh mục"),
+        "email": MessageLookupByLibrary.simpleMessage("Email"),
         "empty_catalog": MessageLookupByLibrary.simpleMessage("Danh mục rỗng"),
         "event": MessageLookupByLibrary.simpleMessage("Sự kiện"),
         "exchange_total":
@@ -107,9 +108,11 @@ class MessageLookup extends MessageLookupByLibrary {
         "following_catalog_with": m1,
         "froom": MessageLookupByLibrary.simpleMessage("Room NN"),
         "fsell": MessageLookupByLibrary.simpleMessage("NN bán"),
+        "full_name": MessageLookupByLibrary.simpleMessage("Họ và tên"),
         "gain_wvalue": m2,
         "hello": MessageLookupByLibrary.simpleMessage("Chào bạn"),
         "hi": MessageLookupByLibrary.simpleMessage("Xin chào"),
+        "hi_you": MessageLookupByLibrary.simpleMessage("Chào bạn"),
         "high": MessageLookupByLibrary.simpleMessage("Cao"),
         "home": MessageLookupByLibrary.simpleMessage("Trang chủ"),
         "industry": MessageLookupByLibrary.simpleMessage("Ngành"),
@@ -133,6 +136,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "login_to_continue":
             MessageLookupByLibrary.simpleMessage("Hãy đăng nhập để tiếp tục"),
         "login_upper": MessageLookupByLibrary.simpleMessage("ĐĂNG NHẬP"),
+        "login_with_facebook":
+            MessageLookupByLibrary.simpleMessage("Đăng nhập với Facebook"),
+        "login_with_google":
+            MessageLookupByLibrary.simpleMessage("Đăng nhập với Google"),
         "loss_wvalue": m3,
         "low": MessageLookupByLibrary.simpleMessage("Thấp"),
         "market": MessageLookupByLibrary.simpleMessage("Thị trường"),
@@ -171,6 +178,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "password": MessageLookupByLibrary.simpleMessage("Mật khẩu"),
         "period_of_validity":
             MessageLookupByLibrary.simpleMessage("Thời gian hiệu lực"),
+        "phone_number": MessageLookupByLibrary.simpleMessage("Số điện thoại"),
         "pin_code": MessageLookupByLibrary.simpleMessage("Mã pin"),
         "price": MessageLookupByLibrary.simpleMessage("Giá"),
         "price_alert": MessageLookupByLibrary.simpleMessage("Cảnh báo giá"),
@@ -189,6 +197,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "sell_price": MessageLookupByLibrary.simpleMessage("Giá bán ra"),
         "session_expired_in":
             MessageLookupByLibrary.simpleMessage("Hết phiên đăng nhập sau "),
+        "sign_up": MessageLookupByLibrary.simpleMessage("Đăng ký"),
         "something_went_wrong":
             MessageLookupByLibrary.simpleMessage("Đã có lỗi xảy ra"),
         "stock_already_exist": MessageLookupByLibrary.simpleMessage(
@@ -232,6 +241,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "volumn": MessageLookupByLibrary.simpleMessage("Khối lượng"),
         "wrong_password":
             MessageLookupByLibrary.simpleMessage("Mật khẩu không chính xác"),
+        "you_are_not_account":
+            MessageLookupByLibrary.simpleMessage("Bạn chưa có tài khoản?"),
         "you_are_not_logged_in":
             MessageLookupByLibrary.simpleMessage("Bạn chưa đăng nhập")
       };

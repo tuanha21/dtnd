@@ -91,6 +91,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Back again to exit"),
         "edit_catalog_name":
             MessageLookupByLibrary.simpleMessage("Edit catalog name"),
+        "email": MessageLookupByLibrary.simpleMessage("Email"),
         "empty_catalog":
             MessageLookupByLibrary.simpleMessage("Catalog is empty"),
         "event": MessageLookupByLibrary.simpleMessage("Event"),
@@ -111,9 +112,11 @@ class MessageLookup extends MessageLookupByLibrary {
         "following_catalog_with": m1,
         "froom": MessageLookupByLibrary.simpleMessage("Room FR"),
         "fsell": MessageLookupByLibrary.simpleMessage("FR sell"),
+        "full_name": MessageLookupByLibrary.simpleMessage("Full name"),
         "gain_wvalue": m2,
         "hello": MessageLookupByLibrary.simpleMessage("Hello"),
         "hi": MessageLookupByLibrary.simpleMessage("Hi"),
+        "hi_you": MessageLookupByLibrary.simpleMessage("Hi you"),
         "high": MessageLookupByLibrary.simpleMessage("High"),
         "home": MessageLookupByLibrary.simpleMessage("Home"),
         "industry": MessageLookupByLibrary.simpleMessage("Industry"),
@@ -136,6 +139,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "login_to_continue":
             MessageLookupByLibrary.simpleMessage("Login to continue"),
         "login_upper": MessageLookupByLibrary.simpleMessage("LOGIN"),
+        "login_with_facebook":
+            MessageLookupByLibrary.simpleMessage("Login with Facebook"),
+        "login_with_google":
+            MessageLookupByLibrary.simpleMessage("Login with Google"),
         "loss_wvalue": m3,
         "low": MessageLookupByLibrary.simpleMessage("Low"),
         "market": MessageLookupByLibrary.simpleMessage("Market"),
@@ -172,6 +179,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "password": MessageLookupByLibrary.simpleMessage("Password"),
         "period_of_validity":
             MessageLookupByLibrary.simpleMessage("Period of validity"),
+        "phone_number": MessageLookupByLibrary.simpleMessage("Phone number"),
         "pin_code": MessageLookupByLibrary.simpleMessage("Pin code"),
         "price": MessageLookupByLibrary.simpleMessage("Price"),
         "price_alert": MessageLookupByLibrary.simpleMessage("Price alert"),
@@ -191,6 +199,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "sell_price": MessageLookupByLibrary.simpleMessage("Sell price"),
         "session_expired_in":
             MessageLookupByLibrary.simpleMessage("Session expired in "),
+        "sign_up": MessageLookupByLibrary.simpleMessage("Sign up"),
         "something_went_wrong":
             MessageLookupByLibrary.simpleMessage("Something went erong"),
         "stock_already_exist":
@@ -234,6 +243,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "volumn": MessageLookupByLibrary.simpleMessage("Volumn"),
         "wrong_password":
             MessageLookupByLibrary.simpleMessage("Password is incorrect"),
+        "you_are_not_account":
+            MessageLookupByLibrary.simpleMessage("You are not account?"),
         "you_are_not_logged_in":
             MessageLookupByLibrary.simpleMessage("You are not yet logged in")
       };
