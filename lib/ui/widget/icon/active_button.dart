@@ -1,9 +1,7 @@
 import 'package:dtnd/config/service/app_services.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
+import 'package:dtnd/utilities/typedef.dart';
 import 'package:flutter/material.dart';
-
-typedef ColorOnThemeMode = Color Function(ThemeMode themeMode);
-typedef IsActive = bool Function();
 
 class ActiveButton extends StatelessWidget {
   const ActiveButton({

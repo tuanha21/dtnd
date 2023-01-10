@@ -56,11 +56,18 @@
     "cash": "Tiền mặt",
     "sold_returning_money": "Tiền bán chờ về",
     "withdrawable_money": "Tiền có thể rút",
+    "total_debt": "Tổng nợ",
+    "safe_ratio": "Tỷ lệ an toàn",
+    "cash_dividends": "Cổ tức bằng tiền",
 
     "million_short": "Tr",
     "billion_short": "T",
 
     "total_asset": "Tổng tài sản",
+    "base_asset": "Tài sản cơ sở",
+    "derivative_asset": "Tài sản phái sinh",
+    "CopyTrade_asset": "Tài sản CopyTrade",
+    "asset_distribution": "Phân bố tài sản",
     "interested_catalog": "Danh mục quan tâm",
     "market_today": "Thị trường hôm nay",
     "market_overview": "Tổng quan thị trường",

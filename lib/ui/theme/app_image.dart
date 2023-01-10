@@ -73,12 +73,15 @@ class AppImages {
   static const String money_change = "assets/images/money_change.png";
   static const String timer_2 = "assets/images/timer_2.png";
   static const String wallet_3 = "assets/images/wallet_3.png";
+  static const String arrow_swap = "assets/images/arrow_swap.png";
+  static const String shield_tick = "assets/images/shield_tick.png";
 
   /// BG
   static const String home_asset_card_light_bg =
       "assets/images/home_asset_card_light_bg.png";
   static const String home_asset_card_dark_bg =
       "assets/images/home_asset_card_dark_bg.png";
+  static const String wallet_bg = "assets/images/wallet_bg.png";
 
   /// Image
   static const String home_banner = "assets/images/home_banner.png";

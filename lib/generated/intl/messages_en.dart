@@ -41,6 +41,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "Carriage": MessageLookupByLibrary.simpleMessage("Carriage"),
         "Chemistry": MessageLookupByLibrary.simpleMessage("Chemistry"),
         "Cigarette": MessageLookupByLibrary.simpleMessage("Cigarette"),
+        "CopyTrade_asset":
+            MessageLookupByLibrary.simpleMessage("CopyTrade asset"),
         "DTND_assistant":
             MessageLookupByLibrary.simpleMessage("DTND assistant"),
         "DTNDs_virtual_assistant": MessageLookupByLibrary.simpleMessage(
@@ -60,14 +62,19 @@ class MessageLookup extends MessageLookupByLibrary {
         "analysis": MessageLookupByLibrary.simpleMessage("Analysis"),
         "are_you_sure_to_delete_catalog": m0,
         "asset": MessageLookupByLibrary.simpleMessage("Asset"),
+        "asset_distribution":
+            MessageLookupByLibrary.simpleMessage("Asset distribution"),
         "average": MessageLookupByLibrary.simpleMessage("Average"),
         "base": MessageLookupByLibrary.simpleMessage("Base"),
+        "base_asset": MessageLookupByLibrary.simpleMessage("Base asset"),
         "billion_short": MessageLookupByLibrary.simpleMessage("B"),
         "bond": MessageLookupByLibrary.simpleMessage("Bond"),
         "buy": MessageLookupByLibrary.simpleMessage("Buy"),
         "buy_price": MessageLookupByLibrary.simpleMessage("Buy price"),
         "cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
         "cash": MessageLookupByLibrary.simpleMessage("Cash"),
+        "cash_dividends":
+            MessageLookupByLibrary.simpleMessage("Cash dividends"),
         "cash_flow": MessageLookupByLibrary.simpleMessage("Cash flow"),
         "catalog_name": MessageLookupByLibrary.simpleMessage("Catalog name"),
         "catalog_notice":
@@ -91,6 +98,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "deposite_money":
             MessageLookupByLibrary.simpleMessage("Deposite money"),
         "derivative": MessageLookupByLibrary.simpleMessage("Derivative"),
+        "derivative_asset":
+            MessageLookupByLibrary.simpleMessage("Derivative asset"),
         "dividend": MessageLookupByLibrary.simpleMessage("Dividend"),
         "double_back_to_close_app":
             MessageLookupByLibrary.simpleMessage("Back again to exit"),
@@ -199,6 +208,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "ref": MessageLookupByLibrary.simpleMessage("Ref"),
         "rename_catalog_to": m5,
         "revenue": MessageLookupByLibrary.simpleMessage("Revenue"),
+        "safe_ratio": MessageLookupByLibrary.simpleMessage("Safe ratio"),
         "save": MessageLookupByLibrary.simpleMessage("Save"),
         "search": MessageLookupByLibrary.simpleMessage("Search"),
         "search_stock": MessageLookupByLibrary.simpleMessage("Search stock"),
@@ -233,6 +243,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("No response from server"),
         "top_influence": MessageLookupByLibrary.simpleMessage("Top influence"),
         "total_asset": MessageLookupByLibrary.simpleMessage("Total asset"),
+        "total_debt": MessageLookupByLibrary.simpleMessage("Total debt"),
         "total_wvalue": m6,
         "trading": MessageLookupByLibrary.simpleMessage("Trading"),
         "trading_board": MessageLookupByLibrary.simpleMessage("Trading board"),

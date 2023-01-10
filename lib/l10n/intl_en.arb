@@ -56,11 +56,18 @@
     "cash": "Cash",
     "sold_returning_money": "Sold returning money",
     "withdrawable_money": "Withdrawable money",
+    "total_debt": "Total debt",
+    "safe_ratio": "Safe ratio",
+    "cash_dividends": "Cash dividends",
 
     "million_short": "M",
     "billion_short": "B",
 
     "total_asset": "Total asset",
+    "base_asset": "Base asset",
+    "derivative_asset": "Derivative asset",
+    "CopyTrade_asset": "CopyTrade asset",
+    "asset_distribution": "Asset distribution",
     "interested_catalog": "Interested catalog",
     "market_today": "Market today",
     "market_overview": "Market overview",

@@ -580,6 +580,36 @@ class S {
     );
   }
 
+  /// `Total debt`
+  String get total_debt {
+    return Intl.message(
+      'Total debt',
+      name: 'total_debt',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Safe ratio`
+  String get safe_ratio {
+    return Intl.message(
+      'Safe ratio',
+      name: 'safe_ratio',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Cash dividends`
+  String get cash_dividends {
+    return Intl.message(
+      'Cash dividends',
+      name: 'cash_dividends',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `M`
   String get million_short {
     return Intl.message(
@@ -605,6 +635,46 @@ class S {
     return Intl.message(
       'Total asset',
       name: 'total_asset',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Base asset`
+  String get base_asset {
+    return Intl.message(
+      'Base asset',
+      name: 'base_asset',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Derivative asset`
+  String get derivative_asset {
+    return Intl.message(
+      'Derivative asset',
+      name: 'derivative_asset',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `CopyTrade asset`
+  String get CopyTrade_asset {
+    return Intl.message(
+      'CopyTrade asset',
+      name: 'CopyTrade_asset',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Asset distribution`
+  String get asset_distribution {
+    return Intl.message(
+      'Asset distribution',
+      name: 'asset_distribution',
       desc: '',
       args: [],
     );

@@ -6,7 +6,6 @@ import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/screen/stock_detail.dart/stock_detail_screen.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_textstyle.dart';
-import 'package:dtnd/utilities/extension.dart';
 import 'package:dtnd/utilities/num_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

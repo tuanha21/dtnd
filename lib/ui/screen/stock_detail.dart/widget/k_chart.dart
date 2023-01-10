@@ -1,6 +1,7 @@
 import 'package:dtnd/=models=/response/index_model.dart';
 import 'package:dtnd/config/service/app_services.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
+import 'package:dtnd/utilities/logger.dart';
 import 'package:flutter/material.dart';
 import 'package:k_chart/flutter_k_chart.dart';
 
@@ -32,9 +33,11 @@ class _KChartState extends State<KChart> {
     setState(() {
       initializing = true;
     });
+    final List<num> list = [];
     for (int i = 0;
         i < widget.indexModel.stockTradingHistory.value!.t!.length;
         i++) {
+      list.add(widget.indexModel.stockTradingHistory.value!.o![i].toDouble());
       datas.add(KLineEntity.fromCustom(
           open: widget.indexModel.stockTradingHistory.value!.o![i].toDouble(),
           close: widget.indexModel.stockTradingHistory.value!.c![i].toDouble(),
@@ -44,6 +47,10 @@ class _KChartState extends State<KChart> {
           low: widget.indexModel.stockTradingHistory.value!.l![i].toDouble(),
           vol: widget.indexModel.stockTradingHistory.value!.v![i].toDouble()));
     }
+    // print(list.getRange(0, 50));
+    list.getRange(0, 50).forEach(
+          (element) => print("$element,"),
+        );
     setState(() {
       initializing = false;
     });
