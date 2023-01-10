@@ -136,6 +136,8 @@
     "catalog_notice": "Catalog notice",
     "volatility_notice_quote1": "Set up fluctuations alerts for your account and interest catalogs",
     "add_catalog": "Add catalog",
+    "right": "Right",
+    "catalog": "Catalog",
     "catalog_name": "Catalog name",
     "edit_catalog_name": "Edit catalog name",
     "rename_catalog_to": "Rename catalog “{name}” to",

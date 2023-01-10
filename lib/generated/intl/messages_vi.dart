@@ -75,6 +75,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "cash_dividends":
             MessageLookupByLibrary.simpleMessage("Cổ tức bằng tiền"),
         "cash_flow": MessageLookupByLibrary.simpleMessage("Dòng tiền"),
+        "catalog": MessageLookupByLibrary.simpleMessage("Danh mục"),
         "catalog_name": MessageLookupByLibrary.simpleMessage("Tên danh mục"),
         "catalog_notice":
             MessageLookupByLibrary.simpleMessage("Thông báo danh mục"),
@@ -203,6 +204,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "ref": MessageLookupByLibrary.simpleMessage("TC"),
         "rename_catalog_to": m5,
         "revenue": MessageLookupByLibrary.simpleMessage("Doanh thu"),
+        "right": MessageLookupByLibrary.simpleMessage("Quyền"),
         "safe_ratio": MessageLookupByLibrary.simpleMessage("Tỷ lệ an toàn"),
         "save": MessageLookupByLibrary.simpleMessage("Lưu"),
         "search": MessageLookupByLibrary.simpleMessage("Tìm kiếm"),

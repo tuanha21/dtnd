@@ -76,6 +76,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "cash_dividends":
             MessageLookupByLibrary.simpleMessage("Cash dividends"),
         "cash_flow": MessageLookupByLibrary.simpleMessage("Cash flow"),
+        "catalog": MessageLookupByLibrary.simpleMessage("Catalog"),
         "catalog_name": MessageLookupByLibrary.simpleMessage("Catalog name"),
         "catalog_notice":
             MessageLookupByLibrary.simpleMessage("Catalog notice"),
@@ -208,6 +209,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "ref": MessageLookupByLibrary.simpleMessage("Ref"),
         "rename_catalog_to": m5,
         "revenue": MessageLookupByLibrary.simpleMessage("Revenue"),
+        "right": MessageLookupByLibrary.simpleMessage("Right"),
         "safe_ratio": MessageLookupByLibrary.simpleMessage("Safe ratio"),
         "save": MessageLookupByLibrary.simpleMessage("Save"),
         "search": MessageLookupByLibrary.simpleMessage("Search"),

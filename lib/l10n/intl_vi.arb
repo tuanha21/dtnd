@@ -136,6 +136,8 @@
     "catalog_notice": "Thông báo danh mục",
     "volatility_notice_quote1": "Cài đặt thống báo biến động tài khoản và danh mục quan tâm của bạn",
     "add_catalog": "Thêm danh mục",
+    "right": "Quyền",
+    "catalog": "Danh mục",
     "catalog_name": "Tên danh mục",
     "edit_catalog_name": "Sửa tên danh mục",
     "rename_catalog_to": "Sửa tên danh mục “{name}” thành",

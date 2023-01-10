@@ -124,8 +124,8 @@ class _BaseAssetScreenState extends State<BaseAssetScreen>
                 child: RoundedTabbar(
                   controller: _tabController,
                   tabs: [
-                    Text(S.of(context).catalog_name),
-                    Text("Quyền"),
+                    Text(S.of(context).catalog),
+                    Text(S.of(context).right),
                   ],
                 ),
               ),

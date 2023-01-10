@@ -1352,6 +1352,26 @@ class S {
     );
   }
 
+  /// `Right`
+  String get right {
+    return Intl.message(
+      'Right',
+      name: 'right',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Catalog`
+  String get catalog {
+    return Intl.message(
+      'Catalog',
+      name: 'catalog',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Catalog name`
   String get catalog_name {
     return Intl.message(
