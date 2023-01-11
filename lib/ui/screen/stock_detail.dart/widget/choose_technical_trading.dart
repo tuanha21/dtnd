@@ -20,7 +20,7 @@ extension TechnicalTradingX on TechnicalTrading {
       case TechnicalTrading.newbie:
         return AppImages.wallet_search;
       case TechnicalTrading.professional:
-        return AppImages.wallet;
+        return AppImages.wallet_icon;
     }
   }
 

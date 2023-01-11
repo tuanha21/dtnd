@@ -69,10 +69,16 @@ class _MoneyType extends StatelessWidget {
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              data.label,
-              style:
-                  textTheme.labelSmall!.copyWith(color: AppColors.neutral_03),
+            Row(
+              children: [
+                Text(
+                  data.label,
+                  style: textTheme.labelSmall!
+                      .copyWith(color: AppColors.neutral_03),
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 1,
+                ),
+              ],
             ),
             Text(
               data.value,

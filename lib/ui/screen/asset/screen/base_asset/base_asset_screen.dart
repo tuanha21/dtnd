@@ -1,10 +1,19 @@
 import 'dart:ui';
 
+import 'package:dtnd/=models=/response/stock_model.dart';
 import 'package:dtnd/config/service/app_services.dart';
+import 'package:dtnd/data/i_data_center_service.dart';
+import 'package:dtnd/data/implementations/data_center_service.dart';
 import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/screen/asset/component/asset_per_type_widget.dart';
+import 'package:dtnd/ui/screen/asset/component/investment_catalog_widget.dart';
 import 'package:dtnd/ui/screen/asset/component/total_asset_widget.dart';
+import 'package:dtnd/ui/screen/asset/logic/investment_catalog.dart';
 import 'package:dtnd/ui/screen/asset/logic/money_type.dart';
+import 'package:dtnd/ui/screen/asset/screen/base_note/base_note_screen.dart';
+import 'package:dtnd/ui/screen/asset/sheet/extensions_sheet.dart';
+import 'package:dtnd/ui/screen/asset/sheet/sheet_config.dart';
+import 'package:dtnd/ui/screen/home/widget/home_market_overview.dart';
 import 'package:dtnd/ui/screen/virtual_assistant/va_volatolity_warning/component/asset_chart.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
@@ -22,10 +31,23 @@ class BaseAssetScreen extends StatefulWidget {
 
 class _BaseAssetScreenState extends State<BaseAssetScreen>
     with SingleTickerProviderStateMixin {
+  final IDataCenterService dataCenterService = DataCenterService();
   late final TabController _tabController;
 
   late final ScrollController scrollController;
   late final PanelController panelController;
+
+  final defaultCatalog = <String>[
+    "ACB",
+    "FPT",
+    "VCB",
+    "GAS",
+    "TPB",
+  ];
+
+  final List<InvestmentCatalog> list = [];
+
+  bool gettingCatalog = true;
 
   @override
   void initState() {
@@ -33,6 +55,21 @@ class _BaseAssetScreenState extends State<BaseAssetScreen>
     scrollController = ScrollController();
     panelController = PanelController();
     super.initState();
+    getData();
+  }
+
+  void getData() async {
+    setState(() {
+      gettingCatalog = true;
+    });
+    final List<StockModel> _list =
+        await dataCenterService.getStockModelsFromStockCodes(defaultCatalog);
+    for (var element in _list) {
+      list.add(InvestmentCatalog(stockModel: element));
+    }
+    setState(() {
+      gettingCatalog = false;
+    });
   }
 
   @override
@@ -89,6 +126,25 @@ class _BaseAssetScreenState extends State<BaseAssetScreen>
     return Scaffold(
       appBar: SimpleAppbar(
         title: S.of(context).base_asset,
+        actions: [
+          IconButton(
+              onPressed: () {
+                const ExtensionsISheet()
+                    .show(context, const ExtensionsSheet())
+                    .then((result) {
+                  if (result is ToBaseNoteCmd) {
+                    Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => const BaseNoteScreen(),
+                    ));
+                  }
+                });
+              },
+              icon: Image.asset(
+                AppImages.element_equal,
+                width: 24,
+                height: 24,
+              ))
+        ],
       ),
       body: SlidingUpPanel(
         minHeight: 60,
@@ -154,8 +210,18 @@ class _BaseAssetScreenState extends State<BaseAssetScreen>
                 //   ],
                 // ),
 
-                const Center(
-                  child: Text("Chi tiết kl"),
+                ListView(
+                  padding: const EdgeInsets.all(16),
+                  controller: scrollController,
+                  children: [
+                    for (var e in list)
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 16),
+                        child: InvestmentCatalogWidget(
+                          data: e,
+                        ),
+                      )
+                  ],
                 ),
                 const Center(
                   child: Text("Chi tiết kl"),

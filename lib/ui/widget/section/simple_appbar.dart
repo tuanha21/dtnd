@@ -16,6 +16,10 @@ class SimpleAppbar extends StatelessWidget implements PreferredSizeWidget {
         onTap: () {},
       ),
       title: Text(title),
+      titleTextStyle: Theme.of(context)
+          .textTheme
+          .labelLarge!
+          .copyWith(fontWeight: FontWeight.w700),
       actions: actions,
     );
   }

@@ -610,6 +610,246 @@ class S {
     );
   }
 
+  /// `Capital value`
+  String get capital_value {
+    return Intl.message(
+      'Capital value',
+      name: 'capital_value',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `MK value`
+  String get mk_value {
+    return Intl.message(
+      'MK value',
+      name: 'mk_value',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Available balanc`
+  String get available_balanc {
+    return Intl.message(
+      'Available balanc',
+      name: 'available_balanc',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Total vol`
+  String get total_vol {
+    return Intl.message(
+      'Total vol',
+      name: 'total_vol',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Normal vol`
+  String get normal_vol {
+    return Intl.message(
+      'Normal vol',
+      name: 'normal_vol',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `FS vol`
+  String get fs_vol {
+    return Intl.message(
+      'FS vol',
+      name: 'fs_vol',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Available vol`
+  String get available_vol {
+    return Intl.message(
+      'Available vol',
+      name: 'available_vol',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Other vol`
+  String get other_vol {
+    return Intl.message(
+      'Other vol',
+      name: 'other_vol',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Sold returning vol`
+  String get sold_returning_vol {
+    return Intl.message(
+      'Sold returning vol',
+      name: 'sold_returning_vol',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Extension`
+  String get extension {
+    return Intl.message(
+      'Extension',
+      name: 'extension',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `All`
+  String get all {
+    return Intl.message(
+      'All',
+      name: 'all',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Base note`
+  String get base_note {
+    return Intl.message(
+      'Base note',
+      name: 'base_note',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Debt following`
+  String get debt_following {
+    return Intl.message(
+      'Debt following',
+      name: 'debt_following',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Profit/Loss`
+  String get profit_and_loss {
+    return Intl.message(
+      'Profit/Loss',
+      name: 'profit_and_loss',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Inday ordernote`
+  String get inday_ordnote {
+    return Intl.message(
+      'Inday ordernote',
+      name: 'inday_ordnote',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Condition ordernote`
+  String get condition_ordnote {
+    return Intl.message(
+      'Condition ordernote',
+      name: 'condition_ordnote',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Order history`
+  String get order_history {
+    return Intl.message(
+      'Order history',
+      name: 'order_history',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Margin`
+  String get margin {
+    return Intl.message(
+      'Margin',
+      name: 'margin',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Order price`
+  String get order_price {
+    return Intl.message(
+      'Order price',
+      name: 'order_price',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Matched price`
+  String get match_price {
+    return Intl.message(
+      'Matched price',
+      name: 'match_price',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Match vol`
+  String get match_vol {
+    return Intl.message(
+      'Match vol',
+      name: 'match_vol',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Waiting match`
+  String get waiting_match {
+    return Intl.message(
+      'Waiting match',
+      name: 'waiting_match',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Matched`
+  String get matched {
+    return Intl.message(
+      'Matched',
+      name: 'matched',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Matching`
+  String get matching {
+    return Intl.message(
+      'Matching',
+      name: 'matching',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `M`
   String get million_short {
     return Intl.message(

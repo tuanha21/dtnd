@@ -40,7 +40,7 @@ class AppImages {
   static const String prefix_up_icon = "assets/images/prefix_up_icon.png";
   static const String prefix_ref_icon = "assets/images/prefix_ref_icon.png";
   static const String prefix_down_icon = "assets/images/prefix_down_icon.png";
-  static const String wallet = "assets/svg/wallet.svg";
+  static const String wallet_icon = "assets/svg/wallet.svg";
   static const String wallet_search = "assets/svg/wallet_search.svg";
 
   static const String notification_icon = "assets/images/notification_icon.png";
@@ -75,6 +75,11 @@ class AppImages {
   static const String wallet_3 = "assets/images/wallet_3.png";
   static const String arrow_swap = "assets/images/arrow_swap.png";
   static const String shield_tick = "assets/images/shield_tick.png";
+  static const String element_equal = "assets/images/element_equal.png";
+  static const String document_filter = "assets/images/document_filter.png";
+  static const String wallet = "assets/images/wallet.png";
+  static const String card_tick = "assets/images/card_tick.png";
+  static const String document = "assets/images/document.png";
 
   /// BG
   static const String home_asset_card_light_bg =
