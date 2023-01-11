@@ -48,29 +48,49 @@ class _IndayOrderTabState extends State<IndayOrderTab> {
   ];
   @override
   Widget build(BuildContext context) {
-    return ListView(
+    return Column(
       children: [
         Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Container(
-            padding: const EdgeInsets.all(16),
-            decoration: const BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.all(Radius.circular(12))),
-            child: Column(
-              children: [
-                for (int i = 0; i < list.length; i++)
-                  Column(
-                    children: [
-                      i != 0 ? const Divider() : Container(),
-                      _IndayOrder(
-                        data: list.elementAt(i),
-                      ),
-                    ],
-                  )
-              ],
-            ),
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                S.of(context).asset,
+                style: Theme.of(context)
+                    .textTheme
+                    .titleMedium!
+                    .copyWith(fontWeight: FontWeight.w700),
+              ),
+              Container(),
+            ],
           ),
+        ),
+        ListView(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Container(
+                padding: const EdgeInsets.all(16),
+                decoration: const BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.all(Radius.circular(12))),
+                child: Column(
+                  children: [
+                    for (int i = 0; i < list.length; i++)
+                      Column(
+                        children: [
+                          i != 0 ? const Divider() : Container(),
+                          _IndayOrder(
+                            data: list.elementAt(i),
+                          ),
+                        ],
+                      )
+                  ],
+                ),
+              ),
+            ),
+          ],
         ),
       ],
     );

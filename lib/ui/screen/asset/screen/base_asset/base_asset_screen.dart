@@ -11,6 +11,7 @@ import 'package:dtnd/ui/screen/asset/component/total_asset_widget.dart';
 import 'package:dtnd/ui/screen/asset/logic/investment_catalog.dart';
 import 'package:dtnd/ui/screen/asset/logic/money_type.dart';
 import 'package:dtnd/ui/screen/asset/screen/base_note/base_note_screen.dart';
+import 'package:dtnd/ui/screen/asset/screen/profit_and_loss/profit_loss_screen.dart';
 import 'package:dtnd/ui/screen/asset/sheet/extensions_sheet.dart';
 import 'package:dtnd/ui/screen/asset/sheet/sheet_config.dart';
 import 'package:dtnd/ui/screen/home/widget/home_market_overview.dart';
@@ -135,6 +136,10 @@ class _BaseAssetScreenState extends State<BaseAssetScreen>
                   if (result is ToBaseNoteCmd) {
                     Navigator.of(context).push(MaterialPageRoute(
                       builder: (context) => const BaseNoteScreen(),
+                    ));
+                  } else if (result is ToProfitAndLossCmd) {
+                    Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => const ProfitLossScreen(),
                     ));
                   }
                 });

@@ -6,20 +6,15 @@ import 'package:dtnd/data/i_data_center_service.dart';
 import 'package:dtnd/data/implementations/data_center_service.dart';
 import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/screen/asset/component/asset_per_type_widget.dart';
-import 'package:dtnd/ui/screen/asset/component/investment_catalog_widget.dart';
 import 'package:dtnd/ui/screen/asset/component/total_asset_widget.dart';
 import 'package:dtnd/ui/screen/asset/logic/investment_catalog.dart';
 import 'package:dtnd/ui/screen/asset/logic/money_type.dart';
 import 'package:dtnd/ui/screen/asset/screen/base_note/tab/inday_order_tab.dart';
-import 'package:dtnd/ui/screen/asset/sheet/extensions_sheet.dart';
-import 'package:dtnd/ui/screen/asset/sheet/sheet_config.dart';
 import 'package:dtnd/ui/screen/virtual_assistant/va_volatolity_warning/component/asset_chart.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:dtnd/ui/widget/section/simple_appbar.dart';
-import 'package:dtnd/ui/widget/tabbar/rounded_tabbar.dart';
 import 'package:flutter/material.dart';
-import 'package:sliding_up_panel2/sliding_up_panel2.dart';
 
 class BaseNoteScreen extends StatefulWidget {
   const BaseNoteScreen({super.key});
