@@ -1,5 +1,7 @@
 import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/screen/asset/screen/base_asset/base_asset_screen.dart';
+import 'package:dtnd/ui/screen/asset/screen/copytrade_asset/copytrade_asset_screen.dart';
+import 'package:dtnd/ui/screen/asset/screen/derivative_asset/derivative_asset_screen.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:flutter/material.dart';
 
@@ -28,11 +30,21 @@ class AccountTypeAssetWidget extends StatelessWidget {
           _StockType(
             label: S.of(context).derivative,
             value: "800.000.000đ",
+            onTap: () {
+              Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => const DerivativeAssetScreen(),
+              ));
+            },
           ),
           const SizedBox(width: 10),
-          const _StockType(
+          _StockType(
             label: "CopyTrade",
             value: "800.000.000đ",
+            onTap: () {
+              Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => const CopytradeAssetScreen(),
+              ));
+            },
           ),
         ],
       ),

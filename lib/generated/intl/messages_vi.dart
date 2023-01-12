@@ -42,8 +42,6 @@ class MessageLookup extends MessageLookupByLibrary {
         "Carriage": MessageLookupByLibrary.simpleMessage("Vận tải"),
         "Chemistry": MessageLookupByLibrary.simpleMessage("Hóa chất"),
         "Cigarette": MessageLookupByLibrary.simpleMessage("Thuốc lá"),
-        "CopyTrade_asset":
-            MessageLookupByLibrary.simpleMessage("Tài sản CopyTrade"),
         "DTND_assistant": MessageLookupByLibrary.simpleMessage("Trợ lý DTND"),
         "DTNDs_virtual_assistant":
             MessageLookupByLibrary.simpleMessage(" của trợ lý ảo DTND"),
@@ -68,6 +66,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "available_balanc": MessageLookupByLibrary.simpleMessage("SD khả dụng"),
         "available_vol": MessageLookupByLibrary.simpleMessage("KL khả dụng"),
         "average": MessageLookupByLibrary.simpleMessage("Trung bình"),
+        "base": MessageLookupByLibrary.simpleMessage("Cơ sở"),
         "base_asset": MessageLookupByLibrary.simpleMessage("Tài sản cơ sở"),
         "base_note": MessageLookupByLibrary.simpleMessage("Sổ lệnh cơ sở"),
         "billion_short": MessageLookupByLibrary.simpleMessage("T"),
@@ -91,6 +90,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "condition_ordnote":
             MessageLookupByLibrary.simpleMessage("SL điều kiện"),
         "confirm": MessageLookupByLibrary.simpleMessage("Xác nhận"),
+        "copyTrade_asset":
+            MessageLookupByLibrary.simpleMessage("Tài sản CopyTrade"),
         "create": MessageLookupByLibrary.simpleMessage("Tạo"),
         "create_account": MessageLookupByLibrary.simpleMessage("Tạo tài khoản"),
         "create_catalog": MessageLookupByLibrary.simpleMessage("Tạo danh mục"),
@@ -102,6 +103,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Theo dõi dư nợ"),
         "delete_catalog": MessageLookupByLibrary.simpleMessage("Xoá danh mục"),
         "deposite_money": MessageLookupByLibrary.simpleMessage("Nộp tiền"),
+        "derivative": MessageLookupByLibrary.simpleMessage("Phái sinh"),
         "derivative_asset":
             MessageLookupByLibrary.simpleMessage("Tài sản phái sinh"),
         "dividend": MessageLookupByLibrary.simpleMessage("Cổ tức"),
@@ -270,6 +272,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "total_wvalue": m6,
         "trading": MessageLookupByLibrary.simpleMessage("Giao dịch"),
         "trading_board": MessageLookupByLibrary.simpleMessage("Bảng giá"),
+        "trading_volatility":
+            MessageLookupByLibrary.simpleMessage("Biến động GD"),
         "unknown_error":
             MessageLookupByLibrary.simpleMessage("Lỗi không xác định"),
         "username": MessageLookupByLibrary.simpleMessage("Tên đăng nhập"),

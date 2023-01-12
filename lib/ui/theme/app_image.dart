@@ -80,6 +80,7 @@ class AppImages {
   static const String wallet = "assets/images/wallet.png";
   static const String card_tick = "assets/images/card_tick.png";
   static const String document = "assets/images/document.png";
+  static const String setting_2 = "assets/images/setting_2.png";
 
   /// BG
   static const String home_asset_card_light_bg =

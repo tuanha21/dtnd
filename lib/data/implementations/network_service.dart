@@ -2,6 +2,7 @@
 
 import 'dart:convert';
 
+import 'package:dtnd/=models=/response/account_info_model.dart';
 import 'package:dtnd/=models=/response/deep_model.dart';
 import 'package:dtnd/=models=/response/inday_matched_order.dart';
 import 'package:dtnd/=models=/response/index_detail.dart';
@@ -308,6 +309,14 @@ class NetworkService implements INetworkService {
         await client.post(url_core, body: requestModel.toString());
     logger.v(response.body);
     return NewOrderResponse.fromJson(decode(response.bodyBytes));
+  }
+
+  @override
+  Future<UserInfo?> getUserInfo(RequestModel requestModel) async {
+    final http.Response response =
+        await client.post(url_core, body: requestModel.toString());
+    logger.v(response.body);
+    return UserInfo.constant();
   }
 
   @override

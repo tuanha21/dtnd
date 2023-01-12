@@ -105,6 +105,7 @@ flutter:
     - assets/
     - assets/svg/
     - assets/images/
+    - assets/account_icon/
     - .env
     - production_domain_config.env
     - test_domain_config.env

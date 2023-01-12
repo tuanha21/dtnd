@@ -14,3 +14,5 @@ typedef GetTotalVol = num Function(Side);
 
 typedef ColorOnThemeMode = Color Function(ThemeMode themeMode);
 typedef IsActive = bool Function();
+
+typedef ButtonLabel = String Function(BuildContext context);

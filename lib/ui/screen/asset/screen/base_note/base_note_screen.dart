@@ -10,6 +10,7 @@ import 'package:dtnd/ui/screen/asset/component/total_asset_widget.dart';
 import 'package:dtnd/ui/screen/asset/logic/investment_catalog.dart';
 import 'package:dtnd/ui/screen/asset/logic/money_type.dart';
 import 'package:dtnd/ui/screen/asset/screen/base_note/tab/inday_order_tab.dart';
+import 'package:dtnd/ui/screen/asset/screen/base_note/tab/order_history_tab.dart';
 import 'package:dtnd/ui/screen/virtual_assistant/va_volatolity_warning/component/asset_chart.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
@@ -145,7 +146,7 @@ class _BaseNoteScreenState extends State<BaseNoteScreen>
               children: const [
                 IndayOrderTab(),
                 Center(child: Text("asd")),
-                Center(child: Text("asd")),
+                OrderHistoryTab(),
               ],
             ),
           )

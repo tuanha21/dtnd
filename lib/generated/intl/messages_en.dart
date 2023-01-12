@@ -41,8 +41,6 @@ class MessageLookup extends MessageLookupByLibrary {
         "Carriage": MessageLookupByLibrary.simpleMessage("Carriage"),
         "Chemistry": MessageLookupByLibrary.simpleMessage("Chemistry"),
         "Cigarette": MessageLookupByLibrary.simpleMessage("Cigarette"),
-        "CopyTrade_asset":
-            MessageLookupByLibrary.simpleMessage("CopyTrade asset"),
         "DTND_assistant":
             MessageLookupByLibrary.simpleMessage("DTND assistant"),
         "DTNDs_virtual_assistant": MessageLookupByLibrary.simpleMessage(
@@ -93,6 +91,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "condition_ordnote":
             MessageLookupByLibrary.simpleMessage("Condition ordernote"),
         "confirm": MessageLookupByLibrary.simpleMessage("Confirm"),
+        "copyTrade_asset":
+            MessageLookupByLibrary.simpleMessage("CopyTrade asset"),
         "create": MessageLookupByLibrary.simpleMessage("Create"),
         "create_account":
             MessageLookupByLibrary.simpleMessage("Create account"),
@@ -277,6 +277,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "total_wvalue": m6,
         "trading": MessageLookupByLibrary.simpleMessage("Trading"),
         "trading_board": MessageLookupByLibrary.simpleMessage("Trading board"),
+        "trading_volatility":
+            MessageLookupByLibrary.simpleMessage("TD volatility"),
         "unknown_error": MessageLookupByLibrary.simpleMessage("Unknown error"),
         "username": MessageLookupByLibrary.simpleMessage("Username"),
         "virtual_assistant":

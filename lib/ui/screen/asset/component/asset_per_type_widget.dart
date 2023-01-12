@@ -31,6 +31,7 @@ class AssetPerTypeWidget extends StatelessWidget {
                             child: _MoneyType(
                           data: values.elementAt(i),
                         )),
+                        const SizedBox(width: 3),
                         Expanded(
                             child: _MoneyType(
                           data: values.elementAt(i + 1),
@@ -66,26 +67,24 @@ class _MoneyType extends StatelessWidget {
           height: 36,
         ),
         const SizedBox(width: 8),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                Text(
-                  data.label,
-                  style: textTheme.labelSmall!
-                      .copyWith(color: AppColors.neutral_03),
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 1,
-                ),
-              ],
-            ),
-            Text(
-              data.value,
-              style:
-                  textTheme.labelMedium!.copyWith(fontWeight: FontWeight.w600),
-            )
-          ],
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                data.label,
+                style:
+                    textTheme.labelSmall!.copyWith(color: AppColors.neutral_03),
+                overflow: TextOverflow.ellipsis,
+                maxLines: 1,
+              ),
+              Text(
+                data.value,
+                style: textTheme.labelMedium!
+                    .copyWith(fontWeight: FontWeight.w600),
+              )
+            ],
+          ),
         )
       ],
     );

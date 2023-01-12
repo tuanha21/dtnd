@@ -5,7 +5,6 @@ import 'package:dtnd/config/service/app_services.dart';
 import 'package:dtnd/data/i_data_center_service.dart';
 import 'package:dtnd/data/implementations/data_center_service.dart';
 import 'package:dtnd/generated/l10n.dart';
-import 'package:dtnd/ui/screen/asset/component/account_right_widget.dart';
 import 'package:dtnd/ui/screen/asset/component/asset_per_type_widget.dart';
 import 'package:dtnd/ui/screen/asset/component/investment_catalog_widget.dart';
 import 'package:dtnd/ui/screen/asset/component/total_asset_widget.dart';
@@ -15,7 +14,6 @@ import 'package:dtnd/ui/screen/asset/screen/base_note/base_note_screen.dart';
 import 'package:dtnd/ui/screen/asset/screen/profit_and_loss/profit_loss_screen.dart';
 import 'package:dtnd/ui/screen/asset/sheet/extensions_sheet.dart';
 import 'package:dtnd/ui/screen/asset/sheet/sheet_config.dart';
-import 'package:dtnd/ui/screen/home/widget/home_market_overview.dart';
 import 'package:dtnd/ui/screen/virtual_assistant/va_volatolity_warning/component/asset_chart.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
@@ -24,14 +22,14 @@ import 'package:dtnd/ui/widget/tabbar/rounded_tabbar.dart';
 import 'package:flutter/material.dart';
 import 'package:sliding_up_panel2/sliding_up_panel2.dart';
 
-class BaseAssetScreen extends StatefulWidget {
-  const BaseAssetScreen({super.key});
+class CopytradeAssetScreen extends StatefulWidget {
+  const CopytradeAssetScreen({super.key});
 
   @override
-  State<BaseAssetScreen> createState() => _BaseAssetScreenState();
+  State<CopytradeAssetScreen> createState() => _CopytradeAssetScreenState();
 }
 
-class _BaseAssetScreenState extends State<BaseAssetScreen>
+class _CopytradeAssetScreenState extends State<CopytradeAssetScreen>
     with SingleTickerProviderStateMixin {
   final IDataCenterService dataCenterService = DataCenterService();
   late final TabController _tabController;
@@ -88,16 +86,12 @@ class _BaseAssetScreenState extends State<BaseAssetScreen>
         ),
         child: ListView(
           children: [
-            const SizedBox(
-              height: 215,
-              child: AssetChart(
-                lineColor: AppColors.graph_7,
-              ),
-            ),
             const Padding(
               padding: EdgeInsets.all(16),
               child: TotalAssetWidget(
                 type: TotalAssetWidgetType.withBackGround,
+                asset: "200.000.000đ",
+                percent: 5,
               ),
             ),
             AssetPerTypeWidget(
@@ -127,33 +121,19 @@ class _BaseAssetScreenState extends State<BaseAssetScreen>
     );
     return Scaffold(
       appBar: SimpleAppbar(
-        title: S.of(context).base_asset,
+        title: S.of(context).copyTrade_asset,
         actions: [
           IconButton(
-              onPressed: () {
-                const ExtensionsISheet()
-                    .show(context, const ExtensionsSheet())
-                    .then((result) {
-                  if (result is ToBaseNoteCmd) {
-                    Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => const BaseNoteScreen(),
-                    ));
-                  } else if (result is ToProfitAndLossCmd) {
-                    Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => const ProfitLossScreen(),
-                    ));
-                  }
-                });
-              },
+              onPressed: () {},
               icon: Image.asset(
-                AppImages.element_equal,
+                AppImages.setting_2,
                 width: 24,
                 height: 24,
               ))
         ],
       ),
       body: SlidingUpPanel(
-        minHeight: 180,
+        minHeight: 100,
         parallaxEnabled: false,
         maxHeight: MediaQuery.of(context).size.height - kToolbarHeight - 80,
         color: themeMode.isLight ? Colors.white : Colors.black,
@@ -187,7 +167,7 @@ class _BaseAssetScreenState extends State<BaseAssetScreen>
                   controller: _tabController,
                   tabs: [
                     Text(S.of(context).catalog),
-                    Text(S.of(context).right),
+                    Text(S.of(context).trading_volatility),
                   ],
                 ),
               ),
@@ -229,18 +209,8 @@ class _BaseAssetScreenState extends State<BaseAssetScreen>
                       )
                   ],
                 ),
-                ListView(
-                  padding: const EdgeInsets.all(16),
-                  controller: scrollController,
-                  children: [
-                    for (int i = 0; i < 3; i++)
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 6),
-                        child: AccountRightWidget(
-                          index: i,
-                        ),
-                      )
-                  ],
+                const Center(
+                  child: Text("Chi tiết kl"),
                 ),
               ],
             ),

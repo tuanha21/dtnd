@@ -901,10 +901,10 @@ class S {
   }
 
   /// `CopyTrade asset`
-  String get CopyTrade_asset {
+  String get copyTrade_asset {
     return Intl.message(
       'CopyTrade asset',
-      name: 'CopyTrade_asset',
+      name: 'copyTrade_asset',
       desc: '',
       args: [],
     );
@@ -1707,6 +1707,16 @@ class S {
     return Intl.message(
       'Derivative',
       name: 'derivative',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `TD volatility`
+  String get trading_volatility {
+    return Intl.message(
+      'TD volatility',
+      name: 'trading_volatility',
       desc: '',
       args: [],
     );

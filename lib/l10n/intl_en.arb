@@ -91,7 +91,7 @@
     "total_asset": "Total asset",
     "base_asset": "Base asset",
     "derivative_asset": "Derivative asset",
-    "CopyTrade_asset": "CopyTrade asset",
+    "copyTrade_asset": "CopyTrade asset",
     "asset_distribution": "Asset distribution",
     "interested_catalog": "Interested catalog",
     "market_today": "Market today",
@@ -173,6 +173,7 @@
     "withdraw_money": "Withdraw money",
     "base": "Base",
     "derivative": "Derivative",
+    "trading_volatility": "TD volatility",
 
     "login_exception_required_OTP": "Login with OTP code sent to your phone",
     "invalid_account": "This account has not been registered or Internet trading feature is no longer available",

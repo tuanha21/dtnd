@@ -5,7 +5,6 @@ import 'package:dtnd/config/service/app_services.dart';
 import 'package:dtnd/data/i_data_center_service.dart';
 import 'package:dtnd/data/implementations/data_center_service.dart';
 import 'package:dtnd/generated/l10n.dart';
-import 'package:dtnd/ui/screen/asset/component/account_right_widget.dart';
 import 'package:dtnd/ui/screen/asset/component/asset_per_type_widget.dart';
 import 'package:dtnd/ui/screen/asset/component/investment_catalog_widget.dart';
 import 'package:dtnd/ui/screen/asset/component/total_asset_widget.dart';
@@ -15,7 +14,6 @@ import 'package:dtnd/ui/screen/asset/screen/base_note/base_note_screen.dart';
 import 'package:dtnd/ui/screen/asset/screen/profit_and_loss/profit_loss_screen.dart';
 import 'package:dtnd/ui/screen/asset/sheet/extensions_sheet.dart';
 import 'package:dtnd/ui/screen/asset/sheet/sheet_config.dart';
-import 'package:dtnd/ui/screen/home/widget/home_market_overview.dart';
 import 'package:dtnd/ui/screen/virtual_assistant/va_volatolity_warning/component/asset_chart.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
@@ -24,14 +22,14 @@ import 'package:dtnd/ui/widget/tabbar/rounded_tabbar.dart';
 import 'package:flutter/material.dart';
 import 'package:sliding_up_panel2/sliding_up_panel2.dart';
 
-class BaseAssetScreen extends StatefulWidget {
-  const BaseAssetScreen({super.key});
+class DerivativeAssetScreen extends StatefulWidget {
+  const DerivativeAssetScreen({super.key});
 
   @override
-  State<BaseAssetScreen> createState() => _BaseAssetScreenState();
+  State<DerivativeAssetScreen> createState() => _DerivativeAssetScreenState();
 }
 
-class _BaseAssetScreenState extends State<BaseAssetScreen>
+class _DerivativeAssetScreenState extends State<DerivativeAssetScreen>
     with SingleTickerProviderStateMixin {
   final IDataCenterService dataCenterService = DataCenterService();
   late final TabController _tabController;
@@ -98,6 +96,8 @@ class _BaseAssetScreenState extends State<BaseAssetScreen>
               padding: EdgeInsets.all(16),
               child: TotalAssetWidget(
                 type: TotalAssetWidgetType.withBackGround,
+                asset: "80.000.000đ",
+                percent: 15,
               ),
             ),
             AssetPerTypeWidget(
@@ -127,24 +127,10 @@ class _BaseAssetScreenState extends State<BaseAssetScreen>
     );
     return Scaffold(
       appBar: SimpleAppbar(
-        title: S.of(context).base_asset,
+        title: S.of(context).derivative,
         actions: [
           IconButton(
-              onPressed: () {
-                const ExtensionsISheet()
-                    .show(context, const ExtensionsSheet())
-                    .then((result) {
-                  if (result is ToBaseNoteCmd) {
-                    Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => const BaseNoteScreen(),
-                    ));
-                  } else if (result is ToProfitAndLossCmd) {
-                    Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => const ProfitLossScreen(),
-                    ));
-                  }
-                });
-              },
+              onPressed: () {},
               icon: Image.asset(
                 AppImages.element_equal,
                 width: 24,
@@ -153,7 +139,7 @@ class _BaseAssetScreenState extends State<BaseAssetScreen>
         ],
       ),
       body: SlidingUpPanel(
-        minHeight: 180,
+        minHeight: 60,
         parallaxEnabled: false,
         maxHeight: MediaQuery.of(context).size.height - kToolbarHeight - 80,
         color: themeMode.isLight ? Colors.white : Colors.black,
@@ -229,18 +215,8 @@ class _BaseAssetScreenState extends State<BaseAssetScreen>
                       )
                   ],
                 ),
-                ListView(
-                  padding: const EdgeInsets.all(16),
-                  controller: scrollController,
-                  children: [
-                    for (int i = 0; i < 3; i++)
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 6),
-                        child: AccountRightWidget(
-                          index: i,
-                        ),
-                      )
-                  ],
+                const Center(
+                  child: Text("Chi tiết kl"),
                 ),
               ],
             ),

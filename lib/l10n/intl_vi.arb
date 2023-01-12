@@ -91,7 +91,7 @@
     "total_asset": "Tổng tài sản",
     "base_asset": "Tài sản cơ sở",
     "derivative_asset": "Tài sản phái sinh",
-    "CopyTrade_asset": "Tài sản CopyTrade",
+    "copyTrade_asset": "Tài sản CopyTrade",
     "asset_distribution": "Phân bố tài sản",
     "interested_catalog": "Danh mục quan tâm",
     "market_today": "Thị trường hôm nay",
@@ -171,6 +171,9 @@
     "save": "Lưu",
     "deposite_money": "Nộp tiền",
     "withdraw_money": "Rút tiền",
+    "base": "Cơ sở",
+    "derivative": "Phái sinh",
+    "trading_volatility": "Biến động GD",
 
     "login_exception_required_OTP": "Hãy đăng nhập bằng mã OTP được gửi về máy của bạn",
     "invalid_account": "Tài khoản chưa đăng ký hoặc đã hết hiệu lực giao dịch Internet",

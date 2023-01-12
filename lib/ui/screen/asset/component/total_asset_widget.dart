@@ -18,18 +18,22 @@ class TotalAssetWidget extends StatelessWidget {
   const TotalAssetWidget({
     Key? key,
     this.type = TotalAssetWidgetType.white,
+    this.asset = "200.000.000đ",
+    this.percent = 85,
   }) : super(key: key);
   final TotalAssetWidgetType type;
+  final String asset;
+  final double percent;
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
     Widget processChart = Container();
     if (type.hasBG) {
-      processChart = const Center(
+      processChart = Center(
         child: SizedBox.square(
           dimension: 40,
           child: CircleProcessChart(
-            percent: 85,
+            percent: percent,
           ),
         ),
       );
@@ -57,7 +61,7 @@ class TotalAssetWidget extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
-                    "200.000.000đ",
+                    asset,
                     style: textTheme.bodyLarge!.copyWith(
                         fontWeight: FontWeight.w700,
                         color: type.hasBG ? Colors.white : null),

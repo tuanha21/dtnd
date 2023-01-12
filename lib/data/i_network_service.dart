@@ -1,6 +1,7 @@
 // ignore_for_file: library_prefixes
 
 import 'package:dtnd/=models=/index.dart';
+import 'package:dtnd/=models=/response/account_info_model.dart';
 import 'package:dtnd/=models=/response/deep_model.dart';
 import 'package:dtnd/=models=/response/inday_matched_order.dart';
 import 'package:dtnd/=models=/response/index_chart_data.dart';
@@ -80,4 +81,6 @@ abstract class INetworkService {
       String body);
 
   Future<SecurityBasicInfo?> getSecurityBasicInfo(String body);
+
+  Future<UserInfo?> getUserInfo(RequestModel requestModel);
 }

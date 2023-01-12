@@ -6,14 +6,14 @@ import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_textstyle.dart';
 import 'package:flutter/material.dart';
 
-class IndayOrderTab extends StatefulWidget {
-  const IndayOrderTab({super.key});
+class OrderHistoryTab extends StatefulWidget {
+  const OrderHistoryTab({super.key});
 
   @override
-  State<IndayOrderTab> createState() => _IndayOrderTabState();
+  State<OrderHistoryTab> createState() => _OrderHistoryTabState();
 }
 
-class _IndayOrderTabState extends State<IndayOrderTab> {
+class _OrderHistoryTabState extends State<OrderHistoryTab> {
   final List<OrderHistory> list = [
     OrderHistory(
         stockCode: "HPG",

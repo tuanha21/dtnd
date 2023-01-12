@@ -47,10 +47,6 @@ class _KChartState extends State<KChart> {
           low: widget.indexModel.stockTradingHistory.value!.l![i].toDouble(),
           vol: widget.indexModel.stockTradingHistory.value!.v![i].toDouble()));
     }
-    // print(list.getRange(0, 50));
-    list.getRange(0, 50).forEach(
-          (element) => print("$element,"),
-        );
     setState(() {
       initializing = false;
     });
@@ -58,7 +54,6 @@ class _KChartState extends State<KChart> {
 
   @override
   void didUpdateWidget(covariant KChart oldWidget) {
-    print("didUpdateWidget called");
     super.didUpdateWidget(oldWidget);
     if (oldWidget.indexModel.index != widget.indexModel.index) {
       initData();
