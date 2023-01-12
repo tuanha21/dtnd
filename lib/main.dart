@@ -16,6 +16,7 @@ import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 
 import 'firebase_options.dart';
+import 'ui/screen/otp/otp_view.dart';
 
 Future<void> main() async {
   // load .env file
@@ -65,6 +66,13 @@ class _MyAppState extends State<MyApp> {
         },
       ),
       GoRoute(
+        name: "otp",
+        path: '/otp/:phone',
+        builder: (BuildContext context, GoRouterState state) {
+          return OtpPage(phone: state.params['phone']!);
+        },
+      ),
+      GoRoute(
         path: '/VirtualAssistant',
         builder: (BuildContext context, GoRouterState state) {
           return const LoginScreen();
@@ -72,6 +80,7 @@ class _MyAppState extends State<MyApp> {
       ),
     ],
   );
+
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -99,6 +108,7 @@ class _MyAppState extends State<MyApp> {
       );
     });
   }
+
   void hideKeyboard() {
     FocusScopeNode currentFocus = FocusScope.of(context);
     if (!currentFocus.hasPrimaryFocus && currentFocus.focusedChild != null) {

@@ -224,6 +224,8 @@ class _SignUpPageState extends State<SignUpPage> with AppValidator {
                             message: "Bạn chưa đồng ý điều khoản");
                         return;
                       }
+                      context.pushNamed('otp',
+                          params: {"phone": state.phoneNumber.text});
                     },
                     child: Text(S.of(context).sign_up))),
             const SizedBox(height: 50),

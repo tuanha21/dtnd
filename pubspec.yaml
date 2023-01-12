@@ -78,6 +78,7 @@ dependencies:
   firebase_core: ^2.4.1
   intl_phone_number_input: ^0.7.2
   top_snackbar_flutter: ^3.0.0+1
+  firebase_auth: ^4.2.5
 
 dev_dependencies:
   flutter_test:
