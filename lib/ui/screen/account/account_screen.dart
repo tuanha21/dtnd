@@ -71,12 +71,12 @@ class _AccountScreenState extends State<AccountScreen> {
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height - 160,
               decoration: const BoxDecoration(
-                  color: Colors.white,
+                  color: AppColors.bg_1,
                   borderRadius: BorderRadius.vertical(top: Radius.circular(8))),
               child: Column(
                 children: [
                   const SizedBox(height: 50),
-                  accountView,
+                  Expanded(child: accountView),
                 ],
               ),
             ),

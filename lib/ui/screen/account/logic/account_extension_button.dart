@@ -1,15 +1,14 @@
+import 'package:dtnd/generated/l10n.dart';
 import 'package:flutter/material.dart';
 
-abstract class IAccountExtensionButton {
-  IAccountExtensionButton({
+class AccountExtensionButton {
+  AccountExtensionButton({
     required this.icon,
     required this.label,
+    this.route,
   });
   String icon;
   String label;
-  late ValueChanged<BuildContext> onPress;
-}
-
-class StockAccountExtensionButton extends IAccountExtensionButton {
-  StockAccountExtensionButton({required super.icon, required super.label});
+  Widget? route;
+  bool sameType(Object? o) => o.runtimeType == runtimeType;
 }

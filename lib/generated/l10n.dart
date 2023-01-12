@@ -80,6 +80,16 @@ class S {
     );
   }
 
+  /// `Logout`
+  String get logout {
+    return Intl.message(
+      'Logout',
+      name: 'logout',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `LOGIN`
   String get login_upper {
     return Intl.message(
@@ -315,6 +325,36 @@ class S {
     return Intl.message(
       'Create catalog',
       name: 'create_catalog',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Order note`
+  String get order_note {
+    return Intl.message(
+      'Order note',
+      name: 'order_note',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Order history`
+  String get order_htr {
+    return Intl.message(
+      'Order history',
+      name: 'order_htr',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Bank`
+  String get bank {
+    return Intl.message(
+      'Bank',
+      name: 'bank',
       desc: '',
       args: [],
     );
@@ -1717,6 +1757,176 @@ class S {
     return Intl.message(
       'TD volatility',
       name: 'trading_volatility',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Stock trading`
+  String get stock_trading {
+    return Intl.message(
+      'Stock trading',
+      name: 'stock_trading',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Money trading`
+  String get money_trading {
+    return Intl.message(
+      'Money trading',
+      name: 'money_trading',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Account managing`
+  String get account_managing {
+    return Intl.message(
+      'Account managing',
+      name: 'account_managing',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Help center`
+  String get help_center {
+    return Intl.message(
+      'Help center',
+      name: 'help_center',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Setting and secutiry`
+  String get setting_and_secutiry {
+    return Intl.message(
+      'Setting and secutiry',
+      name: 'setting_and_secutiry',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Account information`
+  String get account_infomation {
+    return Intl.message(
+      'Account information',
+      name: 'account_infomation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Personal information`
+  String get personal_infomation {
+    return Intl.message(
+      'Personal information',
+      name: 'personal_infomation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Account number`
+  String get account_number {
+    return Intl.message(
+      'Account number',
+      name: 'account_number',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Full name`
+  String get full_name {
+    return Intl.message(
+      'Full name',
+      name: 'full_name',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `ID`
+  String get id_or_business_id_short {
+    return Intl.message(
+      'ID',
+      name: 'id_or_business_id_short',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Issue date`
+  String get issue_date {
+    return Intl.message(
+      'Issue date',
+      name: 'issue_date',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Issue place`
+  String get issue_place {
+    return Intl.message(
+      'Issue place',
+      name: 'issue_place',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Birthday`
+  String get birthday {
+    return Intl.message(
+      'Birthday',
+      name: 'birthday',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Sex`
+  String get sex {
+    return Intl.message(
+      'Sex',
+      name: 'sex',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Contact information`
+  String get contact_infomation {
+    return Intl.message(
+      'Contact information',
+      name: 'contact_infomation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Adrress`
+  String get address {
+    return Intl.message(
+      'Adrress',
+      name: 'address',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Phone number`
+  String get phone_number {
+    return Intl.message(
+      'Phone number',
+      name: 'phone_number',
       desc: '',
       args: [],
     );
