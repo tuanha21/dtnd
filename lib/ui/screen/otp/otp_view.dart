@@ -1,11 +1,15 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pinput/pinput.dart';
 
 import '../../../generated/l10n.dart';
+import '../../../utilities/logger.dart';
 import '../../../utilities/responsive.dart';
 import '../../theme/app_color.dart';
+import '../../widget/app_snack_bar.dart';
 import 'otp_logic.dart';
+import 'otp_state.dart';
 
 class OtpPage extends StatefulWidget {
   final String phone;
@@ -17,8 +21,15 @@ class OtpPage extends StatefulWidget {
 }
 
 class _OtpPageState extends State<OtpPage> {
-  final logic = Get.put(OtpLogic());
-  final state = Get.find<OtpLogic>().state;
+  late OtpLogic logic;
+
+  OtpState get state => logic.state;
+
+  @override
+  void initState() {
+    logic = Get.put(OtpLogic(widget.phone));
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +73,6 @@ class _OtpPageState extends State<OtpPage> {
               cursor: cursor,
               preFilledWidget: preFilledWidget,
               pinputAutovalidateMode: PinputAutovalidateMode.onSubmit,
-
               onCompleted: (pin) => setState(() {}),
             ),
             const SizedBox(height: 16),
@@ -78,14 +88,26 @@ class _OtpPageState extends State<OtpPage> {
                     style: titleSmall?.copyWith(
                         fontWeight: FontWeight.w500,
                         color: AppColors.neutral_04)),
-
               ]),
             ),
             const Spacer(),
             SizedBox(
               width: Responsive.getMaxWidth(context) - 32,
               child: TextButton(
-                onPressed: null,
+                onPressed: () async {
+                  try {
+                    await logic.validateOTp();
+                  } on FirebaseAuthException catch (e) {
+                    if (e.code == "invalid-verification-code") {
+                      AppSnackBar.showError(context,
+                          message: "Nhập mã OTP không chính xác");
+                    } else {
+                      AppSnackBar.showError(context, message: e.message ?? "");
+                    }
+                  } catch (e) {
+                    logger.e(e.toString());
+                  }
+                },
                 style: const ButtonStyle(
                     padding: MaterialStatePropertyAll(EdgeInsets.all(14))),
                 child: Text(S.of(context).confirm),
@@ -102,16 +124,13 @@ class _OtpPageState extends State<OtpPage> {
     width: 49,
     height: 49,
     textStyle: const TextStyle(
-        fontSize: 18,
-        color: AppColors.light_bg,
-        fontWeight: FontWeight.w600),
+        fontSize: 18, color: AppColors.light_bg, fontWeight: FontWeight.w600),
     decoration: BoxDecoration(
       border: Border.all(color: AppColors.neutral_04),
       borderRadius: BorderRadius.circular(12),
       color: AppColors.neutral_01,
     ),
   );
-
 
   final preFilledWidget = Column(
     mainAxisAlignment: MainAxisAlignment.end,
