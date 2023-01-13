@@ -14,6 +14,8 @@ class AppColors {
   static const dark_bg = Color(0xFF000000);
   static const dark_stronger_bg = Color(0xFF282828);
   static const light_blue = Color(0xFFB9D4FE);
+  static const light_tabBar_bg = Color(0xFFEDF1F7);
+
 
   static const yellow = Color(0xFFFCC927);
   static const color_secondary = Color(0xFF0067D3);
@@ -65,4 +67,8 @@ class AppColors {
   ///Text
   static const error_text = Color(0xFFFB0000);
   static const text_main = Color(0xFF062046);
+  static const text_blue = Color(0xFF004DF0);
+  static const text_black = Color(0xFF242437);
+
+
 }

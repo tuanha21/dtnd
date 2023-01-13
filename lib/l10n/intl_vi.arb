@@ -4,6 +4,10 @@
     "login": "Đăng nhập",
     "logout": "Đăng xuất",
     "login_upper": "ĐĂNG NHẬP",
+    "login_with_google": "Đăng nhập với Google",
+    "login_with_facebook": "Đăng nhập với Facebook",
+    "sign_up" : "Đăng ký",
+    "hi_you" : "Chào bạn",
 
     "home": "Trang chủ",
     "market": "Thị trường",
@@ -22,6 +26,9 @@
     "account": "Tài khoản",
     "username": "Tên đăng nhập",
     "password": "Mật khẩu",
+    "full_name" : "Họ và tên",
+    "phone_number" : "Số điện thoại",
+    "email" : "Email",
     "fill_account": "Nhập tài khoản",
     "fill_password": "Nhập mật khẩu",
     "fill_OTP": "Nhập mã OTP",
@@ -156,6 +163,8 @@
     "login_required": "Yêu cầu đăng nhập",
     "login_to_continue": "Hãy đăng nhập để tiếp tục",
     "you_are_not_logged_in": "Bạn chưa đăng nhập",
+    "you_are_not_account": "Bạn chưa có tài khoản?",
+
     "create_new_order": "Đặt lệnh mới",
     "create_order_successfully": "Đặt lệnh thành công",
     "order_will_appear_in_ur_order_note": "Lệnh đặt sẽ xuất hiện trong sổ lệnh của bạn",
@@ -257,6 +266,9 @@
 
     "timeout": "Không nhận được phản hồi từ máy chủ",
     "unknown_error": "Lỗi không xác định",
-    "no_internet": "Không có kết nối Internet"
+    "no_internet": "Không có kết nối Internet",
+
+    "copytrade" : "Copytrade"
+
 
 }

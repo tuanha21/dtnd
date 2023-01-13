@@ -11,6 +11,7 @@ import 'package:dtnd/ui/screen/home/widget/home_section.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:dtnd/ui/widget/my_appbar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -31,7 +32,16 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const MyAppBar(),
+      appBar:  MyAppBar(title: "DTND", actions: [
+        SvgPicture.asset(AppImages.search_appbar_icon),
+        const SizedBox(
+          width: 20,
+        ),
+        SvgPicture.asset(AppImages.notification_appbar_icon),
+        const SizedBox(
+          width: 16,
+        ),
+      ],),
       body: RefreshIndicator(
         onRefresh: () async => homeController.init(),
         child: ScrollConfiguration(

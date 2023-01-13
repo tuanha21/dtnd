@@ -2,12 +2,15 @@ import 'dart:async';
 
 import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/screen/login/login_controller.dart';
+import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/widget/button/async_button.dart';
 import 'package:dtnd/utilities/logger.dart';
 import 'package:dtnd/utilities/typedef.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../theme/app_image.dart';
 
@@ -22,6 +25,7 @@ class LoginForm extends StatefulWidget {
   final GlobalKey<FormState> loginFormKey;
   final VoidCallback onSuccess;
   final Rx<bool> otpRequired;
+
   @override
   State<LoginForm> createState() => _LoginFormState();
 }
@@ -55,6 +59,7 @@ class _LoginFormState extends State<LoginForm> {
   FutureVoidCallback? login;
 
   bool canCheckLogin = false;
+
   @override
   void initState() {
     super.initState();
@@ -157,6 +162,7 @@ class _LoginFormState extends State<LoginForm> {
 
   @override
   Widget build(BuildContext context) {
+    var titleSmall = Theme.of(context).textTheme.titleSmall;
     return Form(
       key: widget.loginFormKey,
       child: Column(
@@ -220,32 +226,72 @@ class _LoginFormState extends State<LoginForm> {
           //     },
           //   );
           // }, widget.otpRequired),
-          const SizedBox(
-            height: 20,
-          ),
-          Row(
-            children: [
-              Expanded(
-                child: AsyncButton(
-                  onPressed: login,
-                  // onPressed: () {
-                  //   GoRouter.of(context).go('/');
-                  // },
-                  padding: const EdgeInsets.all(8),
-                  borderRadius: const BorderRadius.all(Radius.circular(4)),
-                  child: Text(S.of(context).login),
+          const SizedBox(height: 20),
+          IntrinsicHeight(
+            child: Row(
+              children: [
+                Expanded(
+                  child: AsyncButton(
+                    onPressed: login,
+                    borderRadius: const BorderRadius.all(Radius.circular(4)),
+                    child: Text(S.of(context).login),
+                  ),
                 ),
-              ),
-              const SizedBox(
-                width: 20,
-              ),
-              SizedBox.square(
-                dimension: 40,
-                child: SvgPicture.asset(AppImages.login_face_id_icon),
-              ),
-            ],
+                const SizedBox(
+                  width: 20,
+                ),
+                SizedBox.square(
+                  child: SvgPicture.asset(AppImages.login_face_id_icon),
+                ),
+              ],
+            ),
           ),
+          const SizedBox(height: 16),
+          socialButton(AppImages.google, S.of(context).login_with_google),
+          const SizedBox(height: 16),
+          socialButton(AppImages.facebook, S.of(context).login_with_facebook),
+          const SizedBox(height: 50),
+          RichText(
+              text: TextSpan(children: [
+            TextSpan(
+                text: '${S.of(context).you_are_not_account} ',
+                style: titleSmall?.copyWith(
+                    fontWeight: FontWeight.w500, color: AppColors.neutral_04)),
+            TextSpan(
+                text: S.of(context).sign_up,
+                style: titleSmall?.copyWith(
+                    fontWeight: FontWeight.w500, color: AppColors.primary_01),
+                recognizer: TapGestureRecognizer()
+                  ..onTap = () {
+                    GoRouter.of(context).push('/SignUp');
+                  })
+          ]))
         ],
+      ),
+    );
+  }
+
+  Widget socialButton(String icon, String title, {VoidCallback? onTap}) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        height: 50,
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+            color: AppColors.neutral_01,
+            borderRadius: BorderRadius.circular(8)),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SvgPicture.asset(icon),
+            const SizedBox(width: 12),
+            Text(
+              title,
+              style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                  fontWeight: FontWeight.w700, color: AppColors.primary_01),
+            )
+          ],
+        ),
       ),
     );
   }

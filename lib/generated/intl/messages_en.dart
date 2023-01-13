@@ -100,10 +100,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "condition_ordnote":
             MessageLookupByLibrary.simpleMessage("Condition ordernote"),
         "confirm": MessageLookupByLibrary.simpleMessage("Confirm"),
-        "contact_infomation":
-            MessageLookupByLibrary.simpleMessage("Contact information"),
-        "copyTrade_asset":
-            MessageLookupByLibrary.simpleMessage("CopyTrade asset"),
+        "copytrade": MessageLookupByLibrary.simpleMessage("Copytrade"),
         "create": MessageLookupByLibrary.simpleMessage("Create"),
         "create_account":
             MessageLookupByLibrary.simpleMessage("Create account"),
@@ -127,6 +124,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Back again to exit"),
         "edit_catalog_name":
             MessageLookupByLibrary.simpleMessage("Edit catalog name"),
+        "email": MessageLookupByLibrary.simpleMessage("Email"),
         "empty_catalog":
             MessageLookupByLibrary.simpleMessage("Catalog is empty"),
         "event": MessageLookupByLibrary.simpleMessage("Event"),
@@ -154,6 +152,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "hello": MessageLookupByLibrary.simpleMessage("Hello"),
         "help_center": MessageLookupByLibrary.simpleMessage("Help center"),
         "hi": MessageLookupByLibrary.simpleMessage("Hi"),
+        "hi_you": MessageLookupByLibrary.simpleMessage("Hi you"),
         "high": MessageLookupByLibrary.simpleMessage("High"),
         "home": MessageLookupByLibrary.simpleMessage("Home"),
         "id_or_business_id_short": MessageLookupByLibrary.simpleMessage("ID"),
@@ -184,7 +183,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "login_to_continue":
             MessageLookupByLibrary.simpleMessage("Login to continue"),
         "login_upper": MessageLookupByLibrary.simpleMessage("LOGIN"),
-        "logout": MessageLookupByLibrary.simpleMessage("Logout"),
+        "login_with_facebook":
+            MessageLookupByLibrary.simpleMessage("Login with Facebook"),
+        "login_with_google":
+            MessageLookupByLibrary.simpleMessage("Login with Google"),
         "loss_wvalue": m3,
         "low": MessageLookupByLibrary.simpleMessage("Low"),
         "margin": MessageLookupByLibrary.simpleMessage("Margin"),
@@ -240,8 +242,6 @@ class MessageLookup extends MessageLookupByLibrary {
         "password": MessageLookupByLibrary.simpleMessage("Password"),
         "period_of_validity":
             MessageLookupByLibrary.simpleMessage("Period of validity"),
-        "personal_infomation":
-            MessageLookupByLibrary.simpleMessage("Personal information"),
         "phone_number": MessageLookupByLibrary.simpleMessage("Phone number"),
         "pin_code": MessageLookupByLibrary.simpleMessage("Pin code"),
         "price": MessageLookupByLibrary.simpleMessage("Price"),
@@ -267,13 +267,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "sell_price": MessageLookupByLibrary.simpleMessage("Sell price"),
         "session_expired_in":
             MessageLookupByLibrary.simpleMessage("Session expired in "),
-        "setting_and_secutiry":
-            MessageLookupByLibrary.simpleMessage("Setting and secutiry"),
-        "sex": MessageLookupByLibrary.simpleMessage("Sex"),
-        "sold_returning_money":
-            MessageLookupByLibrary.simpleMessage("Sold returning money"),
-        "sold_returning_vol":
-            MessageLookupByLibrary.simpleMessage("Sold returning vol"),
+        "sign_up": MessageLookupByLibrary.simpleMessage("Sign up"),
         "something_went_wrong":
             MessageLookupByLibrary.simpleMessage("Something went erong"),
         "stock_already_exist":
@@ -327,6 +321,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Withdrawable money"),
         "wrong_password":
             MessageLookupByLibrary.simpleMessage("Password is incorrect"),
+        "you_are_not_account":
+            MessageLookupByLibrary.simpleMessage("You are not account?"),
         "you_are_not_logged_in":
             MessageLookupByLibrary.simpleMessage("You are not yet logged in")
       };
