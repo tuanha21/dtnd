@@ -2,6 +2,7 @@ import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/screen/account/icon/account_icon.dart';
 import 'package:dtnd/ui/screen/account/logic/account_extension_button.dart';
 import 'package:dtnd/ui/screen/account/screen/full_extensions_screen.dart';
+import 'package:dtnd/ui/screen/account/screen/smartotp_screen/smartotp_screen.dart';
 import 'package:flutter/material.dart';
 
 class AccountExtensionsWidget extends StatefulWidget {
@@ -43,9 +44,9 @@ class _AccountExtensionsWidgetState extends State<AccountExtensionsWidget> {
       label: S.current.bank,
     ),
     AccountExtensionButton(
-      icon: AccountIcon.scan,
-      label: "SmartOTP",
-    ),
+        icon: AccountIcon.scan,
+        label: "SmartOTP",
+        route: const SmartotpScreen()),
     AccountExtensionButton(
         icon: AccountIcon.more,
         label: S.current.see_more,

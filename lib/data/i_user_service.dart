@@ -8,6 +8,8 @@ abstract class IUserService {
 
   UserInfo? get userInfo;
 
+  bool get regSmartOTP;
+
   Future<void> init();
 
   Future<void> deleteToken();
