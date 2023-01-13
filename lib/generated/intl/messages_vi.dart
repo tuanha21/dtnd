@@ -246,7 +246,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Thời gian hiệu lực"),
         "personal_infomation":
             MessageLookupByLibrary.simpleMessage("Thông tin cá nhân"),
-        "phone_number": MessageLookupByLibrary.simpleMessage("Điện thoại"),
+        "phone_number": MessageLookupByLibrary.simpleMessage("Số điện thoại"),
         "pin_code": MessageLookupByLibrary.simpleMessage("Mã pin"),
         "price": MessageLookupByLibrary.simpleMessage("Giá"),
         "price_alert": MessageLookupByLibrary.simpleMessage("Cảnh báo giá"),

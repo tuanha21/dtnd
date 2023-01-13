@@ -195,7 +195,6 @@
     "account_infomation": "Thông tin tài khoản",
     "personal_infomation": "Thông tin cá nhân",
     "account_number": "Số tài khoản",
-    "full_name": "Họ và tên",
     "id_or_business_id_short": "CMND/ĐKKD",
     "issue_date": "Ngày cấp",
     "issue_place": "Nơi cấp",
@@ -203,7 +202,6 @@
     "sex": "Giới tính",
     "contact_infomation": "Thông tin liên lạc",
     "address": "Địa chỉ",
-    "phone_number": "Điện thoại",
 
     "login_exception_required_OTP": "Hãy đăng nhập bằng mã OTP được gửi về máy của bạn",
     "invalid_account": "Tài khoản chưa đăng ký hoặc đã hết hiệu lực giao dịch Internet",
