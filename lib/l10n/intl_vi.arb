@@ -6,8 +6,8 @@
     "login_upper": "ĐĂNG NHẬP",
     "login_with_google": "Đăng nhập với Google",
     "login_with_facebook": "Đăng nhập với Facebook",
-    "sign_up" : "Đăng ký",
-    "hi_you" : "Chào bạn",
+    "sign_up": "Đăng ký",
+    "hi_you": "Chào bạn",
 
     "home": "Trang chủ",
     "market": "Thị trường",
@@ -26,9 +26,9 @@
     "account": "Tài khoản",
     "username": "Tên đăng nhập",
     "password": "Mật khẩu",
-    "full_name" : "Họ và tên",
-    "phone_number" : "Số điện thoại",
-    "email" : "Email",
+    "full_name": "Họ và tên",
+    "phone_number": "Số điện thoại",
+    "email": "Email",
     "fill_account": "Nhập tài khoản",
     "fill_password": "Nhập mật khẩu",
     "fill_OTP": "Nhập mã OTP",
@@ -268,7 +268,7 @@
     "unknown_error": "Lỗi không xác định",
     "no_internet": "Không có kết nối Internet",
 
-    "copytrade" : "Copytrade"
+    "copytrade": "Copytrade"
 
 
 }

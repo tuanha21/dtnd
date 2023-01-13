@@ -1922,16 +1922,6 @@ class S {
     );
   }
 
-  /// `Full name`
-  String get full_name {
-    return Intl.message(
-      'Full name',
-      name: 'full_name',
-      desc: '',
-      args: [],
-    );
-  }
-
   /// `ID`
   String get id_or_business_id_short {
     return Intl.message(
@@ -1997,16 +1987,6 @@ class S {
     return Intl.message(
       'Adrress',
       name: 'address',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Phone number`
-  String get phone_number {
-    return Intl.message(
-      'Phone number',
-      name: 'phone_number',
       desc: '',
       args: [],
     );

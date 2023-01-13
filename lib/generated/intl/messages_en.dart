@@ -100,6 +100,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "condition_ordnote":
             MessageLookupByLibrary.simpleMessage("Condition ordernote"),
         "confirm": MessageLookupByLibrary.simpleMessage("Confirm"),
+        "contact_infomation":
+            MessageLookupByLibrary.simpleMessage("Contact information"),
+        "copyTrade_asset":
+            MessageLookupByLibrary.simpleMessage("CopyTrade asset"),
         "copytrade": MessageLookupByLibrary.simpleMessage("Copytrade"),
         "create": MessageLookupByLibrary.simpleMessage("Create"),
         "create_account":
@@ -187,6 +191,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Login with Facebook"),
         "login_with_google":
             MessageLookupByLibrary.simpleMessage("Login with Google"),
+        "logout": MessageLookupByLibrary.simpleMessage("Logout"),
         "loss_wvalue": m3,
         "low": MessageLookupByLibrary.simpleMessage("Low"),
         "margin": MessageLookupByLibrary.simpleMessage("Margin"),
@@ -242,6 +247,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "password": MessageLookupByLibrary.simpleMessage("Password"),
         "period_of_validity":
             MessageLookupByLibrary.simpleMessage("Period of validity"),
+        "personal_infomation":
+            MessageLookupByLibrary.simpleMessage("Personal information"),
         "phone_number": MessageLookupByLibrary.simpleMessage("Phone number"),
         "pin_code": MessageLookupByLibrary.simpleMessage("Pin code"),
         "price": MessageLookupByLibrary.simpleMessage("Price"),
@@ -267,7 +274,14 @@ class MessageLookup extends MessageLookupByLibrary {
         "sell_price": MessageLookupByLibrary.simpleMessage("Sell price"),
         "session_expired_in":
             MessageLookupByLibrary.simpleMessage("Session expired in "),
+        "setting_and_secutiry":
+            MessageLookupByLibrary.simpleMessage("Setting and secutiry"),
+        "sex": MessageLookupByLibrary.simpleMessage("Sex"),
         "sign_up": MessageLookupByLibrary.simpleMessage("Sign up"),
+        "sold_returning_money":
+            MessageLookupByLibrary.simpleMessage("Sold returning money"),
+        "sold_returning_vol":
+            MessageLookupByLibrary.simpleMessage("Sold returning vol"),
         "something_went_wrong":
             MessageLookupByLibrary.simpleMessage("Something went erong"),
         "stock_already_exist":

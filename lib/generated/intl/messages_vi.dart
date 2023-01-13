@@ -98,6 +98,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "condition_ordnote":
             MessageLookupByLibrary.simpleMessage("SL điều kiện"),
         "confirm": MessageLookupByLibrary.simpleMessage("Xác nhận"),
+        "contact_infomation":
+            MessageLookupByLibrary.simpleMessage("Thông tin liên lạc"),
+        "copyTrade_asset":
+            MessageLookupByLibrary.simpleMessage("Tài sản CopyTrade"),
         "copytrade": MessageLookupByLibrary.simpleMessage("Copytrade"),
         "create": MessageLookupByLibrary.simpleMessage("Tạo"),
         "create_account": MessageLookupByLibrary.simpleMessage("Tạo tài khoản"),
@@ -182,6 +186,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Đăng nhập với Facebook"),
         "login_with_google":
             MessageLookupByLibrary.simpleMessage("Đăng nhập với Google"),
+        "logout": MessageLookupByLibrary.simpleMessage("Đăng xuất"),
         "loss_wvalue": m3,
         "low": MessageLookupByLibrary.simpleMessage("Thấp"),
         "margin": MessageLookupByLibrary.simpleMessage("Ký quỹ"),
@@ -239,7 +244,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "password": MessageLookupByLibrary.simpleMessage("Mật khẩu"),
         "period_of_validity":
             MessageLookupByLibrary.simpleMessage("Thời gian hiệu lực"),
-        "phone_number": MessageLookupByLibrary.simpleMessage("Số điện thoại"),
+        "personal_infomation":
+            MessageLookupByLibrary.simpleMessage("Thông tin cá nhân"),
+        "phone_number": MessageLookupByLibrary.simpleMessage("Điện thoại"),
         "pin_code": MessageLookupByLibrary.simpleMessage("Mã pin"),
         "price": MessageLookupByLibrary.simpleMessage("Giá"),
         "price_alert": MessageLookupByLibrary.simpleMessage("Cảnh báo giá"),
@@ -263,7 +270,14 @@ class MessageLookup extends MessageLookupByLibrary {
         "sell_price": MessageLookupByLibrary.simpleMessage("Giá bán ra"),
         "session_expired_in":
             MessageLookupByLibrary.simpleMessage("Hết phiên đăng nhập sau "),
+        "setting_and_secutiry":
+            MessageLookupByLibrary.simpleMessage("Cài đặt và bảo mật"),
+        "sex": MessageLookupByLibrary.simpleMessage("Giới tính"),
         "sign_up": MessageLookupByLibrary.simpleMessage("Đăng ký"),
+        "sold_returning_money":
+            MessageLookupByLibrary.simpleMessage("Tiền bán chờ về"),
+        "sold_returning_vol":
+            MessageLookupByLibrary.simpleMessage("KL mua chờ về"),
         "something_went_wrong":
             MessageLookupByLibrary.simpleMessage("Đã có lỗi xảy ra"),
         "stock_already_exist": MessageLookupByLibrary.simpleMessage(

@@ -20,8 +20,8 @@ class _SearchScreenState extends State<SearchScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: MyAppBar(
-        showActions: false,
-      ),
+          // showActions: false,
+          ),
       body: Column(
         children: [
           SizedBox(

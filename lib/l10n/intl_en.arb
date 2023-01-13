@@ -6,8 +6,8 @@
     "login_upper": "LOGIN",
     "login_with_google": "Login with Google",
     "login_with_facebook": "Login with Facebook",
-    "sign_up" : "Sign up",
-    "hi_you" : "Hi you",
+    "sign_up": "Sign up",
+    "hi_you": "Hi you",
 
 
     "home": "Home",
@@ -27,9 +27,9 @@
     "account": "Account",
     "username": "Username",
     "password": "Password",
-    "full_name" : "Full name",
-    "phone_number" : "Phone number",
-    "email" : "Email",
+    "full_name": "Full name",
+    "phone_number": "Phone number",
+    "email": "Email",
     "fill_account": "Fill account",
     "fill_password": "Fill password",
     "fill_OTP": "Fill OTP",
@@ -269,5 +269,5 @@
     "unknown_error": "Unknown error",
     "no_internet": "No Internet connection",
 
-    "copytrade" : "Copytrade"
+    "copytrade": "Copytrade"
 }
