@@ -15,7 +15,15 @@ abstract class IDialog implements IOverlay {
       context: context,
       barrierDismissible: barrierDismissible,
       builder: (BuildContext context) {
-        return child;
+        return Dialog(
+          insetPadding: const EdgeInsets.all(16),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: child,
+          ),
+        );
       },
     ).then((result) => cmd(context, result));
   }

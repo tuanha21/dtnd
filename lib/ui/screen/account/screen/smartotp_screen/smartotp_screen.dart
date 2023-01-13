@@ -12,6 +12,7 @@ class SmartotpScreen extends StatefulWidget {
 }
 
 class _SmartotpScreenState extends State<SmartotpScreen> {
+  final IUserService userService = UserService();
   bool reg = false;
   void onChanged(bool value) async {
     setState(() {
@@ -25,16 +26,23 @@ class _SmartotpScreenState extends State<SmartotpScreen> {
       await Future.delayed(const Duration(milliseconds: 100));
       if (mounted) {
         Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => const SmartOTPRegister(),
+          builder: (context) => SmartOTPRegister(
+            rebuild: rebuild,
+          ),
         ));
       }
     }
   }
 
+  void rebuild() {
+    setState(() {
+      reg = userService.regSmartOTP;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
-    final IUserService userService = UserService();
     return Scaffold(
       appBar: SimpleAppbar(title: "Thiết lập SmartOTP"),
       body: Padding(

@@ -1,19 +1,22 @@
+import 'package:dtnd/data/i_user_service.dart';
+import 'package:dtnd/data/implementations/user_service.dart';
 import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/screen/account/screen/smartotp_register/page/authen_smsotp_pin.dart';
 import 'package:dtnd/ui/screen/account/screen/smartotp_register/page/create_smartotp_pin.dart';
 import 'package:dtnd/ui/screen/account/screen/smartotp_register/page/recreate_smartotp_pin.dart';
-import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/widget/section/simple_appbar.dart';
 import 'package:flutter/material.dart';
 
 class SmartOTPRegister extends StatefulWidget {
-  const SmartOTPRegister({super.key});
+  const SmartOTPRegister({super.key, required this.rebuild});
+  final VoidCallback rebuild;
 
   @override
   State<SmartOTPRegister> createState() => _SmartOTPRegisterState();
 }
 
 class _SmartOTPRegisterState extends State<SmartOTPRegister> {
+  final IUserService userService = UserService();
   final PageController _pageController = PageController();
 
   List<Widget>? _panels;
@@ -35,7 +38,13 @@ class _SmartOTPRegisterState extends State<SmartOTPRegister> {
       ),
       WillPopScope(
         child: AuthenSmsotpPinPage(
-          nextPage: nextPage,
+          nextPage: () {
+            userService.changeRegSmartOTP(true);
+            Navigator.of(context).pop();
+
+            Navigator.of(context).pop();
+            widget.rebuild.call();
+          },
         ),
         onWillPop: () => Future.sync(onWillPop),
       ),
@@ -56,7 +65,7 @@ class _SmartOTPRegisterState extends State<SmartOTPRegister> {
   void previousPage() {
     if (_pageController.page?.round() == _pageController.initialPage) {
       return Navigator.of(context).pop();
-    }                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
+    }
     _pageController.previousPage(
         duration: const Duration(milliseconds: 500), curve: Curves.easeInCubic);
   }

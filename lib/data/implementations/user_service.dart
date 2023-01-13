@@ -24,6 +24,11 @@ class UserService implements IUserService {
   bool regSmartOTP = false;
 
   @override
+  void changeRegSmartOTP(bool value) {
+    regSmartOTP = value;
+  }
+
+  @override
   Future<void> init() {
     throw UnimplementedError();
   }

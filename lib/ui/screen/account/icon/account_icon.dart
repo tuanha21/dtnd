@@ -26,4 +26,5 @@ class AccountIcon {
   static const String people = "assets/account_icon/people.png";
 
   static const String bg = "assets/account_icon/bg.png";
+  static const String scene = "assets/account_icon/scene.png";
 }

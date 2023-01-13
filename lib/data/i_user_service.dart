@@ -10,6 +10,8 @@ abstract class IUserService {
 
   bool get regSmartOTP;
 
+  void changeRegSmartOTP(bool value);
+
   Future<void> init();
 
   Future<void> deleteToken();

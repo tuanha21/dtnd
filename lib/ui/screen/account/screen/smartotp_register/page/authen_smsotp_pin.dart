@@ -1,3 +1,5 @@
+import 'package:dtnd/ui/screen/account/screen/smartotp_register/catalog/catalog_index.dart';
+import 'package:dtnd/ui/screen/account/screen/smartotp_register/catalog/registed_smartotp_catalog.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/widget/input/rounded_pinput.dart';
 import 'package:flutter/material.dart';
@@ -37,7 +39,13 @@ class _AuthenSmsotpPinPageState extends State<AuthenSmsotpPinPage> {
     final textTheme = Theme.of(context).textTheme;
     VoidCallback? onPressed;
     if (complete) {
-      onPressed = widget.nextPage;
+      onPressed = () {
+        const SmartotpRegistedIDialog().show(
+            context,
+            SmartotpRegistedCatalog(
+              onClose: widget.nextPage,
+            ));
+      };
     }
     return Padding(
       padding: const EdgeInsets.all(16),
