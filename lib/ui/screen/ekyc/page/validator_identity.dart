@@ -103,7 +103,9 @@ class _ValidatorIdentityState extends State<ValidatorIdentity> {
                   return SizedBox(
                       width: MediaQuery.of(context).size.width,
                       child: ElevatedButton(
-                          onPressed: isContinue ? () {} : null,
+                          onPressed: isContinue ? () {
+                            logic.nextStep();
+                          } : null,
                           child: const Text('Tiếp tục')));
                 },
               ),

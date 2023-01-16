@@ -17,7 +17,6 @@ enum EkycPageStep {
   intro(EkycIntroducePage()),
   selectType(EkycSelectType()),
   validator(ValidatorIdentity()),
-  validatorError(SizedBox()),
   identityInform(SizedBox()),
   success(SizedBox());
 

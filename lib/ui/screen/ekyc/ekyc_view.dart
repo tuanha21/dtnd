@@ -20,9 +20,14 @@ class _EkycPageState extends State<EkycPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Obx(() {
-      return state.step.value.widget;
-    });
+    return WillPopScope(
+      onWillPop: () {
+        return logic.backStep();
+      },
+      child: Obx(() {
+        return state.step.value.widget;
+      }),
+    );
   }
 
   @override

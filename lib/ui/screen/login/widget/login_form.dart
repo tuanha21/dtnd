@@ -242,7 +242,7 @@ class _LoginFormState extends State<LoginForm> {
                 ),
                 GestureDetector(
                   onTap: (){
-                    context.goNamed("ekyc");
+                    context.pushNamed("ekyc");
                   },
                   child: SizedBox.square(
                     child: SvgPicture.asset(AppImages.login_face_id_icon),
