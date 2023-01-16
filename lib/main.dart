@@ -6,6 +6,8 @@ import 'package:dtnd/data/implementations/local_storage_service.dart';
 import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/screen/home_base/home_base.dart';
 import 'package:dtnd/ui/screen/login/login_screen.dart';
+import 'package:dtnd/ui/screen/sign_up/create_new_pass.dart';
+import 'package:dtnd/ui/screen/sign_up/reference_page.dart';
 import 'package:dtnd/ui/screen/sign_up/sign_up_view.dart';
 import 'package:dtnd/ui/theme/app_theme.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -16,7 +18,9 @@ import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 
 import 'firebase_options.dart';
+import 'ui/screen/ekyc/ekyc_view.dart';
 import 'ui/screen/otp/otp_view.dart';
+import 'ui/screen/sign_up/success_sign_up_page.dart';
 
 Future<void> main() async {
   // load .env file
@@ -54,9 +58,37 @@ class _MyAppState extends State<MyApp> {
         },
       ),
       GoRoute(
+        path: '/Home',
+        name: "home",
+        builder: (BuildContext context, GoRouterState state) {
+          return const HomeBase();
+        },
+      ),
+      GoRoute(
         path: '/SignUp',
         builder: (BuildContext context, GoRouterState state) {
           return const SignUpPage();
+        },
+      ),
+      GoRoute(
+        path: '/CreatePass',
+        name: 'newPass',
+        builder: (BuildContext context, GoRouterState state) {
+          return const CreateNewPassPage();
+        },
+      ),
+      GoRoute(
+        path: '/Reference',
+        name: 'reference',
+        builder: (BuildContext context, GoRouterState state) {
+          return const ReferencePage();
+        },
+      ),
+      GoRoute(
+        path: '/SuccessPage',
+        name: 'success',
+        builder: (BuildContext context, GoRouterState state) {
+          return const SuccessSignUpPage();
         },
       ),
       GoRoute(
@@ -71,6 +103,13 @@ class _MyAppState extends State<MyApp> {
         builder: (BuildContext context, GoRouterState state) {
           return OtpPage(phone: state.params['phone']!);
         },
+      ),
+      GoRoute(
+        name: "ekyc",
+        builder: (BuildContext context, GoRouterState state) {
+          return EkycPage();
+        },
+        path: '/Ekyc',
       ),
       GoRoute(
         path: '/VirtualAssistant',

@@ -390,6 +390,26 @@ class S {
     );
   }
 
+  /// `Input password`
+  String get please_input_password {
+    return Intl.message(
+      'Input password',
+      name: 'please_input_password',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Password not match`
+  String get pass_not_match {
+    return Intl.message(
+      'Password not match',
+      name: 'pass_not_match',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Ceil`
   String get ceil {
     return Intl.message(

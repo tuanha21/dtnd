@@ -53,7 +53,7 @@ class OtpLogic extends GetxController {
 
   @override
   void onReady() {
-    otpAuthentication();
+    //otpAuthentication();
     super.onReady();
   }
 }

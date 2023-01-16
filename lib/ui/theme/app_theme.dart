@@ -87,6 +87,7 @@ final InputDecorationTheme darkInputDecorationTheme = InputDecorationTheme(
   filled: true,
   fillColor: Colors.transparent,
   focusColor: Colors.transparent,
+  iconColor: Colors.white,
   contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
   floatingLabelAlignment: FloatingLabelAlignment.start,
   floatingLabelBehavior: FloatingLabelBehavior.always,

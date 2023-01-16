@@ -37,6 +37,9 @@
     "create_account": "Tạo tài khoản",
     "create_catalog": "Tạo danh mục",
 
+    "please_input_password": "Nhập password",
+    "pass_not_match": "Mật khẩu không trùng khớp",
+
     "ceil": "Trần",
     "floor": "Sàn",
     "ref": "TC",

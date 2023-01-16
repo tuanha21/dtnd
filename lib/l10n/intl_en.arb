@@ -38,6 +38,9 @@
     "create_account": "Create account",
     "create_catalog": "Create catalog",
 
+    "please_input_password": "Input password",
+    "pass_not_match": "Password not match",
+
     "ceil": "Ceil",
     "floor": "Floor",
     "ref": "Ref",
