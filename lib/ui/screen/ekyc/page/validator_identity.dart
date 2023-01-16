@@ -23,6 +23,15 @@ class _ValidatorIdentityState extends State<ValidatorIdentity> {
 
   EkycState get state => logic.state;
 
+  File? identityFront;
+  File? identityBack;
+
+  ValueNotifier<bool> isContinue = ValueNotifier<bool>(false);
+
+  bool get isContinueStep {
+    return identityFront != null && identityBack != null;
+  }
+
   @override
   Widget build(BuildContext context) {
     final headlineSmall = Theme.of(context).textTheme.headlineSmall;
@@ -35,48 +44,72 @@ class _ValidatorIdentityState extends State<ValidatorIdentity> {
           },
         ),
       ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const SizedBox(height: 20),
-            Text(
-              'Xác minh tài khoản ',
-              style: headlineSmall?.copyWith(fontWeight: FontWeight.w700),
-            ),
-            const SizedBox(height: 16),
-            RichText(
-              textAlign: TextAlign.center,
-              text: TextSpan(children: [
-                TextSpan(
-                    text: 'Chụp ảnh ',
-                    style: titleSmall?.copyWith(
-                        fontWeight: FontWeight.w500,
-                        color: AppColors.neutral_04)),
-                TextSpan(
-                    text: "2 mặt CMND/CCCD",
-                    style: titleSmall?.copyWith(
-                        fontWeight: FontWeight.w700,
-                        color: AppColors.light_bg)),
-                TextSpan(
-                    text: ' để xác minh tài khoản',
-                    style: titleSmall?.copyWith(
-                        fontWeight: FontWeight.w500,
-                        color: AppColors.neutral_04)),
-              ]),
-            ),
-            const SizedBox(height: 36),
-            const CardIdentityPick(
-              icon: AppImages.personalCardWhite,
-              title: 'Mặt trước CMND/CCCD',
-            ),
-            const SizedBox(height: 16),
-            const CardIdentityPick(
-              icon: AppImages.card,
-              title: 'Mặt sau CMND/CCCD',
-            )
-          ],
+      body: SafeArea(
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(height: 20),
+              Text(
+                'Xác minh tài khoản ',
+                style: headlineSmall?.copyWith(fontWeight: FontWeight.w700),
+              ),
+              const SizedBox(height: 16),
+              RichText(
+                textAlign: TextAlign.center,
+                text: TextSpan(children: [
+                  TextSpan(
+                      text: 'Chụp ảnh ',
+                      style: titleSmall?.copyWith(
+                          fontWeight: FontWeight.w500,
+                          color: AppColors.neutral_04)),
+                  TextSpan(
+                      text: "2 mặt CMND/CCCD",
+                      style: titleSmall?.copyWith(
+                          fontWeight: FontWeight.w700,
+                          color: AppColors.light_bg)),
+                  TextSpan(
+                      text: ' để xác minh tài khoản',
+                      style: titleSmall?.copyWith(
+                          fontWeight: FontWeight.w500,
+                          color: AppColors.neutral_04)),
+                ]),
+              ),
+              const SizedBox(height: 36),
+              CardIdentityPick(
+                icon: AppImages.personalCardWhite,
+                initImage: identityFront,
+                title: 'Mặt trước CMND/CCCD',
+                onChanged: (File? file) {
+                  identityFront = file;
+                  isContinue.value = isContinueStep;
+                },
+              ),
+              const SizedBox(height: 16),
+              CardIdentityPick(
+                icon: AppImages.card,
+                initImage: identityBack,
+                title: 'Mặt sau CMND/CCCD',
+                onChanged: (File? file) {
+                  identityBack = file;
+                  isContinue.value = isContinueStep;
+                },
+              ),
+              const SizedBox(height: 36),
+              ValueListenableBuilder<bool>(
+                valueListenable: isContinue,
+                builder: (BuildContext context, isContinue, Widget? child) {
+                  return SizedBox(
+                      width: MediaQuery.of(context).size.width,
+                      child: ElevatedButton(
+                          onPressed: isContinue ? () {} : null,
+                          child: const Text('Tiếp tục')));
+                },
+              ),
+              const SizedBox(height: 30),
+            ],
+          ),
         ),
       ),
     );
@@ -86,8 +119,15 @@ class _ValidatorIdentityState extends State<ValidatorIdentity> {
 class CardIdentityPick extends StatefulWidget {
   final String icon;
   final String title;
+  final File? initImage;
+  final ValueChanged<File?> onChanged;
 
-  const CardIdentityPick({Key? key, required this.icon, required this.title})
+  const CardIdentityPick(
+      {Key? key,
+      required this.icon,
+      required this.title,
+      required this.onChanged,
+      this.initImage})
       : super(key: key);
 
   @override
@@ -96,6 +136,12 @@ class CardIdentityPick extends StatefulWidget {
 
 class _CardIdentityPickState extends State<CardIdentityPick> {
   File? image;
+
+  @override
+  void initState() {
+    image = widget.initImage;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -115,10 +161,7 @@ class _CardIdentityPickState extends State<CardIdentityPick> {
               Visibility(
                   visible: image != null,
                   child: GestureDetector(
-                    onTap: (){
-                      MediaPermission.bottomDialog(context, "title", "content");
-                    },
-                      child: SvgPicture.asset(AppImages.edit2)))
+                      onTap: () {}, child: SvgPicture.asset(AppImages.edit2)))
             ],
           ),
           const SizedBox(height: 18),
@@ -132,7 +175,9 @@ class _CardIdentityPickState extends State<CardIdentityPick> {
                       image = await MediaPermission.checkPermissionAndPickImage(
                           context, "gallery");
                       if (image != null) {
-                        setState(() {});
+                        setState(() {
+                          widget.onChanged.call(image);
+                        });
                       }
                     },
                     child: Container(
