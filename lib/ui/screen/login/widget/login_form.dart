@@ -240,8 +240,13 @@ class _LoginFormState extends State<LoginForm> {
                 const SizedBox(
                   width: 20,
                 ),
-                SizedBox.square(
-                  child: SvgPicture.asset(AppImages.login_face_id_icon),
+                GestureDetector(
+                  onTap: (){
+                    context.goNamed("ekyc");
+                  },
+                  child: SizedBox.square(
+                    child: SvgPicture.asset(AppImages.login_face_id_icon),
+                  ),
                 ),
               ],
             ),

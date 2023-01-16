@@ -107,7 +107,7 @@ class _MyAppState extends State<MyApp> {
       GoRoute(
         name: "ekyc",
         builder: (BuildContext context, GoRouterState state) {
-          return EkycPage();
+          return const EkycPage();
         },
         path: '/Ekyc',
       ),

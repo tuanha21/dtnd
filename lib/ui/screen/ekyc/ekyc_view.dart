@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
 
+import '../../theme/app_color.dart';
+import '../../theme/app_image.dart';
 import 'ekyc_logic.dart';
+import 'page/ekyc_introduce_page.dart';
 
 class EkycPage extends StatefulWidget {
+  const EkycPage({super.key});
+
   @override
-  _EkycPageState createState() => _EkycPageState();
+  State<EkycPage> createState() => _EkycPageState();
 }
 
 class _EkycPageState extends State<EkycPage> {
@@ -14,7 +20,9 @@ class _EkycPageState extends State<EkycPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Obx(() {
+      return state.step.value.widget;
+    });
   }
 
   @override

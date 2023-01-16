@@ -40,7 +40,8 @@ class AppImages {
   static const String facebook = "assets/svg/logos_facebook.svg";
   static const String icon_error = "assets/svg/Icon_error.svg";
   static const String icon_success = "assets/svg/icon_success.svg";
-
+  static const String personalCard = "assets/svg/personalcard.svg";
+  static const String documentCopy = "assets/svg/document-copy.svg";
 
 
   static const String qa_base = "assets/svg/qa_base.svg";
@@ -97,7 +98,9 @@ class AppImages {
       "assets/images/virtual_assistant_register.png";
   static const String virtual_assistant_registered =
       "assets/images/virtual_assistant_registered.png";
+  static const String illust07 = "assets/images/Illust07.png";
   static const String illust06 = "assets/images/illust06.png";
+  static const String illust05 = "assets/images/Illust05.png";
   static const String illust04 = "assets/images/Illust04.png";
 
   static const String scene = "assets/images/scene.png";
