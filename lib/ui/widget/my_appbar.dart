@@ -1,10 +1,4 @@
-import 'package:dtnd/=models=/response/stock.dart';
-import 'package:dtnd/data/i_user_service.dart';
-import 'package:dtnd/data/implementations/user_service.dart';
-import 'package:dtnd/ui/screen/search/search_screen.dart';
-import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../config/service/app_services.dart';
 import '../theme/app_color.dart';
@@ -12,7 +6,7 @@ import '../theme/app_color.dart';
 class MyAppBar extends StatefulWidget implements PreferredSizeWidget {
   const MyAppBar({
     super.key,
-     this.title,
+    this.title,
     this.leading,
     this.titleWidget,
     this.actions,
@@ -42,7 +36,7 @@ class _MyAppBarState extends State<MyAppBar> {
   Widget? get backButton {
     final themeMode = AppService.instance.themeMode.value;
 
-    if(Navigator.canPop(context)){
+    if (Navigator.canPop(context)) {
       return Align(
         alignment: Alignment.centerLeft,
         child: Padding(
@@ -53,8 +47,7 @@ class _MyAppBarState extends State<MyAppBar> {
             child: Ink(
               padding: const EdgeInsets.all(10),
               decoration: BoxDecoration(
-                borderRadius:
-                const BorderRadius.all(Radius.circular(6)),
+                borderRadius: const BorderRadius.all(Radius.circular(6)),
                 color: themeMode.isLight
                     ? AppColors.neutral_05
                     : AppColors.neutral_01,
@@ -73,12 +66,10 @@ class _MyAppBarState extends State<MyAppBar> {
   }
 
   Widget? get title {
-    if(widget.title == null) return null;
     return widget.titleWidget ??
         Text(
-          widget.title!,
-          style: Theme
-              .of(context)
+          widget.title ?? "DTND",
+          style: Theme.of(context)
               .textTheme
               .labelLarge
               ?.copyWith(fontWeight: FontWeight.w700),

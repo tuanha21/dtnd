@@ -14,6 +14,7 @@ import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:dtnd/ui/widget/icon/icon_button.dart';
 import 'package:dtnd/ui/widget/my_appbar.dart';
+import 'package:dtnd/ui/widget/section/simple_appbar.dart';
 import 'package:flutter/material.dart';
 
 class AssetScreen extends StatefulWidget {

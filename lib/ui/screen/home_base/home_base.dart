@@ -29,7 +29,7 @@ class _HomeBaseState extends State<HomeBase> {
 
   void _selectTab(HomeNav homeNav) {
     if (homeNav == currentHomeNav.value) {
-      homeNavKeys[homeNav]!.currentState!.popUntil((route) => route.isFirst);
+      homeNavKeys[homeNav]!.currentState?.popUntil((route) => route.isFirst);
     } else {
       currentHomeNav.value = homeNav;
     }

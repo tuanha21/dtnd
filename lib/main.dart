@@ -1,6 +1,5 @@
 import 'package:dtnd/config/service/app_services.dart';
 import 'package:dtnd/config/service/environment.dart';
-import 'package:dtnd/data/i_local_storage_service.dart';
 import 'package:dtnd/data/implementations/data_center_service.dart';
 import 'package:dtnd/data/implementations/network_service.dart';
 import 'package:dtnd/data/implementations/local_storage_service.dart';
@@ -46,7 +45,7 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   final AppService appService = AppService();
   final GoRouter _router = GoRouter(
-    initialLocation: "/SignIn",
+    initialLocation: "/",
     routes: <GoRoute>[
       GoRoute(
         path: '/',
