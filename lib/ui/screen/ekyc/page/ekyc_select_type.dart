@@ -27,7 +27,7 @@ class _EkycSelectTypeState extends State<EkycSelectType> {
       appBar: AppBar(
         leading: BackButton(
           onPressed: () {
-            state.step.value = EkycPageStep.intro;
+            logic.backStep();
           },
         ),
       ),
@@ -61,9 +61,12 @@ class _EkycSelectTypeState extends State<EkycSelectType> {
               ]),
             ),
             const SizedBox(height: 24),
-            const CardTitle(
+            CardTitle(
               icon: AppImages.personalCard,
               title: 'CMND/CCCD',
+              onTap: () {
+                Get.find<EkycLogic>().nextStep();
+              },
             ),
             const SizedBox(height: 16),
             const CardTitle(
@@ -85,13 +88,16 @@ class _EkycSelectTypeState extends State<EkycSelectType> {
 class CardTitle extends StatelessWidget {
   final String icon;
   final String title;
+  final VoidCallback? onTap;
 
-  const CardTitle({Key? key, required this.icon, required this.title})
+  const CardTitle(
+      {Key? key, required this.icon, required this.title, this.onTap})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
+      onTap: onTap,
       tileColor: AppColors.neu_01,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
       leading: Container(

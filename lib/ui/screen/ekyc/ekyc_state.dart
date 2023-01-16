@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 
 import 'page/ekyc_introduce_page.dart';
 import 'page/ekyc_select_type.dart';
+import 'page/validator_identity.dart';
 
 class EkycState {
   final step = EkycPageStep.intro.obs;
@@ -15,7 +16,7 @@ class EkycState {
 enum EkycPageStep {
   intro(EkycIntroducePage()),
   selectType(EkycSelectType()),
-  validator(SizedBox()),
+  validator(ValidatorIdentity()),
   validatorError(SizedBox()),
   identityInform(SizedBox()),
   success(SizedBox());

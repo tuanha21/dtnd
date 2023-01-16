@@ -4,6 +4,7 @@ import 'package:dtnd/data/implementations/data_center_service.dart';
 import 'package:dtnd/data/implementations/network_service.dart';
 import 'package:dtnd/data/implementations/local_storage_service.dart';
 import 'package:dtnd/generated/l10n.dart';
+import 'package:dtnd/ui/screen/ekyc/page/camera_preview_card.dart';
 import 'package:dtnd/ui/screen/home_base/home_base.dart';
 import 'package:dtnd/ui/screen/login/login_screen.dart';
 import 'package:dtnd/ui/screen/sign_up/create_new_pass.dart';
@@ -110,6 +111,13 @@ class _MyAppState extends State<MyApp> {
           return const EkycPage();
         },
         path: '/Ekyc',
+      ),
+      GoRoute(
+        name: "camera",
+        path: '/Camera',
+        builder: (BuildContext context, GoRouterState state) {
+          return const CameraPreviewCard();
+        },
       ),
       GoRoute(
         path: '/VirtualAssistant',

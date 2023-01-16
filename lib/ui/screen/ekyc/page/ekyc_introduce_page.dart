@@ -47,10 +47,10 @@ class EkycIntroducePage extends StatelessWidget {
                       text: "eKYC",
                       style: titleSmall?.copyWith(
                           fontWeight: FontWeight.w700,
-                          color: AppColors.neutral_04)),
+                          color: AppColors.light_bg)),
                   TextSpan(
                       text:
-                      ' là điều kiện bắt buộc khi giao dịch các sản phẩm đầu tư',
+                          ' là điều kiện bắt buộc khi giao dịch các sản phẩm đầu tư',
                       style: titleSmall?.copyWith(
                           fontWeight: FontWeight.w500,
                           color: AppColors.neutral_04)),
@@ -61,8 +61,9 @@ class EkycIntroducePage extends StatelessWidget {
                   width: MediaQuery.of(context).size.width,
                   child: ElevatedButton(
                       onPressed: () {
-                        Get.find<EkycLogic>().state.step.value = EkycPageStep.selectType;
-                      }, child: const Text("Xác minh ngay"))),
+                        Get.find<EkycLogic>().nextStep();
+                      },
+                      child: const Text("Xác minh ngay"))),
               const SizedBox(height: 16),
               GestureDetector(
                 onTap: () {
@@ -70,9 +71,9 @@ class EkycIntroducePage extends StatelessWidget {
                 },
                 child: Center(
                     child: Text(
-                      'Để sau',
-                      style: titleSmall,
-                    )),
+                  'Để sau',
+                  style: titleSmall,
+                )),
               ),
               const SizedBox(height: 30),
             ],

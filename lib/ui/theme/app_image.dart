@@ -41,7 +41,12 @@ class AppImages {
   static const String icon_error = "assets/svg/Icon_error.svg";
   static const String icon_success = "assets/svg/icon_success.svg";
   static const String personalCard = "assets/svg/personalcard.svg";
+  static const String personalCardWhite = "assets/svg/personalcard_white.svg";
   static const String documentCopy = "assets/svg/document-copy.svg";
+  static const String camera = "assets/svg/camera.svg";
+  static const String image = "assets/svg/Image_icon.svg";
+  static const String card = "assets/svg/card.svg";
+  static const String edit2 = "assets/svg/edit-2.svg";
 
 
   static const String qa_base = "assets/svg/qa_base.svg";
