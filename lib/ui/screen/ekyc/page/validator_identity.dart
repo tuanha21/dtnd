@@ -33,6 +33,14 @@ class _ValidatorIdentityState extends State<ValidatorIdentity> {
   }
 
   @override
+  void initState() {
+    identityFront = state.identityFront;
+    identityBack = state.identityBack;
+    isContinue.value = isContinueStep;
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final headlineSmall = Theme.of(context).textTheme.headlineSmall;
     var titleSmall = Theme.of(context).textTheme.titleSmall;
@@ -103,9 +111,13 @@ class _ValidatorIdentityState extends State<ValidatorIdentity> {
                   return SizedBox(
                       width: MediaQuery.of(context).size.width,
                       child: ElevatedButton(
-                          onPressed: isContinue ? () {
-                            logic.nextStep();
-                          } : null,
+                          onPressed: isContinue
+                              ? () {
+                                  state.identityFront = identityFront;
+                                  state.identityBack = identityBack;
+                                  logic.nextStep();
+                                }
+                              : null,
                           child: const Text('Tiếp tục')));
                 },
               ),
