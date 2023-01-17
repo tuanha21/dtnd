@@ -1,10 +1,10 @@
 import 'package:dtnd/=models=/response/stock_model.dart';
 import 'package:dtnd/config/service/app_services.dart';
 import 'package:dtnd/generated/l10n.dart';
-import 'package:dtnd/ui/screen/stock_detail.dart/widget/bounce_price.dart';
-import 'package:dtnd/ui/screen/stock_detail.dart/widget/tab_matched_detail.dart';
-import 'package:dtnd/ui/screen/stock_detail.dart/widget/tab_trading_board.dart';
-import 'package:dtnd/ui/screen/stock_detail.dart/widget/three_price.dart';
+import 'package:dtnd/ui/screen/stock_detail/widget/bounce_price.dart';
+import 'package:dtnd/ui/screen/stock_detail/widget/tab_matched_detail.dart';
+import 'package:dtnd/ui/screen/stock_detail/widget/tab_trading_board.dart';
+import 'package:dtnd/ui/screen/stock_detail/widget/three_price.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:flutter/material.dart';
 import 'package:sliding_up_panel2/sliding_up_panel2.dart';

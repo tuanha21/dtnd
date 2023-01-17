@@ -81,6 +81,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "billion_short": MessageLookupByLibrary.simpleMessage("B"),
         "birthday": MessageLookupByLibrary.simpleMessage("Birthday"),
         "bond": MessageLookupByLibrary.simpleMessage("Bond"),
+        "business_information":
+            MessageLookupByLibrary.simpleMessage("Business information"),
         "buy": MessageLookupByLibrary.simpleMessage("Buy"),
         "buy_price": MessageLookupByLibrary.simpleMessage("Buy price"),
         "cancel": MessageLookupByLibrary.simpleMessage("Cancel"),

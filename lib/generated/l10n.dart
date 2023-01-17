@@ -1992,6 +1992,16 @@ class S {
     );
   }
 
+  /// `Business information`
+  String get business_information {
+    return Intl.message(
+      'Business information',
+      name: 'business_information',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Login with OTP code sent to your phone`
   String get login_exception_required_OTP {
     return Intl.message(

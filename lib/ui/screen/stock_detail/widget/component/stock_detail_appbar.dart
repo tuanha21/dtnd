@@ -1,6 +1,6 @@
 import 'package:dtnd/=models=/response/stock_model.dart';
 import 'package:dtnd/config/service/app_services.dart';
-import 'package:dtnd/ui/screen/stock_detail.dart/widget/stock_detail_overview.dart';
+import 'package:dtnd/ui/screen/stock_detail/widget/stock_detail_overview.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:dtnd/ui/theme/app_textstyle.dart';
@@ -11,8 +11,11 @@ final appbarPaddingTop = WidgetsBinding.instance.window.viewPadding.top /
     WidgetsBinding.instance.window.devicePixelRatio;
 
 class StockDetailAppbar extends SliverPersistentHeaderDelegate {
-  StockDetailAppbar({required this.stockModel});
-
+  StockDetailAppbar({
+    required this.stockModel,
+    this.onTap,
+  });
+  final VoidCallback? onTap;
   final StockModel stockModel;
   @override
   Widget build(
@@ -53,33 +56,36 @@ class StockDetailAppbar extends SliverPersistentHeaderDelegate {
                 ),
               ),
             ),
-            title: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text.rich(
-                  TextSpan(
-                    children: [
-                      TextSpan(
-                          text: stockModel.stock.stockCode,
-                          style: Theme.of(context)
-                              .textTheme
-                              .labelLarge!
-                              .copyWith(fontWeight: FontWeight.w700)),
-                      const TextSpan(text: " "),
-                      TextSpan(
-                        text: "(${stockModel.stock.postTo?.name})",
-                        style: AppTextStyle.labelLarge_18
-                            .copyWith(color: AppColors.neutral_03),
-                      ),
-                    ],
+            title: GestureDetector(
+              onTap: onTap,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text.rich(
+                    TextSpan(
+                      children: [
+                        TextSpan(
+                            text: stockModel.stock.stockCode,
+                            style: Theme.of(context)
+                                .textTheme
+                                .labelLarge!
+                                .copyWith(fontWeight: FontWeight.w700)),
+                        const TextSpan(text: " "),
+                        TextSpan(
+                          text: "(${stockModel.stock.postTo?.name})",
+                          style: AppTextStyle.labelLarge_18
+                              .copyWith(color: AppColors.neutral_03),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-                Text(
-                  "${stockModel.stock.nameShort}",
-                  style: AppTextStyle.bottomNavLabel
-                      .copyWith(color: AppColors.neutral_03),
-                ),
-              ],
+                  Text(
+                    "${stockModel.stock.nameShort}",
+                    style: AppTextStyle.bottomNavLabel
+                        .copyWith(color: AppColors.neutral_03),
+                  ),
+                ],
+              ),
             ),
             actions: [
               SvgIconButton(

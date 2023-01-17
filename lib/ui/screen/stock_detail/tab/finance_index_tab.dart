@@ -3,8 +3,8 @@ import 'package:dtnd/data/i_data_center_service.dart';
 import 'package:dtnd/data/implementations/data_center_service.dart';
 import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/screen/home/widget/home_section.dart';
-import 'package:dtnd/ui/screen/stock_detail.dart/widget/component/benefit_chart.dart';
-import 'package:dtnd/ui/screen/stock_detail.dart/widget/financial_index.dart';
+import 'package:dtnd/ui/screen/stock_detail/widget/component/benefit_chart.dart';
+import 'package:dtnd/ui/screen/stock_detail/widget/financial_index.dart';
 import 'package:flutter/material.dart';
 import 'package:sliding_up_panel2/sliding_up_panel2.dart';
 

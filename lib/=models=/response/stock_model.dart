@@ -1,3 +1,4 @@
+import 'package:dtnd/=models=/response/business_profile_model.dart';
 import 'package:dtnd/=models=/response/inday_matched_order.dart';
 import 'package:dtnd/=models=/response/security_basic_info_model.dart';
 import 'package:dtnd/=models=/response/stock.dart';
@@ -19,6 +20,7 @@ class StockModel {
   final Rx<SecurityBasicInfo?> securityBasicInfo = Rxn();
   final List<StockFinancialIndex> stockFinancialIndex = [];
   final Rx<StockRankingFinancialIndex?> stockRankingFinancialIndex = Rxn();
+  BusinnessProfileModel? businnessProfileModel;
   List<IndayMatchedOrder> get listMatchedOrder => _listMatchedOrder;
 
   void updateListMatchedOrder(List<IndayMatchedOrder> newList) {

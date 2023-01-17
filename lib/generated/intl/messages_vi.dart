@@ -79,6 +79,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "billion_short": MessageLookupByLibrary.simpleMessage("T"),
         "birthday": MessageLookupByLibrary.simpleMessage("Ngày sinh"),
         "bond": MessageLookupByLibrary.simpleMessage("Trái phiếu"),
+        "business_information":
+            MessageLookupByLibrary.simpleMessage("Thông tin doanh nghiệp"),
         "buy": MessageLookupByLibrary.simpleMessage("Mua"),
         "buy_price": MessageLookupByLibrary.simpleMessage("Giá mua vào"),
         "cancel": MessageLookupByLibrary.simpleMessage("Huỷ"),

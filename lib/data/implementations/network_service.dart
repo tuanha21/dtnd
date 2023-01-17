@@ -3,6 +3,7 @@
 import 'dart:convert';
 
 import 'package:dtnd/=models=/response/account_info_model.dart';
+import 'package:dtnd/=models=/response/business_profile_model.dart';
 import 'package:dtnd/=models=/response/deep_model.dart';
 import 'package:dtnd/=models=/response/inday_matched_order.dart';
 import 'package:dtnd/=models=/response/index_detail.dart';
@@ -450,6 +451,24 @@ class NetworkService implements INetworkService {
     response = response["data"].first;
     logger.v(response);
     final SecurityBasicInfo result = SecurityBasicInfo.fromJson(response);
+    return result;
+  }
+
+  @override
+  Future<BusinnessProfileModel?> getBusinnessProfile(String body) async {
+    dynamic response =
+        await client.post(url_algo("companies/introduction"), body: body);
+    if (response.statusCode != 200) {
+      throw response;
+    }
+    response = decode(response.bodyBytes);
+    logger.v(response);
+    if (response["status"] != 200) {
+      throw response["message"];
+    }
+    response = response["data"];
+    final BusinnessProfileModel result =
+        BusinnessProfileModel.fromJson(response);
     return result;
   }
 }

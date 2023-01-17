@@ -203,6 +203,7 @@
     "sex": "Sex",
     "contact_infomation": "Contact information",
     "address": "Adrress",
+    "business_information": "Business information",
 
     "login_exception_required_OTP": "Login with OTP code sent to your phone",
     "invalid_account": "This account has not been registered or Internet trading feature is no longer available",

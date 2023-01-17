@@ -1,4 +1,5 @@
 import 'package:dtnd/=models=/index.dart';
+import 'package:dtnd/=models=/response/business_profile_model.dart';
 import 'package:dtnd/=models=/response/deep_model.dart';
 import 'package:dtnd/=models=/response/inday_matched_order.dart';
 import 'package:dtnd/=models=/response/index_model.dart';
@@ -444,5 +445,11 @@ class DataCenterService implements IDataCenterService {
       [String lang = "vi"]) {
     final body = '{"lang":"$lang", "secList":"$code", "Exchange":""}';
     return networkService.getSecurityBasicInfo(body);
+  }
+
+  @override
+  Future<BusinnessProfileModel?> getBusinnessProfile(String stockCode) {
+    final body = '{"secCode":"$stockCode"}';
+    return networkService.getBusinnessProfile(body);
   }
 }

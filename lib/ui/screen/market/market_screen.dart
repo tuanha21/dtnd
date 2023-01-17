@@ -31,7 +31,6 @@ class _MarketScreenState extends State<MarketScreen>
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: MyAppBar(
-          title: "DTND",
           actions: [
             SvgPicture.asset(AppImages.search_appbar_icon),
             const SizedBox(

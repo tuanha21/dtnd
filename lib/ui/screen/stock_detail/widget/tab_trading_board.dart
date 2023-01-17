@@ -1,6 +1,6 @@
 import 'package:dtnd/=models=/response/stock_model.dart';
-import 'package:dtnd/ui/screen/stock_detail.dart/widget/bounce_price.dart';
-import 'package:dtnd/ui/screen/stock_detail.dart/widget/three_price.dart';
+import 'package:dtnd/ui/screen/stock_detail/widget/bounce_price.dart';
+import 'package:dtnd/ui/screen/stock_detail/widget/three_price.dart';
 import 'package:flutter/material.dart';
 import 'package:sliding_up_panel2/sliding_up_panel2.dart';
 

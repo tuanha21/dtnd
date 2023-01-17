@@ -11,15 +11,16 @@ import 'package:dtnd/data/implementations/user_service.dart';
 import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/screen/exchange_stock/stock_order/sheet/stock_order_sheet.dart';
 import 'package:dtnd/ui/screen/login/login_screen.dart';
-import 'package:dtnd/ui/screen/stock_detail.dart/enum/detail_tab_enum.dart';
-import 'package:dtnd/ui/screen/stock_detail.dart/tab/finance_index_tab.dart';
-import 'package:dtnd/ui/screen/stock_detail.dart/tab/overview_tab.dart';
-import 'package:dtnd/ui/screen/stock_detail.dart/widget/component/price_alert.dart';
-import 'package:dtnd/ui/screen/stock_detail.dart/widget/component/stock_detail_appbar.dart';
-import 'package:dtnd/ui/screen/stock_detail.dart/widget/financial_index.dart';
-import 'package:dtnd/ui/screen/stock_detail.dart/widget/stock_detail_chart.dart';
-import 'package:dtnd/ui/screen/stock_detail.dart/widget/stock_detail_news.dart';
-import 'package:dtnd/ui/screen/stock_detail.dart/widget/tab_trading_board.dart';
+import 'package:dtnd/ui/screen/stock_detail/enum/detail_tab_enum.dart';
+import 'package:dtnd/ui/screen/stock_detail/sheet/business_infomation_sheet.dart';
+import 'package:dtnd/ui/screen/stock_detail/tab/finance_index_tab.dart';
+import 'package:dtnd/ui/screen/stock_detail/tab/overview_tab.dart';
+import 'package:dtnd/ui/screen/stock_detail/widget/component/price_alert.dart';
+import 'package:dtnd/ui/screen/stock_detail/widget/component/stock_detail_appbar.dart';
+import 'package:dtnd/ui/screen/stock_detail/widget/financial_index.dart';
+import 'package:dtnd/ui/screen/stock_detail/widget/stock_detail_chart.dart';
+import 'package:dtnd/ui/screen/stock_detail/widget/stock_detail_news.dart';
+import 'package:dtnd/ui/screen/stock_detail/widget/tab_trading_board.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:dtnd/ui/widget/overlay/login_first_dialog.dart';
@@ -119,6 +120,14 @@ class _StockDetailScreenState extends State<StockDetailScreen>
     }
   }
 
+  void _onAppbarTap() {
+    BusinessInformationISheet(widget.stockModel).show(
+        context,
+        BusinessInformationSheet(
+          stockModel: widget.stockModel,
+        ));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -139,8 +148,12 @@ class _StockDetailScreenState extends State<StockDetailScreen>
                 handle:
                     NestedScrollView.sliverOverlapAbsorberHandleFor(context),
                 sliver: SliverPersistentHeader(
-                    pinned: true,
-                    delegate: StockDetailAppbar(stockModel: widget.stockModel)),
+                  pinned: true,
+                  delegate: StockDetailAppbar(
+                    stockModel: widget.stockModel,
+                    onTap: _onAppbarTap,
+                  ),
+                ),
               ),
             ];
           },

@@ -87,3 +87,25 @@ class StockOrderSuccessISheet extends IStockOrderSheet {
   @override
   Future<void>? onResultNext([cmd]) => null;
 }
+
+class BusinessInformationISheet extends IStockOrderSheet {
+  BusinessInformationISheet(super.stockModel);
+
+  @override
+  ISheet? back([dynamic cmd]) => null;
+
+  @override
+  ISheet? next([dynamic cmd]) => null;
+
+  @override
+  Widget? backWidget([cmd]) => null;
+
+  @override
+  Widget? nextWidget([cmd]) => null;
+
+  @override
+  Future<void>? onResultBack([cmd]) => null;
+
+  @override
+  Future<void>? onResultNext([cmd]) => null;
+}

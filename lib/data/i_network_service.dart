@@ -2,6 +2,7 @@
 
 import 'package:dtnd/=models=/index.dart';
 import 'package:dtnd/=models=/response/account_info_model.dart';
+import 'package:dtnd/=models=/response/business_profile_model.dart';
 import 'package:dtnd/=models=/response/deep_model.dart';
 import 'package:dtnd/=models=/response/inday_matched_order.dart';
 import 'package:dtnd/=models=/response/index_chart_data.dart';
@@ -83,4 +84,7 @@ abstract class INetworkService {
   Future<SecurityBasicInfo?> getSecurityBasicInfo(String body);
 
   Future<UserInfo?> getUserInfo(RequestModel requestModel);
+
+  //business info
+  Future<BusinnessProfileModel?> getBusinnessProfile(String body);
 }

@@ -1,5 +1,5 @@
 import 'package:dtnd/generated/l10n.dart';
-import 'package:dtnd/ui/screen/stock_detail.dart/enum/price_alert_enum.dart';
+import 'package:dtnd/ui/screen/stock_detail/enum/price_alert_enum.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:flutter/material.dart';
