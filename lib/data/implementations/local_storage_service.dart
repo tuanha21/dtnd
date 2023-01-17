@@ -125,4 +125,10 @@ class LocalStorageService implements ILocalStorageService {
   Future<void> flush() {
     return _box.flush();
   }
+  
+  @override
+  Stock? geStock(String code) {
+    // TODO: implement geStock
+    throw UnimplementedError();
+  }
 }

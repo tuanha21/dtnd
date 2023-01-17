@@ -17,6 +17,8 @@ abstract class ILocalStorageService {
 
   List<Stock>? getSavedListAllStock();
 
+  Stock? geStock(String code);
+
   UserToken? getSavedUserToken();
 
   Future<void> saveUserToken(UserToken token);

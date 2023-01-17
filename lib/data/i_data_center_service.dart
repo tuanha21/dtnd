@@ -39,6 +39,8 @@ abstract class IDataCenterService {
 
   Future<List<Stock>> searchStocksBySym(String sym, {int maxSuggestions});
 
+  Stock? getStocksBySym(String sym);
+
   Future<StockTradingHistory?> getStockIndayTradingHistory(String stockCode);
 
   Future<StockTradingHistory?> getStockTradingHistory(

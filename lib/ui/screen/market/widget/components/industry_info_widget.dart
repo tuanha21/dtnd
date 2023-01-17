@@ -138,16 +138,27 @@ class _IndustryInfoWidgetState extends State<IndustryInfoWidget> {
                             Widget pre;
                             Color color;
                             if (per >= 0) {
-                              pre = Image.asset(AppImages.prefix_up_icon);
+                              pre = Image.asset(
+                                AppImages.prefix_up_icon,
+                                width: 12,
+                              );
                               color = AppColors.semantic_01;
                             } else {
-                              pre = Image.asset(AppImages.prefix_down_icon);
+                              pre = Image.asset(
+                                AppImages.prefix_down_icon,
+                                width: 12,
+                              );
                               color = AppColors.semantic_03;
                             }
-                            return Text(
-                              "${per.toStringAsPrecision(2)}%",
-                              style:
-                                  textTheme.labelMedium!.copyWith(color: color),
+                            return Row(
+                              children: [
+                                pre,
+                                Text(
+                                  "${per.toStringAsPrecision(2)}%",
+                                  style: textTheme.labelMedium!
+                                      .copyWith(color: color),
+                                ),
+                              ],
                             );
                           }),
                         ],
@@ -157,7 +168,71 @@ class _IndustryInfoWidgetState extends State<IndustryInfoWidget> {
                 ),
               ],
             ),
-          )
+          ),
+          const SizedBox(height: 16),
+          Container(
+            padding: const EdgeInsets.all(16),
+            decoration: const BoxDecoration(
+              borderRadius: BorderRadius.all(Radius.circular(8)),
+              color: Colors.white,
+            ),
+            child: Column(
+              children: [
+                for (int i = 0; i < (currentIndustry?.stocks.length ?? 0); i++)
+                  Builder(builder: (context) {
+                    Widget row = Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 16),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Expanded(
+                            child: Row(
+                              children: [
+                                Text(currentIndustry!.stocks
+                                        .elementAt(i)
+                                        .sTOCKCODE ??
+                                    ""),
+                                const SizedBox(width: 8),
+                                Text(
+                                    "(${currentIndustry!.stocks.elementAt(i).stock.postTo?.name ?? ""})"),
+                              ],
+                            ),
+                          ),
+                          SizedBox(
+                            width: 80,
+                            child: Align(
+                              alignment: Alignment.centerRight,
+                              child: Text(currentIndustry!.stocks
+                                  .elementAt(i)
+                                  .lASTPRICE
+                                  .toString()),
+                            ),
+                          ),
+                          Expanded(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                Text(currentIndustry!.stocks
+                                    .elementAt(i)
+                                    .cHANGE
+                                    .toString()),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                    if (i == 0) {
+                      return row;
+                    } else {
+                      return Column(
+                        children: [Divider(), row],
+                      );
+                    }
+                  }),
+              ],
+            ),
+          ),
         ],
       );
     }

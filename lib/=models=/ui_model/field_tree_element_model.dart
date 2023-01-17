@@ -1,3 +1,6 @@
+import 'package:dtnd/=models=/response/stock.dart';
+import 'package:dtnd/data/i_data_center_service.dart';
+import 'package:dtnd/data/i_network_service.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:flutter/material.dart';
 
@@ -44,6 +47,7 @@ class FieldTreeModel {
 }
 
 class FieldTreeElementModel {
+  late final Stock stock;
   String? sTOCKCODE;
   num? vHTT;
   String? sTOCKNAME;
@@ -113,6 +117,10 @@ class FieldTreeElementModel {
     // this.cHARTNOTIME,
     // this.cATID,
   });
+
+  void getStock(IDataCenterService dataCenterService) {
+    stock = dataCenterService.getStocksBySym(sTOCKCODE!)!;
+  }
 
   FieldTreeElementModel.fromJson(Map<String, dynamic> json) {
     sTOCKCODE = json['STOCK_CODE'];

@@ -321,6 +321,13 @@ class DataCenterService implements IDataCenterService {
   }
 
   @override
+  Stock? getStocksBySym(String sym) {
+    final _sym = sym.toUpperCase();
+
+    return listAllStock.firstWhere((element) => element.stockCode == _sym);
+  }
+
+  @override
   Future<StockData> getStockData(String stockCode) async {
     final List<StockDataResponse> listResponse =
         await networkService.getListStockData(stockCode);
@@ -408,8 +415,14 @@ class DataCenterService implements IDataCenterService {
 
   @override
   Future<List<FieldTreeModel>> getListIndustryHeatMap(
-      {int top = 8, String type = "KL"}) {
-    return networkService.getListIndustryHeatMap(top, type);
+      {int top = 8, String type = "KL"}) async {
+    final result = await networkService.getListIndustryHeatMap(top, type);
+    for (var field in result) {
+      for (var element in field.stocks) {
+        element.getStock(this);
+      }
+    }
+    return result;
   }
 
   @override
