@@ -21,6 +21,7 @@ import 'package:dtnd/=models=/response/stock_news.dart';
 import 'package:dtnd/=models=/response/stock_ranking_financial_index_model.dart';
 import 'package:dtnd/=models=/response/stock_trade.dart';
 import 'package:dtnd/=models=/response/stock_trading_history.dart';
+import 'package:dtnd/=models=/response/subsidiaries_model.dart';
 import 'package:dtnd/=models=/response/top_influence_model.dart';
 import 'package:dtnd/=models=/response/user_token.dart';
 import 'package:dtnd/=models=/request/request_model.dart';
@@ -469,6 +470,47 @@ class NetworkService implements INetworkService {
     response = response["data"];
     final BusinnessProfileModel result =
         BusinnessProfileModel.fromJson(response);
+    return result;
+  }
+
+  @override
+  Future<List<BusinnessLeaderModel>?> getBusinnessLeaders(String body) async {
+    dynamic response =
+        await client.post(url_algo("companies/leaders"), body: body);
+    if (response.statusCode != 200) {
+      throw response;
+    }
+    response = decode(response.bodyBytes);
+    logger.v(response);
+    if (response["status"] != 200) {
+      throw response["message"];
+    }
+    response = response["data"];
+    final List<BusinnessLeaderModel> result = [];
+    for (var element in response) {
+      result.add(BusinnessLeaderModel.fromJson(element));
+    }
+    return result;
+  }
+
+  @override
+  Future<List<SubsidiariesModel>?> getSubsidiaries(
+      Map<String, dynamic> body) async {
+    dynamic response =
+        await client.get(url_algo("companies/relatedCompanies", body));
+    if (response.statusCode != 200) {
+      throw response;
+    }
+    response = decode(response.bodyBytes);
+    logger.v(response);
+    if (response["status"] != 200) {
+      throw response["message"];
+    }
+    response = response["data"];
+    final List<SubsidiariesModel> result = [];
+    for (var element in response) {
+      result.add(SubsidiariesModel.fromJson(element));
+    }
     return result;
   }
 }

@@ -70,6 +70,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "asset": MessageLookupByLibrary.simpleMessage("Asset"),
         "asset_distribution":
             MessageLookupByLibrary.simpleMessage("Asset distribution"),
+        "associated_company":
+            MessageLookupByLibrary.simpleMessage("Associated Company"),
         "available_balanc":
             MessageLookupByLibrary.simpleMessage("Available balanc"),
         "available_vol": MessageLookupByLibrary.simpleMessage("Available vol"),
@@ -155,6 +157,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "fsell": MessageLookupByLibrary.simpleMessage("FR sell"),
         "full_name": MessageLookupByLibrary.simpleMessage("Full name"),
         "gain_wvalue": m2,
+        "general_information":
+            MessageLookupByLibrary.simpleMessage("General information"),
         "hello": MessageLookupByLibrary.simpleMessage("Hello"),
         "help_center": MessageLookupByLibrary.simpleMessage("Help center"),
         "hi": MessageLookupByLibrary.simpleMessage("Hi"),
@@ -291,6 +295,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "stock_trading": MessageLookupByLibrary.simpleMessage("Stock trading"),
         "stocks_you_interested": MessageLookupByLibrary.simpleMessage(
             "Stocks you are interested in"),
+        "subsidiaries": MessageLookupByLibrary.simpleMessage("Subsidiaries"),
         "successfully_create_assistant_account":
             MessageLookupByLibrary.simpleMessage(
                 "Create virtual assistant successfully"),

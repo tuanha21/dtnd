@@ -203,6 +203,9 @@
     "contact_infomation": "Thông tin liên lạc",
     "address": "Địa chỉ",
     "business_information": "Thông tin doanh nghiệp",
+    "general_information": "Thông tin chung",
+    "subsidiaries": "Công ty con",
+    "associated_company": "Công ty liên kết",
 
     "login_exception_required_OTP": "Hãy đăng nhập bằng mã OTP được gửi về máy của bạn",
     "invalid_account": "Tài khoản chưa đăng ký hoặc đã hết hiệu lực giao dịch Internet",

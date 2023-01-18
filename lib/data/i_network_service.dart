@@ -19,6 +19,7 @@ import 'package:dtnd/=models=/response/stock_news.dart';
 import 'package:dtnd/=models=/response/stock_ranking_financial_index_model.dart';
 import 'package:dtnd/=models=/response/stock_trade.dart';
 import 'package:dtnd/=models=/response/stock_trading_history.dart';
+import 'package:dtnd/=models=/response/subsidiaries_model.dart';
 import 'package:dtnd/=models=/response/top_influence_model.dart';
 import 'package:dtnd/=models=/ui_model/field_tree_element_model.dart';
 import 'package:dtnd/config/service/environment.dart';
@@ -87,4 +88,8 @@ abstract class INetworkService {
 
   //business info
   Future<BusinnessProfileModel?> getBusinnessProfile(String body);
+
+  Future<List<BusinnessLeaderModel>?> getBusinnessLeaders(String body);
+
+  Future<List<SubsidiariesModel>?> getSubsidiaries(Map<String, dynamic> body);
 }

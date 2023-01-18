@@ -10,7 +10,8 @@ class AssetDistributionChart extends StatelessWidget {
     final textTheme = Theme.of(context).textTheme;
     return Container(
       padding: const EdgeInsets.all(10),
-      decoration: BoxDecoration(shape: BoxShape.circle, color: Colors.white),
+      decoration:
+          const BoxDecoration(shape: BoxShape.circle, color: Colors.white),
       child: AspectRatio(
         aspectRatio: 1.3,
         child: SfCircularChart(palette: const [
@@ -18,7 +19,9 @@ class AssetDistributionChart extends StatelessWidget {
           AppColors.graph_2,
           AppColors.graph_3,
           AppColors.graph_4,
-          AppColors.graph_5
+          AppColors.graph_5,
+          AppColors.graph_6,
+          AppColors.graph_7,
         ],
             // tooltipBehavior: TooltipBehavior(
             //     enable: true,
@@ -41,6 +44,14 @@ class AssetDistributionChart extends StatelessWidget {
             //               fontSize: 12,
             //             ),
             //           ));
+            //     }),
+            // legend: Legend(
+            //     isVisible: true,
+            //     // Templating the legend item
+            //     position: LegendPosition.bottom,
+            //     legendItemBuilder:
+            //         (String name, dynamic series, dynamic point, int index) {
+            //       return SizedBox(height: 20, width: 10, child: Text(name));
             //     }),
             annotations: <CircularChartAnnotation>[
               CircularChartAnnotation(

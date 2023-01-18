@@ -16,3 +16,46 @@ class BusinnessProfileModel {
     return data;
   }
 }
+
+class BusinnessLeaderModel {
+  String? securityCode;
+  String? fullName;
+  String? fullNameEn;
+  String? position;
+  String? positionEn;
+  num? personalHeld;
+  num? personalHeldPct;
+
+  BusinnessLeaderModel(
+      {this.securityCode,
+      this.fullName,
+      this.fullNameEn,
+      this.position,
+      this.positionEn,
+      this.personalHeld,
+      this.personalHeldPct});
+
+  BusinnessLeaderModel.fromJson(Map<String, dynamic> json) {
+    securityCode = json['securityCode'];
+    fullName = json['fullName'];
+    fullNameEn = json['fullNameEn'];
+    position = json['position'];
+    positionEn = json['positionEn'];
+    personalHeld =
+        num.parse(num.parse(json['personalHeld'] ?? "0").toStringAsFixed(2));
+    personalHeldPct =
+        num.parse(num.parse(json['personalHeldPct'] ?? "0").toStringAsFixed(2));
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['securityCode'] = securityCode;
+    data['fullName'] = fullName;
+    data['fullNameEn'] = fullNameEn;
+    data['position'] = position;
+    data['positionEn'] = positionEn;
+    data['personalHeld'] = personalHeld;
+    data['personalHeldPct'] = personalHeldPct;
+    return data;
+  }
+}

@@ -8,6 +8,7 @@ import 'package:dtnd/=models=/response/stock_info_core.dart';
 import 'package:dtnd/=models=/response/stock_ranking_financial_index_model.dart';
 import 'package:dtnd/=models=/response/stock_trade.dart';
 import 'package:dtnd/=models=/response/stock_trading_history.dart';
+import 'package:dtnd/=models=/response/subsidiaries_model.dart';
 import 'package:get/get.dart';
 
 class StockModel {
@@ -20,7 +21,10 @@ class StockModel {
   final Rx<SecurityBasicInfo?> securityBasicInfo = Rxn();
   final List<StockFinancialIndex> stockFinancialIndex = [];
   final Rx<StockRankingFinancialIndex?> stockRankingFinancialIndex = Rxn();
-  BusinnessProfileModel? businnessProfileModel;
+  BusinnessProfileModel? businnessProfile;
+  List<BusinnessLeaderModel>? businnessLeaders;
+  final BusinessSubsidiariesModel subsidiaries = BusinessSubsidiariesModel();
+
   List<IndayMatchedOrder> get listMatchedOrder => _listMatchedOrder;
 
   void updateListMatchedOrder(List<IndayMatchedOrder> newList) {

@@ -13,6 +13,7 @@ import 'package:dtnd/=models=/response/stock_model.dart';
 import 'package:dtnd/=models=/response/stock_news.dart';
 import 'package:dtnd/=models=/response/stock_ranking_financial_index_model.dart';
 import 'package:dtnd/=models=/response/stock_trading_history.dart';
+import 'package:dtnd/=models=/response/subsidiaries_model.dart';
 import 'package:dtnd/=models=/response/top_influence_model.dart';
 import 'package:dtnd/=models=/ui_model/field_tree_element_model.dart';
 import 'package:dtnd/data/i_data_center_service.dart';
@@ -451,5 +452,38 @@ class DataCenterService implements IDataCenterService {
   Future<BusinnessProfileModel?> getBusinnessProfile(String stockCode) {
     final body = '{"secCode":"$stockCode"}';
     return networkService.getBusinnessProfile(body);
+  }
+
+  @override
+  Future<List<BusinnessLeaderModel>?> getBusinnessLeaders(String stockCode) {
+    final body = '{"secCode":"$stockCode"}';
+    return networkService.getBusinnessLeaders(body);
+  }
+
+  @override
+  Future<List<SubsidiariesModel>?> getSubsidiaries(String stockCode) {
+    final body = {
+      "ticker": stockCode,
+      "relatedType": "D933DCAE2B553EE0E055C3B42B92FC60"
+    };
+    return networkService.getSubsidiaries(body);
+  }
+
+  @override
+  Future<List<SubsidiariesModel>?> getAssociatedCompany(String stockCode) {
+    final body = {
+      "ticker": stockCode,
+      "relatedType": "D933DCAE2B563EE0E055C3B42B92FC60"
+    };
+    return networkService.getSubsidiaries(body);
+  }
+
+  @override
+  Future<List<SubsidiariesModel>?> getOtherCompany(String stockCode) {
+    final body = {
+      "ticker": stockCode,
+      "relatedType": "D933DCAE2B583EE0E055C3B42B92FC60"
+    };
+    return networkService.getSubsidiaries(body);
   }
 }

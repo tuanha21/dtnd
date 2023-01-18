@@ -204,6 +204,9 @@
     "contact_infomation": "Contact information",
     "address": "Adrress",
     "business_information": "Business information",
+    "general_information": "General information",
+    "subsidiaries": "Subsidiaries",
+    "associated_company": "Associated Company",
 
     "login_exception_required_OTP": "Login with OTP code sent to your phone",
     "invalid_account": "This account has not been registered or Internet trading feature is no longer available",

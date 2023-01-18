@@ -62,8 +62,6 @@ class _StockDetailScreenState extends State<StockDetailScreen>
 
   void initData() async {
     await getStockIndayTradingHistory();
-    // await getIndayMatchedOrders();
-    // await getStockRankingFinancialIndex();
     await getSecurityBasicInfo();
     setState(() {
       initialized = true;

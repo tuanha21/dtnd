@@ -2002,6 +2002,36 @@ class S {
     );
   }
 
+  /// `General information`
+  String get general_information {
+    return Intl.message(
+      'General information',
+      name: 'general_information',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Subsidiaries`
+  String get subsidiaries {
+    return Intl.message(
+      'Subsidiaries',
+      name: 'subsidiaries',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Associated Company`
+  String get associated_company {
+    return Intl.message(
+      'Associated Company',
+      name: 'associated_company',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Login with OTP code sent to your phone`
   String get login_exception_required_OTP {
     return Intl.message(

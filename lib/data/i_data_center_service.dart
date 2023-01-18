@@ -15,6 +15,7 @@ import 'package:dtnd/=models=/response/stock_model.dart';
 import 'package:dtnd/=models=/response/stock_news.dart';
 import 'package:dtnd/=models=/response/stock_ranking_financial_index_model.dart';
 import 'package:dtnd/=models=/response/stock_trading_history.dart';
+import 'package:dtnd/=models=/response/subsidiaries_model.dart';
 import 'package:dtnd/=models=/response/top_influence_model.dart';
 import 'package:dtnd/=models=/ui_model/field_tree_element_model.dart';
 
@@ -74,4 +75,12 @@ abstract class IDataCenterService {
 
   //business info
   Future<BusinnessProfileModel?> getBusinnessProfile(String stockCode);
+
+  Future<List<BusinnessLeaderModel>?> getBusinnessLeaders(String stockCode);
+
+  Future<List<SubsidiariesModel>?> getSubsidiaries(String stockCode);
+
+  Future<List<SubsidiariesModel>?> getAssociatedCompany(String stockCode);
+
+  Future<List<SubsidiariesModel>?> getOtherCompany(String stockCode);
 }

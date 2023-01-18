@@ -41,8 +41,6 @@ class AppImages {
   static const String icon_error = "assets/svg/Icon_error.svg";
   static const String icon_success = "assets/svg/icon_success.svg";
 
-
-
   static const String qa_base = "assets/svg/qa_base.svg";
   static const String qa_bond = "assets/svg/qa_bond.svg";
   static const String qa_copytrade = "assets/svg/qa_copytrade.svg";
@@ -96,6 +94,8 @@ class AppImages {
   static const String card_tick = "assets/images/card_tick.png";
   static const String document = "assets/images/document.png";
   static const String setting_2 = "assets/images/setting_2.png";
+  static const String call = "assets/images/call.png";
+  static const String global = "assets/images/global.png";
 
   /// BG
   static const String home_asset_card_light_bg =

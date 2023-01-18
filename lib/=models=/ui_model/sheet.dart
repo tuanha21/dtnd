@@ -18,12 +18,7 @@ abstract class ISheet implements IOverlay {
           borderRadius: BorderRadius.vertical(top: Radius.circular(20))),
       builder: (BuildContext context) {
         return Wrap(
-          children: [
-            // TechnicalTradings(
-            //   onChoosen: (value) => Navigator.of(context).pop(value),
-            // ),
-            child
-          ],
+          children: [child],
         );
       },
     ).then((result) => cmd(context, result));

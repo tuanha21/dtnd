@@ -69,6 +69,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "asset": MessageLookupByLibrary.simpleMessage("Tài sản"),
         "asset_distribution":
             MessageLookupByLibrary.simpleMessage("Phân bố tài sản"),
+        "associated_company":
+            MessageLookupByLibrary.simpleMessage("Công ty liên kết"),
         "available_balanc": MessageLookupByLibrary.simpleMessage("SD khả dụng"),
         "available_vol": MessageLookupByLibrary.simpleMessage("KL khả dụng"),
         "average": MessageLookupByLibrary.simpleMessage("Trung bình"),
@@ -148,6 +150,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "fsell": MessageLookupByLibrary.simpleMessage("NN bán"),
         "full_name": MessageLookupByLibrary.simpleMessage("Họ và tên"),
         "gain_wvalue": m2,
+        "general_information":
+            MessageLookupByLibrary.simpleMessage("Thông tin chung"),
         "hello": MessageLookupByLibrary.simpleMessage("Chào bạn"),
         "help_center":
             MessageLookupByLibrary.simpleMessage("Trung tâm trợ giúp"),
@@ -288,6 +292,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Giao dịch cổ phiếu"),
         "stocks_you_interested":
             MessageLookupByLibrary.simpleMessage("Các mã CK mà bạn quan tâm"),
+        "subsidiaries": MessageLookupByLibrary.simpleMessage("Công ty con"),
         "successfully_create_assistant_account":
             MessageLookupByLibrary.simpleMessage(
                 "Tạo tài khoản\ntrợ lý ảo thành công"),
