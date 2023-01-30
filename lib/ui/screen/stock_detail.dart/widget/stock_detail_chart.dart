@@ -2,7 +2,6 @@ import 'package:dtnd/=models=/response/stock_model.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_textstyle.dart';
 import 'package:flutter/material.dart';
-import 'package:k_chart/flutter_k_chart.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 class StockDetailChart extends StatefulWidget {

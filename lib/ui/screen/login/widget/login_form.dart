@@ -283,7 +283,7 @@ class _LoginFormState extends State<LoginForm> {
         height: 50,
         alignment: Alignment.center,
         decoration: BoxDecoration(
-            color: AppColors.neutral_01,
+            color: Theme.of(context).colorScheme.onPrimary,
             borderRadius: BorderRadius.circular(8)),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,

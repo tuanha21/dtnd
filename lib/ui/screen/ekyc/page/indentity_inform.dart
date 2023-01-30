@@ -18,6 +18,8 @@ class _IdentityInformState extends State<IdentityInform> {
 
   @override
   Widget build(BuildContext context) {
+    final headlineSmall = Theme.of(context).textTheme.headlineSmall;
+    var titleSmall = Theme.of(context).textTheme.titleSmall;
     return Scaffold(
       appBar: AppBar(
         leading: BackButton(
@@ -25,6 +27,15 @@ class _IdentityInformState extends State<IdentityInform> {
             logic.backStep();
           },
         ),
+      ),
+      body: Column(
+        children: [
+          const SizedBox(height: 20),
+          Text(
+            'Xác minh tài khoản ',
+            style: headlineSmall?.copyWith(fontWeight: FontWeight.w700),
+          ),
+        ],
       ),
     );
   }

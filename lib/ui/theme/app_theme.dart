@@ -311,6 +311,7 @@ const ColorScheme _darkColorScheme = ColorScheme(
 
 final ElevatedButtonThemeData _elevatedButtonTheme = ElevatedButtonThemeData(
     style: ElevatedButton.styleFrom(
+        foregroundColor: Colors.white,
         padding: const EdgeInsets.symmetric(vertical: 12),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))));
 
