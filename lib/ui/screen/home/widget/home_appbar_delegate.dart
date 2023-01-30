@@ -1,14 +1,17 @@
+import 'package:dtnd/config/service/app_services.dart';
 import 'package:dtnd/ui/screen/home/widget/home_appbar.dart';
 import 'package:dtnd/ui/screen/home/widget/home_quick_access.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
-import 'package:dtnd/ui/widget/my_appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class HomeAppbarDelegate extends SliverPersistentHeaderDelegate {
+  const HomeAppbarDelegate(this.appService);
+  final AppService appService;
   @override
   Widget build(
       BuildContext context, double shrinkOffset, bool overlapsContent) {
+    final themeMode = appService.themeMode;
     final scrollRatio = 1 - (shrinkOffset / _difference);
     final size = MediaQuery.of(context).size;
     return Material(
@@ -50,7 +53,6 @@ class HomeAppbarDelegate extends SliverPersistentHeaderDelegate {
             left: 16,
             child: SizedBox(
               width: size.width - 32,
-              height: 180,
               child: HomeQuickAccess(),
             ),
           ),
@@ -69,5 +71,5 @@ class HomeAppbarDelegate extends SliverPersistentHeaderDelegate {
 
   @override
   bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) =>
-      true;
+      false;
 }

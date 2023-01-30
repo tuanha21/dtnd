@@ -1,11 +1,13 @@
 import 'package:dtnd/=models=/request/request_model.dart';
 import 'package:dtnd/=models=/response/account_info_model.dart';
+import 'package:dtnd/=models=/response/total_asset_model.dart';
 import 'package:dtnd/=models=/response/user_token.dart';
 import 'package:dtnd/data/i_local_storage_service.dart';
 import 'package:dtnd/data/i_network_service.dart';
 import 'package:dtnd/data/i_user_service.dart';
 import 'package:dtnd/data/implementations/local_storage_service.dart';
 import 'package:dtnd/data/implementations/network_service.dart';
+import 'package:dtnd/utilities/logger.dart';
 
 class UserService implements IUserService {
   final ILocalStorageService localStorageService = LocalStorageService();
@@ -19,6 +21,9 @@ class UserService implements IUserService {
   UserToken? userToken;
   @override
   UserInfo? userInfo;
+
+  @override
+  TotalAsset? totalAsset;
 
   @override
   bool regSmartOTP = false;
@@ -46,6 +51,7 @@ class UserService implements IUserService {
       userToken = token;
       await localStorageService.saveUserToken(token);
       await getUserInfo();
+      getTotalAsset();
       return true;
     } catch (e) {
       return false;
@@ -58,7 +64,6 @@ class UserService implements IUserService {
   @override
   UserToken? get token => userToken;
 
-  @override
   Future<UserInfo?> getUserInfo() async {
     if (!isLogin) {
       return null;
@@ -72,5 +77,20 @@ class UserService implements IUserService {
         ));
     userInfo = await networkService.getUserInfo(requestModel);
     return userInfo;
+  }
+
+  Future<TotalAsset?> getTotalAsset() async {
+    if (!isLogin) {
+      return null;
+    }
+
+    final RequestModel requestModel = RequestModel(this,
+        group: "SU",
+        data: RequestDataModel(
+          cmd: "TotalAsset",
+        ));
+    totalAsset = await networkService.getTotalAsset(requestModel);
+    logger.v(totalAsset!.toJson());
+    return totalAsset;
   }
 }

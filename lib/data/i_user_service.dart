@@ -1,4 +1,5 @@
 import 'package:dtnd/=models=/response/account_info_model.dart';
+import 'package:dtnd/=models=/response/total_asset_model.dart';
 import 'package:dtnd/=models=/response/user_token.dart';
 
 abstract class IUserService {
@@ -7,6 +8,8 @@ abstract class IUserService {
   UserToken? get token;
 
   UserInfo? get userInfo;
+
+  TotalAsset? get totalAsset;
 
   bool get regSmartOTP;
 
@@ -17,6 +20,4 @@ abstract class IUserService {
   Future<void> deleteToken();
 
   Future<bool> saveToken(UserToken token);
-
-  Future<UserInfo?> getUserInfo();
 }

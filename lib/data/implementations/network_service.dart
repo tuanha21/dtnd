@@ -23,6 +23,7 @@ import 'package:dtnd/=models=/response/stock_trade.dart';
 import 'package:dtnd/=models=/response/stock_trading_history.dart';
 import 'package:dtnd/=models=/response/subsidiaries_model.dart';
 import 'package:dtnd/=models=/response/top_influence_model.dart';
+import 'package:dtnd/=models=/response/total_asset_model.dart';
 import 'package:dtnd/=models=/response/user_token.dart';
 import 'package:dtnd/=models=/request/request_model.dart';
 import 'package:dtnd/=models=/ui_model/field_tree_element_model.dart';
@@ -301,7 +302,6 @@ class NetworkService implements INetworkService {
   Future<SCashBalance> getSCashBalance(RequestModel requestModel) async {
     final http.Response response =
         await client.post(url_core, body: requestModel.toString());
-    logger.v(response.body);
     return SCashBalance.fromJson(decode(response.bodyBytes));
   }
 
@@ -309,7 +309,6 @@ class NetworkService implements INetworkService {
   Future<NewOrderResponse?> createNewOrder(RequestModel requestModel) async {
     final http.Response response =
         await client.post(url_core, body: requestModel.toString());
-    logger.v(response.body);
     return NewOrderResponse.fromJson(decode(response.bodyBytes));
   }
 
@@ -317,8 +316,14 @@ class NetworkService implements INetworkService {
   Future<UserInfo?> getUserInfo(RequestModel requestModel) async {
     final http.Response response =
         await client.post(url_core, body: requestModel.toString());
-    logger.v(response.body);
     return UserInfo.constant();
+  }
+
+  @override
+  Future<TotalAsset?> getTotalAsset(RequestModel requestModel) async {
+    final http.Response response =
+        await client.post(url_core, body: requestModel.toString());
+    return TotalAsset.fromJson(decode(response.bodyBytes)['data']);
   }
 
   @override

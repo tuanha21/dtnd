@@ -21,6 +21,7 @@ import 'package:dtnd/=models=/response/stock_trade.dart';
 import 'package:dtnd/=models=/response/stock_trading_history.dart';
 import 'package:dtnd/=models=/response/subsidiaries_model.dart';
 import 'package:dtnd/=models=/response/top_influence_model.dart';
+import 'package:dtnd/=models=/response/total_asset_model.dart';
 import 'package:dtnd/=models=/ui_model/field_tree_element_model.dart';
 import 'package:dtnd/config/service/environment.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
@@ -84,7 +85,10 @@ abstract class INetworkService {
 
   Future<SecurityBasicInfo?> getSecurityBasicInfo(String body);
 
+  // user
   Future<UserInfo?> getUserInfo(RequestModel requestModel);
+
+  Future<TotalAsset?> getTotalAsset(RequestModel requestModel);
 
   //business info
   Future<BusinnessProfileModel?> getBusinnessProfile(String body);

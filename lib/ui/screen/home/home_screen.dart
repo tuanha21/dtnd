@@ -36,7 +36,7 @@ class _HomeScreenState extends State<HomeScreen> {
       slivers: [
         SliverPersistentHeader(
           pinned: false,
-          delegate: HomeAppbarDelegate(),
+          delegate: HomeAppbarDelegate(homeController.appService),
         ),
         // SliverAppBar(
         //   pinned: true,
@@ -80,12 +80,15 @@ class _HomeScreenState extends State<HomeScreen> {
             child: const HomeMarketOverview(),
           ),
         ),
-        SliverToBoxAdapter(
-          child: HomeSection(
-            title: S.of(context).interested_catalog,
-            onMore: () {},
-            child: const HomeInterestedCatalog(),
+        SliverPadding(
+          sliver: SliverToBoxAdapter(
+            child: HomeSection(
+              title: S.of(context).interested_catalog,
+              onMore: () {},
+              child: const HomeInterestedCatalog(),
+            ),
           ),
+          padding: const EdgeInsets.only(bottom: 120),
         ),
       ],
     );
