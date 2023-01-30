@@ -88,7 +88,7 @@ class _KChartState extends State<KChart> {
       isTapShowInfoDialog: true,
       isLine: true,
       secondaryState: SecondaryState.NONE,
-      hideGrid: true,
+      hideGrid: true, stockCode: widget.indexModel.index.name,
     );
   }
 }
