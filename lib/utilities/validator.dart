@@ -1,5 +1,7 @@
 import 'package:dtnd/utilities/regex.dart';
 
+import '../generated/l10n.dart';
+
 mixin AppValidator {
   static String? pinValidator(String? pin) {
     if (pin?.isEmpty ?? true) {
@@ -57,4 +59,15 @@ mixin AppValidator {
     }
     return null;
   }
+
+  String? checkConfirmPass(String rePass, String pass) {
+    if (rePass.isEmpty) {
+      return S.current.please_input_password;
+    } else if (rePass != pass) {
+      return S.current.pass_not_match;
+    } else {
+      return null;
+    }
+  }
+
 }

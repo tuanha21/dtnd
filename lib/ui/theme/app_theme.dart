@@ -87,6 +87,7 @@ final InputDecorationTheme darkInputDecorationTheme = InputDecorationTheme(
   filled: true,
   fillColor: Colors.transparent,
   focusColor: Colors.transparent,
+  iconColor: Colors.white,
   contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
   floatingLabelAlignment: FloatingLabelAlignment.start,
   floatingLabelBehavior: FloatingLabelBehavior.always,
@@ -308,20 +309,26 @@ const ColorScheme _darkColorScheme = ColorScheme(
   onSurface: Colors.white,
 );
 
+final ElevatedButtonThemeData _elevatedButtonTheme = ElevatedButtonThemeData(
+    style: ElevatedButton.styleFrom(
+        foregroundColor: Colors.white,
+        padding: const EdgeInsets.symmetric(vertical: 12),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))));
+
 ///================ THEME DATA ===================
 
 final ThemeData lightThemeData = ThemeData(
-  scaffoldBackgroundColor: AppColors.bg_1,
-  textTheme: lightTextTheme,
-  inputDecorationTheme: lightInputDecorationTheme,
-  colorScheme: _lightColorScheme,
-  textButtonTheme: TextButtonThemeData(style: _lightTextButtonThemeData),
-  bottomNavigationBarTheme: _lightBottomNavigationBarThemeData,
-  appBarTheme: _lightAppBarTheme,
-  iconTheme: _lightIconThemeData,
-  tabBarTheme: _lightTabBarTheme,
-  bottomSheetTheme: _lightBottomSheetTheme,
-);
+    scaffoldBackgroundColor: AppColors.bg_1,
+    textTheme: lightTextTheme,
+    inputDecorationTheme: lightInputDecorationTheme,
+    colorScheme: _lightColorScheme,
+    textButtonTheme: TextButtonThemeData(style: _lightTextButtonThemeData),
+    bottomNavigationBarTheme: _lightBottomNavigationBarThemeData,
+    appBarTheme: _lightAppBarTheme,
+    iconTheme: _lightIconThemeData,
+    tabBarTheme: _lightTabBarTheme,
+    bottomSheetTheme: _lightBottomSheetTheme,
+    elevatedButtonTheme: _elevatedButtonTheme);
 
 final ThemeData darkThemeData = ThemeData(
   scaffoldBackgroundColor: AppColors.bg_2,
@@ -333,5 +340,6 @@ final ThemeData darkThemeData = ThemeData(
   appBarTheme: _darkAppBarTheme,
   iconTheme: _darkIconThemeData,
   tabBarTheme: _darkTabBarTheme,
+  elevatedButtonTheme: _elevatedButtonTheme,
   bottomSheetTheme: _darkBottomSheetTheme,
 );

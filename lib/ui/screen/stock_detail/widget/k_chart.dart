@@ -79,10 +79,16 @@ class _KChartState extends State<KChart> {
         dnColor: AppColors.semantic_03,
         nowPriceUpColor: AppColors.semantic_01,
         nowPriceDnColor: AppColors.semantic_03,
+         hCrossColor: Colors.transparent,
+         vCrossColor: Colors.transparent,
+        crossTextColor: Colors.transparent,
+        selectBorderColor: Colors.transparent,
+        selectFillColor: Colors.transparent
       ),
       showNowPrice: widget.showNowPrice,
       isTrendLine: false,
-      isLine: widget.isLine,
+      isTapShowInfoDialog: true,
+      isLine: true,
       secondaryState: SecondaryState.NONE,
       hideGrid: true,
     );

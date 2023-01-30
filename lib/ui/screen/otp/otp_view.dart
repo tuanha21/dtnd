@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
 import 'package:pinput/pinput.dart';
 
 import '../../../generated/l10n.dart';
@@ -8,6 +9,7 @@ import '../../../utilities/logger.dart';
 import '../../../utilities/responsive.dart';
 import '../../theme/app_color.dart';
 import '../../widget/app_snack_bar.dart';
+import 'count_down.dart';
 import 'otp_logic.dart';
 import 'otp_state.dart';
 
@@ -67,6 +69,7 @@ class _OtpPageState extends State<OtpPage> {
             ),
             const SizedBox(height: 32),
             Pinput(
+              controller: state.pinPutController,
               length: 6,
               defaultPinTheme: defaultPinTheme,
               focusedPinTheme: defaultPinTheme,
@@ -76,19 +79,13 @@ class _OtpPageState extends State<OtpPage> {
               onCompleted: (pin) => setState(() {}),
             ),
             const SizedBox(height: 16),
-            RichText(
-              text: TextSpan(children: [
-                TextSpan(
-                    text: 'Gửi lại mã? ',
-                    style: titleSmall?.copyWith(
-                        fontWeight: FontWeight.w700,
-                        color: AppColors.primary_01)),
-                TextSpan(
-                    text: '00:30',
-                    style: titleSmall?.copyWith(
-                        fontWeight: FontWeight.w500,
-                        color: AppColors.neutral_04)),
-              ]),
+            TimeCountDown(
+              textStyle: titleSmall!.copyWith(
+                fontWeight: FontWeight.w500,
+                color: AppColors.neutral_04,
+              ),
+              duration: const Duration(seconds: 30),
+              voidCallback: () {},
             ),
             const Spacer(),
             SizedBox(
@@ -96,7 +93,8 @@ class _OtpPageState extends State<OtpPage> {
               child: TextButton(
                 onPressed: () async {
                   try {
-                    await logic.validateOTp();
+                    //await logic.validateOTp();
+                    context.pushNamed('newPass');
                   } on FirebaseAuthException catch (e) {
                     if (e.code == "invalid-verification-code") {
                       AppSnackBar.showError(context,

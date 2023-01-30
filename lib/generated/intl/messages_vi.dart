@@ -247,6 +247,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "other_vol": MessageLookupByLibrary.simpleMessage("KL khác"),
         "otp_code_sent_to_phone_number": m4,
         "overview": MessageLookupByLibrary.simpleMessage("Tổng quan"),
+        "pass_not_match":
+            MessageLookupByLibrary.simpleMessage("Mật khẩu không trùng khớp"),
         "password": MessageLookupByLibrary.simpleMessage("Mật khẩu"),
         "period_of_validity":
             MessageLookupByLibrary.simpleMessage("Thời gian hiệu lực"),
@@ -254,6 +256,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Thông tin cá nhân"),
         "phone_number": MessageLookupByLibrary.simpleMessage("Số điện thoại"),
         "pin_code": MessageLookupByLibrary.simpleMessage("Mã pin"),
+        "please_input_password":
+            MessageLookupByLibrary.simpleMessage("Nhập password"),
         "price": MessageLookupByLibrary.simpleMessage("Giá"),
         "price_alert": MessageLookupByLibrary.simpleMessage("Cảnh báo giá"),
         "profit_and_loss": MessageLookupByLibrary.simpleMessage("Lãi/lỗ"),

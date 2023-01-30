@@ -250,6 +250,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "other_vol": MessageLookupByLibrary.simpleMessage("Other vol"),
         "otp_code_sent_to_phone_number": m4,
         "overview": MessageLookupByLibrary.simpleMessage("Overview"),
+        "pass_not_match":
+            MessageLookupByLibrary.simpleMessage("Password not match"),
         "password": MessageLookupByLibrary.simpleMessage("Password"),
         "period_of_validity":
             MessageLookupByLibrary.simpleMessage("Period of validity"),
@@ -257,6 +259,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Personal information"),
         "phone_number": MessageLookupByLibrary.simpleMessage("Phone number"),
         "pin_code": MessageLookupByLibrary.simpleMessage("Pin code"),
+        "please_input_password":
+            MessageLookupByLibrary.simpleMessage("Input password"),
         "price": MessageLookupByLibrary.simpleMessage("Price"),
         "price_alert": MessageLookupByLibrary.simpleMessage("Price alert"),
         "profit_and_loss": MessageLookupByLibrary.simpleMessage("Profit/Loss"),

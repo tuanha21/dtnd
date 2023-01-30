@@ -43,6 +43,9 @@
     "order_htr": "Order history",
     "bank": "Bank",
 
+    "please_input_password": "Input password",
+    "pass_not_match": "Password not match",
+
     "ceil": "Ceil",
     "floor": "Floor",
     "ref": "Ref",

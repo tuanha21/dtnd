@@ -1,3 +1,4 @@
+import 'package:dtnd/ui/screen/sign_up/widget/state_validator.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
@@ -22,17 +23,15 @@ class SignUpPage extends StatefulWidget {
   State<SignUpPage> createState() => _SignUpPageState();
 }
 
-enum ValidatorState { none, success, failed }
+// enum ValidatorState { none, success, failed }
 
 class _SignUpPageState extends State<SignUpPage> with AppValidator {
   final logic = Get.put(SignUpLogic());
   final state = Get.find<SignUpLogic>().state;
 
-  ValueNotifier<ValidatorState> isLess6Length =
-      ValueNotifier<ValidatorState>(ValidatorState.none);
+  ValueNotifier<bool> isLess6Length = ValueNotifier<bool>(false);
 
-  ValueNotifier<ValidatorState> isSpecialCharacter =
-      ValueNotifier<ValidatorState>(ValidatorState.none);
+  ValueNotifier<bool> isSpecialCharacter = ValueNotifier<bool>(false);
 
   ValueNotifier<bool> validateAccount = ValueNotifier<bool>(false);
 
@@ -93,19 +92,11 @@ class _SignUpPageState extends State<SignUpPage> with AppValidator {
               labelText: S.of(context).account,
               controller: state.account,
               onChanged: (account) {
-                if (checkAccountShort(account) == null) {
-                  isLess6Length.value = ValidatorState.success;
-                } else {
-                  isLess6Length.value = ValidatorState.failed;
-                }
-                if (checkAccountNotMatchSpecial(account) == null) {
-                  isSpecialCharacter.value = ValidatorState.success;
-                } else {
-                  isSpecialCharacter.value = ValidatorState.failed;
-                }
+                isLess6Length.value = checkAccountShort(account) == null;
+                isSpecialCharacter.value =
+                    checkAccountNotMatchSpecial(account) == null;
                 validateAccount.value =
-                    isSpecialCharacter.value == ValidatorState.success &&
-                        isLess6Length.value == ValidatorState.success;
+                    isLess6Length.value && isSpecialCharacter.value;
               },
             ),
             ValueListenableBuilder(
@@ -258,46 +249,5 @@ class _SignUpPageState extends State<SignUpPage> with AppValidator {
   void dispose() {
     Get.delete<SignUpLogic>();
     super.dispose();
-  }
-}
-
-class StateValidator extends StatelessWidget {
-  final ValueNotifier<ValidatorState> state;
-  final String title;
-
-  const StateValidator({Key? key, required this.state, required this.title})
-      : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    var bodySmall = Theme.of(context).textTheme.bodySmall;
-
-    return ValueListenableBuilder<ValidatorState>(
-        valueListenable: state,
-        builder: (context, state, child) {
-          return Row(
-            children: [
-              state.icon,
-              const SizedBox(width: 10),
-              Text(
-                title,
-                style: bodySmall?.copyWith(fontWeight: FontWeight.w500),
-              )
-            ],
-          );
-        });
-  }
-}
-
-extension ValidatorStateExt on ValidatorState {
-  Widget get icon {
-    switch (this) {
-      case ValidatorState.none:
-        return SvgPicture.asset(AppImages.icon_error);
-      case ValidatorState.success:
-        return SvgPicture.asset(AppImages.icon_success);
-      case ValidatorState.failed:
-        return SvgPicture.asset(AppImages.icon_error);
-    }
   }
 }

@@ -241,8 +241,13 @@ class _LoginFormState extends State<LoginForm> {
                 const SizedBox(
                   width: 20,
                 ),
-                SizedBox.square(
-                  child: SvgPicture.asset(AppImages.login_face_id_icon),
+                GestureDetector(
+                  onTap: (){
+                    context.pushNamed("ekyc");
+                  },
+                  child: SizedBox.square(
+                    child: SvgPicture.asset(AppImages.login_face_id_icon),
+                  ),
                 ),
               ],
             ),
@@ -279,7 +284,7 @@ class _LoginFormState extends State<LoginForm> {
         height: 50,
         alignment: Alignment.center,
         decoration: BoxDecoration(
-            color: AppColors.neutral_01,
+            color: Theme.of(context).colorScheme.onPrimary,
             borderRadius: BorderRadius.circular(8)),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
