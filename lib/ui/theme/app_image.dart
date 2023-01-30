@@ -97,12 +97,20 @@ class AppImages {
   static const String call = "assets/images/call.png";
   static const String global = "assets/images/global.png";
 
+  /// Home Icon
+  static const String home_icon_wallet_2 = "assets/home_icon/wallet_2.png";
+  static const String home_icon_3dcube = "assets/home_icon/3dcube.png";
+  static const String home_icon_chart_2 = "assets/home_icon/chart_2.png";
+  static const String home_icon_cpu_charge = "assets/home_icon/cpu_charge.png";
+  // static const String home_icon_ = "assets/home_icon/wallet_2.png";
+
   /// BG
   static const String home_asset_card_light_bg =
       "assets/images/home_asset_card_light_bg.png";
   static const String home_asset_card_dark_bg =
       "assets/images/home_asset_card_dark_bg.png";
   static const String wallet_bg = "assets/images/wallet_bg.png";
+  static const String home_appbar_bg = "assets/images/home_appbar_bg.png";
 
   /// Image
   static const String home_banner = "assets/images/home_banner.png";

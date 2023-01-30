@@ -1,10 +1,8 @@
+import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:flutter/material.dart';
 
-import '../../config/service/app_services.dart';
-import '../theme/app_color.dart';
-
-class MyAppBar extends StatefulWidget implements PreferredSizeWidget {
-  const MyAppBar({
+class HomeAppBar extends StatefulWidget implements PreferredSizeWidget {
+  const HomeAppBar({
     super.key,
     this.title,
     this.leading,
@@ -19,13 +17,13 @@ class MyAppBar extends StatefulWidget implements PreferredSizeWidget {
   final List<Widget>? actions;
   final Color? backgroundColor;
   @override
-  State<MyAppBar> createState() => _MyAppBarState();
+  State<HomeAppBar> createState() => _HomeAppBarState();
 
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }
 
-class _MyAppBarState extends State<MyAppBar> {
+class _HomeAppBarState extends State<HomeAppBar> {
   late List<Widget>? _actions;
 
   @override
@@ -35,8 +33,6 @@ class _MyAppBarState extends State<MyAppBar> {
   }
 
   Widget? get backButton {
-    final themeMode = AppService.instance.themeMode.value;
-
     if (Navigator.canPop(context)) {
       return Align(
         alignment: Alignment.centerLeft,
@@ -47,11 +43,9 @@ class _MyAppBarState extends State<MyAppBar> {
             borderRadius: const BorderRadius.all(Radius.circular(6)),
             child: Ink(
               padding: const EdgeInsets.all(10),
-              decoration: BoxDecoration(
-                borderRadius: const BorderRadius.all(Radius.circular(6)),
-                color: themeMode.isLight
-                    ? AppColors.neutral_05
-                    : AppColors.neutral_01,
+              decoration: const BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(6)),
+                color: AppColors.neutral_05,
               ),
               child: const Icon(
                 Icons.arrow_back_ios_new,
@@ -73,7 +67,7 @@ class _MyAppBarState extends State<MyAppBar> {
           style: Theme.of(context)
               .textTheme
               .labelLarge
-              ?.copyWith(fontWeight: FontWeight.w700),
+              ?.copyWith(fontWeight: FontWeight.w700, color: Colors.white),
         );
   }
 

@@ -260,6 +260,16 @@ class S {
     );
   }
 
+  /// `Custom`
+  String get qa_custom {
+    return Intl.message(
+      'Custom',
+      name: 'qa_custom',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Account`
   String get account {
     return Intl.message(

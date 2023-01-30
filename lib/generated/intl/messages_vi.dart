@@ -260,6 +260,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "qa_base": MessageLookupByLibrary.simpleMessage("Cơ sở"),
         "qa_bond": MessageLookupByLibrary.simpleMessage("Trái phiếu"),
         "qa_copytrade": MessageLookupByLibrary.simpleMessage("Copytrade"),
+        "qa_custom": MessageLookupByLibrary.simpleMessage("Tuỳ chỉnh"),
         "qa_derivative": MessageLookupByLibrary.simpleMessage("Phái sinh"),
         "qa_money": MessageLookupByLibrary.simpleMessage("Tiền gửi"),
         "qa_pack_enrol": MessageLookupByLibrary.simpleMessage("ĐK gói"),

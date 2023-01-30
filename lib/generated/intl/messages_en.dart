@@ -263,6 +263,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "qa_base": MessageLookupByLibrary.simpleMessage("Base"),
         "qa_bond": MessageLookupByLibrary.simpleMessage("Bond"),
         "qa_copytrade": MessageLookupByLibrary.simpleMessage("Copytrade"),
+        "qa_custom": MessageLookupByLibrary.simpleMessage("Custom"),
         "qa_derivative": MessageLookupByLibrary.simpleMessage("Derivative"),
         "qa_money": MessageLookupByLibrary.simpleMessage("Cash deposits"),
         "qa_pack_enrol":

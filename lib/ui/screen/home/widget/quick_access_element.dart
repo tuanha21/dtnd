@@ -56,26 +56,22 @@ class HomeQuickAccessElement extends StatelessWidget {
         child: InkWell(
           onTap: value.route(context),
           borderRadius: const BorderRadius.all(Radius.circular(8)),
-          child: Ink(
-            decoration: BoxDecoration(
-              borderRadius: const BorderRadius.all(Radius.circular(8)),
-              color: themeMode.isLight
-                  ? value.theme.bgColor
-                  : AppColors.neutral_01,
-            ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                SvgPicture.asset(value.path),
-                const SizedBox(
-                  height: 6,
-                ),
-                Text(
-                  value.name(context),
-                  style: Theme.of(context).textTheme.labelMedium,
-                ),
-              ],
-            ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Image.asset(
+                value.path,
+                width: 28,
+                height: 28,
+              ),
+              const SizedBox(
+                height: 6,
+              ),
+              Text(
+                value.name(context),
+                style: Theme.of(context).textTheme.labelMedium,
+              ),
+            ],
           ),
         ),
       ),
