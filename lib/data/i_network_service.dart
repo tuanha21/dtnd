@@ -1,6 +1,8 @@
 // ignore_for_file: library_prefixes
 
 import 'package:dtnd/=models=/index.dart';
+import 'package:dtnd/=models=/response/account_info_model.dart';
+import 'package:dtnd/=models=/response/business_profile_model.dart';
 import 'package:dtnd/=models=/response/deep_model.dart';
 import 'package:dtnd/=models=/response/inday_matched_order.dart';
 import 'package:dtnd/=models=/response/index_chart_data.dart';
@@ -9,11 +11,15 @@ import 'package:dtnd/=models=/response/liquidity_model.dart';
 import 'package:dtnd/=models=/response/new_order.dart';
 import 'package:dtnd/=models=/response/news_detail.dart';
 import 'package:dtnd/=models=/response/s_cash_balance.dart';
+import 'package:dtnd/=models=/response/security_basic_info_model.dart';
 import 'package:dtnd/=models=/response/stock.dart';
 import 'package:dtnd/=models=/response/stock_data.dart';
+import 'package:dtnd/=models=/response/stock_financial_index_model.dart';
 import 'package:dtnd/=models=/response/stock_news.dart';
+import 'package:dtnd/=models=/response/stock_ranking_financial_index_model.dart';
 import 'package:dtnd/=models=/response/stock_trade.dart';
 import 'package:dtnd/=models=/response/stock_trading_history.dart';
+import 'package:dtnd/=models=/response/subsidiaries_model.dart';
 import 'package:dtnd/=models=/response/top_influence_model.dart';
 import 'package:dtnd/=models=/ui_model/field_tree_element_model.dart';
 import 'package:dtnd/config/service/environment.dart';
@@ -70,4 +76,20 @@ abstract class INetworkService {
   Future<LiquidityModel> getLiquidity(String index);
 
   Future<List<FieldTreeModel>> getListIndustryHeatMap(int top, String type);
+
+  Future<List<StockFinancialIndex>> getStockFinancialIndex(String body);
+
+  Future<StockRankingFinancialIndex?> getStockRankingFinancialIndex(
+      String body);
+
+  Future<SecurityBasicInfo?> getSecurityBasicInfo(String body);
+
+  Future<UserInfo?> getUserInfo(RequestModel requestModel);
+
+  //business info
+  Future<BusinnessProfileModel?> getBusinnessProfile(String body);
+
+  Future<List<BusinnessLeaderModel>?> getBusinnessLeaders(String body);
+
+  Future<List<SubsidiariesModel>?> getSubsidiaries(Map<String, dynamic> body);
 }

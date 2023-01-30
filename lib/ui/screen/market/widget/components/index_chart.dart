@@ -8,7 +8,7 @@ import 'package:dtnd/data/i_user_service.dart';
 import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/screen/home/widget/home_market_today.dart';
 import 'package:dtnd/ui/screen/market/market_controller.dart';
-import 'package:dtnd/ui/screen/stock_detail.dart/widget/k_chart.dart';
+import 'package:dtnd/ui/screen/stock_detail/widget/k_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

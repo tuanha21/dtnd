@@ -83,6 +83,7 @@ dependencies:
   image_picker: ^0.8.6
   permission_handler: ^10.2.0
   image_cropper: ^3.0.1
+  flutter_html: ^3.0.0-alpha.6
 
 dev_dependencies:
   flutter_test:
@@ -114,6 +115,8 @@ flutter:
     - assets/
     - assets/svg/
     - assets/images/
+    - assets/account_icon/
+    - assets/home_icon/
     - .env
     - production_domain_config.env
     - test_domain_config.env

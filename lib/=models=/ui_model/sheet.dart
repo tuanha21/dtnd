@@ -18,12 +18,7 @@ abstract class ISheet implements IOverlay {
           borderRadius: BorderRadius.vertical(top: Radius.circular(20))),
       builder: (BuildContext context) {
         return Wrap(
-          children: [
-            // TechnicalTradings(
-            //   onChoosen: (value) => Navigator.of(context).pop(value),
-            // ),
-            child
-          ],
+          children: [child],
         );
       },
     ).then((result) => cmd(context, result));
@@ -31,20 +26,19 @@ abstract class ISheet implements IOverlay {
 
   @override
   Future<UserCmd?> cmd(BuildContext context, UserCmd? cmd) {
-    print(cmd);
     if (cmd is BackCmd) {
       return onResultBack.call(cmd)?.then(
               (_) => back.call(cmd)?.show(context, backWidget.call(cmd))) ??
           back.call(cmd)?.show(context, backWidget.call(cmd)) ??
           Future(
-            () => null,
+            () => cmd,
           );
     } else {
       return onResultNext.call(cmd)?.then(
               (_) => next.call(cmd)?.show(context, nextWidget.call(cmd))) ??
           next.call(cmd)?.show(context, nextWidget.call(cmd)) ??
           Future(
-            () => null,
+            () => cmd,
           );
     }
     // if (cmd is ToOptionCmd) {

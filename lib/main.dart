@@ -50,7 +50,7 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   final AppService appService = AppService();
   final GoRouter _router = GoRouter(
-    initialLocation: "/SignIn",
+    initialLocation: "/",
     routes: <GoRoute>[
       GoRoute(
         path: '/',

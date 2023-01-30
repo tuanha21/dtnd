@@ -1,0 +1,10 @@
+diff a/pubspec.yaml b/pubspec.yaml	(rejected hunks)
+@@ -111,6 +111,8 @@
+     - assets/
+     - assets/svg/
+     - assets/images/
++    - assets/account_icon/
++    - assets/home_icon/
+     - .env
+     - production_domain_config.env
+     - test_domain_config.env

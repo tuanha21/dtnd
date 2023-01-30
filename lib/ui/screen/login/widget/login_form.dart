@@ -192,6 +192,7 @@ class _LoginFormState extends State<LoginForm> {
             key: passwordFormKey,
             validator: passwordValidator,
             builder: (passwordState) => TextField(
+              obscureText: true,
               autocorrect: false,
               focusNode: passwordFocusNode,
               controller: _passController,

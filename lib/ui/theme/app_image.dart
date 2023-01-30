@@ -49,6 +49,7 @@ class AppImages {
   static const String edit2 = "assets/svg/edit-2.svg";
 
 
+
   static const String qa_base = "assets/svg/qa_base.svg";
   static const String qa_bond = "assets/svg/qa_bond.svg";
   static const String qa_copytrade = "assets/svg/qa_copytrade.svg";
@@ -61,7 +62,7 @@ class AppImages {
   static const String prefix_up_icon = "assets/images/prefix_up_icon.png";
   static const String prefix_ref_icon = "assets/images/prefix_ref_icon.png";
   static const String prefix_down_icon = "assets/images/prefix_down_icon.png";
-  static const String wallet = "assets/svg/wallet.svg";
+  static const String wallet_icon = "assets/svg/wallet.svg";
   static const String wallet_search = "assets/svg/wallet_search.svg";
 
   static const String notification_icon = "assets/images/notification_icon.png";
@@ -85,12 +86,40 @@ class AppImages {
   static const String element_3 = "assets/images/element_3.png";
   static const String textalign_justifycenter =
       "assets/images/textalign_justifycenter.png";
+  static const String chart = "assets/images/chart.png";
+  static const String timer = "assets/images/timer.png";
+  static const String money_recive = "assets/images/money_recive.png";
+  static const String money_send = "assets/images/money_send.png";
+
+  static const String money_2 = "assets/images/money_2.png";
+  static const String money_change = "assets/images/money_change.png";
+  static const String timer_2 = "assets/images/timer_2.png";
+  static const String wallet_3 = "assets/images/wallet_3.png";
+  static const String arrow_swap = "assets/images/arrow_swap.png";
+  static const String shield_tick = "assets/images/shield_tick.png";
+  static const String element_equal = "assets/images/element_equal.png";
+  static const String document_filter = "assets/images/document_filter.png";
+  static const String wallet = "assets/images/wallet.png";
+  static const String card_tick = "assets/images/card_tick.png";
+  static const String document = "assets/images/document.png";
+  static const String setting_2 = "assets/images/setting_2.png";
+  static const String call = "assets/images/call.png";
+  static const String global = "assets/images/global.png";
+
+  /// Home Icon
+  static const String home_icon_wallet_2 = "assets/home_icon/wallet_2.png";
+  static const String home_icon_3dcube = "assets/home_icon/3dcube.png";
+  static const String home_icon_chart_2 = "assets/home_icon/chart_2.png";
+  static const String home_icon_cpu_charge = "assets/home_icon/cpu_charge.png";
+  static const String home_icon_ = "assets/home_icon/wallet_2.png";
 
   /// BG
   static const String home_asset_card_light_bg =
       "assets/images/home_asset_card_light_bg.png";
   static const String home_asset_card_dark_bg =
       "assets/images/home_asset_card_dark_bg.png";
+  static const String wallet_bg = "assets/images/wallet_bg.png";
+  static const String home_appbar_bg = "assets/images/home_appbar_bg.png";
 
   /// Image
   static const String home_banner = "assets/images/home_banner.png";

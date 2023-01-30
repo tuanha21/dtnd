@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/screen/home/home_controller.dart';
 import 'package:dtnd/ui/screen/home/widget/asset_card.dart';
+import 'package:dtnd/ui/screen/home/widget/home_appbar_delegate.dart';
 import 'package:dtnd/ui/screen/home/widget/home_interested_catalog.dart';
 import 'package:dtnd/ui/screen/home/widget/home_market_overview.dart';
 import 'package:dtnd/ui/screen/home/widget/home_market_today.dart';
@@ -31,17 +32,80 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    return CustomScrollView(
+      slivers: [
+        SliverPersistentHeader(
+          pinned: false,
+          delegate: HomeAppbarDelegate(),
+        ),
+        // SliverAppBar(
+        //   pinned: true,
+        //   expandedHeight: 400.0,
+        //   leading: Text(
+        //     "DTND",
+        //     style: Theme.of(context)
+        //         .textTheme
+        //         .labelLarge
+        //         ?.copyWith(fontWeight: FontWeight.w700),
+        //   ),
+        //   actions: [
+        //     SvgPicture.asset(AppImages.search_appbar_icon),
+        //     const SizedBox(
+        //       width: 20,
+        //     ),
+        //     SvgPicture.asset(AppImages.notification_appbar_icon),
+        //     const SizedBox(
+        //       width: 16,
+        //     ),
+        //   ],
+        //   // stretch: true,
+        //   flexibleSpace: FlexibleSpaceBar(
+        //     background: Image.asset(
+        //       AppImages.home_appbar_bg,
+        //       fit: BoxFit.fitWidth,
+        //     ),
+        //   ),
+        // ),
+
+        SliverToBoxAdapter(
+          child: HomeSection(
+            title: S.of(context).market_today,
+            child: const HomeMarketToday(),
+          ),
+        ),
+        SliverToBoxAdapter(
+          child: HomeSection(
+            title: S.of(context).market_overview,
+            onMore: () {},
+            child: const HomeMarketOverview(),
+          ),
+        ),
+        SliverToBoxAdapter(
+          child: HomeSection(
+            title: S.of(context).interested_catalog,
+            onMore: () {},
+            child: const HomeInterestedCatalog(),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget builder(BuildContext context) {
     return Scaffold(
-      appBar:  MyAppBar(title: "DTND", actions: [
-        SvgPicture.asset(AppImages.search_appbar_icon),
-        const SizedBox(
-          width: 20,
-        ),
-        SvgPicture.asset(AppImages.notification_appbar_icon),
-        const SizedBox(
-          width: 16,
-        ),
-      ],),
+      appBar: MyAppBar(
+        title: "DTND",
+        actions: [
+          SvgPicture.asset(AppImages.search_appbar_icon),
+          const SizedBox(
+            width: 20,
+          ),
+          SvgPicture.asset(AppImages.notification_appbar_icon),
+          const SizedBox(
+            width: 16,
+          ),
+        ],
+      ),
       body: RefreshIndicator(
         onRefresh: () async => homeController.init(),
         child: ScrollConfiguration(

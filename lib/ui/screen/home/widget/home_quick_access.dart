@@ -7,30 +7,33 @@ import 'package:flutter/material.dart';
 enum QuickAccess {
   money,
   base,
-  derivative,
-  packEnrol,
-  bond,
-  coppytrade,
   virtualAssistant,
+  custom,
+  // derivative,
+  // packEnrol,
+  // bond,
+  // coppytrade,
 }
 
 extension QuickAccessX on QuickAccess {
   String get path {
     switch (this) {
       case QuickAccess.money:
-        return AppImages.qa_money;
+        return AppImages.home_icon_wallet_2;
       case QuickAccess.base:
-        return AppImages.qa_base;
-      case QuickAccess.derivative:
-        return AppImages.qa_derivative;
-      case QuickAccess.packEnrol:
-        return AppImages.qa_pack_enrol;
-      case QuickAccess.bond:
-        return AppImages.qa_bond;
-      case QuickAccess.coppytrade:
-        return AppImages.qa_copytrade;
+        return AppImages.home_icon_chart_2;
       case QuickAccess.virtualAssistant:
-        return AppImages.qa_virtual_assistant;
+        return AppImages.home_icon_cpu_charge;
+      case QuickAccess.custom:
+        return AppImages.home_icon_3dcube;
+      // case QuickAccess.derivative:
+      //   return AppImages.qa_derivative;
+      // case QuickAccess.packEnrol:
+      //   return AppImages.qa_pack_enrol;
+      // case QuickAccess.bond:
+      //   return AppImages.qa_bond;
+      // case QuickAccess.virtualAssistant:
+      //   return AppImages.qa_virtual_assistant;
     }
   }
 
@@ -40,35 +43,18 @@ extension QuickAccessX on QuickAccess {
         return S.of(context).qa_money;
       case QuickAccess.base:
         return S.of(context).qa_base;
-      case QuickAccess.derivative:
-        return S.of(context).qa_derivative;
-      case QuickAccess.packEnrol:
-        return S.of(context).qa_pack_enrol;
-      case QuickAccess.bond:
-        return S.of(context).qa_bond;
-      case QuickAccess.coppytrade:
-        return S.of(context).qa_copytrade;
       case QuickAccess.virtualAssistant:
         return S.of(context).virtual_assistant;
-    }
-  }
-
-  HomeQuickAccessElementTheme get theme {
-    switch (this) {
-      case QuickAccess.money:
-        return HomeQuickAccessElementTheme.purple;
-      case QuickAccess.base:
-        return HomeQuickAccessElementTheme.blue;
-      case QuickAccess.derivative:
-        return HomeQuickAccessElementTheme.orange;
-      case QuickAccess.packEnrol:
-        return HomeQuickAccessElementTheme.green;
-      case QuickAccess.bond:
-        return HomeQuickAccessElementTheme.green;
-      case QuickAccess.coppytrade:
-        return HomeQuickAccessElementTheme.orange;
-      case QuickAccess.virtualAssistant:
-        return HomeQuickAccessElementTheme.purple;
+      case QuickAccess.custom:
+        return S.of(context).qa_custom;
+      // case QuickAccess.derivative:
+      //   return S.of(context).qa_derivative;
+      // case QuickAccess.packEnrol:
+      //   return S.of(context).qa_pack_enrol;
+      // case QuickAccess.bond:
+      //   return S.of(context).qa_bond;
+      // case QuickAccess.virtualAssistant:
+      //   return S.of(context).virtual_assistant;
     }
   }
 
@@ -92,9 +78,38 @@ class HomeQuickAccess extends StatefulWidget {
 class _HomeQuickAccessState extends State<HomeQuickAccess> {
   @override
   Widget build(BuildContext context) {
+    final int elementPerRow = MediaQuery.of(context).size.width ~/ 80;
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: const BoxDecoration(
+        borderRadius: BorderRadius.all(Radius.circular(12)),
+        color: Colors.white,
+      ),
+      child: Column(
+        children: [
+          for (int i = 0; i < QuickAccess.values.length; i += elementPerRow)
+            Row(
+              children: [
+                for (int j = 0; j < elementPerRow; j++)
+                  if (i + j < QuickAccess.values.length)
+                    Expanded(
+                      child: Padding(
+                        padding: EdgeInsets.only(left: j == 0 ? 0 : 16),
+                        child: HomeQuickAccessElement(
+                            value: QuickAccess.values.elementAt(i + j)),
+                      ),
+                    )
+                  else
+                    Expanded(child: Container())
+              ],
+            )
+        ],
+      ),
+    );
     return Wrap(
       runSpacing: 8,
       spacing: 8,
+      alignment: WrapAlignment.spaceBetween,
       runAlignment: WrapAlignment.spaceBetween,
       children: [
         for (QuickAccess element in QuickAccess.values)
