@@ -1,6 +1,8 @@
 import 'dart:math';
 import 'dart:convert';
 import 'package:crypto/crypto.dart';
+import 'package:dtnd/generated/l10n.dart';
+import 'package:flutter/cupertino.dart';
 
 import 'package:intl/intl.dart';
 
@@ -85,5 +87,20 @@ class NumUtils {
 
   static String generateMd5(String input) {
     return md5.convert(utf8.encode(input)).toString();
+  }
+
+  static String getMoneyWithPostfix(num num, BuildContext context) {
+    int intValue = num ~/ 1;
+    String i = intValue.toString();
+    String postfix;
+    String value;
+    if (i.length < 9) {
+      value = (intValue / 1000000).toStringAsPrecision(2);
+      postfix = S.of(context).million_short;
+    } else {
+      value = (intValue / 1000000000).toStringAsPrecision(2);
+      postfix = S.of(context).billion_short;
+    }
+    return "$value $postfix";
   }
 }

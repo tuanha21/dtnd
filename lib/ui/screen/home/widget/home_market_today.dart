@@ -5,7 +5,7 @@ import 'package:dtnd/=models=/response/index_model.dart';
 import 'package:dtnd/config/service/app_services.dart';
 import 'package:dtnd/generated/l10n.dart' as s;
 import 'package:dtnd/ui/screen/home/home_controller.dart';
-import 'package:dtnd/ui/screen/stock_detail.dart/widget/k_chart.dart';
+import 'package:dtnd/ui/screen/stock_detail/widget/k_chart.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_textstyle.dart';
 import 'package:flutter/material.dart';

@@ -145,10 +145,9 @@ class _VAScreenState extends State<VAScreen> {
                           horizontal: 8, vertical: 4),
                       // width: 102,
                       // height: 52,
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                           color: Colors.white,
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(8))),
+                          borderRadius: BorderRadius.all(Radius.circular(8))),
                       child: child,
                     ),
                   );

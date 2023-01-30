@@ -73,7 +73,13 @@ dependencies:
   flutter_slidable: ^2.0.0
   table_calendar: ^3.0.8
   fluttertoast: ^8.1.2
+  fl_chart: ^0.55.2
   syncfusion_flutter_treemap: ^20.4.42-beta
+  firebase_core: ^2.4.1
+  intl_phone_number_input: ^0.7.2
+  top_snackbar_flutter: ^3.0.0+1
+  firebase_auth: ^4.2.5
+  flutter_html: ^3.0.0-alpha.6
 
 dev_dependencies:
   flutter_test:
@@ -105,6 +111,8 @@ flutter:
     - assets/
     - assets/svg/
     - assets/images/
+    - assets/account_icon/
+    - assets/home_icon/
     - .env
     - production_domain_config.env
     - test_domain_config.env

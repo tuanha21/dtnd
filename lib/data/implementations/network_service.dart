@@ -2,6 +2,8 @@
 
 import 'dart:convert';
 
+import 'package:dtnd/=models=/response/account_info_model.dart';
+import 'package:dtnd/=models=/response/business_profile_model.dart';
 import 'package:dtnd/=models=/response/deep_model.dart';
 import 'package:dtnd/=models=/response/inday_matched_order.dart';
 import 'package:dtnd/=models=/response/index_detail.dart';
@@ -11,11 +13,15 @@ import 'package:dtnd/=models=/response/liquidity_model.dart';
 import 'package:dtnd/=models=/response/new_order.dart';
 import 'package:dtnd/=models=/response/news_detail.dart';
 import 'package:dtnd/=models=/response/s_cash_balance.dart';
+import 'package:dtnd/=models=/response/security_basic_info_model.dart';
 import 'package:dtnd/=models=/response/stock.dart';
 import 'package:dtnd/=models=/response/stock_data.dart';
+import 'package:dtnd/=models=/response/stock_financial_index_model.dart';
 import 'package:dtnd/=models=/response/stock_news.dart';
+import 'package:dtnd/=models=/response/stock_ranking_financial_index_model.dart';
 import 'package:dtnd/=models=/response/stock_trade.dart';
 import 'package:dtnd/=models=/response/stock_trading_history.dart';
+import 'package:dtnd/=models=/response/subsidiaries_model.dart';
 import 'package:dtnd/=models=/response/top_influence_model.dart';
 import 'package:dtnd/=models=/response/user_token.dart';
 import 'package:dtnd/=models=/request/request_model.dart';
@@ -47,7 +53,7 @@ class NetworkService implements INetworkService {
   late final String info_sbsi_url;
   late final String algo_url;
 
-  Uri get url_core => Uri.http(core_url, core_endpoint);
+  Uri get url_core => Uri.https(core_url, core_endpoint);
   Uri url_board(String path) => Uri.https(board_url, path);
   Uri url_board_data_feed(Map<String, dynamic> queryParameters) =>
       Uri.https(sbboard_url, "datafeed/history", queryParameters);
@@ -67,9 +73,13 @@ class NetworkService implements INetworkService {
   @override
   late Socket socket;
 
-  dynamic decode(Uint8List data) {
+  dynamic decode(dynamic data) {
     try {
-      return jsonDecode(utf8Codec.decode(data));
+      if (data is Uint8List) {
+        return jsonDecode(utf8Codec.decode(data));
+      } else {
+        return jsonDecode(data);
+      }
     } catch (e) {
       // print(data);
       logger.e(e.toString());
@@ -304,6 +314,14 @@ class NetworkService implements INetworkService {
   }
 
   @override
+  Future<UserInfo?> getUserInfo(RequestModel requestModel) async {
+    final http.Response response =
+        await client.post(url_core, body: requestModel.toString());
+    logger.v(response.body);
+    return UserInfo.constant();
+  }
+
+  @override
   Future<List<IndayMatchedOrder>> getIndayMatchedOrders(String symbol) async {
     dynamic response =
         await client.get(url_algo("stockBoard/chart/stock/$symbol"));
@@ -376,6 +394,122 @@ class NetworkService implements INetworkService {
     final List<FieldTreeModel> result = [];
     for (var element in response) {
       result.add(FieldTreeModel.fromJson(element));
+    }
+    return result;
+  }
+
+  @override
+  Future<List<StockFinancialIndex>> getStockFinancialIndex(String body) async {
+    dynamic response = await client.post(url_algo("secFSRatios"), body: body);
+    if (response.statusCode != 200) {
+      throw response;
+    }
+    response = decode(response.bodyBytes);
+    if (response["status"] != 200) {
+      throw response["message"];
+    }
+    response = decode(response["data"]);
+    logger.v(response);
+    final List<StockFinancialIndex> result = [];
+    for (final element in response) {
+      result.add(StockFinancialIndex.fromJson(element));
+    }
+
+    return result;
+  }
+
+  @override
+  Future<StockRankingFinancialIndex?> getStockRankingFinancialIndex(
+      String body) async {
+    dynamic response =
+        await client.post(url_algo("secRankingFSRatios"), body: body);
+    if (response.statusCode != 200) {
+      throw response;
+    }
+    response = decode(response.bodyBytes);
+    if (response["status"] != 200) {
+      throw response["message"];
+    }
+    response = decode(response["data"]);
+    logger.v(response);
+    final StockRankingFinancialIndex result =
+        StockRankingFinancialIndex.fromJson(response);
+    return result;
+  }
+
+  @override
+  Future<SecurityBasicInfo?> getSecurityBasicInfo(String body) async {
+    dynamic response =
+        await client.post(url_algo("securityBasicInfo"), body: body);
+    if (response.statusCode != 200) {
+      throw response;
+    }
+    response = decode(response.bodyBytes);
+    logger.v(response);
+    if (response["status"] != 200) {
+      throw response["message"];
+    }
+    response = response["data"].first;
+    logger.v(response);
+    final SecurityBasicInfo result = SecurityBasicInfo.fromJson(response);
+    return result;
+  }
+
+  @override
+  Future<BusinnessProfileModel?> getBusinnessProfile(String body) async {
+    dynamic response =
+        await client.post(url_algo("companies/introduction"), body: body);
+    if (response.statusCode != 200) {
+      throw response;
+    }
+    response = decode(response.bodyBytes);
+    logger.v(response);
+    if (response["status"] != 200) {
+      throw response["message"];
+    }
+    response = response["data"];
+    final BusinnessProfileModel result =
+        BusinnessProfileModel.fromJson(response);
+    return result;
+  }
+
+  @override
+  Future<List<BusinnessLeaderModel>?> getBusinnessLeaders(String body) async {
+    dynamic response =
+        await client.post(url_algo("companies/leaders"), body: body);
+    if (response.statusCode != 200) {
+      throw response;
+    }
+    response = decode(response.bodyBytes);
+    logger.v(response);
+    if (response["status"] != 200) {
+      throw response["message"];
+    }
+    response = response["data"];
+    final List<BusinnessLeaderModel> result = [];
+    for (var element in response) {
+      result.add(BusinnessLeaderModel.fromJson(element));
+    }
+    return result;
+  }
+
+  @override
+  Future<List<SubsidiariesModel>?> getSubsidiaries(
+      Map<String, dynamic> body) async {
+    dynamic response =
+        await client.get(url_algo("companies/relatedCompanies", body));
+    if (response.statusCode != 200) {
+      throw response;
+    }
+    response = decode(response.bodyBytes);
+    logger.v(response);
+    if (response["status"] != 200) {
+      throw response["message"];
+    }
+    response = response["data"];
+    final List<SubsidiariesModel> result = [];
+    for (var element in response) {
+      result.add(SubsidiariesModel.fromJson(element));
     }
     return result;
   }

@@ -1,14 +1,19 @@
 import 'package:dtnd/=models=/index.dart';
+import 'package:dtnd/=models=/response/business_profile_model.dart';
 import 'package:dtnd/=models=/response/deep_model.dart';
 import 'package:dtnd/=models=/response/inday_matched_order.dart';
 import 'package:dtnd/=models=/response/index_model.dart';
 import 'package:dtnd/=models=/response/liquidity_model.dart';
 import 'package:dtnd/=models=/response/news_detail.dart';
+import 'package:dtnd/=models=/response/security_basic_info_model.dart';
 import 'package:dtnd/=models=/response/stock.dart';
 import 'package:dtnd/=models=/response/stock_data.dart';
+import 'package:dtnd/=models=/response/stock_financial_index_model.dart';
 import 'package:dtnd/=models=/response/stock_model.dart';
 import 'package:dtnd/=models=/response/stock_news.dart';
+import 'package:dtnd/=models=/response/stock_ranking_financial_index_model.dart';
 import 'package:dtnd/=models=/response/stock_trading_history.dart';
+import 'package:dtnd/=models=/response/subsidiaries_model.dart';
 import 'package:dtnd/=models=/response/top_influence_model.dart';
 import 'package:dtnd/=models=/ui_model/field_tree_element_model.dart';
 import 'package:dtnd/data/i_data_center_service.dart';
@@ -318,6 +323,13 @@ class DataCenterService implements IDataCenterService {
   }
 
   @override
+  Stock? getStocksBySym(String sym) {
+    final _sym = sym.toUpperCase();
+
+    return listAllStock.firstWhere((element) => element.stockCode == _sym);
+  }
+
+  @override
   Future<StockData> getStockData(String stockCode) async {
     final List<StockDataResponse> listResponse =
         await networkService.getListStockData(stockCode);
@@ -405,7 +417,73 @@ class DataCenterService implements IDataCenterService {
 
   @override
   Future<List<FieldTreeModel>> getListIndustryHeatMap(
-      {int top = 8, String type = "KL"}) {
-    return networkService.getListIndustryHeatMap(top, type);
+      {int top = 8, String type = "KL"}) async {
+    final result = await networkService.getListIndustryHeatMap(top, type);
+    for (var field in result) {
+      for (var element in field.stocks) {
+        element.getStock(this);
+      }
+    }
+    return result;
+  }
+
+  @override
+  Future<List<StockFinancialIndex>> getStockFinancialIndex(String code,
+      [String freg = "Y", String lang = "vi"]) {
+    final body = '{"lang":"$lang", "secCode": "$code", "freq":"$freg"}';
+    return networkService.getStockFinancialIndex(body);
+  }
+
+  @override
+  Future<StockRankingFinancialIndex?> getStockRankingFinancialIndex(String code,
+      [String lang = "vi"]) {
+    final body = '{"lang":"$lang", "secCode": "$code"}';
+    return networkService.getStockRankingFinancialIndex(body);
+  }
+
+  @override
+  Future<SecurityBasicInfo?> getSecurityBasicInfo(String code,
+      [String lang = "vi"]) {
+    final body = '{"lang":"$lang", "secList":"$code", "Exchange":""}';
+    return networkService.getSecurityBasicInfo(body);
+  }
+
+  @override
+  Future<BusinnessProfileModel?> getBusinnessProfile(String stockCode) {
+    final body = '{"secCode":"$stockCode"}';
+    return networkService.getBusinnessProfile(body);
+  }
+
+  @override
+  Future<List<BusinnessLeaderModel>?> getBusinnessLeaders(String stockCode) {
+    final body = '{"secCode":"$stockCode"}';
+    return networkService.getBusinnessLeaders(body);
+  }
+
+  @override
+  Future<List<SubsidiariesModel>?> getSubsidiaries(String stockCode) {
+    final body = {
+      "ticker": stockCode,
+      "relatedType": "D933DCAE2B553EE0E055C3B42B92FC60"
+    };
+    return networkService.getSubsidiaries(body);
+  }
+
+  @override
+  Future<List<SubsidiariesModel>?> getAssociatedCompany(String stockCode) {
+    final body = {
+      "ticker": stockCode,
+      "relatedType": "D933DCAE2B563EE0E055C3B42B92FC60"
+    };
+    return networkService.getSubsidiaries(body);
+  }
+
+  @override
+  Future<List<SubsidiariesModel>?> getOtherCompany(String stockCode) {
+    final body = {
+      "ticker": stockCode,
+      "relatedType": "D933DCAE2B583EE0E055C3B42B92FC60"
+    };
+    return networkService.getSubsidiaries(body);
   }
 }
