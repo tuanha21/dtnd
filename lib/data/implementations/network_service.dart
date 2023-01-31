@@ -54,7 +54,7 @@ class NetworkService implements INetworkService {
   late final String info_sbsi_url;
   late final String algo_url;
 
-  Uri get url_core => Uri.https(core_url, core_endpoint);
+  Uri get url_core => Uri.http(core_url, core_endpoint);
   Uri url_board(String path) => Uri.https(board_url, path);
   Uri url_board_data_feed(Map<String, dynamic> queryParameters) =>
       Uri.https(sbboard_url, "datafeed/history", queryParameters);
@@ -116,6 +116,13 @@ class NetworkService implements INetworkService {
   @override
   Future<void> startSocket() async {
     throw UnimplementedError();
+  }
+
+  @override
+  Future<String?> getHomeBanner() async {
+    dynamic response = await client.get(Uri.http(core_url, "banners"));
+    response = decode(response.bodyBytes);
+    return response["data"].first["img"];
   }
 
   @override

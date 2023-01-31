@@ -39,6 +39,8 @@ abstract class INetworkService {
 
   Future<void> startSocket();
 
+  Future<String?> getHomeBanner();
+
   //core api
   Future<UserEntity?> checkLogin(RequestModel requestModel);
 

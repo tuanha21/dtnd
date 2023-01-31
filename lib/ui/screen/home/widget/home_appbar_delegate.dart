@@ -1,9 +1,13 @@
 import 'package:dtnd/config/service/app_services.dart';
+import 'package:dtnd/data/implementations/network_service.dart';
 import 'package:dtnd/ui/screen/home/widget/home_appbar.dart';
 import 'package:dtnd/ui/screen/home/widget/home_quick_access.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get_state_manager/get_state_manager.dart';
+
+const imageHeight = 280.0;
 
 class HomeAppbarDelegate extends SliverPersistentHeaderDelegate {
   const HomeAppbarDelegate(this.appService);
@@ -18,14 +22,11 @@ class HomeAppbarDelegate extends SliverPersistentHeaderDelegate {
       child: Stack(
         children: [
           Positioned(
-            top: shrinkOffset / _difference * -250,
+            top: shrinkOffset / _difference * -imageHeight,
             child: SizedBox(
               width: size.width,
-              height: 250,
-              child: Image.asset(
-                AppImages.home_appbar_bg,
-                fit: BoxFit.fill,
-              ),
+              height: imageHeight,
+              child: _HomeBanner(appService),
             ),
           ),
           Align(
@@ -49,7 +50,7 @@ class HomeAppbarDelegate extends SliverPersistentHeaderDelegate {
             ),
           ),
           Positioned(
-            top: 224 + (shrinkOffset / _difference * -250),
+            top: 224 + (shrinkOffset / _difference * -imageHeight),
             left: 16,
             child: SizedBox(
               width: size.width - 32,
@@ -72,4 +73,43 @@ class HomeAppbarDelegate extends SliverPersistentHeaderDelegate {
   @override
   bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) =>
       false;
+}
+
+class _HomeBanner extends StatefulWidget {
+  const _HomeBanner(this.appService);
+  final AppService appService;
+  @override
+  State<_HomeBanner> createState() => __HomeBannerState();
+}
+
+class __HomeBannerState extends State<_HomeBanner> {
+  @override
+  void initState() {
+    super.initState();
+    widget.appService.getHomeBanner(NetworkService());
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Obx(() {
+      if (widget.appService.loadingHomBanner.value) {
+        return const Center(
+          child: SizedBox.square(
+            dimension: 40,
+            child: CircularProgressIndicator(),
+          ),
+        );
+      }
+      if (widget.appService.homeBanner.value == null) {
+        return Image.asset(
+          AppImages.home_appbar_bg,
+          fit: BoxFit.fill,
+        );
+      }
+      return Image.network(
+        widget.appService.homeBanner.value!,
+        fit: BoxFit.fill,
+      );
+    });
+  }
 }
