@@ -60,14 +60,18 @@ class _HeapMapWidgetState extends State<HeapMapWidget> {
   void init() async {
     await controller.getListIndustry();
     await newData();
-    setState(() {
-      initialized = true;
-    });
+    if(mounted){
+      setState(() {
+        initialized = true;
+      });
+    }
   }
 
   Future<void> newData() async {
     _datas.clear();
-    setState(() {});
+    if(mounted){
+      setState(() {});
+    }
     _total = 0;
 
     if (chartType == _Type.kl) {
@@ -97,7 +101,9 @@ class _HeapMapWidgetState extends State<HeapMapWidget> {
         return (element.gTGD ?? 0) < _total / 1000;
       }
     });
-    setState(() {});
+    if(mounted){
+      setState(() {});
+    }
   }
 
   @override

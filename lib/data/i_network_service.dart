@@ -26,6 +26,7 @@ import 'package:dtnd/config/service/environment.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 import '../=models=/request/request_model.dart';
+import '../=models=/response/index_board.dart';
 import '../=models=/response/user_token.dart';
 
 abstract class INetworkService {
@@ -66,6 +67,8 @@ abstract class INetworkService {
   Future<List<DeepModel>> getMarketDepth();
 
   Future<List<IndayMatchedOrder>> getIndayMatchedOrders(String symbol);
+
+  Future<List<IndexBoard>> getIndexBoard(String marketCode);
 
   Future<SCashBalance> getSCashBalance(RequestModel requestModel);
 

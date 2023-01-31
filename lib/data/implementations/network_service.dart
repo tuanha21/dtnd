@@ -6,6 +6,7 @@ import 'package:dtnd/=models=/response/account_info_model.dart';
 import 'package:dtnd/=models=/response/business_profile_model.dart';
 import 'package:dtnd/=models=/response/deep_model.dart';
 import 'package:dtnd/=models=/response/inday_matched_order.dart';
+import 'package:dtnd/=models=/response/index_board.dart';
 import 'package:dtnd/=models=/response/index_detail.dart';
 import 'package:dtnd/=models=/response/index_chart_data.dart';
 import 'package:dtnd/=models=/index.dart';
@@ -40,6 +41,7 @@ class NetworkService implements INetworkService {
   NetworkService._internal();
 
   static final _instance = NetworkService._internal();
+
   static NetworkService get instance => _instance;
 
   factory NetworkService() => _instance;
@@ -54,11 +56,15 @@ class NetworkService implements INetworkService {
   late final String algo_url;
 
   Uri get url_core => Uri.https(core_url, core_endpoint);
+
   Uri url_board(String path) => Uri.https(board_url, path);
+
   Uri url_board_data_feed(Map<String, dynamic> queryParameters) =>
       Uri.https(sbboard_url, "datafeed/history", queryParameters);
+
   Uri url_info_sbsi(String path, [Map<String, dynamic>? queryParameters]) =>
       Uri.https(info_sbsi_url, path, queryParameters);
+
   Uri url_algo(
     String path, [
     Map<String, dynamic>? queryParameters,
@@ -510,6 +516,30 @@ class NetworkService implements INetworkService {
     final List<SubsidiariesModel> result = [];
     for (var element in response) {
       result.add(SubsidiariesModel.fromJson(element));
+    }
+    return result;
+  }
+
+  @override
+  Future<List<IndexBoard>> getIndexBoard(String marketCode) async {
+    var response =
+        await client.get(url_algo("stockBoard/chart/index/$marketCode"));
+    if (response.statusCode != 200) {
+      throw response;
+    }
+    var res = decode(response.bodyBytes);
+    if (res["status"] != 200) {
+      throw res["message"];
+    }
+    var list = res["data"] as List;
+    List<IndexBoard> result = [];
+    for (var element in list) {
+      /// lọc với giá trị lỗi
+      if (element['Advances'] > 0 ||
+          element['Declines'] > 0 ||
+          element['NoChanges'] > 0 ) {
+        result.add(IndexBoard.fromJson(element));
+      }
     }
     return result;
   }

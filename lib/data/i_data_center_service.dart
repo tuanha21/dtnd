@@ -19,6 +19,8 @@ import 'package:dtnd/=models=/response/subsidiaries_model.dart';
 import 'package:dtnd/=models=/response/top_influence_model.dart';
 import 'package:dtnd/=models=/ui_model/field_tree_element_model.dart';
 
+import '../=models=/response/index_board.dart';
+
 abstract class IDataCenterService {
   Set<IndexModel> get listIndexs;
 
@@ -57,6 +59,8 @@ abstract class IDataCenterService {
   Future<List<DeepModel>> getMarketDepth();
 
   Future<List<IndayMatchedOrder>> getIndayMatchedOrders(String symbol);
+
+  Future<List<IndexBoard>> getIndexBoard(String marketCode);
 
   Future<List<TopInfluenceModel>> getTopInfluence(Index index);
 
