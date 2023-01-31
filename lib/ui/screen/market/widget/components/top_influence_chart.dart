@@ -40,9 +40,11 @@ class _TopInfluenceChartState extends State<TopInfluenceChart> {
         data: topInfluenceList,
       )
     ];
-    setState(() {
-      initialized = true;
-    });
+    if(mounted){
+      setState(() {
+        initialized = true;
+      });
+    }
   }
 
   @override

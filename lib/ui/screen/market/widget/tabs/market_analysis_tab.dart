@@ -19,7 +19,7 @@ class _MarketAnalysisTabState extends State<MarketAnalysisTab> {
         children: const [
           TopInfluenceChart(),
           LiquidityChart(),
-          MoneyChart(height: 150),
+          MoneyChart(),
           SizedBox(height: 150)
         ],
       ),
