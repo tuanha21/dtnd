@@ -49,7 +49,6 @@ class AppImages {
   static const String edit2 = "assets/svg/edit-2.svg";
 
 
-
   static const String qa_base = "assets/svg/qa_base.svg";
   static const String qa_bond = "assets/svg/qa_bond.svg";
   static const String qa_copytrade = "assets/svg/qa_copytrade.svg";
