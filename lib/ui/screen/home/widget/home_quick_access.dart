@@ -129,32 +129,29 @@ class __AssetRowState extends State<_AssetRow> {
   bool show = false;
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: Colors.transparent,
-      child: InkWell(
-        onTap: () {},
-        child: Ink(
-          decoration: const BoxDecoration(
-            color: Colors.transparent,
-            borderRadius: BorderRadius.all(Radius.circular(8)),
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Row(
-                children: const [
-                  Icon(Icons.visibility_outlined),
-                  SizedBox(
-                    width: 16,
-                  ),
-                  Text("**********")
-                ],
-              ),
-              const Icon(Icons.arrow_forward_ios_rounded),
-            ],
-          ),
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Row(
+          children: [
+            GestureDetector(
+                onTap: () {
+                  setState(() {
+                    show = !show;
+                  });
+                },
+                child: Icon(show
+                    ? Icons.visibility_outlined
+                    : Icons.visibility_off_outlined)),
+            const SizedBox(
+              width: 16,
+            ),
+            
+            Text("**********")
+          ],
         ),
-      ),
+        const Icon(Icons.arrow_forward_ios_rounded),
+      ],
     );
   }
 }

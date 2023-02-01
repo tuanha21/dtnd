@@ -130,6 +130,10 @@
     "pin_code": "Pin code",
     "matched_order_by_time": "Matched order by time",
     "matched_order_by_price_step": "Matched order by price steps",
+    "search_history": "Search history",
+    "top_search": "Top search",
+    "no_matching_results_were_found": "No matching results were found",
+    "try_searching_again_with_another_keyword": "Try searching again with another keyword!",
 
     "DTND_assistant": "DTND assistant",
     "virtual_assistant": "Virtual assistant",
@@ -166,6 +170,9 @@
     "login_to_continue": "Login to continue",
     "you_are_not_logged_in": "You are not yet logged in",
     "you_are_not_account": "You are not account?",
+    "price_increase": "Price increase",
+    "price_decrease": "Price decrease",
+    "top_foreign": "Top foreign",
 
     "create_new_order": "Create new order",
     "create_order_successfully": "Create order successfully",

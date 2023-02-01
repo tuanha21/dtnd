@@ -71,11 +71,11 @@ abstract class StockStatus {
         path = AppImages.prefix_down_icon;
         break;
       case SStatus.ceil:
-        path = AppImages.prefix_ref_icon;
+        path = AppImages.prefix_up_icon;
         _color = AppColors.semantic_05;
         break;
       case SStatus.floor:
-        path = AppImages.prefix_ref_icon;
+        path = AppImages.prefix_down_icon;
         _color = AppColors.semantic_04;
         break;
     }

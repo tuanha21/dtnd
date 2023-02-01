@@ -29,6 +29,8 @@ abstract class IDataCenterService {
   Future<List<StockModel>> getStockModelsFromStockCodes(
       List<String> stockCodes);
 
+  List<Stock> getStockFromStockCodes(List<String> stockCodes);
+
   Future<void> removeStockModelsFromStockCodes(List<String> stockCodes);
 
   Future<StockData> getStockData(String stockCode);
@@ -37,9 +39,17 @@ abstract class IDataCenterService {
 
   Future<List<StockData>> getListStockData(List<String> listStock);
 
-  Future<List<StockModel>> getList30Stock(String code);
+  Future<List<Stock>> getList30Stock(String code);
 
-  Future<List<Stock>> searchStocksBySym(String sym, {int maxSuggestions});
+  Future<List<Stock>> getTopSearch();
+
+  Future<List<String>> getTopStockTrade([int count, String type]);
+
+  Future<List<String>> getTopStockChange([int count, String type]);
+
+  Future<List<String>> getTopForeignTrade([int count, String type]);
+
+  List<Stock> searchStocksBySym(String sym, {int? maxSuggestions});
 
   Stock? getStocksBySym(String sym);
 
@@ -48,7 +58,8 @@ abstract class IDataCenterService {
   Future<StockTradingHistory?> getStockTradingHistory(
       String stockCode, String resolution, int from, int to);
 
-  Future<Set<IndexModel>> getListIndex();
+  Future<Set<IndexModel>> getListIndex(
+      {DateTime? fromTime, DateTime? toTime, String? resolution});
 
   Future<List<StockNews>> getStockNews(String stockCode);
 

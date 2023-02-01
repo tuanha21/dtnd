@@ -66,8 +66,9 @@ class VirtualAssistantFilterController {
 
   Future<void> getList30Stocks() async {
     try {
-      listSuggestionStocks.value =
-          await dataCenterService.getList30Stock("HSX30");
+      final top = await dataCenterService.getList30Stock("HSX30");
+      listSuggestionStocks.value = await dataCenterService
+          .getStockModelsFromStockCodes(top.map((e) => e.stockCode).toList());
     } catch (e) {
       logger.e(e);
     }

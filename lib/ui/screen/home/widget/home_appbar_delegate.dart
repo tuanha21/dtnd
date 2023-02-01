@@ -1,22 +1,24 @@
+import 'package:dtnd/=models=/response/stock.dart';
 import 'package:dtnd/config/service/app_services.dart';
+import 'package:dtnd/data/i_data_center_service.dart';
 import 'package:dtnd/data/implementations/network_service.dart';
 import 'package:dtnd/ui/screen/home/widget/home_appbar.dart';
 import 'package:dtnd/ui/screen/home/widget/home_quick_access.dart';
+import 'package:dtnd/ui/screen/search/search_screen.dart';
+import 'package:dtnd/ui/screen/stock_detail/stock_detail_screen.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 
 const imageHeight = 280.0;
 
 class HomeAppbarDelegate extends SliverPersistentHeaderDelegate {
-  const HomeAppbarDelegate(this.appService);
+  const HomeAppbarDelegate(this.appService, this.dataCenterService);
   final AppService appService;
+  final IDataCenterService dataCenterService;
   @override
   Widget build(
       BuildContext context, double shrinkOffset, bool overlapsContent) {
-    final themeMode = appService.themeMode;
-    final scrollRatio = 1 - (shrinkOffset / _difference);
     final size = MediaQuery.of(context).size;
     return Material(
       child: Stack(
@@ -37,11 +39,35 @@ class HomeAppbarDelegate extends SliverPersistentHeaderDelegate {
                 backgroundColor: Colors.transparent,
                 title: "DTND",
                 actions: [
-                  SvgPicture.asset(AppImages.search_appbar_icon),
+                  SizedBox.square(
+                      dimension: 24,
+                      child: InkWell(
+                          onTap: () {
+                            Navigator.of(context)
+                                .push(MaterialPageRoute(
+                              builder: (context) => const SearchScreen(),
+                            ))
+                                .then((value) async {
+                              if (value is Stock) {
+                                dataCenterService.getStockModelsFromStockCodes([
+                                  value.stockCode
+                                ]).then((stockModels) => Navigator.of(context)
+                                        .push(MaterialPageRoute(
+                                      builder: (context) => StockDetailScreen(
+                                        stockModel: stockModels.first,
+                                      ),
+                                    )));
+                              }
+                            });
+                          },
+                          child:
+                              Image.asset(AppImages.home_icon_search_normal))),
                   const SizedBox(
                     width: 20,
                   ),
-                  SvgPicture.asset(AppImages.notification_appbar_icon),
+                  SizedBox.square(
+                      dimension: 24,
+                      child: Image.asset(AppImages.home_icon_notification)),
                   const SizedBox(
                     width: 16,
                   ),
@@ -54,7 +80,7 @@ class HomeAppbarDelegate extends SliverPersistentHeaderDelegate {
             left: 16,
             child: SizedBox(
               width: size.width - 32,
-              child: HomeQuickAccess(),
+              child: const HomeQuickAccess(),
             ),
           ),
         ],

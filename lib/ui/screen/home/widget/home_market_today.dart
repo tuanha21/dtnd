@@ -11,6 +11,7 @@ import 'package:dtnd/ui/theme/app_textstyle.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
+import 'package:k_chart/flutter_k_chart.dart';
 
 class HomeMarketToday extends StatefulWidget {
   const HomeMarketToday({super.key});
@@ -41,24 +42,30 @@ class _HomeMarketTodayState extends State<HomeMarketToday> {
                   PointerDeviceKind.mouse,
                 },
               ),
-              child: ListView.separated(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                scrollDirection: Axis.horizontal,
-                physics: const AlwaysScrollableScrollPhysics(),
-                itemCount: homeController.listIndexs.length,
-                itemBuilder: (context, index) => HomeIndexItem(
-                  data: homeController.listIndexs.elementAt(index),
-                ),
-                separatorBuilder: (BuildContext context, int index) =>
-                    const SizedBox(
-                  width: 8,
-                ),
-              ),
+              child: Obx(() {
+                final cindex = homeController.currentIndexModel.value?.index;
+                return ListView.separated(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  scrollDirection: Axis.horizontal,
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  itemCount: homeController.listIndexs.length,
+                  itemBuilder: (context, index) => HomeIndexItem(
+                    data: homeController.listIndexs.elementAt(index),
+                    selectedIndex: cindex,
+                    onSelected: homeController.changeIndex,
+                  ),
+                  separatorBuilder: (BuildContext context, int index) =>
+                      const SizedBox(
+                    width: 8,
+                  ),
+                );
+              }),
             ),
           ),
-          Builder(
-            builder: (context) {
-              if (homeController.currentIndexModel.stockTradingHistory.value ==
+          Obx(
+            () {
+              if (homeController
+                      .currentIndexModel.value?.stockTradingHistory.value ==
                   null) {
                 return Container();
               }
@@ -66,7 +73,11 @@ class _HomeMarketTodayState extends State<HomeMarketToday> {
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: SizedBox.fromSize(
                   size: Size(MediaQuery.of(context).size.width, 250),
-                  child: KChart(indexModel: homeController.currentIndexModel),
+                  child: KChart(
+                    indexModel: homeController.currentIndexModel.value!,
+                    isLine: true,
+                    dateTimeFormat: const [dd, "/", mm],
+                  ),
                 ),
               );
             },
@@ -92,7 +103,10 @@ class HomeIndexItem extends StatelessWidget {
     }
     VoidCallback? onTap;
     if (onSelected != null) {
-      onTap = () => onSelected?.call(data.index);
+      onTap = () {
+        print(data.index);
+        onSelected?.call(data.index);
+      };
     }
     return Obx(() {
       return Material(
@@ -106,7 +120,7 @@ class HomeIndexItem extends StatelessWidget {
             decoration: BoxDecoration(
               border: border,
               borderRadius: const BorderRadius.all(Radius.circular(8)),
-              color: data.indexDetail.bgColor(themeMode),
+              color: AppColors.neutral_07,
             ),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,

@@ -26,6 +26,9 @@ class UserService implements IUserService {
   TotalAsset? totalAsset;
 
   @override
+  List<String> searchHistory = [];
+
+  @override
   bool regSmartOTP = false;
 
   @override
@@ -42,6 +45,8 @@ class UserService implements IUserService {
   Future<void> deleteToken() async {
     userToken = null;
     userInfo = null;
+    totalAsset = null;
+    searchHistory = [];
     return;
   }
 
@@ -50,8 +55,9 @@ class UserService implements IUserService {
     try {
       userToken = token;
       await localStorageService.saveUserToken(token);
-      await getUserInfo();
+      getUserInfo();
       getTotalAsset();
+      getSearchHistory();
       return true;
     } catch (e) {
       return false;
@@ -92,5 +98,27 @@ class UserService implements IUserService {
     totalAsset = await networkService.getTotalAsset(requestModel);
     logger.v(totalAsset!.toJson());
     return totalAsset;
+  }
+
+  @override
+  Future<List<String>> getSearchHistory() async {
+    if (!isLogin) {
+      return [];
+    }
+    final body = '{"account":"${userToken!.user}"}';
+
+    searchHistory = await networkService.getSearchHistory(body);
+    logger.v(searchHistory);
+    return searchHistory;
+  }
+
+  @override
+  void putSearchHistory(String searchString) {
+    final Map<String, dynamic> body = {
+      "account": userToken!.user,
+      "textSearch": searchString,
+    };
+    networkService.putSearchHistory(body.toString());
+    return;
   }
 }

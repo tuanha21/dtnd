@@ -48,6 +48,14 @@ abstract class INetworkService {
 
   Future<List<String>> getList30Stocks(String code);
 
+  Future<List<String>> getTopSearch();
+
+  Future<List<String>> getTopStockTrade(Map<String, dynamic> body);
+
+  Future<List<String>> getTopStockChange(Map<String, dynamic> body);
+
+  Future<List<String>> getTopForeignTrade(Map<String, dynamic> body);
+
   Future<List<StockDataResponse>> getListStockData(String listStock);
 
   /// Should not call, too many data
@@ -91,6 +99,10 @@ abstract class INetworkService {
   Future<UserInfo?> getUserInfo(RequestModel requestModel);
 
   Future<TotalAsset?> getTotalAsset(RequestModel requestModel);
+
+  Future<List<String>> getSearchHistory(String body);
+
+  Future<void> putSearchHistory(String body);
 
   //business info
   Future<BusinnessProfileModel?> getBusinnessProfile(String body);

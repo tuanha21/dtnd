@@ -247,16 +247,35 @@ class DataCenterService implements IDataCenterService {
     final unregisteredCodes = getUnregisteredCodes(stockCodes);
     if (unregisteredCodes.isNotEmpty) {
       for (final String code in unregisteredCodes) {
-        final stock =
-            listAllStock.firstWhere((element) => element.stockCode == code);
-        final stockData = await getStockData(code);
-        final stockModel = StockModel(stock: stock, stockData: stockData);
-        listStockReg.add(stockModel);
-        listReturn.add(stockModel);
+        try {
+          final stock =
+              listAllStock.firstWhere((element) => element.stockCode == code);
+          final stockData = await getStockData(code);
+          final stockModel = StockModel(stock: stock, stockData: stockData);
+          listStockReg.add(stockModel);
+          listReturn.add(stockModel);
+        } catch (e) {
+          continue;
+        }
       }
     }
     regStocks(stockCodes);
     registering = false;
+    return listReturn;
+  }
+
+  @override
+  List<Stock> getStockFromStockCodes(List<String> stockCodes) {
+    final List<Stock> listReturn = <Stock>[];
+    for (final String code in stockCodes) {
+      try {
+        final stock =
+            listAllStock.firstWhere((element) => element.stockCode == code);
+        listReturn.add(stock);
+      } catch (e) {
+        continue;
+      }
+    }
     return listReturn;
   }
 
@@ -291,20 +310,82 @@ class DataCenterService implements IDataCenterService {
   }
 
   @override
-  Future<List<StockModel>> getList30Stock(String code) async {
+  Future<List<Stock>> getList30Stock(String code) async {
     final listStocks = await networkService.getList30Stocks(code);
     if (listStocks.isEmpty) {
       return [];
     }
-
-    final List<StockModel> results =
-        await getStockModelsFromStockCodes(listStocks);
+    final List<Stock> results = [];
+    for (var e in listStocks) {
+      try {
+        final stock =
+            listAllStock.firstWhere((element) => element.stockCode == e);
+        results.add(stock);
+      } catch (e) {
+        continue;
+      }
+    }
     return results;
   }
 
   @override
-  Future<List<Stock>> searchStocksBySym(String sym,
-      {int maxSuggestions = 10}) async {
+  Future<List<Stock>> getTopSearch() async {
+    final listStrings = await networkService.getTopSearch();
+    if (listStrings.isEmpty) {
+      return [];
+    }
+    final List<Stock> results = getStockFromStockCodes(listStrings);
+
+    return results;
+  }
+
+  @override
+  Future<List<String>> getTopForeignTrade(
+      [int count = 8, String type = "i"]) async {
+    final Map<String, String> body = {
+      "count": "$count",
+      "type": type,
+    };
+    final listStrings = await networkService.getTopForeignTrade(body);
+    if (listStrings.isEmpty) {
+      return [];
+    }
+
+    return listStrings;
+  }
+
+  @override
+  Future<List<String>> getTopStockChange(
+      [int count = 8, String type = "i"]) async {
+    final Map<String, String> body = {
+      "count": "$count",
+      "type": type,
+    };
+    final listStrings = await networkService.getTopStockChange(body);
+    if (listStrings.isEmpty) {
+      return [];
+    }
+
+    return listStrings;
+  }
+
+  @override
+  Future<List<String>> getTopStockTrade(
+      [int count = 8, String type = "S"]) async {
+    final Map<String, String> body = {
+      "count": "$count",
+      "type": type,
+    };
+    final listStrings = await networkService.getTopStockTrade(body);
+    if (listStrings.isEmpty) {
+      return [];
+    }
+
+    return listStrings;
+  }
+
+  @override
+  List<Stock> searchStocksBySym(String sym, {int? maxSuggestions}) {
     if (sym.isEmpty) {
       return [];
     }
@@ -314,7 +395,7 @@ class DataCenterService implements IDataCenterService {
     for (final Stock stock in listAllStock) {
       if (stock.stockCode.contains(_sym)) {
         searchedStocks.add(stock);
-        if (_sym.length == maxSuggestions) {
+        if (maxSuggestions != null && _sym.length == maxSuggestions) {
           return searchedStocks;
         }
       }
@@ -357,7 +438,8 @@ class DataCenterService implements IDataCenterService {
   }
 
   @override
-  Future<Set<IndexModel>> getListIndex() async {
+  Future<Set<IndexModel>> getListIndex(
+      {DateTime? fromTime, DateTime? toTime, String? resolution}) async {
     if (_listIndex.isNotEmpty) {
       return _listIndex;
     }
@@ -371,10 +453,10 @@ class DataCenterService implements IDataCenterService {
     for (final Index index in Index.values) {
       final response = await networkService.getIndexDetail(index);
       final int from = TimeUtilities.timeToEpoch(
-          TimeUtilities.getPreviousDateTime(TimeUtilities.week(1)));
-      final int to = TimeUtilities.timeToEpoch(DateTime.now());
-      final chartResponse =
-          await getStockTradingHistory(index.chartCode, "5", from, to);
+          fromTime ?? TimeUtilities.getPreviousDateTime(TimeUtilities.week(1)));
+      final int to = TimeUtilities.timeToEpoch(toTime ?? DateTime.now());
+      final chartResponse = await getStockTradingHistory(
+          index.chartCode, resolution ?? "5", from, to);
       _listIndex.add(IndexModel(
         index: index,
         indexDetailResponse: response,

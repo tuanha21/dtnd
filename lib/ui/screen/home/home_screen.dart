@@ -36,7 +36,8 @@ class _HomeScreenState extends State<HomeScreen> {
       slivers: [
         SliverPersistentHeader(
           pinned: false,
-          delegate: HomeAppbarDelegate(homeController.appService),
+          delegate: HomeAppbarDelegate(
+              homeController.appService, homeController.dataCenterService),
         ),
         // SliverAppBar(
         //   pinned: true,

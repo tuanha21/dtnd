@@ -11,6 +11,8 @@ abstract class IUserService {
 
   TotalAsset? get totalAsset;
 
+  List<String> get searchHistory;
+
   bool get regSmartOTP;
 
   void changeRegSmartOTP(bool value);
@@ -20,4 +22,8 @@ abstract class IUserService {
   Future<void> deleteToken();
 
   Future<bool> saveToken(UserToken token);
+
+  Future<List<String>> getSearchHistory();
+
+  void putSearchHistory(String searchString);
 }
