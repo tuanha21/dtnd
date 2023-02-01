@@ -208,8 +208,7 @@ class _HeapMapTreeState extends State<HeapMapTree> {
                           },
                           labelBuilder:
                               (BuildContext context, TreemapTile tile) {
-                            return Padding(
-                              padding: const EdgeInsets.all(2.5),
+                            return Center(
                               child: Text(
                                 tile.group,
                                 overflow: TextOverflow.ellipsis,
