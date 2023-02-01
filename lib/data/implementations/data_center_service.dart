@@ -493,4 +493,9 @@ class DataCenterService implements IDataCenterService {
   Future<List<IndexBoard>> getIndexBoard(String marketCode) {
     return networkService.getIndexBoard(marketCode);
   }
+
+  @override
+  Future<List<String>> getSectors(String industryCode) {
+    return networkService.getSectors(industryCode);
+  }
 }

@@ -87,4 +87,6 @@ abstract class IDataCenterService {
   Future<List<SubsidiariesModel>?> getAssociatedCompany(String stockCode);
 
   Future<List<SubsidiariesModel>?> getOtherCompany(String stockCode);
+
+  Future<List<String>> getSectors(String industryCode);
 }

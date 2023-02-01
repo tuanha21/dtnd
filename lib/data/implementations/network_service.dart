@@ -537,10 +537,30 @@ class NetworkService implements INetworkService {
       /// lọc với giá trị lỗi
       if (element['Advances'] > 0 ||
           element['Declines'] > 0 ||
-          element['NoChanges'] > 0 ) {
+          element['NoChanges'] > 0) {
         result.add(IndexBoard.fromJson(element));
       }
     }
     return result;
   }
+
+  @override
+  Future<List<String>> getSectors(String industryCode) async {
+    var response =
+        await client.get(url_algo("sectors/$industryCode"));
+    if (response.statusCode != 200) {
+      throw response;
+    }
+    var res = decode(response.bodyBytes);
+    if (res["status"] != 200) {
+      throw res["message"];
+    }
+    var list = res["data"] as List;
+    final List<String> result = [];
+    for (var element in list) {
+      result.add(element['securityCode']);
+    }
+    return result;
+  }
+
 }

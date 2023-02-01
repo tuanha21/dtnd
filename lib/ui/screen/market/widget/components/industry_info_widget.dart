@@ -226,7 +226,7 @@ class _IndustryInfoWidgetState extends State<IndustryInfoWidget> {
                       return row;
                     } else {
                       return Column(
-                        children: [Divider(), row],
+                        children: [const Divider(), row],
                       );
                     }
                   }),

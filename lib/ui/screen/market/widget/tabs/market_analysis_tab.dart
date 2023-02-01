@@ -22,7 +22,7 @@ class MarketAnalysisTab extends StatefulWidget {
   State<MarketAnalysisTab> createState() => _MarketAnalysisTabState();
 }
 
-class _MarketAnalysisTabState extends State<MarketAnalysisTab> {
+class _MarketAnalysisTabState extends State<MarketAnalysisTab> with AutomaticKeepAliveClientMixin {
   final IDataCenterService dataCenterService = DataCenterService();
   late Future<List<TopInfluenceModel>> topInfluenceList;
   late Future<List<IndexBoard>> indexBoard;
@@ -44,6 +44,7 @@ class _MarketAnalysisTabState extends State<MarketAnalysisTab> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return ListView(
       children: [
         const SizedBox(height: 32),
@@ -86,6 +87,10 @@ class _MarketAnalysisTabState extends State<MarketAnalysisTab> {
       ],
     );
   }
+
+  @override
+  // TODO: implement wantKeepAlive
+  bool get wantKeepAlive => true;
 }
 
 class BottomSheet extends StatefulWidget {

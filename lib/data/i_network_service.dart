@@ -95,4 +95,7 @@ abstract class INetworkService {
   Future<List<BusinnessLeaderModel>?> getBusinnessLeaders(String body);
 
   Future<List<SubsidiariesModel>?> getSubsidiaries(Map<String, dynamic> body);
+
+  Future<List<String>> getSectors(String industryCode);
+
 }
