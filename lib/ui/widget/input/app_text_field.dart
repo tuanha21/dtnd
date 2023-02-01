@@ -7,6 +7,10 @@ class AppTextField extends StatefulWidget {
   final FormFieldValidator<String>? validator;
   final bool obscureText;
   final bool readOnly;
+  final Widget? suffixIcon;
+  final Color? fillColor;
+  final InputBorder? border;
+  final GestureTapCallback? onTap;
 
   final TextEditingController? controller;
 
@@ -19,6 +23,10 @@ class AppTextField extends StatefulWidget {
     this.validator,
     this.obscureText = false,
     this.readOnly = false,
+    this.suffixIcon,
+    this.fillColor,
+    this.border,
+    this.onTap,
   }) : super(key: key);
 
   @override
@@ -34,27 +42,38 @@ class _AppTextFieldState extends State<AppTextField> {
     super.initState();
   }
 
+  Widget? get suffixIcon {
+    if (widget.suffixIcon != null) return widget.suffixIcon;
+    return !widget.obscureText
+        ? null
+        : GestureDetector(
+            onTap: () {
+              setState(() {
+                _obscureText = !_obscureText;
+              });
+            },
+            child: Icon(_obscureText
+                ? Icons.remove_red_eye
+                : Icons.remove_red_eye_outlined));
+  }
+
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+        onTap: widget.onTap,
         readOnly: widget.readOnly,
         obscureText: _obscureText,
         controller: widget.controller,
         onChanged: widget.onChanged,
         validator: widget.validator,
         decoration: InputDecoration(
+            border: widget.border,
+            focusedBorder: widget.border,
+            enabledBorder: widget.border,
+            fillColor: widget.fillColor,
+            filled: widget.fillColor != null,
             labelText: widget.labelText,
             hintText: widget.hintText,
-            suffixIcon: !widget.obscureText
-                ? null
-                : GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        _obscureText = !_obscureText;
-                      });
-                    },
-                    child: Icon(_obscureText
-                        ? Icons.remove_red_eye
-                        : Icons.remove_red_eye_outlined))));
+            suffixIcon: suffixIcon));
   }
 }

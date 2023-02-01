@@ -27,6 +27,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
+import '../../=models=/response/index_board.dart';
+
 const List<String> defaultListStock = [
   'ACB',
   'BID',
@@ -567,5 +569,15 @@ class DataCenterService implements IDataCenterService {
       "relatedType": "D933DCAE2B583EE0E055C3B42B92FC60"
     };
     return networkService.getSubsidiaries(body);
+  }
+
+  @override
+  Future<List<IndexBoard>> getIndexBoard(String marketCode) {
+    return networkService.getIndexBoard(marketCode);
+  }
+
+  @override
+  Future<List<String>> getSectors(String industryCode) {
+    return networkService.getSectors(industryCode);
   }
 }

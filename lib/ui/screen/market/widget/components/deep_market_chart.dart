@@ -8,7 +8,9 @@ import 'package:flutter/material.dart';
 
 class DeepMarketChart extends StatefulWidget {
   final List<charts.Series<DeepModel, String>> seriesList;
+
   const DeepMarketChart(this.seriesList, {super.key});
+
   @override
   _DeepMarketChartState createState() => _DeepMarketChartState();
 }
@@ -53,16 +55,14 @@ class _DeepMarketChartState extends State<DeepMarketChart> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(S.of(context).market_deep),
-        const SizedBox(
-          height: 5,
-        ),
-        Text(
-          S.of(context).total_wvalue(_total),
-          style: const TextStyle(
-              fontSize: 12,
-              fontWeight: FontWeight.w400,
-              color: Color(0xffcccccc)),
-        ),
+        // const SizedBox(height: 5),
+        // Text(
+        //   S.of(context).total_wvalue(_total),
+        //   style: const TextStyle(
+        //       fontSize: 12,
+        //       fontWeight: FontWeight.w400,
+        //       color: Color(0xffcccccc)),
+        // ),
         Center(
           child: Padding(
             padding: const EdgeInsets.only(bottom: 20),
@@ -77,7 +77,6 @@ class _DeepMarketChartState extends State<DeepMarketChart> {
                 domainAxis: charts.OrdinalAxisSpec(
                     renderSpec: charts.SmallTickRendererSpec(
                         // labelRotation: 45,
-
                         // Tick and Label styling here.
                         labelStyle: charts.TextStyleSpec(
                             fontSize: 7, // size in Pts.
@@ -96,43 +95,41 @@ class _DeepMarketChartState extends State<DeepMarketChart> {
             ),
           ),
         ),
-        SizedBox(
-          height: 5,
-          child: Row(
-            children: [
-              buildQuantity(AppColors.semantic_03, _loss),
-              const SizedBox(
-                width: 5,
-              ),
-              buildQuantity(AppColors.semantic_02, _ref),
-              const SizedBox(
-                width: 5,
-              ),
-              buildQuantity(AppColors.semantic_01, _gain),
-            ],
-          ),
-        ),
-        const SizedBox(
-          height: 5,
-        ),
-        Row(
-          children: [
-            Text(
-              S.of(context).loss_wvalue(_loss),
-              style:
-                  const TextStyle(color: AppColors.semantic_03, fontSize: 10),
-            ),
-            const Spacer(),
-            Text(
-              S.of(context).gain_wvalue(_gain),
-              style:
-                  const TextStyle(color: AppColors.semantic_01, fontSize: 10),
-            ),
-          ],
-        ),
-        const SizedBox(
-          height: 15,
-        ),
+        // SizedBox(
+        //   height: 5,
+        //   child: Row(
+        //     children: [
+        //       buildQuantity(AppColors.semantic_03, _loss),
+        //       const SizedBox(
+        //         width: 5,
+        //       ),
+        //       buildQuantity(AppColors.semantic_02, _ref),
+        //       const SizedBox(
+        //         width: 5,
+        //       ),
+        //       buildQuantity(AppColors.semantic_01, _gain),
+        //     ],
+        //   ),
+        // ),
+        // const SizedBox(
+        //   height: 5,
+        // ),
+        // Row(
+        //   children: [
+        //     Text(
+        //       S.of(context).loss_wvalue(_loss),
+        //       style:
+        //           const TextStyle(color: AppColors.semantic_03, fontSize: 10),
+        //     ),
+        //     const Spacer(),
+        //     Text(
+        //       S.of(context).gain_wvalue(_gain),
+        //       style:
+        //           const TextStyle(color: AppColors.semantic_01, fontSize: 10),
+        //     ),
+        //   ],
+        // ),
+        // const SizedBox(height: 15),
       ],
     );
   }

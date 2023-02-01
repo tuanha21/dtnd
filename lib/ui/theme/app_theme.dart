@@ -62,9 +62,7 @@ final InputDecorationTheme lightInputDecorationTheme = InputDecorationTheme(
   contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
   floatingLabelAlignment: FloatingLabelAlignment.start,
   floatingLabelBehavior: FloatingLabelBehavior.always,
-  hintStyle: AppTextStyle.titleSmall_14.copyWith(
-    color: AppColors.neutral_03,
-  ),
+  hintStyle: AppTextStyle.bodyMedium_14.copyWith(color: AppColors.neutral_04),
   border: _defaulBorder,
   enabledBorder: _defaulBorder,
   disabledBorder: _defaulBorder,

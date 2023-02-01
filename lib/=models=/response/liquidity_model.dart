@@ -61,7 +61,7 @@ class LiquidityModel {
     for (var element in sublist) {
       result.add(element.reduce((a, b) => a + b));
     }
-    logger.v(sublist);
+    //logger.v(sublist);
     list.clear();
     list.addAll(result);
     return result;

@@ -14,7 +14,6 @@ class MarketIndustryTab extends StatefulWidget {
 }
 
 class _MarketIndustryTabState extends State<MarketIndustryTab> {
-  final IndustryTabController controller = IndustryTabController();
   bool heapMapMode = true;
 
   void changeMode(bool newValue) {
