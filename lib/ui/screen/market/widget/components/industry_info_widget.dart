@@ -91,20 +91,19 @@ class _IndustryInfoWidgetState extends State<IndustryInfoWidget> {
             decoration: const BoxDecoration(
                 borderRadius: BorderRadius.all(Radius.circular(8)),
                 color: Colors.white),
-            child: Column(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
+                Flexible(
+                  child: IntrinsicHeight(
+                    child: Row(
                       children: [
                         ClipRRect(
                             borderRadius:
                                 const BorderRadius.all(Radius.circular(8)),
                             child: Image.network("https://picsum.photos/44")),
                         const SizedBox(width: 8),
-                        SizedBox(
-                          height: 40,
+                        Flexible(
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -123,49 +122,49 @@ class _IndustryInfoWidgetState extends State<IndustryInfoWidget> {
                         ),
                       ],
                     ),
-                    SizedBox(
-                      height: 40,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          Text(
-                            currentIndustry!.tOTALKLGD.toString(),
-                            style: textTheme.titleSmall,
-                          ),
-                          Builder(builder: (context) {
-                            final per = Random().nextDouble() * 2 - 1;
-                            Widget pre;
-                            Color color;
-                            if (per >= 0) {
-                              pre = Image.asset(
-                                AppImages.prefix_up_icon,
-                                width: 12,
-                              );
-                              color = AppColors.semantic_01;
-                            } else {
-                              pre = Image.asset(
-                                AppImages.prefix_down_icon,
-                                width: 12,
-                              );
-                              color = AppColors.semantic_03;
-                            }
-                            return Row(
-                              children: [
-                                pre,
-                                Text(
-                                  "${per.toStringAsPrecision(2)}%",
-                                  style: textTheme.labelMedium!
-                                      .copyWith(color: color),
-                                ),
-                              ],
-                            );
-                          }),
-                        ],
-                      ),
-                    )
-                  ],
+                  ),
                 ),
+                SizedBox(
+                  height: 40,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Text(
+                        currentIndustry!.tOTALKLGD.toString(),
+                        style: textTheme.titleSmall,
+                      ),
+                      Builder(builder: (context) {
+                        final per = Random().nextDouble() * 2 - 1;
+                        Widget pre;
+                        Color color;
+                        if (per >= 0) {
+                          pre = Image.asset(
+                            AppImages.prefix_up_icon,
+                            width: 12,
+                          );
+                          color = AppColors.semantic_01;
+                        } else {
+                          pre = Image.asset(
+                            AppImages.prefix_down_icon,
+                            width: 12,
+                          );
+                          color = AppColors.semantic_03;
+                        }
+                        return Row(
+                          children: [
+                            pre,
+                            Text(
+                              "${per.toStringAsPrecision(2)}%",
+                              style:
+                                  textTheme.labelMedium!.copyWith(color: color),
+                            ),
+                          ],
+                        );
+                      }),
+                    ],
+                  ),
+                )
               ],
             ),
           ),
