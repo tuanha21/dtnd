@@ -154,6 +154,7 @@
     "search_stock": "Tìm mã CP",
     "search": "Tìm kiếm",
     "filter_stock": "Lọc cổ phiếu",
+    "filter" : "Bộ lọc",
     "filter_stock_figure": "Chỉ số lọc cổ phiếu",
     "technical_analysis": "Phân tích kỹ thuật",
     "create": "Tạo",

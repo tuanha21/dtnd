@@ -3,35 +3,20 @@ import 'package:dtnd/utilities/num_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
-import '../../../../../=models=/index.dart';
-import '../../../../../data/i_data_center_service.dart';
-import '../../../../../data/implementations/data_center_service.dart';
 import '../../../../../generated/l10n.dart';
 import '../../../../theme/app_color.dart';
 
 class MoneyChart extends StatefulWidget {
   final double height;
+  final Future<List<IndexBoard>> indexBoard;
 
-  const MoneyChart({super.key, this.height = 150});
+  const MoneyChart({super.key, this.height = 150, required this.indexBoard});
 
   @override
   State<MoneyChart> createState() => _MoneyChartState();
 }
 
 class _MoneyChartState extends State<MoneyChart> {
-  final IDataCenterService dataCenterService = DataCenterService();
-
-  late Future<List<IndexBoard>> indexBoard;
-
-  @override
-  void initState() {
-    initData();
-    super.initState();
-  }
-
-  void initData() {
-    indexBoard = dataCenterService.getIndexBoard(Index.VNI.exchangeName);
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +36,7 @@ class _MoneyChartState extends State<MoneyChart> {
           height: widget.height,
           width: MediaQuery.of(context).size.width,
           child: FutureBuilder<List<IndexBoard>>(
-              future: indexBoard,
+              future: widget.indexBoard,
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return SizedBox(
@@ -97,11 +82,12 @@ class _MoneyChartState extends State<MoneyChart> {
                   .titleMedium
                   ?.copyWith(fontWeight: FontWeight.w700)),
         ),
+        const SizedBox(height: 5),
         SizedBox(
           height: widget.height,
           width: MediaQuery.of(context).size.width,
           child: FutureBuilder<List<IndexBoard>>(
-              future: indexBoard,
+              future: widget.indexBoard,
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return SizedBox(
@@ -111,15 +97,19 @@ class _MoneyChartState extends State<MoneyChart> {
                 if (snapshot.connectionState == ConnectionState.done) {
                   var list = snapshot.data;
                   return Padding(
-                    padding: const EdgeInsets.only(left: 20, right: 20),
+                    padding: const EdgeInsets.only(left: 0, right: 20),
                     child: charts.NumericComboChart(
                       _createSampleData(list!),
                       defaultRenderer: charts.LineRendererConfig(
                           includeArea: true, stacked: true),
                       animate: true,
-                      primaryMeasureAxis: const charts.NumericAxisSpec(
+                      secondaryMeasureAxis: const charts.NumericAxisSpec(
                         viewport: charts.NumericExtents(0, 100),
-                        tickProviderSpec: charts.BasicNumericTickProviderSpec(),
+                        tickProviderSpec: charts.BasicNumericTickProviderSpec(
+                          desiredTickCount: 5,
+                          dataIsInWholeNumbers: true,
+                          zeroBound: true
+                        ),
                       ),
                       domainAxis: domainSpec(list),
                     ),

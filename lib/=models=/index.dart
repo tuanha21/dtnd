@@ -16,6 +16,19 @@ extension IndexX on Index {
     }
   }
 
+  String get market {
+    switch (this) {
+      case Index.VNI:
+        return "HOSE";
+      case Index.VN30:
+        return "VN30";
+      case Index.HNI:
+        return "HNX";
+      case Index.UPCOM:
+        return "UPCOM";
+    }
+  }
+
   String get exchangeCode {
     switch (this) {
       case Index.VNI:

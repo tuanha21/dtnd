@@ -1512,6 +1512,16 @@ class S {
     );
   }
 
+  /// `Filter`
+  String get filter {
+    return Intl.message(
+      'Filter',
+      name: 'filter',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Filter stocks figure`
   String get filter_stock_figure {
     return Intl.message(

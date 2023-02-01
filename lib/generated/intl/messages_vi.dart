@@ -136,6 +136,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "fill_OTP": MessageLookupByLibrary.simpleMessage("Nhập mã OTP"),
         "fill_account": MessageLookupByLibrary.simpleMessage("Nhập tài khoản"),
         "fill_password": MessageLookupByLibrary.simpleMessage("Nhập mật khẩu"),
+        "filter": MessageLookupByLibrary.simpleMessage("Bộ lọc"),
         "filter_stock": MessageLookupByLibrary.simpleMessage("Lọc cổ phiếu"),
         "filter_stock_figure":
             MessageLookupByLibrary.simpleMessage("Chỉ số lọc cổ phiếu"),

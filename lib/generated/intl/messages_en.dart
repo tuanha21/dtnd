@@ -143,6 +143,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "fill_OTP": MessageLookupByLibrary.simpleMessage("Fill OTP"),
         "fill_account": MessageLookupByLibrary.simpleMessage("Fill account"),
         "fill_password": MessageLookupByLibrary.simpleMessage("Fill password"),
+        "filter": MessageLookupByLibrary.simpleMessage("Filter"),
         "filter_stock": MessageLookupByLibrary.simpleMessage("Filter stocks"),
         "filter_stock_figure":
             MessageLookupByLibrary.simpleMessage("Filter stocks figure"),

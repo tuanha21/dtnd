@@ -84,6 +84,7 @@ dependencies:
   permission_handler: ^10.2.0
   image_cropper: ^3.0.1
   flutter_html: ^3.0.0-alpha.6
+  modal_bottom_sheet: ^2.1.2
 
 dev_dependencies:
   flutter_test:
