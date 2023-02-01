@@ -110,6 +110,10 @@ class AppImages {
   static const String home_icon_3dcube = "assets/home_icon/3dcube.png";
   static const String home_icon_chart_2 = "assets/home_icon/chart_2.png";
   static const String home_icon_cpu_charge = "assets/home_icon/cpu_charge.png";
+  static const String home_icon_search_normal =
+      "assets/home_icon/search_normal.png";
+  static const String home_icon_notification =
+      "assets/home_icon/notification.png";
   // static const String home_icon_ = "assets/home_icon/wallet_2.png";
 
   /// BG

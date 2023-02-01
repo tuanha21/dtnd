@@ -21,6 +21,7 @@ import 'package:dtnd/=models=/response/stock_trade.dart';
 import 'package:dtnd/=models=/response/stock_trading_history.dart';
 import 'package:dtnd/=models=/response/subsidiaries_model.dart';
 import 'package:dtnd/=models=/response/top_influence_model.dart';
+import 'package:dtnd/=models=/response/total_asset_model.dart';
 import 'package:dtnd/=models=/ui_model/field_tree_element_model.dart';
 import 'package:dtnd/config/service/environment.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
@@ -38,12 +39,22 @@ abstract class INetworkService {
 
   Future<void> startSocket();
 
+  Future<String?> getHomeBanner();
+
   //core api
   Future<UserEntity?> checkLogin(RequestModel requestModel);
 
   Future<List<Stock>> getListAllStock();
 
   Future<List<String>> getList30Stocks(String code);
+
+  Future<List<String>> getTopSearch();
+
+  Future<List<String>> getTopStockTrade(Map<String, dynamic> body);
+
+  Future<List<String>> getTopStockChange(Map<String, dynamic> body);
+
+  Future<List<String>> getTopForeignTrade(Map<String, dynamic> body);
 
   Future<List<StockDataResponse>> getListStockData(String listStock);
 
@@ -84,7 +95,14 @@ abstract class INetworkService {
 
   Future<SecurityBasicInfo?> getSecurityBasicInfo(String body);
 
+  // user
   Future<UserInfo?> getUserInfo(RequestModel requestModel);
+
+  Future<TotalAsset?> getTotalAsset(RequestModel requestModel);
+
+  Future<List<String>> getSearchHistory(String body);
+
+  Future<void> putSearchHistory(String body);
 
   //business info
   Future<BusinnessProfileModel?> getBusinnessProfile(String body);

@@ -232,6 +232,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "next": MessageLookupByLibrary.simpleMessage("Next"),
         "no_internet":
             MessageLookupByLibrary.simpleMessage("No Internet connection"),
+        "no_matching_results_were_found": MessageLookupByLibrary.simpleMessage(
+            "No matching results were found"),
         "normal_vol": MessageLookupByLibrary.simpleMessage("Normal vol"),
         "null_password": MessageLookupByLibrary.simpleMessage(
             "Password requires at least 8 characters"),
@@ -263,6 +265,10 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Input password"),
         "price": MessageLookupByLibrary.simpleMessage("Price"),
         "price_alert": MessageLookupByLibrary.simpleMessage("Price alert"),
+        "price_decrease":
+            MessageLookupByLibrary.simpleMessage("Price decrease"),
+        "price_increase":
+            MessageLookupByLibrary.simpleMessage("Price increase"),
         "profit_and_loss": MessageLookupByLibrary.simpleMessage("Profit/Loss"),
         "qa_base": MessageLookupByLibrary.simpleMessage("Base"),
         "qa_bond": MessageLookupByLibrary.simpleMessage("Bond"),
@@ -279,6 +285,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "safe_ratio": MessageLookupByLibrary.simpleMessage("Safe ratio"),
         "save": MessageLookupByLibrary.simpleMessage("Save"),
         "search": MessageLookupByLibrary.simpleMessage("Search"),
+        "search_history":
+            MessageLookupByLibrary.simpleMessage("Search history"),
         "search_stock": MessageLookupByLibrary.simpleMessage("Search stock"),
         "see_more": MessageLookupByLibrary.simpleMessage("See more"),
         "sell": MessageLookupByLibrary.simpleMessage("Sell"),
@@ -317,7 +325,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "time": MessageLookupByLibrary.simpleMessage("Time"),
         "timeout":
             MessageLookupByLibrary.simpleMessage("No response from server"),
+        "top_foreign": MessageLookupByLibrary.simpleMessage("Top foreign"),
         "top_influence": MessageLookupByLibrary.simpleMessage("Top influence"),
+        "top_search": MessageLookupByLibrary.simpleMessage("Top search"),
         "total_asset": MessageLookupByLibrary.simpleMessage("Total asset"),
         "total_debt": MessageLookupByLibrary.simpleMessage("Total debt"),
         "total_vol": MessageLookupByLibrary.simpleMessage("Total vol"),
@@ -326,6 +336,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "trading_board": MessageLookupByLibrary.simpleMessage("Trading board"),
         "trading_volatility":
             MessageLookupByLibrary.simpleMessage("TD volatility"),
+        "try_searching_again_with_another_keyword":
+            MessageLookupByLibrary.simpleMessage(
+                "Try searching again with another keyword!"),
         "unknown_error": MessageLookupByLibrary.simpleMessage("Unknown error"),
         "username": MessageLookupByLibrary.simpleMessage("Username"),
         "virtual_assistant":

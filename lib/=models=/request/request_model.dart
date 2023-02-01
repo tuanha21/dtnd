@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:dtnd/data/i_user_service.dart';
 
-enum RequestType { string, cursor }
+enum RequestType { string, cursor, none }
 
 extension RequestTypeX on RequestType {}
 
@@ -132,7 +132,9 @@ class RequestDataModel {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['type'] = type?.name ?? "string";
+    if (type != null) {
+      data['type'] = type?.name ?? "string";
+    }
     data['cmd'] = cmd;
     if (p1 != null) {
       data['p1'] = p1;

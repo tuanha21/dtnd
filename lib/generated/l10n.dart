@@ -1300,6 +1300,46 @@ class S {
     );
   }
 
+  /// `Search history`
+  String get search_history {
+    return Intl.message(
+      'Search history',
+      name: 'search_history',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Top search`
+  String get top_search {
+    return Intl.message(
+      'Top search',
+      name: 'top_search',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No matching results were found`
+  String get no_matching_results_were_found {
+    return Intl.message(
+      'No matching results were found',
+      name: 'no_matching_results_were_found',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Try searching again with another keyword!`
+  String get try_searching_again_with_another_keyword {
+    return Intl.message(
+      'Try searching again with another keyword!',
+      name: 'try_searching_again_with_another_keyword',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `DTND assistant`
   String get DTND_assistant {
     return Intl.message(
@@ -1647,6 +1687,36 @@ class S {
     return Intl.message(
       'You are not account?',
       name: 'you_are_not_account',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Price increase`
+  String get price_increase {
+    return Intl.message(
+      'Price increase',
+      name: 'price_increase',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Price decrease`
+  String get price_decrease {
+    return Intl.message(
+      'Price decrease',
+      name: 'price_decrease',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Top foreign`
+  String get top_foreign {
+    return Intl.message(
+      'Top foreign',
+      name: 'top_foreign',
       desc: '',
       args: [],
     );

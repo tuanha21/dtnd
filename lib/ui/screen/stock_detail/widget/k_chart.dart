@@ -11,10 +11,12 @@ class KChart extends StatefulWidget {
     required this.indexModel,
     this.isLine = false,
     this.showNowPrice = false,
+    this.dateTimeFormat,
   });
   final IndexModel indexModel;
   final bool isLine;
   final bool showNowPrice;
+  final List<String>? dateTimeFormat;
   @override
   State<KChart> createState() => _KChartState();
 }
@@ -69,7 +71,7 @@ class _KChartState extends State<KChart> {
     ];
     return KChartWidget(
       datas,
-      ChartStyle(dateTimeFormat: <String>[h, ":", nn]),
+      ChartStyle(dateTimeFormat: widget.dateTimeFormat ?? <String>[h, ":", nn]),
       ChartColors(
         bgColor: bgColor,
         kLineColor: widget.indexModel.indexDetail.color,

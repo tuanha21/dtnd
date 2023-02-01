@@ -24,8 +24,16 @@ class HomeMarketOverview extends StatefulWidget {
   State<HomeMarketOverview> createState() => _HomeMarketOverviewState();
 }
 
-class _HomeMarketOverviewState extends State<HomeMarketOverview> {
+class _HomeMarketOverviewState extends State<HomeMarketOverview>
+    with SingleTickerProviderStateMixin {
   final HomeController homeController = HomeController();
+  late final TabController _tabController;
+
+  @override
+  void initState() {
+    _tabController = TabController(length: 4, vsync: this);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,12 +44,25 @@ class _HomeMarketOverviewState extends State<HomeMarketOverview> {
         );
       }
       final width = MediaQuery.of(context).size.width;
-
+      final data;
+      switch (_tabController.index) {
+        case 1:
+          data = homeController.priceIncreaseToday;
+          break;
+        case 2:
+          data = homeController.priceDecreaseToday;
+          break;
+        case 3:
+          data = homeController.topForeignToday;
+          break;
+        default:
+          data = homeController.hotToday;
+      }
       Widget grid = SizedBox(
         height: 72 * 3 + 16 * 2,
         child: GridView.builder(
           padding: const EdgeInsets.symmetric(horizontal: 16),
-          itemCount: homeController.marketToday.length,
+          itemCount: data.length,
           scrollDirection: Axis.horizontal,
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 3,
@@ -50,19 +71,40 @@ class _HomeMarketOverviewState extends State<HomeMarketOverview> {
             childAspectRatio: 72 / (width - 32),
           ),
           itemBuilder: (context, index) => HomeMarketOverviewItem(
-            data: homeController.marketToday[index],
+            data: data[index],
           ),
         ),
+      );
+      grid = Column(
+        children: [
+          PreferredSize(
+            preferredSize: const Size.fromHeight(kToolbarHeight),
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: TabBar(
+                controller: _tabController,
+                isScrollable: true,
+                labelPadding:
+                    const EdgeInsets.symmetric(horizontal: 18, vertical: 6),
+                padding: EdgeInsets.zero,
+                onTap: (value) async {
+                  setState(() {});
+                  await homeController.changeList(data);
+                  setState(() {});
+                },
+                tabs: <Widget>[
+                  const Text("HOT"),
+                  Text(S.of(context).price_increase),
+                  Text(S.of(context).price_decrease),
+                  Text(S.of(context).top_foreign),
+                ],
+              ),
+            ),
+          ),
+          grid,
+        ],
       );
       return grid;
-      return Column(
-        children: List<Widget>.generate(
-          homeController.marketToday.length,
-          (index) => HomeMarketOverviewItem(
-            data: homeController.marketToday[index],
-          ),
-        ),
-      );
     }, homeController.initialized);
   }
 }

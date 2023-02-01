@@ -229,6 +229,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "next": MessageLookupByLibrary.simpleMessage("Tiếp tục"),
         "no_internet":
             MessageLookupByLibrary.simpleMessage("Không có kết nối Internet"),
+        "no_matching_results_were_found": MessageLookupByLibrary.simpleMessage(
+            "Không tìm thấy kết quả phù hợp"),
         "normal_vol": MessageLookupByLibrary.simpleMessage("KL thường"),
         "null_password": MessageLookupByLibrary.simpleMessage(
             "Mật khẩu cần tối thiểu 8 ký tự"),
@@ -260,6 +262,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Nhập password"),
         "price": MessageLookupByLibrary.simpleMessage("Giá"),
         "price_alert": MessageLookupByLibrary.simpleMessage("Cảnh báo giá"),
+        "price_decrease": MessageLookupByLibrary.simpleMessage("Giảm giá"),
+        "price_increase": MessageLookupByLibrary.simpleMessage("Tăng giá"),
         "profit_and_loss": MessageLookupByLibrary.simpleMessage("Lãi/lỗ"),
         "qa_base": MessageLookupByLibrary.simpleMessage("Cơ sở"),
         "qa_bond": MessageLookupByLibrary.simpleMessage("Trái phiếu"),
@@ -275,6 +279,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "safe_ratio": MessageLookupByLibrary.simpleMessage("Tỷ lệ an toàn"),
         "save": MessageLookupByLibrary.simpleMessage("Lưu"),
         "search": MessageLookupByLibrary.simpleMessage("Tìm kiếm"),
+        "search_history":
+            MessageLookupByLibrary.simpleMessage("Lịch sử tìm kiếm"),
         "search_stock": MessageLookupByLibrary.simpleMessage("Tìm mã CP"),
         "see_more": MessageLookupByLibrary.simpleMessage("Xem thêm"),
         "sell": MessageLookupByLibrary.simpleMessage("Bán"),
@@ -314,7 +320,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "time": MessageLookupByLibrary.simpleMessage("Thời gian"),
         "timeout": MessageLookupByLibrary.simpleMessage(
             "Không nhận được phản hồi từ máy chủ"),
+        "top_foreign": MessageLookupByLibrary.simpleMessage("Top nước ngoài"),
         "top_influence": MessageLookupByLibrary.simpleMessage("Top ảnh hưởng"),
+        "top_search": MessageLookupByLibrary.simpleMessage("Top tìm kiếm"),
         "total_asset": MessageLookupByLibrary.simpleMessage("Tổng tài sản"),
         "total_debt": MessageLookupByLibrary.simpleMessage("Tổng nợ"),
         "total_vol": MessageLookupByLibrary.simpleMessage("Tổng KL"),
@@ -323,6 +331,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "trading_board": MessageLookupByLibrary.simpleMessage("Bảng giá"),
         "trading_volatility":
             MessageLookupByLibrary.simpleMessage("Biến động GD"),
+        "try_searching_again_with_another_keyword":
+            MessageLookupByLibrary.simpleMessage(
+                "Bạn thử tìm kiếm lại bằng từ khoá khác nhé!"),
         "unknown_error":
             MessageLookupByLibrary.simpleMessage("Lỗi không xác định"),
         "username": MessageLookupByLibrary.simpleMessage("Tên đăng nhập"),

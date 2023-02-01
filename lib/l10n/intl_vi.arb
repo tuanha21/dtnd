@@ -132,6 +132,10 @@
     "pin_code": "Mã pin",
     "matched_order_by_time": "Khớp lệnh theo thời gian",
     "matched_order_by_price_step": "Khớp lệnh theo bước giá",
+    "search_history": "Lịch sử tìm kiếm",
+    "top_search": "Top tìm kiếm",
+    "no_matching_results_were_found": "Không tìm thấy kết quả phù hợp",
+    "try_searching_again_with_another_keyword": "Bạn thử tìm kiếm lại bằng từ khoá khác nhé!",
 
     "DTND_assistant": "Trợ lý DTND",
     "virtual_assistant": "Trợ lý ảo",
@@ -168,6 +172,9 @@
     "login_to_continue": "Hãy đăng nhập để tiếp tục",
     "you_are_not_logged_in": "Bạn chưa đăng nhập",
     "you_are_not_account": "Bạn chưa có tài khoản?",
+    "price_increase": "Tăng giá",
+    "price_decrease": "Giảm giá",
+    "top_foreign": "Top nước ngoài",
 
     "create_new_order": "Đặt lệnh mới",
     "create_order_successfully": "Đặt lệnh thành công",

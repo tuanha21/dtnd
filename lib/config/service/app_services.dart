@@ -1,4 +1,5 @@
 import 'package:dtnd/config/helper/app_service_helper.dart';
+import 'package:dtnd/data/i_network_service.dart';
 import 'package:dtnd/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -26,6 +27,10 @@ class AppService {
   Rx<Locale> get locale => _locale;
 
   factory AppService() => _instance;
+
+  final Rx<String?> homeBanner = Rxn();
+
+  final Rx<bool> loadingHomBanner = false.obs;
 
   Future<void> initialize(SharedPreferences sharedPreferences) async {
     sharedPreferencesInstance = sharedPreferences;
@@ -72,5 +77,29 @@ class AppService {
     _locale.value = locale;
     await S.load(locale);
     return locale;
+  }
+
+  Future<String> getHomeBanner(INetworkService networkService) async {
+    if (loadingHomBanner.value) {
+      await 1.delay();
+      return getHomeBanner(networkService);
+    }
+    if (homeBanner.value == null) {
+      loadingHomBanner.value = true;
+        final res = await networkService.getHomeBanner().onError((error, stackTrace) {
+          loadingHomBanner.value = false;
+        throw Exception();
+        });
+      if (res != null) {
+        homeBanner.value = res;
+        loadingHomBanner.value = false;
+        return res;
+      } else {
+        loadingHomBanner.value = false;
+        throw Exception();
+      }
+    } else {
+      return homeBanner.value!;
+    }
   }
 }

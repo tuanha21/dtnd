@@ -23,6 +23,7 @@ import 'package:dtnd/=models=/response/stock_trade.dart';
 import 'package:dtnd/=models=/response/stock_trading_history.dart';
 import 'package:dtnd/=models=/response/subsidiaries_model.dart';
 import 'package:dtnd/=models=/response/top_influence_model.dart';
+import 'package:dtnd/=models=/response/total_asset_model.dart';
 import 'package:dtnd/=models=/response/user_token.dart';
 import 'package:dtnd/=models=/request/request_model.dart';
 import 'package:dtnd/=models=/ui_model/field_tree_element_model.dart';
@@ -53,18 +54,28 @@ class NetworkService implements INetworkService {
   late final String info_sbsi_url;
   late final String algo_url;
 
-  Uri get url_core => Uri.https(core_url, core_endpoint);
+  Uri url_core(
+    String unencodedPath, [
+    Map<String, dynamic>? queryParameters,
+  ]) =>
+      Uri.http(core_url, unencodedPath, queryParameters);
+  Uri get url_core_endpoint => Uri.http(core_url, core_endpoint);
   Uri url_board(String path) => Uri.https(board_url, path);
-  Uri url_board_data_feed(Map<String, dynamic> queryParameters) =>
-      Uri.https(sbboard_url, "datafeed/history", queryParameters);
-  Uri url_info_sbsi(String path, [Map<String, dynamic>? queryParameters]) =>
-      Uri.https(info_sbsi_url, path, queryParameters);
+  Uri url_board_data_feed(Map<String, dynamic> queryParameters) {
+    print(Uri.https(sbboard_url, "datafeed/history", queryParameters));
+    return Uri.https(sbboard_url, "datafeed/history", queryParameters);
+  }
+
+  Uri url_info_sbsi(String path, [Map<String, dynamic>? queryParameters]) {
+    print(Uri.https(info_sbsi_url, path, queryParameters).toString());
+    return Uri.https(info_sbsi_url, path, queryParameters);
+  }
+
   Uri url_algo(
     String path, [
     Map<String, dynamic>? queryParameters,
   ]) {
     final unencodedPath = "algo/pbapi/api/$path";
-    print(Uri.http(algo_url, unencodedPath, queryParameters).toString());
     return Uri.http(algo_url, unencodedPath, queryParameters);
   }
 
@@ -118,9 +129,16 @@ class NetworkService implements INetworkService {
   }
 
   @override
+  Future<String?> getHomeBanner() async {
+    dynamic response = await client.get(Uri.http(core_url, "banners"));
+    response = decode(response.bodyBytes);
+    return response["data"].first["img"];
+  }
+
+  @override
   Future<UserEntity?> checkLogin(RequestModel requestModel) async {
     final http.Response response =
-        await client.post(url_core, body: requestModel.toString());
+        await client.post(url_core_endpoint, body: requestModel.toString());
     logger.v(response.body);
     return UserEntity.fromJson(decode(response.bodyBytes));
   }
@@ -300,27 +318,134 @@ class NetworkService implements INetworkService {
   @override
   Future<SCashBalance> getSCashBalance(RequestModel requestModel) async {
     final http.Response response =
-        await client.post(url_core, body: requestModel.toString());
-    logger.v(response.body);
+        await client.post(url_core_endpoint, body: requestModel.toString());
     return SCashBalance.fromJson(decode(response.bodyBytes));
   }
 
   @override
   Future<NewOrderResponse?> createNewOrder(RequestModel requestModel) async {
     final http.Response response =
-        await client.post(url_core, body: requestModel.toString());
-    logger.v(response.body);
+        await client.post(url_core_endpoint, body: requestModel.toString());
     return NewOrderResponse.fromJson(decode(response.bodyBytes));
   }
 
+  /// Todo: User
   @override
   Future<UserInfo?> getUserInfo(RequestModel requestModel) async {
     final http.Response response =
-        await client.post(url_core, body: requestModel.toString());
-    logger.v(response.body);
+        await client.post(url_core_endpoint, body: requestModel.toString());
     return UserInfo.constant();
   }
 
+  @override
+  Future<TotalAsset?> getTotalAsset(RequestModel requestModel) async {
+    final http.Response response =
+        await client.post(url_core_endpoint, body: requestModel.toString());
+    return TotalAsset.fromJson(decode(response.bodyBytes)['data']);
+  }
+
+  @override
+  Future<List<String>> getSearchHistory(String body) async {
+    dynamic response =
+        await client.post(url_core("searchMarket/history"), body: body);
+    response = decode(response.bodyBytes);
+    final List<String> list = [];
+    logger.v(response);
+    if (response["rc"] == 200) {
+      for (var element in response["data"]) {
+        list.add(element);
+      }
+    }
+    return list;
+  }
+
+  @override
+  Future<void> putSearchHistory(String body) async {
+    await client.post(url_core("searchMarket/event"), body: body);
+    return;
+  }
+
+  @override
+  Future<List<String>> getTopSearch() async {
+    dynamic response =
+        await client.post(url_core("searchMarket/top"), body: {});
+    response = decode(response.bodyBytes);
+    final List<String> list = [];
+    if (response["rc"] == 200) {
+      for (var element in response["data"]) {
+        list.add(element);
+      }
+    }
+    return list;
+  }
+
+  @override
+  Future<List<String>> getTopForeignTrade(Map<String, dynamic> body) async {
+    try {
+      final http.Response response =
+          await client.get(url_info_sbsi("topForeignTrade", body));
+
+      final List<dynamic> responseBody = decode(response.bodyBytes)["data"];
+      List<String> data = [];
+      for (var element in responseBody) {
+        try {
+          data.add(element["STOCK_CODE"]);
+        } catch (e) {
+          continue;
+        }
+      }
+      return data;
+    } catch (e) {
+      logger.e(e);
+      return [];
+    }
+  }
+
+  @override
+  Future<List<String>> getTopStockChange(Map<String, dynamic> body) async {
+    try {
+      final http.Response response =
+          await client.get(url_info_sbsi("topStockChange", body));
+
+      final List<dynamic> responseBody = decode(response.bodyBytes)["data"];
+      List<String> data = [];
+      for (var element in responseBody) {
+        try {
+          data.add(element["STOCK_CODE"]);
+        } catch (e) {
+          continue;
+        }
+      }
+      return data;
+    } catch (e) {
+      logger.e(e);
+      return [];
+    }
+  }
+
+  @override
+  Future<List<String>> getTopStockTrade(Map<String, dynamic> body) async {
+    try {
+      final http.Response response =
+          await client.get(url_info_sbsi("topStockTrade", body));
+
+      final List<dynamic> responseBody = decode(response.bodyBytes)["data"];
+      List<String> data = [];
+      for (var element in responseBody) {
+        try {
+          data.add(element["STOCK_CODE"]);
+        } catch (e) {
+          continue;
+        }
+      }
+      return data;
+    } catch (e) {
+      logger.e(e);
+      return [];
+    }
+  }
+
+  /// Todo: Order
   @override
   Future<List<IndayMatchedOrder>> getIndayMatchedOrders(String symbol) async {
     dynamic response =
