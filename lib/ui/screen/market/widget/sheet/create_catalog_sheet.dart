@@ -12,7 +12,9 @@ class CreateCatalogSheet extends StatefulWidget {
     super.key,
     required this.savedCatalog,
   });
+
   final SavedCatalog savedCatalog;
+
   @override
   State<CreateCatalogSheet> createState() => _CreateCatalogSheetState();
 }
@@ -21,6 +23,7 @@ class _CreateCatalogSheetState extends State<CreateCatalogSheet> {
   final TextEditingController controller = TextEditingController();
   final GlobalKey<FormState> key = GlobalKey<FormState>();
   final FocusNode node = FocusNode();
+
   @override
   void initState() {
     super.initState();
@@ -59,12 +62,11 @@ class _CreateCatalogSheetState extends State<CreateCatalogSheet> {
                       try {
                         final UserCatalog newCatalog =
                             UserCatalog(controller.text);
-                        widget.savedCatalog.catalogs.add(newCatalog);
-                        widget.savedCatalog.save();
-                      } catch (e) {
+                        widget.savedCatalog.addCatalog(newCatalog);
                         Navigator.of(context).pop(const BackCmd());
+                      } catch (e) {
+                        Navigator.of(context).pop();
                       }
-                      Navigator.of(context).pop(const BackCmd());
                     }
                   },
                   child: Text(S.of(context).save),
@@ -72,6 +74,7 @@ class _CreateCatalogSheetState extends State<CreateCatalogSheet> {
               ],
             ),
             const SizedBox(height: 20),
+            SizedBox(height: MediaQuery.of(context).viewInsets.bottom)
           ],
         ),
       ),

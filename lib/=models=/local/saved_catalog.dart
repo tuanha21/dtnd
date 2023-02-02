@@ -6,14 +6,14 @@ import 'package:hive_flutter/hive_flutter.dart';
 part 'saved_catalog.g.dart';
 
 @HiveType(typeId: 3)
-class SavedCatalog extends HiveObject {
-  SavedCatalog(this._user);
+class SavedCatalog{
+  SavedCatalog(this._user, {this.catalogs = const <LocalCatalog>[]});
 
   @HiveField(0)
   final String _user;
 
-  @HiveField(1)
-  final List<LocalCatalog> catalogs = <LocalCatalog>[];
+  @HiveField(1, defaultValue: <LocalCatalog>[])
+  final List<LocalCatalog> catalogs;
 
   void addCatalog(LocalCatalog catalog) {
     try {
@@ -21,7 +21,6 @@ class SavedCatalog extends HiveObject {
         throw ExistedCatalogException();
       }
       catalogs.add(catalog);
-      save();
     } catch (e) {
       logger.e(e);
     }
@@ -30,7 +29,6 @@ class SavedCatalog extends HiveObject {
   void removeCatalog(LocalCatalog catalog) {
     try {
       catalogs.removeWhere((element) => element.name == catalog.name);
-      save();
     } catch (e) {
       logger.e(e);
     }

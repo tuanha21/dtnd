@@ -9,9 +9,15 @@ import 'package:dtnd/ui/screen/market/widget/sheet/delete_catalog_dialog.dart';
 import 'package:dtnd/ui/screen/market/widget/sheet/rename_catalog_sheet.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../utilities/logger.dart';
+
+
+
 class CreateCatalogISheet extends ISheet {
   const CreateCatalogISheet(this.savedCatalog);
+
   final SavedCatalog savedCatalog;
+
   @override
   IOverlay? back([cmd]) => null;
 
@@ -33,10 +39,14 @@ class CreateCatalogISheet extends ISheet {
 
 class CatalogOptionsISheet extends ISheet {
   const CatalogOptionsISheet(this.savedCatalog, this.catalog);
+
   final SavedCatalog savedCatalog;
   final LocalCatalog catalog;
+
   @override
-  IOverlay? back([cmd]) => null;
+  IOverlay? back([cmd]) {
+    return null;
+  }
 
   @override
   Widget? backWidget([cmd]) => null;
@@ -62,7 +72,9 @@ class CatalogOptionsISheet extends ISheet {
   }
 
   @override
-  Future<void>? onResultBack([cmd]) => null;
+  Future<void>? onResultBack([cmd]) {
+    return null;
+  }
 
   @override
   Future<void>? onResultNext([cmd]) => null;
@@ -70,8 +82,10 @@ class CatalogOptionsISheet extends ISheet {
 
 class DeleteCatalogIDialog extends IDialog {
   const DeleteCatalogIDialog(this.savedCatalog, this.catalog);
+
   final SavedCatalog savedCatalog;
   final LocalCatalog catalog;
+
   @override
   IOverlay? back([cmd]) => CatalogOptionsISheet(savedCatalog, catalog);
 
@@ -86,22 +100,31 @@ class DeleteCatalogIDialog extends IDialog {
   Widget? nextWidget([cmd]) => null;
 
   @override
-  Future<void>? onResultBack([cmd]) => null;
+  Future<void>? onResultBack([cmd]) {
+    return null;
+  }
 
   @override
-  Future<void>? onResultNext([cmd]) => null;
+  Future<void>? onResultNext([cmd]) {
+    return null;
+  }
 }
 
 class RenameCatalogISheet extends ISheet {
   const RenameCatalogISheet(this.savedCatalog, this.catalog);
+
   final SavedCatalog savedCatalog;
   final LocalCatalog catalog;
-  @override
-  IOverlay? back([cmd]) => CatalogOptionsISheet(savedCatalog, catalog);
 
   @override
-  Widget? backWidget([cmd]) =>
-      CatalogOptionsSheet(savedCatalog: savedCatalog, catalog: catalog);
+  IOverlay? back([cmd]) {
+    return CatalogOptionsISheet(savedCatalog, catalog);
+  }
+
+  @override
+  Widget? backWidget([cmd]) {
+    return CatalogOptionsSheet(savedCatalog: savedCatalog, catalog: catalog);
+  }
 
   @override
   IOverlay? next([cmd]) => null;

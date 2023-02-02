@@ -25,6 +25,5 @@ class UserCatalog extends LocalCatalog {
       return;
     }
     _name = name;
-    save();
   }
 }

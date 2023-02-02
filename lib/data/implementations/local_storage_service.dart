@@ -28,8 +28,10 @@ class LocalStorageService implements ILocalStorageService {
 
   late final SharedPreferences _sharedPreferences;
   late final Box _box;
+
   @override
   SharedPreferences get sharedPreferences => _sharedPreferences;
+
   @override
   Box get box => _box;
 
@@ -94,30 +96,12 @@ class LocalStorageService implements ILocalStorageService {
   // }
 
   @override
-  SavedCatalog? getSavedCatalog(String user) {
-    try {
-      print("saved_catalog_$user");
-      return _box.get("saved_catalog_$user");
-    } catch (e) {
-      logger.e(e);
-      return null;
-    }
-    // final SavedCatalog? savedCatalog = box.get("${user}_saved_catalog");
-    // if (savedCatalog == null) {
-    //   final SavedCatalog newSavedCatalog = SavedCatalog(user);
-    //   createDefault(newSavedCatalog);
-    //   await box.put("${user}_saved_catalog", newSavedCatalog);
-    //   return newSavedCatalog;
-    // }
-    // if (savedCatalog.catalogs.isEmpty) {
-    //   createDefault(savedCatalog);
-    // }
-    // return savedCatalog;
+  SavedCatalog getSavedCatalog(String user) {
+    return _box.get("saved_catalog_$user") ?? SavedCatalog(user);
   }
 
   @override
   Future<void> putSavedCatalog(SavedCatalog savedCatalog) {
-    print("saved_catalog_${savedCatalog.user}");
     return _box.put("saved_catalog_${savedCatalog.user}", savedCatalog);
   }
 
@@ -125,7 +109,7 @@ class LocalStorageService implements ILocalStorageService {
   Future<void> flush() {
     return _box.flush();
   }
-  
+
   @override
   Stock? geStock(String code) {
     // TODO: implement geStock

@@ -25,7 +25,7 @@ abstract class ILocalStorageService {
 
   List<String>? getListInterestedStock();
 
-  SavedCatalog? getSavedCatalog(String user);
+  SavedCatalog getSavedCatalog(String user);
 
   Future<void> putSavedCatalog(SavedCatalog savedCatalog);
 }
