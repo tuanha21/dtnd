@@ -95,10 +95,10 @@ class NumUtils {
     String postfix;
     String value;
     if (i.length < 9) {
-      value = (intValue / 1000000).toStringAsPrecision(2);
+      value = (intValue / 1000000).toStringAsFixed(2);
       postfix = S.of(context).million_short;
     } else {
-      value = (intValue / 1000000000).toStringAsPrecision(2);
+      value = (intValue / 1000000000).toStringAsFixed(2);
       postfix = S.of(context).billion_short;
     }
     return "$value $postfix";

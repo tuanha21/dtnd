@@ -4,14 +4,18 @@ import 'package:dtnd/=models=/index.dart';
 import 'package:dtnd/=models=/response/index_model.dart';
 import 'package:dtnd/config/service/app_services.dart';
 import 'package:dtnd/generated/l10n.dart' as s;
+import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/screen/home/home_controller.dart';
+import 'package:dtnd/ui/screen/home/widget/world_index.dart';
 import 'package:dtnd/ui/screen/stock_detail/widget/k_chart.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_textstyle.dart';
+import 'package:dtnd/utilities/num_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
-import 'package:k_chart/flutter_k_chart.dart';
+import 'package:k_chart/chart_translations.dart';
+import 'package:k_chart/flutter_k_chart.dart' as kcharts;
 
 class HomeMarketToday extends StatefulWidget {
   const HomeMarketToday({super.key});
@@ -20,8 +24,16 @@ class HomeMarketToday extends StatefulWidget {
   State<HomeMarketToday> createState() => _HomeMarketTodayState();
 }
 
-class _HomeMarketTodayState extends State<HomeMarketToday> {
+class _HomeMarketTodayState extends State<HomeMarketToday>
+    with SingleTickerProviderStateMixin {
   final HomeController homeController = HomeController();
+  late final TabController _tabController;
+
+  @override
+  void initState() {
+    _tabController = TabController(length: 2, vsync: this);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,58 +45,127 @@ class _HomeMarketTodayState extends State<HomeMarketToday> {
       }
       return Column(
         children: [
-          SizedBox.fromSize(
-            size: Size(MediaQuery.of(context).size.width, 64),
-            child: ScrollConfiguration(
-              behavior: ScrollConfiguration.of(context).copyWith(
-                dragDevices: {
-                  PointerDeviceKind.touch,
-                  PointerDeviceKind.mouse,
+          PreferredSize(
+            preferredSize: const Size.fromHeight(kToolbarHeight),
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: TabBar(
+                controller: _tabController,
+                isScrollable: true,
+                labelPadding:
+                    const EdgeInsets.symmetric(horizontal: 18, vertical: 6),
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                onTap: (value) async {
+                  setState(() {});
                 },
+                tabs: <Widget>[
+                  Text(S.of(context).vietnam),
+                  Text(S.of(context).foreign),
+                ],
               ),
-              child: Obx(() {
-                final cindex = homeController.currentIndexModel.value?.index;
-                return ListView.separated(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  scrollDirection: Axis.horizontal,
-                  physics: const AlwaysScrollableScrollPhysics(),
-                  itemCount: homeController.listIndexs.length,
-                  itemBuilder: (context, index) => HomeIndexItem(
-                    data: homeController.listIndexs.elementAt(index),
-                    selectedIndex: cindex,
-                    onSelected: homeController.changeIndex,
-                  ),
-                  separatorBuilder: (BuildContext context, int index) =>
-                      const SizedBox(
-                    width: 8,
-                  ),
-                );
-              }),
             ),
           ),
-          Obx(
-            () {
-              if (homeController
-                      .currentIndexModel.value?.stockTradingHistory.value ==
-                  null) {
-                return Container();
-              }
-              return Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: SizedBox.fromSize(
-                  size: Size(MediaQuery.of(context).size.width, 250),
-                  child: KChart(
-                    indexModel: homeController.currentIndexModel.value!,
-                    isLine: true,
-                    dateTimeFormat: const [dd, "/", mm],
-                  ),
+          if (_tabController.index == 0)
+            SizedBox.fromSize(
+              size: Size(MediaQuery.of(context).size.width, 80),
+              child: ScrollConfiguration(
+                behavior: ScrollConfiguration.of(context).copyWith(
+                  dragDevices: {
+                    PointerDeviceKind.touch,
+                    PointerDeviceKind.mouse,
+                  },
                 ),
-              );
-            },
-          )
+                child: Obx(() {
+                  final cindex = homeController.currentIndexModel.value?.index;
+                  return ListView.separated(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    scrollDirection: Axis.horizontal,
+                    physics: const AlwaysScrollableScrollPhysics(),
+                    itemCount: homeController.listIndexs.length,
+                    itemBuilder: (context, index) => HomeIndexItem(
+                      data: homeController.listIndexs.elementAt(index),
+                      selectedIndex: cindex,
+                      onSelected: homeController.changeIndex,
+                    ),
+                    separatorBuilder: (BuildContext context, int index) =>
+                        const SizedBox(
+                      width: 8,
+                    ),
+                  );
+                }),
+              ),
+            )
+          else
+            SizedBox.fromSize(
+              size: Size(MediaQuery.of(context).size.width, 80),
+              child: ScrollConfiguration(
+                behavior: ScrollConfiguration.of(context).copyWith(
+                  dragDevices: {
+                    PointerDeviceKind.touch,
+                    PointerDeviceKind.mouse,
+                  },
+                ),
+                child: Obx(() {
+                  final cindex =
+                      homeController.currentWorldIndexModel.value?.iDSYMBOL;
+                  return ListView.separated(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    scrollDirection: Axis.horizontal,
+                    physics: const AlwaysScrollableScrollPhysics(),
+                    itemCount: homeController.worldIndex.length,
+                    itemBuilder: (context, index) => HomeWorldIndexItem(
+                      data: homeController.worldIndex.elementAt(index),
+                      selectedSymbol: cindex,
+                      onSelected: homeController.changeWorldIndex,
+                    ),
+                    separatorBuilder: (BuildContext context, int index) =>
+                        const SizedBox(
+                      width: 8,
+                    ),
+                  );
+                }),
+              ),
+            ),
+          if (_tabController.index == 0)
+            Obx(
+              () {
+                if (homeController
+                        .currentIndexModel.value?.stockTradingHistory.value ==
+                    null) {
+                  return Container();
+                }
+                final locale = Localizations.localeOf(context);
+                final languageTag =
+                    '${locale.languageCode}_${locale.countryCode}';
+                final Map<String, ChartTranslations> kChartTranslations = {
+                  languageTag: ChartTranslations(
+                    date: S.of(context).date_translations,
+                    open: S.of(context).open_translations,
+                    high: S.of(context).high_translations,
+                    low: S.of(context).low_translations,
+                    close: S.of(context).close_translations,
+                    changeAmount: S.of(context).changeAmount_translations,
+                    change: S.of(context).change_translations,
+                    amount: S.of(context).amount_translations,
+                  ),
+                };
+                return Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: SizedBox.fromSize(
+                    size: Size(MediaQuery.of(context).size.width, 250),
+                    child: KChart(
+                      indexModel: homeController.currentIndexModel.value!,
+                      isLine: true,
+                      dateTimeFormat: const [kcharts.dd, "/", kcharts.mm],
+                      translations: kChartTranslations,
+                    ),
+                  ),
+                );
+              },
+            )
         ],
       );
-    }, homeController.initialized);
+    }, homeController.indexInitialized);
   }
 }
 
@@ -160,6 +241,20 @@ class HomeIndexItem extends StatelessWidget {
                     Text(
                       "${data.indexDetail.change} (${data.indexDetail.changePc})",
                       style: AppTextStyle.bodySmall_8.copyWith(
+                        fontWeight: FontWeight.w600,
+                        color: data.indexDetail.color,
+                      ),
+                    ),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Text(
+                      NumUtils.getMoneyWithPostfix(
+                          (data.indexDetail.value.value ?? 0) * 1000000,
+                          context),
+                      style: AppTextStyle.labelMedium_12.copyWith(
                         fontWeight: FontWeight.w600,
                         color: data.indexDetail.color,
                       ),

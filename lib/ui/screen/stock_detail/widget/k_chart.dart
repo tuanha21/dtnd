@@ -1,8 +1,8 @@
 import 'package:dtnd/=models=/response/index_model.dart';
 import 'package:dtnd/config/service/app_services.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
-import 'package:dtnd/utilities/logger.dart';
 import 'package:flutter/material.dart';
+import 'package:k_chart/chart_translations.dart';
 import 'package:k_chart/flutter_k_chart.dart';
 
 class KChart extends StatefulWidget {
@@ -12,11 +12,13 @@ class KChart extends StatefulWidget {
     this.isLine = false,
     this.showNowPrice = false,
     this.dateTimeFormat,
+    this.translations,
   });
   final IndexModel indexModel;
   final bool isLine;
   final bool showNowPrice;
   final List<String>? dateTimeFormat;
+  final Map<String, ChartTranslations>? translations;
   @override
   State<KChart> createState() => _KChartState();
 }
@@ -75,18 +77,33 @@ class _KChartState extends State<KChart> {
       ChartColors(
         bgColor: bgColor,
         kLineColor: widget.indexModel.indexDetail.color,
-        lineFillColor: Colors.transparent,
+        lineFillColor: Colors.black,
         volColor: AppColors.neutral_06,
         upColor: AppColors.semantic_01,
         dnColor: AppColors.semantic_03,
         nowPriceUpColor: AppColors.semantic_01,
         nowPriceDnColor: AppColors.semantic_03,
+        infoWindowNormalColor: Colors.black,
+        infoWindowTitleColor: Colors.black,
+        infoWindowDnColor: AppColors.semantic_03,
+        infoWindowUpColor: AppColors.semantic_01,
+        crossTextColor: Colors.black,
+        hCrossColor: const Color(0xFF8894AA),
+        vCrossColor: const Color(0x1E000000),
+        defaultTextColor: const Color(0xFFA0AEC0),
+        selectFillColor: AppColors.neutral_06,
       ),
       showNowPrice: widget.showNowPrice,
+      fixedLength: 2,
+      showInfoDialog: true,
+      isTapShowInfoDialog: true,
+      materialInfoDialog: true,
+      verticalTextAlignment: VerticalTextAlignment.right,
       isTrendLine: false,
-      isLine: widget.isLine,
+      isLine: false,
       secondaryState: SecondaryState.NONE,
       hideGrid: true,
+      translations: widget.translations ?? kChartTranslations,
     );
   }
 }

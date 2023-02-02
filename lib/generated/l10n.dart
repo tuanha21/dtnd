@@ -2442,6 +2442,106 @@ class S {
     );
   }
 
+  /// `Date`
+  String get date_translations {
+    return Intl.message(
+      'Date',
+      name: 'date_translations',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Open`
+  String get open_translations {
+    return Intl.message(
+      'Open',
+      name: 'open_translations',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `High`
+  String get high_translations {
+    return Intl.message(
+      'High',
+      name: 'high_translations',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Low`
+  String get low_translations {
+    return Intl.message(
+      'Low',
+      name: 'low_translations',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Close`
+  String get close_translations {
+    return Intl.message(
+      'Close',
+      name: 'close_translations',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Change`
+  String get changeAmount_translations {
+    return Intl.message(
+      'Change',
+      name: 'changeAmount_translations',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Change%`
+  String get change_translations {
+    return Intl.message(
+      'Change%',
+      name: 'change_translations',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Amount`
+  String get amount_translations {
+    return Intl.message(
+      'Amount',
+      name: 'amount_translations',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Vietnam`
+  String get vietnam {
+    return Intl.message(
+      'Vietnam',
+      name: 'vietnam',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Foreign`
+  String get foreign {
+    return Intl.message(
+      'Foreign',
+      name: 'foreign',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Copytrade`
   String get copytrade {
     return Intl.message(

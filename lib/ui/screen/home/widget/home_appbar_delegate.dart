@@ -40,28 +40,29 @@ class HomeAppbarDelegate extends SliverPersistentHeaderDelegate {
                 title: "DTND",
                 actions: [
                   SizedBox.square(
-                      dimension: 24,
-                      child: InkWell(
-                          onTap: () {
-                            Navigator.of(context)
-                                .push(MaterialPageRoute(
-                              builder: (context) => const SearchScreen(),
-                            ))
-                                .then((value) async {
-                              if (value is Stock) {
-                                dataCenterService.getStockModelsFromStockCodes([
-                                  value.stockCode
-                                ]).then((stockModels) => Navigator.of(context)
-                                        .push(MaterialPageRoute(
-                                      builder: (context) => StockDetailScreen(
-                                        stockModel: stockModels.first,
-                                      ),
-                                    )));
-                              }
-                            });
-                          },
-                          child:
-                              Image.asset(AppImages.home_icon_search_normal))),
+                    dimension: 24,
+                    child: InkWell(
+                      onTap: () {
+                        Navigator.of(context)
+                            .push(MaterialPageRoute(
+                          builder: (context) => const SearchScreen(),
+                        ))
+                            .then((value) async {
+                          if (value is Stock) {
+                            dataCenterService.getStockModelsFromStockCodes([
+                              value.stockCode
+                            ]).then((stockModels) =>
+                                Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) => StockDetailScreen(
+                                    stockModel: stockModels.first,
+                                  ),
+                                )));
+                          }
+                        });
+                      },
+                      child: Image.asset(AppImages.home_icon_search_normal),
+                    ),
+                  ),
                   const SizedBox(
                     width: 20,
                   ),

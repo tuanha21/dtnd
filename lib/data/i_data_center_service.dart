@@ -7,6 +7,7 @@ import 'package:dtnd/=models=/response/inday_matched_order.dart';
 import 'package:dtnd/=models=/response/index_model.dart';
 import 'package:dtnd/=models=/response/liquidity_model.dart';
 import 'package:dtnd/=models=/response/news_detail.dart';
+import 'package:dtnd/=models=/response/news_model.dart';
 import 'package:dtnd/=models=/response/security_basic_info_model.dart';
 import 'package:dtnd/=models=/response/stock.dart';
 import 'package:dtnd/=models=/response/stock_data.dart';
@@ -56,12 +57,14 @@ abstract class IDataCenterService {
   Future<StockTradingHistory?> getStockIndayTradingHistory(String stockCode);
 
   Future<StockTradingHistory?> getStockTradingHistory(
-      String stockCode, String resolution, int from, int to);
+      String stockCode, String resolution, DateTime from, DateTime to);
 
   Future<Set<IndexModel>> getListIndex(
       {DateTime? fromTime, DateTime? toTime, String? resolution});
 
   Future<List<StockNews>> getStockNews(String stockCode);
+
+  Future<List<NewsModel>> getNews([int? page, int? records]);
 
   Future<NewsDetail?> getNewsDetail(int id);
 

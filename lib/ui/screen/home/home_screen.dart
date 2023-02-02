@@ -7,6 +7,7 @@ import 'package:dtnd/ui/screen/home/widget/home_appbar_delegate.dart';
 import 'package:dtnd/ui/screen/home/widget/home_interested_catalog.dart';
 import 'package:dtnd/ui/screen/home/widget/home_market_overview.dart';
 import 'package:dtnd/ui/screen/home/widget/home_market_today.dart';
+import 'package:dtnd/ui/screen/home/widget/home_news.dart';
 import 'package:dtnd/ui/screen/home/widget/home_quick_access.dart';
 import 'package:dtnd/ui/screen/home/widget/home_section.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
@@ -74,14 +75,18 @@ class _HomeScreenState extends State<HomeScreen> {
             child: const HomeMarketToday(),
           ),
         ),
-        SliverToBoxAdapter(
-          child: HomeSection(
-            title: S.of(context).market_overview,
-            onMore: () {},
-            child: const HomeMarketOverview(),
+        SliverPadding(
+          padding: const EdgeInsets.symmetric(vertical: 24),
+          sliver: SliverToBoxAdapter(
+            child: HomeSection(
+              title: S.of(context).market_overview,
+              onMore: () {},
+              child: const HomeMarketOverview(),
+            ),
           ),
         ),
         SliverPadding(
+          padding: const EdgeInsets.symmetric(vertical: 24),
           sliver: SliverToBoxAdapter(
             child: HomeSection(
               title: S.of(context).interested_catalog,
@@ -89,7 +94,16 @@ class _HomeScreenState extends State<HomeScreen> {
               child: const HomeInterestedCatalog(),
             ),
           ),
+        ),
+        SliverPadding(
           padding: const EdgeInsets.only(bottom: 120),
+          sliver: SliverToBoxAdapter(
+            child: HomeSection(
+              title: S.of(context).news,
+              onMore: () {},
+              child: const HomeNews(),
+            ),
+          ),
         ),
       ],
     );

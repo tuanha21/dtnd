@@ -64,6 +64,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "address": MessageLookupByLibrary.simpleMessage("Địa chỉ"),
         "agree_with": MessageLookupByLibrary.simpleMessage("Đồng ý với "),
         "all": MessageLookupByLibrary.simpleMessage("Tất cả"),
+        "amount_translations":
+            MessageLookupByLibrary.simpleMessage("khối lượng"),
         "analysis": MessageLookupByLibrary.simpleMessage("Phân tích"),
         "are_you_sure_to_delete_catalog": m0,
         "asset": MessageLookupByLibrary.simpleMessage("Tài sản"),
@@ -96,8 +98,14 @@ class MessageLookup extends MessageLookupByLibrary {
         "catalog_notice":
             MessageLookupByLibrary.simpleMessage("Thông báo danh mục"),
         "ceil": MessageLookupByLibrary.simpleMessage("Trần"),
+        "changeAmount_translations":
+            MessageLookupByLibrary.simpleMessage("Thay đổi"),
+        "change_translations":
+            MessageLookupByLibrary.simpleMessage("% Thay đổi"),
         "choose_stocks_you_interested": MessageLookupByLibrary.simpleMessage(
             "Chọn các mã CK mà bạn đang quan tâm. Bạn có thể cập nhật thêm các mã CK sau"),
+        "close_translations":
+            MessageLookupByLibrary.simpleMessage("Giá đóng cửa"),
         "community": MessageLookupByLibrary.simpleMessage("Cộng đồng"),
         "condition_ordnote":
             MessageLookupByLibrary.simpleMessage("SL điều kiện"),
@@ -114,6 +122,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Đặt lệnh mới"),
         "create_order_successfully":
             MessageLookupByLibrary.simpleMessage("Đặt lệnh thành công"),
+        "date_translations": MessageLookupByLibrary.simpleMessage("Ngày"),
         "debt_following":
             MessageLookupByLibrary.simpleMessage("Theo dõi dư nợ"),
         "delete_catalog": MessageLookupByLibrary.simpleMessage("Xoá danh mục"),
@@ -145,6 +154,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "following_catalog":
             MessageLookupByLibrary.simpleMessage("Danh mục theo dõi"),
         "following_catalog_with": m1,
+        "foreign": MessageLookupByLibrary.simpleMessage("Nước ngoài"),
         "froom": MessageLookupByLibrary.simpleMessage("Room NN"),
         "fs_vol": MessageLookupByLibrary.simpleMessage("KL FS"),
         "fsell": MessageLookupByLibrary.simpleMessage("NN bán"),
@@ -158,6 +168,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "hi": MessageLookupByLibrary.simpleMessage("Xin chào"),
         "hi_you": MessageLookupByLibrary.simpleMessage("Chào bạn"),
         "high": MessageLookupByLibrary.simpleMessage("Cao"),
+        "high_translations": MessageLookupByLibrary.simpleMessage("Cao"),
         "home": MessageLookupByLibrary.simpleMessage("Trang chủ"),
         "id_or_business_id_short":
             MessageLookupByLibrary.simpleMessage("CMND/ĐKKD"),
@@ -195,6 +206,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "logout": MessageLookupByLibrary.simpleMessage("Đăng xuất"),
         "loss_wvalue": m3,
         "low": MessageLookupByLibrary.simpleMessage("Thấp"),
+        "low_translations": MessageLookupByLibrary.simpleMessage("Thấp"),
         "margin": MessageLookupByLibrary.simpleMessage("Ký quỹ"),
         "market": MessageLookupByLibrary.simpleMessage("Thị trường"),
         "market_breadth":
@@ -236,6 +248,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Mật khẩu cần tối thiểu 8 ký tự"),
         "null_username": MessageLookupByLibrary.simpleMessage(
             "Tên đăng nhập cần tối thiểu 6 ký tự"),
+        "open_translations": MessageLookupByLibrary.simpleMessage("Giá mở cửa"),
         "order": MessageLookupByLibrary.simpleMessage("Đặt lệnh"),
         "order_confirm": MessageLookupByLibrary.simpleMessage("Xác nhận lệnh"),
         "order_history": MessageLookupByLibrary.simpleMessage("Lịch sử lệnh"),
@@ -333,6 +346,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "unknown_error":
             MessageLookupByLibrary.simpleMessage("Lỗi không xác định"),
         "username": MessageLookupByLibrary.simpleMessage("Tên đăng nhập"),
+        "vietnam": MessageLookupByLibrary.simpleMessage("Việt nam"),
         "virtual_assistant": MessageLookupByLibrary.simpleMessage("Trợ lý ảo"),
         "virtual_assistant_available":
             MessageLookupByLibrary.simpleMessage("Trợ lý ảo đã sẵn sàng"),
