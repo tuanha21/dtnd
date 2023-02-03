@@ -16,6 +16,27 @@ class IndexBoard {
     return DateFormat("hh:mm:ss").parse(time!);
   }
 
+  num get total {
+    num total = 0;
+    if (advances != null) total += advances!;
+    if (declines != null) total += declines!;
+    if (noChanges != null) total += noChanges!;
+    if (total == 0) return 1;
+    return total;
+  }
+
+  num get declinesPer {
+    return (declines! / total) * 100;
+  }
+
+  num get noChangesPer {
+    return (noChanges! / total) * 100;
+  }
+
+  num get advancesPer {
+    return 100 - declinesPer - noChangesPer;
+  }
+
 
   IndexBoard(
       {this.time,

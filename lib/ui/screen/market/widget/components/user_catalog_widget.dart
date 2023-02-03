@@ -18,7 +18,6 @@ import 'package:dtnd/utilities/num_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
-import '../../../../../=models=/response/stock.dart';
 import '../../../../../utilities/deboncer.dart';
 import '../../../../../utilities/logger.dart';
 import '../../../../theme/app_textstyle.dart';
@@ -47,7 +46,7 @@ class _UserCatalogWidgetState extends State<UserCatalogWidget> {
 
   late LocalCatalog currentCatalog;
 
-  late Future<List<StockModel>> listStocks;
+  late Future<List<StockModel>> listStocks = Future.value([]);
 
   late String user;
 
@@ -206,27 +205,10 @@ class _UserCatalogWidgetState extends State<UserCatalogWidget> {
               var catalog = savedCatalog.catalogs[index];
               return GestureDetector(
                 onTap: () {
-                  setState(() {
-                    currentCatalog = catalog;
-                    if (currentCatalog.listStock.isEmpty) {
-                      listStocks = Future.value([]);
-                    } else {
-                      listStocks =
-                          dataCenterService.getStockModelsFromStockCodes(
-                              currentCatalog.listStock);
-                    }
-                  });
+                  onTapChangeCatalog(catalog);
                 },
                 onLongPress: () async {
-                  var cmd = await CatalogOptionsISheet(savedCatalog, catalog)
-                      .show(
-                          context,
-                          CatalogOptionsSheet(
-                              savedCatalog: savedCatalog, catalog: catalog));
-                  // if (cmd.runtimeType == NextCmd) {
-                  //   setState(() {});
-                  // }
-                  setState(() {});
+                  await updateCatalog(catalog);
                 },
                 child: Container(
                   margin: EdgeInsets.only(
@@ -251,6 +233,28 @@ class _UserCatalogWidgetState extends State<UserCatalogWidget> {
         ],
       ),
     );
+  }
+
+  Future<void> updateCatalog(LocalCatalog catalog) async {
+    await CatalogOptionsISheet(savedCatalog, catalog)
+        .show(
+            context,
+            CatalogOptionsSheet(
+                savedCatalog: savedCatalog, catalog: catalog));
+    setState(() {});
+  }
+
+  void onTapChangeCatalog(LocalCatalog catalog) {
+    setState(() {
+      currentCatalog = catalog;
+      if (currentCatalog.listStock.isEmpty) {
+        listStocks = Future.value([]);
+      } else {
+        listStocks =
+            dataCenterService.getStockModelsFromStockCodes(
+                currentCatalog.listStock);
+      }
+    });
   }
 
   void addCatalog() async {
@@ -288,6 +292,7 @@ class _BottomAddStockState extends State<BottomAddStock> {
 
   @override
   void initState() {
+    stockSelect = widget.localCatalog.listStock;
     super.initState();
   }
 
@@ -313,56 +318,56 @@ class _BottomAddStockState extends State<BottomAddStock> {
             borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(12), topRight: Radius.circular(12)),
             color: AppColors.light_bg),
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text('Thêm danh mục theo dõi',
-                      style: Theme.of(context)
-                          .textTheme
-                          .labelLarge
-                          ?.copyWith(fontWeight: FontWeight.w700)),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.pop(context);
-                    },
-                    child: Container(
-                      padding: const EdgeInsets.all(10),
-                      decoration: BoxDecoration(
-                          color: const Color.fromRGBO(245, 248, 255, 1),
-                          borderRadius: BorderRadius.circular(6)),
-                      child: const Icon(
-                        Icons.clear,
-                        size: 18,
-                        color: AppColors.dark_bg,
-                      ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text('Thêm danh mục theo dõi',
+                    style: Theme.of(context)
+                        .textTheme
+                        .labelLarge
+                        ?.copyWith(fontWeight: FontWeight.w700)),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                        color: const Color.fromRGBO(245, 248, 255, 1),
+                        borderRadius: BorderRadius.circular(6)),
+                    child: const Icon(
+                      Icons.clear,
+                      size: 18,
+                      color: AppColors.dark_bg,
                     ),
-                  )
-                ],
+                  ),
+                )
+              ],
+            ),
+            const Divider(
+              thickness: 1,
+              color: AppColors.neutral_05,
+              height: 32,
+            ),
+            AppTextField(
+              border: InputBorder.none,
+              controller: search,
+              onChanged: (value) {
+                _debouncer.run(() {
+                  getHistory(value);
+                });
+              },
+              suffixIcon: Padding(
+                padding: const EdgeInsets.only(right: 20),
+                child: SvgPicture.asset(AppImages.search_appbar_icon),
               ),
-              const Divider(
-                thickness: 1,
-                color: AppColors.neutral_05,
-                height: 32,
-              ),
-              AppTextField(
-                border: InputBorder.none,
-                controller: search,
-                onChanged: (value) {
-                  _debouncer.run(() {
-                    getHistory(value);
-                  });
-                },
-                suffixIcon: Padding(
-                  padding: const EdgeInsets.only(right: 20),
-                  child: SvgPicture.asset(AppImages.search_appbar_icon),
-                ),
-                hintText: 'Tìm theo mã cổ phiếu, tên công ty',
-              ),
-              StreamBuilder<List<StockModel>>(
+              hintText: 'Tìm theo mã cổ phiếu, tên công ty',
+            ),
+            Expanded(
+              child: StreamBuilder<List<StockModel>>(
                   stream: listStockController.stream,
                   builder: (context, snapshot) {
                     if (snapshot.hasData) {
@@ -372,14 +377,14 @@ class _BottomAddStockState extends State<BottomAddStock> {
                           physics: const NeverScrollableScrollPhysics(),
                           itemBuilder: (context, index) {
                             return StockWidgetChart(
-                              stockModel: list![index],
+                              key: ObjectKey(list![index]),
+                              stockModel: list[index],
                               onChanged: (value) {
                                 if (value &&
                                     !stockSelect.contains(
                                         list[index].stock.stockCode)) {
                                   stockSelect.add(list[index].stock.stockCode);
-                                }
-                                if (!value &&
+                                } else if (!value &&
                                     stockSelect.contains(
                                         list[index].stock.stockCode)) {
                                   stockSelect
@@ -401,19 +406,19 @@ class _BottomAddStockState extends State<BottomAddStock> {
                     }
                     return const SizedBox();
                   }),
-              SizedBox(
-                width: MediaQuery.of(context).size.width,
-                child: ElevatedButton(
-                  onPressed: () {
-                    widget.localCatalog.setStockList = stockSelect;
-                    Navigator.of(context).pop(widget.localCatalog);
-                  },
-                  child: const Text('Thêm vào danh mục'),
-                ),
+            ),
+            SizedBox(
+              width: MediaQuery.of(context).size.width,
+              child: ElevatedButton(
+                onPressed: () {
+                  widget.localCatalog.setStockList = stockSelect;
+                  Navigator.of(context).pop(widget.localCatalog);
+                },
+                child: const Text('Thêm vào danh mục'),
               ),
-              SizedBox(height: MediaQuery.of(context).viewInsets.bottom)
-            ],
-          ),
+            ),
+            SizedBox(height: MediaQuery.of(context).viewInsets.bottom)
+          ],
         ),
       ),
     );

@@ -117,7 +117,6 @@ class _MarketOverviewTabState extends State<MarketOverviewTab> {
         }, marketController.loadingDeepModel),
         SectionWithTitle(
           title: S.of(context).interested_catalog,
-          onMore: () {},
           child: const Padding(
             padding: EdgeInsets.symmetric(horizontal: 16),
             child: UserCatalogWidget(),
