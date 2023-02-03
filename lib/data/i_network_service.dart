@@ -29,6 +29,7 @@ import 'package:dtnd/config/service/environment.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 import '../=models=/request/request_model.dart';
+import '../=models=/response/indContrib.dart';
 import '../=models=/response/index_board.dart';
 import '../=models=/response/user_token.dart';
 
@@ -123,5 +124,12 @@ abstract class INetworkService {
   Future<List<SubsidiariesModel>?> getSubsidiaries(Map<String, dynamic> body);
 
   Future<List<String>> getSectors(String industryCode);
+
+  Future<IndContrib> getIndContrib(String marketCode);
+
+  Future<IndContrib> getPIvalue(String marketCode);
+
+  Future<IndContrib> getFIvalue(String marketCode);
+
 
 }

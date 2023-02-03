@@ -16,6 +16,7 @@ class KChart extends StatefulWidget {
     this.mainState,
     this.secondaryState,
   });
+
   final IndexModel indexModel;
   final bool isLine;
   final bool showNowPrice;
@@ -78,7 +79,7 @@ class _KChartState extends State<KChart> {
     ];
     return KChartWidget(
       datas,
-      ChartStyle(dateTimeFormat: widget.dateTimeFormat ?? <String>[h, ":", nn]),
+      ChartStyle(),
       ChartColors(
         bgColor: bgColor,
         kLineColor: widget.indexModel.indexDetail.color,

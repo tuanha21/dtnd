@@ -35,22 +35,22 @@ class _VAVolatilityWarningScreenState extends State<VAVolatilityWarningScreen> {
   @override
   void initState() {
     super.initState();
-    init();
+    //init();
   }
 
-  void init() async {
-    final result =
-        await localStorageService.getSavedCatalog(userService.token!.user);
-    if (result == null || result.catalogs.isEmpty) {
-      savedCatalog = SavedCatalog(userService.token!.user);
-      await localStorageService.putSavedCatalog(savedCatalog!);
-    } else {
-      savedCatalog = result;
-    }
-    setState(() {
-      initialized = true;
-    });
-  }
+  // void init() async {
+  //   final result =
+  //        localStorageService.getSavedCatalog(userService.token!.user);
+  //   if (result == null || result.catalogs.isEmpty) {
+  //     savedCatalog = SavedCatalog(userService.token!.user);
+  //     await localStorageService.putSavedCatalog(savedCatalog!);
+  //   } else {
+  //     savedCatalog = result;
+  //   }
+  //   setState(() {
+  //     initialized = true;
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {

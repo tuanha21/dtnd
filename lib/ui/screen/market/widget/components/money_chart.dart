@@ -45,11 +45,12 @@ class _MoneyChartState extends State<MoneyChart> {
                 }
                 if (snapshot.connectionState == ConnectionState.done) {
                   var list = snapshot.data;
+                  if(list == null) return const SizedBox();
                   return Padding(
                     padding: const EdgeInsets.only(left: 0, right: 20),
                     child: charts.NumericComboChart(
                       List<charts.Series<IndexBoard, num>>.generate(
-                          list!.length,
+                          list.length,
                           (index) => charts.Series<IndexBoard, num>(
                                 id: 'chart1',
                                 colorFn: (_, __) =>
@@ -82,7 +83,7 @@ class _MoneyChartState extends State<MoneyChart> {
                   .titleMedium
                   ?.copyWith(fontWeight: FontWeight.w700)),
         ),
-        const SizedBox(height: 5),
+        const SizedBox(height: 20),
         SizedBox(
           height: widget.height,
           width: MediaQuery.of(context).size.width,
@@ -96,20 +97,26 @@ class _MoneyChartState extends State<MoneyChart> {
                 }
                 if (snapshot.connectionState == ConnectionState.done) {
                   var list = snapshot.data;
+                  if(list == null) return const SizedBox();
                   return Padding(
-                    padding: const EdgeInsets.only(left: 0, right: 20),
+                    padding: const EdgeInsets.only(left: 20, right: 40),
                     child: charts.NumericComboChart(
-                      _createSampleData(list!),
+                      _createSampleData(list),
                       defaultRenderer: charts.LineRendererConfig(
                           includeArea: true, stacked: true),
                       animate: true,
+                      layoutConfig: charts.LayoutConfig(
+                        leftMarginSpec: charts.MarginSpec.fixedPixel(0),
+                        topMarginSpec: charts.MarginSpec.fixedPixel(0),
+                        rightMarginSpec: charts.MarginSpec.fixedPixel(0),
+                        bottomMarginSpec: charts.MarginSpec.fixedPixel(0),
+                      ),
                       secondaryMeasureAxis: const charts.NumericAxisSpec(
                         viewport: charts.NumericExtents(0, 100),
                         tickProviderSpec: charts.BasicNumericTickProviderSpec(
-                          desiredTickCount: 5,
-                          dataIsInWholeNumbers: true,
-                          zeroBound: true
+                          desiredTickCount: 5
                         ),
+
                       ),
                       domainAxis: domainSpec(list),
                     ),
@@ -135,7 +142,7 @@ class _MoneyChartState extends State<MoneyChart> {
               charts.ColorUtil.fromDartColor(AppColors.semantic_03),
           domainFn: (IndexBoard sales, index) => index!,
           measureFn: (IndexBoard sales, _) {
-            return sales.declines;
+            return sales.declinesPer;
           },
           data: list)..setAttribute(charts.measureAxisIdKey,
           "secondaryMeasureAxisId"),
@@ -148,7 +155,7 @@ class _MoneyChartState extends State<MoneyChart> {
         areaColorFn: (_, __) =>
             charts.ColorUtil.fromDartColor(AppColors.semantic_02),
         domainFn: (IndexBoard sales, index) => index!,
-        measureFn: (IndexBoard sales, _) => sales.noChanges,
+        measureFn: (IndexBoard sales, _) => sales.noChangesPer,
         data: list,
       )..setAttribute(charts.measureAxisIdKey,
           "secondaryMeasureAxisId"),
@@ -162,7 +169,7 @@ class _MoneyChartState extends State<MoneyChart> {
         areaColorFn: (_, __) =>
             charts.ColorUtil.fromDartColor(AppColors.semantic_01),
         domainFn: (IndexBoard sales, index) => index!,
-        measureFn: (IndexBoard sales, _) => sales.advances,
+        measureFn: (IndexBoard sales, _) => sales.advancesPer,
         data: list,
       )..setAttribute(charts.measureAxisIdKey,
           "secondaryMeasureAxisId"),

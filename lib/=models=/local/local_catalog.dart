@@ -2,7 +2,11 @@ import 'package:hive_flutter/hive_flutter.dart';
 
 abstract class LocalCatalog extends HiveObject {
   String get name;
-  List<String> get stocks;
+
+  List<String> get listStock;
+
+  set setStockList(List<String> list);
+
   // void add(String stock);
   // void addAll(List<String> stocks);
   // String remove(String stock);
@@ -19,6 +23,6 @@ abstract class LocalCatalog extends HiveObject {
 
   @override
   String toString() {
-    return "{\n\t$name\n\t${stocks.toString()}\n}";
+    return "{\n\t$name\n\t${listStock.toString()}\n}";
   }
 }

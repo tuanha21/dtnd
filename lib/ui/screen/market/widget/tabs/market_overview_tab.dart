@@ -35,7 +35,6 @@ class _MarketOverviewTabState extends State<MarketOverviewTab> {
 
   late final List<StockModel> listCatalog;
 
-  bool listCatalogInitialized = false;
 
   @override
   void initState() {
@@ -93,14 +92,14 @@ class _MarketOverviewTabState extends State<MarketOverviewTab> {
 
   @override
   Widget build(BuildContext context) {
-    Widget catalog;
-    if (!userService.isLogin) {
-      catalog = NotSigninCatalogWidget(
-        afterLogin: rebuild,
-      );
-    } else {
-      catalog = const UserCatalogWidget();
-    }
+    // Widget catalog;
+    // if (!userService.isLogin) {
+    //   catalog = NotSigninCatalogWidget(
+    //     afterLogin: rebuild,
+    //   );
+    // } else {
+    //   catalog = const UserCatalogWidget();
+    // }
     return ListView(
       children: [
         const IndexChart(),
@@ -118,10 +117,9 @@ class _MarketOverviewTabState extends State<MarketOverviewTab> {
         }, marketController.loadingDeepModel),
         SectionWithTitle(
           title: S.of(context).interested_catalog,
-          onMore: () {},
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: catalog,
+          child: const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16),
+            child: UserCatalogWidget(),
           ),
         ),
         const SizedBox(height: 100),

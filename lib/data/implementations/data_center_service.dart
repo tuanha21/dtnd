@@ -1,6 +1,7 @@
 import 'package:dtnd/=models=/index.dart';
 import 'package:dtnd/=models=/response/business_profile_model.dart';
 import 'package:dtnd/=models=/response/deep_model.dart';
+import 'package:dtnd/=models=/response/indContrib.dart';
 import 'package:dtnd/=models=/response/inday_matched_order.dart';
 import 'package:dtnd/=models=/response/index_model.dart';
 import 'package:dtnd/=models=/response/liquidity_model.dart';
@@ -590,5 +591,26 @@ class DataCenterService implements IDataCenterService {
   @override
   Future<List<String>> getSectors(String industryCode) {
     return networkService.getSectors(industryCode);
+  }
+
+  @override
+  Future putSearchHistory(String searchString) {
+    return networkService.putSearchHistory(searchString);
+  }
+
+  @override
+  Future<IndContrib> getIndContrib(String marketCode) {
+    return networkService.getIndContrib(marketCode);
+  }
+
+  @override
+  Future<IndContrib> getFIvalue(String marketCode) {
+    return networkService.getFIvalue(marketCode);
+  }
+
+  @override
+  Future<IndContrib> getPIvalue(String marketCode) {
+    return networkService.getPIvalue(marketCode);
+
   }
 }

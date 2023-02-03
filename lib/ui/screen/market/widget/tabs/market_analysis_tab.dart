@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../../../../../=models=/index.dart';
+import '../../../../../=models=/response/indContrib.dart';
 import '../../../../../=models=/response/index_board.dart';
 import '../../../../../=models=/response/liquidity_model.dart';
 import '../../../../../=models=/response/top_influence_model.dart';
@@ -13,7 +14,10 @@ import '../../../../../data/i_data_center_service.dart';
 import '../../../../../data/implementations/data_center_service.dart';
 import '../../../../../generated/l10n.dart';
 import '../../../../theme/app_color.dart';
+import '../components/Fi_chart.dart';
+import '../components/PI_chart.dart';
 import '../components/money_chart.dart';
+import '../components/top_index_widget.dart';
 
 class MarketAnalysisTab extends StatefulWidget {
   const MarketAnalysisTab({super.key});
@@ -22,16 +26,23 @@ class MarketAnalysisTab extends StatefulWidget {
   State<MarketAnalysisTab> createState() => _MarketAnalysisTabState();
 }
 
-class _MarketAnalysisTabState extends State<MarketAnalysisTab> with AutomaticKeepAliveClientMixin {
+class _MarketAnalysisTabState extends State<MarketAnalysisTab>
+    with AutomaticKeepAliveClientMixin {
   final IDataCenterService dataCenterService = DataCenterService();
   late Future<List<TopInfluenceModel>> topInfluenceList;
   late Future<List<IndexBoard>> indexBoard;
   late Future<LiquidityModel> liquidityModel;
+  late Future<IndContrib> topIndex;
+  late Future<IndContrib> piValue;
+  late Future<IndContrib> fiValue;
 
   void initData() {
     topInfluenceList = dataCenterService.getTopInfluence(indexSelect);
     indexBoard = dataCenterService.getIndexBoard(indexSelect.exchangeName);
-    liquidityModel = dataCenterService.getLiquidity(Index.VNI);
+    liquidityModel = dataCenterService.getLiquidity(indexSelect);
+    topIndex = dataCenterService.getIndContrib(indexSelect.market);
+    piValue = dataCenterService.getPIvalue(indexSelect.market);
+    fiValue = dataCenterService.getFIvalue(indexSelect.market);
   }
 
   @override
@@ -83,6 +94,9 @@ class _MarketAnalysisTabState extends State<MarketAnalysisTab> with AutomaticKee
         TopInfluenceChart(topInfluenceList: topInfluenceList),
         LiquidityChart(liquidityModel: liquidityModel),
         MoneyChart(indexBoard: indexBoard),
+        TopIndexWidgetChart(topIndex: topIndex),
+        PiValueChart(pIValue: piValue),
+        FiChartValue(fIValue: fiValue),
         const SizedBox(height: 150)
       ],
     );

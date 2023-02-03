@@ -38,6 +38,8 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import 'package:socket_io_client/socket_io_client.dart';
 
+import '../../=models=/response/indContrib.dart';
+
 class NetworkService implements INetworkService {
   final http.Client client = http.Client();
 
@@ -57,6 +59,7 @@ class NetworkService implements INetworkService {
   late final String sbboard_url;
   late final String info_sbsi_url;
   late final String algo_url;
+  late final String algo_url_apec;
 
   Uri url_core(
     String unencodedPath, [
@@ -67,7 +70,9 @@ class NetworkService implements INetworkService {
   }
 
   Uri get url_core_endpoint => Uri.http(core_url, core_endpoint);
+
   Uri url_board(String path) => Uri.https(board_url, path);
+
   Uri url_board_data_feed(Map<String, dynamic> queryParameters) {
     print(Uri.https(sbboard_url, "datafeed/history", queryParameters));
     return Uri.https(sbboard_url, "datafeed/history", queryParameters);
@@ -84,6 +89,14 @@ class NetworkService implements INetworkService {
   ]) {
     final unencodedPath = "algo/pbapi/api/$path";
     return Uri.http(algo_url, unencodedPath, queryParameters);
+  }
+
+  Uri url_algo_apec(
+    String path, [
+    Map<String, dynamic>? queryParameters,
+  ]) {
+    final unencodedPath = "algo/pbapi/api/$path";
+    return Uri.http("opacc-api.apec.com.vn", unencodedPath, queryParameters);
   }
 
   final Utf8Codec utf8Codec = const Utf8Codec();
@@ -115,6 +128,8 @@ class NetworkService implements INetworkService {
     sbboard_url = dotenv.env['sbboard_domain']!;
     info_sbsi_url = dotenv.env['info_sbsi_domain']!;
     algo_url = dotenv.env['algo_domain']!;
+    algo_url_apec = dotenv.env['algo_domain_apec']!;
+
     initSocket(sbboard_url);
     return;
   }
@@ -354,7 +369,7 @@ class NetworkService implements INetworkService {
     try {
       final http.Response response =
           await client.get(url_info_sbsi("marketDepth"));
-
+      logger.d(response.request?.url);
       final List<dynamic> responseBody = decode(response.bodyBytes);
       List<DeepModel> data = [];
       for (var element in responseBody) {
@@ -418,8 +433,8 @@ class NetworkService implements INetworkService {
 
   @override
   Future<void> putSearchHistory(String body) async {
-    await client.post(url_core("searchMarket/event"), body: body);
-    return;
+    var res = await client.post(url_core("searchMarket/event"), body: body);
+    logger.d(jsonDecode(res.body));
   }
 
   @override
@@ -722,8 +737,7 @@ class NetworkService implements INetworkService {
 
   @override
   Future<List<String>> getSectors(String industryCode) async {
-    var response =
-        await client.get(url_algo("sectors/$industryCode"));
+    var response = await client.get(url_algo("sectors/$industryCode"));
     if (response.statusCode != 200) {
       throw response;
     }
@@ -739,4 +753,54 @@ class NetworkService implements INetworkService {
     return result;
   }
 
+  @override
+  Future<IndContrib> getIndContrib(String marketCode) async {
+    try {
+      var response =
+          await client.get(url_algo_apec("IndContrib", {"id": marketCode}));
+      if (response.statusCode != 200) {
+        throw response;
+      }
+      var res = decode(response.bodyBytes);
+      return IndContrib.fromJson(res);
+    } catch (e) {
+      logger.d(e.toString());
+      rethrow;
+    }
+  }
+
+  @override
+  Future<IndContrib> getFIvalue(String marketCode) async {
+    try {
+      var response =
+          await client.get(url_algo_apec("Fvalue", {"id": marketCode}));
+      if (response.statusCode != 200) {
+        throw response;
+      }
+      var res = decode(response.bodyBytes);
+      return IndContrib.fromJson(res);
+    } catch (e) {
+      logger.e(e.toString());
+      rethrow;
+    }
+  }
+
+  @override
+  Future<IndContrib> getPIvalue(String marketCode) async {
+    try {
+      var response =
+          await client.get(url_algo_apec("PIvalue", {"id": marketCode}));
+      if (response.statusCode != 200) {
+        throw response;
+      }
+      var res = decode(response.bodyBytes);
+      if (res["status"] != 200) {
+        throw res["message"];
+      }
+      return IndContrib.fromJson(res['data']);
+    } catch (e) {
+      logger.d(e.toString());
+      rethrow;
+    }
+  }
 }
