@@ -591,4 +591,15 @@ class DataCenterService implements IDataCenterService {
   Future<IndContrib> getIndContrib(String marketCode) {
     return networkService.getIndContrib(marketCode);
   }
+
+  @override
+  Future<IndContrib> getFIvalue(String marketCode) {
+    return networkService.getFIvalue(marketCode);
+  }
+
+  @override
+  Future<IndContrib> getPIvalue(String marketCode) {
+    return networkService.getPIvalue(marketCode);
+
+  }
 }

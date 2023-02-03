@@ -708,8 +708,42 @@ class NetworkService implements INetworkService {
         throw response;
       }
       var res = decode(response.bodyBytes);
-      logger.d(res);
       return IndContrib.fromJson(res);
+    } catch (e) {
+      logger.d(e.toString());
+      rethrow;
+    }
+  }
+
+  @override
+  Future<IndContrib> getFIvalue(String marketCode) async {
+    try {
+      var response =
+          await client.get(url_algo_apec("Fvalue", {"id": marketCode}));
+      if (response.statusCode != 200) {
+        throw response;
+      }
+      var res = decode(response.bodyBytes);
+      return IndContrib.fromJson(res);
+    } catch (e) {
+      logger.e(e.toString());
+      rethrow;
+    }
+  }
+
+  @override
+  Future<IndContrib> getPIvalue(String marketCode) async {
+    try {
+      var response =
+          await client.get(url_algo_apec("PIvalue", {"id": marketCode}));
+      if (response.statusCode != 200) {
+        throw response;
+      }
+      var res = decode(response.bodyBytes);
+      if (res["status"] != 200) {
+        throw res["message"];
+      }
+      return IndContrib.fromJson(res['data']);
     } catch (e) {
       logger.d(e.toString());
       rethrow;

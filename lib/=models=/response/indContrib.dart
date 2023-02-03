@@ -8,7 +8,7 @@ class IndContrib {
   List<num>? value;
   List<String>? color1;
   List<num>? value1;
-  List<num>? ptcolor;
+  List<String>? ptcolor;
   List<num>? ptvalue;
   List<num>? ptcolor1;
   List<num>? ptvalue1;
@@ -21,15 +21,11 @@ class IndContrib {
         "name": mapIndustryList[name![i]] ?? name?[i] ?? "",
         "color": color != null ? HexColor(color![i]) : null,
         "value": value != null ? value![i] : null,
-        "contribPoint": contribPoint != null ? contribPoint![i] : null
+        "contribPoint": contribPoint != null ? contribPoint![i] : null,
+        "ptcolor": ptcolor != null ? HexColor(ptcolor![i]) : null,
+        "ptvalue": ptvalue != null ? ptvalue![i] : null,
       });
     }
-    if(list.isEmpty) return [];
-    list.sort((a, b) {
-      num numA = a['contribPoint'];
-      num numB = b['contribPoint'];
-      return numB.compareTo(numA);
-    });
     return list;
   }
 
@@ -66,7 +62,7 @@ class IndContrib {
       value1 = json['value1'].cast<double>();
     }
     if (json['ptcolor'] != null) {
-      ptcolor = json['ptcolor'].cast<double>();
+      ptcolor = json['ptcolor'].cast<String>();
     }
     if (json['ptvalue'] != null) {
       ptvalue = json['value'].cast<double>();

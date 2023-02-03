@@ -118,4 +118,10 @@ abstract class INetworkService {
   Future<List<String>> getSectors(String industryCode);
 
   Future<IndContrib> getIndContrib(String marketCode);
+
+  Future<IndContrib> getPIvalue(String marketCode);
+
+  Future<IndContrib> getFIvalue(String marketCode);
+
+
 }

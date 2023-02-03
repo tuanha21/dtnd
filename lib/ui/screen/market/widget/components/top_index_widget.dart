@@ -16,6 +16,7 @@ class TopIndexWidgetChart extends StatefulWidget {
 }
 
 class _TopIndexWidgetChartState extends State<TopIndexWidgetChart> {
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -40,6 +41,12 @@ class _TopIndexWidgetChartState extends State<TopIndexWidgetChart> {
               }
               if (snapshot.connectionState == ConnectionState.done) {
                 if(snapshot.data == null) return const SizedBox();
+                var list = snapshot.data!.listMapValue;
+                list.sort((a, b) {
+                  num numA = a['contribPoint'];
+                  num numB = b['contribPoint'];
+                  return numB.compareTo(numA);
+                });
                 return SizedBox(
                   height: 300,
                   child: Padding(
@@ -59,7 +66,7 @@ class _TopIndexWidgetChartState extends State<TopIndexWidgetChart> {
                                   model['contribPoint'] > 0
                                       ? AppColors.semantic_01
                                       : AppColors.semantic_03),
-                          data: snapshot.data!.listMapValue,
+                          data: list,
                         )
                       ],
                       animate: true,

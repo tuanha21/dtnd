@@ -14,6 +14,8 @@ import '../../../../../data/i_data_center_service.dart';
 import '../../../../../data/implementations/data_center_service.dart';
 import '../../../../../generated/l10n.dart';
 import '../../../../theme/app_color.dart';
+import '../components/Fi_chart.dart';
+import '../components/PI_chart.dart';
 import '../components/money_chart.dart';
 import '../components/top_index_widget.dart';
 
@@ -31,13 +33,16 @@ class _MarketAnalysisTabState extends State<MarketAnalysisTab>
   late Future<List<IndexBoard>> indexBoard;
   late Future<LiquidityModel> liquidityModel;
   late Future<IndContrib> topIndex;
-
+  late Future<IndContrib> piValue;
+  late Future<IndContrib> fiValue;
 
   void initData() {
     topInfluenceList = dataCenterService.getTopInfluence(indexSelect);
     indexBoard = dataCenterService.getIndexBoard(indexSelect.exchangeName);
     liquidityModel = dataCenterService.getLiquidity(indexSelect);
     topIndex = dataCenterService.getIndContrib(indexSelect.market);
+    piValue = dataCenterService.getPIvalue(indexSelect.market);
+    fiValue = dataCenterService.getFIvalue(indexSelect.market);
   }
 
   @override
@@ -74,11 +79,8 @@ class _MarketAnalysisTabState extends State<MarketAnalysisTab>
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 Text(
-                  S
-                      .of(context)
-                      .filter,
-                  style: Theme
-                      .of(context)
+                  S.of(context).filter,
+                  style: Theme.of(context)
                       .textTheme
                       .bodySmall
                       ?.copyWith(color: AppColors.color_secondary),
@@ -93,6 +95,8 @@ class _MarketAnalysisTabState extends State<MarketAnalysisTab>
         LiquidityChart(liquidityModel: liquidityModel),
         MoneyChart(indexBoard: indexBoard),
         TopIndexWidgetChart(topIndex: topIndex),
+        PiValueChart(pIValue: piValue),
+        FiChartValue(fIValue: fiValue),
         const SizedBox(height: 150)
       ],
     );
@@ -141,11 +145,8 @@ class _BottomSheetState extends State<BottomSheet> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      S
-                          .of(context)
-                          .filter,
-                      style: Theme
-                          .of(context)
+                      S.of(context).filter,
+                      style: Theme.of(context)
                           .textTheme
                           .labelLarge
                           ?.copyWith(fontWeight: FontWeight.w700),
@@ -168,8 +169,7 @@ class _BottomSheetState extends State<BottomSheet> {
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: Text(
                   "Sàn chứng khoán",
-                  style: Theme
-                      .of(context)
+                  style: Theme.of(context)
                       .textTheme
                       .labelLarge
                       ?.copyWith(fontWeight: FontWeight.w700, fontSize: 14),
@@ -178,25 +178,21 @@ class _BottomSheetState extends State<BottomSheet> {
               const SizedBox(height: 16),
               Column(
                 children: Index.values
-                    .map((index) =>
-                    CheckBoxMarket(
-                      key: UniqueKey(),
-                      index: index,
-                      indexInit: indexSelected,
-                      onChanged: (Index index) {
-                        setState(() {
-                          indexSelected = index;
-                        });
-                      },
-                    ))
+                    .map((index) => CheckBoxMarket(
+                          key: UniqueKey(),
+                          index: index,
+                          indexInit: indexSelected,
+                          onChanged: (Index index) {
+                            setState(() {
+                              indexSelected = index;
+                            });
+                          },
+                        ))
                     .toList(),
               ),
               const SizedBox(height: 32),
               SizedBox(
-                width: MediaQuery
-                    .of(context)
-                    .size
-                    .width,
+                width: MediaQuery.of(context).size.width,
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: ElevatedButton(
@@ -270,13 +266,9 @@ class _CheckBoxMarketState extends State<CheckBoxMarket> {
         ),
         title: Text(
           widget.index.market,
-          style: Theme
-              .of(context)
-              .textTheme
-              .bodyMedium
-              ?.copyWith(
+          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
               color:
-              _isSelect ? AppColors.color_secondary : AppColors.neutral_03),
+                  _isSelect ? AppColors.color_secondary : AppColors.neutral_03),
         ),
       ),
     );

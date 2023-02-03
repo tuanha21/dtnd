@@ -106,4 +106,8 @@ abstract class IDataCenterService {
 
   Future<IndContrib> getIndContrib(String marketCode);
 
+  Future<IndContrib> getPIvalue(String marketCode);
+
+  Future<IndContrib> getFIvalue(String marketCode);
+
 }
