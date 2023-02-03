@@ -13,7 +13,7 @@ class SavedCatalog{
   final String _user;
 
   @HiveField(1, defaultValue: <LocalCatalog>[])
-  final List<LocalCatalog> catalogs;
+  late List<LocalCatalog> catalogs;
 
   void addCatalog(LocalCatalog catalog) {
     try {

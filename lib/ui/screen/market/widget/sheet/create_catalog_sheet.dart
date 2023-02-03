@@ -61,7 +61,7 @@ class _CreateCatalogSheetState extends State<CreateCatalogSheet> {
                     if (key.currentState?.validate() ?? false) {
                       try {
                         final UserCatalog newCatalog =
-                            UserCatalog(controller.text);
+                            UserCatalog(controller.text, []);
                         widget.savedCatalog.addCatalog(newCatalog);
                         Navigator.of(context).pop(const BackCmd());
                       } catch (e) {

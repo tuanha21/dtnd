@@ -42,7 +42,7 @@ class _AppCheckBoxState extends State<AppCheckBox> {
             color: _isSelect ? AppColors.primary_01 : null),
         child: Visibility(
           visible: _isSelect,
-          child: const Icon(Icons.check, size: 20),
+          child: const Icon(Icons.check, size: 20,color: AppColors.light_bg,),
         ),
       ),
     );
