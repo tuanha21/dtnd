@@ -63,7 +63,7 @@ dependencies:
     git:
       url: https://github.com/tuanha21/k_chart.git
   syncfusion_flutter_charts: ^20.4.42
-  pinput: ^2.2.16
+  pinput: ^2.2.23
   web_socket_channel: ^2.2.0
   messagepack: ^0.2.1
   flutter_typeahead: ^4.3.1
@@ -84,7 +84,7 @@ dependencies:
   permission_handler: ^10.2.0
   image_cropper: ^3.0.1
   flutter_html: ^3.0.0-alpha.6
-  modal_bottom_sheet: ^2.1.2
+  modal_bottom_sheet: ^3.0.0-pre
 
 dev_dependencies:
   flutter_test:
