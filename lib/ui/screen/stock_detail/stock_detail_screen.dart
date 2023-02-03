@@ -69,7 +69,7 @@ class _StockDetailScreenState extends State<StockDetailScreen>
   }
 
   Future<void> getStockIndayTradingHistory() async {
-    widget.stockModel.stockTradingHistory.value = await dataCenterService
+    widget.stockModel.indayTradingHistory.value = await dataCenterService
         .getStockIndayTradingHistory(widget.stockModel.stock.stockCode);
   }
 

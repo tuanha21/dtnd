@@ -20,6 +20,7 @@ class HomeAppbarDelegate extends SliverPersistentHeaderDelegate {
   Widget build(
       BuildContext context, double shrinkOffset, bool overlapsContent) {
     final size = MediaQuery.of(context).size;
+    final ratio = 1 - (shrinkOffset / _difference);
     return Material(
       child: Stack(
         children: [
@@ -31,56 +32,68 @@ class HomeAppbarDelegate extends SliverPersistentHeaderDelegate {
               child: _HomeBanner(appService),
             ),
           ),
-          Align(
-            alignment: Alignment.topCenter,
-            child: SizedBox(
-              height: 80,
-              child: HomeAppBar(
-                backgroundColor: Colors.transparent,
-                title: "DTND",
-                actions: [
-                  SizedBox.square(
-                      dimension: 24,
-                      child: InkWell(
-                          onTap: () {
-                            Navigator.of(context)
-                                .push(MaterialPageRoute(
-                              builder: (context) => const SearchScreen(),
-                            ))
-                                .then((value) async {
-                              if (value is Stock) {
-                                dataCenterService.getStockModelsFromStockCodes([
-                                  value.stockCode
-                                ]).then((stockModels) => Navigator.of(context)
-                                        .push(MaterialPageRoute(
-                                      builder: (context) => StockDetailScreen(
-                                        stockModel: stockModels.first,
-                                      ),
-                                    )));
-                              }
-                            });
-                          },
-                          child:
-                              Image.asset(AppImages.home_icon_search_normal))),
-                  const SizedBox(
-                    width: 20,
-                  ),
-                  SizedBox.square(
-                      dimension: 24,
-                      child: Image.asset(AppImages.home_icon_notification)),
-                  const SizedBox(
-                    width: 16,
-                  ),
-                ],
-              ),
-            ),
-          ),
           Positioned(
             top: 224 + (shrinkOffset / _difference * -imageHeight),
             left: 16,
             child: SizedBox(
               width: size.width - 32,
               child: const HomeQuickAccess(),
+            ),
+          ),
+          Align(
+            alignment: Alignment.topCenter,
+            child: SizedBox(
+              height: 80,
+              child: AppBar(
+                backgroundColor: ratio <= 0 ? Colors.white : Colors.transparent,
+                title: Text(
+                  "DTND",
+                  style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                      fontWeight: FontWeight.w700,
+                      color: ratio <= 0 ? Colors.black : Colors.white),
+                ),
+                actions: [
+                  SizedBox.square(
+                    dimension: 24,
+                    child: InkWell(
+                      onTap: () {
+                        Navigator.of(context)
+                            .push(MaterialPageRoute(
+                          builder: (context) => const SearchScreen(),
+                        ))
+                            .then((value) async {
+                          if (value is Stock) {
+                            dataCenterService.getStockModelsFromStockCodes([
+                              value.stockCode
+                            ]).then((stockModels) =>
+                                Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) => StockDetailScreen(
+                                    stockModel: stockModels.first,
+                                  ),
+                                )));
+                          }
+                        });
+                      },
+                      child: Image.asset(
+                        AppImages.home_icon_search_normal,
+                        color: ratio <= 0 ? Colors.black : Colors.white,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    width: 20,
+                  ),
+                  SizedBox.square(
+                      dimension: 24,
+                      child: Image.asset(
+                        AppImages.home_icon_notification,
+                        color: ratio <= 0 ? Colors.black : Colors.white,
+                      )),
+                  const SizedBox(
+                    width: 16,
+                  ),
+                ],
+              ),
             ),
           ),
         ],

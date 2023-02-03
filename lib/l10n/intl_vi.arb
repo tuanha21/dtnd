@@ -282,7 +282,18 @@
     "unknown_error": "Lỗi không xác định",
     "no_internet": "Không có kết nối Internet",
 
+    "date_translations": "Ngày",
+    "open_translations": "Giá mở cửa",
+    "high_translations": "Cao",
+    "low_translations": "Thấp",
+    "close_translations": "Giá đóng cửa",
+    "changeAmount_translations": "Thay đổi",
+    "change_translations": "% Thay đổi",
+    "amount_translations": "khối lượng",
+
+    "vietnam": "Việt nam",
+    "foreign": "Nước ngoài",
+    "world": "Thế giới",
+
     "copytrade": "Copytrade"
-
-
 }

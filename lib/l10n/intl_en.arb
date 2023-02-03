@@ -283,5 +283,18 @@
     "unknown_error": "Unknown error",
     "no_internet": "No Internet connection",
 
+    "date_translations": "Date",
+    "open_translations": "Open",
+    "high_translations": "High",
+    "low_translations": "Low",
+    "close_translations": "Close",
+    "changeAmount_translations": "Change",
+    "change_translations": "Change%",
+    "amount_translations": "Amount",
+
+    "vietnam": "Vietnam",
+    "foreign": "Foreign",
+    "world": "World",
+
     "copytrade": "Copytrade"
 }

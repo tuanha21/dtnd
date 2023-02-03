@@ -9,6 +9,8 @@ import 'package:dtnd/=models=/response/stock_ranking_financial_index_model.dart'
 import 'package:dtnd/=models=/response/stock_trade.dart';
 import 'package:dtnd/=models=/response/stock_trading_history.dart';
 import 'package:dtnd/=models=/response/subsidiaries_model.dart';
+import 'package:dtnd/data/i_data_center_service.dart';
+import 'package:dtnd/utilities/time_utils.dart';
 import 'package:get/get.dart';
 
 class StockModel {
@@ -16,7 +18,7 @@ class StockModel {
   late final StockData stockData;
   late StockInfoCore? stockDataCore;
   late List<StockTrade>? listStockTrade;
-  final Rx<StockTradingHistory?> stockTradingHistory = Rxn();
+  final Rx<StockTradingHistory?> indayTradingHistory = Rxn();
   final List<IndayMatchedOrder> _listMatchedOrder = [];
   final Rx<SecurityBasicInfo?> securityBasicInfo = Rxn();
   final List<StockFinancialIndex> stockFinancialIndex = [];
@@ -53,12 +55,24 @@ class StockModel {
     SecurityBasicInfo? securityBasicInfo,
     StockRankingFinancialIndex? stockRankingFinancialIndex,
   }) {
-    this.stockTradingHistory.value = stockTradingHistory;
+    indayTradingHistory.value = stockTradingHistory;
     this.stockRankingFinancialIndex.value = stockRankingFinancialIndex;
     this.securityBasicInfo.value = securityBasicInfo;
     if (stockFinancialIndex != null) {
       this.stockFinancialIndex.addAll(stockFinancialIndex);
     }
+  }
+
+  Future<StockTradingHistory?> getTradingHistory(
+      IDataCenterService dataCenterService,
+      {String? resolution,
+      DateTime? from,
+      DateTime? to}) {
+    return dataCenterService.getStockTradingHistory(
+        stock.stockCode,
+        resolution ?? "1D",
+        from ?? TimeUtilities.getPreviousDateTime(TimeUtilities.year(1)),
+        to ?? DateTime.now());
   }
 
   void changeStockFinancialIndex(
@@ -112,6 +126,6 @@ class StockModel {
 
   @override
   String toString() {
-    return 'StockModel{stock: $stock, stockData: $stockData, stockDataCore: $stockDataCore, listStockTrade: $listStockTrade, stockTradingHistory: $stockTradingHistory, _listMatchedOrder: $_listMatchedOrder}';
+    return 'StockModel{stock: $stock, stockData: $stockData, stockDataCore: $stockDataCore, listStockTrade: $listStockTrade, stockTradingHistory: $indayTradingHistory, _listMatchedOrder: $_listMatchedOrder}';
   }
 }

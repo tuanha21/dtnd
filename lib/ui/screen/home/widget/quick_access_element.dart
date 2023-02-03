@@ -52,6 +52,7 @@ class HomeQuickAccessElement extends StatelessWidget {
     return SizedBox.fromSize(
       size: const Size(80, 56),
       child: Material(
+        color: Colors.transparent,
         borderRadius: const BorderRadius.all(Radius.circular(8)),
         child: InkWell(
           onTap: value.route(context),

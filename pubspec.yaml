@@ -66,7 +66,7 @@ dependencies:
   pinput: ^2.2.16
   web_socket_channel: ^2.2.0
   messagepack: ^0.2.1
-  flutter_typeahead: 4.1.1
+  flutter_typeahead: ^4.3.1
   msgpack_dart: ^1.0.0
   vector_math: ^2.1.2
   sliding_up_panel2: ^3.2.2
