@@ -236,11 +236,8 @@ class _UserCatalogWidgetState extends State<UserCatalogWidget> {
   }
 
   Future<void> updateCatalog(LocalCatalog catalog) async {
-    await CatalogOptionsISheet(savedCatalog, catalog)
-        .show(
-            context,
-            CatalogOptionsSheet(
-                savedCatalog: savedCatalog, catalog: catalog));
+    await CatalogOptionsISheet(savedCatalog, catalog).show(context,
+        CatalogOptionsSheet(savedCatalog: savedCatalog, catalog: catalog));
     setState(() {});
   }
 
@@ -250,9 +247,8 @@ class _UserCatalogWidgetState extends State<UserCatalogWidget> {
       if (currentCatalog.listStock.isEmpty) {
         listStocks = Future.value([]);
       } else {
-        listStocks =
-            dataCenterService.getStockModelsFromStockCodes(
-                currentCatalog.listStock);
+        listStocks = dataCenterService
+            .getStockModelsFromStockCodes(currentCatalog.listStock);
       }
     });
   }
@@ -497,13 +493,14 @@ class _StockWidgetChartState extends State<StockWidgetChart> {
             ],
           ),
           const SizedBox(width: 16),
-          Visibility(
-            visible: widget.stockModel.stockTradingHistory.value != null,
-            child: SizedBox(
-                height: 50,
-                width: 150,
-                child: HomeMarketOverviewItemChart(data: widget.stockModel)),
-          ),
+          SizedBox(
+              height: 50,
+              width: 150,
+              child: HomeMarketOverviewItemChart(
+                data: widget.stockModel,
+                future: widget.stockModel
+                    .getTradingHistory(DataCenterService.instance),
+              )),
           Expanded(
               child: Align(
             alignment: Alignment.centerRight,

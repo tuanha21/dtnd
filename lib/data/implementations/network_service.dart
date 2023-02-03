@@ -13,6 +13,7 @@ import 'package:dtnd/=models=/index.dart';
 import 'package:dtnd/=models=/response/liquidity_model.dart';
 import 'package:dtnd/=models=/response/new_order.dart';
 import 'package:dtnd/=models=/response/news_detail.dart';
+import 'package:dtnd/=models=/response/news_model.dart';
 import 'package:dtnd/=models=/response/s_cash_balance.dart';
 import 'package:dtnd/=models=/response/security_basic_info_model.dart';
 import 'package:dtnd/=models=/response/stock.dart';
@@ -27,6 +28,7 @@ import 'package:dtnd/=models=/response/top_influence_model.dart';
 import 'package:dtnd/=models=/response/total_asset_model.dart';
 import 'package:dtnd/=models=/response/user_token.dart';
 import 'package:dtnd/=models=/request/request_model.dart';
+import 'package:dtnd/=models=/response/world_index_model.dart';
 import 'package:dtnd/=models=/ui_model/field_tree_element_model.dart';
 import 'package:dtnd/config/service/environment.dart';
 import 'package:dtnd/data/i_network_service.dart';
@@ -62,8 +64,10 @@ class NetworkService implements INetworkService {
   Uri url_core(
     String unencodedPath, [
     Map<String, dynamic>? queryParameters,
-  ]) =>
-      Uri.http(core_url, unencodedPath, queryParameters);
+  ]) {
+    print(Uri.http(core_url, unencodedPath, queryParameters).toString());
+    return Uri.http(core_url, unencodedPath, queryParameters);
+  }
 
   Uri get url_core_endpoint => Uri.http(core_url, core_endpoint);
 
@@ -216,19 +220,21 @@ class NetworkService implements INetworkService {
 
   @override
   Future<StockTradingHistory?> getStockTradingHistory(
-      String symbol, resolution, from, to) async {
-    final Map<String, dynamic> queryParameters = {
+      String symbol, String resolution, int from, int to) async {
+    final Map<String, String> queryParameters = {
       "symbol": symbol,
       "resolution": resolution,
-      "from": from,
-      "to": to,
+      "from": "$from",
+      "to": "$to",
     };
+    // logger.v(queryParameters);
     final http.Response response =
         await client.get(url_board_data_feed(queryParameters));
     final responseBody = decode(response.bodyBytes);
     if (responseBody == null) {
       return null;
     }
+    // logger.v(responseBody);
     if (responseBody == null) throw Exception();
     final StockTradingHistory data = StockTradingHistory.fromJson(responseBody);
     return data;
@@ -295,6 +301,21 @@ class NetworkService implements INetworkService {
   }
 
   @override
+  Future<List<NewsModel>> getNews(Map<String, String> body) async {
+    final http.Response response = await client.get(url_core("pickNews", body));
+    final List<dynamic> responseBody = decode(response.bodyBytes)["data"];
+    List<NewsModel> data = [];
+    for (var element in responseBody) {
+      try {
+        data.add(NewsModel.fromJson(element));
+      } catch (e) {
+        continue;
+      }
+    }
+    return data;
+  }
+
+  @override
   Future<NewsDetail?> getNewsDetail(int id) async {
     final Map<String, dynamic> queryParameters = {
       "id": id,
@@ -308,6 +329,39 @@ class NetworkService implements INetworkService {
       logger.e(e);
       return null;
     }
+  }
+
+  @override
+  Future<List<WorldIndexModel>> getWorldIndex() async {
+    final http.Response response =
+        await client.get(url_info_sbsi("worldIndex"));
+    final List<dynamic> responseBody = decode(response.bodyBytes)["data"];
+    List<WorldIndexModel> data = [];
+    for (var element in responseBody) {
+      try {
+        data.add(WorldIndexModel.fromJson(element));
+      } catch (e) {
+        continue;
+      }
+    }
+    return data;
+  }
+
+  @override
+  Future<List<WorldIndexData>> getWorldIndexData(
+      Map<String, String> body) async {
+    final http.Response response =
+        await client.get(url_info_sbsi("chartTime", body));
+    final List<dynamic> responseBody = decode(response.bodyBytes)["data"];
+    List<WorldIndexData> data = [];
+    for (var element in responseBody) {
+      try {
+        data.add(WorldIndexData.fromJson(element));
+      } catch (e) {
+        continue;
+      }
+    }
+    return data;
   }
 
   @override

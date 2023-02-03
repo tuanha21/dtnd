@@ -8,6 +8,7 @@ import 'package:dtnd/data/i_user_service.dart';
 import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/screen/home/widget/home_market_today.dart';
 import 'package:dtnd/ui/screen/market/market_controller.dart';
+import 'package:dtnd/ui/screen/market/widget/components/index_item.dart';
 import 'package:dtnd/ui/screen/stock_detail/widget/k_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -91,7 +92,7 @@ class _IndexChartState extends State<IndexChart> {
                   itemCount: marketController.listIndexs.length,
                   itemBuilder: (context, index) =>
                       ObxValue<Rx<IndexModel?>>((currentIndexModel) {
-                    return HomeIndexItem(
+                    return MarketIndexItem(
                       data: marketController.listIndexs.elementAt(index),
                       selectedIndex: currentIndexModel.value?.index,
                       onSelected: changeIndex,

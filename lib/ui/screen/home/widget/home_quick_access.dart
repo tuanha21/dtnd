@@ -2,6 +2,7 @@ import 'package:dtnd/config/service/app_services.dart';
 import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/screen/home/widget/quick_access_element.dart';
 import 'package:dtnd/ui/screen/virtual_assistant/va_util.dart';
+import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:dtnd/ui/widget/seperator.dart';
 import 'package:flutter/material.dart';
@@ -109,6 +110,7 @@ class _HomeQuickAccessState extends State<HomeQuickAccess> {
               ),
             const Separator(
               padding: EdgeInsets.symmetric(vertical: 16),
+              color: AppColors.neutral_05,
             ),
             const _AssetRow()
           ],
@@ -140,17 +142,22 @@ class __AssetRowState extends State<_AssetRow> {
                     show = !show;
                   });
                 },
-                child: Icon(show
-                    ? Icons.visibility_outlined
-                    : Icons.visibility_off_outlined)),
+                child: Icon(
+                  show
+                      ? Icons.visibility_outlined
+                      : Icons.visibility_off_outlined,
+                  color: AppColors.text_black,
+                )),
             const SizedBox(
               width: 16,
             ),
-            
             Text("**********")
           ],
         ),
-        const Icon(Icons.arrow_forward_ios_rounded),
+        const Icon(
+          Icons.arrow_forward_ios_rounded,
+          color: AppColors.text_black,
+        ),
       ],
     );
   }

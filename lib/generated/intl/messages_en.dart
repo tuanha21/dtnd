@@ -65,6 +65,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "address": MessageLookupByLibrary.simpleMessage("Adrress"),
         "agree_with": MessageLookupByLibrary.simpleMessage("Agree with "),
         "all": MessageLookupByLibrary.simpleMessage("All"),
+        "amount_translations": MessageLookupByLibrary.simpleMessage("Amount"),
         "analysis": MessageLookupByLibrary.simpleMessage("Analysis"),
         "are_you_sure_to_delete_catalog": m0,
         "asset": MessageLookupByLibrary.simpleMessage("Asset"),
@@ -98,8 +99,12 @@ class MessageLookup extends MessageLookupByLibrary {
         "catalog_notice":
             MessageLookupByLibrary.simpleMessage("Catalog notice"),
         "ceil": MessageLookupByLibrary.simpleMessage("Ceil"),
+        "changeAmount_translations":
+            MessageLookupByLibrary.simpleMessage("Change"),
+        "change_translations": MessageLookupByLibrary.simpleMessage("Change%"),
         "choose_stocks_you_interested": MessageLookupByLibrary.simpleMessage(
             "Select the stocks you are interested in. You can update later"),
+        "close_translations": MessageLookupByLibrary.simpleMessage("Close"),
         "community": MessageLookupByLibrary.simpleMessage("Community"),
         "condition_ordnote":
             MessageLookupByLibrary.simpleMessage("Condition ordernote"),
@@ -118,6 +123,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Create new order"),
         "create_order_successfully":
             MessageLookupByLibrary.simpleMessage("Create order successfully"),
+        "date_translations": MessageLookupByLibrary.simpleMessage("Date"),
         "debt_following":
             MessageLookupByLibrary.simpleMessage("Debt following"),
         "delete_catalog":
@@ -153,6 +159,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "following_catalog":
             MessageLookupByLibrary.simpleMessage("Following catalog"),
         "following_catalog_with": m1,
+        "foreign": MessageLookupByLibrary.simpleMessage("Foreign"),
         "froom": MessageLookupByLibrary.simpleMessage("Room FR"),
         "fs_vol": MessageLookupByLibrary.simpleMessage("FS vol"),
         "fsell": MessageLookupByLibrary.simpleMessage("FR sell"),
@@ -165,6 +172,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "hi": MessageLookupByLibrary.simpleMessage("Hi"),
         "hi_you": MessageLookupByLibrary.simpleMessage("Hi you"),
         "high": MessageLookupByLibrary.simpleMessage("High"),
+        "high_translations": MessageLookupByLibrary.simpleMessage("High"),
         "home": MessageLookupByLibrary.simpleMessage("Home"),
         "id_or_business_id_short": MessageLookupByLibrary.simpleMessage("ID"),
         "inday_ordnote":
@@ -201,6 +209,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "logout": MessageLookupByLibrary.simpleMessage("Logout"),
         "loss_wvalue": m3,
         "low": MessageLookupByLibrary.simpleMessage("Low"),
+        "low_translations": MessageLookupByLibrary.simpleMessage("Low"),
         "margin": MessageLookupByLibrary.simpleMessage("Margin"),
         "market": MessageLookupByLibrary.simpleMessage("Market"),
         "market_breadth":
@@ -240,6 +249,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Password requires at least 8 characters"),
         "null_username": MessageLookupByLibrary.simpleMessage(
             "Username requires at least 6 characters"),
+        "open_translations": MessageLookupByLibrary.simpleMessage("Open"),
         "order": MessageLookupByLibrary.simpleMessage("Order"),
         "order_confirm": MessageLookupByLibrary.simpleMessage("Confirm order"),
         "order_history": MessageLookupByLibrary.simpleMessage("Order history"),
@@ -342,6 +352,7 @@ class MessageLookup extends MessageLookupByLibrary {
                 "Try searching again with another keyword!"),
         "unknown_error": MessageLookupByLibrary.simpleMessage("Unknown error"),
         "username": MessageLookupByLibrary.simpleMessage("Username"),
+        "vietnam": MessageLookupByLibrary.simpleMessage("Vietnam"),
         "virtual_assistant":
             MessageLookupByLibrary.simpleMessage("Virtual assistant"),
         "virtual_assistant_available":
@@ -359,6 +370,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Withdraw money"),
         "withdrawable_money":
             MessageLookupByLibrary.simpleMessage("Withdrawable money"),
+        "world": MessageLookupByLibrary.simpleMessage("World"),
         "wrong_password":
             MessageLookupByLibrary.simpleMessage("Password is incorrect"),
         "you_are_not_account":

@@ -6,6 +6,7 @@ import 'package:dtnd/=models=/response/inday_matched_order.dart';
 import 'package:dtnd/=models=/response/index_model.dart';
 import 'package:dtnd/=models=/response/liquidity_model.dart';
 import 'package:dtnd/=models=/response/news_detail.dart';
+import 'package:dtnd/=models=/response/news_model.dart';
 import 'package:dtnd/=models=/response/security_basic_info_model.dart';
 import 'package:dtnd/=models=/response/stock.dart';
 import 'package:dtnd/=models=/response/stock_data.dart';
@@ -344,7 +345,7 @@ class DataCenterService implements IDataCenterService {
 
   @override
   Future<List<String>> getTopForeignTrade(
-      [int count = 8, String type = "i"]) async {
+      [int count = 5, String type = "i"]) async {
     final Map<String, String> body = {
       "count": "$count",
       "type": type,
@@ -359,7 +360,7 @@ class DataCenterService implements IDataCenterService {
 
   @override
   Future<List<String>> getTopStockChange(
-      [int count = 8, String type = "i"]) async {
+      [int count = 5, String type = "i"]) async {
     final Map<String, String> body = {
       "count": "$count",
       "type": type,
@@ -374,7 +375,7 @@ class DataCenterService implements IDataCenterService {
 
   @override
   Future<List<String>> getTopStockTrade(
-      [int count = 8, String type = "S"]) async {
+      [int count = 5, String type = "S"]) async {
     final Map<String, String> body = {
       "count": "$count",
       "type": type,
@@ -426,18 +427,19 @@ class DataCenterService implements IDataCenterService {
   @override
   Future<StockTradingHistory?> getStockIndayTradingHistory(String stockCode) {
     const String resolution = "5";
-    final String from =
-        TimeUtilities.timeToEpoch(TimeUtilities.beginningOfDay).toString();
-    final String to = TimeUtilities.timeToEpoch(DateTime.now()).toString();
+    final int from = TimeUtilities.timeToEpoch(TimeUtilities.beginningOfDay);
+    final int to = TimeUtilities.timeToEpoch(DateTime.now());
     return networkService.getStockTradingHistory(
         stockCode, resolution, from, to);
   }
 
   @override
   Future<StockTradingHistory?> getStockTradingHistory(
-      String stockCode, String resolution, int from, int to) {
+      String stockCode, String resolution, DateTime from, DateTime to) {
+    final int fromTime = TimeUtilities.timeToEpoch(from);
+    final int toTime = TimeUtilities.timeToEpoch(to);
     return networkService.getStockTradingHistory(
-        stockCode, resolution, from.toString(), to.toString());
+        stockCode, resolution, fromTime, toTime);
   }
 
   @override
@@ -455,11 +457,11 @@ class DataCenterService implements IDataCenterService {
     initingListIndex = true;
     for (final Index index in Index.values) {
       final response = await networkService.getIndexDetail(index);
-      final int from = TimeUtilities.timeToEpoch(
-          fromTime ?? TimeUtilities.getPreviousDateTime(TimeUtilities.week(1)));
-      final int to = TimeUtilities.timeToEpoch(toTime ?? DateTime.now());
       final chartResponse = await getStockTradingHistory(
-          index.chartCode, resolution ?? "5", from, to);
+          index.chartCode,
+          resolution ?? "5",
+          fromTime ?? TimeUtilities.getPreviousDateTime(TimeUtilities.week(1)),
+          toTime ?? DateTime.now());
       _listIndex.add(IndexModel(
         index: index,
         indexDetailResponse: response,
@@ -473,6 +475,15 @@ class DataCenterService implements IDataCenterService {
   @override
   Future<List<StockNews>> getStockNews(String stockCode) {
     return networkService.getStockNews(stockCode);
+  }
+
+  @override
+  Future<List<NewsModel>> getNews([int? page, int? records]) {
+    final Map<String, String> body = {
+      "page": "$page",
+      "records": "$records",
+    };
+    return networkService.getNews(body);
   }
 
   @override

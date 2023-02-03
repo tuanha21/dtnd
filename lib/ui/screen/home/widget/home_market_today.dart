@@ -2,16 +2,24 @@ import 'dart:ui';
 
 import 'package:dtnd/=models=/index.dart';
 import 'package:dtnd/=models=/response/index_model.dart';
+import 'package:dtnd/=models=/response/world_index_model.dart';
 import 'package:dtnd/config/service/app_services.dart';
+import 'package:dtnd/data/implementations/network_service.dart';
 import 'package:dtnd/generated/l10n.dart' as s;
+import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/screen/home/home_controller.dart';
+import 'package:dtnd/ui/screen/home/widget/world_index.dart';
 import 'package:dtnd/ui/screen/stock_detail/widget/k_chart.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_textstyle.dart';
+import 'package:dtnd/utilities/num_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
-import 'package:k_chart/flutter_k_chart.dart';
+import 'package:k_chart/chart_translations.dart';
+import 'package:k_chart/flutter_k_chart.dart' as kcharts;
+import 'package:syncfusion_flutter_charts/charts.dart';
+import 'package:syncfusion_flutter_charts/sparkcharts.dart';
 
 class HomeMarketToday extends StatefulWidget {
   const HomeMarketToday({super.key});
@@ -20,8 +28,16 @@ class HomeMarketToday extends StatefulWidget {
   State<HomeMarketToday> createState() => _HomeMarketTodayState();
 }
 
-class _HomeMarketTodayState extends State<HomeMarketToday> {
+class _HomeMarketTodayState extends State<HomeMarketToday>
+    with SingleTickerProviderStateMixin {
   final HomeController homeController = HomeController();
+  late final TabController _tabController;
+
+  @override
+  void initState() {
+    _tabController = TabController(length: 2, vsync: this);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,58 +49,182 @@ class _HomeMarketTodayState extends State<HomeMarketToday> {
       }
       return Column(
         children: [
-          SizedBox.fromSize(
-            size: Size(MediaQuery.of(context).size.width, 64),
-            child: ScrollConfiguration(
-              behavior: ScrollConfiguration.of(context).copyWith(
-                dragDevices: {
-                  PointerDeviceKind.touch,
-                  PointerDeviceKind.mouse,
+          PreferredSize(
+            preferredSize: const Size.fromHeight(kToolbarHeight),
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: TabBar(
+                controller: _tabController,
+                isScrollable: true,
+                labelPadding:
+                    const EdgeInsets.symmetric(horizontal: 18, vertical: 6),
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                onTap: (value) async {
+                  setState(() {});
                 },
+                tabs: <Widget>[
+                  Text(S.of(context).vietnam),
+                  Text(S.of(context).world),
+                ],
               ),
-              child: Obx(() {
-                final cindex = homeController.currentIndexModel.value?.index;
-                return ListView.separated(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  scrollDirection: Axis.horizontal,
-                  physics: const AlwaysScrollableScrollPhysics(),
-                  itemCount: homeController.listIndexs.length,
-                  itemBuilder: (context, index) => HomeIndexItem(
-                    data: homeController.listIndexs.elementAt(index),
-                    selectedIndex: cindex,
-                    onSelected: homeController.changeIndex,
-                  ),
-                  separatorBuilder: (BuildContext context, int index) =>
-                      const SizedBox(
-                    width: 8,
-                  ),
-                );
-              }),
             ),
           ),
-          Obx(
-            () {
-              if (homeController
-                      .currentIndexModel.value?.stockTradingHistory.value ==
-                  null) {
+          const SizedBox(height: 16),
+          if (_tabController.index == 0)
+            SizedBox.fromSize(
+              size: Size(MediaQuery.of(context).size.width, 80),
+              child: ScrollConfiguration(
+                behavior: ScrollConfiguration.of(context).copyWith(
+                  dragDevices: {
+                    PointerDeviceKind.touch,
+                    PointerDeviceKind.mouse,
+                  },
+                ),
+                child: Obx(() {
+                  final cindex = homeController.currentIndexModel.value?.index;
+                  return ListView.separated(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    scrollDirection: Axis.horizontal,
+                    physics: const AlwaysScrollableScrollPhysics(),
+                    itemCount: homeController.listIndexs.length,
+                    itemBuilder: (context, index) => HomeIndexItem(
+                      data: homeController.listIndexs.elementAt(index),
+                      selectedIndex: cindex,
+                      onSelected: homeController.changeIndex,
+                    ),
+                    separatorBuilder: (BuildContext context, int index) =>
+                        const SizedBox(
+                      width: 8,
+                    ),
+                  );
+                }),
+              ),
+            )
+          else
+            SizedBox.fromSize(
+              size: Size(MediaQuery.of(context).size.width, 80),
+              child: ScrollConfiguration(
+                behavior: ScrollConfiguration.of(context).copyWith(
+                  dragDevices: {
+                    PointerDeviceKind.touch,
+                    PointerDeviceKind.mouse,
+                  },
+                ),
+                child: Obx(() {
+                  final cindex =
+                      homeController.currentWorldIndexModel.value?.iDSYMBOL;
+                  return ListView.separated(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    scrollDirection: Axis.horizontal,
+                    physics: const AlwaysScrollableScrollPhysics(),
+                    itemCount: homeController.worldIndex.length,
+                    itemBuilder: (context, index) => HomeWorldIndexItem(
+                      data: homeController.worldIndex.elementAt(index),
+                      selectedSymbol: cindex,
+                      onSelected: homeController.changeWorldIndex,
+                    ),
+                    separatorBuilder: (BuildContext context, int index) =>
+                        const SizedBox(
+                      width: 8,
+                    ),
+                  );
+                }),
+              ),
+            ),
+          if (_tabController.index == 0)
+            Obx(
+              () {
+                if (homeController
+                        .currentIndexModel.value?.stockTradingHistory.value ==
+                    null) {
+                  return Container();
+                }
+                final locale = Localizations.localeOf(context);
+                final languageTag =
+                    '${locale.languageCode}_${locale.countryCode}';
+                final Map<String, ChartTranslations> kChartTranslations = {
+                  languageTag: ChartTranslations(
+                    date: S.of(context).date_translations,
+                    open: S.of(context).open_translations,
+                    high: S.of(context).high_translations,
+                    low: S.of(context).low_translations,
+                    close: S.of(context).close_translations,
+                    changeAmount: S.of(context).changeAmount_translations,
+                    change: S.of(context).change_translations,
+                    amount: S.of(context).amount_translations,
+                  ),
+                };
+                return Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: SizedBox.fromSize(
+                    size: Size(MediaQuery.of(context).size.width, 250),
+                    child: KChart(
+                      indexModel: homeController.currentIndexModel.value!,
+                      isLine: true,
+                      dateTimeFormat: const [kcharts.dd, "/", kcharts.mm],
+                      translations: kChartTranslations,
+                      mainState: kcharts.MainState.MA,
+                    ),
+                  ),
+                );
+              },
+            )
+          else
+            Obx(() {
+              final cwIndex = homeController.currentWorldIndexModel.value;
+              if (cwIndex == null) {
                 return Container();
               }
-              return Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: SizedBox.fromSize(
-                  size: Size(MediaQuery.of(context).size.width, 250),
-                  child: KChart(
-                    indexModel: homeController.currentIndexModel.value!,
-                    isLine: true,
-                    dateTimeFormat: const [dd, "/", mm],
-                  ),
-                ),
+              return FutureBuilder<List<WorldIndexData>?>(
+                future: cwIndex.getHistoryData(NetworkService.instance),
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    return SizedBox(
+                      height: 250,
+                      child: charts.TimeSeriesChart([
+                        charts.Series<WorldIndexData, DateTime>(
+                          id: 'Headcount',
+                          domainFn: (WorldIndexData row, _) => row.dateTime!,
+                          measureFn: (WorldIndexData row, _) => row.value,
+                          data: snapshot.data!,
+                        )
+                      ],
+                          animate: true,
+                          // Provide a tickProviderSpec which does NOT require that zero is
+                          // included.
+                          primaryMeasureAxis: const charts.NumericAxisSpec(
+                              tickProviderSpec:
+                                  charts.BasicNumericTickProviderSpec(
+                                      zeroBound: false))),
+                    );
+                    return SfCartesianChart(
+                      primaryXAxis: DateTimeAxis(),
+                      primaryYAxis: NumericAxis(),
+                      series: <ChartSeries<WorldIndexData, DateTime>>[
+                        // Renders spline chart
+                        SplineSeries<WorldIndexData, DateTime>(
+                            dataSource: snapshot.data!,
+                            xValueMapper: (WorldIndexData data, _) =>
+                                data.dateTime,
+                            yValueMapper: (WorldIndexData data, _) =>
+                                data.value)
+                      ],
+                      zoomPanBehavior: ZoomPanBehavior(
+                        maximumZoomLevel: 0.1,
+                        enablePinching: true,
+                        zoomMode: ZoomMode.x,
+                        enablePanning: true,
+                      ),
+                    );
+                  } else {
+                    return Container();
+                  }
+                },
               );
-            },
-          )
+            })
         ],
       );
-    }, homeController.initialized);
+    }, homeController.indexInitialized);
   }
 }
 
@@ -162,6 +302,20 @@ class HomeIndexItem extends StatelessWidget {
                       style: AppTextStyle.bodySmall_8.copyWith(
                         fontWeight: FontWeight.w600,
                         color: data.indexDetail.color,
+                      ),
+                    ),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Text(
+                      NumUtils.getMoneyWithPostfix(
+                          (data.indexDetail.value.value ?? 0) * 1000000,
+                          context),
+                      style: AppTextStyle.labelSmall_11.copyWith(
+                        fontWeight: FontWeight.w600,
+                        color: AppColors.neutral_03,
                       ),
                     ),
                   ],
