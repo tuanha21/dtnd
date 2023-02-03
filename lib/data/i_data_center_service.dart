@@ -19,6 +19,7 @@ import 'package:dtnd/=models=/response/subsidiaries_model.dart';
 import 'package:dtnd/=models=/response/top_influence_model.dart';
 import 'package:dtnd/=models=/ui_model/field_tree_element_model.dart';
 
+import '../=models=/response/indContrib.dart';
 import '../=models=/response/index_board.dart';
 
 abstract class IDataCenterService {
@@ -102,4 +103,7 @@ abstract class IDataCenterService {
   Future<List<String>> getSectors(String industryCode);
 
   Future putSearchHistory(String searchString);
+
+  Future<IndContrib> getIndContrib(String marketCode);
+
 }

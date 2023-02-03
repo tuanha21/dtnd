@@ -36,6 +36,8 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import 'package:socket_io_client/socket_io_client.dart';
 
+import '../../=models=/response/indContrib.dart';
+
 class NetworkService implements INetworkService {
   final http.Client client = http.Client();
 
@@ -55,6 +57,7 @@ class NetworkService implements INetworkService {
   late final String sbboard_url;
   late final String info_sbsi_url;
   late final String algo_url;
+  late final String algo_url_apec;
 
   Uri url_core(
     String unencodedPath, [
@@ -82,6 +85,14 @@ class NetworkService implements INetworkService {
   ]) {
     final unencodedPath = "algo/pbapi/api/$path";
     return Uri.http(algo_url, unencodedPath, queryParameters);
+  }
+
+  Uri url_algo_apec(
+    String path, [
+    Map<String, dynamic>? queryParameters,
+  ]) {
+    final unencodedPath = "algo/pbapi/api/$path";
+    return Uri.http("opacc-api.apec.com.vn", unencodedPath, queryParameters);
   }
 
   final Utf8Codec utf8Codec = const Utf8Codec();
@@ -113,6 +124,8 @@ class NetworkService implements INetworkService {
     sbboard_url = dotenv.env['sbboard_domain']!;
     info_sbsi_url = dotenv.env['info_sbsi_domain']!;
     algo_url = dotenv.env['algo_domain']!;
+    algo_url_apec = dotenv.env['algo_domain_apec']!;
+
     initSocket(sbboard_url);
     return;
   }
@@ -684,5 +697,22 @@ class NetworkService implements INetworkService {
       result.add(element['securityCode']);
     }
     return result;
+  }
+
+  @override
+  Future<IndContrib> getIndContrib(String marketCode) async {
+    try {
+      var response =
+          await client.get(url_algo_apec("IndContrib", {"id": marketCode}));
+      if (response.statusCode != 200) {
+        throw response;
+      }
+      var res = decode(response.bodyBytes);
+      logger.d(res);
+      return IndContrib.fromJson(res);
+    } catch (e) {
+      logger.d(e.toString());
+      rethrow;
+    }
   }
 }

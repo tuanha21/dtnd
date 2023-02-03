@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dtnd/config/service/app_services.dart';
 import 'package:dtnd/config/service/environment.dart';
 import 'package:dtnd/data/implementations/data_center_service.dart';
@@ -23,14 +25,28 @@ import 'ui/screen/ekyc/ekyc_view.dart';
 import 'ui/screen/otp/otp_view.dart';
 import 'ui/screen/sign_up/success_sign_up_page.dart';
 
+
+class MyHttpOverrides extends HttpOverrides {
+  @override
+  HttpClient createHttpClient(SecurityContext? context) {
+    return super.createHttpClient(context)
+      ..badCertificateCallback =
+          (X509Certificate cert, String host, int port) => true;
+  }
+}
+
 Future<void> main() async {
   // load .env file
   await dotenv.load(fileName: ".env");
+
   WidgetsFlutterBinding.ensureInitialized();
+
   final Environment appEnvironment = E.fromString(dotenv.env['ENVIRONMENT']);
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  HttpOverrides.global = MyHttpOverrides();
+
   await LocalStorageService().init();
   await AppService().initialize(LocalStorageService().sharedPreferences);
   await NetworkService().init(appEnvironment);
