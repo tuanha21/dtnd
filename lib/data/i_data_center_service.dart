@@ -100,4 +100,6 @@ abstract class IDataCenterService {
   Future<List<SubsidiariesModel>?> getOtherCompany(String stockCode);
 
   Future<List<String>> getSectors(String industryCode);
+
+  Future putSearchHistory(String searchString);
 }

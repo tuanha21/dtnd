@@ -580,4 +580,9 @@ class DataCenterService implements IDataCenterService {
   Future<List<String>> getSectors(String industryCode) {
     return networkService.getSectors(industryCode);
   }
+
+  @override
+  Future putSearchHistory(String searchString) {
+    return networkService.putSearchHistory(searchString);
+  }
 }

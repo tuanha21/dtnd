@@ -61,8 +61,11 @@ class NetworkService implements INetworkService {
     Map<String, dynamic>? queryParameters,
   ]) =>
       Uri.http(core_url, unencodedPath, queryParameters);
+
   Uri get url_core_endpoint => Uri.http(core_url, core_endpoint);
+
   Uri url_board(String path) => Uri.https(board_url, path);
+
   Uri url_board_data_feed(Map<String, dynamic> queryParameters) {
     print(Uri.https(sbboard_url, "datafeed/history", queryParameters));
     return Uri.https(sbboard_url, "datafeed/history", queryParameters);
@@ -363,8 +366,8 @@ class NetworkService implements INetworkService {
 
   @override
   Future<void> putSearchHistory(String body) async {
-    await client.post(url_core("searchMarket/event"), body: body);
-    return;
+    var res = await client.post(url_core("searchMarket/event"), body: body);
+    logger.d(jsonDecode(res.body));
   }
 
   @override
@@ -667,8 +670,7 @@ class NetworkService implements INetworkService {
 
   @override
   Future<List<String>> getSectors(String industryCode) async {
-    var response =
-        await client.get(url_algo("sectors/$industryCode"));
+    var response = await client.get(url_algo("sectors/$industryCode"));
     if (response.statusCode != 200) {
       throw response;
     }
@@ -683,5 +685,4 @@ class NetworkService implements INetworkService {
     }
     return result;
   }
-
 }

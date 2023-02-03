@@ -97,7 +97,10 @@ class LocalStorageService implements ILocalStorageService {
 
   @override
   SavedCatalog getSavedCatalog(String user) {
-    return _box.get("saved_catalog_$user") ?? SavedCatalog(user);
+    if (_box.containsKey("saved_catalog_$user")) {
+      return _box.get("saved_catalog_$user");
+    }
+    return SavedCatalog(user,catalogs: []);
   }
 
   @override
