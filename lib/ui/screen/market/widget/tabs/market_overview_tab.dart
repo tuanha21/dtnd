@@ -35,7 +35,6 @@ class _MarketOverviewTabState extends State<MarketOverviewTab> {
 
   late final List<StockModel> listCatalog;
 
-  bool listCatalogInitialized = false;
 
   @override
   void initState() {

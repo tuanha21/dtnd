@@ -13,10 +13,12 @@ class KChart extends StatefulWidget {
     this.showNowPrice = false,
     this.dateTimeFormat,
   });
+
   final IndexModel indexModel;
   final bool isLine;
   final bool showNowPrice;
   final List<String>? dateTimeFormat;
+
   @override
   State<KChart> createState() => _KChartState();
 }
@@ -71,28 +73,28 @@ class _KChartState extends State<KChart> {
     ];
     return KChartWidget(
       datas,
-      ChartStyle(dateTimeFormat: widget.dateTimeFormat ?? <String>[h, ":", nn]),
+      ChartStyle(),
       ChartColors(
-        bgColor: bgColor,
-        kLineColor: widget.indexModel.indexDetail.color,
-        lineFillColor: Colors.transparent,
-        volColor: AppColors.neutral_06,
-        upColor: AppColors.semantic_01,
-        dnColor: AppColors.semantic_03,
-        nowPriceUpColor: AppColors.semantic_01,
-        nowPriceDnColor: AppColors.semantic_03,
-         hCrossColor: Colors.transparent,
-         vCrossColor: Colors.transparent,
-        crossTextColor: Colors.transparent,
-        selectBorderColor: Colors.transparent,
-        selectFillColor: Colors.transparent
-      ),
+          bgColor: bgColor,
+          kLineColor: widget.indexModel.indexDetail.color,
+          lineFillColor: Colors.transparent,
+          volColor: AppColors.neutral_06,
+          upColor: AppColors.semantic_01,
+          dnColor: AppColors.semantic_03,
+          nowPriceUpColor: AppColors.semantic_01,
+          nowPriceDnColor: AppColors.semantic_03,
+          hCrossColor: Colors.transparent,
+          vCrossColor: Colors.transparent,
+          crossTextColor: Colors.transparent,
+          selectBorderColor: Colors.transparent,
+          selectFillColor: Colors.transparent),
       showNowPrice: widget.showNowPrice,
       isTrendLine: false,
       isTapShowInfoDialog: true,
       isLine: true,
       secondaryState: SecondaryState.NONE,
-      hideGrid: true, stockCode: widget.indexModel.index.name,
+      hideGrid: true,
+      stockCode: widget.indexModel.index.name,
     );
   }
 }

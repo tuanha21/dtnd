@@ -299,7 +299,7 @@ class NetworkService implements INetworkService {
     try {
       final http.Response response =
           await client.get(url_info_sbsi("marketDepth"));
-
+      logger.d(response.request?.url);
       final List<dynamic> responseBody = decode(response.bodyBytes);
       List<DeepModel> data = [];
       for (var element in responseBody) {
