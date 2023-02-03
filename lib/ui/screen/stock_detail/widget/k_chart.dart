@@ -13,12 +13,16 @@ class KChart extends StatefulWidget {
     this.showNowPrice = false,
     this.dateTimeFormat,
     this.translations,
+    this.mainState,
+    this.secondaryState,
   });
   final IndexModel indexModel;
   final bool isLine;
   final bool showNowPrice;
   final List<String>? dateTimeFormat;
   final Map<String, ChartTranslations>? translations;
+  final MainState? mainState;
+  final SecondaryState? secondaryState;
   @override
   State<KChart> createState() => _KChartState();
 }
@@ -51,6 +55,7 @@ class _KChartState extends State<KChart> {
           low: widget.indexModel.stockTradingHistory.value!.l![i].toDouble(),
           vol: widget.indexModel.stockTradingHistory.value!.v![i].toDouble()));
     }
+    // DataUtil.calculate(datas);
     setState(() {
       initializing = false;
     });
@@ -92,7 +97,10 @@ class _KChartState extends State<KChart> {
         vCrossColor: const Color(0x1E000000),
         defaultTextColor: const Color(0xFFA0AEC0),
         selectFillColor: AppColors.neutral_06,
+        minColor: Colors.black,
+        maxColor: Colors.black,
       ),
+      stockCode: widget.indexModel.index.name,
       showNowPrice: widget.showNowPrice,
       fixedLength: 2,
       showInfoDialog: true,
@@ -101,7 +109,8 @@ class _KChartState extends State<KChart> {
       verticalTextAlignment: VerticalTextAlignment.right,
       isTrendLine: false,
       isLine: false,
-      secondaryState: SecondaryState.NONE,
+      mainState: widget.mainState ?? MainState.NONE,
+      secondaryState: widget.secondaryState ?? SecondaryState.NONE,
       hideGrid: true,
       translations: widget.translations ?? kChartTranslations,
     );

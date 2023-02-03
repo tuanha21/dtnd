@@ -1,7 +1,11 @@
 import 'dart:ui';
 
+import 'package:dtnd/data/i_network_service.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
-import 'package:dtnd/utilities/num_utils.dart';
+import 'package:dtnd/utilities/logger.dart';
+import 'package:intl/intl.dart';
+
+final DateFormat dateFormat = DateFormat("yyyy-MM-ddTHH:mm:ss");
 
 class WorldIndexModel {
   String? nAME;
@@ -13,6 +17,7 @@ class WorldIndexModel {
   num? sTT;
   int? iDSYMBOL;
   num? iSDEFAULT;
+  List<WorldIndexData>? historyData;
 
   WorldIndexModel(
       {this.nAME,
@@ -46,6 +51,19 @@ class WorldIndexModel {
     iSDEFAULT = json['IS_DEFAULT'];
   }
 
+  Future<List<WorldIndexData>?> getHistoryData(
+      INetworkService networkService) async {
+    if (historyData != null) {
+      return historyData;
+    }
+    final body = {
+      "symbolId": "$iDSYMBOL",
+      "period": "oneYear",
+    };
+    historyData = await networkService.getWorldIndexData(body);
+    return historyData;
+  }
+
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['NAME'] = nAME;
@@ -58,5 +76,19 @@ class WorldIndexModel {
     data['ID_SYMBOL'] = iDSYMBOL;
     data['IS_DEFAULT'] = iSDEFAULT;
     return data;
+  }
+}
+
+class WorldIndexData {
+  DateTime? dateTime;
+  num? value;
+
+  WorldIndexData.fromJson(Map<String, dynamic> json) {
+    dateTime = dateFormat.parse(json["dateTime"]);
+    try {
+      value = json["value"];
+    } catch (e) {
+      logger.e(e);
+    }
   }
 }

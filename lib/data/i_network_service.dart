@@ -80,6 +80,8 @@ abstract class INetworkService {
 
   Future<List<WorldIndexModel>> getWorldIndex();
 
+  Future<List<WorldIndexData>> getWorldIndexData(Map<String, String> body);
+
   Future<List<DeepModel>> getMarketDepth();
 
   Future<List<IndayMatchedOrder>> getIndayMatchedOrders(String symbol);

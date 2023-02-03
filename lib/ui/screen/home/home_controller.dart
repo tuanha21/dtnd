@@ -86,7 +86,7 @@ class HomeController {
   }
 
   Future<List<NewsModel>> getNews() {
-    return dataCenterService.getNews(1, 3);
+    return dataCenterService.getNews(1, 5);
   }
 
   Future<List<WorldIndexModel>> getWorldIndex() async {

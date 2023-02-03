@@ -362,6 +362,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "withdraw_money": MessageLookupByLibrary.simpleMessage("Rút tiền"),
         "withdrawable_money":
             MessageLookupByLibrary.simpleMessage("Tiền có thể rút"),
+        "world": MessageLookupByLibrary.simpleMessage("Thế giới"),
         "wrong_password":
             MessageLookupByLibrary.simpleMessage("Mật khẩu không chính xác"),
         "you_are_not_account":

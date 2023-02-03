@@ -365,6 +365,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Withdraw money"),
         "withdrawable_money":
             MessageLookupByLibrary.simpleMessage("Withdrawable money"),
+        "world": MessageLookupByLibrary.simpleMessage("World"),
         "wrong_password":
             MessageLookupByLibrary.simpleMessage("Password is incorrect"),
         "you_are_not_account":

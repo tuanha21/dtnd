@@ -246,6 +246,7 @@ class _SearchScreenState extends State<SearchScreen>
                                                 height: 40.0,
                                                 decoration: BoxDecoration(
                                                   shape: BoxShape.circle,
+                                                  border: Border.all(),
                                                   image: DecorationImage(
                                                       image: imageProvider,
                                                       fit: BoxFit.scaleDown),

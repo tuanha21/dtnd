@@ -36,7 +36,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return CustomScrollView(
       slivers: [
         SliverPersistentHeader(
-          pinned: false,
+          pinned: true,
           delegate: HomeAppbarDelegate(
               homeController.appService, homeController.dataCenterService),
         ),
@@ -80,19 +80,14 @@ class _HomeScreenState extends State<HomeScreen> {
           sliver: SliverToBoxAdapter(
             child: HomeSection(
               title: S.of(context).market_overview,
-              onMore: () {},
               child: const HomeMarketOverview(),
             ),
           ),
         ),
-        SliverPadding(
-          padding: const EdgeInsets.symmetric(vertical: 24),
+        const SliverPadding(
+          padding: EdgeInsets.symmetric(vertical: 24),
           sliver: SliverToBoxAdapter(
-            child: HomeSection(
-              title: S.of(context).interested_catalog,
-              onMore: () {},
-              child: const HomeInterestedCatalog(),
-            ),
+            child: HomeInterestedCatalog(),
           ),
         ),
         SliverPadding(

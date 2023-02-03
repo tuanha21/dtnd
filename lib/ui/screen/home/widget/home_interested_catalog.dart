@@ -6,6 +6,7 @@ import 'package:dtnd/data/implementations/data_center_service.dart';
 import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/screen/stock_detail/stock_detail_screen.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
+import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:dtnd/ui/theme/app_textstyle.dart';
 import 'package:dtnd/utilities/num_utils.dart';
 import 'package:dtnd/utilities/time_utils.dart';
@@ -27,36 +28,83 @@ class _HomeInterestedCatalogState extends State<HomeInterestedCatalog> {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox.fromSize(
-      size: Size(MediaQuery.of(context).size.width, 136),
-      child: ScrollConfiguration(
-        behavior: ScrollConfiguration.of(context).copyWith(
-          dragDevices: {
-            PointerDeviceKind.touch,
-            PointerDeviceKind.mouse,
-          },
-        ),
-        child: ObxValue<Rx<bool>>((initialized) {
-          if (!initialized.value) {
-            return Center(
-              child: Text(S.of(context).loading),
-            );
-          }
-          return ListView.separated(
+    return Container(
+      color: AppColors.neutral_07,
+      padding: const EdgeInsets.symmetric(vertical: 16),
+      child: Column(
+        children: [
+          Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
-            scrollDirection: Axis.horizontal,
-            physics: const AlwaysScrollableScrollPhysics(),
-            itemCount: homeController.interestedCatalog.length,
-            itemBuilder: (context, index) => HomeInterestedCatalogItem(
-              index: index,
-              data: homeController.interestedCatalog[index],
+            child: Row(
+              children: [
+                SizedBox.square(
+                    dimension: 36,
+                    child: Image.asset(
+                      AppImages.home_icon_light,
+                    )),
+                const SizedBox(width: 16),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Text(
+                          "Có top mã cổ phiếu dành cho bạn",
+                          style: AppTextStyle.bodyMedium_14
+                              .copyWith(color: AppColors.primary_01),
+                        ),
+                        const SizedBox(width: 8),
+                        SizedBox.square(
+                            dimension: 20,
+                            child: Image.asset(
+                              AppImages.home_icon_100,
+                            )),
+                      ],
+                    ),
+                    Text(
+                      "Đầu tư ngay đừng bỏ lỡ",
+                      style: AppTextStyle.bodySmall_12
+                          .copyWith(color: AppColors.neutral_03),
+                    ),
+                  ],
+                )
+              ],
             ),
-            separatorBuilder: (BuildContext context, int index) =>
-                const SizedBox(
-              width: 8,
+          ),
+          const SizedBox(height: 16),
+          SizedBox.fromSize(
+            size: Size(MediaQuery.of(context).size.width, 136),
+            child: ScrollConfiguration(
+              behavior: ScrollConfiguration.of(context).copyWith(
+                dragDevices: {
+                  PointerDeviceKind.touch,
+                  PointerDeviceKind.mouse,
+                },
+              ),
+              child: ObxValue<Rx<bool>>((initialized) {
+                if (!initialized.value) {
+                  return Center(
+                    child: Text(S.of(context).loading),
+                  );
+                }
+                return ListView.separated(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  scrollDirection: Axis.horizontal,
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  itemCount: homeController.interestedCatalog.length,
+                  itemBuilder: (context, index) => HomeInterestedCatalogItem(
+                    index: index,
+                    data: homeController.interestedCatalog[index],
+                  ),
+                  separatorBuilder: (BuildContext context, int index) =>
+                      const SizedBox(
+                    width: 8,
+                  ),
+                );
+              }, homeController.suggestInitialized),
             ),
-          );
-        }, homeController.suggestInitialized),
+          ),
+        ],
       ),
     );
   }
@@ -119,7 +167,7 @@ class HomeInterestedCatalogItem extends StatelessWidget {
                                         child: data.stockData
                                             .prefixIcon(size: 16)),
                                     TextSpan(
-                                      text: "${lastPrice.value}",
+                                      text: "  ${lastPrice.value}",
                                     )
                                   ]),
                                   style: AppTextStyle.labelMedium_12.copyWith(

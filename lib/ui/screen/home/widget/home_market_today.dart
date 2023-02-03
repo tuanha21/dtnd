@@ -2,7 +2,9 @@ import 'dart:ui';
 
 import 'package:dtnd/=models=/index.dart';
 import 'package:dtnd/=models=/response/index_model.dart';
+import 'package:dtnd/=models=/response/world_index_model.dart';
 import 'package:dtnd/config/service/app_services.dart';
+import 'package:dtnd/data/implementations/network_service.dart';
 import 'package:dtnd/generated/l10n.dart' as s;
 import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/screen/home/home_controller.dart';
@@ -16,6 +18,8 @@ import 'package:get/get.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:k_chart/chart_translations.dart';
 import 'package:k_chart/flutter_k_chart.dart' as kcharts;
+import 'package:syncfusion_flutter_charts/charts.dart';
+import 'package:syncfusion_flutter_charts/sparkcharts.dart';
 
 class HomeMarketToday extends StatefulWidget {
   const HomeMarketToday({super.key});
@@ -60,11 +64,12 @@ class _HomeMarketTodayState extends State<HomeMarketToday>
                 },
                 tabs: <Widget>[
                   Text(S.of(context).vietnam),
-                  Text(S.of(context).foreign),
+                  Text(S.of(context).world),
                 ],
               ),
             ),
           ),
+          const SizedBox(height: 16),
           if (_tabController.index == 0)
             SizedBox.fromSize(
               size: Size(MediaQuery.of(context).size.width, 80),
@@ -158,11 +163,65 @@ class _HomeMarketTodayState extends State<HomeMarketToday>
                       isLine: true,
                       dateTimeFormat: const [kcharts.dd, "/", kcharts.mm],
                       translations: kChartTranslations,
+                      mainState: kcharts.MainState.MA,
                     ),
                   ),
                 );
               },
             )
+          else
+            Obx(() {
+              final cwIndex = homeController.currentWorldIndexModel.value;
+              if (cwIndex == null) {
+                return Container();
+              }
+              return FutureBuilder<List<WorldIndexData>?>(
+                future: cwIndex.getHistoryData(NetworkService.instance),
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    return SizedBox(
+                      height: 250,
+                      child: charts.TimeSeriesChart([
+                        charts.Series<WorldIndexData, DateTime>(
+                          id: 'Headcount',
+                          domainFn: (WorldIndexData row, _) => row.dateTime!,
+                          measureFn: (WorldIndexData row, _) => row.value,
+                          data: snapshot.data!,
+                        )
+                      ],
+                          animate: true,
+                          // Provide a tickProviderSpec which does NOT require that zero is
+                          // included.
+                          primaryMeasureAxis: const charts.NumericAxisSpec(
+                              tickProviderSpec:
+                                  charts.BasicNumericTickProviderSpec(
+                                      zeroBound: false))),
+                    );
+                    return SfCartesianChart(
+                      primaryXAxis: DateTimeAxis(),
+                      primaryYAxis: NumericAxis(),
+                      series: <ChartSeries<WorldIndexData, DateTime>>[
+                        // Renders spline chart
+                        SplineSeries<WorldIndexData, DateTime>(
+                            dataSource: snapshot.data!,
+                            xValueMapper: (WorldIndexData data, _) =>
+                                data.dateTime,
+                            yValueMapper: (WorldIndexData data, _) =>
+                                data.value)
+                      ],
+                      zoomPanBehavior: ZoomPanBehavior(
+                        maximumZoomLevel: 0.1,
+                        enablePinching: true,
+                        zoomMode: ZoomMode.x,
+                        enablePanning: true,
+                      ),
+                    );
+                  } else {
+                    return Container();
+                  }
+                },
+              );
+            })
         ],
       );
     }, homeController.indexInitialized);
@@ -254,9 +313,9 @@ class HomeIndexItem extends StatelessWidget {
                       NumUtils.getMoneyWithPostfix(
                           (data.indexDetail.value.value ?? 0) * 1000000,
                           context),
-                      style: AppTextStyle.labelMedium_12.copyWith(
+                      style: AppTextStyle.labelSmall_11.copyWith(
                         fontWeight: FontWeight.w600,
-                        color: data.indexDetail.color,
+                        color: AppColors.neutral_03,
                       ),
                     ),
                   ],

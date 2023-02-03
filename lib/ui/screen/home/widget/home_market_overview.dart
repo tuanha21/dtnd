@@ -159,19 +159,20 @@ class HomeMarketOverviewItem extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               SizedBox(
-                width: 32,
+                width: 40,
                 child: Center(
                   child: ClipOval(
                     child: SizedBox.square(
-                      dimension: 32.0,
+                      dimension: 40.0,
                       child: CachedNetworkImage(
                         imageUrl:
                             "https://info.sbsi.vn/logo/${data.stock.stockCode}",
                         imageBuilder: (context, imageProvider) => Container(
-                          width: 32.0,
-                          height: 32.0,
+                          width: 40,
+                          height: 40,
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
+                            border: Border.all(),
                             image: DecorationImage(
                                 image: imageProvider, fit: BoxFit.scaleDown),
                           ),

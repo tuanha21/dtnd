@@ -331,6 +331,23 @@ class NetworkService implements INetworkService {
   }
 
   @override
+  Future<List<WorldIndexData>> getWorldIndexData(
+      Map<String, String> body) async {
+    final http.Response response =
+        await client.get(url_info_sbsi("chartTime", body));
+    final List<dynamic> responseBody = decode(response.bodyBytes)["data"];
+    List<WorldIndexData> data = [];
+    for (var element in responseBody) {
+      try {
+        data.add(WorldIndexData.fromJson(element));
+      } catch (e) {
+        continue;
+      }
+    }
+    return data;
+  }
+
+  @override
   Future<List<DeepModel>> getMarketDepth() async {
     try {
       final http.Response response =

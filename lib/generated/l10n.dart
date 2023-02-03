@@ -2542,6 +2542,16 @@ class S {
     );
   }
 
+  /// `World`
+  String get world {
+    return Intl.message(
+      'World',
+      name: 'world',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Copytrade`
   String get copytrade {
     return Intl.message(
