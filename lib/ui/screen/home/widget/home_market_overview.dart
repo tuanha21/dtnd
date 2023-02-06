@@ -174,13 +174,25 @@ class HomeMarketOverviewItem extends StatelessWidget {
                         .titleSmall!
                         .copyWith(fontWeight: FontWeight.w600),
                   ),
-                  Text(
-                    "${data.stockData.lastPrice}",
-                    style: AppTextStyle.labelMedium_12.copyWith(
-                      fontWeight: FontWeight.w600,
-                      color: data.stockData.color,
-                    ),
-                  )
+                  ObxValue<Rx<num?>>(
+                    (lastPrice) {
+                      return Text.rich(
+                        TextSpan(children: [
+                          WidgetSpan(
+                              child: data.stockData.prefixIcon(size: 12)),
+                          TextSpan(
+                            text: " ${data.stockData.changePc}%",
+                          )
+                        ]),
+                        maxLines: 1,
+                        style: AppTextStyle.labelMedium_12.copyWith(
+                          fontWeight: FontWeight.w600,
+                          color: data.stockData.color,
+                        ),
+                      );
+                    },
+                    data.stockData.lastPrice,
+                  ),
                 ],
               ),
               const SizedBox(width: 16),
@@ -213,26 +225,14 @@ class HomeMarketOverviewItem extends StatelessWidget {
                   //   },
                   //   data.stockData.lastPrice,
                   // ),
-
-                  ObxValue<Rx<num?>>(
-                    (lastPrice) {
-                      return Text.rich(
-                        TextSpan(children: [
-                          WidgetSpan(
-                              child: data.stockData.prefixIcon(size: 12)),
-                          TextSpan(
-                            text: " ${data.stockData.changePc}%",
-                          )
-                        ]),
-                        maxLines: 1,
-                        style: AppTextStyle.labelMedium_12.copyWith(
-                          fontWeight: FontWeight.w600,
-                          color: data.stockData.color,
-                        ),
-                      );
-                    },
-                    data.stockData.lastPrice,
+                  Text(
+                    "${data.stockData.lastPrice}",
+                    style: AppTextStyle.labelMedium_12.copyWith(
+                      fontWeight: FontWeight.w600,
+                      color: data.stockData.color,
+                    ),
                   ),
+
                   Obx(() {
                     return Text(
                       "${NumUtils.formatInteger10(data.stockData.lot.value)} CP",

@@ -18,8 +18,6 @@ import 'package:get/get.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:k_chart/chart_translations.dart';
 import 'package:k_chart/flutter_k_chart.dart' as kcharts;
-import 'package:syncfusion_flutter_charts/charts.dart';
-import 'package:syncfusion_flutter_charts/sparkcharts.dart';
 
 class HomeMarketToday extends StatefulWidget {
   const HomeMarketToday({super.key});

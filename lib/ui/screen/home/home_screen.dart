@@ -76,7 +76,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
         SliverPadding(
-          padding: const EdgeInsets.symmetric(vertical: 24),
+          padding: const EdgeInsets.only(top: 24),
           sliver: SliverToBoxAdapter(
             child: HomeSection(
               title: S.of(context).market_overview,
