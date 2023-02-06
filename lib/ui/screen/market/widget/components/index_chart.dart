@@ -68,6 +68,7 @@ class _IndexChartState extends State<IndexChart> {
                 indexModel:
                     selectedIndex ?? marketController.currentIndexModel.value!,
                 isLine: true,
+                showNowPrice: true,
               );
             }),
           ),

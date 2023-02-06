@@ -28,7 +28,7 @@ class MarketIndexItem extends StatelessWidget {
     final themeMode = AppService.instance.themeMode.value;
     BoxBorder? border;
     if (selectedIndex != null && data.index == selectedIndex) {
-      border = Border.all(color: AppColors.neutral_03);
+      border = Border.all(color: AppColors.neutral_05);
     }
     VoidCallback? onTap;
     if (onSelected != null) {
@@ -44,6 +44,7 @@ class MarketIndexItem extends StatelessWidget {
           borderRadius: const BorderRadius.all(Radius.circular(8)),
           child: Ink(
             width: 148,
+            height: 64,
             padding: const EdgeInsets.symmetric(horizontal: 12),
             decoration: BoxDecoration(
               border: border,
@@ -52,7 +53,6 @@ class MarketIndexItem extends StatelessWidget {
             ),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -96,19 +96,15 @@ class MarketIndexItem extends StatelessWidget {
                   ],
                 ),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     Text(
-                      res.valueString,
-                      style: AppTextStyle.labelMedium_12.copyWith(
+                      NumUtils.getMoneyWithPostfix(
+                          (res.value ?? 0) * 1000000,
+                          context),
+                      style: AppTextStyle.labelSmall_11.copyWith(
                         fontWeight: FontWeight.w600,
-                        color: data.indexDetail.color,
-                      ),
-                    ),
-                    Text(
-                      res.statusVN,
-                      style: AppTextStyle.bodySmall_12.copyWith(
-                        fontWeight: FontWeight.w400
+                        color: AppColors.neutral_03,
                       ),
                     ),
                   ],

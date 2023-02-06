@@ -20,6 +20,7 @@ import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import '../../../../../utilities/deboncer.dart';
 import '../../../../../utilities/logger.dart';
 import '../../../../theme/app_textstyle.dart';
+import '../../../../widget/icon/stock_icon.dart';
 import '../../logic/add_catalog_logic.dart';
 import '../sheet/catalog_options_sheet.dart';
 import '../sheet/create_catalog_sheet.dart';
@@ -177,13 +178,15 @@ class _UserCatalogWidgetState extends State<UserCatalogWidget> {
                                 // An action can be bigger than the others.
                                 onPressed: (BuildContext context) {
                                   setState(() {
-                                    currentCatalog.listStock.remove(list![index].stock.stockCode);
+                                    currentCatalog.listStock
+                                        .remove(list![index].stock.stockCode);
                                     savedCatalog.catalogs[currentCatalogIndex] =
                                         currentCatalog;
-                                    localStorageService.putSavedCatalog(savedCatalog);
+                                    localStorageService
+                                        .putSavedCatalog(savedCatalog);
                                     if (currentCatalog.listStock.isNotEmpty) {
-                                      listStocks =
-                                          dataCenterService.getStockModelsFromStockCodes(
+                                      listStocks = dataCenterService
+                                          .getStockModelsFromStockCodes(
                                               currentCatalog.listStock);
                                     } else {
                                       listStocks = Future.value([]);
@@ -493,32 +496,8 @@ class _StockWidgetChartState extends State<StockWidgetChart> {
       decoration: const BoxDecoration(color: AppColors.light_bg),
       child: Row(
         children: [
-          SizedBox(
-            width: 40,
-            child: Center(
-              child: ClipOval(
-                child: SizedBox.square(
-                  dimension: 40.0,
-                  child: CachedNetworkImage(
-                    imageUrl:
-                        "https://info.sbsi.vn/logo/${widget.stockModel.stock.stockCode}",
-                    imageBuilder: (context, imageProvider) => Container(
-                      width: 40.0,
-                      height: 40.0,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        image: DecorationImage(
-                            image: imageProvider, fit: BoxFit.scaleDown),
-                      ),
-                    ),
-                    placeholder: (context, url) =>
-                        const CircularProgressIndicator(),
-                    errorWidget: (context, url, error) =>
-                        const Icon(Icons.error),
-                  ),
-                ),
-              ),
-            ),
+          StockIcon(
+            stockCode: widget.stockModel.stock.stockCode,
           ),
           const SizedBox(width: 8),
           Expanded(
