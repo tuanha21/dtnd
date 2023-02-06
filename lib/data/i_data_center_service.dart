@@ -22,6 +22,7 @@ import 'package:dtnd/=models=/ui_model/field_tree_element_model.dart';
 
 import '../=models=/response/indContrib.dart';
 import '../=models=/response/index_board.dart';
+import '../=models=/response/index_detail.dart';
 
 abstract class IDataCenterService {
   Set<IndexModel> get listIndexs;
@@ -112,5 +113,7 @@ abstract class IDataCenterService {
   Future<IndContrib> getPIvalue(String marketCode);
 
   Future<IndContrib> getFIvalue(String marketCode);
+
+  Future<List<IndexDetailResponse>> getListIndexDetail();
 
 }

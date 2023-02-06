@@ -1,5 +1,5 @@
-
 import 'package:dtnd/logic/stock_status.dart';
+import 'package:dtnd/utilities/num_utils.dart';
 import 'package:get/get.dart';
 
 class IndexDetail extends StockStatus {
@@ -31,9 +31,13 @@ class IndexDetail extends StockStatus {
   }
 
   num get change => num.tryParse(ot.value?.first ?? "0") ?? 0;
+
   String get changePc => ot.value?.elementAt(1) ?? "0%";
+
   num get upQuant => num.tryParse(ot.value?.elementAt(3) ?? "0") ?? 0;
+
   num get downQuant => num.tryParse(ot.value?.elementAt(4) ?? "0") ?? 0;
+
   num get refQuant => num.tryParse(ot.value?.elementAt(5) ?? "0") ?? 0;
 
   IndexDetail({
@@ -93,9 +97,26 @@ class IndexDetailResponse {
   num? vol;
   num? value;
   String? time;
+
   String? status;
   num? accVol;
   List<String>? ot;
+
+  String get valueString {
+    if (value == null) return "0";
+    try {
+      return "${NumUtils.formatInteger((value! / 1000))} tỷ";
+    } catch (e) {
+      return "0";
+    }
+  }
+
+  String get statusVN {
+    if(status == null) return "";
+    if(status?.toUpperCase() == "O") return "Mở cửa";
+    if(status?.toUpperCase() == "C") return "Đóng cửa";
+    return "";
+  }
 
   IndexDetailResponse(
       {required this.mc,
