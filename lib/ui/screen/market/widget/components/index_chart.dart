@@ -13,6 +13,7 @@ import 'package:dtnd/ui/screen/stock_detail/widget/k_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../../../=models=/response/index_detail.dart';
 import '../../../../../data/implementations/data_center_service.dart';
 import '../../../../../data/implementations/local_storage_service.dart';
 import '../../../../../data/implementations/user_service.dart';
@@ -30,10 +31,13 @@ class _IndexChartState extends State<IndexChart> {
   final IUserService userService = UserService();
   final MarketController marketController = MarketController();
 
+  Future<List<IndexDetailResponse>> listIndexRes = Future.value([]);
+
   IndexModel? selectedIndex;
 
   @override
   void initState() {
+    listIndexRes = dataCenterService.getListIndexDetail();
     super.initState();
   }
 
@@ -42,7 +46,6 @@ class _IndexChartState extends State<IndexChart> {
     setState(() {
       selectedIndex = marketController.currentIndexModel.value;
     });
-    print(selectedIndex!.index.exchangeName);
   }
 
   @override
@@ -75,36 +78,50 @@ class _IndexChartState extends State<IndexChart> {
               child: Text(S.of(context).loading),
             );
           }
-          return Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: SizedBox.fromSize(
-              size: Size(MediaQuery.of(context).size.width, 64),
-              child: ScrollConfiguration(
-                behavior: ScrollConfiguration.of(context).copyWith(
-                  dragDevices: {
-                    PointerDeviceKind.touch,
-                    PointerDeviceKind.mouse,
-                  },
-                ),
-                child: ListView.separated(
-                  scrollDirection: Axis.horizontal,
-                  physics: const AlwaysScrollableScrollPhysics(),
-                  itemCount: marketController.listIndexs.length,
-                  itemBuilder: (context, index) =>
-                      ObxValue<Rx<IndexModel?>>((currentIndexModel) {
-                    return MarketIndexItem(
-                      data: marketController.listIndexs.elementAt(index),
-                      selectedIndex: currentIndexModel.value?.index,
-                      onSelected: changeIndex,
-                    );
-                  }, marketController.currentIndexModel),
-                  separatorBuilder: (BuildContext context, int index) =>
-                      const SizedBox(
-                    width: 8,
+          return FutureBuilder<List<IndexDetailResponse>>(
+            future: listIndexRes,
+            builder: (context, snapshot) {
+              if(snapshot.connectionState == ConnectionState.waiting){
+                return Center(
+                  child: Text(S.of(context).loading),
+                );
+              }
+              if(snapshot.connectionState == ConnectionState.done){
+                var listRes = snapshot.data;
+                return Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: SizedBox.fromSize(
+                    size: Size(MediaQuery.of(context).size.width, 64),
+                    child: ScrollConfiguration(
+                      behavior: ScrollConfiguration.of(context).copyWith(
+                        dragDevices: {
+                          PointerDeviceKind.touch,
+                          PointerDeviceKind.mouse,
+                        },
+                      ),
+                      child: ListView.separated(
+                        scrollDirection: Axis.horizontal,
+                        physics: const AlwaysScrollableScrollPhysics(),
+                        itemCount: marketController.listIndexs.length,
+                        itemBuilder: (context, index) =>
+                            ObxValue<Rx<IndexModel?>>((currentIndexModel) {
+                              return MarketIndexItem(
+                                data: marketController.listIndexs.elementAt(index),
+                                selectedIndex: currentIndexModel.value?.index,
+                                onSelected: changeIndex, res: listRes![index],
+                              );
+                            }, marketController.currentIndexModel),
+                        separatorBuilder: (BuildContext context, int index) =>
+                        const SizedBox(
+                          width: 8,
+                        ),
+                      ),
+                    ),
                   ),
-                ),
-              ),
-            ),
+                );
+              }
+              return const SizedBox();
+            }
           );
         }, marketController.initialized),
       ],

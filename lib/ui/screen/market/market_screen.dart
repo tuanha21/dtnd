@@ -6,7 +6,12 @@ import 'package:dtnd/ui/screen/market/widget/tabs/market_overview_tab.dart';
 import 'package:dtnd/ui/widget/my_appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import '../../../=models=/response/stock.dart';
+import '../../../data/i_data_center_service.dart';
+import '../../../data/implementations/data_center_service.dart';
 import '../../theme/app_image.dart';
+import '../search/search_screen.dart';
+import '../stock_detail/stock_detail_screen.dart';
 
 class MarketScreen extends StatefulWidget {
   const MarketScreen({super.key});
@@ -20,6 +25,8 @@ class _MarketScreenState extends State<MarketScreen>
   final MarketController marketController = MarketController();
   late final TabController _tabController;
 
+  final IDataCenterService dataCenterService = DataCenterService();
+
   @override
   void initState() {
     _tabController = TabController(length: 3, vsync: this);
@@ -32,7 +39,26 @@ class _MarketScreenState extends State<MarketScreen>
     return Scaffold(
         appBar: MyAppBar(
           actions: [
-            SvgPicture.asset(AppImages.search_appbar_icon),
+            GestureDetector(
+                onTap: () {
+                  Navigator.of(context)
+                      .push(MaterialPageRoute(
+                    builder: (context) => const SearchScreen(),
+                  ))
+                      .then((value) async {
+                    if (value is Stock) {
+                      dataCenterService
+                          .getStockModelsFromStockCodes([value.stockCode]).then(
+                              (stockModels) =>
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) => StockDetailScreen(
+                                      stockModel: stockModels.first,
+                                    ),
+                                  )));
+                    }
+                  });
+                },
+                child: SvgPicture.asset(AppImages.search_appbar_icon)),
             const SizedBox(
               width: 20,
             ),

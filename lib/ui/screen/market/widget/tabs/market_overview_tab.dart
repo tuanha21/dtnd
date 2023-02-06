@@ -92,14 +92,6 @@ class _MarketOverviewTabState extends State<MarketOverviewTab> {
 
   @override
   Widget build(BuildContext context) {
-    // Widget catalog;
-    // if (!userService.isLogin) {
-    //   catalog = NotSigninCatalogWidget(
-    //     afterLogin: rebuild,
-    //   );
-    // } else {
-    //   catalog = const UserCatalogWidget();
-    // }
     return ListView(
       children: [
         const IndexChart(),

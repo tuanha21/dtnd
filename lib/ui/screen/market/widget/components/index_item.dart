@@ -4,15 +4,25 @@ import 'package:dtnd/config/service/app_services.dart';
 import 'package:dtnd/ui/screen/home/widget/home_market_today.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_textstyle.dart';
+import 'package:dtnd/utilities/num_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../../../=models=/response/index_detail.dart';
+
 class MarketIndexItem extends StatelessWidget {
   const MarketIndexItem(
-      {super.key, required this.data, this.selectedIndex, this.onSelected});
+      {super.key,
+      required this.data,
+      this.selectedIndex,
+      this.onSelected,
+      required this.res});
+
   final IndexModel data;
   final Index? selectedIndex;
   final ValueChanged<Index>? onSelected;
+  final IndexDetailResponse res;
+
   @override
   Widget build(BuildContext context) {
     final themeMode = AppService.instance.themeMode.value;
@@ -34,15 +44,15 @@ class MarketIndexItem extends StatelessWidget {
           borderRadius: const BorderRadius.all(Radius.circular(8)),
           child: Ink(
             width: 148,
-            height: 64,
-            padding: const EdgeInsets.all(12.0),
+            padding: const EdgeInsets.symmetric(horizontal: 12),
             decoration: BoxDecoration(
               border: border,
               borderRadius: const BorderRadius.all(Radius.circular(8)),
               color: AppColors.neutral_07,
             ),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -81,6 +91,24 @@ class MarketIndexItem extends StatelessWidget {
                       style: AppTextStyle.bodySmall_8.copyWith(
                         fontWeight: FontWeight.w600,
                         color: data.indexDetail.color,
+                      ),
+                    ),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      res.valueString,
+                      style: AppTextStyle.labelMedium_12.copyWith(
+                        fontWeight: FontWeight.w600,
+                        color: data.indexDetail.color,
+                      ),
+                    ),
+                    Text(
+                      res.statusVN,
+                      style: AppTextStyle.bodySmall_12.copyWith(
+                        fontWeight: FontWeight.w400
                       ),
                     ),
                   ],

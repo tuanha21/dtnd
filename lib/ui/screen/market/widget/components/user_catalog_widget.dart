@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dtnd/=models=/local/local_catalog.dart';
 import 'package:dtnd/=models=/local/saved_catalog.dart';
@@ -14,15 +13,13 @@ import 'package:dtnd/data/implementations/user_service.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:dtnd/ui/widget/input/app_text_field.dart';
-import 'package:dtnd/utilities/num_utils.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import '../../../../../utilities/deboncer.dart';
 import '../../../../../utilities/logger.dart';
 import '../../../../theme/app_textstyle.dart';
-import '../../../../widget/icon/check_box.dart';
-import '../../../home/widget/home_market_overview.dart';
 import '../../logic/add_catalog_logic.dart';
 import '../sheet/catalog_options_sheet.dart';
 import '../sheet/create_catalog_sheet.dart';
@@ -77,7 +74,6 @@ class _UserCatalogWidgetState extends State<UserCatalogWidget> {
 
   @override
   Widget build(BuildContext context) {
-    logger.d(localStorageService.getSavedCatalog(user));
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -85,46 +81,80 @@ class _UserCatalogWidgetState extends State<UserCatalogWidget> {
         const SizedBox(height: 10),
         Visibility(
           visible: savedCatalog.catalogs.isNotEmpty,
-          child: GestureDetector(
-            onTap: () async {
-              var catalog = await showCupertinoModalBottomSheet<LocalCatalog>(
-                  context: context,
-                  builder: (context) =>
-                      BottomAddStock(localCatalog: currentCatalog));
-              if (catalog != null) {
-                setState(() {
-                  currentCatalog = catalog;
-                  savedCatalog.catalogs[currentCatalogIndex] = currentCatalog;
-                  localStorageService.putSavedCatalog(savedCatalog);
-                  if (currentCatalog.listStock.isNotEmpty) {
-                    listStocks = dataCenterService
-                        .getStockModelsFromStockCodes(currentCatalog.listStock);
-                  } else {
-                    listStocks = Future.value([]);
-                  }
-                });
-              }
-            },
-            child: Container(
-              padding: const EdgeInsets.all(18),
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(12),
-                  color: AppColors.neutral_06),
-              child: Row(
-                children: [
-                  SvgPicture.asset(
-                    AppImages.add_square,
-                    color: AppColors.primary_01,
-                  ),
-                  const SizedBox(width: 8),
-                  Text(
-                    'Thêm mã',
-                    style: Theme.of(context).textTheme.labelMedium?.copyWith(
+          child: Container(
+            padding: const EdgeInsets.all(18),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(12),
+                color: AppColors.neutral_06),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                GestureDetector(
+                  onTap: () async {
+                    await showCupertinoModalBottomSheet(
+                        context: context,
+                        builder: (context) =>
+                            BottomAddStock(localCatalog: currentCatalog));
+                    setState(() {
+                      savedCatalog.catalogs[currentCatalogIndex] =
+                          currentCatalog;
+                      localStorageService.putSavedCatalog(savedCatalog);
+                      if (currentCatalog.listStock.isNotEmpty) {
+                        listStocks =
+                            dataCenterService.getStockModelsFromStockCodes(
+                                currentCatalog.listStock);
+                      } else {
+                        listStocks = Future.value([]);
+                      }
+                    });
+                  },
+                  child: Row(
+                    children: [
+                      SvgPicture.asset(
+                        AppImages.add_square,
                         color: AppColors.primary_01,
-                        fontWeight: FontWeight.w700),
-                  )
-                ],
-              ),
+                        height: 20,
+                        width: 20,
+                      ),
+                      const SizedBox(width: 8),
+                      Text(
+                        'Thêm mã',
+                        style: Theme.of(context)
+                            .textTheme
+                            .labelMedium
+                            ?.copyWith(
+                                color: AppColors.primary_01,
+                                fontWeight: FontWeight.w700),
+                      )
+                    ],
+                  ),
+                ),
+                GestureDetector(
+                  onTap: () async {
+                    await updateCatalog(currentCatalog);
+                  },
+                  child: Row(
+                    children: [
+                      SvgPicture.asset(
+                        AppImages.edit2,
+                        color: AppColors.primary_01,
+                        height: 20,
+                        width: 20,
+                      ),
+                      const SizedBox(width: 8),
+                      Text(
+                        'Chỉnh sửa',
+                        style: Theme.of(context)
+                            .textTheme
+                            .labelMedium
+                            ?.copyWith(
+                                color: AppColors.primary_01,
+                                fontWeight: FontWeight.w700),
+                      )
+                    ],
+                  ),
+                ),
+              ],
             ),
           ),
         ),
@@ -138,7 +168,37 @@ class _UserCatalogWidgetState extends State<UserCatalogWidget> {
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
                     itemBuilder: (context, index) {
-                      return StockWidgetChart(stockModel: list![index]);
+                      return Slidable(
+                          endActionPane: ActionPane(
+                            extentRatio: 0.25,
+                            motion: const ScrollMotion(),
+                            children: [
+                              SlidableAction(
+                                // An action can be bigger than the others.
+                                onPressed: (BuildContext context) {
+                                  setState(() {
+                                    currentCatalog.listStock.remove(list![index].stock.stockCode);
+                                    savedCatalog.catalogs[currentCatalogIndex] =
+                                        currentCatalog;
+                                    localStorageService.putSavedCatalog(savedCatalog);
+                                    if (currentCatalog.listStock.isNotEmpty) {
+                                      listStocks =
+                                          dataCenterService.getStockModelsFromStockCodes(
+                                              currentCatalog.listStock);
+                                    } else {
+                                      listStocks = Future.value([]);
+                                    }
+                                  });
+                                },
+                                backgroundColor: AppColors.semantic_03,
+                                foregroundColor: Colors.white,
+                                icon: Icons.delete_outline,
+                                spacing: 0,
+                                label: 'Xóa mã',
+                              ),
+                            ],
+                          ),
+                          child: StockWidgetChart(stockModel: list![index]));
                     },
                     separatorBuilder: (context, index) {
                       return const Divider(
@@ -206,9 +266,6 @@ class _UserCatalogWidgetState extends State<UserCatalogWidget> {
               return GestureDetector(
                 onTap: () {
                   onTapChangeCatalog(catalog);
-                },
-                onLongPress: () async {
-                  await updateCatalog(catalog);
                 },
                 child: Container(
                   margin: EdgeInsets.only(
@@ -279,20 +336,11 @@ class BottomAddStock extends StatefulWidget {
 class _BottomAddStockState extends State<BottomAddStock> {
   final TextEditingController search = TextEditingController();
   final IDataCenterService dataCenterService = DataCenterService();
-  final IUserService userService = UserService();
 
   StreamController<List<StockModel>> listStockController =
       StreamController<List<StockModel>>.broadcast();
 
   final _debouncer = Debouncer(milliseconds: 500);
-
-  @override
-  void initState() {
-    stockSelect = widget.localCatalog.listStock;
-    super.initState();
-  }
-
-  List<String> stockSelect = [];
 
   Future<void> getHistory(String code) async {
     try {
@@ -320,7 +368,7 @@ class _BottomAddStockState extends State<BottomAddStock> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('Thêm danh mục theo dõi',
+                Text('Thêm mã',
                     style: Theme.of(context)
                         .textTheme
                         .labelLarge
@@ -370,20 +418,20 @@ class _BottomAddStockState extends State<BottomAddStock> {
                       var list = snapshot.data;
                       return ListView.separated(
                           shrinkWrap: true,
-                          physics: const NeverScrollableScrollPhysics(),
                           itemBuilder: (context, index) {
                             return StockWidgetChart(
                               key: ObjectKey(list![index]),
                               stockModel: list[index],
                               onChanged: (value) {
                                 if (value &&
-                                    !stockSelect.contains(
+                                    !widget.localCatalog.listStock.contains(
                                         list[index].stock.stockCode)) {
-                                  stockSelect.add(list[index].stock.stockCode);
+                                  widget.localCatalog.listStock
+                                      .add(list[index].stock.stockCode);
                                 } else if (!value &&
-                                    stockSelect.contains(
+                                    widget.localCatalog.listStock.contains(
                                         list[index].stock.stockCode)) {
-                                  stockSelect
+                                  widget.localCatalog.listStock
                                       .remove(list[index].stock.stockCode);
                                 }
                               },
@@ -403,16 +451,16 @@ class _BottomAddStockState extends State<BottomAddStock> {
                     return const SizedBox();
                   }),
             ),
-            SizedBox(
-              width: MediaQuery.of(context).size.width,
-              child: ElevatedButton(
-                onPressed: () {
-                  widget.localCatalog.setStockList = stockSelect;
-                  Navigator.of(context).pop(widget.localCatalog);
-                },
-                child: const Text('Thêm vào danh mục'),
-              ),
-            ),
+            // SizedBox(
+            //   width: MediaQuery.of(context).size.width,
+            //   child: ElevatedButton(
+            //     onPressed: () {
+            //       widget.localCatalog.setStockList = stockSelect;
+            //       Navigator.of(context).pop(widget.localCatalog);
+            //     },
+            //     child: const Text('Thêm vào danh mục'),
+            //   ),
+            // ),
             SizedBox(height: MediaQuery.of(context).viewInsets.bottom)
           ],
         ),
@@ -473,36 +521,28 @@ class _StockWidgetChartState extends State<StockWidgetChart> {
             ),
           ),
           const SizedBox(width: 8),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                widget.stockModel.stock.stockCode,
-                style: Theme.of(context)
-                    .textTheme
-                    .titleSmall!
-                    .copyWith(fontWeight: FontWeight.w600),
-              ),
-              Text(
-                "${NumUtils.formatInteger(widget.stockModel.stockData.lot.value)} CP",
-                style: AppTextStyle.labelMedium_12
-                    .copyWith(color: AppColors.neutral_03),
-                overflow: TextOverflow.ellipsis,
-              ),
-            ],
-          ),
-          const SizedBox(width: 16),
-          SizedBox(
-              height: 50,
-              width: 150,
-              child: HomeMarketOverviewItemChart(
-                data: widget.stockModel,
-                future: widget.stockModel
-                    .getTradingHistory(DataCenterService.instance),
-              )),
           Expanded(
-              child: Align(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  widget.stockModel.stock.stockCode,
+                  style: Theme.of(context)
+                      .textTheme
+                      .titleSmall!
+                      .copyWith(fontWeight: FontWeight.w600),
+                ),
+                Text(
+                  widget.stockModel.stock.nameShort ?? "",
+                  style: AppTextStyle.labelMedium_12
+                      .copyWith(color: AppColors.neutral_03),
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ],
+            ),
+          ),
+          Align(
             alignment: Alignment.centerRight,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -523,18 +563,49 @@ class _StockWidgetChartState extends State<StockWidgetChart> {
                 ),
               ],
             ),
-          )),
+          ),
           const SizedBox(width: 16),
-          Visibility(
-            visible: widget.onChanged != null,
-            child: AppCheckBox(
-                initValue: widget.initSelect,
-                onChanged: (value) {
-                  widget.onChanged?.call(value);
-                }),
-          )
+          AddStockIcon(initAdd: widget.initSelect, onChanged: widget.onChanged)
         ],
       ),
     );
+  }
+}
+
+class AddStockIcon extends StatefulWidget {
+  final bool initAdd;
+  final ValueChanged<bool>? onChanged;
+
+  const AddStockIcon({Key? key, required this.initAdd, this.onChanged})
+      : super(key: key);
+
+  @override
+  State<AddStockIcon> createState() => _AddStockIconState();
+}
+
+class _AddStockIconState extends State<AddStockIcon> {
+  bool isAdd = false;
+
+  @override
+  void initState() {
+    isAdd = widget.initAdd;
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Visibility(
+        visible: widget.onChanged != null,
+        child: GestureDetector(
+            onTap: () {
+              setState(() {
+                isAdd = !isAdd;
+                widget.onChanged?.call(isAdd);
+              });
+            },
+            child: Icon(
+              isAdd ? Icons.check_circle : Icons.add_circle,
+              color: isAdd ? AppColors.primary_01 : AppColors.neutral_04,
+            )));
   }
 }
