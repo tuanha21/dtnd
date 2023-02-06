@@ -31,7 +31,7 @@ class HomeWorldIndexItem extends StatelessWidget {
     final themeMode = AppService.instance.themeMode.value;
     BoxBorder? border;
     if (selectedSymbol != null && data.iDSYMBOL == selectedSymbol) {
-      border = Border.all(color: AppColors.neutral_03);
+      border = Border.all(color: AppColors.neutral_04);
     }
     VoidCallback? onTap;
     if (onSelected != null) {
@@ -46,7 +46,7 @@ class HomeWorldIndexItem extends StatelessWidget {
         borderRadius: const BorderRadius.all(Radius.circular(8)),
         child: Ink(
           width: 148,
-          height: 64,
+          height: 56,
           padding: const EdgeInsets.all(12.0),
           decoration: BoxDecoration(
             border: border,

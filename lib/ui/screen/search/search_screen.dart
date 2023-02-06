@@ -10,6 +10,7 @@ import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:dtnd/ui/theme/app_textstyle.dart';
+import 'package:dtnd/ui/widget/icon/stock_icon.dart';
 import 'package:dtnd/ui/widget/input/search_stock.dart';
 import 'package:dtnd/ui/widget/my_appbar.dart';
 import 'package:dtnd/utilities/logger.dart';
@@ -230,37 +231,8 @@ class _SearchScreenState extends State<SearchScreen>
                               child: Center(
                                 child: Row(
                                   children: [
-                                    SizedBox(
-                                      width: 40,
-                                      child: Center(
-                                        child: ClipOval(
-                                          child: SizedBox.square(
-                                            dimension: 40.0,
-                                            child: CachedNetworkImage(
-                                              imageUrl:
-                                                  "https://info.sbsi.vn/logo/${e.stockCode}",
-                                              imageBuilder:
-                                                  (context, imageProvider) =>
-                                                      Container(
-                                                width: 40.0,
-                                                height: 40.0,
-                                                decoration: BoxDecoration(
-                                                  shape: BoxShape.circle,
-                                                  border: Border.all(),
-                                                  image: DecorationImage(
-                                                      image: imageProvider,
-                                                      fit: BoxFit.scaleDown),
-                                                ),
-                                              ),
-                                              placeholder: (context, url) =>
-                                                  const CircularProgressIndicator(),
-                                              errorWidget:
-                                                  (context, url, error) =>
-                                                      const Icon(Icons.error),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
+                                    StockIcon(
+                                      stockCode: e.stockCode,
                                     ),
                                     const SizedBox(width: 8),
                                     Expanded(

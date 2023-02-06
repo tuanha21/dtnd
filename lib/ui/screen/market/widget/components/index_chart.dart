@@ -55,7 +55,7 @@ class _IndexChartState extends State<IndexChart> {
             size: Size(MediaQuery.of(context).size.width, 250),
             child: Obx(() {
               if (marketController
-                      .currentIndexModel.value?.stockTradingHistory.value ==
+                      .currentIndexModel.value?.stockDayTradingHistory.value ==
                   null) {
                 return Center(
                   child: Text(S.of(context).loading),

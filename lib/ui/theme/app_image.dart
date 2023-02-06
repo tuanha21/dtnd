@@ -49,8 +49,6 @@ class AppImages {
   static const String edit2 = "assets/svg/edit-2.svg";
   static const String filter = "assets/svg/filter.svg";
 
-
-
   static const String qa_base = "assets/svg/qa_base.svg";
   static const String qa_bond = "assets/svg/qa_bond.svg";
   static const String qa_copytrade = "assets/svg/qa_copytrade.svg";
@@ -106,6 +104,15 @@ class AppImages {
   static const String setting_2 = "assets/images/setting_2.png";
   static const String call = "assets/images/call.png";
   static const String global = "assets/images/global.png";
+
+  ///Loading
+  static const String loading_light_bg = "assets/images/loading_light_bg.png";
+  static const String loading_dark_bg = "assets/images/loading_dark_bg.png";
+  static const String loading_icon = "assets/images/loading_icon.png";
+  static const String loading_light_logo =
+      "assets/images/loading_light_logo.png";
+  static const String loading_dark_logo = "assets/images/loading_dark_logo.png";
+  static const String loading_copyright = "assets/images/loading_copyright.png";
 
   /// Home Icon
   static const String home_icon_wallet_2 = "assets/home_icon/wallet_2.png";

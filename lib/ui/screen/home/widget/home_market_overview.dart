@@ -9,6 +9,7 @@ import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/screen/stock_detail/stock_detail_screen.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_textstyle.dart';
+import 'package:dtnd/ui/widget/icon/stock_icon.dart';
 import 'package:dtnd/utilities/extension.dart';
 import 'package:dtnd/utilities/num_utils.dart';
 import 'package:dtnd/utilities/responsive.dart';
@@ -158,33 +159,8 @@ class HomeMarketOverviewItem extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              SizedBox(
-                width: 40,
-                child: Center(
-                  child: ClipOval(
-                    child: SizedBox.square(
-                      dimension: 40.0,
-                      child: CachedNetworkImage(
-                        imageUrl:
-                            "https://info.sbsi.vn/logo/${data.stock.stockCode}",
-                        imageBuilder: (context, imageProvider) => Container(
-                          width: 40,
-                          height: 40,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            border: Border.all(),
-                            image: DecorationImage(
-                                image: imageProvider, fit: BoxFit.scaleDown),
-                          ),
-                        ),
-                        placeholder: (context, url) =>
-                            const CircularProgressIndicator(),
-                        errorWidget: (context, url, error) =>
-                            const Icon(Icons.error),
-                      ),
-                    ),
-                  ),
-                ),
+              StockIcon(
+                stockCode: data.stock.stockCode,
               ),
               const SizedBox(width: 8),
               Column(

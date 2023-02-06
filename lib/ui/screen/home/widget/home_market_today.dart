@@ -102,7 +102,7 @@ class _HomeMarketTodayState extends State<HomeMarketToday>
             )
           else
             SizedBox.fromSize(
-              size: Size(MediaQuery.of(context).size.width, 80),
+              size: Size(MediaQuery.of(context).size.width, 72),
               child: ScrollConfiguration(
                 behavior: ScrollConfiguration.of(context).copyWith(
                   dragDevices: {
@@ -134,8 +134,8 @@ class _HomeMarketTodayState extends State<HomeMarketToday>
           if (_tabController.index == 0)
             Obx(
               () {
-                if (homeController
-                        .currentIndexModel.value?.stockTradingHistory.value ==
+                if (homeController.currentIndexModel.value
+                        ?.stockDayTradingHistory.value ==
                     null) {
                   return Container();
                 }
@@ -159,11 +159,11 @@ class _HomeMarketTodayState extends State<HomeMarketToday>
                   child: SizedBox.fromSize(
                     size: Size(MediaQuery.of(context).size.width, 250),
                     child: KChart(
+                      showNowPrice: true,
                       indexModel: homeController.currentIndexModel.value!,
                       isLine: true,
                       dateTimeFormat: const [kcharts.dd, "/", kcharts.mm],
                       translations: kChartTranslations,
-                      mainState: kcharts.MainState.MA,
                     ),
                   ),
                 );
@@ -181,39 +181,29 @@ class _HomeMarketTodayState extends State<HomeMarketToday>
                   if (snapshot.hasData) {
                     return SizedBox(
                       height: 250,
-                      child: charts.TimeSeriesChart([
-                        charts.Series<WorldIndexData, DateTime>(
-                          id: 'Headcount',
-                          domainFn: (WorldIndexData row, _) => row.dateTime!,
-                          measureFn: (WorldIndexData row, _) => row.value,
-                          data: snapshot.data!,
-                        )
-                      ],
-                          animate: true,
-                          // Provide a tickProviderSpec which does NOT require that zero is
-                          // included.
-                          primaryMeasureAxis: const charts.NumericAxisSpec(
-                              tickProviderSpec:
-                                  charts.BasicNumericTickProviderSpec(
-                                      zeroBound: false))),
-                    );
-                    return SfCartesianChart(
-                      primaryXAxis: DateTimeAxis(),
-                      primaryYAxis: NumericAxis(),
-                      series: <ChartSeries<WorldIndexData, DateTime>>[
-                        // Renders spline chart
-                        SplineSeries<WorldIndexData, DateTime>(
-                            dataSource: snapshot.data!,
-                            xValueMapper: (WorldIndexData data, _) =>
-                                data.dateTime,
-                            yValueMapper: (WorldIndexData data, _) =>
-                                data.value)
-                      ],
-                      zoomPanBehavior: ZoomPanBehavior(
-                        maximumZoomLevel: 0.1,
-                        enablePinching: true,
-                        zoomMode: ZoomMode.x,
-                        enablePanning: true,
+                      child: charts.TimeSeriesChart(
+                        [
+                          charts.Series<WorldIndexData, DateTime>(
+                            id: 'Headcount',
+                            domainFn: (WorldIndexData row, _) => row.dateTime!,
+                            measureFn: (WorldIndexData row, _) => row.value,
+                            data: snapshot.data!,
+                          )
+                        ],
+                        animate: false,
+                        // Provide a tickProviderSpec which does NOT require that zero is
+                        // included.
+                        primaryMeasureAxis: const charts.NumericAxisSpec(
+                            renderSpec: charts.NoneRenderSpec(),
+                            tickProviderSpec:
+                                charts.BasicNumericTickProviderSpec(
+                                    zeroBound: false)),
+                        domainAxis: const charts.DateTimeAxisSpec(
+                            // Make sure that we draw the domain axis line.
+                            // But don't draw anything else.
+                            renderSpec: charts.NoneRenderSpec()),
+                        defaultRenderer:
+                            charts.LineRendererConfig(includeArea: true),
                       ),
                     );
                   } else {
@@ -239,7 +229,7 @@ class HomeIndexItem extends StatelessWidget {
     final themeMode = AppService.instance.themeMode.value;
     BoxBorder? border;
     if (selectedIndex != null && data.index == selectedIndex) {
-      border = Border.all(color: AppColors.neutral_03);
+      border = Border.all(color: AppColors.neutral_05);
     }
     VoidCallback? onTap;
     if (onSelected != null) {

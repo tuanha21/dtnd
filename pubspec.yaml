@@ -85,6 +85,7 @@ dependencies:
   image_cropper: ^3.0.1
   flutter_html: ^3.0.0-alpha.6
   modal_bottom_sheet: ^3.0.0-pre
+  flutter_widget_from_html: ^0.9.1
 
 dev_dependencies:
   flutter_test:

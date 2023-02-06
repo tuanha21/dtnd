@@ -25,11 +25,11 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final HomeController homeController = HomeController();
 
-  @override
-  void initState() {
-    homeController.init();
-    super.initState();
-  }
+  // @override
+  // void initState() {
+  //   homeController.init();
+  //   super.initState();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -95,6 +95,7 @@ class _HomeScreenState extends State<HomeScreen> {
           sliver: SliverToBoxAdapter(
             child: HomeSection(
               title: S.of(context).news,
+              onTitleTap: () => HomeController().getNews(),
               onMore: () {},
               child: const HomeNews(),
             ),

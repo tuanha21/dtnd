@@ -43,7 +43,7 @@ extension QuickAccessX on QuickAccess {
   String name(BuildContext context) {
     switch (this) {
       case QuickAccess.money:
-        return S.of(context).qa_money;
+        return S.of(context).accumulate;
       case QuickAccess.base:
         return S.of(context).qa_base;
       case QuickAccess.virtualAssistant:

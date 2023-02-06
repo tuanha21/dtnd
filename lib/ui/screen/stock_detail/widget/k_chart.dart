@@ -44,17 +44,22 @@ class _KChartState extends State<KChart> {
     });
     final List<num> list = [];
     for (int i = 0;
-        i < widget.indexModel.stockTradingHistory.value!.t!.length;
+        i < widget.indexModel.stockDayTradingHistory.value!.t!.length;
         i++) {
-      list.add(widget.indexModel.stockTradingHistory.value!.o![i].toDouble());
+      list.add(
+          widget.indexModel.stockDayTradingHistory.value!.o![i].toDouble());
       datas.add(KLineEntity.fromCustom(
-          open: widget.indexModel.stockTradingHistory.value!.o![i].toDouble(),
-          close: widget.indexModel.stockTradingHistory.value!.c![i].toDouble(),
-          time:
-              widget.indexModel.stockTradingHistory.value!.t![i].toInt() * 1000,
-          high: widget.indexModel.stockTradingHistory.value!.h![i].toDouble(),
-          low: widget.indexModel.stockTradingHistory.value!.l![i].toDouble(),
-          vol: widget.indexModel.stockTradingHistory.value!.v![i].toDouble()));
+          open:
+              widget.indexModel.stockDayTradingHistory.value!.o![i].toDouble(),
+          close:
+              widget.indexModel.stockDayTradingHistory.value!.c![i].toDouble(),
+          time: widget.indexModel.stockDayTradingHistory.value!.t![i].toInt() *
+              1000,
+          high:
+              widget.indexModel.stockDayTradingHistory.value!.h![i].toDouble(),
+          low: widget.indexModel.stockDayTradingHistory.value!.l![i].toDouble(),
+          vol: widget.indexModel.stockDayTradingHistory.value!.v![i]
+              .toDouble()));
     }
     // DataUtil.calculate(datas);
     setState(() {
@@ -67,6 +72,13 @@ class _KChartState extends State<KChart> {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.indexModel.index != widget.indexModel.index) {
       initData();
+    }
+    if (widget.indexModel.stockDayTradingHistory.value?.c?.last != null &&
+        datas.last.close !=
+            widget.indexModel.stockDayTradingHistory.value!.c!.last) {
+      datas.last.close =
+          widget.indexModel.stockDayTradingHistory.value!.c!.last.toDouble();
+      // DataUtil.calculate(datas);
     }
   }
 

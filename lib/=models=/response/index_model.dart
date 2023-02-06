@@ -6,16 +6,24 @@ import 'package:get/get.dart';
 class IndexModel {
   late final Index index;
   late final IndexDetail _indexDetail;
-  final Rx<StockTradingHistory?> stockTradingHistory = Rxn();
+  final Rx<StockTradingHistory?> stockIndayTradingHistory = Rxn();
+  final Rx<StockTradingHistory?> stockDayTradingHistory = Rxn();
 
   IndexDetail get indexDetail => _indexDetail;
 
   IndexModel(
       {required this.index,
       required IndexDetailResponse indexDetailResponse,
-      StockTradingHistory? stockTradingHistory}) {
+      StockTradingHistory? stockIndayTradingHistory,
+      StockTradingHistory? stockDayTradingHistory}) {
     _indexDetail = IndexDetail.fromResponse(indexDetailResponse);
-    this.stockTradingHistory.value = stockTradingHistory;
+    this.stockIndayTradingHistory.value = stockIndayTradingHistory;
+    this.stockDayTradingHistory.value = stockDayTradingHistory;
+    if (this.stockDayTradingHistory.value != null &&
+        (this.stockDayTradingHistory.value?.o?.isNotEmpty ?? false) &&
+        indexDetailResponse.oIndex != null) {
+      this.stockDayTradingHistory.value!.o!.last = indexDetailResponse.oIndex!;
+    }
   }
 
   void updateIndexDetail(IndexDetailResponse data) {
@@ -34,6 +42,11 @@ class IndexModel {
       ..vol.value = data['data']['vol']
       ..ot.value = data["data"]["ot"].split('|')
       ..value.value = data['data']['value'];
+    if (stockDayTradingHistory.value != null &&
+        (stockDayTradingHistory.value!.c?.isNotEmpty ?? false)) {
+      stockDayTradingHistory.value!.c!.last = data["data"]["cIndex"];
+      stockDayTradingHistory.refresh();
+    }
   }
 
   @override
