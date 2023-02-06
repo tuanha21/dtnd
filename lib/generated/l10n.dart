@@ -440,6 +440,16 @@ class S {
     );
   }
 
+  /// `Accumulate`
+  String get accumulate {
+    return Intl.message(
+      'Accumulate',
+      name: 'accumulate',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Input password`
   String get please_input_password {
     return Intl.message(

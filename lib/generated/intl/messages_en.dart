@@ -58,6 +58,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Account notice"),
         "account_number":
             MessageLookupByLibrary.simpleMessage("Account number"),
+        "accumulate": MessageLookupByLibrary.simpleMessage("Accumulate"),
         "add_catalog": MessageLookupByLibrary.simpleMessage("Add catalog"),
         "add_following_stock":
             MessageLookupByLibrary.simpleMessage("Add following stocks"),

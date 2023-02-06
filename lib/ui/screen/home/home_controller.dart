@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:dtnd/=models=/index.dart';
 import 'package:dtnd/=models=/response/index_model.dart';
 import 'package:dtnd/=models=/response/news_model.dart';
@@ -32,6 +34,10 @@ class HomeController {
   late final AppService appService;
   late final INetworkService networkService;
   late final IDataCenterService dataCenterService;
+  final int _initStep = 4;
+  final StreamController<double> _initProcess =
+      StreamController<double>.broadcast();
+  Stream<double> get initProcess => _initProcess.stream;
 
   late final List<StockModel> interestedCatalog;
   List<StockModel> hotToday = [];
@@ -43,12 +49,13 @@ class HomeController {
   late final Set<IndexModel> listIndexs;
   final Rx<IndexModel?> currentIndexModel = Rxn();
   final Rx<WorldIndexModel?> currentWorldIndexModel = Rxn();
+  final Rx<bool> newsLoading = true.obs;
 
   final Rx<bool> indexInitialized = false.obs;
   final Rx<bool> topInitialized = false.obs;
   final Rx<bool> suggestInitialized = false.obs;
 
-  void init() async {
+  Future<void> init() async {
     try {
       if (indexInitialized.value &&
           topInitialized.value &&
@@ -85,8 +92,11 @@ class HomeController {
     topForeignToday = list;
   }
 
-  Future<List<NewsModel>> getNews() {
-    return dataCenterService.getNews(1, 5);
+  Future<List<NewsModel>> getNews() async {
+    newsLoading.value = true;
+    news = await dataCenterService.getNews(1, 5);
+    newsLoading.value = false;
+    return news;
   }
 
   Future<List<WorldIndexModel>> getWorldIndex() async {
@@ -97,25 +107,30 @@ class HomeController {
   }
 
   Future<void> refresh() async {
+    _initProcess.sink.add(0 / _initStep);
     indexInitialized.value = false;
     topInitialized.value = false;
     suggestInitialized.value = false;
     listIndexs = await dataCenterService.getListIndex(
         fromTime: TimeUtilities.getPreviousDateTime(TimeUtilities.year(1)),
         resolution: "1D");
+    _initProcess.sink.add(1 / _initStep);
     currentIndexModel.value = listIndexs.first;
     indexInitialized.value = true;
 
     await getHotToday();
+    _initProcess.sink.add(2 / _initStep);
     // marketToday = await dataCenterService.getStockModelsFromStockCodes(
     //     localStorageService.getListInterestedStock() ?? defaultListStock);
     // changeList(hotToday);
-    for (var element in hotToday) {
-      await getStockIndayTradingHistory(element);
+    for (var i = 0; i < hotToday.length; i++) {
+      await getStockIndayTradingHistory(hotToday.elementAt(i));
+      _initProcess.sink.add(((2 + (i / hotToday.length)) / _initStep));
     }
     topInitialized.value = true;
     interestedCatalog = await dataCenterService.getStockModelsFromStockCodes(
         localStorageService.getListInterestedStock() ?? defaultListStock);
+    _initProcess.sink.add(4 / _initStep);
     suggestInitialized.value = true;
     getWorldIndex();
     getPriceIncrease();

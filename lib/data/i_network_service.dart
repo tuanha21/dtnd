@@ -78,6 +78,8 @@ abstract class INetworkService {
 
   Future<List<NewsModel>> getNews(Map<String, String> body);
 
+  Future<String> getNewsContent(int id);
+
   Future<NewsDetail?> getNewsDetail(int id);
 
   Future<List<WorldIndexModel>> getWorldIndex();
@@ -130,6 +132,4 @@ abstract class INetworkService {
   Future<IndContrib> getPIvalue(String marketCode);
 
   Future<IndContrib> getFIvalue(String marketCode);
-
-
 }

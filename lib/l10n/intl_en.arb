@@ -42,6 +42,7 @@
     "order_note": "Order note",
     "order_htr": "Order history",
     "bank": "Bank",
+    "accumulate": "Accumulate",
 
     "please_input_password": "Input password",
     "pass_not_match": "Password not match",
@@ -159,7 +160,7 @@
     "search_stock": "Search stock",
     "search": "Search",
     "filter_stock": "Filter stocks",
-    "filter" : "Filter",
+    "filter": "Filter",
     "filter_stock_figure": "Filter stocks figure",
     "technical_analysis": "Technical analysis",
     "create": "Create",

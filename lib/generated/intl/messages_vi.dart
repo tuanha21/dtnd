@@ -57,6 +57,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "account_notice":
             MessageLookupByLibrary.simpleMessage("Thông báo tài khoản"),
         "account_number": MessageLookupByLibrary.simpleMessage("Số tài khoản"),
+        "accumulate": MessageLookupByLibrary.simpleMessage("Tích luỹ"),
         "add_catalog": MessageLookupByLibrary.simpleMessage("Thêm danh mục"),
         "add_following_stock":
             MessageLookupByLibrary.simpleMessage("Thêm mã theo dõi"),

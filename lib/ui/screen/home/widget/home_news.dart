@@ -1,11 +1,14 @@
 import 'package:dtnd/=models=/response/news_model.dart';
 import 'package:dtnd/ui/screen/home/home_controller.dart';
+import 'package:dtnd/ui/screen/news_detail.dart/new_detail_screen.dart';
 import 'package:dtnd/utilities/logger.dart';
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_textstyle.dart';
+import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
 
 class HomeNews extends StatefulWidget {
   const HomeNews({super.key});
@@ -17,13 +20,20 @@ class HomeNews extends StatefulWidget {
 class _HomeNewsState extends State<HomeNews> {
   final HomeController controller = HomeController();
   @override
+  void initState() {
+    super.initState();
+    controller.getNews();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return FutureBuilder<List<NewsModel>>(
-      initialData: const [],
-      future: controller.getNews(),
-      builder: (context, snapshot) {
-        logger.v(snapshot.data);
-        if (snapshot.hasData) {
+    return Obx(
+      () {
+        if (controller.newsLoading.value) {
+          return Center(
+            child: SizedBox(height: 520, child: Text(S.of(context).loading)),
+          );
+        } else {
           return Container(
             padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
             decoration: const BoxDecoration(
@@ -31,25 +41,23 @@ class _HomeNewsState extends State<HomeNews> {
                 borderRadius: BorderRadius.all(Radius.circular(12))),
             child: Column(
               children: [
-                for (int i = 0; i < snapshot.data!.length; i++)
+                for (int i = 0; i < controller.news.length; i++)
                   if (i != 0)
                     Column(
                       children: [
-                        Divider(),
+                        const Divider(),
                         HomeNewsCard(
-                          stockNews: snapshot.data!.elementAt(i),
+                          stockNews: controller.news.elementAt(i),
                         )
                       ],
                     )
                   else
                     HomeNewsCard(
-                      stockNews: snapshot.data!.elementAt(i),
+                      stockNews: controller.news.elementAt(i),
                     )
               ],
             ),
           );
-        } else {
-          return Container();
         }
       },
     );
@@ -67,7 +75,11 @@ class HomeNewsCard extends StatelessWidget {
     return Material(
       color: Colors.transparent,
       child: InkWell(
-        onTap: () {},
+        onTap: () {
+          Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => NewsDetailScreen(newsModel: stockNews),
+          ));
+        },
         borderRadius: const BorderRadius.all(Radius.circular(8)),
         child: Ink(
           padding: const EdgeInsets.all(8.0),

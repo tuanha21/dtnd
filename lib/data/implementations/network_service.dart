@@ -316,6 +316,14 @@ class NetworkService implements INetworkService {
   }
 
   @override
+  Future<String> getNewsContent(int id) async {
+    final http.Response response =
+        await client.get(url_core("pickContents/$id"));
+    final responseBody = decode(response.bodyBytes)["data"];
+    return responseBody;
+  }
+
+  @override
   Future<NewsDetail?> getNewsDetail(int id) async {
     final Map<String, dynamic> queryParameters = {
       "id": id,

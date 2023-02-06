@@ -10,8 +10,10 @@ class HomeSection extends StatelessWidget {
     this.onMore,
     this.child,
     this.padding = 16,
+    this.onTitleTap,
   });
   final String title;
+  final VoidCallback? onTitleTap;
   final VoidCallback? onMore;
   final Widget? child;
   final double padding;
@@ -24,12 +26,15 @@ class HomeSection extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                title,
-                style: Theme.of(context)
-                    .textTheme
-                    .titleMedium!
-                    .copyWith(fontWeight: FontWeight.w700),
+              GestureDetector(
+                onTap: onTitleTap,
+                child: Text(
+                  title,
+                  style: Theme.of(context)
+                      .textTheme
+                      .titleMedium!
+                      .copyWith(fontWeight: FontWeight.w700),
+                ),
               ),
               onMore != null
                   ? InkWell(

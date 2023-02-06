@@ -466,7 +466,7 @@ class DataCenterService implements IDataCenterService {
       _listIndex.add(IndexModel(
         index: index,
         indexDetailResponse: response,
-        stockTradingHistory: chartResponse,
+        stockDayTradingHistory: chartResponse,
       ));
     }
     initingListIndex = false;
@@ -612,7 +612,6 @@ class DataCenterService implements IDataCenterService {
   @override
   Future<IndContrib> getPIvalue(String marketCode) {
     return networkService.getPIvalue(marketCode);
-
   }
 
   @override

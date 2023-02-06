@@ -41,6 +41,7 @@
     "order_note": "Sổ lệnh",
     "order_htr": "LS lệnh",
     "bank": "Ngân hàng",
+    "accumulate": "Tích luỹ",
 
     "please_input_password": "Nhập password",
     "pass_not_match": "Mật khẩu không trùng khớp",
@@ -158,7 +159,7 @@
     "search_stock": "Tìm mã CP",
     "search": "Tìm kiếm",
     "filter_stock": "Lọc cổ phiếu",
-    "filter" : "Bộ lọc",
+    "filter": "Bộ lọc",
     "filter_stock_figure": "Chỉ số lọc cổ phiếu",
     "technical_analysis": "Phân tích kỹ thuật",
     "create": "Tạo",
