@@ -142,6 +142,13 @@ class HomeNewsCard extends StatelessWidget {
                               shape: BoxShape.circle,
                               color: AppColors.semantic_02),
                         ),
+                        Expanded(
+                          child: Text(
+                            stockNews.publishTime ?? "",
+                            textAlign: TextAlign.end,
+                            style: AppTextStyle.bottomNavLabel,
+                          ),
+                        )
                         // const SizedBox(width: 5),
                         // Text(stockNews.stockCode ?? "",
                         //     style: AppTextStyle.labelSmall_10

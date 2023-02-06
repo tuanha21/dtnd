@@ -110,7 +110,7 @@ class _HomeMarketOverviewState extends State<HomeMarketOverview>
                   setState(() {});
                 },
                 tabs: <Widget>[
-                  const Text("HOT"),
+                  const Text("🔥HOT"),
                   Text(S.of(context).price_increase),
                   Text(S.of(context).price_decrease),
                   Text(S.of(context).top_foreign),
@@ -195,7 +195,7 @@ class HomeMarketOverviewItem extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(width: 16),
+              const SizedBox(width: 24),
               Expanded(
                 child: Container(
                   constraints: BoxConstraints(
@@ -208,7 +208,7 @@ class HomeMarketOverviewItem extends StatelessWidget {
                   ),
                 ),
               ),
-              const SizedBox(width: 16),
+              const SizedBox(width: 24),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 mainAxisAlignment: MainAxisAlignment.center,

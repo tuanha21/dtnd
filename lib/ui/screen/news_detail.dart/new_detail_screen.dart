@@ -83,6 +83,15 @@ class _NewsDetailScreenState extends State<NewsDetailScreen> {
                   ],
                 ),
               ),
+              HtmlWidget(
+                newsDetail.trim(),
+                textStyle: AppTextStyle.bodySmall_12,
+                onTapUrl: (url) async {
+                  // await launchUrl(Uri.parse(url),
+                  //     mode: LaunchMode.externalApplication);
+                  return true;
+                },
+              ),
               Container(
                 padding: const EdgeInsets.all(16),
                 width: double.maxFinite,
@@ -97,6 +106,7 @@ class _NewsDetailScreenState extends State<NewsDetailScreen> {
                     HtmlWidget(
                       newsDetail.trim(),
                       textStyle: AppTextStyle.bodySmall_12,
+                      onErrorBuilder: (context, element, error) => Container(),
                       onTapUrl: (url) async {
                         // await launchUrl(Uri.parse(url),
                         //     mode: LaunchMode.externalApplication);
