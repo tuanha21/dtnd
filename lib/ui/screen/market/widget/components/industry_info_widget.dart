@@ -147,6 +147,9 @@ class _IndustryInfoWidgetState extends State<IndustryInfoWidget> {
               if (value.isEmpty) {
                 setState(() {
                   industry = null;
+                  getCodeIndustry = Future.wait(listIndustry.entries
+                      .map((e) => dataCenterService.getSectors(e.key))
+                      .toList());
                 });
               }
             },
@@ -175,6 +178,10 @@ class _IndustryInfoWidgetState extends State<IndustryInfoWidget> {
         onSuggestionSelected: (suggestion) {
           searchController.text = suggestion.value;
           industry = suggestion;
+          setState(() {
+            getCodeIndustry =
+                Future.wait([dataCenterService.getSectors(industry!.key)]);
+          });
         },
         noItemsFoundBuilder: (context) {
           return ListTile(
