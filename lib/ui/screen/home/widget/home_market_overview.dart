@@ -31,11 +31,11 @@ class _HomeMarketOverviewState extends State<HomeMarketOverview>
   final HomeController homeController = HomeController();
   late final TabController _tabController;
 
-  int tab = 0;
+  bool up = true;
 
   @override
   void initState() {
-    _tabController = TabController(length: 4, vsync: this);
+    _tabController = TabController(length: 3, vsync: this);
     super.initState();
   }
 
@@ -50,12 +50,13 @@ class _HomeMarketOverviewState extends State<HomeMarketOverview>
       final List<StockModel> data;
       switch (_tabController.index) {
         case 1:
-          data = homeController.priceIncreaseToday;
+          if (!up) {
+            data = homeController.priceDecreaseToday;
+          } else {
+            data = homeController.priceIncreaseToday;
+          }
           break;
         case 2:
-          data = homeController.priceDecreaseToday;
-          break;
-        case 3:
           data = homeController.topForeignToday;
           break;
         default:
@@ -78,6 +79,29 @@ class _HomeMarketOverviewState extends State<HomeMarketOverview>
       //     ),
       //   ),
       // );
+
+      final Widget sortArrow = Container(
+        // color: Colors.green,
+        padding: const EdgeInsets.all(5),
+        child: Column(
+          children: [
+            Opacity(
+              opacity: up ? 1.0 : 0.3,
+              child: const Icon(
+                Icons.expand_less_rounded,
+                size: 12,
+              ),
+            ),
+            Opacity(
+              opacity: !up ? 1.0 : 0.3,
+              child: const Icon(
+                Icons.expand_more_rounded,
+                size: 12,
+              ),
+            ),
+          ],
+        ),
+      );
       Widget list = Column(
         children: [
           for (int i = 0; i < data.length; i++)
@@ -105,15 +129,23 @@ class _HomeMarketOverviewState extends State<HomeMarketOverview>
                     const EdgeInsets.symmetric(horizontal: 18, vertical: 6),
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 onTap: (value) async {
+                  print(_tabController.indexIsChanging);
+                  if (!_tabController.indexIsChanging && value == 1) {
+                    up = !up;
+                  }
                   setState(() {});
                   await homeController.changeList(data);
                   // setState(() {});
                 },
                 tabs: <Widget>[
                   const Text("🔥HOT"),
-                  Text(S.of(context).price_increase),
-                  Text(S.of(context).price_decrease),
-                  Text(S.of(context).top_foreign),
+                  Row(
+                    children: [
+                      const Text("Top biến động"),
+                      sortArrow,
+                    ],
+                  ),
+                  const Text("Top khối lượng"),
                 ],
               ),
             ),
@@ -327,6 +359,7 @@ class HomeMarketOverviewItemChart extends StatelessWidget {
               ],
             );
           } else if (snapshot.hasError) {
+            // Todo: on error load
             return Container();
           } else {
             return Container();
