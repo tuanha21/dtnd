@@ -351,9 +351,11 @@ class _UserCatalogWidgetState extends State<UserCatalogWidget> {
   }
 
   Future<void> updateCatalog(LocalCatalog catalog) async {
-    await CatalogOptionsISheet(savedCatalog, catalog).show(context,
+    var res = await CatalogOptionsISheet(savedCatalog, catalog).show(context,
         CatalogOptionsSheet(savedCatalog: savedCatalog, catalog: catalog));
-    setState(() {});
+    if (res.runtimeType == NextCmd) {
+      setState(() {});
+    }
   }
 
   void onTapChangeCatalog(LocalCatalog catalog) {

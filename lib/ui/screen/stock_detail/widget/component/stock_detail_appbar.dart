@@ -89,8 +89,10 @@ class StockDetailAppbar extends SliverPersistentHeaderDelegate {
             ),
             actions: [
               SvgIconButton(
-                AppImages.search_appbar_icon,
-                onPressed: () {},
+                AppImages.add_square,
+                onPressed: () {
+
+                },
                 iconSize: 20,
                 color: Theme.of(context).colorScheme.onPrimary,
               ),
