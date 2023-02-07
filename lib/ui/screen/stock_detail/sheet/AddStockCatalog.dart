@@ -11,11 +11,17 @@ import '../../../../data/i_user_service.dart';
 import '../../../../data/implementations/data_center_service.dart';
 import '../../../../data/implementations/local_storage_service.dart';
 import '../../../../data/implementations/user_service.dart';
+import '../../../widget/app_snack_bar.dart';
 import '../../../widget/icon/sheet_header.dart';
 import '../../market/logic/add_catalog_logic.dart';
 import '../../market/widget/sheet/create_catalog_sheet.dart';
 
 class AddCatalogISheet extends ISheet {
+  final String? stock;
+
+  AddCatalogISheet({this.stock});
+
+
   @override
   IOverlay? back([UserCmd? cmd]) {
     return null;
@@ -30,7 +36,7 @@ class AddCatalogISheet extends ISheet {
   IOverlay? next([UserCmd? cmd]) {
     if (cmd is NextCmd) {
       var data = cmd.data as SavedCatalog;
-      return CreateCatalogISheet(data);
+      return CreateCatalogISheet(data,stock: stock);
     }
     return null;
   }
@@ -57,8 +63,10 @@ class AddCatalogISheet extends ISheet {
 
 class AddCatalogSheet extends StatefulWidget {
   final SavedCatalog? initSavedCatalog;
+  final String? stock;
 
-  const AddCatalogSheet({Key? key, this.initSavedCatalog}) : super(key: key);
+  const AddCatalogSheet({Key? key, this.initSavedCatalog, this.stock})
+      : super(key: key);
 
   @override
   State<AddCatalogSheet> createState() => _AddCatalogSheetState();
@@ -111,7 +119,18 @@ class _AddCatalogSheetState extends State<AddCatalogSheet> {
                     return _RowButton(
                       tittle: catalog.name,
                       onTap: () {
-                        Navigator.pop(context, BackCmd(catalog));
+                        if (!savedCatalog.catalogs[index].listStock
+                            .contains(widget.stock!)) {
+                          catalog.listStock.add(widget.stock!);
+                          savedCatalog.catalogs[index] = catalog;
+                          localStorageService.putSavedCatalog(savedCatalog);
+                          Navigator.pop(context);
+                          AppSnackBar.showInfo(context, message: "Thêm mã thành công");
+                        }
+                        else {
+                          Navigator.pop(context);
+                          AppSnackBar.showInfo(context, message: "Mã đã thêm trong danh mục");
+                        }
                       },
                     );
                   },

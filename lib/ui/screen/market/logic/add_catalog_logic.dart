@@ -15,9 +15,10 @@ import '../../../../utilities/logger.dart';
 import '../../stock_detail/sheet/AddStockCatalog.dart';
 
 class CreateCatalogISheet extends ISheet {
-  const CreateCatalogISheet(this.savedCatalog);
+  const CreateCatalogISheet(this.savedCatalog, {this.stock});
 
   final SavedCatalog savedCatalog;
+  final String? stock;
 
   @override
   IOverlay? back([cmd]) {
@@ -27,10 +28,10 @@ class CreateCatalogISheet extends ISheet {
     if (cmd is BackCmd) {
       /// back chở về màn chọn danh mục
       if (cmd.data is SavedCatalog) {
-        return AddCatalogISheet();
+        return AddCatalogISheet(stock: stock);
       }
       if (cmd.data is BackCmd) {
-        return AddCatalogISheet();
+        return AddCatalogISheet(stock: stock);
       }
       return null;
     }
@@ -45,10 +46,10 @@ class CreateCatalogISheet extends ISheet {
     if (cmd is BackCmd) {
       /// chở về màn chọn danh mục ở màn chi tiết mã
       if (cmd.data is BackCmd) {
-        return const AddCatalogSheet();
+        return AddCatalogSheet(stock: stock);
       }
       if (cmd.data is SavedCatalog) {
-        return AddCatalogSheet(initSavedCatalog: cmd.data!);
+        return AddCatalogSheet(initSavedCatalog: cmd.data!, stock: stock);
       }
       return null;
     }
