@@ -11,10 +11,12 @@ class HomeSection extends StatelessWidget {
     this.child,
     this.padding = 16,
     this.onTitleTap,
+    this.onMoreDot,
   });
   final String title;
   final VoidCallback? onTitleTap;
   final VoidCallback? onMore;
+  final VoidCallback? onMoreDot;
   final Widget? child;
   final double padding;
   @override
@@ -36,16 +38,23 @@ class HomeSection extends StatelessWidget {
                       .copyWith(fontWeight: FontWeight.w700),
                 ),
               ),
-              onMore != null
-                  ? InkWell(
-                      onTap: onMore,
-                      child: Text(
-                        S.of(context).see_more,
-                        style: AppTextStyle.labelMedium_12
-                            .copyWith(color: AppColors.primary_01),
-                      ),
-                    )
-                  : Container(),
+              if (onMore != null)
+                InkWell(
+                  onTap: onMore,
+                  child: Text(
+                    S.of(context).see_more,
+                    style: AppTextStyle.labelMedium_12
+                        .copyWith(color: AppColors.primary_01),
+                  ),
+                )
+              else if (onMoreDot != null)
+                InkWell(
+                  onTap: onMoreDot,
+                  child: const Icon(
+                    Icons.more_horiz_rounded,
+                    color: AppColors.neutral_01,
+                  ),
+                ),
             ],
           ),
         ),

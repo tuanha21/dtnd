@@ -210,7 +210,28 @@ class _HomeMarketTodayState extends State<HomeMarketToday>
                             tickProviderSpec:
                                 charts.BasicNumericTickProviderSpec(
                                     zeroBound: false)),
-
+                        domainAxis: const charts.DateTimeAxisSpec(
+                          // Make sure that we draw the domain axis line.
+                          // But don't draw anything else.
+                          tickFormatterSpec:
+                              charts.AutoDateTimeTickFormatterSpec(
+                                  day: charts.TimeFormatterSpec(
+                                      format: 'dd',
+                                      transitionFormat: 'MM-dd-yyyy'),
+                                  month: charts.TimeFormatterSpec(
+                                      format: 'MM',
+                                      transitionFormat: 'MM-dd-yyyy'),
+                                  year: charts.TimeFormatterSpec(
+                                      format: 'yyy',
+                                      transitionFormat: 'MM-dd-yyyy')),
+                          showAxisLine: false,
+                        ),
+                        layoutConfig: charts.LayoutConfig(
+                          leftMarginSpec: charts.MarginSpec.fixedPixel(16),
+                          topMarginSpec: charts.MarginSpec.fixedPixel(16),
+                          rightMarginSpec: charts.MarginSpec.fixedPixel(16),
+                          bottomMarginSpec: charts.MarginSpec.fixedPixel(16),
+                        ),
                         defaultRenderer:
                             charts.LineRendererConfig(includeArea: true),
                       ),

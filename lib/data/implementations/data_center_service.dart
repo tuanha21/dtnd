@@ -376,7 +376,7 @@ class DataCenterService implements IDataCenterService {
 
   @override
   Future<List<String>> getTopStockTrade(
-      [int count = 5, String type = "S"]) async {
+      [int count = 5, String type = "i"]) async {
     final Map<String, String> body = {
       "count": "$count",
       "type": type,
@@ -617,6 +617,5 @@ class DataCenterService implements IDataCenterService {
   @override
   Future<List<IndexDetailResponse>> getListIndexDetail() {
     return networkService.getListIndexDetail();
-
   }
 }

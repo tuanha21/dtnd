@@ -23,18 +23,24 @@ class MessageLookup extends MessageLookupByLibrary {
   static String m0(name) =>
       "Bạn có chắc chắn muốn xóa danh mục “${name}” không ?";
 
-  static String m1(name) => "Danh mục theo dõi \"${name}\"";
+  static String m1(days) => "${days} ngày trước";
 
-  static String m2(value) => "Tăng ${value}";
+  static String m2(name) => "Danh mục theo dõi \"${name}\"";
 
-  static String m3(value) => "Giảm ${value}";
+  static String m3(value) => "Tăng ${value}";
 
-  static String m4(value) =>
+  static String m4(hours) => "${hours} giờ trước";
+
+  static String m5(value) => "Giảm ${value}";
+
+  static String m6(minutes) => "${minutes} phút trước";
+
+  static String m7(value) =>
       "Mã OTP đã được gửi về số điện thoại đuôi ${value} của bạn. Nhập mã 6 số để tiếp tục.";
 
-  static String m5(name) => "Sửa tên danh mục “${name}” thành";
+  static String m8(name) => "Sửa tên danh mục “${name}” thành";
 
-  static String m6(value) => "Tổng ${value}";
+  static String m9(value) => "Tổng ${value}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -81,7 +87,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "base": MessageLookupByLibrary.simpleMessage("Cơ sở"),
         "base_asset": MessageLookupByLibrary.simpleMessage("Tài sản cơ sở"),
         "base_note": MessageLookupByLibrary.simpleMessage("Sổ lệnh cơ sở"),
-        "billion_short": MessageLookupByLibrary.simpleMessage("T"),
+        "billion": MessageLookupByLibrary.simpleMessage("Tỷ"),
+        "billion_short": MessageLookupByLibrary.simpleMessage("Tỷ"),
         "birthday": MessageLookupByLibrary.simpleMessage("Ngày sinh"),
         "bond": MessageLookupByLibrary.simpleMessage("Trái phiếu"),
         "business_information":
@@ -124,6 +131,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "create_order_successfully":
             MessageLookupByLibrary.simpleMessage("Đặt lệnh thành công"),
         "date_translations": MessageLookupByLibrary.simpleMessage("Ngày"),
+        "days_ago": m1,
         "debt_following":
             MessageLookupByLibrary.simpleMessage("Theo dõi dư nợ"),
         "delete_catalog": MessageLookupByLibrary.simpleMessage("Xoá danh mục"),
@@ -155,13 +163,13 @@ class MessageLookup extends MessageLookupByLibrary {
         "floor": MessageLookupByLibrary.simpleMessage("Sàn"),
         "following_catalog":
             MessageLookupByLibrary.simpleMessage("Danh mục theo dõi"),
-        "following_catalog_with": m1,
+        "following_catalog_with": m2,
         "foreign": MessageLookupByLibrary.simpleMessage("Nước ngoài"),
         "froom": MessageLookupByLibrary.simpleMessage("Room NN"),
         "fs_vol": MessageLookupByLibrary.simpleMessage("KL FS"),
         "fsell": MessageLookupByLibrary.simpleMessage("NN bán"),
         "full_name": MessageLookupByLibrary.simpleMessage("Họ và tên"),
-        "gain_wvalue": m2,
+        "gain_wvalue": m3,
         "general_information":
             MessageLookupByLibrary.simpleMessage("Thông tin chung"),
         "hello": MessageLookupByLibrary.simpleMessage("Chào bạn"),
@@ -172,6 +180,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "high": MessageLookupByLibrary.simpleMessage("Cao"),
         "high_translations": MessageLookupByLibrary.simpleMessage("Cao"),
         "home": MessageLookupByLibrary.simpleMessage("Trang chủ"),
+        "hours_ago": m4,
         "id_or_business_id_short":
             MessageLookupByLibrary.simpleMessage("CMND/ĐKKD"),
         "inday_ordnote": MessageLookupByLibrary.simpleMessage("SL trong ngày"),
@@ -206,7 +215,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "login_with_google":
             MessageLookupByLibrary.simpleMessage("Đăng nhập với Google"),
         "logout": MessageLookupByLibrary.simpleMessage("Đăng xuất"),
-        "loss_wvalue": m3,
+        "loss_wvalue": m5,
         "low": MessageLookupByLibrary.simpleMessage("Thấp"),
         "low_translations": MessageLookupByLibrary.simpleMessage("Thấp"),
         "margin": MessageLookupByLibrary.simpleMessage("Ký quỹ"),
@@ -233,6 +242,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "matching": MessageLookupByLibrary.simpleMessage("Đang khớp"),
         "million_short": MessageLookupByLibrary.simpleMessage("Tr"),
         "minutes": MessageLookupByLibrary.simpleMessage(" phút"),
+        "minutes_ago": m6,
         "mk_value": MessageLookupByLibrary.simpleMessage("Giá trị TT"),
         "money_trading": MessageLookupByLibrary.simpleMessage("Giao dịch tiền"),
         "net_assets": MessageLookupByLibrary.simpleMessage("Tài sản ròng"),
@@ -262,7 +272,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage(
                 "Lệnh đặt sẽ xuất hiện trong sổ lệnh của bạn"),
         "other_vol": MessageLookupByLibrary.simpleMessage("KL khác"),
-        "otp_code_sent_to_phone_number": m4,
+        "otp_code_sent_to_phone_number": m7,
         "overview": MessageLookupByLibrary.simpleMessage("Tổng quan"),
         "pass_not_match":
             MessageLookupByLibrary.simpleMessage("Mật khẩu không trùng khớp"),
@@ -288,7 +298,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "qa_money": MessageLookupByLibrary.simpleMessage("Tiền gửi"),
         "qa_pack_enrol": MessageLookupByLibrary.simpleMessage("ĐK gói"),
         "ref": MessageLookupByLibrary.simpleMessage("TC"),
-        "rename_catalog_to": m5,
+        "rename_catalog_to": m8,
         "revenue": MessageLookupByLibrary.simpleMessage("Doanh thu"),
         "right": MessageLookupByLibrary.simpleMessage("Quyền"),
         "safe_ratio": MessageLookupByLibrary.simpleMessage("Tỷ lệ an toàn"),
@@ -344,7 +354,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "total_asset": MessageLookupByLibrary.simpleMessage("Tổng tài sản"),
         "total_debt": MessageLookupByLibrary.simpleMessage("Tổng nợ"),
         "total_vol": MessageLookupByLibrary.simpleMessage("Tổng KL"),
-        "total_wvalue": m6,
+        "total_wvalue": m9,
         "trading": MessageLookupByLibrary.simpleMessage("Giao dịch"),
         "trading_board": MessageLookupByLibrary.simpleMessage("Bảng giá"),
         "trading_volatility":

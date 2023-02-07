@@ -108,6 +108,10 @@
 
     "million_short": "M",
     "billion_short": "B",
+    "billion": "Bil",
+    "minutes_ago": "{minutes} minutes ago",
+    "hours_ago": "{hours} hours ago",
+    "days_ago": "{days} days ago",
 
     "total_asset": "Total asset",
     "base_asset": "Base asset",

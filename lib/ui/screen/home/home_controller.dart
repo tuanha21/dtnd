@@ -44,6 +44,7 @@ class HomeController {
   List<StockModel> priceIncreaseToday = [];
   List<StockModel> priceDecreaseToday = [];
   List<StockModel> topForeignToday = [];
+  List<StockModel> topVolumnToday = [];
   List<NewsModel> news = [];
   List<WorldIndexModel> worldIndex = [];
   late final Set<IndexModel> listIndexs;
@@ -70,19 +71,19 @@ class HomeController {
 
   Future<void> getHotToday() async {
     final list = await dataCenterService.getStockModelsFromStockCodes(
-        await dataCenterService.getTopStockTrade());
+        await dataCenterService.getTopStockTrade(8));
     hotToday = list;
   }
 
   Future<void> getPriceIncrease() async {
     final list = await dataCenterService.getStockModelsFromStockCodes(
-        await dataCenterService.getTopStockChange());
+        await dataCenterService.getTopStockChange(8));
     priceIncreaseToday = list;
   }
 
   Future<void> getPriceDecrease() async {
     final list = await dataCenterService.getStockModelsFromStockCodes(
-        await dataCenterService.getTopStockChange(5, "d"));
+        await dataCenterService.getTopStockChange(8, "d"));
     priceDecreaseToday = list;
   }
 
@@ -90,6 +91,12 @@ class HomeController {
     final list = await dataCenterService.getStockModelsFromStockCodes(
         await dataCenterService.getTopForeignTrade());
     topForeignToday = list;
+  }
+
+  Future<void> getTopVolumn() async {
+    final list = await dataCenterService.getStockModelsFromStockCodes(
+        await dataCenterService.getTopStockTrade(8));
+    topVolumnToday = list;
   }
 
   Future<List<NewsModel>> getNews() async {
@@ -135,7 +142,8 @@ class HomeController {
     getWorldIndex();
     getPriceIncrease();
     getPriceDecrease();
-    getTopForeign();
+    // getTopForeign();
+    getTopVolumn();
   }
 
   void changeIndex(Index index) {

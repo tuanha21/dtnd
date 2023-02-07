@@ -57,7 +57,7 @@ class _HomeMarketOverviewState extends State<HomeMarketOverview>
           }
           break;
         case 2:
-          data = homeController.topForeignToday;
+          data = homeController.topVolumnToday;
           break;
         default:
           data = homeController.hotToday;
@@ -226,10 +226,12 @@ class HomeMarketOverviewItem extends StatelessWidget {
                   constraints: BoxConstraints(
                       minWidth: MediaQuery.of(context).size.width / 5,
                       maxWidth: MediaQuery.of(context).size.width / 4),
-                  child: HomeMarketOverviewItemChart(
-                    data: data,
-                    future: data.getTradingHistory(DataCenterService(),
-                        resolution: "5", from: TimeUtilities.beginningOfDay),
+                  child: AbsorbPointer(
+                    child: HomeMarketOverviewItemChart(
+                      data: data,
+                      future: data.getTradingHistory(DataCenterService(),
+                          resolution: "5", from: TimeUtilities.beginningOfDay),
+                    ),
                   ),
                 ),
               ),
@@ -252,6 +254,20 @@ class HomeMarketOverviewItem extends StatelessWidget {
                   // ),
                   ObxValue<Rx<num?>>(
                     (lastPrice) {
+                      return Row(
+                        children: [
+                          data.stockData.prefixIcon(size: 12),
+                          Text(
+                            " ${data.stockData.lastPrice}",
+                            maxLines: 1,
+                            style: AppTextStyle.labelMedium_12.copyWith(
+                              fontWeight: FontWeight.w600,
+                              fontSize: 13,
+                              color: data.stockData.color,
+                            ),
+                          )
+                        ],
+                      );
                       return Text.rich(
                         TextSpan(children: [
                           WidgetSpan(
@@ -263,6 +279,7 @@ class HomeMarketOverviewItem extends StatelessWidget {
                         maxLines: 1,
                         style: AppTextStyle.labelMedium_12.copyWith(
                           fontWeight: FontWeight.w600,
+                          fontSize: 13,
                           color: data.stockData.color,
                         ),
                       );

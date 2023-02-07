@@ -1,6 +1,7 @@
 import 'package:dtnd/=models=/response/news_model.dart';
 import 'package:dtnd/ui/screen/home/home_controller.dart';
 import 'package:dtnd/ui/screen/news_detail.dart/new_detail_screen.dart';
+import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:dtnd/utilities/logger.dart';
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -9,6 +10,7 @@ import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_textstyle.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
+import 'package:intl/intl.dart';
 
 class HomeNews extends StatefulWidget {
   const HomeNews({super.key});
@@ -133,6 +135,41 @@ class HomeNewsCard extends StatelessWidget {
                     ),
                     Row(
                       children: [
+                        Expanded(
+                          child: Builder(builder: (context) {
+                            final DateFormat format =
+                                DateFormat("dd/MM/yyyy HH:mm:ss");
+                            final Duration duration;
+                            if (stockNews.publishTime == null) {
+                              duration = Duration.zero;
+                            } else {
+                              duration = DateTime.now().difference(
+                                  format.parse(stockNews.publishTime!));
+                            }
+                            print(format
+                                .format(format.parse(stockNews.publishTime!)));
+                            print(format.format(DateTime.now()));
+                            final String ago;
+                            if (duration.inHours > 23) {
+                              ago = S.of(context).days_ago(duration.inDays);
+                            } else if (duration.inHours > 0) {
+                              ago = S.of(context).hours_ago(duration.inHours);
+                            } else {
+                              ago =
+                                  S.of(context).minutes_ago(duration.inMinutes);
+                            }
+                            return Text(
+                              ago,
+                              // textAlign: TextAlign.end,
+                              style: AppTextStyle.bottomNavLabel
+                                  .copyWith(color: AppColors.neutral_03),
+                            );
+                          }),
+                        )
+                      ],
+                    ),
+                    Row(
+                      children: [
                         Text(
                           S.of(context).event,
                           style: AppTextStyle.bottomNavLabel
@@ -147,13 +184,55 @@ class HomeNewsCard extends StatelessWidget {
                               color: AppColors.semantic_02),
                         ),
                         Expanded(
-                          child: Text(
-                            stockNews.publishTime ?? "",
-                            textAlign: TextAlign.end,
-                            style: AppTextStyle.bottomNavLabel
-                                .copyWith(color: AppColors.neutral_03),
-                          ),
-                        )
+                            child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Container(
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 2, horizontal: 8),
+                              decoration: const BoxDecoration(
+                                  color: AppColors.bg_1,
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(56))),
+                              child: Row(
+                                children: [
+                                  SizedBox.square(
+                                      dimension: 10,
+                                      child: Image.asset(
+                                          AppImages.home_icon_like)),
+                                  const SizedBox(width: 2),
+                                  Text(
+                                    "${stockNews.viewCount}",
+                                    style: AppTextStyle.labelSmall_10,
+                                  )
+                                ],
+                              ),
+                            ),
+                            const SizedBox(width: 10),
+                            Container(
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 2, horizontal: 8),
+                              decoration: const BoxDecoration(
+                                  color: AppColors.bg_1,
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(56))),
+                              child: Row(
+                                children: [
+                                  SizedBox.square(
+                                      dimension: 10,
+                                      child: Image.asset(
+                                          AppImages.home_icon_sharing)),
+                                  const SizedBox(width: 2),
+                                  Text(
+                                    "${stockNews.commentCount}",
+                                    style: AppTextStyle.labelSmall_10,
+                                  )
+                                ],
+                              ),
+                            ),
+                          ],
+                        ))
+
                         // const SizedBox(width: 5),
                         // Text(stockNews.stockCode ?? "",
                         //     style: AppTextStyle.labelSmall_10

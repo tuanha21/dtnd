@@ -73,6 +73,7 @@ class _HomeScreenState extends State<HomeScreen> {
         SliverToBoxAdapter(
           child: HomeSection(
             title: S.of(context).market_today,
+            onMoreDot: () => widget.navigateTab.call(HomeNav.market),
             child: const HomeMarketToday(),
           ),
         ),
