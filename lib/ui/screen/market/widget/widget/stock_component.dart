@@ -1,5 +1,6 @@
 import 'package:dtnd/utilities/num_utils.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../../../../../=models=/response/stock_model.dart';
 
@@ -23,7 +24,11 @@ class _StockComponentState extends State<StockComponent> {
             flex: 2,
             child: Text(
               widget.model.stock.stockCode,
-              style: Theme.of(context).textTheme.bodySmall?.copyWith(
+              style: Theme
+                  .of(context)
+                  .textTheme
+                  .bodySmall
+                  ?.copyWith(
                   fontWeight: FontWeight.w700,
                   color: widget.model.stockData.color),
             ),
@@ -34,36 +39,49 @@ class _StockComponentState extends State<StockComponent> {
               alignment: Alignment.centerRight,
               child: Text(
                 widget.model.stockData.lastPrice.value?.toString() ?? "",
-                style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                    fontWeight: FontWeight.w600,
-                    color: widget.model.stockData.color),
-              ),
-            ),
-          ),
-          Expanded(
-            flex: 3,
-            child: Align(
-              alignment: Alignment.centerRight,
-              child: Text(
-                widget.model.stockData.ot.value?.toString() ?? "",
-                style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                    fontWeight: FontWeight.w600,
-                    color: widget.model.stockData.color),
-              ),
-            ),
-          ),
-          Expanded(
-            flex: 3,
-            child: Align(
-              alignment: Alignment.centerRight,
-              child: Text(
-                NumUtils.formatInteger(widget.model.stockData.lot.value),
-                style: Theme.of(context)
+                style: Theme
+                    .of(context)
                     .textTheme
                     .bodySmall
-                    ?.copyWith(fontWeight: FontWeight.w600),
+                    ?.copyWith(
+                    fontWeight: FontWeight.w600,
+                    color: widget.model.stockData.color),
               ),
             ),
+          ),
+          Expanded(
+            flex: 3,
+            child: Obx(() {
+              return Align(
+                alignment: Alignment.centerRight,
+                child: Text(
+                  widget.model.stockData.ot.value?.toString() ?? "",
+                  style: Theme
+                      .of(context)
+                      .textTheme
+                      .bodySmall
+                      ?.copyWith(
+                      fontWeight: FontWeight.w600,
+                      color: widget.model.stockData.color),
+                ),
+              );
+            }),
+          ),
+          Expanded(
+            flex: 3,
+            child: Obx(() {
+              return Align(
+                alignment: Alignment.centerRight,
+                child: Text(
+                  NumUtils.formatInteger(widget.model.stockData.lot.value),
+                  style: Theme
+                      .of(context)
+                      .textTheme
+                      .bodySmall
+                      ?.copyWith(fontWeight: FontWeight.w600),
+                ),
+              );
+            }),
           )
         ],
       ),

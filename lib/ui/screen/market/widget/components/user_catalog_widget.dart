@@ -18,7 +18,6 @@ import 'package:flutter_svg/svg.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import '../../../../../=models=/response/stock.dart';
 import '../../../../../generated/l10n.dart';
-import '../../../../../utilities/deboncer.dart';
 import '../../../../../utilities/logger.dart';
 import '../../logic/add_catalog_logic.dart';
 import '../sheet/catalog_options_sheet.dart';
@@ -36,7 +35,7 @@ class UserCatalogWidget extends StatefulWidget {
 }
 
 class _UserCatalogWidgetState extends State<UserCatalogWidget> {
-  final IDataCenterService dataCenterService = DataCenterService();
+  final DataCenterService dataCenterService = DataCenterService();
   final ILocalStorageService localStorageService = LocalStorageService();
   final IUserService userService = UserService();
 
@@ -222,6 +221,10 @@ class _UserCatalogWidgetState extends State<UserCatalogWidget> {
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
                     itemBuilder: (context, index) {
+                      var stock = dataCenterService.listStockReg.firstWhere(
+                          (element) =>
+                              element.stock.stockCode ==
+                              list![index].stock.stockCode);
                       return Slidable(
                           endActionPane: ActionPane(
                             extentRatio: 0.25,
@@ -253,7 +256,7 @@ class _UserCatalogWidgetState extends State<UserCatalogWidget> {
                               ),
                             ],
                           ),
-                          child: StockComponent(model: list![index]));
+                          child: StockComponent(model: stock));
                     },
                     separatorBuilder: (context, index) {
                       return const Divider(
