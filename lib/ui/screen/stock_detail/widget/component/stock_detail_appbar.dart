@@ -1,4 +1,5 @@
 import 'package:dtnd/=models=/response/stock_model.dart';
+import 'package:dtnd/=models=/ui_model/user_cmd.dart';
 import 'package:dtnd/config/service/app_services.dart';
 import 'package:dtnd/ui/screen/stock_detail/widget/stock_detail_overview.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
@@ -6,7 +7,10 @@ import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:dtnd/ui/theme/app_textstyle.dart';
 import 'package:dtnd/ui/widget/svg_icon_button.dart';
 import 'package:flutter/material.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
+import '../../../../../=models=/local/local_catalog.dart';
+import '../../../market/widget/components/user_catalog_widget.dart';
 import '../../sheet/AddStockCatalog.dart';
 
 final appbarPaddingTop = WidgetsBinding.instance.window.viewPadding.top /
@@ -23,6 +27,17 @@ class StockDetailAppbar extends SliverPersistentHeaderDelegate {
 
   void addCatalog(BuildContext context) async {
     var res = await AddCatalogISheet().show(context, const AddCatalogSheet());
+    if (res is BackCmd) {
+      var localCatalog = res.data as LocalCatalog;
+      if (context.mounted) {
+        await showCupertinoModalBottomSheet(
+            context: context,
+            builder: (_) => BottomAddStock(localCatalog: localCatalog));
+        if (context.mounted) {
+          addCatalog(context);
+        }
+      }
+    }
   }
 
   @override

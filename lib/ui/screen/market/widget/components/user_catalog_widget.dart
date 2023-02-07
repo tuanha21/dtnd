@@ -373,7 +373,7 @@ class _UserCatalogWidgetState extends State<UserCatalogWidget> {
   void addCatalog() async {
     var res = await CreateCatalogISheet(savedCatalog)
         .show(context, CreateCatalogSheet(savedCatalog: savedCatalog));
-    if (res.runtimeType == BackCmd) {
+    if (res.runtimeType == BackCmd && res?.data != null) {
       setState(() {
         localStorageService.putSavedCatalog(savedCatalog);
         currentCatalog = savedCatalog.catalogs.last;

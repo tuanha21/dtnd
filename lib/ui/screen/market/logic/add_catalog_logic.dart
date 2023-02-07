@@ -7,11 +7,12 @@ import 'package:dtnd/ui/screen/market/logic/cmd.dart';
 import 'package:dtnd/ui/screen/market/widget/sheet/catalog_options_sheet.dart';
 import 'package:dtnd/ui/screen/market/widget/sheet/delete_catalog_dialog.dart';
 import 'package:dtnd/ui/screen/market/widget/sheet/rename_catalog_sheet.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../=models=/ui_model/user_cmd.dart';
 import '../../../../utilities/logger.dart';
-
-
+import '../../stock_detail/sheet/AddStockCatalog.dart';
 
 class CreateCatalogISheet extends ISheet {
   const CreateCatalogISheet(this.savedCatalog);
@@ -19,22 +20,72 @@ class CreateCatalogISheet extends ISheet {
   final SavedCatalog savedCatalog;
 
   @override
-  IOverlay? back([cmd]) => null;
+  IOverlay? back([cmd]) {
+    if (kDebugMode) {
+      print('back ${cmd?.data}');
+    }
+    if (cmd is BackCmd) {
+      /// back chở về màn chọn danh mục
+      if (cmd.data is SavedCatalog) {
+        return AddCatalogISheet();
+      }
+      if (cmd.data is BackCmd) {
+        return AddCatalogISheet();
+      }
+      return null;
+    }
+    return null;
+  }
 
   @override
-  Widget? backWidget([cmd]) => null;
+  Widget? backWidget([cmd]) {
+    if (kDebugMode) {
+      print('backWidget $cmd');
+    }
+    if (cmd is BackCmd) {
+      /// chở về màn chọn danh mục ở màn chi tiết mã
+      if (cmd.data is BackCmd) {
+        return const AddCatalogSheet();
+      }
+      if (cmd.data is SavedCatalog) {
+        return AddCatalogSheet(initSavedCatalog: cmd.data!);
+      }
+      return null;
+    }
+    return null;
+  }
 
   @override
-  IOverlay? next([cmd]) => null;
+  IOverlay? next([cmd]) {
+    if (kDebugMode) {
+      print('next $cmd');
+    }
+    return null;
+  }
 
   @override
-  Widget? nextWidget([cmd]) => null;
+  Widget? nextWidget([cmd]) {
+    if (kDebugMode) {
+      print('nextWidget $cmd');
+    }
+    return null;
+  }
 
   @override
-  Future<void>? onResultBack([cmd]) => null;
+  Future<void>? onResultBack([cmd]) {
+    if (kDebugMode) {
+      print('onResultBack ${cmd?.data}');
+    }
+    return null;
+  }
 
   @override
-  Future<void>? onResultNext([cmd]) => null;
+  Future<void>? onResultNext([cmd]) {
+    if (kDebugMode) {
+      print('onResultNext $cmd');
+    }
+    return null;
+  }
 }
 
 class CatalogOptionsISheet extends ISheet {

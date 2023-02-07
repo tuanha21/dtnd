@@ -28,14 +28,10 @@ class AddCatalogISheet extends ISheet {
 
   @override
   IOverlay? next([UserCmd? cmd]) {
-    print(cmd);
     if (cmd is NextCmd) {
       var data = cmd.data as SavedCatalog;
       return CreateCatalogISheet(data);
     }
-    // if (cmd is BackCmd) {
-    //   return AddCatalogISheet();
-    // }
     return null;
   }
 
@@ -43,12 +39,8 @@ class AddCatalogISheet extends ISheet {
   Widget? nextWidget([UserCmd? cmd]) {
     if (cmd is NextCmd) {
       var data = cmd.data as SavedCatalog;
-
-      return CreateCatalogSheet(savedCatalog: data);
+      return CreateCatalogSheet(savedCatalog: data, isBack: true);
     }
-    // if (cmd is BackCmd) {
-    //   return const AddCatalogSheet();
-    // }
     return null;
   }
 
@@ -64,7 +56,9 @@ class AddCatalogISheet extends ISheet {
 }
 
 class AddCatalogSheet extends StatefulWidget {
-  const AddCatalogSheet({Key? key}) : super(key: key);
+  final SavedCatalog? initSavedCatalog;
+
+  const AddCatalogSheet({Key? key, this.initSavedCatalog}) : super(key: key);
 
   @override
   State<AddCatalogSheet> createState() => _AddCatalogSheetState();
@@ -81,6 +75,12 @@ class _AddCatalogSheetState extends State<AddCatalogSheet> {
 
   @override
   void initState() {
+    if (widget.initSavedCatalog != null) {
+      savedCatalog = widget.initSavedCatalog!;
+      localStorageService.putSavedCatalog(savedCatalog);
+      return;
+    }
+
     if (userService.token == null) {
       user = "default";
     } else {
@@ -104,17 +104,21 @@ class _AddCatalogSheetState extends State<AddCatalogSheet> {
         children: [
           const SheetHeader(title: "Chọn danh mục"),
           savedCatalog.catalogs.isNotEmpty
-              ? Expanded(
-                  child: ListView.separated(
-                      itemBuilder: (context, index) {
-                        var catalog = savedCatalog.catalogs[index];
-                        return _RowButton(tittle: catalog.name);
+              ? ListView.separated(
+                  shrinkWrap: true,
+                  itemBuilder: (context, index) {
+                    var catalog = savedCatalog.catalogs[index];
+                    return _RowButton(
+                      tittle: catalog.name,
+                      onTap: () {
+                        Navigator.pop(context, BackCmd(catalog));
                       },
-                      separatorBuilder: (context, index) {
-                        return const SizedBox(height: 10);
-                      },
-                      itemCount: savedCatalog.catalogs.length),
-                )
+                    );
+                  },
+                  separatorBuilder: (context, index) {
+                    return const SizedBox(height: 10);
+                  },
+                  itemCount: savedCatalog.catalogs.length)
               : _RowButton(
                   tittle: "Thêm danh mục",
                   onTap: () {
