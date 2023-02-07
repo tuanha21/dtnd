@@ -80,7 +80,7 @@ class CatalogOptionsISheet extends ISheet {
   Future<void>? onResultNext([cmd]) => null;
 }
 
-class DeleteCatalogIDialog extends IDialog {
+class DeleteCatalogIDialog extends ISheet {
   const DeleteCatalogIDialog(this.savedCatalog, this.catalog);
 
   final SavedCatalog savedCatalog;

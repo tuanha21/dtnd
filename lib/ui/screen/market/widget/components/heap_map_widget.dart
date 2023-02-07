@@ -179,12 +179,13 @@ class _HeapMapTreeState extends State<HeapMapTree> {
               }
               if (snapshot.connectionState == ConnectionState.done) {
                 var data = snapshot.data;
-                data?.removeWhere((element) => element.lot.value == 0);
+                if(data == null  || data.isEmpty) return const SizedBox();
+                data.removeWhere((element) => element.lot.value == 0);
                 return Container(
                     height: 200,
                     color: Colors.grey,
                     child: SfTreemap(
-                      dataCount: data!.length,
+                      dataCount: data.length,
                       weightValueMapper: (int index) {
                         return data[index].lot.value?.toDouble() ?? 0.0;
                       },

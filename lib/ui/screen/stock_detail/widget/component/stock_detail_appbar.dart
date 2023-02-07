@@ -7,6 +7,8 @@ import 'package:dtnd/ui/theme/app_textstyle.dart';
 import 'package:dtnd/ui/widget/svg_icon_button.dart';
 import 'package:flutter/material.dart';
 
+import '../../sheet/AddStockCatalog.dart';
+
 final appbarPaddingTop = WidgetsBinding.instance.window.viewPadding.top /
     WidgetsBinding.instance.window.devicePixelRatio;
 
@@ -15,8 +17,14 @@ class StockDetailAppbar extends SliverPersistentHeaderDelegate {
     required this.stockModel,
     this.onTap,
   });
+
   final VoidCallback? onTap;
   final StockModel stockModel;
+
+  void addCatalog(BuildContext context) async {
+    var res = await AddCatalogISheet().show(context, const AddCatalogSheet());
+  }
+
   @override
   Widget build(
       BuildContext context, double shrinkOffset, bool overlapsContent) {
@@ -89,8 +97,10 @@ class StockDetailAppbar extends SliverPersistentHeaderDelegate {
             ),
             actions: [
               SvgIconButton(
-                AppImages.search_appbar_icon,
-                onPressed: () {},
+                AppImages.add_square,
+                onPressed: () {
+                  addCatalog(context);
+                },
                 iconSize: 20,
                 color: Theme.of(context).colorScheme.onPrimary,
               ),
