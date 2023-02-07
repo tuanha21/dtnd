@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dtnd/=models=/local/local_catalog.dart';
 import 'package:dtnd/=models=/local/saved_catalog.dart';
 import 'package:dtnd/=models=/response/stock_model.dart';
@@ -17,13 +16,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import '../../../../../=models=/response/stock.dart';
+import '../../../../../generated/l10n.dart';
 import '../../../../../utilities/deboncer.dart';
 import '../../../../../utilities/logger.dart';
-import '../../../../theme/app_textstyle.dart';
-import '../../../../widget/icon/stock_icon.dart';
 import '../../logic/add_catalog_logic.dart';
 import '../sheet/catalog_options_sheet.dart';
 import '../sheet/create_catalog_sheet.dart';
+import '../widget/stock_component.dart';
+import '../widget/stock_widget_bottom.dart';
 
 class UserCatalogWidget extends StatefulWidget {
   const UserCatalogWidget({
@@ -160,6 +161,58 @@ class _UserCatalogWidgetState extends State<UserCatalogWidget> {
           ),
         ),
         const SizedBox(height: 16),
+        Container(
+          padding: const EdgeInsets.symmetric(vertical: 10),
+          child: Row(
+            children: [
+              Expanded(
+                flex: 2,
+                child: Text(
+                  "Mã CK",
+                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                      fontWeight: FontWeight.w700, color: AppColors.neutral_04),
+                ),
+              ),
+              Expanded(
+                flex: 2,
+                child: Align(
+                  alignment: Alignment.centerRight,
+                  child: Text(
+                    S.of(context).price,
+                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                        fontWeight: FontWeight.w600,
+                        color: AppColors.neutral_04),
+                  ),
+                ),
+              ),
+              Expanded(
+                flex: 3,
+                child: Align(
+                  alignment: Alignment.centerRight,
+                  child: Text(
+                    "<+/->",
+                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                        fontWeight: FontWeight.w600,
+                        color: AppColors.neutral_04),
+                  ),
+                ),
+              ),
+              Expanded(
+                flex: 3,
+                child: Align(
+                  alignment: Alignment.centerRight,
+                  child: Text(
+                    S.of(context).volumn,
+                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                        fontWeight: FontWeight.w600,
+                        color: AppColors.neutral_04),
+                  ),
+                ),
+              )
+            ],
+          ),
+        ),
+        const SizedBox(height: 10),
         FutureBuilder<List<StockModel>>(
             future: listStocks,
             builder: (context, snapshot) {
@@ -197,11 +250,10 @@ class _UserCatalogWidgetState extends State<UserCatalogWidget> {
                                 foregroundColor: Colors.white,
                                 icon: Icons.delete_outline,
                                 spacing: 0,
-                                label: 'Xóa mã',
                               ),
                             ],
                           ),
-                          child: StockWidgetChart(stockModel: list![index]));
+                          child: StockComponent(model: list![index]));
                     },
                     separatorBuilder: (context, index) {
                       return const Divider(
@@ -338,18 +390,18 @@ class BottomAddStock extends StatefulWidget {
 
 class _BottomAddStockState extends State<BottomAddStock> {
   final TextEditingController search = TextEditingController();
-  final IDataCenterService dataCenterService = DataCenterService();
+  final DataCenterService dataCenterService = DataCenterService();
 
-  StreamController<List<StockModel>> listStockController =
-      StreamController<List<StockModel>>.broadcast();
-
-  final _debouncer = Debouncer(milliseconds: 500);
+  StreamController<List<Stock>> listStockController =
+      StreamController<List<Stock>>.broadcast();
 
   Future<void> getHistory(String code) async {
     try {
-      var list = dataCenterService.searchStocksBySym(code);
-      var listStockModel = await dataCenterService
-          .getStockModelsFromStockCodes(list.map((e) => e.stockCode).toList());
+      var list = dataCenterService.listAllStock;
+      var listStockModel = list
+          .where((element) =>
+              element.stockCode.toLowerCase().contains(code.toString()))
+          .toList();
       listStockController.sink.add(listStockModel);
     } catch (e) {
       logger.e(e.toString());
@@ -403,9 +455,7 @@ class _BottomAddStockState extends State<BottomAddStock> {
               border: InputBorder.none,
               controller: search,
               onChanged: (value) {
-                _debouncer.run(() {
-                  getHistory(value);
-                });
+                getHistory(value);
               },
               suffixIcon: Padding(
                 padding: const EdgeInsets.only(right: 20),
@@ -414,8 +464,9 @@ class _BottomAddStockState extends State<BottomAddStock> {
               hintText: 'Tìm theo mã cổ phiếu, tên công ty',
             ),
             Expanded(
-              child: StreamBuilder<List<StockModel>>(
+              child: StreamBuilder<List<Stock>>(
                   stream: listStockController.stream,
+                  initialData: dataCenterService.listAllStock,
                   builder: (context, snapshot) {
                     if (snapshot.hasData) {
                       var list = snapshot.data;
@@ -427,19 +478,19 @@ class _BottomAddStockState extends State<BottomAddStock> {
                               stockModel: list[index],
                               onChanged: (value) {
                                 if (value &&
-                                    !widget.localCatalog.listStock.contains(
-                                        list[index].stock.stockCode)) {
+                                    !widget.localCatalog.listStock
+                                        .contains(list[index].stockCode)) {
                                   widget.localCatalog.listStock
-                                      .add(list[index].stock.stockCode);
+                                      .add(list[index].stockCode);
                                 } else if (!value &&
-                                    widget.localCatalog.listStock.contains(
-                                        list[index].stock.stockCode)) {
+                                    widget.localCatalog.listStock
+                                        .contains(list[index].stockCode)) {
                                   widget.localCatalog.listStock
-                                      .remove(list[index].stock.stockCode);
+                                      .remove(list[index].stockCode);
                                 }
                               },
                               initSelect: widget.localCatalog.listStock
-                                  .contains(list[index].stock.stockCode),
+                                  .contains(list[index].stockCode),
                             );
                           },
                           separatorBuilder: (context, index) {
@@ -469,122 +520,5 @@ class _BottomAddStockState extends State<BottomAddStock> {
         ),
       ),
     );
-  }
-}
-
-class StockWidgetChart extends StatefulWidget {
-  final StockModel stockModel;
-  final bool initSelect;
-  final ValueChanged<bool>? onChanged;
-
-  const StockWidgetChart(
-      {Key? key,
-      required this.stockModel,
-      this.onChanged,
-      this.initSelect = false})
-      : super(key: key);
-
-  @override
-  State<StockWidgetChart> createState() => _StockWidgetChartState();
-}
-
-class _StockWidgetChartState extends State<StockWidgetChart> {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 22.5),
-      decoration: const BoxDecoration(color: AppColors.light_bg),
-      child: Row(
-        children: [
-          StockIcon(
-            stockCode: widget.stockModel.stock.stockCode,
-          ),
-          const SizedBox(width: 8),
-          Expanded(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  widget.stockModel.stock.stockCode,
-                  style: Theme.of(context)
-                      .textTheme
-                      .titleSmall!
-                      .copyWith(fontWeight: FontWeight.w600),
-                ),
-                Text(
-                  widget.stockModel.stock.nameShort ?? "",
-                  style: AppTextStyle.labelMedium_12
-                      .copyWith(color: AppColors.neutral_03),
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ],
-            ),
-          ),
-          Align(
-            alignment: Alignment.centerRight,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Text(
-                  '${widget.stockModel.stockData.lastPrice.value}',
-                  style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                      fontWeight: FontWeight.w600,
-                      fontSize: 14,
-                      color: widget.stockModel.stockData.color),
-                ),
-                Text(
-                  '(-${widget.stockModel.stockData.changePc.value}%)',
-                  style: AppTextStyle.labelMedium_12.copyWith(
-                      color: widget.stockModel.stockData.color, fontSize: 10),
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(width: 16),
-          AddStockIcon(initAdd: widget.initSelect, onChanged: widget.onChanged)
-        ],
-      ),
-    );
-  }
-}
-
-class AddStockIcon extends StatefulWidget {
-  final bool initAdd;
-  final ValueChanged<bool>? onChanged;
-
-  const AddStockIcon({Key? key, required this.initAdd, this.onChanged})
-      : super(key: key);
-
-  @override
-  State<AddStockIcon> createState() => _AddStockIconState();
-}
-
-class _AddStockIconState extends State<AddStockIcon> {
-  bool isAdd = false;
-
-  @override
-  void initState() {
-    isAdd = widget.initAdd;
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Visibility(
-        visible: widget.onChanged != null,
-        child: GestureDetector(
-            onTap: () {
-              setState(() {
-                isAdd = !isAdd;
-                widget.onChanged?.call(isAdd);
-              });
-            },
-            child: Icon(
-              isAdd ? Icons.check_circle : Icons.add_circle,
-              color: isAdd ? AppColors.primary_01 : AppColors.neutral_04,
-            )));
   }
 }
