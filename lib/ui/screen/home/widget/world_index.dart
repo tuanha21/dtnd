@@ -4,6 +4,7 @@ import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_textstyle.dart';
 import 'package:dtnd/utilities/num_utils.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
 class WorldIndexPanel extends StatefulWidget {
@@ -59,6 +60,13 @@ class HomeWorldIndexItem extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
+                  SizedBox.square(
+                    dimension: 15,
+                    child: SvgPicture.asset(
+                      'assets/images/${data.iDSYMBOL}.svg',
+                    ),
+                  ),
+                  const SizedBox(width: 5),
                   Text(
                     data.nAME ?? "",
                     style: Theme.of(context)

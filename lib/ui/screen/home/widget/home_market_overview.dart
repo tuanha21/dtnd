@@ -10,7 +10,6 @@ import 'package:dtnd/ui/screen/stock_detail/stock_detail_screen.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_textstyle.dart';
 import 'package:dtnd/ui/widget/icon/stock_icon.dart';
-import 'package:dtnd/utilities/extension.dart';
 import 'package:dtnd/utilities/num_utils.dart';
 import 'package:dtnd/utilities/responsive.dart';
 import 'package:dtnd/utilities/time_utils.dart';
@@ -32,6 +31,8 @@ class _HomeMarketOverviewState extends State<HomeMarketOverview>
   final HomeController homeController = HomeController();
   late final TabController _tabController;
 
+  int tab = 0;
+
   @override
   void initState() {
     _tabController = TabController(length: 4, vsync: this);
@@ -46,8 +47,7 @@ class _HomeMarketOverviewState extends State<HomeMarketOverview>
           child: Text(S.of(context).loading),
         );
       }
-      final width = MediaQuery.of(context).size.width;
-      final data;
+      final List<StockModel> data;
       switch (_tabController.index) {
         case 1:
           data = homeController.priceIncreaseToday;
@@ -107,7 +107,7 @@ class _HomeMarketOverviewState extends State<HomeMarketOverview>
                 onTap: (value) async {
                   setState(() {});
                   await homeController.changeList(data);
-                  setState(() {});
+                  // setState(() {});
                 },
                 tabs: <Widget>[
                   const Text("🔥HOT"),
@@ -176,15 +176,8 @@ class HomeMarketOverviewItem extends StatelessWidget {
                   ),
                   ObxValue<Rx<num?>>(
                     (lastPrice) {
-                      return Text.rich(
-                        TextSpan(children: [
-                          WidgetSpan(
-                              child: data.stockData.prefixIcon(size: 12)),
-                          TextSpan(
-                            text: " ${data.stockData.changePc}%",
-                          )
-                        ]),
-                        maxLines: 1,
+                      return Text(
+                        "${data.stockData.changePc}%",
                         style: AppTextStyle.labelMedium_12.copyWith(
                           fontWeight: FontWeight.w600,
                           color: data.stockData.color,
@@ -225,12 +218,24 @@ class HomeMarketOverviewItem extends StatelessWidget {
                   //   },
                   //   data.stockData.lastPrice,
                   // ),
-                  Text(
-                    "${data.stockData.lastPrice}",
-                    style: AppTextStyle.labelMedium_12.copyWith(
-                      fontWeight: FontWeight.w600,
-                      color: data.stockData.color,
-                    ),
+                  ObxValue<Rx<num?>>(
+                    (lastPrice) {
+                      return Text.rich(
+                        TextSpan(children: [
+                          WidgetSpan(
+                              child: data.stockData.prefixIcon(size: 12)),
+                          TextSpan(
+                            text: " ${data.stockData.lastPrice}",
+                          )
+                        ]),
+                        maxLines: 1,
+                        style: AppTextStyle.labelMedium_12.copyWith(
+                          fontWeight: FontWeight.w600,
+                          color: data.stockData.color,
+                        ),
+                      );
+                    },
+                    data.stockData.lastPrice,
                   ),
 
                   Obx(() {

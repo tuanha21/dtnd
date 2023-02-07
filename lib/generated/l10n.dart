@@ -450,6 +450,36 @@ class S {
     );
   }
 
+  /// `Opening`
+  String get status_open {
+    return Intl.message(
+      'Opening',
+      name: 'status_open',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Closed`
+  String get status_close {
+    return Intl.message(
+      'Closed',
+      name: 'status_close',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Intermission`
+  String get status_intermission {
+    return Intl.message(
+      'Intermission',
+      name: 'status_intermission',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Input password`
   String get please_input_password {
     return Intl.message(

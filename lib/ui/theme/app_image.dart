@@ -125,7 +125,7 @@ class AppImages {
       "assets/home_icon/notification.png";
   static const String home_icon_light = "assets/home_icon/light.png";
   static const String home_icon_100 = "assets/home_icon/100.png";
-  // static const String home_icon_ = "assets/home_icon/wallet_2.png";
+  static const String home_icon_clock = "assets/home_icon/clock.png";
 
   /// BG
   static const String home_asset_card_light_bg =

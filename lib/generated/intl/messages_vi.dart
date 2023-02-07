@@ -312,6 +312,9 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("KL mua chờ về"),
         "something_went_wrong":
             MessageLookupByLibrary.simpleMessage("Đã có lỗi xảy ra"),
+        "status_close": MessageLookupByLibrary.simpleMessage("Đóng cửa"),
+        "status_intermission": MessageLookupByLibrary.simpleMessage("Tạm nghỉ"),
+        "status_open": MessageLookupByLibrary.simpleMessage("Mở cửa"),
         "stock_already_exist": MessageLookupByLibrary.simpleMessage(
             "Mã đã tồn tại trong danh mục"),
         "stock_trading":

@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:dtnd/=models=/index.dart';
+import 'package:dtnd/=models=/response/index_detail.dart';
 import 'package:dtnd/=models=/response/index_model.dart';
 import 'package:dtnd/=models=/response/world_index_model.dart';
 import 'package:dtnd/config/service/app_services.dart';
@@ -11,6 +12,7 @@ import 'package:dtnd/ui/screen/home/home_controller.dart';
 import 'package:dtnd/ui/screen/home/widget/world_index.dart';
 import 'package:dtnd/ui/screen/stock_detail/widget/k_chart.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
+import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:dtnd/ui/theme/app_textstyle.dart';
 import 'package:dtnd/utilities/num_utils.dart';
 import 'package:flutter/material.dart';
@@ -189,6 +191,18 @@ class _HomeMarketTodayState extends State<HomeMarketToday>
                           )
                         ],
                         animate: false,
+                        behaviors: [
+                          charts.RangeAnnotation([
+                            if (cwIndex.openPoint != null)
+                              charts.LineAnnotationSegment(cwIndex.openPoint!,
+                                  charts.RangeAnnotationAxisType.measure,
+                                  endLabel:
+                                      NumUtils.formatDouble(cwIndex.openPoint),
+                                  // startLabel: 'Measure 1 End',
+                                  dashPattern: [5, 5],
+                                  color: charts.MaterialPalette.gray.shade300),
+                          ]),
+                        ],
                         // Provide a tickProviderSpec which does NOT require that zero is
                         // included.
                         primaryMeasureAxis: const charts.NumericAxisSpec(
@@ -196,10 +210,7 @@ class _HomeMarketTodayState extends State<HomeMarketToday>
                             tickProviderSpec:
                                 charts.BasicNumericTickProviderSpec(
                                     zeroBound: false)),
-                        domainAxis: const charts.DateTimeAxisSpec(
-                            // Make sure that we draw the domain axis line.
-                            // But don't draw anything else.
-                            renderSpec: charts.NoneRenderSpec()),
+
                         defaultRenderer:
                             charts.LineRendererConfig(includeArea: true),
                       ),
@@ -236,68 +247,77 @@ class HomeIndexItem extends StatelessWidget {
         onSelected?.call(data.index);
       };
     }
-    return Obx(() {
-      return Material(
-        child: InkWell(
-          onTap: onTap,
-          borderRadius: const BorderRadius.all(Radius.circular(8)),
-          child: Ink(
-            width: 148,
-            height: 64,
-            padding: const EdgeInsets.all(12.0),
-            decoration: BoxDecoration(
-              border: border,
-              borderRadius: const BorderRadius.all(Radius.circular(8)),
-              color: AppColors.neutral_07,
-            ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      data.index.exchangeName,
-                      style: Theme.of(context)
-                          .textTheme
-                          .titleSmall!
-                          .copyWith(fontWeight: FontWeight.w600),
-                    ),
-                    Builder(builder: (context) {
-                      return SizedBox.square(
-                        dimension: 20,
-                        child: HomeIndexItemChart(data: [
-                          data.indexDetail.upQuant.toInt(),
-                          data.indexDetail.downQuant.toInt(),
-                          data.indexDetail.refQuant.toInt(),
-                        ]),
-                      );
-                    }),
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
+    return Material(
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: const BorderRadius.all(Radius.circular(8)),
+        child: Ink(
+          width: 148,
+          height: 64,
+          padding: const EdgeInsets.all(12.0),
+          decoration: BoxDecoration(
+            border: border,
+            borderRadius: const BorderRadius.all(Radius.circular(8)),
+            color: AppColors.neutral_07,
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    data.index.exchangeName,
+                    style: Theme.of(context)
+                        .textTheme
+                        .titleSmall!
+                        .copyWith(fontWeight: FontWeight.w600),
+                  ),
+                  Obx(() {
+                    return SizedBox.square(
+                      dimension: 20,
+                      child: HomeIndexItemChart(data: [
+                        data.indexDetail.upQuant.toInt(),
+                        data.indexDetail.downQuant.toInt(),
+                        data.indexDetail.refQuant.toInt(),
+                      ]),
+                    );
+                  }),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Obx(() {
+                    return Text(
                       "${data.indexDetail.cIndex.value}",
                       style: AppTextStyle.labelMedium_12.copyWith(
                         fontWeight: FontWeight.w600,
                         color: data.indexDetail.color,
                       ),
-                    ),
-                    Text(
+                    );
+                  }),
+                  Obx(() {
+                    return Text(
                       "${data.indexDetail.change} (${data.indexDetail.changePc})",
                       style: AppTextStyle.bodySmall_8.copyWith(
                         fontWeight: FontWeight.w600,
                         color: data.indexDetail.color,
                       ),
-                    ),
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Text(
+                    );
+                  }),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Obx(() => SizedBox.square(
+                        dimension: 12,
+                        child: Image.asset(AppImages.home_icon_clock,
+                            color: data.indexDetail.status.value.color),
+                      )),
+                  Obx(() {
+                    return Text(
                       NumUtils.getMoneyWithPostfix(
                           (data.indexDetail.value.value ?? 0) * 1000000,
                           context),
@@ -305,15 +325,15 @@ class HomeIndexItem extends StatelessWidget {
                         fontWeight: FontWeight.w600,
                         color: AppColors.neutral_03,
                       ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
+                    );
+                  }),
+                ],
+              ),
+            ],
           ),
         ),
-      );
-    });
+      ),
+    );
   }
 }
 

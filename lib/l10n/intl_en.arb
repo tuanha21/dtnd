@@ -44,6 +44,10 @@
     "bank": "Bank",
     "accumulate": "Accumulate",
 
+    "status_open": "Opening",
+    "status_close": "Closed",
+    "status_intermission": "Intermission",
+
     "please_input_password": "Input password",
     "pass_not_match": "Password not match",
 

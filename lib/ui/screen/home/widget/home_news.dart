@@ -119,13 +119,17 @@ class HomeNewsCard extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Expanded(
-                      child: Text(
-                        stockNews.title ?? "Title",
-                        maxLines: 2,
-                        textAlign: TextAlign.left,
-                        style: Theme.of(context).textTheme.titleSmall,
-                      ),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Text(
+                            stockNews.title ?? "Title",
+                            maxLines: 2,
+                            textAlign: TextAlign.left,
+                            style: Theme.of(context).textTheme.titleSmall,
+                          ),
+                        ),
+                      ],
                     ),
                     Row(
                       children: [
@@ -146,7 +150,8 @@ class HomeNewsCard extends StatelessWidget {
                           child: Text(
                             stockNews.publishTime ?? "",
                             textAlign: TextAlign.end,
-                            style: AppTextStyle.bottomNavLabel,
+                            style: AppTextStyle.bottomNavLabel
+                                .copyWith(color: AppColors.neutral_03),
                           ),
                         )
                         // const SizedBox(width: 5),

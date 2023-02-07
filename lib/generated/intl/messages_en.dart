@@ -315,6 +315,10 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Sold returning vol"),
         "something_went_wrong":
             MessageLookupByLibrary.simpleMessage("Something went erong"),
+        "status_close": MessageLookupByLibrary.simpleMessage("Closed"),
+        "status_intermission":
+            MessageLookupByLibrary.simpleMessage("Intermission"),
+        "status_open": MessageLookupByLibrary.simpleMessage("Opening"),
         "stock_already_exist":
             MessageLookupByLibrary.simpleMessage("This stock is already exist"),
         "stock_trading": MessageLookupByLibrary.simpleMessage("Stock trading"),
