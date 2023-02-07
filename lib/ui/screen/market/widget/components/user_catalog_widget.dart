@@ -354,7 +354,17 @@ class _UserCatalogWidgetState extends State<UserCatalogWidget> {
     var res = await CatalogOptionsISheet(savedCatalog, catalog).show(context,
         CatalogOptionsSheet(savedCatalog: savedCatalog, catalog: catalog));
     if (res.runtimeType == NextCmd) {
-      setState(() {});
+      setState(() {
+        if (res?.data == true) {
+          if (savedCatalog.catalogs.isNotEmpty) {
+            currentCatalog = savedCatalog.catalogs.last;
+            listStocks = dataCenterService
+                .getStockModelsFromStockCodes(currentCatalog.listStock);
+          } else {
+            listStocks = Future.value([]);
+          }
+        }
+      });
     }
   }
 
@@ -373,7 +383,7 @@ class _UserCatalogWidgetState extends State<UserCatalogWidget> {
   void addCatalog() async {
     var res = await CreateCatalogISheet(savedCatalog)
         .show(context, CreateCatalogSheet(savedCatalog: savedCatalog));
-    if (res.runtimeType == BackCmd) {
+    if (res.runtimeType == BackCmd && res?.data != null) {
       setState(() {
         localStorageService.putSavedCatalog(savedCatalog);
         currentCatalog = savedCatalog.catalogs.last;

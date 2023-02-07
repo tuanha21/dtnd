@@ -63,7 +63,7 @@ class _DeleteCatalogDialogState extends State<DeleteCatalogDialog> {
                             LocalStorageService();
                         localStorageService
                             .putSavedCatalog(widget.savedCatalog);
-                        Navigator.of(context).pop(const NextCmd());
+                        Navigator.of(context).pop(const NextCmd(true));
                       } catch (e) {
                         logger.e(e.toString());
                       }
