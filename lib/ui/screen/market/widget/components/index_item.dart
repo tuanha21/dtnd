@@ -96,12 +96,17 @@ class MarketIndexItem extends StatelessWidget {
                   ],
                 ),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      NumUtils.getMoneyWithPostfix(
-                          (res.value ?? 0) * 1000000,
-                          context),
+                      "${NumUtils.formatInteger((res.value ?? 0) / 1000)} tỷ",
+                      style: AppTextStyle.labelSmall_11.copyWith(
+                        fontWeight: FontWeight.w600,
+                        color: AppColors.neutral_03,
+                      ),
+                    ),
+                    Text(
+                      res.statusVN,
                       style: AppTextStyle.labelSmall_11.copyWith(
                         fontWeight: FontWeight.w600,
                         color: AppColors.neutral_03,

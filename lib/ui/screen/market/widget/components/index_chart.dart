@@ -89,7 +89,7 @@ class _IndexChartState extends State<IndexChart> {
               }
               if(snapshot.connectionState == ConnectionState.done){
                 var listRes = snapshot.data;
-                return Padding(
+                  return Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: SizedBox.fromSize(
                     size: Size(MediaQuery.of(context).size.width, 64),

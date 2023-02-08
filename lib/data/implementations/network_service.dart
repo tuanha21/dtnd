@@ -250,7 +250,7 @@ class NetworkService implements INetworkService {
 
   @override
   Future<List<IndexDetailResponse>> getListIndexDetail() async {
-    const String path = "getlistindexdetail/10,11,02,03";
+    const String path = "getlistindexdetail/11,10,02,03";
     final http.Response response = await client.get(url_board(path));
     final List<dynamic> responseBody = decode(response.bodyBytes);
     if (responseBody.isEmpty) throw Exception();

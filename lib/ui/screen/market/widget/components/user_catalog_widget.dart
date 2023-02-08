@@ -51,6 +51,8 @@ class _UserCatalogWidgetState extends State<UserCatalogWidget> {
   int get currentCatalogIndex => savedCatalog.catalogs
       .indexWhere((element) => element.name == currentCatalog.name);
 
+  bool isPercent = false;
+
   @override
   void initState() {
     super.initState();
@@ -186,13 +188,20 @@ class _UserCatalogWidgetState extends State<UserCatalogWidget> {
               ),
               Expanded(
                 flex: 3,
-                child: Align(
-                  alignment: Alignment.centerRight,
-                  child: Text(
-                    "<+/->",
-                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        fontWeight: FontWeight.w600,
-                        color: AppColors.neutral_04),
+                child: GestureDetector(
+                  onTap: (){
+                    setState(() {
+                      isPercent = !isPercent;
+                    });
+                  },
+                  child: Align(
+                    alignment: Alignment.centerRight,
+                    child: Text(
+                      isPercent ? "<%>" : "<+/->",
+                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                          fontWeight: FontWeight.w600,
+                          color: AppColors.neutral_04),
+                    ),
                   ),
                 ),
               ),
@@ -256,7 +265,7 @@ class _UserCatalogWidgetState extends State<UserCatalogWidget> {
                               ),
                             ],
                           ),
-                          child: StockComponent(model: stock));
+                          child: StockComponent(model: stock, isPercent: isPercent,));
                     },
                     separatorBuilder: (context, index) {
                       return const Divider(

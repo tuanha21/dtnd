@@ -13,7 +13,6 @@ import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/screen/market/market_controller.dart';
 import 'package:dtnd/ui/screen/market/widget/components/deep_market_chart.dart';
 import 'package:dtnd/ui/screen/market/widget/components/index_chart.dart';
-import 'package:dtnd/ui/screen/market/widget/components/not_signin_catalog_widget.dart';
 import 'package:dtnd/ui/screen/market/widget/components/user_catalog_widget.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/widget/section/section_with_title.dart';

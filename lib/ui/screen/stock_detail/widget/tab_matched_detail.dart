@@ -14,12 +14,8 @@ class TabMatchedDetail extends StatefulWidget {
   const TabMatchedDetail({
     super.key,
     required this.stockModel,
-    required this.scrollController,
-    required this.panelController,
   });
 
-  final ScrollController scrollController;
-  final PanelController panelController;
   final StockModel stockModel;
   @override
   State<TabMatchedDetail> createState() => _TabMatchedDetailState();
@@ -114,8 +110,6 @@ class _TabMatchedDetailState extends State<TabMatchedDetail> {
             context: context,
             removeTop: true,
             child: ListView(
-              physics: PanelScrollPhysics(controller: widget.panelController),
-              controller: widget.scrollController,
               shrinkWrap: true,
               children: [
                 for (final IndayMatchedOrder element

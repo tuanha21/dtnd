@@ -11,72 +11,86 @@ class BoundPrice extends StatelessWidget {
     super.key,
     required this.stockModel,
   });
+
   final StockModel stockModel;
+
   @override
   Widget build(BuildContext context) {
     final themeMode = AppService.instance.themeMode.value;
-    return Container(
-      padding: const EdgeInsets.symmetric(vertical: 6),
-      decoration: BoxDecoration(
-        color: themeMode.isDark ? AppColors.neutral_01 : AppColors.neutral_06,
-        borderRadius: const BorderRadius.all(
-          Radius.circular(4),
-        ),
-      ),
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 6,horizontal: 16),
       child: Row(
         children: [
           Expanded(
-            child: Column(
-              children: [
-                BoundPriceElement(
-                  title: S.of(context).low,
-                  value: stockModel.stockData.lowPrice.value.toString(),
-                  valueColor: stockModel.stockData
-                      .getPriceColor(stockModel.stockData.lowPrice.value ?? 0),
-                ),
-                const SizedBox(height: 6),
-                BoundPriceElement(
-                  title: S.of(context).fbuy,
-                  value: NumUtils.formatInteger10(
-                      stockModel.stockData.fBVol.value, "-"),
-                ),
-              ],
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  BoundPriceElement(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    title: S.of(context).low,
+                    value: stockModel.stockData.lowPrice.value.toString(),
+                    valueColor: stockModel.stockData.getPriceColor(
+                        stockModel.stockData.lowPrice.value ?? 0),
+                  ),
+                  const SizedBox(height: 6),
+                  BoundPriceElement(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    title: S.of(context).fbuy,
+                    value: NumUtils.formatInteger10(
+                        stockModel.stockData.fBVol.value, "-"),
+                  ),
+                ],
+              ),
             ),
           ),
           Expanded(
-            child: Column(
-              children: [
-                BoundPriceElement(
-                  title: S.of(context).average,
-                  value: stockModel.stockData.avePrice.value.toString(),
-                  valueColor: stockModel.stockData
-                      .getPriceColor(stockModel.stockData.avePrice.value ?? 0),
-                ),
-                const SizedBox(height: 6),
-                BoundPriceElement(
-                  title: S.of(context).froom,
-                  value: NumUtils.formatInteger(
-                      stockModel.stockData.fRoom.value, "-"),
-                ),
-              ],
+            child: Align(
+              alignment: Alignment.center,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  BoundPriceElement(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    title: S.of(context).average,
+                    value: stockModel.stockData.avePrice.value.toString(),
+                    valueColor: stockModel.stockData.getPriceColor(
+                        stockModel.stockData.avePrice.value ?? 0),
+                  ),
+                  const SizedBox(height: 6),
+                  BoundPriceElement(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    title: S.of(context).froom,
+                    value: NumUtils.formatInteger(
+                        stockModel.stockData.fRoom.value, "-"),
+                  ),
+                ],
+              ),
             ),
           ),
           Expanded(
-            child: Column(
-              children: [
-                BoundPriceElement(
-                  title: S.of(context).high,
-                  value: stockModel.stockData.highPrice.value.toString(),
-                  valueColor: stockModel.stockData
-                      .getPriceColor(stockModel.stockData.highPrice.value ?? 0),
-                ),
-                const SizedBox(height: 6),
-                BoundPriceElement(
-                  title: S.of(context).fsell,
-                  value: NumUtils.formatInteger10(
-                      stockModel.stockData.fSVolume.value, "-"),
-                ),
-              ],
+            child: Align(
+              alignment: Alignment.centerRight,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  BoundPriceElement(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    title: S.of(context).high,
+                    value: stockModel.stockData.highPrice.value.toString(),
+                    valueColor: stockModel.stockData.getPriceColor(
+                        stockModel.stockData.highPrice.value ?? 0),
+                  ),
+                  const SizedBox(height: 6),
+                  BoundPriceElement(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    title: S.of(context).fsell,
+                    value: NumUtils.formatInteger10(
+                        stockModel.stockData.fSVolume.value, "-"),
+                  ),
+                ],
+              ),
             ),
           ),
         ],
@@ -91,13 +105,18 @@ class BoundPriceElement extends StatelessWidget {
     required this.title,
     required this.value,
     this.valueColor,
+    this.crossAxisAlignment = CrossAxisAlignment.center,
   });
+
   final String title;
   final String value;
   final Color? valueColor;
+  final CrossAxisAlignment crossAxisAlignment;
+
   @override
   Widget build(BuildContext context) {
     return Column(
+      crossAxisAlignment: crossAxisAlignment,
       children: [
         Text(
           title,

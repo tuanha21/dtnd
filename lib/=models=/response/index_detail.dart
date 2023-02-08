@@ -168,9 +168,31 @@ class IndexDetailResponse {
 
   String get statusVN {
     if (status == null) return "";
-    if (status?.toUpperCase() == "O") return "Mở cửa";
-    if (status?.toUpperCase() == "I") return "Nghỉ trưa";
-    if (status?.toUpperCase() == "C") return "Đóng cửa";
+    if (mc == 10 || mc == 11) {
+      if (status?.toUpperCase() == "O") return "Mở cửa";
+      if (status?.toUpperCase() == "P") return "ATO";
+      if (status?.toUpperCase() == "I") return "Nghỉ trưa";
+      if (status?.toUpperCase() == "A") return "ATC";
+      if (status?.toUpperCase() == "C" || status?.toUpperCase() == "K") {
+        return "Đóng cửa";
+      }
+      return "Đóng cửa";
+    }
+    if (mc == 2) {
+      if (status?.toUpperCase() == "O") return "Mở cửa";
+      if (status?.toUpperCase() == "I") return "Nghỉ trưa";
+      if (status?.toUpperCase() == "A") return "ATC";
+      if (status?.toUpperCase() == "C" || status?.toUpperCase() == "K") {
+        return "Đóng cửa";
+      }
+      return "Đóng cửa";
+    }
+    if (mc == 3) {
+      if (status?.toUpperCase() == "O") return "Mở cửa";
+      if (status?.toUpperCase() == "I") return "Nghỉ trưa";
+      return "Đóng cửa";
+    }
+
     return "";
   }
 

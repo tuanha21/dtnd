@@ -18,107 +18,81 @@ class ThreePrices extends StatelessWidget {
     super.key,
     required this.stockModel,
   });
+
   final StockModel stockModel;
+
   @override
   Widget build(BuildContext context) {
     return ObxValue<Rx<ThemeMode>>(
       (themeMode) {
-        return Container(
-          decoration: BoxDecoration(
-            color: themeMode.value.isDark
-                ? Colors.transparent
-                : AppColors.neutral_06,
-            borderRadius: const BorderRadius.all(
-              Radius.circular(4),
+        return Row(
+          children: [
+            Expanded(
+              child: Column(
+                children: [
+                  ThreePriceHeader(
+                    side: Side.buy,
+                    themeMode: themeMode.value,
+                  ),
+                  const SizedBox(height: 8),
+                  ThreePriceElement(
+                    themeMode: themeMode.value,
+                    side: Side.buy,
+                    totalVol: stockModel.stockData.getTotalVol(Side.buy),
+                    data: stockModel.stockData.g1.value,
+                  ),
+                  const SizedBox(height: 8),
+                  ThreePriceElement(
+                    themeMode: themeMode.value,
+                    side: Side.buy,
+                    totalVol: stockModel.stockData.getTotalVol(Side.buy),
+                    data: stockModel.stockData.g2.value,
+                  ),
+                  const SizedBox(height: 8),
+                  ThreePriceElement(
+                    themeMode: themeMode.value,
+                    side: Side.buy,
+                    totalVol: stockModel.stockData.getTotalVol(Side.buy),
+                    data: stockModel.stockData.g3.value,
+                  ),
+                  const SizedBox(height: 8),
+                ],
+              ),
             ),
-          ),
-          child: Row(
-            children: [
-              Expanded(
-                child: Column(
-                  children: [
-                    ThreePriceHeader(
-                      side: Side.buy,
-                      themeMode: themeMode.value,
-                    ),
-                    const SizedBox(
-                      height: 8,
-                    ),
-                    ThreePriceElement(
-                      themeMode: themeMode.value,
-                      side: Side.buy,
-                      totalVol: stockModel.stockData.getTotalVol(Side.buy),
-                      data: stockModel.stockData.g1.value,
-                    ),
-                    const SizedBox(
-                      height: 8,
-                    ),
-                    ThreePriceElement(
-                      themeMode: themeMode.value,
-                      side: Side.buy,
-                      totalVol: stockModel.stockData.getTotalVol(Side.buy),
-                      data: stockModel.stockData.g2.value,
-                    ),
-                    const SizedBox(
-                      height: 8,
-                    ),
-                    ThreePriceElement(
-                      themeMode: themeMode.value,
-                      side: Side.buy,
-                      totalVol: stockModel.stockData.getTotalVol(Side.buy),
-                      data: stockModel.stockData.g3.value,
-                    ),
-                    const SizedBox(
-                      height: 8,
-                    ),
-                  ],
-                ),
+            const SizedBox(width: 6),
+            Expanded(
+              child: Column(
+                children: [
+                  ThreePriceHeader(
+                    side: Side.sell,
+                    themeMode: themeMode.value,
+                  ),
+                  const SizedBox(height: 8),
+                  ThreePriceElement(
+                    themeMode: themeMode.value,
+                    side: Side.sell,
+                    totalVol: stockModel.stockData.getTotalVol(Side.sell),
+                    data: stockModel.stockData.g4.value,
+                  ),
+                  const SizedBox(height: 8),
+                  ThreePriceElement(
+                    themeMode: themeMode.value,
+                    side: Side.sell,
+                    totalVol: stockModel.stockData.getTotalVol(Side.sell),
+                    data: stockModel.stockData.g5.value,
+                  ),
+                  const SizedBox(height: 8),
+                  ThreePriceElement(
+                    themeMode: themeMode.value,
+                    side: Side.sell,
+                    totalVol: stockModel.stockData.getTotalVol(Side.sell),
+                    data: stockModel.stockData.g6.value,
+                  ),
+                  const SizedBox(height: 8),
+                ],
               ),
-              const SizedBox(
-                width: 2,
-              ),
-              Expanded(
-                child: Column(
-                  children: [
-                    ThreePriceHeader(
-                      side: Side.sell,
-                      themeMode: themeMode.value,
-                    ),
-                    const SizedBox(
-                      height: 8,
-                    ),
-                    ThreePriceElement(
-                      themeMode: themeMode.value,
-                      side: Side.sell,
-                      totalVol: stockModel.stockData.getTotalVol(Side.sell),
-                      data: stockModel.stockData.g4.value,
-                    ),
-                    const SizedBox(
-                      height: 8,
-                    ),
-                    ThreePriceElement(
-                      themeMode: themeMode.value,
-                      side: Side.sell,
-                      totalVol: stockModel.stockData.getTotalVol(Side.sell),
-                      data: stockModel.stockData.g5.value,
-                    ),
-                    const SizedBox(
-                      height: 8,
-                    ),
-                    ThreePriceElement(
-                      themeMode: themeMode.value,
-                      side: Side.sell,
-                      totalVol: stockModel.stockData.getTotalVol(Side.sell),
-                      data: stockModel.stockData.g6.value,
-                    ),
-                    const SizedBox(
-                      height: 8,
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
+            ),
+          ],
         );
       },
       AppService.instance.themeMode,
@@ -132,35 +106,51 @@ class ThreePriceHeader extends StatelessWidget {
     required this.side,
     required this.themeMode,
   });
+
   final Side side;
   final ThemeMode themeMode;
+
   @override
   Widget build(BuildContext context) {
+    var bodySmall = Theme.of(context).textTheme.bodySmall?.copyWith(
+        fontSize: 12,
+        color: const Color.fromRGBO(136, 148, 170, 1),
+        fontWeight: FontWeight.w600);
     const Radius radius = Radius.circular(4);
     List<Widget> rowChildren;
     BorderRadius borderRadius;
     if (side.isBuy) {
-      rowChildren = [Text(S.of(context).volumn), Text(side.name(context))];
-      borderRadius = const BorderRadius.only(
-        topLeft: radius,
-      );
+      rowChildren = [
+        Text(S.of(context).volumn, style: bodySmall),
+        Text(
+          side.name(context),
+          style: bodySmall?.copyWith(
+              color: const Color.fromRGBO(105, 224, 199, 1)),
+        )
+      ];
+      borderRadius = const BorderRadius.only(topLeft: radius);
     } else {
-      rowChildren = [Text(side.name(context)), Text(S.of(context).volumn)];
+      rowChildren = [
+        Text(
+          side.name(context),
+          style:
+              bodySmall?.copyWith(color: const Color.fromRGBO(255, 117, 76, 1)),
+        ),
+        Text(
+          S.of(context).volumn,
+          style: bodySmall,
+        )
+      ];
       borderRadius = const BorderRadius.only(
         topRight: radius,
       );
     }
-    return Container(
-      decoration: BoxDecoration(
-        color: themeMode.isLight ? AppColors.neutral_05 : AppColors.neutral_01,
-        borderRadius: borderRadius,
-      ),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 4),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: rowChildren,
-        ),
+    return Padding(
+      padding: EdgeInsets.only(
+          left: side.isBuy ? 16 : 0, right: !side.isBuy ? 16 : 0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: rowChildren,
       ),
     );
   }
@@ -174,6 +164,7 @@ class ThreePriceElement extends StatefulWidget {
     required this.totalVol,
     this.data,
   });
+
   final Side side;
   final ThemeMode themeMode;
   final num totalVol;
@@ -236,16 +227,23 @@ class _ThreePriceElementState extends State<ThreePriceElement>
 
   @override
   Widget build(BuildContext context) {
-    final themeMode = AppService.instance.themeMode.value;
+    return Padding(
+      padding: EdgeInsets.only(
+          left: widget.side.isBuy ? 16 : 0, right: !widget.side.isBuy ? 16 : 0),
+      child: LayoutBuilder(
+        builder: (context, ctx) {
+          return Row(
+            children: rowChildren(ctx),
+          );
+        },
+      ),
+    );
+  }
+
+  List<Widget> rowChildren(BoxConstraints ctx) {
     List<Widget> rowChildren;
     if (double.tryParse(widget.price) == 0) {
-      rowChildren = [
-        Text(
-          "",
-          style:
-              AppTextStyle.labelSmall_10.copyWith(color: AppColors.neutral_04),
-        ),
-      ];
+      rowChildren = [];
     } else if (widget.side.isBuy) {
       rowChildren = [
         Text(
@@ -253,17 +251,38 @@ class _ThreePriceElementState extends State<ThreePriceElement>
           style:
               AppTextStyle.labelSmall_10.copyWith(color: AppColors.neutral_04),
         ),
+        const Spacer(),
         Text(
           widget.price.toString(),
           style: AppTextStyle.labelSmall_10.copyWith(color: color),
+        ),
+        const SizedBox(width: 8),
+        Container(
+          width: widget.ratio * ctx.maxWidth,
+          height: 5,
+          decoration: const BoxDecoration(
+              color: AppColors.accent_dark_01,
+              borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(4), bottomLeft: Radius.circular(4))),
         ),
       ];
     } else {
       rowChildren = [
+        Container(
+          width: widget.ratio * ctx.maxWidth,
+          height: 5,
+          decoration: const BoxDecoration(
+              color: AppColors.three_prices_sell_bg,
+              borderRadius: BorderRadius.only(
+                  bottomRight: Radius.circular(4),
+                  topRight: Radius.circular(4))),
+        ),
+        const SizedBox(width: 8),
         Text(
           widget.price.toString(),
           style: AppTextStyle.labelSmall_10.copyWith(color: color),
         ),
+        const Spacer(),
         Text(
           NumUtils.formatInteger10(widget.vol),
           style:
@@ -271,25 +290,7 @@ class _ThreePriceElementState extends State<ThreePriceElement>
         )
       ];
     }
-    final Color volColor = themeMode.isDark
-        ? (widget.side.isBuy
-            ? AppColors.accent_dark_01
-            : AppColors.accent_dark_03)
-        : (widget.side.isBuy
-            ? AppColors.three_prices_buy_bg
-            : AppColors.three_prices_sell_bg);
-    return AnimatedContainer(
-      side: widget.side,
-      animation: animation,
-      color: volColor,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 4),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: rowChildren,
-        ),
-      ),
-    );
+    return rowChildren;
   }
 }
 
@@ -299,6 +300,7 @@ class VolBGPainter extends CustomPainter {
     required this.ratio,
     required this.color,
   });
+
   final Side side;
   final double ratio;
   final Color color;
@@ -335,6 +337,7 @@ class AnimatedContainer extends AnimatedWidget {
   final Side side;
   final Widget? child;
   final Color color;
+
   @override
   Widget build(BuildContext context) {
     final animation = listenable as Animation<double>;
