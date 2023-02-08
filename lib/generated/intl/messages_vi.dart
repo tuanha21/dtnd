@@ -88,6 +88,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "base_asset": MessageLookupByLibrary.simpleMessage("Tài sản cơ sở"),
         "base_note": MessageLookupByLibrary.simpleMessage("Sổ lệnh cơ sở"),
         "billion": MessageLookupByLibrary.simpleMessage("Tỷ"),
+        "billion_lowercase": MessageLookupByLibrary.simpleMessage("tỷ"),
         "billion_short": MessageLookupByLibrary.simpleMessage("Tỷ"),
         "birthday": MessageLookupByLibrary.simpleMessage("Ngày sinh"),
         "bond": MessageLookupByLibrary.simpleMessage("Trái phiếu"),

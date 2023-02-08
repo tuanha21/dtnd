@@ -89,6 +89,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "base_asset": MessageLookupByLibrary.simpleMessage("Base asset"),
         "base_note": MessageLookupByLibrary.simpleMessage("Base note"),
         "billion": MessageLookupByLibrary.simpleMessage("Bil"),
+        "billion_lowercase": MessageLookupByLibrary.simpleMessage("b"),
         "billion_short": MessageLookupByLibrary.simpleMessage("B"),
         "birthday": MessageLookupByLibrary.simpleMessage("Birthday"),
         "bond": MessageLookupByLibrary.simpleMessage("Bond"),

@@ -9,6 +9,16 @@ class StockTradingHistory {
 
   StockTradingHistory({this.t, this.c, this.o, this.h, this.l, this.v, this.s});
 
+  StockTradingHistory.kChartData() {
+    final now = DateTime.now();
+    t = [now.millisecondsSinceEpoch / 1000];
+    c = [1];
+    o = [1];
+    h = [1];
+    l = [1];
+    v = [0];
+  }
+
   StockTradingHistory.fromJson(Map<String, dynamic> json) {
     t = json['t'].cast<num>();
     c = json['c'].cast<num>();

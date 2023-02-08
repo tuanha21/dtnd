@@ -48,6 +48,8 @@ abstract class IDataCenterService {
 
   Future<List<Stock>> getTopSearch();
 
+  Future<List<String>> getTopInterested([int count]);
+
   Future<List<String>> getTopStockTrade([int count, String type]);
 
   Future<List<String>> getTopStockChange([int count, String type]);
@@ -115,5 +117,4 @@ abstract class IDataCenterService {
   Future<IndContrib> getFIvalue(String marketCode);
 
   Future<List<IndexDetailResponse>> getListIndexDetail();
-
 }

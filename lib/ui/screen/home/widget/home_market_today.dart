@@ -213,6 +213,17 @@ class _HomeMarketTodayState extends State<HomeMarketToday>
                         domainAxis: const charts.DateTimeAxisSpec(
                           // Make sure that we draw the domain axis line.
                           // But don't draw anything else.
+                          renderSpec: charts.SmallTickRendererSpec(
+                              // labelRotation: 45,
+                              // Tick and Label styling here.
+                              labelOffsetFromAxisPx: 10,
+                              // minimumPaddingBetweenLabelsPx: 5,
+                              // labelCollisionOffsetFromAxisPx: 5,
+                              // labelCollisionOffsetFromTickPx: 5,
+                              // labelOffsetFromTickPx: 5,
+                              // Change the line colors to match text color.
+                              lineStyle: charts.LineStyleSpec(
+                                  color: charts.MaterialPalette.transparent)),
                           tickFormatterSpec:
                               charts.AutoDateTimeTickFormatterSpec(
                                   day: charts.TimeFormatterSpec(
@@ -339,9 +350,9 @@ class HomeIndexItem extends StatelessWidget {
                       )),
                   Obx(() {
                     return Text(
-                      NumUtils.getMoneyWithPostfix(
-                          (data.indexDetail.value.value ?? 0) * 1000000,
-                          context),
+                      "${NumUtils.formatInteger(
+                        (data.indexDetail.value.value ?? 0) ~/ 1000,
+                      )} ${S.of(context).billion_lowercase}",
                       style: AppTextStyle.labelSmall_11.copyWith(
                         fontWeight: FontWeight.w600,
                         color: AppColors.neutral_03,

@@ -375,6 +375,20 @@ class DataCenterService implements IDataCenterService {
   }
 
   @override
+  Future<List<String>> getTopInterested(
+      [int count = 5, String type = "i"]) async {
+    final Map<String, String> body = {
+      "count": "$count",
+    };
+    final listStrings = await networkService.getTopInterested(body);
+    if (listStrings.isEmpty) {
+      return [];
+    }
+
+    return listStrings;
+  }
+
+  @override
   Future<List<String>> getTopStockTrade(
       [int count = 5, String type = "i"]) async {
     final Map<String, String> body = {

@@ -17,7 +17,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'dart:math';
-
+import 'dart:math' as math;
 import '../home_controller.dart';
 
 class HomeMarketOverview extends StatefulWidget {
@@ -226,12 +226,10 @@ class HomeMarketOverviewItem extends StatelessWidget {
                   constraints: BoxConstraints(
                       minWidth: MediaQuery.of(context).size.width / 5,
                       maxWidth: MediaQuery.of(context).size.width / 4),
-                  child: AbsorbPointer(
-                    child: HomeMarketOverviewItemChart(
-                      data: data,
-                      future: data.getTradingHistory(DataCenterService(),
-                          resolution: "5", from: TimeUtilities.beginningOfDay),
-                    ),
+                  child: HomeMarketOverviewItemChart(
+                    data: data,
+                    future: data.getTradingHistory(DataCenterService(),
+                        resolution: "5", from: TimeUtilities.beginningOfDay),
                   ),
                 ),
               ),
@@ -267,21 +265,6 @@ class HomeMarketOverviewItem extends StatelessWidget {
                             ),
                           )
                         ],
-                      );
-                      return Text.rich(
-                        TextSpan(children: [
-                          WidgetSpan(
-                              child: data.stockData.prefixIcon(size: 12)),
-                          TextSpan(
-                            text: " ${data.stockData.lastPrice}",
-                          )
-                        ]),
-                        maxLines: 1,
-                        style: AppTextStyle.labelMedium_12.copyWith(
-                          fontWeight: FontWeight.w600,
-                          fontSize: 13,
-                          color: data.stockData.color,
-                        ),
                       );
                     },
                     data.stockData.lastPrice,
@@ -320,7 +303,7 @@ class HomeMarketOverviewItemChart extends StatelessWidget {
           id: "SimpleChart",
           domainFn: (_, index) => index ?? 0,
           measureFn: (datum, index) => datum,
-          data: chartData.c!,
+          data: chartData.o!,
           seriesColor: charts.ColorUtil.fromDartColor(data.stockData.color),
         ),
       ];
@@ -331,9 +314,27 @@ class HomeMarketOverviewItemChart extends StatelessWidget {
         initialData: null,
         future: future,
         builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            return charts.LineChart(
-              toSeries(snapshot.data!),
+          final StockTradingHistory chartData;
+          final num annotation;
+          final num max;
+          final num min;
+          final num length;
+          if (snapshot.hasData && (snapshot.data?.o?.isNotEmpty ?? false)) {
+            chartData = snapshot.data!;
+            annotation = data.stockData.r.value ?? (snapshot.data!.o!.first);
+            max = math.max<num>(snapshot.data!.o!.reduce(math.max), annotation);
+            min = math.min<num>(snapshot.data!.o!.reduce(math.min), annotation);
+            length = snapshot.data!.o!.length;
+          } else {
+            chartData = StockTradingHistory.kChartData();
+            annotation = 1;
+            max = 2;
+            min = 0;
+            length = 2;
+          }
+          return AbsorbPointer(
+            child: charts.LineChart(
+              toSeries(chartData),
               animate: false,
               layoutConfig: charts.LayoutConfig(
                 leftMarginSpec: charts.MarginSpec.fixedPixel(3),
@@ -345,8 +346,9 @@ class HomeMarketOverviewItemChart extends StatelessWidget {
                 showAxisLine: false,
                 renderSpec: const charts.NoneRenderSpec(),
                 viewport: charts.NumericExtents(
-                    snapshot.data?.c?.reduce(min) ?? 0,
-                    snapshot.data?.c?.reduce(max) ?? 0),
+                  min,
+                  max,
+                ),
                 tickProviderSpec: const charts.BasicNumericTickProviderSpec(
                   zeroBound: false,
                 ),
@@ -354,8 +356,7 @@ class HomeMarketOverviewItemChart extends StatelessWidget {
               domainAxis: charts.NumericAxisSpec(
                 showAxisLine: false,
                 renderSpec: const charts.NoneRenderSpec(),
-                viewport:
-                    charts.NumericExtents(0, snapshot.data?.c?.length ?? 0),
+                viewport: charts.NumericExtents(0, length),
                 tickProviderSpec: const charts.BasicNumericTickProviderSpec(
                   zeroBound: false,
                 ),
@@ -364,7 +365,7 @@ class HomeMarketOverviewItemChart extends StatelessWidget {
               behaviors: [
                 charts.RangeAnnotation([
                   charts.LineAnnotationSegment(
-                    snapshot.data?.c?.first ?? 0,
+                    annotation,
                     charts.RangeAnnotationAxisType.measure,
                     color: charts.ColorUtil.fromDartColor(
                       AppColors.neutral_02,
@@ -372,15 +373,10 @@ class HomeMarketOverviewItemChart extends StatelessWidget {
                     dashPattern: [5, 5],
                     strokeWidthPx: 0.3,
                   )
-                ])
+                ], extendAxis: false)
               ],
-            );
-          } else if (snapshot.hasError) {
-            // Todo: on error load
-            return Container();
-          } else {
-            return Container();
-          }
+            ),
+          );
         });
   }
 }

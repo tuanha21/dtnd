@@ -1050,6 +1050,16 @@ class S {
     );
   }
 
+  /// `b`
+  String get billion_lowercase {
+    return Intl.message(
+      'b',
+      name: 'billion_lowercase',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Bil`
   String get billion {
     return Intl.message(

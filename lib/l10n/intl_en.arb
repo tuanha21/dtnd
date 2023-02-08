@@ -108,6 +108,7 @@
 
     "million_short": "M",
     "billion_short": "B",
+    "billion_lowercase": "b",
     "billion": "Bil",
     "minutes_ago": "{minutes} minutes ago",
     "hours_ago": "{hours} hours ago",

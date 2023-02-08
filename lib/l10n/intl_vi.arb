@@ -107,6 +107,7 @@
 
     "million_short": "Tr",
     "billion_short": "Tỷ",
+    "billion_lowercase": "tỷ",
     "billion": "Tỷ",
     "minutes_ago": "{minutes} phút trước",
     "hours_ago": "{hours} giờ trước",

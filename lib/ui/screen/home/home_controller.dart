@@ -71,7 +71,7 @@ class HomeController {
 
   Future<void> getHotToday() async {
     final list = await dataCenterService.getStockModelsFromStockCodes(
-        await dataCenterService.getTopStockTrade(8));
+        await dataCenterService.getTopInterested(8));
     hotToday = list;
   }
 
@@ -94,8 +94,15 @@ class HomeController {
   }
 
   Future<void> getTopVolumn() async {
-    final list = await dataCenterService.getStockModelsFromStockCodes(
-        await dataCenterService.getTopStockTrade(8));
+    final listStrings = await dataCenterService.getTopStockTrade(8);
+    // logger.v(listStrings);
+    final list =
+        await dataCenterService.getStockModelsFromStockCodes(listStrings);
+    list.sort((a, b) => (a.stockData.lastVolume.value ?? 0)
+        .compareTo((b.stockData.lastVolume.value ?? 0)));
+    for (var element in list) {
+      print(element.stock.stockCode);
+    }
     topVolumnToday = list;
   }
 
