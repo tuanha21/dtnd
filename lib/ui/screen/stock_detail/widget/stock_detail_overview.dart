@@ -34,12 +34,12 @@ class StockDetailOverview extends StatelessWidget {
     ];
     final themeMode = AppService.instance.themeMode.value;
     return Row(
-      crossAxisAlignment: CrossAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Row(
                 children: [
@@ -109,7 +109,7 @@ class _StockDetailPriceElement extends StatelessWidget {
         alignment: Alignment.center,
         decoration: BoxDecoration(
           borderRadius: const BorderRadius.all(Radius.circular(8)),
-          color: themeMode.isLight ? data.bgColor : AppColors.neutral_01,
+          color: themeMode.isLight ? Colors.transparent : AppColors.neutral_01,
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

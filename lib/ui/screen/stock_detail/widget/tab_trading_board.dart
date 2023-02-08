@@ -8,12 +8,10 @@ class TabTradingBoard extends StatefulWidget {
   const TabTradingBoard({
     super.key,
     required this.stockModel,
-    required this.scrollController,
-    required this.panelController,
   });
+
   final StockModel stockModel;
-  final ScrollController scrollController;
-  final PanelController panelController;
+
   @override
   State<TabTradingBoard> createState() => _TabTradingBoardState();
 }
@@ -25,13 +23,9 @@ class _TabTradingBoardState extends State<TabTradingBoard> {
       context: context,
       removeTop: true,
       child: ListView(
-        physics: PanelScrollPhysics(controller: widget.panelController),
-        controller: widget.scrollController,
         shrinkWrap: true,
         children: <Widget>[
-          const SizedBox(
-            height: 20,
-          ),
+          const SizedBox(height: 16),
           ThreePrices(
             stockModel: widget.stockModel,
           ),

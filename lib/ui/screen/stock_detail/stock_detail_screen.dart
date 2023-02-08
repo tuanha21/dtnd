@@ -20,6 +20,7 @@ import 'package:dtnd/ui/screen/stock_detail/widget/component/stock_detail_appbar
 import 'package:dtnd/ui/screen/stock_detail/widget/financial_index.dart';
 import 'package:dtnd/ui/screen/stock_detail/widget/stock_detail_chart.dart';
 import 'package:dtnd/ui/screen/stock_detail/widget/stock_detail_news.dart';
+import 'package:dtnd/ui/screen/stock_detail/widget/stock_detail_overview.dart';
 import 'package:dtnd/ui/screen/stock_detail/widget/tab_trading_board.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
@@ -37,6 +38,7 @@ class StockDetailScreen extends StatefulWidget {
     required this.stockModel,
   }) : super(key: key);
   final StockModel stockModel;
+
   @override
   State<StockDetailScreen> createState() => _StockDetailScreenState();
 }
@@ -51,6 +53,7 @@ class _StockDetailScreenState extends State<StockDetailScreen>
   late final PanelController panelController;
 
   bool initialized = false;
+
   @override
   void initState() {
     _tabController = TabController(length: 3, vsync: this);
@@ -129,151 +132,29 @@ class _StockDetailScreenState extends State<StockDetailScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: StockDetailAppbar(
+        stockModel: widget.stockModel,
+        onTap: _onAppbarTap,
+      ),
       // appBar: StockDetailAppbar(stock: widget.stockModel.stock),
-      body: Builder(builder: (context) {
-        if (!initialized) {
-          return Center(
-            child: Text(S.of(context).loading),
-          );
-        }
-        final themeMode = AppService.instance.themeMode.value;
-        return NestedScrollView(
-          // physics: PanelScrollPhysics(controller: panelController),
-          // controller: ScrollController(),
-          headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
-            return [
-              SliverOverlapAbsorber(
-                handle:
-                    NestedScrollView.sliverOverlapAbsorberHandleFor(context),
-                sliver: SliverPersistentHeader(
-                  pinned: true,
-                  delegate: StockDetailAppbar(
-                    stockModel: widget.stockModel,
-                    onTap: _onAppbarTap,
-                  ),
-                ),
-              ),
-            ];
-          },
-          body: SizedBox.expand(
-            child: SlidingUpPanel(
-              minHeight: 60,
-              parallaxEnabled: false,
-              maxHeight:
-                  MediaQuery.of(context).size.height - kToolbarHeight - 80,
-              color: themeMode.isLight ? Colors.white : Colors.black,
-              scrollController: scrollController,
-              controller: panelController,
-              body: Builder(builder: (context) {
-                return Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: CustomScrollView(
-                    slivers: [
-                      SliverOverlapInjector(
-                        handle: NestedScrollView.sliverOverlapAbsorberHandleFor(
-                            context),
-                      ),
-                      SliverToBoxAdapter(
-                        child: SizedBox(
-                            height: 200,
-                            width: MediaQuery.of(context).size.width,
-                            child: StockDetailChart(
-                                stockModel: widget.stockModel)),
-                      ),
-                      const SliverToBoxAdapter(child: PriceAlert()),
-                      const SliverToBoxAdapter(child: SizedBox(height: 15)),
-                      SliverToBoxAdapter(
-                        child: HomeSection(
-                          title: S.of(context).news_and_events,
-                          child: StockDetailNews(
-                            stockCode: widget.stockModel.stock.stockCode,
-                          ),
-                        ),
-                      ),
-                      const SliverToBoxAdapter(child: SizedBox(height: 120)),
-                    ],
-                  ),
-                );
-              }),
-              header: SizedBox(
-                width: MediaQuery.of(context).size.width,
-                height: 60,
-                child: Column(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 6),
-                      child: ForceDraggableWidget(
-                        child: SizedBox(
-                          width: 39,
-                          height: 4,
-                          child: Container(
-                            decoration: const BoxDecoration(
-                              color: AppColors.neutral_03,
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(2),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    ForceDraggableWidget(
-                      child: TabBar(
-                        controller: _tabController,
-                        isScrollable: true,
-                        labelPadding: const EdgeInsets.symmetric(
-                            horizontal: 10, vertical: 6),
-                        padding: EdgeInsets.zero,
-                        tabs: DetailTab.values
-                            .map((e) => Text(e.getName(context)))
-                            .toList(),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              panelBuilder: () {
-                return Padding(
-                  padding: const EdgeInsets.only(top: 60),
-                  child: TabBarView(
-                    controller: _tabController,
-                    // physics: PanelScrollPhysics(controller: panelController),
-                    // controller: scrollController,
-                    children: <Widget>[
-                      // ListView(
-                      //   physics:
-                      //       PanelScrollPhysics(controller: panelController),
-                      //   controller: scrollController,
-                      //   shrinkWrap: true,
-                      //   children: [
-                      //     TabTradingBoard(
-                      //       stockModel: widget.stockModel,
-                      //       scrollController: scrollController,
-                      //       panelController: panelController,
-                      //     ),
-                      //   ],
-                      // ),
-                      OverviewTab(
-                        stockModel: widget.stockModel,
-                        scrollController: scrollController,
-                        panelController: panelController,
-                      ),
-                      const Center(
-                        child: Text("Chi tiết kl"),
-                      ),
-                      FinanceIndexTab(
-                        scrollController: scrollController,
-                        panelController: panelController,
-                        stockModel: widget.stockModel,
-                      ),
-                    ],
-                  ),
-                );
-              },
-            ),
-          ),
-        );
-      }),
+      body: ListView(children: [
+        Padding(
+          padding: const EdgeInsets.all(16),
+          child: StockDetailOverview(stockModel: widget.stockModel),
+        ),
+        SizedBox(
+            height: 200,
+            width: MediaQuery.of(context).size.width,
+            child: StockDetailChart(stockModel: widget.stockModel)),
+        const Padding(
+          padding: EdgeInsets.symmetric(horizontal: 16),
+          child: PriceAlert(),
+        ),
+        TabTradingBoard(
+          stockModel: widget.stockModel,
+        )
+      ]),
+      backgroundColor: AppColors.bg_1,
       floatingActionButton: SizedBox.square(
         dimension: 40,
         child: Material(

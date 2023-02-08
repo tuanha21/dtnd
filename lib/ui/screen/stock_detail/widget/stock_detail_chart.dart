@@ -38,7 +38,7 @@ class _StockChart extends StatefulWidget {
 
 class _StockChartState extends State<_StockChart> {
   final LinearGradient gradient = const LinearGradient(
-    colors: AppColors.chartArea,
+    colors: [Colors.transparent,Colors.transparent],
     begin: Alignment.topCenter,
     end: Alignment.bottomCenter,
   );
@@ -75,6 +75,7 @@ class _StockChartState extends State<_StockChart> {
           gradient: gradient,
           borderColor: AppColors.primary_01,
           borderWidth: 2,
+
         )
       ],
     );
