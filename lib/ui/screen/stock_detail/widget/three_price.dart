@@ -67,36 +67,28 @@ class ThreePrices extends StatelessWidget {
                     side: Side.sell,
                     themeMode: themeMode.value,
                   ),
-                  const SizedBox(
-                    height: 8,
-                  ),
+                  const SizedBox(height: 8),
                   ThreePriceElement(
                     themeMode: themeMode.value,
                     side: Side.sell,
                     totalVol: stockModel.stockData.getTotalVol(Side.sell),
                     data: stockModel.stockData.g4.value,
                   ),
-                  const SizedBox(
-                    height: 8,
-                  ),
+                  const SizedBox(height: 8),
                   ThreePriceElement(
                     themeMode: themeMode.value,
                     side: Side.sell,
                     totalVol: stockModel.stockData.getTotalVol(Side.sell),
                     data: stockModel.stockData.g5.value,
                   ),
-                  const SizedBox(
-                    height: 8,
-                  ),
+                  const SizedBox(height: 8),
                   ThreePriceElement(
                     themeMode: themeMode.value,
                     side: Side.sell,
                     totalVol: stockModel.stockData.getTotalVol(Side.sell),
                     data: stockModel.stockData.g6.value,
                   ),
-                  const SizedBox(
-                    height: 8,
-                  ),
+                  const SizedBox(height: 8),
                 ],
               ),
             ),
