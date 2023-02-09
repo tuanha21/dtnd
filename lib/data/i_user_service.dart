@@ -1,3 +1,4 @@
+import 'package:dtnd/=models=/response/account/i_account.dart';
 import 'package:dtnd/=models=/response/account_info_model.dart';
 import 'package:dtnd/=models=/response/total_asset_model.dart';
 import 'package:dtnd/=models=/response/user_token.dart';
@@ -10,6 +11,8 @@ abstract class IUserService {
   UserInfo? get userInfo;
 
   TotalAsset? get totalAsset;
+
+  List<IAccountModel>? get listAccount;
 
   List<String> get searchHistory;
 

@@ -98,11 +98,11 @@ class HomeController {
     // logger.v(listStrings);
     final list =
         await dataCenterService.getStockModelsFromStockCodes(listStrings);
-    list.sort((a, b) => (a.stockData.lastVolume.value ?? 0)
-        .compareTo((b.stockData.lastVolume.value ?? 0)));
-    for (var element in list) {
-      print(element.stock.stockCode);
-    }
+    // list.sort((a, b) => (a.stockData.lastVolume.value ?? 0)
+    //     .compareTo((b.stockData.lastVolume.value ?? 0)));
+    // for (var element in list) {
+    //   print(element.stock.stockCode);
+    // }
     topVolumnToday = list;
   }
 

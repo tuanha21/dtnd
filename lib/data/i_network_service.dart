@@ -1,6 +1,8 @@
 // ignore_for_file: library_prefixes
 
+import 'package:dtnd/=models=/core_response_model.dart';
 import 'package:dtnd/=models=/index.dart';
+import 'package:dtnd/=models=/response/account/i_account.dart';
 import 'package:dtnd/=models=/response/account_info_model.dart';
 import 'package:dtnd/=models=/response/business_profile_model.dart';
 import 'package:dtnd/=models=/response/deep_model.dart';
@@ -47,6 +49,9 @@ abstract class INetworkService {
 
   //core api
   Future<UserEntity?> checkLogin(RequestModel requestModel);
+
+  Future<T?> requestTraditionalApi<T extends CoreResponseModel>(
+      RequestModel requestModel);
 
   Future<List<Stock>> getListAllStock();
 

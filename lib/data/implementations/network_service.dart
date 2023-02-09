@@ -2,6 +2,8 @@
 
 import 'dart:convert';
 
+import 'package:dtnd/=models=/core_response_model.dart';
+import 'package:dtnd/=models=/response/account/i_account.dart';
 import 'package:dtnd/=models=/response/account_info_model.dart';
 import 'package:dtnd/=models=/response/business_profile_model.dart';
 import 'package:dtnd/=models=/response/deep_model.dart';
@@ -81,7 +83,7 @@ class NetworkService implements INetworkService {
   Uri url_board(String path) => Uri.https(board_url, path);
 
   Uri url_board_data_feed(Map<String, dynamic> queryParameters) {
-    print(Uri.https(sbboard_url, "datafeed/history", queryParameters));
+    // print(Uri.https(sbboard_url, "datafeed/history", queryParameters));
     return Uri.https(sbboard_url, "datafeed/history", queryParameters);
   }
 
@@ -171,6 +173,16 @@ class NetworkService implements INetworkService {
         await client.post(url_core_endpoint, body: requestModel.toString());
     logger.v(response.body);
     return UserEntity.fromJson(decode(response.bodyBytes));
+  }
+
+  @override
+  Future<T> requestTraditionalApi<T extends CoreResponseModel>(
+      RequestModel requestModel) async {
+    // dynamic response =
+    //     await client.post(url_core_endpoint, body: requestModel.toString());
+    // response = decode(response.bodyBytes);
+    // T().fromJson(element);
+    throw UnimplementedError();
   }
 
   @override
@@ -423,6 +435,7 @@ class NetworkService implements INetworkService {
   Future<UserInfo?> getUserInfo(RequestModel requestModel) async {
     final http.Response response =
         await client.post(url_core_endpoint, body: requestModel.toString());
+    logger.v(response.body);
     return UserInfo.constant();
   }
 

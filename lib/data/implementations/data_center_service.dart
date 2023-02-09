@@ -239,19 +239,12 @@ class DataCenterService implements IDataCenterService {
     }
     registering = true;
     final List<StockModel> listReturn = <StockModel>[];
-    final registeredCode = getRegisteredCodes(stockCodes);
-    final unregisteredCodes = getUnregisteredCodes(stockCodes);
-
     for (final String stockCode in stockCodes) {
-      if (registeredCode.isNotEmpty && registeredCode.contains(stockCode)) {
-        final int index = listStockReg
-            .indexWhere((element) => element.stock.stockCode == stockCode);
-        if (index != -1) {
-          listReturn.add(listStockReg[index]);
-        }
-      }
-      if (unregisteredCodes.isNotEmpty &&
-          unregisteredCodes.contains(stockCode)) {
+      final int index = listStockReg
+          .indexWhere((element) => element.stock.stockCode == stockCode);
+      if (index != -1) {
+        listReturn.add(listStockReg[index]);
+      } else {
         try {
           final stock = listAllStock
               .firstWhere((element) => element.stockCode == stockCode);
@@ -264,6 +257,7 @@ class DataCenterService implements IDataCenterService {
         }
       }
     }
+
     regStocks(stockCodes);
     registering = false;
     return listReturn;
