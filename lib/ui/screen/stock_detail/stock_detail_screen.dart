@@ -21,6 +21,7 @@ import 'package:dtnd/ui/screen/stock_detail/widget/financial_index.dart';
 import 'package:dtnd/ui/screen/stock_detail/widget/stock_detail_chart.dart';
 import 'package:dtnd/ui/screen/stock_detail/widget/stock_detail_news.dart';
 import 'package:dtnd/ui/screen/stock_detail/widget/stock_detail_overview.dart';
+import 'package:dtnd/ui/screen/stock_detail/widget/tab_matched_detail.dart';
 import 'package:dtnd/ui/screen/stock_detail/widget/tab_trading_board.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
@@ -43,22 +44,12 @@ class StockDetailScreen extends StatefulWidget {
   State<StockDetailScreen> createState() => _StockDetailScreenState();
 }
 
-class _StockDetailScreenState extends State<StockDetailScreen>
-    with SingleTickerProviderStateMixin {
+class _StockDetailScreenState extends State<StockDetailScreen> {
   final IDataCenterService dataCenterService = DataCenterService();
   final IUserService userService = UserService();
-  late final TabController _tabController;
-
-  late final ScrollController scrollController;
-  late final PanelController panelController;
-
-  bool initialized = false;
 
   @override
   void initState() {
-    _tabController = TabController(length: 3, vsync: this);
-    scrollController = ScrollController();
-    panelController = PanelController();
     super.initState();
     initData();
   }
@@ -66,9 +57,6 @@ class _StockDetailScreenState extends State<StockDetailScreen>
   void initData() async {
     await getStockIndayTradingHistory();
     await getSecurityBasicInfo();
-    setState(() {
-      initialized = true;
-    });
   }
 
   Future<void> getStockIndayTradingHistory() async {
@@ -81,19 +69,18 @@ class _StockDetailScreenState extends State<StockDetailScreen>
         .getSecurityBasicInfo(widget.stockModel.stock.stockCode);
   }
 
-  Future<void> getStockRankingFinancialIndex() async {
-    widget.stockModel.stockRankingFinancialIndex.value = await dataCenterService
-        .getStockRankingFinancialIndex(widget.stockModel.stock.stockCode);
-  }
-
-  Future<void> getIndayMatchedOrders() async {
-    final listMatchedOrder = await dataCenterService
-        .getIndayMatchedOrders(widget.stockModel.stock.stockCode);
-    widget.stockModel.updateListMatchedOrder(listMatchedOrder);
-  }
+  // Future<void> getStockRankingFinancialIndex() async {
+  //   widget.stockModel.stockRankingFinancialIndex.value = await dataCenterService
+  //       .getStockRankingFinancialIndex(widget.stockModel.stock.stockCode);
+  // }
+  //
+  // Future<void> getIndayMatchedOrders() async {
+  //   final listMatchedOrder = await dataCenterService
+  //       .getIndayMatchedOrders(widget.stockModel.stock.stockCode);
+  //   widget.stockModel.updateListMatchedOrder(listMatchedOrder);
+  // }
 
   void _onFABTapped() async {
-    // print("userService.isLogin ${userService.isLogin}");
     if (!userService.isLogin) {
       final toLogin = await showDialog<bool>(
         context: context,
@@ -121,38 +108,27 @@ class _StockDetailScreenState extends State<StockDetailScreen>
     }
   }
 
-  void _onAppbarTap() {
-    BusinessInformationISheet(widget.stockModel).show(
-        context,
-        BusinessInformationSheet(
-          stockModel: widget.stockModel,
-        ));
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: StockDetailAppbar(
-        stockModel: widget.stockModel,
-        onTap: _onAppbarTap,
-      ),
+      appBar: StockDetailAppbar(stockModel: widget.stockModel),
       // appBar: StockDetailAppbar(stock: widget.stockModel.stock),
-      body: ListView(children: [
+      body: Column(children: [
+        const SizedBox(height: 16),
         Padding(
-          padding: const EdgeInsets.all(16),
+          padding: const EdgeInsets.symmetric(horizontal: 16),
           child: StockDetailOverview(stockModel: widget.stockModel),
         ),
-        SizedBox(
-            height: 200,
-            width: MediaQuery.of(context).size.width,
-            child: StockDetailChart(stockModel: widget.stockModel)),
-        const Padding(
-          padding: EdgeInsets.symmetric(horizontal: 16),
-          child: PriceAlert(),
-        ),
-        TabTradingBoard(
-          stockModel: widget.stockModel,
-        )
+        // SizedBox(
+        //     height: 200,
+        //     width: MediaQuery.of(context).size.width,
+        //     child: StockDetailChart(stockModel: widget.stockModel)),
+        // const Padding(
+        //   padding: EdgeInsets.symmetric(horizontal: 16),
+        //   child: PriceAlert(),
+        // ),
+        const SizedBox(height: 20),
+        OverviewTab(stockModel: widget.stockModel)
       ]),
       backgroundColor: AppColors.bg_1,
       floatingActionButton: SizedBox.square(

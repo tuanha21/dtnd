@@ -258,7 +258,7 @@ class _ThreePriceElementState extends State<ThreePriceElement>
         ),
         const SizedBox(width: 8),
         Container(
-          width: widget.ratio * ctx.maxWidth,
+          width: widget.ratio * ctx.maxWidth *2/3,
           height: 5,
           decoration: const BoxDecoration(
               color: AppColors.accent_dark_01,
@@ -269,7 +269,7 @@ class _ThreePriceElementState extends State<ThreePriceElement>
     } else {
       rowChildren = [
         Container(
-          width: widget.ratio * ctx.maxWidth,
+          width: widget.ratio * ctx.maxWidth * 2/3,
           height: 5,
           decoration: const BoxDecoration(
               color: AppColors.three_prices_sell_bg,

@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:dtnd/=models=/response/inday_matched_order.dart';
 import 'package:dtnd/=models=/response/stock_model.dart';
 import 'package:dtnd/data/i_data_center_service.dart';
@@ -8,7 +9,6 @@ import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:dtnd/ui/widget/icon/active_button.dart';
 import 'package:dtnd/utilities/num_utils.dart';
 import 'package:flutter/material.dart';
-import 'package:sliding_up_panel2/sliding_up_panel2.dart';
 
 class TabMatchedDetail extends StatefulWidget {
   const TabMatchedDetail({
@@ -17,6 +17,7 @@ class TabMatchedDetail extends StatefulWidget {
   });
 
   final StockModel stockModel;
+
   @override
   State<TabMatchedDetail> createState() => _TabMatchedDetailState();
 }
@@ -24,11 +25,12 @@ class TabMatchedDetail extends StatefulWidget {
 class _TabMatchedDetailState extends State<TabMatchedDetail> {
   final IDataCenterService dataCenterService = DataCenterService();
 
-  bool initialized = false;
-
   bool byTime = true;
 
   num maxVolumn = 0;
+
+  StreamController<List<IndayMatchedOrder>> listMatchedOrder =
+      StreamController<List<IndayMatchedOrder>>.broadcast();
 
   @override
   void initState() {
@@ -36,14 +38,11 @@ class _TabMatchedDetailState extends State<TabMatchedDetail> {
     getIndayMatchedOrders();
   }
 
-  Future<void> getIndayMatchedOrders() async {
-    final listMatchedOrder = await dataCenterService
-        .getIndayMatchedOrders(widget.stockModel.stock.stockCode);
-    widget.stockModel
-        .updateListMatchedOrder(listMatchedOrder.reversed.toList());
-    setState(() {
-      maxVolumn = widget.stockModel.maxVolumnMatchedOrder;
-      initialized = true;
+  void getIndayMatchedOrders() {
+    dataCenterService
+        .getIndayMatchedOrders(widget.stockModel.stock.stockCode)
+        .then((list) {
+      listMatchedOrder.sink.add(list);
     });
   }
 
@@ -57,11 +56,6 @@ class _TabMatchedDetailState extends State<TabMatchedDetail> {
 
   @override
   Widget build(BuildContext context) {
-    if (!initialized) {
-      return Center(
-        child: Text(S.of(context).loading),
-      );
-    }
     return Column(
       children: [
         Padding(
@@ -106,23 +100,34 @@ class _TabMatchedDetailState extends State<TabMatchedDetail> {
         ),
         const _TabMatchedDetailHeader(),
         Expanded(
-          child: MediaQuery.removePadding(
-            context: context,
-            removeTop: true,
-            child: ListView(
-              shrinkWrap: true,
-              children: [
-                for (final IndayMatchedOrder element
-                    in widget.stockModel.listMatchedOrder)
-                  _TabMatchedDetailRow(
-                    byTime: byTime,
-                    data: element,
-                    maxVolumn: maxVolumn,
-                    colorFunct: widget.stockModel.stockData.getPriceColor,
-                  ),
-              ],
-            ),
-          ),
+          child: StreamBuilder<List<IndayMatchedOrder>>(
+              stream: listMatchedOrder.stream,
+              initialData: const [],
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(child: CircularProgressIndicator());
+                }
+                if (snapshot.hasData) {
+                  var list = snapshot.data!;
+                  widget.stockModel
+                      .updateListMatchedOrder(list.reversed.toList());
+                  maxVolumn = widget.stockModel.maxVolumnMatchedOrder;
+                  return ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: list.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      var element = list[index];
+                      return _TabMatchedDetailRow(
+                        byTime: byTime,
+                        data: element,
+                        maxVolumn: maxVolumn,
+                        colorFunct: widget.stockModel.stockData.getPriceColor,
+                      );
+                    },
+                  );
+                }
+                return const SizedBox();
+              }),
         ),
       ],
     );
@@ -136,6 +141,7 @@ class _TabMatchedDetailRow extends StatelessWidget {
     required this.colorFunct,
     required this.maxVolumn,
   });
+
   final bool byTime;
   final IndayMatchedOrder data;
   final Function colorFunct;
