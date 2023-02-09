@@ -1,12 +1,11 @@
 import 'package:dtnd/=models=/response/stock_model.dart';
 import 'package:flutter/material.dart';
-
 import '../../../../generated/l10n.dart';
 import '../../../theme/app_color.dart';
 import '../../home/widget/home_section.dart';
-import '../widget/component/price_alert.dart';
 import '../widget/stock_detail_chart.dart';
 import '../widget/stock_detail_news.dart';
+import '../widget/stock_event.dart';
 
 class OverviewTab extends StatefulWidget {
   const OverviewTab({
@@ -28,11 +27,6 @@ class _OverviewTabState extends State<OverviewTab> {
         SizedBox(
             height: 200,
             child: StockDetailChart(stockModel: widget.stockModel)),
-        // const Padding(
-        //   padding: EdgeInsets.symmetric(horizontal: 16),
-        //   child: PriceAlert(),
-        // ),
-        // const SizedBox(height: 24),
         HomeSection(
           title: "Chỉ số cơ bản",
           child: Padding(
@@ -66,6 +60,20 @@ class _OverviewTabState extends State<OverviewTab> {
                       widget.stockModel.stockData.lowPrice.value.toString(),
                       style: Theme.of(context).textTheme.titleSmall,
                     ),
+                    Expanded(
+                      child: Slider(
+                        min: widget.stockModel.stockData.lowPrice.value
+                                ?.toDouble() ??
+                            0,
+                        max: widget.stockModel.stockData.highPrice.value
+                                ?.toDouble() ??
+                            0,
+                        value: widget.stockModel.stockData.lastPrice.value
+                                ?.toDouble() ??
+                            1,
+                        onChanged: (value) {},
+                      ),
+                    ),
                     Text(
                       widget.stockModel.stockData.highPrice.value.toString(),
                       style: Theme.of(context).textTheme.titleSmall,
@@ -83,6 +91,16 @@ class _OverviewTabState extends State<OverviewTab> {
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child:
                 StockDetailNews(stockCode: widget.stockModel.stock.stockCode),
+          ),
+        ),
+        const SizedBox(height: 20),
+        HomeSection(
+          title: S.of(context).event,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: StockEvent(
+              stockModel: widget.stockModel,
+            ),
           ),
         )
       ],

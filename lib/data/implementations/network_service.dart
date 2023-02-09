@@ -39,6 +39,7 @@ import 'package:http/http.dart' as http;
 import 'package:socket_io_client/socket_io_client.dart';
 
 import '../../=models=/response/indContrib.dart';
+import '../../=models=/response/sec_event.dart';
 import '../../=models=/response/stock_industry.dart';
 
 class NetworkService implements INetworkService {
@@ -637,7 +638,7 @@ class NetworkService implements INetworkService {
     var list = res["data"] as List;
     List<StockIndustry> result = [];
     for (var element in list) {
-      if(element['GTGD']!=null) {
+      if (element['GTGD'] != null) {
         result.add(StockIndustry.fromJson(element));
       }
     }
@@ -716,7 +717,6 @@ class NetworkService implements INetworkService {
       throw response["message"];
     }
     response = response["data"].first;
-    logger.v(response);
     final SecurityBasicInfo result = SecurityBasicInfo.fromJson(response);
     return result;
   }
@@ -868,6 +868,28 @@ class NetworkService implements INetworkService {
       return IndContrib.fromJson(res['data']);
     } catch (e) {
       logger.d(e.toString());
+      rethrow;
+    }
+  }
+
+  @override
+  Future<List<SecEvent>> getListEvent(String stockCode) async {
+    try {
+      var response = await client.post(
+          Uri.http('202.124.204.208:8998', 'algo/pbapi/api/secEvents'),
+          body: {"lang": "vi", "secCode": stockCode});
+      if (response.statusCode != 200) {
+        throw response;
+      }
+      var res = decode(response.bodyBytes);
+      var list = res['data'] as List;
+      var listSecc = <SecEvent>[];
+      for (var element in list) {
+        listSecc.add(SecEvent.fromJson(element));
+      }
+      return listSecc;
+    } catch (e) {
+      print(e.toString());
       rethrow;
     }
   }

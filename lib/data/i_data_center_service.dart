@@ -23,6 +23,7 @@ import 'package:dtnd/=models=/ui_model/field_tree_element_model.dart';
 import '../=models=/response/indContrib.dart';
 import '../=models=/response/index_board.dart';
 import '../=models=/response/index_detail.dart';
+import '../=models=/response/sec_event.dart';
 import '../=models=/response/stock_industry.dart';
 
 abstract class IDataCenterService {
@@ -122,4 +123,7 @@ abstract class IDataCenterService {
   Future<IndContrib> getFIvalue(String marketCode);
 
   Future<List<IndexDetailResponse>> getListIndexDetail();
+
+  Future<List<SecEvent>> getListEvent(String stockCode);
+
 }

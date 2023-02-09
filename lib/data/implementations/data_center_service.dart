@@ -8,6 +8,7 @@ import 'package:dtnd/=models=/response/index_model.dart';
 import 'package:dtnd/=models=/response/liquidity_model.dart';
 import 'package:dtnd/=models=/response/news_detail.dart';
 import 'package:dtnd/=models=/response/news_model.dart';
+import 'package:dtnd/=models=/response/sec_event.dart';
 import 'package:dtnd/=models=/response/security_basic_info_model.dart';
 import 'package:dtnd/=models=/response/stock.dart';
 import 'package:dtnd/=models=/response/stock_data.dart';
@@ -642,5 +643,10 @@ class DataCenterService implements IDataCenterService {
   @override
   Future<List<StockIndustry>> getListStockByIndust(String industry) {
     return networkService.getListStockByIndust(industry);
+  }
+
+  @override
+  Future<List<SecEvent>> getListEvent(String stockCode) {
+    return networkService.getListEvent(stockCode);
   }
 }
