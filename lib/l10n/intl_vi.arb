@@ -43,6 +43,10 @@
     "bank": "Ngân hàng",
     "accumulate": "Tích luỹ",
 
+    "status_open": "Mở cửa",
+    "status_close": "Đóng cửa",
+    "status_intermission": "Tạm nghỉ",
+
     "please_input_password": "Nhập password",
     "pass_not_match": "Mật khẩu không trùng khớp",
 
@@ -102,7 +106,12 @@
     "matching": "Đang khớp",
 
     "million_short": "Tr",
-    "billion_short": "T",
+    "billion_short": "Tỷ",
+    "billion_lowercase": "tỷ",
+    "billion": "Tỷ",
+    "minutes_ago": "{minutes} phút trước",
+    "hours_ago": "{hours} giờ trước",
+    "days_ago": "{days} ngày trước",
 
     "total_asset": "Tổng tài sản",
     "base_asset": "Tài sản cơ sở",

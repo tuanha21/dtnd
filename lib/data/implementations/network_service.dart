@@ -54,6 +54,7 @@ class NetworkService implements INetworkService {
   late Environment environment;
 
   late final String core_url;
+  late final String core_url1;
   late final String core_endpoint;
   late final String board_url;
   late final String sbboard_url;
@@ -65,11 +66,17 @@ class NetworkService implements INetworkService {
     String unencodedPath, [
     Map<String, dynamic>? queryParameters,
   ]) {
-    print(Uri.http(core_url, unencodedPath, queryParameters).toString());
-    return Uri.http(core_url, unencodedPath, queryParameters);
+    return Uri.https(core_url, unencodedPath, queryParameters);
   }
 
-  Uri get url_core_endpoint => Uri.http(core_url, core_endpoint);
+  Uri url_core1(
+    String unencodedPath, [
+    Map<String, dynamic>? queryParameters,
+  ]) {
+    return Uri.http(core_url1, unencodedPath, queryParameters);
+  }
+
+  Uri get url_core_endpoint => Uri.https(core_url, core_endpoint);
 
   Uri url_board(String path) => Uri.https(board_url, path);
 
@@ -123,6 +130,7 @@ class NetworkService implements INetworkService {
     this.environment = environment;
     await dotenv.load(fileName: environment.envFileName);
     core_url = dotenv.env['core_domain']!;
+    core_url1 = dotenv.env['core_domain1']!;
     core_endpoint = dotenv.env['core_endpoint']!;
     board_url = dotenv.env['board_domain']!;
     sbboard_url = dotenv.env['sbboard_domain']!;
@@ -152,7 +160,7 @@ class NetworkService implements INetworkService {
 
   @override
   Future<String?> getHomeBanner() async {
-    dynamic response = await client.get(Uri.http(core_url, "banners"));
+    dynamic response = await client.get(Uri.http(core_url1, "banners"));
     response = decode(response.bodyBytes);
     return response["data"].first["img"];
   }
@@ -302,7 +310,8 @@ class NetworkService implements INetworkService {
 
   @override
   Future<List<NewsModel>> getNews(Map<String, String> body) async {
-    final http.Response response = await client.get(url_core("pickNews", body));
+    final http.Response response =
+        await client.get(url_core1("pickNews", body));
     final List<dynamic> responseBody = decode(response.bodyBytes)["data"];
     List<NewsModel> data = [];
     for (var element in responseBody) {
@@ -318,7 +327,7 @@ class NetworkService implements INetworkService {
   @override
   Future<String> getNewsContent(int id) async {
     final http.Response response =
-        await client.get(url_core("pickContents/$id"));
+        await client.get(url_core1("pickContents/$id"));
     final responseBody = decode(response.bodyBytes)["data"];
     return responseBody;
   }
@@ -427,7 +436,7 @@ class NetworkService implements INetworkService {
   @override
   Future<List<String>> getSearchHistory(String body) async {
     dynamic response =
-        await client.post(url_core("searchMarket/history"), body: body);
+        await client.post(url_core1("searchMarket/history"), body: body);
     response = decode(response.bodyBytes);
     final List<String> list = [];
     logger.v(response);
@@ -441,14 +450,14 @@ class NetworkService implements INetworkService {
 
   @override
   Future<void> putSearchHistory(String body) async {
-    var res = await client.post(url_core("searchMarket/event"), body: body);
+    var res = await client.post(url_core1("searchMarket/event"), body: body);
     logger.d(jsonDecode(res.body));
   }
 
   @override
   Future<List<String>> getTopSearch() async {
     dynamic response =
-        await client.post(url_core("searchMarket/top"), body: {});
+        await client.post(url_core1("searchMarket/top"), body: {});
     response = decode(response.bodyBytes);
     final List<String> list = [];
     if (response["rc"] == 200) {
@@ -486,6 +495,28 @@ class NetworkService implements INetworkService {
     try {
       final http.Response response =
           await client.get(url_info_sbsi("topStockChange", body));
+
+      final List<dynamic> responseBody = decode(response.bodyBytes)["data"];
+      List<String> data = [];
+      for (var element in responseBody) {
+        try {
+          data.add(element["STOCK_CODE"]);
+        } catch (e) {
+          continue;
+        }
+      }
+      return data;
+    } catch (e) {
+      logger.e(e);
+      return [];
+    }
+  }
+
+  @override
+  Future<List<String>> getTopInterested(Map<String, dynamic> body) async {
+    try {
+      final http.Response response =
+          await client.get(url_info_sbsi("topStockInterested", body));
 
       final List<dynamic> responseBody = decode(response.bodyBytes)["data"];
       List<String> data = [];

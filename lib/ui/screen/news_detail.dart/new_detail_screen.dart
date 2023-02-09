@@ -83,13 +83,17 @@ class _NewsDetailScreenState extends State<NewsDetailScreen> {
                   ],
                 ),
               ),
+              // HtmlWidget(
+              //   newsDetail.trim(),
+              //   textStyle: AppTextStyle.bodySmall_12,
+              //   onTapUrl: (url) async {
+              //     // await launchUrl(Uri.parse(url),
+              //     //     mode: LaunchMode.externalApplication);
+              //     return true;
+              //   },
+              // ),
               Container(
                 padding: const EdgeInsets.all(16),
-                width: double.maxFinite,
-                decoration: const BoxDecoration(
-                    borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(10),
-                        topRight: Radius.circular(10))),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -97,6 +101,8 @@ class _NewsDetailScreenState extends State<NewsDetailScreen> {
                     HtmlWidget(
                       newsDetail.trim(),
                       textStyle: AppTextStyle.bodySmall_12,
+                      // factoryBuilder: ,
+                      onErrorBuilder: (context, element, error) => Container(),
                       onTapUrl: (url) async {
                         // await launchUrl(Uri.parse(url),
                         //     mode: LaunchMode.externalApplication);

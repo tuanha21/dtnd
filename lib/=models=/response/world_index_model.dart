@@ -19,6 +19,14 @@ class WorldIndexModel {
   num? iSDEFAULT;
   List<WorldIndexData>? historyData;
 
+  num? get openPoint {
+    try {
+      return lASTPOINT! + num.parse(cHANGE!);
+    } catch (e) {
+      return null;
+    }
+  }
+
   WorldIndexModel(
       {this.nAME,
       this.lASTPOINT,

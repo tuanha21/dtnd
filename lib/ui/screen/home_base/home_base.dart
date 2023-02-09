@@ -7,7 +7,6 @@ import 'package:dtnd/ui/screen/home_base/widget/home_base_nav.dart';
 import 'package:dtnd/ui/screen/market/market_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:go_router/go_router.dart';
 
 class HomeBase extends StatefulWidget {
   const HomeBase({super.key});
@@ -19,13 +18,7 @@ class HomeBase extends StatefulWidget {
 class _HomeBaseState extends State<HomeBase> {
   final Rx<HomeNav> currentHomeNav = Rx<HomeNav>(HomeNav.home);
 
-  final Map<HomeNav, Widget> routeBuilders = const {
-    HomeNav.home: HomeScreen(),
-    HomeNav.market: MarketScreen(),
-    HomeNav.asset: AssetScreen(),
-    HomeNav.community: CommunityScreen(),
-    HomeNav.account: AccountScreen(),
-  };
+  late final Map<HomeNav, Widget> routeBuilders;
 
   void _selectTab(HomeNav homeNav) {
     if (homeNav == currentHomeNav.value) {
@@ -36,12 +29,29 @@ class _HomeBaseState extends State<HomeBase> {
   }
 
   @override
+  void initState() {
+    routeBuilders = {
+      HomeNav.home: HomeScreen(
+        navigateTab: _selectTab,
+      ),
+      HomeNav.market: const MarketScreen(),
+      HomeNav.asset: const AssetScreen(),
+      HomeNav.community: const CommunityScreen(),
+      HomeNav.account: const AccountScreen(),
+    };
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       key: homeBaseKey,
       body: ObxValue<Rx<HomeNav>>(
         (currentHomeNav) {
-          return routeBuilders[currentHomeNav.value] ?? const HomeScreen();
+          return routeBuilders[currentHomeNav.value] ??
+              HomeScreen(
+                navigateTab: _selectTab,
+              );
         },
         currentHomeNav,
       ),
@@ -54,95 +64,95 @@ class _HomeBaseState extends State<HomeBase> {
   }
 }
 
-class OffStageNavigator extends StatelessWidget {
-  const OffStageNavigator({
-    super.key,
-    required this.homeNav,
-    required this.currentHomeNav,
-  });
-  final HomeNav homeNav;
-  final Rx<HomeNav> currentHomeNav;
-  @override
-  Widget build(BuildContext context) {
-    return ObxValue<Rx<HomeNav>>(
-      (currentHomeNav) {
-        return Offstage(
-          offstage: currentHomeNav.value != homeNav,
-          child: TabNavigator(
-            navigatorKey: homeNavKeys[homeNav],
-            tabItem: homeNav,
-          ),
-        );
-      },
-      currentHomeNav,
-    );
-  }
-}
+// class OffStageNavigator extends StatelessWidget {
+//   const OffStageNavigator({
+//     super.key,
+//     required this.homeNav,
+//     required this.currentHomeNav,
+//   });
+//   final HomeNav homeNav;
+//   final Rx<HomeNav> currentHomeNav;
+//   @override
+//   Widget build(BuildContext context) {
+//     return ObxValue<Rx<HomeNav>>(
+//       (currentHomeNav) {
+//         return Offstage(
+//           offstage: currentHomeNav.value != homeNav,
+//           child: TabNavigator(
+//             navigatorKey: homeNavKeys[homeNav],
+//             tabItem: homeNav,
+//           ),
+//         );
+//       },
+//       currentHomeNav,
+//     );
+//   }
+// }
 
-class TabNavigatorRoutes {
-  static const String root = '/';
-  static const String home = '/home';
-  static const String notificationDetail = '/notificationDetail';
-}
+// class TabNavigatorRoutes {
+//   static const String root = '/';
+//   static const String home = '/home';
+//   static const String notificationDetail = '/notificationDetail';
+// }
 
-class TabNavigator extends StatelessWidget {
-  const TabNavigator(
-      {super.key, this.navigatorKey, required this.tabItem, this.messageID});
+// class TabNavigator extends StatelessWidget {
+//   const TabNavigator(
+//       {super.key, this.navigatorKey, required this.tabItem, this.messageID});
 
-  final GlobalKey<NavigatorState>? navigatorKey;
-  final HomeNav tabItem;
-  final String? messageID;
+//   final GlobalKey<NavigatorState>? navigatorKey;
+//   final HomeNav tabItem;
+//   final String? messageID;
 
-  void _pushNotificationDetail(BuildContext context) {
-    var routeBuilders = _routeBuilders(context);
+//   void _pushNotificationDetail(BuildContext context) {
+//     var routeBuilders = _routeBuilders(context);
 
-    Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) =>
-                routeBuilders![TabNavigatorRoutes.notificationDetail]!(
-                    context)));
-  }
+//     Navigator.push(
+//         context,
+//         MaterialPageRoute(
+//             builder: (context) =>
+//                 routeBuilders![TabNavigatorRoutes.notificationDetail]!(
+//                     context)));
+//   }
 
-  void _logout(BuildContext context) {
-    GoRouter.of(context).go("/SignIn");
-  }
+//   void _logout(BuildContext context) {
+//     GoRouter.of(context).go("/SignIn");
+//   }
 
-  Map<String, WidgetBuilder>? _routeBuilders(BuildContext contex) {
-    switch (tabItem) {
-      case HomeNav.home:
-        return {
-          TabNavigatorRoutes.root: (context) => const HomeScreen(),
-        };
-      case HomeNav.market:
-        return {
-          TabNavigatorRoutes.root: (context) => const MarketScreen(),
-        };
-      case HomeNav.asset:
-        return {
-          TabNavigatorRoutes.root: (context) => const AssetScreen(),
-        };
-      case HomeNav.community:
-        return {
-          TabNavigatorRoutes.root: (context) => const CommunityScreen(),
-        };
-      case HomeNav.account:
-        return {
-          TabNavigatorRoutes.root: (context) => const AccountScreen(),
-        };
-    }
-  }
+//   Map<String, WidgetBuilder>? _routeBuilders(BuildContext contex) {
+//     switch (tabItem) {
+//       case HomeNav.home:
+//         return {
+//           TabNavigatorRoutes.root: (context) => const HomeScreen(),
+//         };
+//       case HomeNav.market:
+//         return {
+//           TabNavigatorRoutes.root: (context) => const MarketScreen(),
+//         };
+//       case HomeNav.asset:
+//         return {
+//           TabNavigatorRoutes.root: (context) => const AssetScreen(),
+//         };
+//       case HomeNav.community:
+//         return {
+//           TabNavigatorRoutes.root: (context) => const CommunityScreen(),
+//         };
+//       case HomeNav.account:
+//         return {
+//           TabNavigatorRoutes.root: (context) => const AccountScreen(),
+//         };
+//     }
+//   }
 
-  @override
-  Widget build(BuildContext context) {
-    final routeBuilders = _routeBuilders(context);
-    return Navigator(
-      key: navigatorKey,
-      initialRoute: TabNavigatorRoutes.root,
-      onGenerateRoute: (routeSettings) {
-        return MaterialPageRoute(
-            builder: (context) => routeBuilders![routeSettings.name]!(context));
-      },
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     final routeBuilders = _routeBuilders(context);
+//     return Navigator(
+//       key: navigatorKey,
+//       initialRoute: TabNavigatorRoutes.root,
+//       onGenerateRoute: (routeSettings) {
+//         return MaterialPageRoute(
+//             builder: (context) => routeBuilders![routeSettings.name]!(context));
+//       },
+//     );
+//   }
+// }

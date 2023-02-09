@@ -19,7 +19,7 @@ class NewsModel {
     title = json['title'];
     publishTime = json['publishTime'];
     headImg = json['headImg'];
-    viewCount = json['viewCount'];
+    viewCount = json['viewCount'] == 0 ? 1 : json['viewCount'];
     commentCount = json['commentCount'];
   }
 

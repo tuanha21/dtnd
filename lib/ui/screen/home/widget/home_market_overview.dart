@@ -10,7 +10,7 @@ import 'package:dtnd/ui/screen/stock_detail/stock_detail_screen.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_textstyle.dart';
 import 'package:dtnd/ui/widget/icon/stock_icon.dart';
-import 'package:dtnd/utilities/extension.dart';
+import 'package:dtnd/utilities/logger.dart';
 import 'package:dtnd/utilities/num_utils.dart';
 import 'package:dtnd/utilities/responsive.dart';
 import 'package:dtnd/utilities/time_utils.dart';
@@ -18,7 +18,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'dart:math';
-
+import 'dart:math' as math;
 import '../home_controller.dart';
 
 class HomeMarketOverview extends StatefulWidget {
@@ -32,9 +32,11 @@ class _HomeMarketOverviewState extends State<HomeMarketOverview>
   final HomeController homeController = HomeController();
   late final TabController _tabController;
 
+  bool up = true;
+
   @override
   void initState() {
-    _tabController = TabController(length: 4, vsync: this);
+    _tabController = TabController(length: 3, vsync: this);
     super.initState();
   }
 
@@ -46,17 +48,17 @@ class _HomeMarketOverviewState extends State<HomeMarketOverview>
           child: Text(S.of(context).loading),
         );
       }
-      final width = MediaQuery.of(context).size.width;
-      final data;
+      final List<StockModel> data;
       switch (_tabController.index) {
         case 1:
-          data = homeController.priceIncreaseToday;
+          if (!up) {
+            data = homeController.priceDecreaseToday;
+          } else {
+            data = homeController.priceIncreaseToday;
+          }
           break;
         case 2:
-          data = homeController.priceDecreaseToday;
-          break;
-        case 3:
-          data = homeController.topForeignToday;
+          data = homeController.topVolumnToday;
           break;
         default:
           data = homeController.hotToday;
@@ -78,6 +80,29 @@ class _HomeMarketOverviewState extends State<HomeMarketOverview>
       //     ),
       //   ),
       // );
+
+      final Widget sortArrow = Container(
+        // color: Colors.green,
+        padding: const EdgeInsets.all(5),
+        child: Column(
+          children: [
+            Opacity(
+              opacity: up ? 1.0 : 0.3,
+              child: const Icon(
+                Icons.expand_less_rounded,
+                size: 12,
+              ),
+            ),
+            Opacity(
+              opacity: !up ? 1.0 : 0.3,
+              child: const Icon(
+                Icons.expand_more_rounded,
+                size: 12,
+              ),
+            ),
+          ],
+        ),
+      );
       Widget list = Column(
         children: [
           for (int i = 0; i < data.length; i++)
@@ -105,15 +130,23 @@ class _HomeMarketOverviewState extends State<HomeMarketOverview>
                     const EdgeInsets.symmetric(horizontal: 18, vertical: 6),
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 onTap: (value) async {
+                  print(_tabController.indexIsChanging);
+                  if (!_tabController.indexIsChanging && value == 1) {
+                    up = !up;
+                  }
                   setState(() {});
                   await homeController.changeList(data);
-                  setState(() {});
+                  // setState(() {});
                 },
                 tabs: <Widget>[
-                  const Text("HOT"),
-                  Text(S.of(context).price_increase),
-                  Text(S.of(context).price_decrease),
-                  Text(S.of(context).top_foreign),
+                  const Text("🔥HOT"),
+                  Row(
+                    children: [
+                      const Text("Top biến động"),
+                      sortArrow,
+                    ],
+                  ),
+                  const Text("Top khối lượng"),
                 ],
               ),
             ),
@@ -176,15 +209,8 @@ class HomeMarketOverviewItem extends StatelessWidget {
                   ),
                   ObxValue<Rx<num?>>(
                     (lastPrice) {
-                      return Text.rich(
-                        TextSpan(children: [
-                          WidgetSpan(
-                              child: data.stockData.prefixIcon(size: 12)),
-                          TextSpan(
-                            text: " ${data.stockData.changePc}%",
-                          )
-                        ]),
-                        maxLines: 1,
+                      return Text(
+                        "${data.stockData.changePc}%",
                         style: AppTextStyle.labelMedium_12.copyWith(
                           fontWeight: FontWeight.w600,
                           color: data.stockData.color,
@@ -195,7 +221,7 @@ class HomeMarketOverviewItem extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(width: 16),
+              const SizedBox(width: 24),
               Expanded(
                 child: Container(
                   constraints: BoxConstraints(
@@ -208,7 +234,7 @@ class HomeMarketOverviewItem extends StatelessWidget {
                   ),
                 ),
               ),
-              const SizedBox(width: 16),
+              const SizedBox(width: 24),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -225,12 +251,24 @@ class HomeMarketOverviewItem extends StatelessWidget {
                   //   },
                   //   data.stockData.lastPrice,
                   // ),
-                  Text(
-                    "${data.stockData.lastPrice}",
-                    style: AppTextStyle.labelMedium_12.copyWith(
-                      fontWeight: FontWeight.w600,
-                      color: data.stockData.color,
-                    ),
+                  ObxValue<Rx<num?>>(
+                    (lastPrice) {
+                      return Row(
+                        children: [
+                          data.stockData.prefixIcon(size: 12),
+                          Text(
+                            " ${data.stockData.lastPrice}",
+                            maxLines: 1,
+                            style: AppTextStyle.labelMedium_12.copyWith(
+                              fontWeight: FontWeight.w600,
+                              fontSize: 13,
+                              color: data.stockData.color,
+                            ),
+                          )
+                        ],
+                      );
+                    },
+                    data.stockData.lastPrice,
                   ),
 
                   Obx(() {
@@ -266,7 +304,7 @@ class HomeMarketOverviewItemChart extends StatelessWidget {
           id: "SimpleChart",
           domainFn: (_, index) => index ?? 0,
           measureFn: (datum, index) => datum,
-          data: chartData.c!,
+          data: chartData.o!,
           seriesColor: charts.ColorUtil.fromDartColor(data.stockData.color),
         ),
       ];
@@ -277,55 +315,76 @@ class HomeMarketOverviewItemChart extends StatelessWidget {
         initialData: null,
         future: future,
         builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            return charts.LineChart(
-              toSeries(snapshot.data!),
-              animate: false,
-              layoutConfig: charts.LayoutConfig(
-                leftMarginSpec: charts.MarginSpec.fixedPixel(3),
-                topMarginSpec: charts.MarginSpec.fixedPixel(3),
-                rightMarginSpec: charts.MarginSpec.fixedPixel(3),
-                bottomMarginSpec: charts.MarginSpec.fixedPixel(3),
-              ),
-              primaryMeasureAxis: charts.NumericAxisSpec(
-                showAxisLine: false,
-                renderSpec: const charts.NoneRenderSpec(),
-                viewport: charts.NumericExtents(
-                    snapshot.data?.c?.reduce(min) ?? 0,
-                    snapshot.data?.c?.reduce(max) ?? 0),
-                tickProviderSpec: const charts.BasicNumericTickProviderSpec(
-                  zeroBound: false,
-                ),
-              ),
-              domainAxis: charts.NumericAxisSpec(
-                showAxisLine: false,
-                renderSpec: const charts.NoneRenderSpec(),
-                viewport:
-                    charts.NumericExtents(0, snapshot.data?.c?.length ?? 0),
-                tickProviderSpec: const charts.BasicNumericTickProviderSpec(
-                  zeroBound: false,
-                ),
-              ),
-              defaultRenderer: charts.LineRendererConfig(smoothLine: true),
-              behaviors: [
-                charts.RangeAnnotation([
-                  charts.LineAnnotationSegment(
-                    snapshot.data?.c?.first ?? 0,
-                    charts.RangeAnnotationAxisType.measure,
-                    color: charts.ColorUtil.fromDartColor(
-                      AppColors.neutral_02,
-                    ),
-                    dashPattern: [5, 5],
-                    strokeWidthPx: 0.3,
-                  )
-                ])
-              ],
-            );
-          } else if (snapshot.hasError) {
-            return Container();
+          final StockTradingHistory chartData;
+          final num annotation;
+          final num max;
+          final num min;
+          final num length;
+          if (snapshot.hasData && (snapshot.data?.o?.isNotEmpty ?? false)) {
+            chartData = snapshot.data!;
+            annotation = data.stockData.r.value ?? (snapshot.data!.o!.first);
+            max = math.max<num>(snapshot.data!.o!.reduce(math.max), annotation);
+            min = math.min<num>(snapshot.data!.o!.reduce(math.min), annotation);
+            length = snapshot.data!.o!.length;
           } else {
-            return Container();
+            chartData = StockTradingHistory.kChartData();
+            annotation = 1;
+            max = 2;
+            min = 0;
+            length = 2;
           }
+          return GestureDetector(
+            onTap: () {
+              logger.v(chartData.o);
+            },
+            child: AbsorbPointer(
+              child: charts.LineChart(
+                toSeries(chartData),
+                animate: false,
+                layoutConfig: charts.LayoutConfig(
+                  leftMarginSpec: charts.MarginSpec.fixedPixel(3),
+                  topMarginSpec: charts.MarginSpec.fixedPixel(3),
+                  rightMarginSpec: charts.MarginSpec.fixedPixel(3),
+                  bottomMarginSpec: charts.MarginSpec.fixedPixel(3),
+                ),
+                primaryMeasureAxis: charts.NumericAxisSpec(
+                  showAxisLine: false,
+                  renderSpec: const charts.NoneRenderSpec(),
+                  viewport: charts.NumericExtents(
+                    min,
+                    max,
+                  ),
+                  tickProviderSpec: const charts.BasicNumericTickProviderSpec(
+                    zeroBound: false,
+                  ),
+                ),
+                domainAxis: charts.NumericAxisSpec(
+                  showAxisLine: false,
+                  renderSpec: const charts.NoneRenderSpec(),
+                  viewport: charts.NumericExtents(0, length - 1),
+                  tickProviderSpec: const charts.BasicNumericTickProviderSpec(
+                    zeroBound: false,
+                  ),
+                ),
+                defaultRenderer: charts.LineRendererConfig(smoothLine: true),
+                behaviors: [
+                  charts.RangeAnnotation(
+                    [
+                      charts.LineAnnotationSegment(
+                        annotation,
+                        charts.RangeAnnotationAxisType.measure,
+                        color: charts.ColorUtil.fromDartColor(
+                          AppColors.neutral_02,
+                        ),
+                        dashPattern: [5, 5],
+                        strokeWidthPx: 0.3,
+                      )
+                    ],
+                  )
+                ],
+              ),
+            ),
+          );
         });
   }
 }

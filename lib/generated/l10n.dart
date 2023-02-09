@@ -450,6 +450,36 @@ class S {
     );
   }
 
+  /// `Opening`
+  String get status_open {
+    return Intl.message(
+      'Opening',
+      name: 'status_open',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Closed`
+  String get status_close {
+    return Intl.message(
+      'Closed',
+      name: 'status_close',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Intermission`
+  String get status_intermission {
+    return Intl.message(
+      'Intermission',
+      name: 'status_intermission',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Input password`
   String get please_input_password {
     return Intl.message(
@@ -1017,6 +1047,56 @@ class S {
       name: 'billion_short',
       desc: '',
       args: [],
+    );
+  }
+
+  /// `b`
+  String get billion_lowercase {
+    return Intl.message(
+      'b',
+      name: 'billion_lowercase',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Bil`
+  String get billion {
+    return Intl.message(
+      'Bil',
+      name: 'billion',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `{minutes} minutes ago`
+  String minutes_ago(Object minutes) {
+    return Intl.message(
+      '$minutes minutes ago',
+      name: 'minutes_ago',
+      desc: '',
+      args: [minutes],
+    );
+  }
+
+  /// `{hours} hours ago`
+  String hours_ago(Object hours) {
+    return Intl.message(
+      '$hours hours ago',
+      name: 'hours_ago',
+      desc: '',
+      args: [hours],
+    );
+  }
+
+  /// `{days} days ago`
+  String days_ago(Object days) {
+    return Intl.message(
+      '$days days ago',
+      name: 'days_ago',
+      desc: '',
+      args: [days],
     );
   }
 

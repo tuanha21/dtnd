@@ -1,6 +1,28 @@
+import 'dart:ui';
+
 import 'package:dtnd/logic/stock_status.dart';
+import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/utilities/num_utils.dart';
 import 'package:get/get.dart';
+
+enum IndexStatus {
+  opening,
+  intermission,
+  closed,
+}
+
+extension IndexStatusX on IndexStatus {
+  Color get color {
+    switch (this) {
+      case IndexStatus.opening:
+        return AppColors.semantic_01;
+      case IndexStatus.intermission:
+        return AppColors.semantic_02;
+      default:
+        return AppColors.semantic_03;
+    }
+  }
+}
 
 class IndexDetail extends StockStatus {
   final int id = 1101;
@@ -10,7 +32,7 @@ class IndexDetail extends StockStatus {
   final Rx<num?> vol = Rxn<num>();
   final Rx<num?> value = Rxn<num>();
   final Rx<String?> time = Rxn();
-  final Rx<String?> status = Rxn();
+  final Rx<IndexStatus> status = Rx<IndexStatus>(IndexStatus.closed);
   final Rx<num?> accVol = Rxn<num>();
   final Rx<List<String>?> ot = Rxn();
 
@@ -40,6 +62,39 @@ class IndexDetail extends StockStatus {
 
   num get refQuant => num.tryParse(ot.value?.elementAt(5) ?? "0") ?? 0;
 
+  void changeIndexStatus(String? stt) {
+    IndexStatus nextStt;
+    switch (stt) {
+      case "O":
+        nextStt = IndexStatus.opening;
+        break;
+      case "P":
+        nextStt = IndexStatus.opening;
+        break;
+      case "A":
+        nextStt = IndexStatus.opening;
+        break;
+      case "Undefined":
+        nextStt = IndexStatus.opening;
+        break;
+      case "undefined":
+        nextStt = IndexStatus.opening;
+        break;
+      case "I":
+        nextStt = IndexStatus.intermission;
+        break;
+      case "C":
+        nextStt = IndexStatus.closed;
+        break;
+      default:
+        nextStt = IndexStatus.closed;
+    }
+    if (status.value != nextStt) {
+      status.value = nextStt;
+    }
+    return;
+  }
+
   IndexDetail({
     required this.mc,
     num? cIndex,
@@ -56,7 +111,7 @@ class IndexDetail extends StockStatus {
     this.vol.value = vol;
     this.value.value = value;
     this.time.value = time;
-    this.status.value = status;
+    changeIndexStatus(status);
     this.accVol.value = accVol;
     this.ot.value = ot;
   }
@@ -68,7 +123,7 @@ class IndexDetail extends StockStatus {
     vol.value = data.vol;
     value.value = data.value;
     time.value = data.time;
-    status.value = data.status;
+    changeIndexStatus(data.status);
     accVol.value = data.accVol;
     ot.value = data.ot;
   }

@@ -30,7 +30,7 @@ class IndexModel {
     _indexDetail
       ..cIndex.value = data.cIndex
       ..ot.value = data.ot
-      ..status.value = data.status
+      ..changeIndexStatus(data.status)
       ..value.value = data.value
       ..vol.value = data.vol
       ..time.value = data.time;
@@ -40,6 +40,7 @@ class IndexModel {
     _indexDetail
       ..cIndex.value = data["data"]["cIndex"]
       ..vol.value = data['data']['vol']
+      ..changeIndexStatus(data['data']['status'])
       ..ot.value = data["data"]["ot"].split('|')
       ..value.value = data['data']['value'];
     if (stockDayTradingHistory.value != null &&

@@ -54,6 +54,8 @@ abstract class INetworkService {
 
   Future<List<String>> getTopSearch();
 
+  Future<List<String>> getTopInterested(Map<String, dynamic> body);
+
   Future<List<String>> getTopStockTrade(Map<String, dynamic> body);
 
   Future<List<String>> getTopStockChange(Map<String, dynamic> body);

@@ -22,18 +22,24 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m0(name) => "Are you sure to delete the “${name}” category?";
 
-  static String m1(name) => "Following catalog \"${name}\"";
+  static String m1(days) => "${days} days ago";
 
-  static String m2(value) => "Gain ${value}";
+  static String m2(name) => "Following catalog \"${name}\"";
 
-  static String m3(value) => "Loss ${value}";
+  static String m3(value) => "Gain ${value}";
 
-  static String m4(value) =>
+  static String m4(hours) => "${hours} hours ago";
+
+  static String m5(value) => "Loss ${value}";
+
+  static String m6(minutes) => "${minutes} minutes ago";
+
+  static String m7(value) =>
       "The OTP has been sent to your ${value} extension phone number. Enter the 6-digit code to continue.";
 
-  static String m5(name) => "Rename catalog “${name}” to";
+  static String m8(name) => "Rename catalog “${name}” to";
 
-  static String m6(value) => "Total ${value}";
+  static String m9(value) => "Total ${value}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -82,6 +88,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "base": MessageLookupByLibrary.simpleMessage("Base"),
         "base_asset": MessageLookupByLibrary.simpleMessage("Base asset"),
         "base_note": MessageLookupByLibrary.simpleMessage("Base note"),
+        "billion": MessageLookupByLibrary.simpleMessage("Bil"),
+        "billion_lowercase": MessageLookupByLibrary.simpleMessage("b"),
         "billion_short": MessageLookupByLibrary.simpleMessage("B"),
         "birthday": MessageLookupByLibrary.simpleMessage("Birthday"),
         "bond": MessageLookupByLibrary.simpleMessage("Bond"),
@@ -125,6 +133,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "create_order_successfully":
             MessageLookupByLibrary.simpleMessage("Create order successfully"),
         "date_translations": MessageLookupByLibrary.simpleMessage("Date"),
+        "days_ago": m1,
         "debt_following":
             MessageLookupByLibrary.simpleMessage("Debt following"),
         "delete_catalog":
@@ -159,13 +168,13 @@ class MessageLookup extends MessageLookupByLibrary {
         "floor": MessageLookupByLibrary.simpleMessage("Floor"),
         "following_catalog":
             MessageLookupByLibrary.simpleMessage("Following catalog"),
-        "following_catalog_with": m1,
+        "following_catalog_with": m2,
         "foreign": MessageLookupByLibrary.simpleMessage("Foreign"),
         "froom": MessageLookupByLibrary.simpleMessage("Room FR"),
         "fs_vol": MessageLookupByLibrary.simpleMessage("FS vol"),
         "fsell": MessageLookupByLibrary.simpleMessage("FR sell"),
         "full_name": MessageLookupByLibrary.simpleMessage("Full name"),
-        "gain_wvalue": m2,
+        "gain_wvalue": m3,
         "general_information":
             MessageLookupByLibrary.simpleMessage("General information"),
         "hello": MessageLookupByLibrary.simpleMessage("Hello"),
@@ -175,6 +184,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "high": MessageLookupByLibrary.simpleMessage("High"),
         "high_translations": MessageLookupByLibrary.simpleMessage("High"),
         "home": MessageLookupByLibrary.simpleMessage("Home"),
+        "hours_ago": m4,
         "id_or_business_id_short": MessageLookupByLibrary.simpleMessage("ID"),
         "inday_ordnote":
             MessageLookupByLibrary.simpleMessage("Inday ordernote"),
@@ -208,7 +218,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "login_with_google":
             MessageLookupByLibrary.simpleMessage("Login with Google"),
         "logout": MessageLookupByLibrary.simpleMessage("Logout"),
-        "loss_wvalue": m3,
+        "loss_wvalue": m5,
         "low": MessageLookupByLibrary.simpleMessage("Low"),
         "low_translations": MessageLookupByLibrary.simpleMessage("Low"),
         "margin": MessageLookupByLibrary.simpleMessage("Margin"),
@@ -233,6 +243,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "matching": MessageLookupByLibrary.simpleMessage("Matching"),
         "million_short": MessageLookupByLibrary.simpleMessage("M"),
         "minutes": MessageLookupByLibrary.simpleMessage(" minutes"),
+        "minutes_ago": m6,
         "mk_value": MessageLookupByLibrary.simpleMessage("MK value"),
         "money_trading": MessageLookupByLibrary.simpleMessage("Money trading"),
         "net_assets": MessageLookupByLibrary.simpleMessage("Net assets"),
@@ -262,7 +273,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage(
                 "Order will appear in your order note"),
         "other_vol": MessageLookupByLibrary.simpleMessage("Other vol"),
-        "otp_code_sent_to_phone_number": m4,
+        "otp_code_sent_to_phone_number": m7,
         "overview": MessageLookupByLibrary.simpleMessage("Overview"),
         "pass_not_match":
             MessageLookupByLibrary.simpleMessage("Password not match"),
@@ -291,7 +302,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "qa_pack_enrol":
             MessageLookupByLibrary.simpleMessage("Pack enrollment"),
         "ref": MessageLookupByLibrary.simpleMessage("Ref"),
-        "rename_catalog_to": m5,
+        "rename_catalog_to": m8,
         "revenue": MessageLookupByLibrary.simpleMessage("Revenue"),
         "right": MessageLookupByLibrary.simpleMessage("Right"),
         "safe_ratio": MessageLookupByLibrary.simpleMessage("Safe ratio"),
@@ -315,6 +326,10 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Sold returning vol"),
         "something_went_wrong":
             MessageLookupByLibrary.simpleMessage("Something went erong"),
+        "status_close": MessageLookupByLibrary.simpleMessage("Closed"),
+        "status_intermission":
+            MessageLookupByLibrary.simpleMessage("Intermission"),
+        "status_open": MessageLookupByLibrary.simpleMessage("Opening"),
         "stock_already_exist":
             MessageLookupByLibrary.simpleMessage("This stock is already exist"),
         "stock_trading": MessageLookupByLibrary.simpleMessage("Stock trading"),
@@ -343,7 +358,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "total_asset": MessageLookupByLibrary.simpleMessage("Total asset"),
         "total_debt": MessageLookupByLibrary.simpleMessage("Total debt"),
         "total_vol": MessageLookupByLibrary.simpleMessage("Total vol"),
-        "total_wvalue": m6,
+        "total_wvalue": m9,
         "trading": MessageLookupByLibrary.simpleMessage("Trading"),
         "trading_board": MessageLookupByLibrary.simpleMessage("Trading board"),
         "trading_volatility":

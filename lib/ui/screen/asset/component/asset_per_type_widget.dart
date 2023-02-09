@@ -73,8 +73,8 @@ class _MoneyType extends StatelessWidget {
             children: [
               Text(
                 data.label,
-                style:
-                    textTheme.labelSmall!.copyWith(color: AppColors.neutral_03),
+                style: textTheme.labelMedium!
+                    .copyWith(color: AppColors.neutral_03),
                 overflow: TextOverflow.ellipsis,
                 maxLines: 1,
               ),

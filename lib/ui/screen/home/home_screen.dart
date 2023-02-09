@@ -10,14 +10,15 @@ import 'package:dtnd/ui/screen/home/widget/home_market_today.dart';
 import 'package:dtnd/ui/screen/home/widget/home_news.dart';
 import 'package:dtnd/ui/screen/home/widget/home_quick_access.dart';
 import 'package:dtnd/ui/screen/home/widget/home_section.dart';
+import 'package:dtnd/ui/screen/home_base/widget/home_base_nav.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:dtnd/ui/widget/my_appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
-
+  const HomeScreen({super.key, required this.navigateTab});
+  final ValueChanged<HomeNav> navigateTab;
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
@@ -72,6 +73,7 @@ class _HomeScreenState extends State<HomeScreen> {
         SliverToBoxAdapter(
           child: HomeSection(
             title: S.of(context).market_today,
+            onMoreDot: () => widget.navigateTab.call(HomeNav.market),
             child: const HomeMarketToday(),
           ),
         ),

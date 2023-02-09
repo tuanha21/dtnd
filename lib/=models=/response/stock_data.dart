@@ -106,7 +106,11 @@ class StockData extends StockStatus {
       if (lastPrice.value == null ||
           r.value == null ||
           c.value == null ||
-          f.value == null) {
+          f.value == null ||
+          lastPrice.value == 0 ||
+          r.value == 0 ||
+          c.value == 0 ||
+          f.value == 0) {
         return SStatus.ref;
       }
       if (lastPrice.value! == r.value) {
