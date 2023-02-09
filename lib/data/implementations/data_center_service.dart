@@ -240,22 +240,22 @@ class DataCenterService implements IDataCenterService {
     registering = true;
     final List<StockModel> listReturn = <StockModel>[];
     final registeredCode = getRegisteredCodes(stockCodes);
-    if (registeredCode.isNotEmpty) {
-      for (final String stockCode in registeredCode) {
+    final unregisteredCodes = getUnregisteredCodes(stockCodes);
+
+    for (final String stockCode in stockCodes) {
+      if (registeredCode.isNotEmpty && registeredCode.contains(stockCode)) {
         final int index = listStockReg
             .indexWhere((element) => element.stock.stockCode == stockCode);
         if (index != -1) {
           listReturn.add(listStockReg[index]);
         }
       }
-    }
-    final unregisteredCodes = getUnregisteredCodes(stockCodes);
-    if (unregisteredCodes.isNotEmpty) {
-      for (final String code in unregisteredCodes) {
+      if (unregisteredCodes.isNotEmpty &&
+          unregisteredCodes.contains(stockCode)) {
         try {
-          final stock =
-              listAllStock.firstWhere((element) => element.stockCode == code);
-          final stockData = await getStockData(code);
+          final stock = listAllStock
+              .firstWhere((element) => element.stockCode == stockCode);
+          final stockData = await getStockData(stockCode);
           final stockModel = StockModel(stock: stock, stockData: stockData);
           listStockReg.add(stockModel);
           listReturn.add(stockModel);

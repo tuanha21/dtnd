@@ -10,6 +10,7 @@ import 'package:dtnd/ui/screen/stock_detail/stock_detail_screen.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_textstyle.dart';
 import 'package:dtnd/ui/widget/icon/stock_icon.dart';
+import 'package:dtnd/utilities/logger.dart';
 import 'package:dtnd/utilities/num_utils.dart';
 import 'package:dtnd/utilities/responsive.dart';
 import 'package:dtnd/utilities/time_utils.dart';
@@ -332,49 +333,56 @@ class HomeMarketOverviewItemChart extends StatelessWidget {
             min = 0;
             length = 2;
           }
-          return AbsorbPointer(
-            child: charts.LineChart(
-              toSeries(chartData),
-              animate: false,
-              layoutConfig: charts.LayoutConfig(
-                leftMarginSpec: charts.MarginSpec.fixedPixel(3),
-                topMarginSpec: charts.MarginSpec.fixedPixel(3),
-                rightMarginSpec: charts.MarginSpec.fixedPixel(3),
-                bottomMarginSpec: charts.MarginSpec.fixedPixel(3),
-              ),
-              primaryMeasureAxis: charts.NumericAxisSpec(
-                showAxisLine: false,
-                renderSpec: const charts.NoneRenderSpec(),
-                viewport: charts.NumericExtents(
-                  min,
-                  max,
+          return GestureDetector(
+            onTap: () {
+              logger.v(chartData.o);
+            },
+            child: AbsorbPointer(
+              child: charts.LineChart(
+                toSeries(chartData),
+                animate: false,
+                layoutConfig: charts.LayoutConfig(
+                  leftMarginSpec: charts.MarginSpec.fixedPixel(3),
+                  topMarginSpec: charts.MarginSpec.fixedPixel(3),
+                  rightMarginSpec: charts.MarginSpec.fixedPixel(3),
+                  bottomMarginSpec: charts.MarginSpec.fixedPixel(3),
                 ),
-                tickProviderSpec: const charts.BasicNumericTickProviderSpec(
-                  zeroBound: false,
+                primaryMeasureAxis: charts.NumericAxisSpec(
+                  showAxisLine: false,
+                  renderSpec: const charts.NoneRenderSpec(),
+                  viewport: charts.NumericExtents(
+                    min,
+                    max,
+                  ),
+                  tickProviderSpec: const charts.BasicNumericTickProviderSpec(
+                    zeroBound: false,
+                  ),
                 ),
-              ),
-              domainAxis: charts.NumericAxisSpec(
-                showAxisLine: false,
-                renderSpec: const charts.NoneRenderSpec(),
-                viewport: charts.NumericExtents(0, length),
-                tickProviderSpec: const charts.BasicNumericTickProviderSpec(
-                  zeroBound: false,
+                domainAxis: charts.NumericAxisSpec(
+                  showAxisLine: false,
+                  renderSpec: const charts.NoneRenderSpec(),
+                  viewport: charts.NumericExtents(0, length - 1),
+                  tickProviderSpec: const charts.BasicNumericTickProviderSpec(
+                    zeroBound: false,
+                  ),
                 ),
-              ),
-              defaultRenderer: charts.LineRendererConfig(smoothLine: true),
-              behaviors: [
-                charts.RangeAnnotation([
-                  charts.LineAnnotationSegment(
-                    annotation,
-                    charts.RangeAnnotationAxisType.measure,
-                    color: charts.ColorUtil.fromDartColor(
-                      AppColors.neutral_02,
-                    ),
-                    dashPattern: [5, 5],
-                    strokeWidthPx: 0.3,
+                defaultRenderer: charts.LineRendererConfig(smoothLine: true),
+                behaviors: [
+                  charts.RangeAnnotation(
+                    [
+                      charts.LineAnnotationSegment(
+                        annotation,
+                        charts.RangeAnnotationAxisType.measure,
+                        color: charts.ColorUtil.fromDartColor(
+                          AppColors.neutral_02,
+                        ),
+                        dashPattern: [5, 5],
+                        strokeWidthPx: 0.3,
+                      )
+                    ],
                   )
-                ], extendAxis: false)
-              ],
+                ],
+              ),
             ),
           );
         });
