@@ -11,12 +11,8 @@ import 'package:sliding_up_panel2/sliding_up_panel2.dart';
 class FinanceIndexTab extends StatefulWidget {
   const FinanceIndexTab({
     super.key,
-    required this.panelController,
-    required this.scrollController,
     required this.stockModel,
   });
-  final PanelController panelController;
-  final ScrollController scrollController;
   final StockModel stockModel;
   @override
   State<FinanceIndexTab> createState() => _FinanceIndexTabState();
@@ -41,8 +37,10 @@ class _FinanceIndexTabState extends State<FinanceIndexTab> {
   }
 
   Future<void> getStockFinancialIndex() async {
+    print('asd');
     widget.stockModel.changeStockFinancialIndex(await dataCenterService
         .getStockFinancialIndex(widget.stockModel.stock.stockCode));
+    print(widget.stockModel.stockFinancialIndex.length);
   }
 
   @override
@@ -61,8 +59,6 @@ class _FinanceIndexTabState extends State<FinanceIndexTab> {
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: ListView(
-          physics: PanelScrollPhysics(controller: widget.panelController),
-          controller: widget.scrollController,
           shrinkWrap: true,
           children: <Widget>[
             const SizedBox(height: 20),

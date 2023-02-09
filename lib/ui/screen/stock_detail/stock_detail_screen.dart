@@ -21,6 +21,7 @@ import 'package:dtnd/ui/screen/stock_detail/widget/financial_index.dart';
 import 'package:dtnd/ui/screen/stock_detail/widget/stock_detail_chart.dart';
 import 'package:dtnd/ui/screen/stock_detail/widget/stock_detail_news.dart';
 import 'package:dtnd/ui/screen/stock_detail/widget/stock_detail_overview.dart';
+import 'package:dtnd/ui/screen/stock_detail/widget/tab_matched_detail.dart';
 import 'package:dtnd/ui/screen/stock_detail/widget/tab_trading_board.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
@@ -31,6 +32,9 @@ import 'package:sliding_up_panel2/sliding_up_panel2.dart';
 
 import '../exchange_stock/stock_order/business/stock_order_cmd.dart';
 import '../home/widget/home_section.dart';
+import 'tab/general_info_tab.dart';
+import 'tab/technical_analysis.dart';
+import 'tab/transaction_tab.dart';
 
 class StockDetailScreen extends StatefulWidget {
   const StockDetailScreen({
@@ -43,22 +47,12 @@ class StockDetailScreen extends StatefulWidget {
   State<StockDetailScreen> createState() => _StockDetailScreenState();
 }
 
-class _StockDetailScreenState extends State<StockDetailScreen>
-    with SingleTickerProviderStateMixin {
+class _StockDetailScreenState extends State<StockDetailScreen> {
   final IDataCenterService dataCenterService = DataCenterService();
   final IUserService userService = UserService();
-  late final TabController _tabController;
-
-  late final ScrollController scrollController;
-  late final PanelController panelController;
-
-  bool initialized = false;
 
   @override
   void initState() {
-    _tabController = TabController(length: 3, vsync: this);
-    scrollController = ScrollController();
-    panelController = PanelController();
     super.initState();
     initData();
   }
@@ -66,9 +60,8 @@ class _StockDetailScreenState extends State<StockDetailScreen>
   void initData() async {
     await getStockIndayTradingHistory();
     await getSecurityBasicInfo();
-    setState(() {
-      initialized = true;
-    });
+    widget.stockModel.businnessLeaders ??= await dataCenterService
+        .getBusinnessLeaders(widget.stockModel.stock.stockCode);
   }
 
   Future<void> getStockIndayTradingHistory() async {
@@ -81,19 +74,18 @@ class _StockDetailScreenState extends State<StockDetailScreen>
         .getSecurityBasicInfo(widget.stockModel.stock.stockCode);
   }
 
-  Future<void> getStockRankingFinancialIndex() async {
-    widget.stockModel.stockRankingFinancialIndex.value = await dataCenterService
-        .getStockRankingFinancialIndex(widget.stockModel.stock.stockCode);
-  }
-
-  Future<void> getIndayMatchedOrders() async {
-    final listMatchedOrder = await dataCenterService
-        .getIndayMatchedOrders(widget.stockModel.stock.stockCode);
-    widget.stockModel.updateListMatchedOrder(listMatchedOrder);
-  }
+  // Future<void> getStockRankingFinancialIndex() async {
+  //   widget.stockModel.stockRankingFinancialIndex.value = await dataCenterService
+  //       .getStockRankingFinancialIndex(widget.stockModel.stock.stockCode);
+  // }
+  //
+  // Future<void> getIndayMatchedOrders() async {
+  //   final listMatchedOrder = await dataCenterService
+  //       .getIndayMatchedOrders(widget.stockModel.stock.stockCode);
+  //   widget.stockModel.updateListMatchedOrder(listMatchedOrder);
+  // }
 
   void _onFABTapped() async {
-    // print("userService.isLogin ${userService.isLogin}");
     if (!userService.isLogin) {
       final toLogin = await showDialog<bool>(
         context: context,
@@ -121,37 +113,55 @@ class _StockDetailScreenState extends State<StockDetailScreen>
     }
   }
 
-  void _onAppbarTap() {
-    BusinessInformationISheet(widget.stockModel).show(
-        context,
-        BusinessInformationSheet(
-          stockModel: widget.stockModel,
-        ));
-  }
-
   @override
   Widget build(BuildContext context) {
+    final themeMode = AppService.instance.themeMode.value;
+    final tabbarBgColor =
+        themeMode.isLight ? AppColors.neutral_05 : AppColors.neutral_01;
     return Scaffold(
-      appBar: StockDetailAppbar(
-        stockModel: widget.stockModel,
-        onTap: _onAppbarTap,
-      ),
+      appBar: StockDetailAppbar(stockModel: widget.stockModel),
       // appBar: StockDetailAppbar(stock: widget.stockModel.stock),
-      body: ListView(children: [
-        Padding(
-          padding: const EdgeInsets.all(16),
-          child: StockDetailOverview(stockModel: widget.stockModel),
-        ),
-        SizedBox(
-            height: 200,
-            width: MediaQuery.of(context).size.width,
-            child: StockDetailChart(stockModel: widget.stockModel)),
-        const Padding(
-          padding: EdgeInsets.symmetric(horizontal: 16),
-          child: PriceAlert(),
-        ),
-        TabTradingBoard(
-          stockModel: widget.stockModel,
+      body: Column(children: [
+        const SizedBox(height: 16),
+        Expanded(
+          child: DefaultTabController(
+            length: DetailTab.values.length,
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: TabBar(
+                    isScrollable: true,
+                    labelStyle: Theme.of(context)
+                        .textTheme
+                        .titleSmall
+                        ?.copyWith(color: AppColors.text_black_1),
+                    unselectedLabelStyle: Theme.of(context)
+                        .textTheme
+                        .titleSmall
+                        ?.copyWith(color: AppColors.neutral_02),
+                    labelPadding:
+                        const EdgeInsets.symmetric(horizontal: 18, vertical: 6),
+                    padding: EdgeInsets.zero,
+                    // indicatorSize: TabBarIndicatorSize.label,
+                    tabs: DetailTab.values
+                        .map((e) => Text(e.getName(context)))
+                        .toList(),
+                  ),
+                ),
+                const SizedBox(height: 16),
+                Expanded(
+                  child: TabBarView(children: [
+                    OverviewTab(stockModel: widget.stockModel),
+                    TransactionTab(stockModel: widget.stockModel),
+                    TechnicalAnalysis(
+                        stockCode: widget.stockModel.stock.stockCode),
+                    FinanceIndexTab(stockModel: widget.stockModel),
+                  ]),
+                )
+              ],
+            ),
+          ),
         )
       ]),
       backgroundColor: AppColors.bg_1,

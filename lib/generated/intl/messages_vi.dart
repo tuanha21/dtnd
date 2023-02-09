@@ -360,6 +360,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "trading_board": MessageLookupByLibrary.simpleMessage("Bảng giá"),
         "trading_volatility":
             MessageLookupByLibrary.simpleMessage("Biến động GD"),
+        "transaction": MessageLookupByLibrary.simpleMessage("Giao dịch"),
         "try_searching_again_with_another_keyword":
             MessageLookupByLibrary.simpleMessage(
                 "Bạn thử tìm kiếm lại bằng từ khoá khác nhé!"),

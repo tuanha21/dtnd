@@ -23,6 +23,7 @@ import 'package:dtnd/=models=/ui_model/field_tree_element_model.dart';
 import '../=models=/response/indContrib.dart';
 import '../=models=/response/index_board.dart';
 import '../=models=/response/index_detail.dart';
+import '../=models=/response/stock_industry.dart';
 
 abstract class IDataCenterService {
   Set<IndexModel> get listIndexs;
@@ -83,6 +84,10 @@ abstract class IDataCenterService {
   Future<List<TopInfluenceModel>> getTopInfluence(Index index);
 
   Future<LiquidityModel> getLiquidity(Index index);
+
+  Future<List<String>> getListIndustry();
+
+  Future<List<StockIndustry>> getListStockByIndust(String industry);
 
   Future<List<FieldTreeModel>> getListIndustryHeatMap(
       {int top = 8, String type = "KL"});

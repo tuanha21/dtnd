@@ -26,9 +26,7 @@ class _TabTradingBoardState extends State<TabTradingBoard> {
         shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),
         children: <Widget>[
-          const SizedBox(height: 16),
           ThreePrices(stockModel: widget.stockModel),
-          const SizedBox(height: 20),
           BoundPrice(stockModel: widget.stockModel),
           const SizedBox(height: 20),
           // HomeSection(

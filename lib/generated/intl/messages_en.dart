@@ -363,6 +363,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "trading_board": MessageLookupByLibrary.simpleMessage("Trading board"),
         "trading_volatility":
             MessageLookupByLibrary.simpleMessage("TD volatility"),
+        "transaction": MessageLookupByLibrary.simpleMessage("Transaction"),
         "try_searching_again_with_another_keyword":
             MessageLookupByLibrary.simpleMessage(
                 "Try searching again with another keyword!"),
