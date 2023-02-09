@@ -40,7 +40,9 @@ class FinancialIndex extends StatelessWidget {
     super.key,
     required this.stockModel,
   });
+
   final StockModel stockModel;
+
   @override
   Widget build(BuildContext context) {
     final themeMode = AppService.instance.themeMode.value;
@@ -69,8 +71,10 @@ class _RowData extends StatelessWidget {
     required this.type,
     required this.stockModel,
   });
+
   final _RowType type;
   final StockModel stockModel;
+
   @override
   Widget build(BuildContext context) {
     final themeMode = AppService.instance.themeMode.value;

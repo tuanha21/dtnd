@@ -83,15 +83,6 @@ class FieldTreeElementModel {
       default:
         return AppColors.semantic_02;
     }
-    // if (pERCENTCHANGE > 0) {
-    //   return AppColors.green_price;
-    // }
-
-    // if (pERCENTCHANGE < 0) {
-    //   return AppColors.red_price;
-    // }
-
-    // return AppColors.yellow_price;
   }
 
   FieldTreeElementModel({

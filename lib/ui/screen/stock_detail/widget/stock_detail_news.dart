@@ -11,7 +11,9 @@ class StockDetailNews extends StatefulWidget {
     super.key,
     required this.stockCode,
   });
+
   final String stockCode;
+
   @override
   State<StockDetailNews> createState() => _StockDetailNewsState();
 }
@@ -22,6 +24,7 @@ class _StockDetailNewsState extends State<StockDetailNews> {
   late final List<StockNews> shortStockNews;
 
   bool initialized = false;
+
   @override
   void initState() {
     getStockNews();
@@ -51,15 +54,16 @@ class _StockDetailNewsState extends State<StockDetailNews> {
         borderRadius: BorderRadius.all(Radius.circular(12)),
         color: AppColors.neutral_07,
       ),
-      child: Column(
-        children: [
-          for (final StockNews news in shortStockNews)
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 5),
-              child: NewsCard(stockNews: news),
-            )
-        ],
-      ),
+      child: ListView.separated(
+        shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          itemBuilder: (context, index) {
+            return NewsCard(stockNews: shortStockNews[index]);
+          },
+          separatorBuilder: (context, index) {
+            return const SizedBox(height: 10);
+          },
+          itemCount: shortStockNews.length),
     );
   }
 }

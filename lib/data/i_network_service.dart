@@ -31,6 +31,7 @@ import 'package:socket_io_client/socket_io_client.dart' as IO;
 import '../=models=/request/request_model.dart';
 import '../=models=/response/indContrib.dart';
 import '../=models=/response/index_board.dart';
+import '../=models=/response/stock_industry.dart';
 import '../=models=/response/user_token.dart';
 
 abstract class INetworkService {
@@ -102,7 +103,11 @@ abstract class INetworkService {
 
   Future<LiquidityModel> getLiquidity(String index);
 
+  Future<List<String>> getListIndustry();
+
   Future<List<FieldTreeModel>> getListIndustryHeatMap(int top, String type);
+
+  Future<List<StockIndustry>> getListStockByIndust(String industry);
 
   Future<List<StockFinancialIndex>> getStockFinancialIndex(String body);
 

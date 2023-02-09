@@ -305,5 +305,7 @@
     "foreign": "Nước ngoài",
     "world": "Thế giới",
 
-    "copytrade": "Copytrade"
+    "copytrade": "Copytrade",
+
+    "transaction" : "Giao dịch"
 }

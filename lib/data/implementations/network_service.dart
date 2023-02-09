@@ -39,6 +39,7 @@ import 'package:http/http.dart' as http;
 import 'package:socket_io_client/socket_io_client.dart';
 
 import '../../=models=/response/indContrib.dart';
+import '../../=models=/response/stock_industry.dart';
 
 class NetworkService implements INetworkService {
   final http.Client client = http.Client();
@@ -614,6 +615,36 @@ class NetworkService implements INetworkService {
   }
 
   @override
+  Future<List<String>> getListIndustry() async {
+    var response = await client.get(url_info_sbsi("listIndustry"));
+    var data = jsonDecode(response.body);
+    var list = data['data'] as List;
+    List<String> listString = [];
+    for (var element in list) {
+      listString.add(element.toString());
+    }
+    return listString;
+  }
+
+  @override
+  Future<List<StockIndustry>> getListStockByIndust(String industry) async {
+    var response = await client
+        .get(url_info_sbsi("listStockByIndust", {'industry': industry}));
+    if (response.statusCode != 200) {
+      throw response;
+    }
+    var res = decode(response.bodyBytes);
+    var list = res["data"] as List;
+    List<StockIndustry> result = [];
+    for (var element in list) {
+      if(element['GTGD']!=null) {
+        result.add(StockIndustry.fromJson(element));
+      }
+    }
+    return result;
+  }
+
+  @override
   Future<List<FieldTreeModel>> getListIndustryHeatMap(
       int top, String type) async {
     final param = {
@@ -641,11 +672,11 @@ class NetworkService implements INetworkService {
       throw response;
     }
     response = decode(response.bodyBytes);
+
     if (response["status"] != 200) {
       throw response["message"];
     }
     response = decode(response["data"]);
-    logger.v(response);
     final List<StockFinancialIndex> result = [];
     for (final element in response) {
       result.add(StockFinancialIndex.fromJson(element));
@@ -681,7 +712,6 @@ class NetworkService implements INetworkService {
       throw response;
     }
     response = decode(response.bodyBytes);
-    logger.v(response);
     if (response["status"] != 200) {
       throw response["message"];
     }
@@ -699,7 +729,6 @@ class NetworkService implements INetworkService {
       throw response;
     }
     response = decode(response.bodyBytes);
-    logger.v(response);
     if (response["status"] != 200) {
       throw response["message"];
     }

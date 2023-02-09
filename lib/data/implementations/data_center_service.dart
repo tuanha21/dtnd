@@ -31,6 +31,7 @@ import 'package:get/get.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 import '../../=models=/response/index_board.dart';
+import '../../=models=/response/stock_industry.dart';
 
 const List<String> defaultListStock = [
   'ACB',
@@ -631,5 +632,15 @@ class DataCenterService implements IDataCenterService {
   @override
   Future<List<IndexDetailResponse>> getListIndexDetail() {
     return networkService.getListIndexDetail();
+  }
+
+  @override
+  Future<List<String>> getListIndustry() {
+    return networkService.getListIndustry();
+  }
+
+  @override
+  Future<List<StockIndustry>> getListStockByIndust(String industry) {
+    return networkService.getListStockByIndust(industry);
   }
 }
