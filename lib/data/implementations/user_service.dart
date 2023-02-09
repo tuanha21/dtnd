@@ -1,4 +1,5 @@
 import 'package:dtnd/=models=/request/request_model.dart';
+import 'package:dtnd/=models=/response/account/i_account.dart';
 import 'package:dtnd/=models=/response/account_info_model.dart';
 import 'package:dtnd/=models=/response/total_asset_model.dart';
 import 'package:dtnd/=models=/response/user_token.dart';
@@ -24,6 +25,9 @@ class UserService implements IUserService {
 
   @override
   TotalAsset? totalAsset;
+
+  @override
+  List<IAccountModel>? listAccount;
 
   @override
   List<String> searchHistory = [];
@@ -69,6 +73,15 @@ class UserService implements IUserService {
 
   @override
   UserToken? get token => userToken;
+
+  // Future<List<IAccountModel>> getListAccount() async {
+  //   final RequestModel requestModel = RequestModel(this,
+  //       group: "B",
+  //       data: RequestDataModel.cursorType(
+  //         cmd: "GetAccountInfo",
+  //       ));
+  //   listAccount = await networkService.requestTraditionalApi(requestModel);
+  // }
 
   Future<UserInfo?> getUserInfo() async {
     if (!isLogin) {

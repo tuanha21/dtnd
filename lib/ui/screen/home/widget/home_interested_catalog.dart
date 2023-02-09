@@ -4,6 +4,7 @@ import 'package:dtnd/=models=/response/stock_model.dart';
 import 'package:dtnd/config/service/app_services.dart';
 import 'package:dtnd/data/implementations/data_center_service.dart';
 import 'package:dtnd/generated/l10n.dart';
+import 'package:dtnd/ui/screen/home/widget/simple_line_chart.dart';
 import 'package:dtnd/ui/screen/stock_detail/stock_detail_screen.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
@@ -203,7 +204,7 @@ class HomeInterestedCatalogItem extends StatelessWidget {
                   constraints: BoxConstraints(
                       minWidth: MediaQuery.of(context).size.width / 5,
                       maxWidth: MediaQuery.of(context).size.width / 4),
-                  child: HomeMarketOverviewItemChart(
+                  child: SimpleLineChart(
                     data: data,
                     future: data.getTradingHistory(DataCenterService(),
                         resolution: "1D",

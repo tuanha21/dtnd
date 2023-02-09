@@ -68,6 +68,7 @@ class StockModel {
       {String? resolution,
       DateTime? from,
       DateTime? to}) {
+    // print("getTradingHistory");
     return dataCenterService.getStockTradingHistory(
         stock.stockCode,
         resolution ?? "1D",

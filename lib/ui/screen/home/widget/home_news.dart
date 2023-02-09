@@ -146,9 +146,6 @@ class HomeNewsCard extends StatelessWidget {
                               duration = DateTime.now().difference(
                                   format.parse(stockNews.publishTime!));
                             }
-                            print(format
-                                .format(format.parse(stockNews.publishTime!)));
-                            print(format.format(DateTime.now()));
                             final String ago;
                             if (duration.inHours > 23) {
                               ago = S.of(context).days_ago(duration.inDays);

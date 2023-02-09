@@ -1,11 +1,8 @@
-import 'dart:convert';
-
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dtnd/=models=/response/stock_model.dart';
-import 'package:dtnd/=models=/response/stock_trading_history.dart';
 import 'package:dtnd/config/service/app_services.dart';
 import 'package:dtnd/data/implementations/data_center_service.dart';
 import 'package:dtnd/generated/l10n.dart';
+import 'package:dtnd/ui/screen/home/widget/simple_line_chart.dart';
 import 'package:dtnd/ui/screen/stock_detail/stock_detail_screen.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_textstyle.dart';
@@ -16,9 +13,6 @@ import 'package:dtnd/utilities/responsive.dart';
 import 'package:dtnd/utilities/time_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:charts_flutter/flutter.dart' as charts;
-import 'dart:math';
-import 'dart:math' as math;
 import '../home_controller.dart';
 
 class HomeMarketOverview extends StatefulWidget {
@@ -227,11 +221,19 @@ class HomeMarketOverviewItem extends StatelessWidget {
                   constraints: BoxConstraints(
                       minWidth: MediaQuery.of(context).size.width / 5,
                       maxWidth: MediaQuery.of(context).size.width / 4),
-                  child: HomeMarketOverviewItemChart(
-                    data: data,
-                    future: data.getTradingHistory(DataCenterService(),
-                        resolution: "5", from: TimeUtilities.beginningOfDay),
-                  ),
+                  child: Obx(() {
+                    data.stockData.lastPrice.value;
+                    return SimpleLineChart(
+                      data: data,
+                      future: DataCenterService().getStockTradingHistory.call(
+                          data.stock.stockCode,
+                          "5",
+                          TimeUtilities.beginningOfDay,
+                          DateTime.now()),
+                      // future: data.getTradingHistory(DataCenterService(),
+                      //     resolution: "5", from: TimeUtilities.beginningOfDay),
+                    );
+                  }),
                 ),
               ),
               const SizedBox(width: 24),
@@ -287,104 +289,5 @@ class HomeMarketOverviewItem extends StatelessWidget {
         ),
       ),
     );
-  }
-}
-
-class HomeMarketOverviewItemChart extends StatelessWidget {
-  const HomeMarketOverviewItemChart({
-    super.key,
-    required this.data,
-    required this.future,
-  });
-
-  final StockModel data;
-  final Future<StockTradingHistory?> future;
-  List<charts.Series<num, int>> toSeries(StockTradingHistory chartData) => [
-        charts.Series<num, int>(
-          id: "SimpleChart",
-          domainFn: (_, index) => index ?? 0,
-          measureFn: (datum, index) => datum,
-          data: chartData.o!,
-          seriesColor: charts.ColorUtil.fromDartColor(data.stockData.color),
-        ),
-      ];
-
-  @override
-  Widget build(BuildContext context) {
-    return FutureBuilder<StockTradingHistory?>(
-        initialData: null,
-        future: future,
-        builder: (context, snapshot) {
-          final StockTradingHistory chartData;
-          final num annotation;
-          final num max;
-          final num min;
-          final num length;
-          if (snapshot.hasData && (snapshot.data?.o?.isNotEmpty ?? false)) {
-            chartData = snapshot.data!;
-            annotation = data.stockData.r.value ?? (snapshot.data!.o!.first);
-            max = math.max<num>(snapshot.data!.o!.reduce(math.max), annotation);
-            min = math.min<num>(snapshot.data!.o!.reduce(math.min), annotation);
-            length = snapshot.data!.o!.length;
-          } else {
-            chartData = StockTradingHistory.kChartData();
-            annotation = 1;
-            max = 2;
-            min = 0;
-            length = 2;
-          }
-          return GestureDetector(
-            onTap: () {
-              logger.v(chartData.o);
-            },
-            child: AbsorbPointer(
-              child: charts.LineChart(
-                toSeries(chartData),
-                animate: false,
-                layoutConfig: charts.LayoutConfig(
-                  leftMarginSpec: charts.MarginSpec.fixedPixel(3),
-                  topMarginSpec: charts.MarginSpec.fixedPixel(3),
-                  rightMarginSpec: charts.MarginSpec.fixedPixel(3),
-                  bottomMarginSpec: charts.MarginSpec.fixedPixel(3),
-                ),
-                primaryMeasureAxis: charts.NumericAxisSpec(
-                  showAxisLine: false,
-                  renderSpec: const charts.NoneRenderSpec(),
-                  viewport: charts.NumericExtents(
-                    min,
-                    max,
-                  ),
-                  tickProviderSpec: const charts.BasicNumericTickProviderSpec(
-                    zeroBound: false,
-                  ),
-                ),
-                domainAxis: charts.NumericAxisSpec(
-                  showAxisLine: false,
-                  renderSpec: const charts.NoneRenderSpec(),
-                  viewport: charts.NumericExtents(0, length - 1),
-                  tickProviderSpec: const charts.BasicNumericTickProviderSpec(
-                    zeroBound: false,
-                  ),
-                ),
-                defaultRenderer: charts.LineRendererConfig(smoothLine: true),
-                behaviors: [
-                  charts.RangeAnnotation(
-                    [
-                      charts.LineAnnotationSegment(
-                        annotation,
-                        charts.RangeAnnotationAxisType.measure,
-                        color: charts.ColorUtil.fromDartColor(
-                          AppColors.neutral_02,
-                        ),
-                        dashPattern: [5, 5],
-                        strokeWidthPx: 0.3,
-                      )
-                    ],
-                  )
-                ],
-              ),
-            ),
-          );
-        });
   }
 }
