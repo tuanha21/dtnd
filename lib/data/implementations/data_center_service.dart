@@ -18,6 +18,7 @@ import 'package:dtnd/=models=/response/stock_ranking_financial_index_model.dart'
 import 'package:dtnd/=models=/response/stock_trading_history.dart';
 import 'package:dtnd/=models=/response/subsidiaries_model.dart';
 import 'package:dtnd/=models=/response/top_influence_model.dart';
+import 'package:dtnd/=models=/response/top_interested_model.dart';
 import 'package:dtnd/=models=/ui_model/field_tree_element_model.dart';
 import 'package:dtnd/data/i_data_center_service.dart';
 import 'package:dtnd/data/i_local_storage_service.dart';
@@ -340,7 +341,7 @@ class DataCenterService implements IDataCenterService {
   }
 
   @override
-  Future<List<String>> getTopForeignTrade(
+  Future<List<TopInterested>> getTopForeignTrade(
       [int count = 5, String type = "i"]) async {
     final Map<String, String> body = {
       "count": "$count",
@@ -355,7 +356,7 @@ class DataCenterService implements IDataCenterService {
   }
 
   @override
-  Future<List<String>> getTopStockChange(
+  Future<List<TopInterested>> getTopStockChange(
       [int count = 5, String type = "i"]) async {
     final Map<String, String> body = {
       "count": "$count",
@@ -370,7 +371,7 @@ class DataCenterService implements IDataCenterService {
   }
 
   @override
-  Future<List<String>> getTopInterested(
+  Future<List<TopInterested>> getTopInterested(
       [int count = 5, String type = "i"]) async {
     final Map<String, String> body = {
       "count": "$count",
@@ -384,7 +385,7 @@ class DataCenterService implements IDataCenterService {
   }
 
   @override
-  Future<List<String>> getTopStockTrade(
+  Future<List<TopInterested>> getTopStockTrade(
       [int count = 5, String type = "i"]) async {
     final Map<String, String> body = {
       "count": "$count",

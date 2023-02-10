@@ -2,6 +2,7 @@ import 'package:dtnd/=models=/response/account/i_account.dart';
 import 'package:dtnd/=models=/response/account_info_model.dart';
 import 'package:dtnd/=models=/response/total_asset_model.dart';
 import 'package:dtnd/=models=/response/user_token.dart';
+import 'package:get/get.dart';
 
 abstract class IUserService {
   bool get isLogin;
@@ -12,7 +13,7 @@ abstract class IUserService {
 
   TotalAsset? get totalAsset;
 
-  List<IAccountModel>? get listAccount;
+  Rx<List<IAccountModel>?> get listAccountModel;
 
   List<String> get searchHistory;
 

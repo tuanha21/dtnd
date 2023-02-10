@@ -1,5 +1,6 @@
 import 'package:dtnd/=models=/request/request_model.dart';
 import 'package:dtnd/=models=/response/account/i_account.dart';
+import 'package:dtnd/=models=/response/account/list_account_model.dart';
 import 'package:dtnd/=models=/response/account_info_model.dart';
 import 'package:dtnd/=models=/response/total_asset_model.dart';
 import 'package:dtnd/=models=/response/user_token.dart';
@@ -9,6 +10,7 @@ import 'package:dtnd/data/i_user_service.dart';
 import 'package:dtnd/data/implementations/local_storage_service.dart';
 import 'package:dtnd/data/implementations/network_service.dart';
 import 'package:dtnd/utilities/logger.dart';
+import 'package:get/get.dart';
 
 class UserService implements IUserService {
   final ILocalStorageService localStorageService = LocalStorageService();
@@ -27,7 +29,7 @@ class UserService implements IUserService {
   TotalAsset? totalAsset;
 
   @override
-  List<IAccountModel>? listAccount;
+  Rx<List<IAccountModel>?> listAccountModel = Rxn();
 
   @override
   List<String> searchHistory = [];
@@ -60,6 +62,7 @@ class UserService implements IUserService {
       userToken = token;
       await localStorageService.saveUserToken(token);
       getUserInfo();
+      getListAccount();
       getTotalAsset();
       getSearchHistory();
       return true;
@@ -74,14 +77,33 @@ class UserService implements IUserService {
   @override
   UserToken? get token => userToken;
 
-  // Future<List<IAccountModel>> getListAccount() async {
-  //   final RequestModel requestModel = RequestModel(this,
-  //       group: "B",
-  //       data: RequestDataModel.cursorType(
-  //         cmd: "GetAccountInfo",
-  //       ));
-  //   listAccount = await networkService.requestTraditionalApi(requestModel);
-  // }
+  Future<List<IAccountModel>?> getListAccount() async {
+    RequestModel requestModel = RequestModel(this,
+        group: "B",
+        data: RequestDataModel.cursorType(
+          cmd: "ListAccount",
+        ));
+    final listAccount = await networkService
+        .requestTraditionalApiResList<IAccountModel>(requestModel);
+    if (listAccount?.isEmpty ?? true) {
+      return [];
+    } else {
+      listAccountModel.value = listAccount;
+      for (var i = 0; i < listAccount!.length; i++) {
+        RequestModel requestModel = RequestModel(this,
+            group: "Q",
+            data: RequestDataModel.stringType(
+              cmd: "Web.Portfolio.AccountStatus",
+              p1: listAccount.elementAt(i).accCode,
+            ));
+        final accountResponse = await networkService
+            .requestTraditionalApi<IAccountResponse>(requestModel);
+        listAccount.elementAt(i).updateData(accountResponse!);
+      }
+    }
+    listAccountModel.refresh();
+    return listAccountModel.value;
+  }
 
   Future<UserInfo?> getUserInfo() async {
     if (!isLogin) {

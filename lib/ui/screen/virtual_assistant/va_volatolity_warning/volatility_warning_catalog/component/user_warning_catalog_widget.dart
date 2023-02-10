@@ -230,6 +230,7 @@ class _UserWarningCatalogWidgetState extends State<UserWarningCatalogWidget> {
                     height: 85,
                     child: HomeMarketOverviewItem(
                       data: listStocks!.elementAt(index),
+                      dataCenterService: dataCenterService,
                     ),
                   );
                 },
