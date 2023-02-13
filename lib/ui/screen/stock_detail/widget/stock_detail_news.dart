@@ -1,3 +1,4 @@
+import 'package:dtnd/=models=/response/news_model.dart';
 import 'package:dtnd/=models=/response/stock_news.dart';
 import 'package:dtnd/data/i_network_service.dart';
 import 'package:dtnd/data/implementations/network_service.dart';
@@ -5,6 +6,8 @@ import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/widget/news_card.dart';
 import 'package:flutter/material.dart';
+
+import '../../news_detail.dart/new_detail_screen.dart';
 
 class StockDetailNews extends StatefulWidget {
   const StockDetailNews({
@@ -55,10 +58,22 @@ class _StockDetailNewsState extends State<StockDetailNews> {
         color: AppColors.neutral_07,
       ),
       child: ListView.separated(
-        shrinkWrap: true,
+          shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
           itemBuilder: (context, index) {
-            return NewsCard(stockNews: shortStockNews[index]);
+            return GestureDetector(
+                onTap: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) =>
+                        NewsDetailScreen(newsModel: NewsModel(
+                          title: shortStockNews[index].title,
+                          articleID: shortStockNews[index].articleID,
+                          headImg: shortStockNews[index].imageUrl,
+                          publishTime: shortStockNews[index].publishTime
+                        )),
+                  ));
+                },
+                child: NewsCard(stockNews: shortStockNews[index]));
           },
           separatorBuilder: (context, index) {
             return const SizedBox(height: 10);

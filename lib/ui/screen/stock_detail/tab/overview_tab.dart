@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import '../../../../generated/l10n.dart';
 import '../../../theme/app_color.dart';
 import '../../home/widget/home_section.dart';
+import '../widget/introduct_widget.dart';
 import '../widget/stock_detail_chart.dart';
 import '../widget/stock_detail_news.dart';
+import '../widget/stock_detail_overview.dart';
 import '../widget/stock_event.dart';
 
 class OverviewTab extends StatefulWidget {
@@ -24,6 +26,10 @@ class _OverviewTabState extends State<OverviewTab> {
   Widget build(BuildContext context) {
     return ListView(
       children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: StockDetailOverview(stockModel: widget.stockModel),
+        ),
         SizedBox(
             height: 200,
             child: StockDetailChart(stockModel: widget.stockModel)),
@@ -67,10 +73,10 @@ class _OverviewTabState extends State<OverviewTab> {
                             0,
                         max: widget.stockModel.stockData.highPrice.value
                                 ?.toDouble() ??
-                            0,
+                            1,
                         value: widget.stockModel.stockData.lastPrice.value
                                 ?.toDouble() ??
-                            1,
+                            0,
                         onChanged: (value) {},
                       ),
                     ),
@@ -85,6 +91,7 @@ class _OverviewTabState extends State<OverviewTab> {
           ),
         ),
         const SizedBox(height: 20),
+        IntroduceWidget(stockCode: widget.stockModel.stockData.sym),
         HomeSection(
           title: S.of(context).news,
           child: Padding(
@@ -102,7 +109,9 @@ class _OverviewTabState extends State<OverviewTab> {
               stockModel: widget.stockModel,
             ),
           ),
-        )
+        ),
+        const SizedBox(height: 20),
+
       ],
     );
   }

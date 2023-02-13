@@ -23,6 +23,7 @@ import 'package:dtnd/=models=/ui_model/field_tree_element_model.dart';
 import '../=models=/response/indContrib.dart';
 import '../=models=/response/index_board.dart';
 import '../=models=/response/index_detail.dart';
+import '../=models=/response/introduct_company.dart';
 import '../=models=/response/sec_event.dart';
 import '../=models=/response/stock_industry.dart';
 
@@ -126,4 +127,5 @@ abstract class IDataCenterService {
 
   Future<List<SecEvent>> getListEvent(String stockCode);
 
+  Future<CompanyIntroductionResponse> getCompanyIntroduction(String stockCode);
 }

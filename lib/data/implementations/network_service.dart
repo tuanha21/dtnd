@@ -12,6 +12,7 @@ import 'package:dtnd/=models=/response/index_board.dart';
 import 'package:dtnd/=models=/response/index_detail.dart';
 import 'package:dtnd/=models=/response/index_chart_data.dart';
 import 'package:dtnd/=models=/index.dart';
+import 'package:dtnd/=models=/response/introduct_company.dart';
 import 'package:dtnd/=models=/response/liquidity_model.dart';
 import 'package:dtnd/=models=/response/new_order.dart';
 import 'package:dtnd/=models=/response/news_detail.dart';
@@ -759,7 +760,6 @@ class NetworkService implements INetworkService {
       throw response;
     }
     response = decode(response.bodyBytes);
-    logger.v(response);
     if (response["status"] != 200) {
       throw response["message"];
     }
@@ -889,21 +889,31 @@ class NetworkService implements INetworkService {
   Future<List<SecEvent>> getListEvent(String stockCode) async {
     try {
       var response = await client.post(
-          Uri.http('202.124.204.208:8998', 'algo/pbapi/api/secEvents'),
-          body: {"lang": "vi", "secCode": stockCode});
+          Uri.https('opacc-api.apec.com.vn','algo/pbapi/api/secEvents'),
+          body: jsonEncode({"lang": "vi", "secCode": stockCode}));
       if (response.statusCode != 200) {
         throw response;
       }
       var res = decode(response.bodyBytes);
-      var list = res['data'] as List;
+      var list = jsonDecode(res['data']) as List;
       var listSecc = <SecEvent>[];
       for (var element in list) {
         listSecc.add(SecEvent.fromJson(element));
       }
       return listSecc;
     } catch (e) {
-      print(e.toString());
+      logger.e(e.toString());
+      logger.e((e as http.Response).request?.url);
       rethrow;
     }
+  }
+
+  @override
+  Future<CompanyIntroductionResponse> getCompanyIntroduction(String stockCode) async {
+    var response = await client.post(
+        Uri.https('opacc-api.apec.com.vn','algo/pbapi/api/companies/introduction'),
+        body: jsonEncode({"secCode": stockCode}));
+    var res = decode(response.bodyBytes);
+    return CompanyIntroductionResponse.fromJson(res);
   }
 }

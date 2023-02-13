@@ -5,6 +5,7 @@ import '../../../../=models=/response/sec_event.dart';
 import '../../../../data/i_data_center_service.dart';
 import '../../../../data/implementations/data_center_service.dart';
 import '../../../../generated/l10n.dart';
+import '../../../../utilities/logger.dart';
 import '../../../theme/app_color.dart';
 import '../../../theme/app_textstyle.dart';
 
@@ -48,12 +49,12 @@ class _StockEventState extends State<StockEvent> {
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
                 itemBuilder: (context, index) {
-                  return EventCard(event: list![index]);
+                  return EventCard(event: list[index]);
                 },
                 separatorBuilder: (context, index) {
                   return const SizedBox(height: 10);
                 },
-                itemCount: list!.length),
+                itemCount: list.length),
           );
         }
         return const SizedBox();
@@ -72,22 +73,27 @@ class EventCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    logger.d(event.toJson());
     return GestureDetector(
       onTap: () {},
       child: IntrinsicHeight(
         child: Row(
           children: [
-            SizedBox.square(
-              dimension: 75,
+             SizedBox(
+              height: 40,width: 40,
+              child: Container(
+                color: Colors.grey,
+              ),
             ),
             const SizedBox(width: 10),
             Expanded(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Expanded(
                     child: Text(
-                      event.sECURITYCODE ?? "Title",
+                      event.eVENTDESC ?? "Title",
                       maxLines: 2,
                       textAlign: TextAlign.left,
                       style: Theme.of(context).textTheme.titleSmall,
