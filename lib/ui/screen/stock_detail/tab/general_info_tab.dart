@@ -11,14 +11,14 @@ class GeneralInfoTab extends StatefulWidget {
     super.key,
     required this.stockModel,
   });
+
   final StockModel stockModel;
+
   @override
   State<GeneralInfoTab> createState() => _GeneralInfoTabState();
 }
 
 class _GeneralInfoTabState extends State<GeneralInfoTab> {
-
-
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
@@ -135,8 +135,8 @@ class _GeneralInfoTabState extends State<GeneralInfoTab> {
             children: [
               Text(
                 "Thành viên Hội đồng quản trị",
-                style:
-                    textTheme.titleMedium!.copyWith(fontWeight: FontWeight.w700),
+                style: textTheme.titleMedium!
+                    .copyWith(fontWeight: FontWeight.w700),
               ),
             ],
           ),
@@ -144,7 +144,8 @@ class _GeneralInfoTabState extends State<GeneralInfoTab> {
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 8),
               child: Container(
-                padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
                 decoration: const BoxDecoration(
                   borderRadius: BorderRadius.all(Radius.circular(12)),
                   color: AppColors.neutral_06,
@@ -204,8 +205,8 @@ class _GeneralInfoTabState extends State<GeneralInfoTab> {
             children: [
               Text(
                 "Cơ cấu cổ đông",
-                style:
-                    textTheme.titleMedium!.copyWith(fontWeight: FontWeight.w700),
+                style: textTheme.titleMedium!
+                    .copyWith(fontWeight: FontWeight.w700),
               ),
             ],
           ),

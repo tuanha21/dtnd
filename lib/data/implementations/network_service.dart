@@ -6,7 +6,9 @@ import 'package:dtnd/=models=/core_response_model.dart';
 import 'package:dtnd/=models=/response/account/i_account.dart';
 import 'package:dtnd/=models=/response/account_info_model.dart';
 import 'package:dtnd/=models=/response/business_profile_model.dart';
+import 'package:dtnd/=models=/response/company_info.dart';
 import 'package:dtnd/=models=/response/deep_model.dart';
+import 'package:dtnd/=models=/response/head.dart';
 import 'package:dtnd/=models=/response/inday_matched_order.dart';
 import 'package:dtnd/=models=/response/index_board.dart';
 import 'package:dtnd/=models=/response/index_detail.dart';
@@ -41,6 +43,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import 'package:socket_io_client/socket_io_client.dart';
 
+import '../../=models=/response/basic_company.dart';
 import '../../=models=/response/indContrib.dart';
 import '../../=models=/response/sec_event.dart';
 import '../../=models=/response/stock_industry.dart';
@@ -753,6 +756,22 @@ class NetworkService implements INetworkService {
   }
 
   @override
+  Future<BasicCompany> getBasicProfile(String code) async {
+    dynamic response = await client.post(url_algo("companies/basic"),
+        body: jsonEncode({"secCode": code}));
+    if (response.statusCode != 200) {
+      throw response;
+    }
+    response = decode(response.bodyBytes);
+    if (response["status"] != 200) {
+      throw response["message"];
+    }
+    response = response["data"];
+    final BasicCompany result = BasicCompany.fromJson(response);
+    return result;
+  }
+
+  @override
   Future<List<BusinnessLeaderModel>?> getBusinnessLeaders(String body) async {
     dynamic response =
         await client.post(url_algo("companies/leaders"), body: body);
@@ -889,7 +908,7 @@ class NetworkService implements INetworkService {
   Future<List<SecEvent>> getListEvent(String stockCode) async {
     try {
       var response = await client.post(
-          Uri.https('opacc-api.apec.com.vn','algo/pbapi/api/secEvents'),
+          Uri.https('opacc-api.apec.com.vn', 'algo/pbapi/api/secEvents'),
           body: jsonEncode({"lang": "vi", "secCode": stockCode}));
       if (response.statusCode != 200) {
         throw response;
@@ -909,11 +928,34 @@ class NetworkService implements INetworkService {
   }
 
   @override
-  Future<CompanyIntroductionResponse> getCompanyIntroduction(String stockCode) async {
+  Future<CompanyIntroductionResponse> getCompanyIntroduction(
+      String stockCode) async {
     var response = await client.post(
-        Uri.https('opacc-api.apec.com.vn','algo/pbapi/api/companies/introduction'),
+        Uri.https(
+            'opacc-api.apec.com.vn', 'algo/pbapi/api/companies/introduction'),
         body: jsonEncode({"secCode": stockCode}));
     var res = decode(response.bodyBytes);
     return CompanyIntroductionResponse.fromJson(res);
+  }
+
+  @override
+  Future<CompanyInfo> getCompanyInfo(String stockCode) async {
+    var response = await client
+        .get(url_info_sbsi('companyInfo.pt', {"symbol": stockCode}));
+    var res = decode(response.bodyBytes);
+    return CompanyInfo.fromJson(res);
+  }
+
+  @override
+  Future<List<Head>> getStockInfo(String stockCOde) async {
+    var response = await client.get(url_info_sbsi('stockReport.pt', {
+      "symbol": stockCOde,
+      "type": "CSTC",
+      "termtype": 1,
+      "from": 1,
+      "to": 4
+    }));
+    var res = decode(response.bodyBytes);
+    throw res;
   }
 }

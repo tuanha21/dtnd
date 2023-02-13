@@ -114,8 +114,10 @@ class _HomeInterestedCatalogState extends State<HomeInterestedCatalog> {
 class HomeInterestedCatalogItem extends StatelessWidget {
   const HomeInterestedCatalogItem(
       {super.key, required this.data, required this.index});
+
   final int index;
   final StockModel data;
+
   @override
   Widget build(BuildContext context) {
     final themeMode = AppService.instance.themeMode.value;

@@ -31,6 +31,9 @@ import 'package:dtnd/config/service/environment.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 import '../=models=/request/request_model.dart';
+import '../=models=/response/basic_company.dart';
+import '../=models=/response/company_info.dart';
+import '../=models=/response/head.dart';
 import '../=models=/response/indContrib.dart';
 import '../=models=/response/index_board.dart';
 import '../=models=/response/introduct_company.dart';
@@ -150,4 +153,10 @@ abstract class INetworkService {
   Future<IndContrib> getFIvalue(String marketCode);
 
   Future<CompanyIntroductionResponse> getCompanyIntroduction(String stockCode);
+
+  Future<BasicCompany> getBasicProfile(String stockCode);
+
+  Future<CompanyInfo> getCompanyInfo(String stockCode);
+
+  Future<List<Head>> getStockInfo(String stockCOde);
 }

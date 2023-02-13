@@ -1,9 +1,16 @@
+import 'package:intl/intl.dart';
+
 /// Reduce [StockData] for simple line chart
 class StockTrade {
   num? lastPrice;
   num? lastVol;
   String? change;
   String? timeServer;
+
+  DateTime? get dateTime {
+    if (timeServer == null) return null;
+    return DateFormat("hh:mm:ss").parse(timeServer!);
+  }
 
   StockTrade({
     this.lastPrice,

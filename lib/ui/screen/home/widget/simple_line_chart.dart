@@ -106,8 +106,7 @@ class _SimpleLineChartState extends State<SimpleLineChart> {
             max,
           ),
           tickProviderSpec: const charts.BasicNumericTickProviderSpec(
-            zeroBound: false,
-          ),
+              dataIsInWholeNumbers: false, desiredTickCount: 4, zeroBound: false),
         ),
         domainAxis: charts.NumericAxisSpec(
           showAxisLine: false,
