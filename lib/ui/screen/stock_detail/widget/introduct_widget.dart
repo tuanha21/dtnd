@@ -45,7 +45,7 @@ class _IntroduceWidgetState extends State<IntroduceWidget> {
                 var profile = snapshot.data?.data?.profile;
                 var document = parse(profile);
                 return HomeSection(
-                  title: "Giới thiệu",
+                  title: "Về ${widget.stockCode.stockData.sym}",
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16),
                     child: LayoutBuilder(builder: (context, ctx) {

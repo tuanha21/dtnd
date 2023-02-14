@@ -20,8 +20,10 @@ import 'package:dtnd/=models=/response/news_model.dart';
 import 'package:dtnd/=models=/response/s_cash_balance.dart';
 import 'package:dtnd/=models=/response/security_basic_info_model.dart';
 import 'package:dtnd/=models=/response/stock.dart';
+import 'package:dtnd/=models=/response/stock_board.dart';
 import 'package:dtnd/=models=/response/stock_data.dart';
 import 'package:dtnd/=models=/response/stock_financial_index_model.dart';
+import 'package:dtnd/=models=/response/stock_his.dart';
 import 'package:dtnd/=models=/response/stock_news.dart';
 import 'package:dtnd/=models=/response/stock_ranking_financial_index_model.dart';
 import 'package:dtnd/=models=/response/stock_report_res.dart';
@@ -369,8 +371,13 @@ class NetworkService implements INetworkService {
   Future<String> getNewsContent(int id) async {
     final http.Response response =
         await client.get(url_core1("pickContents/$id"));
-    final responseBody = decode(response.bodyBytes)["data"];
-    return responseBody;
+    var responseBody = decode(response.bodyBytes);
+    if (responseBody['rc'] == -1) {
+      return Future.error(responseBody['rs']);
+    }
+    final data = responseBody["data"];
+
+    return data;
   }
 
   @override
@@ -1005,5 +1012,40 @@ class NetworkService implements INetworkService {
       print(e.toString());
       rethrow;
     }
+  }
+
+  @override
+  Future<List<StockHis>> getStockHis(
+      String stockCode, String from, String to) async {
+    try {
+      var response = await client.get(url_info_sbsi('stockHis.pt', {
+        "symbol": stockCode,
+        "from": from,
+        "to": to,
+        "page": "1",
+        "pageSize": "100"
+      }));
+      if (response.statusCode != 200) {
+        throw response;
+      }
+      var res = decode(response.bodyBytes);
+      var list = res as List;
+      var listSecc = <StockHis>[];
+      for (var element in list) {
+        listSecc.add(StockHis.fromJson(element));
+      }
+      return listSecc;
+    } catch (e) {
+      logger.e(e.toString());
+      rethrow;
+    }
+  }
+
+  @override
+  Future<StockBoard> getStockBoard(String stockCode) async {
+    var response =
+        await client.get(url_algo_apec('stockBoard/stock/$stockCode'));
+    var res = decode(response.bodyBytes);
+    return StockBoard.fromJson(res['data']);
   }
 }

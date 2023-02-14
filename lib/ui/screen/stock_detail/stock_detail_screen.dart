@@ -123,6 +123,10 @@ class _StockDetailScreenState extends State<StockDetailScreen> {
       // appBar: StockDetailAppbar(stock: widget.stockModel.stock),
       body: Column(children: [
         const SizedBox(height: 16),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: StockDetailOverview(stockModel: widget.stockModel),
+        ),
         Expanded(
           child: DefaultTabController(
             length: DetailTab.values.length,

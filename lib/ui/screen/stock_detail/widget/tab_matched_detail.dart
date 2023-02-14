@@ -27,7 +27,7 @@ class TabMatchedDetail extends StatefulWidget {
 class _TabMatchedDetailState extends State<TabMatchedDetail> {
   final IDataCenterService dataCenterService = DataCenterService();
 
-  bool byTime = true;
+  bool byTime = false;
 
   num maxVolumn = 0;
 
@@ -40,7 +40,7 @@ class _TabMatchedDetailState extends State<TabMatchedDetail> {
   @override
   void initState() {
     super.initState();
-    getIndayMatchedOrders();
+    getIndayMatchedStock();
   }
 
   void getIndayMatchedOrders() {
@@ -118,7 +118,9 @@ class _TabMatchedDetailState extends State<TabMatchedDetail> {
             ],
           ),
         ),
-        const _TabMatchedDetailHeader(),
+        Visibility(
+          visible: byTime,
+            child: const _TabMatchedDetailHeader()),
         byTime ? orderWidget() : stockMatchWidget(),
       ],
     );
@@ -305,6 +307,7 @@ class _TabMatchStock extends StatelessWidget {
           const SizedBox(width: 10),
 
           Expanded(
+            flex: 2,
             child: Align(
               alignment: Alignment.centerRight,
               child: Text(NumUtils.formatInteger(stockMatch.totalVol),

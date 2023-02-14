@@ -2,7 +2,7 @@ class BasicCompany {
   String? securityCode;
   String? exchangeCode;
   String? firstListingDate;
-  int? listedPrice;
+  num? listedPrice;
   int? listedShares;
   int? outsShares;
   int? marketCap;

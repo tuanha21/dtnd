@@ -4,6 +4,7 @@ import 'package:dtnd/data/i_network_service.dart';
 import 'package:dtnd/data/implementations/network_service.dart';
 import 'package:dtnd/utilities/num_utils.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../../../../=models=/response/company_info.dart';
 import '../../../theme/app_color.dart';
@@ -120,57 +121,57 @@ class _IndexWidgetState extends State<IndexWidget> {
                 }
                 if (snapshot.connectionState == ConnectionState.done) {
                   var list = snapshot.data!.content!;
-                  var lnRong = list.firstWhere((element) => element.iD == 54);
+                  //var lnRong = list.firstWhere((element) => element.iD == 54);
 
-                  var eps = list.firstWhere((element) => element.iD == 1);
+                  var eps = list.firstWhereOrNull((element) => element.iD == 1);
                   var tongNoVCSH =
-                      list.firstWhere((element) => element.iD == 46);
-                  var roe = list.firstWhere((element) => element.iD == 14);
+                      list.firstWhereOrNull((element) => element.iD == 46);
+                  var roe = list.firstWhereOrNull((element) => element.iD == 14);
 
-                  var pe = list.firstWhere((element) => element.iD == 3);
-                  var tongNoTS = list.firstWhere((element) => element.iD == 42);
-                  var roa = list.firstWhere((element) => element.iD == 16);
+                  var pe = list.firstWhereOrNull((element) => element.iD == 3);
+                  var tongNoTS = list.firstWhereOrNull((element) => element.iD == 42);
+                  var roa = list.firstWhereOrNull((element) => element.iD == 16);
 
-                  var pb = list.firstWhere((element) => element.iD == 4);
+                  var pb = list.firstWhereOrNull((element) => element.iD == 4);
                   var thanhToan =
-                      list.firstWhere((element) => element.iD == 55);
-                  var tyXuatLN = list.firstWhere((element) => element.iD == 10);
+                      list.firstWhereOrNull((element) => element.iD == 55);
+                  var tyXuatLN = list.firstWhereOrNull((element) => element.iD == 10);
 
                   return Column(
                     children: [
-                      Row(
-                        children: [
-                          Expanded(
-                              child: boxData(
-                                  "KLNN Mua",
-                                  NumUtils.formatInteger(widget
-                                      .stockModel.stockData.fBVol.value))),
-                          const SizedBox(width: 5),
-                          Expanded(
-                              child: boxData(
-                                  "KLNN Bán",
-                                  NumUtils.formatInteger(widget
-                                      .stockModel.stockData.fSVolume.value))),
-                          const SizedBox(width: 5),
-                          Expanded(
-                              child: boxData("Biên LN ròng",
-                                  "${NumUtils.formatInteger(lnRong.value1)}%"))
-                        ],
-                      ),
-                      const SizedBox(height: 5),
+                      // Row(
+                      //   children: [
+                      //     Expanded(
+                      //         child: boxData(
+                      //             "KLNN Mua",
+                      //             NumUtils.formatInteger(widget
+                      //                 .stockModel.stockData.fBVol.value))),
+                      //     const SizedBox(width: 5),
+                      //     Expanded(
+                      //         child: boxData(
+                      //             "KLNN Bán",
+                      //             NumUtils.formatInteger(widget
+                      //                 .stockModel.stockData.fSVolume.value))),
+                      //     const SizedBox(width: 5),
+                      //     Expanded(
+                      //         child: boxData("Biên LN ròng",
+                      //             "${NumUtils.formatInteger(lnRong.value1)}%"))
+                      //   ],
+                      // ),
+                      // const SizedBox(height: 5),
                       Row(
                         children: [
                           Expanded(
                               child: boxData("EPS",
-                                  "${NumUtils.formatInteger(eps.value1)} VND")),
+                                  "${NumUtils.formatInteger(eps?.value1)} VND")),
                           const SizedBox(width: 5),
                           Expanded(
                               child: boxData("PE",
-                                  "${NumUtils.formatInteger(pe.value1)} Lần")),
+                                  "${NumUtils.formatInteger(pe?.value1)} Lần")),
                           const SizedBox(width: 5),
                           Expanded(
                               child: boxData("PB",
-                                  "${NumUtils.formatInteger(pb.value1)} Lần"))
+                                  "${NumUtils.formatInteger(pb?.value1)} Lần"))
                         ],
                       ),
                       const SizedBox(height: 5),
@@ -178,15 +179,15 @@ class _IndexWidgetState extends State<IndexWidget> {
                         children: [
                           Expanded(
                               child: boxData("Tổng nợ/VCSH",
-                                  NumUtils.formatInteger(tongNoVCSH.value1))),
+                                  NumUtils.formatInteger(tongNoVCSH?.value1 ?? 0))),
                           const SizedBox(width: 5),
                           Expanded(
                               child: boxData("Tổng nợ/Tổng TS",
-                                  NumUtils.formatInteger(tongNoTS.value1))),
+                                  NumUtils.formatInteger(tongNoTS?.value1))),
                           const SizedBox(width: 5),
                           Expanded(
                               child: boxData("Tổng nợ/Tổng TS",
-                                  "${NumUtils.formatInteger(thanhToan.value1)}%"))
+                                  "${NumUtils.formatInteger(thanhToan?.value1)}%"))
                         ],
                       ),
                       const SizedBox(height: 5),
@@ -194,15 +195,15 @@ class _IndexWidgetState extends State<IndexWidget> {
                         children: [
                           Expanded(
                               child: boxData("ROE",
-                                  "${NumUtils.formatInteger(roe.value1)}%")),
+                                  "${NumUtils.formatInteger(roe?.value1)}%")),
                           const SizedBox(width: 5),
                           Expanded(
                               child: boxData("ROA",
-                                  "${NumUtils.formatInteger(roa.value1)}%")),
+                                  "${NumUtils.formatInteger(roa?.value1)}%")),
                           const SizedBox(width: 5),
                           Expanded(
                               child: boxData("Tỷ suất LN gộp",
-                                  "${NumUtils.formatInteger(tyXuatLN.value1)}%"))
+                                  "${NumUtils.formatInteger(tyXuatLN?.value1)}%"))
                         ],
                       ),
                     ],
