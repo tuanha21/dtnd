@@ -9,6 +9,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../../../=models=/response/index_detail.dart';
+import '../../../../../generated/l10n.dart';
+import '../../../../theme/app_image.dart';
 
 class MarketIndexItem extends StatelessWidget {
   const MarketIndexItem(
@@ -98,20 +100,22 @@ class MarketIndexItem extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      "${NumUtils.formatInteger((res.value ?? 0) / 1000)} tỷ",
-                      style: AppTextStyle.labelSmall_11.copyWith(
-                        fontWeight: FontWeight.w600,
-                        color: AppColors.neutral_03,
-                      ),
-                    ),
-                    Text(
-                      res.statusVN,
-                      style: AppTextStyle.labelSmall_11.copyWith(
-                        fontWeight: FontWeight.w600,
-                        color: AppColors.neutral_03,
-                      ),
-                    ),
+                    Obx(() => SizedBox.square(
+                          dimension: 12,
+                          child: Image.asset(AppImages.home_icon_clock,
+                              color: data.indexDetail.status.value.color),
+                        )),
+                    Obx(() {
+                      return Text(
+                        "${NumUtils.formatInteger(
+                          (data.indexDetail.value.value ?? 0) ~/ 1000,
+                        )} ${S.of(context).billion_lowercase}",
+                        style: AppTextStyle.labelSmall_11.copyWith(
+                          fontWeight: FontWeight.w600,
+                          color: AppColors.neutral_03,
+                        ),
+                      );
+                    }),
                   ],
                 ),
               ],

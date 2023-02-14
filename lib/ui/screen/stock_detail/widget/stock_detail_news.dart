@@ -37,9 +37,11 @@ class _StockDetailNewsState extends State<StockDetailNews> {
   void getStockNews() async {
     stockNews = await networkService.getStockNews(widget.stockCode);
     shortStockNews = stockNews.getRange(0, 3).toList();
-    setState(() {
-      initialized = true;
-    });
+    if (mounted) {
+      setState(() {
+        initialized = true;
+      });
+    }
   }
 
   @override
@@ -64,13 +66,12 @@ class _StockDetailNewsState extends State<StockDetailNews> {
             return GestureDetector(
                 onTap: () {
                   Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) =>
-                        NewsDetailScreen(newsModel: NewsModel(
-                          title: shortStockNews[index].title,
-                          articleID: shortStockNews[index].articleID,
-                          headImg: shortStockNews[index].imageUrl,
-                          publishTime: shortStockNews[index].publishTime
-                        )),
+                    builder: (context) => NewsDetailScreen(
+                        newsModel: NewsModel(
+                            title: shortStockNews[index].title,
+                            articleID: shortStockNews[index].articleID,
+                            headImg: shortStockNews[index].imageUrl,
+                            publishTime: shortStockNews[index].publishTime)),
                   ));
                 },
                 child: NewsCard(stockNews: shortStockNews[index]));
