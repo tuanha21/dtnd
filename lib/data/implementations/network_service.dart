@@ -951,11 +951,17 @@ class NetworkService implements INetworkService {
     var response = await client.get(url_info_sbsi('stockReport.pt', {
       "symbol": stockCOde,
       "type": "CSTC",
-      "termtype": 1,
-      "from": 1,
-      "to": 4
+      "termtype": "1",
+      "from": "1",
+      "to": "4"
     }));
     var res = decode(response.bodyBytes);
-    throw res;
+    logger.d(res);
+    var list = res['Head'] as List;
+    var listHead = <Head>[];
+    for (var element in list) {
+      listHead.add(Head.fromJson(element));
+    }
+    return listHead;
   }
 }

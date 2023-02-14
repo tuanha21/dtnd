@@ -11,18 +11,25 @@ class SecEvent {
   String? aNNOUNCEDDATE;
   String? eVENTDESCKR;
 
+  DateTime? get dateTime {
+    if (eFFECTIVEDATE == null) {
+      return null;
+    }
+    return DateTime.tryParse(eFFECTIVEDATE!);
+  }
+
   SecEvent(
       {this.eFFECTIVEDATE,
-        this.eVENTDESCJP,
-        this.eVENTDATE,
-        this.lASTREGDATE,
-        this.eVENTDESC,
-        this.eXDATE,
-        this.eVENTDESCCN,
-        this.sECURITYCODE,
-        this.eVENTDESCEN,
-        this.aNNOUNCEDDATE,
-        this.eVENTDESCKR});
+      this.eVENTDESCJP,
+      this.eVENTDATE,
+      this.lASTREGDATE,
+      this.eVENTDESC,
+      this.eXDATE,
+      this.eVENTDESCCN,
+      this.sECURITYCODE,
+      this.eVENTDESCEN,
+      this.aNNOUNCEDDATE,
+      this.eVENTDESCKR});
 
   SecEvent.fromJson(Map<String, dynamic> json) {
     eFFECTIVEDATE = json['EFFECTIVE_DATE'];
@@ -56,7 +63,7 @@ class SecEvent {
 
   static List<SecEvent> fromJsonModel(List<dynamic> listDynamic) {
     List<SecEvent> listData =
-    listDynamic.map((e) => SecEvent.fromJson(e)).toList();
+        listDynamic.map((e) => SecEvent.fromJson(e)).toList();
     return listData;
   }
 }

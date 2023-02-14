@@ -5,7 +5,6 @@ import 'package:dtnd/utilities/num_utils.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../=models=/response/company_info.dart';
-import '../../../../utilities/logger.dart';
 import '../../../theme/app_color.dart';
 
 class IndexWidget extends StatefulWidget {
@@ -25,6 +24,7 @@ class _IndexWidgetState extends State<IndexWidget> {
   void initState() {
     companyInfo =
         networkService.getCompanyInfo(widget.stockModel.stockData.sym);
+    networkService.getStockInfo(widget.stockModel.stockData.sym);
     super.initState();
   }
 
@@ -38,7 +38,6 @@ class _IndexWidgetState extends State<IndexWidget> {
           }
           if (snapshot.connectionState == ConnectionState.done) {
             var info = snapshot.data;
-            logger.d(info?.toJson());
             return Container(
               margin: const EdgeInsets.symmetric(horizontal: 16),
               padding: const EdgeInsets.all(16),
@@ -121,12 +120,16 @@ class _IndexWidgetState extends State<IndexWidget> {
                   Row(
                     children: [
                       Expanded(
-                          child: boxData("KLNN Mua",
-                              NumUtils.formatInteger(widget.stockModel.stockData.fBVol.value))),
+                          child: boxData(
+                              "KLNN Mua",
+                              NumUtils.formatInteger(
+                                  widget.stockModel.stockData.fBVol.value))),
                       const SizedBox(width: 5),
                       Expanded(
-                          child: boxData("KLNN Bán",
-                              NumUtils.formatInteger(widget.stockModel.stockData.fSVolume.value))),
+                          child: boxData(
+                              "KLNN Bán",
+                              NumUtils.formatInteger(
+                                  widget.stockModel.stockData.fSVolume.value))),
                       const SizedBox(width: 5),
                       Expanded(
                           child: boxData("SD khả dụng",
@@ -149,36 +152,36 @@ class _IndexWidgetState extends State<IndexWidget> {
                         const SizedBox(width: 5),
                         Expanded(
                             child: Column(
+                          children: [
+                            Row(
                               children: [
-                                Row(
-                                  children: [
-                                    Expanded(
-                                      child: boxData("KL khả dụng",
-                                          "${NumUtils.formatInteger(widget.stockModel.stockData.fBValue.value)}đ"),
-                                    ),
-                                  ],
-                                ),
-                                const SizedBox(height: 1),
-                                Row(
-                                  children: [
-                                    Expanded(
-                                      child: boxData("KL khác",
-                                          "${NumUtils.formatInteger(widget.stockModel.stockData.fBValue.value)}đ"),
-                                    ),
-                                  ],
+                                Expanded(
+                                  child: boxData("KL khả dụng",
+                                      "${NumUtils.formatInteger(widget.stockModel.stockData.fBValue.value)}đ"),
                                 ),
                               ],
-                            )),
+                            ),
+                            const SizedBox(height: 1),
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: boxData("KL khác",
+                                      "${NumUtils.formatInteger(widget.stockModel.stockData.fBValue.value)}đ"),
+                                ),
+                              ],
+                            ),
+                          ],
+                        )),
                         const SizedBox(width: 5),
                         Expanded(
                             child: boxData2(
-                              value1: NumUtils.formatInteger(
-                                  widget.stockModel.stockData.lot.value),
-                              value2: NumUtils.formatInteger(
-                                  widget.stockModel.stockData.lot.value),
-                              value3: NumUtils.formatInteger(
-                                  widget.stockModel.stockData.lot.value),
-                            ))
+                          value1: NumUtils.formatInteger(
+                              widget.stockModel.stockData.lot.value),
+                          value2: NumUtils.formatInteger(
+                              widget.stockModel.stockData.lot.value),
+                          value3: NumUtils.formatInteger(
+                              widget.stockModel.stockData.lot.value),
+                        ))
                       ],
                     ),
                   ),
@@ -198,7 +201,6 @@ class _IndexWidgetState extends State<IndexWidget> {
         borderRadius: BorderRadius.circular(4),
       ),
       child: Column(
-
         children: [
           Text(
             title,
@@ -222,7 +224,7 @@ class _IndexWidgetState extends State<IndexWidget> {
       required String value2,
       required String value3}) {
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 8,horizontal: 5),
+      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 5),
       decoration: BoxDecoration(
         color: AppColors.light_bg,
         borderRadius: BorderRadius.circular(4),
@@ -302,10 +304,10 @@ class _IndexWidgetState extends State<IndexWidget> {
 
   Widget boxData2(
       {required String value1,
-        required String value2,
-        required String value3}) {
+      required String value2,
+      required String value3}) {
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 8,horizontal: 5),
+      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 5),
       decoration: BoxDecoration(
         color: AppColors.light_bg,
         borderRadius: BorderRadius.circular(4),

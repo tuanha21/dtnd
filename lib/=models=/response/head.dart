@@ -1,18 +1,18 @@
 class Head {
-  int? iD;
-  int? companyID;
-  int? yearPeriod;
+  num? iD;
+  num? companyID;
+  num? yearPeriod;
   String? termCode;
   String? termName;
   String? termNameEN;
-  int? reportTermID;
-  int? displayOrdering;
+  num? reportTermID;
+  num? displayOrdering;
   String? united;
   String? auditedStatus;
   String? periodBegin;
   String? periodEnd;
-  int? totalRow;
-  int? businessType;
+  num? totalRow;
+  num? businessType;
 
   Head(
       {this.iD,
