@@ -12,6 +12,10 @@ class StockNews {
   String? uRL;
   int? totalRow;
 
+  DateTime? get dateTime {
+    return DateTime.tryParse(publishTime!);
+  }
+
   StockNews(
       {this.imageUrl,
       this.stockCode,

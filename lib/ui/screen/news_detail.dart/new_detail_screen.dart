@@ -7,6 +7,7 @@ import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 
 class NewsDetailScreen extends StatefulWidget {
   const NewsDetailScreen({super.key, required this.newsModel});
+
   final NewsModel newsModel;
 
   @override
@@ -18,6 +19,7 @@ class _NewsDetailScreenState extends State<NewsDetailScreen> {
   final _controller = ScrollController();
   late String newsDetail;
   bool loading = true;
+
   @override
   void initState() {
     super.initState();

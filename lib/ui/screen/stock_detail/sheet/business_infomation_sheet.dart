@@ -15,6 +15,7 @@ class BusinessInformationSheet extends StatefulWidget {
   const BusinessInformationSheet({Key? key, required this.stockModel})
       : super(key: key);
   final StockModel stockModel;
+
   @override
   State<BusinessInformationSheet> createState() =>
       _BusinessInformationSheetState();
@@ -22,13 +23,12 @@ class BusinessInformationSheet extends StatefulWidget {
 
 class _BusinessInformationSheetState extends State<BusinessInformationSheet>
     with SingleTickerProviderStateMixin {
-  late final TabController _tabController;
   final IDataCenterService dataCenterService = DataCenterService();
   bool loading = true;
   int currentIndex = 0;
+
   @override
   void initState() {
-    _tabController = TabController(length: 2, vsync: this);
     super.initState();
     getData();
   }
@@ -61,149 +61,75 @@ class _BusinessInformationSheetState extends State<BusinessInformationSheet>
         ),
       );
     }
-    final textTheme = Theme.of(context).textTheme;
-    final themeMode = AppService.instance.themeMode.value;
-    final tabbarBgColor =
-        themeMode.isLight ? AppColors.neutral_05 : AppColors.neutral_01;
-    return SafeArea(
-      child: SizedBox(
-        height: MediaQuery.of(context).size.height - kToolbarHeight,
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Column(children: [
-            SheetHeader(
-              title: S.of(context).business_information,
-              implementBackButton: false,
-            ),
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 16),
-                child: ListView(
-                  shrinkWrap: true,
-                  children: [
-                    Row(
-                      children: [
-                        SizedBox.square(
-                          dimension: 60.0,
-                          child: CachedNetworkImage(
-                            imageUrl:
-                                "https://info.sbsi.vn/logo/${widget.stockModel.stock.stockCode}",
-                            imageBuilder: (context, imageProvider) => Container(
-                              width: 60.0,
-                              height: 60.0,
-                              decoration: BoxDecoration(
-                                color: AppColors.neutral_06,
-                                borderRadius:
-                                    const BorderRadius.all(Radius.circular(4)),
-                                image: DecorationImage(
-                                    image: imageProvider,
-                                    fit: BoxFit.scaleDown),
-                              ),
-                            ),
-                            placeholder: (context, url) =>
-                                const CircularProgressIndicator(),
-                            errorWidget: (context, url, error) =>
-                                const Icon(Icons.error),
-                          ),
-                        ),
-                        const SizedBox(width: 8),
-                        Flexible(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                widget.stockModel.stock.nameShort ?? "",
-                                style: textTheme.titleMedium!
-                                    .copyWith(fontWeight: FontWeight.w600),
-                              ),
-                              Text(
-                                "${widget.stockModel.stock.postTo?.name ?? ""}: ${widget.stockModel.stock.nameVn ?? ""}",
-                                style: textTheme.labelMedium!
-                                    .copyWith(color: AppColors.neutral_04),
-                              ),
-                            ],
-                          ),
-                        )
-                      ],
-                    ),
-                    Text(
-                      "Giới thiệu",
-                      style: textTheme.titleMedium!
-                          .copyWith(fontWeight: FontWeight.w700),
-                    ),
-                    Html(
-                      data: widget.stockModel.businnessProfile!.profile,
-                      // customRenders: {
-                      //   "p": (context, child, _, __) {
-                      //     return MaterialButton(
-                      //       onPressed: () {
-                      //         Navigator.of(context.buildContext)
-                      //             .pushNamed('/new-page');
-                      //       },
-                      //       child: child,
-                      //     );
-                      //   },
-                      // },
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Container(
-                          padding: const EdgeInsets.all(5),
-                          decoration: BoxDecoration(
-                            color: tabbarBgColor,
-                            borderRadius:
-                                const BorderRadius.all(Radius.circular(12)),
-                          ),
-                          child: TabBar(
-                            controller: _tabController,
-                            isScrollable: true,
-                            onTap: (value) {
-                              print(value);
-                              if (currentIndex != value) {
-                                setState(() {
-                                  currentIndex = value;
-                                });
-                              }
-                            },
-                            indicator: BoxDecoration(
-                              borderRadius: BorderRadius.circular(12.0),
-                              color: AppColors.primary_01,
-                            ),
-                            labelColor: AppColors.neutral_07,
-                            unselectedLabelColor: themeMode.isLight
-                                ? AppColors.neutral_01
-                                : AppColors.neutral_07,
-                            labelPadding: const EdgeInsets.symmetric(
-                                horizontal: 18, vertical: 6),
-                            padding: EdgeInsets.zero,
-                            // indicatorSize: TabBarIndicatorSize.label,
-                            tabs: <Widget>[
-                              Text(S.of(context).general_information),
-                              Text(S.of(context).subsidiaries),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                    currentIndex == 1
-                        ? SubsidiariesInfoTab(stockModel: widget.stockModel)
-                        : GeneralInfoTab(stockModel: widget.stockModel),
-                    // Builder(
-                    //   builder: (context) {
-                    //     if (currentIndex == 1) {
-                    //       return SubsidiariesInfoTab(
-                    //           stockModel: widget.stockModel);
-                    //     } else {
-                    //       return GeneralInfoTab(stockModel: widget.stockModel);
-                    //     }
-                    //   },
-                    // )
+    return Material(
+      child: DefaultTabController(
+        length: 2,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(top: 16),
+              child: Container(
+                margin: const EdgeInsets.symmetric(horizontal: 20),
+                padding: const EdgeInsets.all(4),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(12),
+                    color: AppColors.light_tabBar_bg),
+                child: TabBar(
+                  unselectedLabelStyle: Theme.of(context)
+                      .textTheme
+                      .titleSmall
+                      ?.copyWith(fontWeight: FontWeight.w600),
+                  labelStyle: Theme.of(context)
+                      .textTheme
+                      .titleSmall
+                      ?.copyWith(fontWeight: FontWeight.w600),
+                  indicatorColor: AppColors.text_blue,
+                  indicator: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8),
+                      color: AppColors.text_blue),
+                  isScrollable: false,
+                  indicatorSize: TabBarIndicatorSize.tab,
+                  labelPadding: const EdgeInsets.symmetric(vertical: 4),
+                  labelColor: AppColors.light_bg,
+                  unselectedLabelColor: AppColors.text_black,
+                  onTap: (index) {
+                    setState(() {
+                      currentIndex = index;
+                    });
+                  },
+                  tabs: [
+                    Text(S.of(context).general_information),
+                    Text(S.of(context).subsidiaries)
                   ],
                 ),
               ),
-            )
-          ]),
+            ),
+            Expanded(
+              child: SafeArea(
+                child: Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: ListView(
+                    children: [
+                      currentIndex == 1
+                          ? SubsidiariesInfoTab(stockModel: widget.stockModel)
+                          : GeneralInfoTab(stockModel: widget.stockModel),
+                      // Builder(
+                      //   builder: (context) {
+                      //     if (currentIndex == 1) {
+                      //       return SubsidiariesInfoTab(
+                      //           stockModel: widget.stockModel);
+                      //     } else {
+                      //       return GeneralInfoTab(stockModel: widget.stockModel);
+                      //     }
+                      //   },
+                      // )
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );

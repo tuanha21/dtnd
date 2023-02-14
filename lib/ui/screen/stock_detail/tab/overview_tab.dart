@@ -1,12 +1,15 @@
 import 'package:dtnd/=models=/response/stock_model.dart';
 import 'package:flutter/material.dart';
-
+import 'package:percent_indicator/linear_percent_indicator.dart';
 import '../../../../generated/l10n.dart';
 import '../../../theme/app_color.dart';
 import '../../home/widget/home_section.dart';
-import '../widget/component/price_alert.dart';
+import '../widget/index_widget.dart';
+import '../widget/introduct_widget.dart';
 import '../widget/stock_detail_chart.dart';
 import '../widget/stock_detail_news.dart';
+import '../widget/stock_detail_overview.dart';
+import '../widget/stock_event.dart';
 
 class OverviewTab extends StatefulWidget {
   const OverviewTab({
@@ -25,14 +28,17 @@ class _OverviewTabState extends State<OverviewTab> {
   Widget build(BuildContext context) {
     return ListView(
       children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: StockDetailOverview(stockModel: widget.stockModel),
+        ),
         SizedBox(
             height: 200,
-            child: StockDetailChart(stockModel: widget.stockModel)),
-        // const Padding(
-        //   padding: EdgeInsets.symmetric(horizontal: 16),
-        //   child: PriceAlert(),
-        // ),
-        // const SizedBox(height: 24),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: StockDetailChart(stockModel: widget.stockModel),
+            )),
+        const SizedBox(height: 16),
         HomeSection(
           title: "Chỉ số cơ bản",
           child: Padding(
@@ -66,6 +72,22 @@ class _OverviewTabState extends State<OverviewTab> {
                       widget.stockModel.stockData.lowPrice.value.toString(),
                       style: Theme.of(context).textTheme.titleSmall,
                     ),
+                    Expanded(
+                      child: Builder(
+                        builder: (context) {
+                          return LinearPercentIndicator(
+                            barRadius: const Radius.circular(12),
+                            animation: true,
+                            animationDuration: 1000,
+                            lineHeight: 10,
+                            percent:
+                                widget.stockModel.stockData.percent.toDouble(),
+                            progressColor: AppColors.neutral_03,
+                            backgroundColor: AppColors.neutral_01,
+                          );
+                        },
+                      ),
+                    ),
                     Text(
                       widget.stockModel.stockData.highPrice.value.toString(),
                       style: Theme.of(context).textTheme.titleSmall,
@@ -76,7 +98,11 @@ class _OverviewTabState extends State<OverviewTab> {
             ),
           ),
         ),
+        const SizedBox(height: 16),
+        IndexWidget(stockModel: widget.stockModel),
         const SizedBox(height: 20),
+        IntroduceWidget(stockCode: widget.stockModel),
+        const SizedBox(height: 16),
         HomeSection(
           title: S.of(context).news,
           child: Padding(
@@ -84,7 +110,18 @@ class _OverviewTabState extends State<OverviewTab> {
             child:
                 StockDetailNews(stockCode: widget.stockModel.stock.stockCode),
           ),
-        )
+        ),
+        const SizedBox(height: 20),
+        HomeSection(
+          title: S.of(context).event,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: StockEvent(
+              stockModel: widget.stockModel,
+            ),
+          ),
+        ),
+        const SizedBox(height: 20),
       ],
     );
   }

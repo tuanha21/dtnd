@@ -86,6 +86,8 @@ dependencies:
   modal_bottom_sheet: ^3.0.0-pre
   flutter_widget_from_html: ^0.9.1
   webview_flutter: ^2.1.1
+  html: ^0.15.1
+  percent_indicator: ^4.2.2
 
 dev_dependencies:
   flutter_test:

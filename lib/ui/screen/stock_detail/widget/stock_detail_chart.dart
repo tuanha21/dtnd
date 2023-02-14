@@ -1,83 +1,119 @@
+import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:dtnd/=models=/response/stock_model.dart';
-import 'package:dtnd/ui/theme/app_color.dart';
-import 'package:dtnd/ui/theme/app_textstyle.dart';
 import 'package:flutter/material.dart';
-import 'package:syncfusion_flutter_charts/charts.dart';
+import 'package:intl/intl.dart';
+import '../../../../=models=/response/stock_trading_history.dart';
+import '../../../../data/i_data_center_service.dart';
+import '../../../../data/implementations/data_center_service.dart';
+import '../../../../utilities/time_utils.dart';
+import 'dart:math' as math;
 
 class StockDetailChart extends StatefulWidget {
   const StockDetailChart({
     super.key,
     required this.stockModel,
   });
+
   final StockModel stockModel;
+
   @override
   State<StockDetailChart> createState() => _StockDetailChartState();
 }
 
 class _StockDetailChartState extends State<StockDetailChart> {
-  @override
-  Widget build(BuildContext context) {
-    if (widget.stockModel.indayTradingHistory.value?.c?.isEmpty ?? true) {
-      return Container();
-    }
-    return _StockChart(
-      datas: widget.stockModel.indayTradingHistory.value!.c!,
-    );
-  }
-}
+  late Future<StockTradingHistory?> stockTrading;
 
-class _StockChart extends StatefulWidget {
-  const _StockChart({
-    required this.datas,
-  });
-  final List<num> datas;
+  final IDataCenterService iDataCenterService = DataCenterService();
 
-  @override
-  State<_StockChart> createState() => _StockChartState();
-}
-
-class _StockChartState extends State<_StockChart> {
-  final LinearGradient gradient = const LinearGradient(
-    colors: [Colors.transparent,Colors.transparent],
-    begin: Alignment.topCenter,
-    end: Alignment.bottomCenter,
-  );
-  late TrackballBehavior trackballBehavior;
+  StockTradingHistory chartData = StockTradingHistory.nullChartData();
 
   @override
   void initState() {
-    trackballBehavior = TrackballBehavior(
-        // Enables the trackball
-        enable: true,
-        lineColor: AppColors.primary_01,
-        shouldAlwaysShow: true,
-        activationMode: ActivationMode.singleTap,
-        tooltipSettings: InteractiveTooltip(
-            enable: true,
-            color: AppColors.primary_03,
-            textStyle: AppTextStyle.bodySmall_8
-                .copyWith(color: AppColors.primary_01)));
+    stockTrading = iDataCenterService.getStockTradingHistory.call(
+        widget.stockModel.stock.stockCode,
+        "5",
+        TimeUtilities.beginningOfDay,
+        DateTime.now());
     super.initState();
   }
 
+  num annotation = 1;
+  num max = 2;
+  num min = 0;
+
   @override
   Widget build(BuildContext context) {
-    return SfCartesianChart(
-      primaryXAxis: NumericAxis(isVisible: false),
-      primaryYAxis: NumericAxis(isVisible: false),
-      plotAreaBorderWidth: 0,
-      trackballBehavior: trackballBehavior,
-      series: [
-        SplineAreaSeries<num, int>(
-          dataSource: widget.datas,
-          xValueMapper: (datum, index) => index,
-          yValueMapper: (datum, index) => datum,
-          gradient: gradient,
-          borderColor: AppColors.primary_01,
-          borderWidth: 2,
+    return FutureBuilder<StockTradingHistory?>(
+        future: stockTrading,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            var list = snapshot.data;
+            if (list == null) return const SizedBox();
+            annotation = list.o!.first;
+            max = math.max<num>(list.o!.reduce(math.max), annotation);
+            min = math.min<num>(list.o!.reduce(math.min), annotation);
+            return Padding(
+              padding: const EdgeInsets.only(left: 0, right: 20),
+              child: charts.NumericComboChart(
+                List<charts.Series<num, num>>.generate(
+                    list.o!.length,
+                    (index) => charts.Series<num, num>(
+                          id: 'chart1',
+                          colorFn: (_, __) => charts.ColorUtil.fromDartColor(
+                              widget.stockModel.stockData.color),
+                          domainFn: (num indexBoard, int? index) => index!,
+                          measureFn: (num sales, _) {
+                            return sales;
+                          },
+                          data: list.o!,
+                        )..setAttribute(
+                            charts.measureAxisIdKey, "secondaryMeasureAxisId")),
+                defaultRenderer: charts.LineRendererConfig(smoothLine: true),
+                domainAxis: domainSpec(list.t!),
+                secondaryMeasureAxis: axisSpec(),
+              ),
+            );
+          }
+          return const SizedBox();
+        });
+  }
 
-        )
-      ],
+  charts.NumericAxisSpec domainSpec(List<num> list) {
+    return charts.NumericAxisSpec(
+        tickFormatterSpec: charts.BasicNumericTickFormatterSpec((index) {
+          if (index! < list.length) {
+            String formattedDate = DateFormat('HH:mm').format(
+                DateTime.fromMillisecondsSinceEpoch(
+                    list[index.toInt()].toInt() * 1000));
+            return formattedDate;
+          }
+          return "";
+        }),
+        renderSpec: const charts.GridlineRendererSpec(
+            axisLineStyle: charts.LineStyleSpec(
+              dashPattern: [4],
+              thickness: 0,
+              color: charts.Color(r: 74, g: 85, b: 104),
+            ),
+            labelStyle: charts.TextStyleSpec(fontSize: 9),
+            lineStyle: charts.LineStyleSpec(dashPattern: [4])));
+  }
+
+  charts.NumericAxisSpec axisSpec() {
+    return charts.NumericAxisSpec(
+      showAxisLine: true,
+      tickProviderSpec: const charts.BasicNumericTickProviderSpec(
+        zeroBound: false,
+      ),
+      viewport: charts.NumericExtents(min, max),
+      renderSpec: const charts.GridlineRendererSpec(
+          axisLineStyle: charts.LineStyleSpec(
+            dashPattern: [4],
+            thickness: 0,
+            color: charts.Color(r: 74, g: 85, b: 104),
+          ),
+          labelStyle: charts.TextStyleSpec(fontSize: 9),
+          lineStyle: charts.LineStyleSpec(dashPattern: [4])),
     );
   }
 }

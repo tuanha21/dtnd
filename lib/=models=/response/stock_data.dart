@@ -51,6 +51,13 @@ class StockData extends StockStatus {
     return true;
   }
 
+  num get percent {
+    var min = lowPrice.value?.toDouble() ?? 0;
+    var max = highPrice.value?.toDouble() ?? 1;
+    var lp = lastPrice.value?.toDouble() ?? 0;
+    return (lp - min) / (max - min);
+  }
+
   num getTotalVol(Side side) {
     try {
       switch (side) {

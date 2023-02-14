@@ -10,6 +10,8 @@ import 'package:dtnd/ui/widget/icon/active_button.dart';
 import 'package:dtnd/utilities/num_utils.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../=models=/response/stock_vol.dart';
+
 class TabMatchedDetail extends StatefulWidget {
   const TabMatchedDetail({
     super.key,
@@ -32,6 +34,9 @@ class _TabMatchedDetailState extends State<TabMatchedDetail> {
   StreamController<List<IndayMatchedOrder>> listMatchedOrder =
       StreamController<List<IndayMatchedOrder>>.broadcast();
 
+  StreamController<List<StockMatch>> listMatchedStock =
+      StreamController<List<StockMatch>>.broadcast();
+
   @override
   void initState() {
     super.initState();
@@ -46,10 +51,23 @@ class _TabMatchedDetailState extends State<TabMatchedDetail> {
     });
   }
 
+  void getIndayMatchedStock() {
+    dataCenterService
+        .getListStockMatch(widget.stockModel.stock.stockCode)
+        .then((list) {
+      listMatchedStock.sink.add(list);
+    });
+  }
+
   void changeMode(bool newValue) {
     if (byTime != newValue) {
       setState(() {
         byTime = newValue;
+        if (byTime) {
+          getIndayMatchedOrders();
+        } else {
+          getIndayMatchedStock();
+        }
       });
     }
   }
@@ -64,7 +82,9 @@ class _TabMatchedDetailState extends State<TabMatchedDetail> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                S.of(context).matched_order_by_time,
+                byTime
+                    ? S.of(context).matched_order_by_time
+                    : S.of(context).matched_order_by_price_step,
                 style: Theme.of(context)
                     .textTheme
                     .titleMedium!
@@ -99,106 +119,84 @@ class _TabMatchedDetailState extends State<TabMatchedDetail> {
           ),
         ),
         const _TabMatchedDetailHeader(),
-        Expanded(
-          child: StreamBuilder<List<IndayMatchedOrder>>(
-              stream: listMatchedOrder.stream,
-              initialData: const [],
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const Center(child: CircularProgressIndicator());
-                }
-                if (snapshot.hasData) {
-                  var list = snapshot.data!;
-                  widget.stockModel
-                      .updateListMatchedOrder(list.reversed.toList());
-                  maxVolumn = widget.stockModel.maxVolumnMatchedOrder;
-                  return ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: list.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      var element = list[index];
-                      return _TabMatchedDetailRow(
-                        byTime: byTime,
-                        data: element,
-                        maxVolumn: maxVolumn,
-                        colorFunct: widget.stockModel.stockData.getPriceColor,
-                      );
-                    },
-                  );
-                }
-                return const SizedBox();
-              }),
-        ),
+        byTime ? orderWidget() : stockMatchWidget(),
       ],
+    );
+  }
+
+  Widget orderWidget() {
+    return Expanded(
+      child: StreamBuilder<List<IndayMatchedOrder>>(
+          stream: listMatchedOrder.stream,
+          initialData: const [],
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(child: CircularProgressIndicator());
+            }
+            if (snapshot.hasData) {
+              var list = snapshot.data!;
+              widget.stockModel.updateListMatchedOrder(list.reversed.toList());
+              maxVolumn = widget.stockModel.maxVolumnMatchedOrder;
+              return ListView.builder(
+                shrinkWrap: true,
+                itemCount: list.length,
+                itemBuilder: (BuildContext context, int index) {
+                  var element = list[index];
+                  return _TabMatchedDetailRow(
+                    data: element,
+                    maxVolumn: maxVolumn,
+                    colorFunct: widget.stockModel.stockData.getPriceColor,
+                  );
+                },
+              );
+            }
+            return const SizedBox();
+          }),
+    );
+  }
+
+  Widget stockMatchWidget() {
+    return Expanded(
+      child: StreamBuilder<List<StockMatch>>(
+          stream: listMatchedStock.stream,
+          initialData: const [],
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(child: CircularProgressIndicator());
+            }
+            if (snapshot.hasData) {
+              var list = snapshot.data!;
+              return ListView.builder(
+                shrinkWrap: true,
+                itemCount: list.length,
+                itemBuilder: (BuildContext context, int index) {
+                  var element = list[index];
+                  return _TabMatchStock(
+                    stockMatch: element,
+                    colorFunct: widget.stockModel.stockData.getPriceColor,
+                  );
+                },
+              );
+            }
+            return const SizedBox();
+          }),
     );
   }
 }
 
 class _TabMatchedDetailRow extends StatelessWidget {
   const _TabMatchedDetailRow({
-    required this.byTime,
     required this.data,
     required this.colorFunct,
     required this.maxVolumn,
   });
 
-  final bool byTime;
   final IndayMatchedOrder data;
   final Function colorFunct;
   final num maxVolumn;
 
   @override
   Widget build(BuildContext context) {
-    if (!byTime) {
-      return Padding(
-        padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 16),
-        child: DefaultTextStyle(
-          style: Theme.of(context).textTheme.labelMedium!,
-          child: Row(
-            children: [
-              SizedBox(
-                width: 40,
-                child: Text(
-                  NumUtils.formatDouble(data.matchPrice),
-                  style: TextStyle(color: colorFunct.call(data.matchPrice)),
-                  textAlign: TextAlign.right,
-                ),
-              ),
-              const SizedBox(width: 10),
-              Expanded(
-                  child: Row(
-                children: [
-                  Flexible(
-                    flex: data.matchVolume.toInt(),
-                    child: Container(
-                      height: 6,
-                      decoration: const BoxDecoration(
-                        borderRadius:
-                            BorderRadius.horizontal(right: Radius.circular(4)),
-                        color: AppColors.primary_01,
-                      ),
-                      alignment: Alignment.bottomCenter,
-                    ),
-                  ),
-                  Flexible(
-                    flex: maxVolumn.toInt() - data.matchVolume.toInt(),
-                    child: Container(),
-                  )
-                ],
-              )),
-              const SizedBox(width: 10),
-              SizedBox(
-                width: 50,
-                child: Text(
-                  NumUtils.formatInteger10(data.matchVolume),
-                  textAlign: TextAlign.right,
-                ),
-              ),
-            ],
-          ),
-        ),
-      );
-    }
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 16),
       child: DefaultTextStyle(
@@ -265,5 +263,59 @@ class _TabMatchedDetailHeader extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+class _TabMatchStock extends StatelessWidget {
+  final StockMatch stockMatch;
+  final Function colorFunct;
+
+  const _TabMatchStock(
+      {Key? key, required this.stockMatch, required this.colorFunct})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+        height: 40,
+        padding: const EdgeInsets.symmetric(vertical: 12),
+        child: Row(children: [
+          const SizedBox(width: 16),
+          Expanded(
+            flex: 1,
+            child: Text('${stockMatch.matchPrice}',
+                style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                    fontSize: 10,
+                    color: colorFunct.call(stockMatch.matchPrice))),
+          ),
+          const SizedBox(width: 10),
+          Expanded(
+              flex: 8,
+              child: Row(children: [
+                Expanded(
+                    flex: stockMatch.buyActiveQtty?.toInt() ?? 0,
+                    child: Container(color: AppColors.semantic_01, height: 16)),
+                Expanded(
+                    flex: stockMatch.sellActiveQtty?.toInt() ?? 0,
+                    child: Container(color: AppColors.semantic_03, height: 16)),
+                Expanded(
+                    flex: stockMatch.noneActiveQtty?.toInt() ?? 0,
+                    child: Container(color: AppColors.neutral_03, height: 16))
+              ])),
+          const SizedBox(width: 10),
+
+          Expanded(
+            child: Align(
+              alignment: Alignment.centerRight,
+              child: Text(NumUtils.formatInteger(stockMatch.totalVol),
+                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                      fontSize: 10,
+                      fontWeight: FontWeight.w600,
+                      color: AppColors.neutral_03)),
+            ),
+          ),
+          const SizedBox(width: 16),
+
+        ]));
   }
 }

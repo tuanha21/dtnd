@@ -53,7 +53,6 @@ class _SearchScreenState extends State<SearchScreen>
     final list = await userService.getSearchHistory();
     final searchHistory =
         await dataCenterService.getStockModelsFromStockCodes(list);
-    logger.v(searchHistory);
     setState(() {
       listSearchHistory = searchHistory;
       if (searchHistory.isNotEmpty) {
