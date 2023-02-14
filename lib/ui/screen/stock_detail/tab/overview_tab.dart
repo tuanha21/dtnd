@@ -76,6 +76,7 @@ class _OverviewTabState extends State<OverviewTab> {
                       child: Builder(
                         builder: (context) {
                           return LinearPercentIndicator(
+                            barRadius: const Radius.circular(12),
                             animation: true,
                             animationDuration: 1000,
                             lineHeight: 10,
@@ -87,20 +88,6 @@ class _OverviewTabState extends State<OverviewTab> {
                         },
                       ),
                     ),
-                    // Expanded(
-                    //   child: Slider(
-                    //     min: widget.stockModel.stockData.lowPrice.value
-                    //             ?.toDouble() ??
-                    //         0,
-                    //     max: widget.stockModel.stockData.highPrice.value
-                    //             ?.toDouble() ??
-                    //         1,
-                    //     value: widget.stockModel.stockData.lastPrice.value
-                    //             ?.toDouble() ??
-                    //         0,
-                    //     onChanged: (value) {},
-                    //   ),
-                    // ),
                     Text(
                       widget.stockModel.stockData.highPrice.value.toString(),
                       style: Theme.of(context).textTheme.titleSmall,

@@ -36,7 +36,9 @@ class _IndexWidgetState extends State<IndexWidget> {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 16),
       padding: const EdgeInsets.all(16),
-      decoration: const BoxDecoration(color: AppColors.neutral_03),
+      decoration: BoxDecoration(
+          color: const Color(0xffF5F8FF),
+          borderRadius: BorderRadius.circular(16)),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -48,7 +50,9 @@ class _IndexWidgetState extends State<IndexWidget> {
                 }
                 if (snapshot.connectionState == ConnectionState.done) {
                   var info = snapshot.data;
-
+                  var textTheme =
+                      Theme.of(context).textTheme.bodySmall?.copyWith();
+                  var colorBoder = AppColors.neutral_04;
                   return Row(
                     children: [
                       Visibility(
@@ -58,14 +62,10 @@ class _IndexWidgetState extends State<IndexWidget> {
                               decoration: BoxDecoration(
                                   color: Colors.transparent,
                                   borderRadius: BorderRadius.circular(6),
-                                  border:
-                                      Border.all(color: AppColors.neutral_05)),
+                                  border: Border.all(color: colorBoder)),
                               child: Text(
                                 'Margin',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodySmall
-                                    ?.copyWith(color: AppColors.light_bg),
+                                style: textTheme,
                               ))),
                       Visibility(
                           visible: info?.isFTSE == true,
@@ -75,14 +75,10 @@ class _IndexWidgetState extends State<IndexWidget> {
                               decoration: BoxDecoration(
                                   color: Colors.transparent,
                                   borderRadius: BorderRadius.circular(6),
-                                  border:
-                                      Border.all(color: AppColors.neutral_05)),
+                                  border: Border.all(color: colorBoder)),
                               child: Text(
                                 'FTSE',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodySmall
-                                    ?.copyWith(color: AppColors.light_bg),
+                                style: textTheme,
                               ))),
                       Visibility(
                           visible: info?.isVNMETF == true,
@@ -92,14 +88,10 @@ class _IndexWidgetState extends State<IndexWidget> {
                               decoration: BoxDecoration(
                                   color: Colors.transparent,
                                   borderRadius: BorderRadius.circular(6),
-                                  border:
-                                      Border.all(color: AppColors.neutral_05)),
+                                  border: Border.all(color: colorBoder)),
                               child: Text(
                                 'VNMETF',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodySmall
-                                    ?.copyWith(color: AppColors.light_bg),
+                                style: textTheme,
                               ))),
                       Visibility(
                           visible: info?.isVN30 == true,
@@ -109,14 +101,10 @@ class _IndexWidgetState extends State<IndexWidget> {
                               decoration: BoxDecoration(
                                   color: Colors.transparent,
                                   borderRadius: BorderRadius.circular(6),
-                                  border:
-                                      Border.all(color: AppColors.neutral_05)),
+                                  border: Border.all(color: colorBoder)),
                               child: Text(
                                 'VN30',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodySmall
-                                    ?.copyWith(color: AppColors.light_bg),
+                                style: textTheme,
                               )))
                     ],
                   );
@@ -170,32 +158,52 @@ class _IndexWidgetState extends State<IndexWidget> {
                         ],
                       ),
                       const SizedBox(height: 5),
-                      IntrinsicHeight(
-                        child: Row(
-                          children: [
-                            Expanded(
-                                child: boxData1(
-                              value1: NumUtils.formatInteger(eps.value1),
-                              value2: NumUtils.formatInteger(tongNoVCSH.value1),
-                              value3: "${NumUtils.formatInteger(roe.value1)}%",
-                            )),
-                            const SizedBox(width: 5),
-                            Expanded(
-                                child: boxData2(
-                              value1: NumUtils.formatInteger(pe.value1),
-                              value2: NumUtils.formatInteger(tongNoTS.value1),
-                              value3: "${NumUtils.formatInteger(roa.value1)}%",
-                            )),
-                            const SizedBox(width: 5),
-                            Expanded(
-                                child: boxData3(
-                              value1: NumUtils.formatInteger(pb.value1),
-                              value2: NumUtils.formatInteger(thanhToan.value1),
-                              value3:
-                                  "${NumUtils.formatInteger(tyXuatLN.value1)}%",
-                            ))
-                          ],
-                        ),
+                      Row(
+                        children: [
+                          Expanded(
+                              child: boxData("EPS",
+                                  "${NumUtils.formatInteger(eps.value1)} VND")),
+                          const SizedBox(width: 5),
+                          Expanded(
+                              child: boxData("PE",
+                                  "${NumUtils.formatInteger(pe.value1)} Lần")),
+                          const SizedBox(width: 5),
+                          Expanded(
+                              child: boxData("PB",
+                                  "${NumUtils.formatInteger(pb.value1)} Lần"))
+                        ],
+                      ),
+                      const SizedBox(height: 5),
+                      Row(
+                        children: [
+                          Expanded(
+                              child: boxData("Tổng nợ/VCSH",
+                                  NumUtils.formatInteger(tongNoVCSH.value1))),
+                          const SizedBox(width: 5),
+                          Expanded(
+                              child: boxData("Tổng nợ/Tổng TS",
+                                  NumUtils.formatInteger(tongNoTS.value1))),
+                          const SizedBox(width: 5),
+                          Expanded(
+                              child: boxData("Tổng nợ/Tổng TS",
+                                  "${NumUtils.formatInteger(thanhToan.value1)}%"))
+                        ],
+                      ),
+                      const SizedBox(height: 5),
+                      Row(
+                        children: [
+                          Expanded(
+                              child: boxData("ROE",
+                                  "${NumUtils.formatInteger(roe.value1)}%")),
+                          const SizedBox(width: 5),
+                          Expanded(
+                              child: boxData("ROA",
+                                  "${NumUtils.formatInteger(roa.value1)}%")),
+                          const SizedBox(width: 5),
+                          Expanded(
+                              child: boxData("Tỷ suất LN gộp",
+                                  "${NumUtils.formatInteger(tyXuatLN.value1)}%"))
+                        ],
                       ),
                     ],
                   );
@@ -233,7 +241,7 @@ class _IndexWidgetState extends State<IndexWidget> {
     );
   }
 
-  Widget columnData(String title, String value){
+  Widget columnData(String title, String value) {
     return Column(
       children: [
         Text(
