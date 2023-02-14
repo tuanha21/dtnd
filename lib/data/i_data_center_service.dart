@@ -26,6 +26,7 @@ import '../=models=/response/index_detail.dart';
 import '../=models=/response/introduct_company.dart';
 import '../=models=/response/sec_event.dart';
 import '../=models=/response/stock_industry.dart';
+import '../=models=/response/stock_vol.dart';
 
 abstract class IDataCenterService {
   Set<IndexModel> get listIndexs;
@@ -128,4 +129,7 @@ abstract class IDataCenterService {
   Future<List<SecEvent>> getListEvent(String stockCode);
 
   Future<CompanyIntroductionResponse> getCompanyIntroduction(String stockCode);
+
+  Future<List<StockMatch>> getListStockMatch(String stockCode);
+
 }

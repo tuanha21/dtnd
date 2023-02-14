@@ -39,6 +39,7 @@ import '../=models=/response/index_board.dart';
 import '../=models=/response/introduct_company.dart';
 import '../=models=/response/sec_event.dart';
 import '../=models=/response/stock_industry.dart';
+import '../=models=/response/stock_vol.dart';
 import '../=models=/response/user_token.dart';
 
 abstract class INetworkService {
@@ -159,4 +160,6 @@ abstract class INetworkService {
   Future<CompanyInfo> getCompanyInfo(String stockCode);
 
   Future<StockReportRes> getStockInfo(String stockCOde);
+
+  Future<List<StockMatch>> getListStockMatch(String stockCode);
 }

@@ -18,6 +18,7 @@ import 'package:dtnd/=models=/response/stock_model.dart';
 import 'package:dtnd/=models=/response/stock_news.dart';
 import 'package:dtnd/=models=/response/stock_ranking_financial_index_model.dart';
 import 'package:dtnd/=models=/response/stock_trading_history.dart';
+import 'package:dtnd/=models=/response/stock_vol.dart';
 import 'package:dtnd/=models=/response/subsidiaries_model.dart';
 import 'package:dtnd/=models=/response/top_influence_model.dart';
 import 'package:dtnd/=models=/ui_model/field_tree_element_model.dart';
@@ -648,5 +649,11 @@ class DataCenterService implements IDataCenterService {
   @override
   Future<CompanyIntroductionResponse> getCompanyIntroduction(String stockCode) {
     return networkService.getCompanyIntroduction(stockCode);
+  }
+
+  @override
+  Future<List<StockMatch>> getListStockMatch(String stockCode) {
+    return networkService.getListStockMatch(stockCode);
+
   }
 }

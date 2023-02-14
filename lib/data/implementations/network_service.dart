@@ -27,6 +27,7 @@ import 'package:dtnd/=models=/response/stock_ranking_financial_index_model.dart'
 import 'package:dtnd/=models=/response/stock_report_res.dart';
 import 'package:dtnd/=models=/response/stock_trade.dart';
 import 'package:dtnd/=models=/response/stock_trading_history.dart';
+import 'package:dtnd/=models=/response/stock_vol.dart';
 import 'package:dtnd/=models=/response/subsidiaries_model.dart';
 import 'package:dtnd/=models=/response/top_influence_model.dart';
 import 'package:dtnd/=models=/response/total_asset_model.dart';
@@ -956,5 +957,26 @@ class NetworkService implements INetworkService {
     }));
     var res = decode(response.bodyBytes);
     return StockReportRes.fromJson(res);
+  }
+
+  @override
+  Future<List<StockMatch>> getListStockMatch(String stockCode) async {
+    try {
+      var response = await client.get(Uri.https('opacc-api.apec.com.vn',
+          'algo/pbapi/api/stockBoard/stock/getDetailsActivelyByPrice/$stockCode'));
+      if (response.statusCode != 200) {
+        throw response;
+      }
+      var res = decode(response.bodyBytes);
+      var list = res['data'] as List;
+      var listSecc = <StockMatch>[];
+      for (var element in list) {
+        listSecc.add(StockMatch.fromJson(element));
+      }
+      return listSecc;
+    } catch (e) {
+      print(e.toString());
+      rethrow;
+    }
   }
 }
