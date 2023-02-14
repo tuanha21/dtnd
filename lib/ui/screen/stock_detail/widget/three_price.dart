@@ -270,7 +270,7 @@ class _ThreePriceElementState extends State<ThreePriceElement>
     } else {
       rowChildren = [
         Container(
-          width: widget.ratio * ctx.maxWidth * 2 / 3,
+          width: widget.ratio * ctx.maxWidth * 1 / 3,
           height: 5,
           decoration: const BoxDecoration(
               color: AppColors.three_prices_sell_bg,

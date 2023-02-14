@@ -8,7 +8,6 @@ import '../widget/index_widget.dart';
 import '../widget/introduct_widget.dart';
 import '../widget/stock_detail_chart.dart';
 import '../widget/stock_detail_news.dart';
-import '../widget/stock_detail_overview.dart';
 import '../widget/stock_event.dart';
 
 class OverviewTab extends StatefulWidget {
@@ -28,10 +27,6 @@ class _OverviewTabState extends State<OverviewTab> {
   Widget build(BuildContext context) {
     return ListView(
       children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: StockDetailOverview(stockModel: widget.stockModel),
-        ),
         SizedBox(
             height: 200,
             child: Padding(
@@ -81,7 +76,7 @@ class _OverviewTabState extends State<OverviewTab> {
                             animationDuration: 1000,
                             lineHeight: 10,
                             percent:
-                                widget.stockModel.stockData.percent.toDouble(),
+                            widget.stockModel.stockData.percent.toDouble(),
                             progressColor: AppColors.neutral_03,
                             backgroundColor: AppColors.neutral_01,
                           );
