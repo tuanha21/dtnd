@@ -3,12 +3,10 @@
 import 'dart:convert';
 
 import 'package:dtnd/=models=/core_response_model.dart';
-import 'package:dtnd/=models=/response/account/i_account.dart';
 import 'package:dtnd/=models=/response/account_info_model.dart';
 import 'package:dtnd/=models=/response/business_profile_model.dart';
 import 'package:dtnd/=models=/response/company_info.dart';
 import 'package:dtnd/=models=/response/deep_model.dart';
-import 'package:dtnd/=models=/response/head.dart';
 import 'package:dtnd/=models=/response/inday_matched_order.dart';
 import 'package:dtnd/=models=/response/index_board.dart';
 import 'package:dtnd/=models=/response/index_detail.dart';
@@ -26,6 +24,7 @@ import 'package:dtnd/=models=/response/stock_data.dart';
 import 'package:dtnd/=models=/response/stock_financial_index_model.dart';
 import 'package:dtnd/=models=/response/stock_news.dart';
 import 'package:dtnd/=models=/response/stock_ranking_financial_index_model.dart';
+import 'package:dtnd/=models=/response/stock_report_res.dart';
 import 'package:dtnd/=models=/response/stock_trade.dart';
 import 'package:dtnd/=models=/response/stock_trading_history.dart';
 import 'package:dtnd/=models=/response/subsidiaries_model.dart';
@@ -947,7 +946,7 @@ class NetworkService implements INetworkService {
   }
 
   @override
-  Future<List<Head>> getStockInfo(String stockCOde) async {
+  Future<StockReportRes> getStockInfo(String stockCOde) async {
     var response = await client.get(url_info_sbsi('stockReport.pt', {
       "symbol": stockCOde,
       "type": "CSTC",
@@ -956,12 +955,6 @@ class NetworkService implements INetworkService {
       "to": "4"
     }));
     var res = decode(response.bodyBytes);
-    logger.d(res);
-    var list = res['Head'] as List;
-    var listHead = <Head>[];
-    for (var element in list) {
-      listHead.add(Head.fromJson(element));
-    }
-    return listHead;
+    return StockReportRes.fromJson(res);
   }
 }

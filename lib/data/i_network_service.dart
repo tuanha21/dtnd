@@ -20,6 +20,7 @@ import 'package:dtnd/=models=/response/stock_data.dart';
 import 'package:dtnd/=models=/response/stock_financial_index_model.dart';
 import 'package:dtnd/=models=/response/stock_news.dart';
 import 'package:dtnd/=models=/response/stock_ranking_financial_index_model.dart';
+import 'package:dtnd/=models=/response/stock_report_res.dart';
 import 'package:dtnd/=models=/response/stock_trade.dart';
 import 'package:dtnd/=models=/response/stock_trading_history.dart';
 import 'package:dtnd/=models=/response/subsidiaries_model.dart';
@@ -33,7 +34,6 @@ import 'package:socket_io_client/socket_io_client.dart' as IO;
 import '../=models=/request/request_model.dart';
 import '../=models=/response/basic_company.dart';
 import '../=models=/response/company_info.dart';
-import '../=models=/response/head.dart';
 import '../=models=/response/indContrib.dart';
 import '../=models=/response/index_board.dart';
 import '../=models=/response/introduct_company.dart';
@@ -158,5 +158,5 @@ abstract class INetworkService {
 
   Future<CompanyInfo> getCompanyInfo(String stockCode);
 
-  Future<List<Head>> getStockInfo(String stockCOde);
+  Future<StockReportRes> getStockInfo(String stockCOde);
 }
