@@ -346,8 +346,13 @@ class NetworkService implements INetworkService {
   Future<String> getNewsContent(int id) async {
     final http.Response response =
         await client.get(url_core1("pickContents/$id"));
-    final responseBody = decode(response.bodyBytes)["data"];
-    return responseBody;
+    var responseBody = decode(response.bodyBytes);
+    if (responseBody['rc'] == -1) {
+      return Future.error(responseBody['rs']);
+    }
+    final data = responseBody["data"];
+
+    return data;
   }
 
   @override
