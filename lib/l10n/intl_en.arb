@@ -78,6 +78,7 @@
     "sold_returning_money": "Sold returning money",
     "withdrawable_money": "Withdrawable money",
     "total_debt": "Total debt",
+    "total_principal_debt": "Total principal debt",
     "safe_ratio": "Safe ratio",
     "cash_dividends": "Cash dividends",
     "capital_value": "Capital value",
@@ -308,6 +309,6 @@
 
     "copytrade": "Copytrade",
 
-    "transaction" : "Transaction"
+    "transaction": "Transaction"
 
 }

@@ -2,6 +2,8 @@ import 'package:dtnd/=models=/core_response_model.dart';
 import 'package:dtnd/=models=/response/account/i_account.dart';
 import 'package:dtnd/utilities/logger.dart';
 
+import 'portfolio_status_model.dart';
+
 class BaseMarginAccountModel implements IAccountModel {
   ///Account Info
   @override
@@ -77,6 +79,9 @@ class BaseMarginAccountModel implements IAccountModel {
   num? payment;
   num? totalMarket;
   num? totalCost;
+
+  @override
+  PortfolioStatus? portfolioStatus;
 
   BaseMarginAccountModel(
       {this.assets,

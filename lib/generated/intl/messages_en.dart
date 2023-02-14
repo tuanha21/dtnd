@@ -357,6 +357,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "top_search": MessageLookupByLibrary.simpleMessage("Top search"),
         "total_asset": MessageLookupByLibrary.simpleMessage("Total asset"),
         "total_debt": MessageLookupByLibrary.simpleMessage("Total debt"),
+        "total_principal_debt":
+            MessageLookupByLibrary.simpleMessage("Total principal debt"),
         "total_vol": MessageLookupByLibrary.simpleMessage("Total vol"),
         "total_wvalue": m9,
         "trading": MessageLookupByLibrary.simpleMessage("Trading"),

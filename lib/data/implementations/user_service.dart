@@ -1,6 +1,7 @@
 import 'package:dtnd/=models=/request/request_model.dart';
 import 'package:dtnd/=models=/response/account/i_account.dart';
 import 'package:dtnd/=models=/response/account/list_account_model.dart';
+import 'package:dtnd/=models=/response/account/portfolio_status_model.dart';
 import 'package:dtnd/=models=/response/account_info_model.dart';
 import 'package:dtnd/=models=/response/total_asset_model.dart';
 import 'package:dtnd/=models=/response/user_token.dart';
@@ -90,15 +91,28 @@ class UserService implements IUserService {
     } else {
       listAccountModel.value = listAccount;
       for (var i = 0; i < listAccount!.length; i++) {
-        RequestModel requestModel = RequestModel(this,
+        requestModel = RequestModel(this,
             group: "Q",
             data: RequestDataModel.stringType(
               cmd: "Web.Portfolio.AccountStatus",
               p1: listAccount.elementAt(i).accCode,
             ));
-        final accountResponse = await networkService
+        dynamic response = await networkService
             .requestTraditionalApi<IAccountResponse>(requestModel);
-        listAccount.elementAt(i).updateData(accountResponse!);
+
+        listAccount.elementAt(i).updateData(response!);
+        requestModel = RequestModel(this,
+            group: "Q",
+            data: RequestDataModel.stringType(
+              cmd: "Web.Portfolio.PortfolioStatus",
+              p1: listAccount.elementAt(i).accCode,
+            ));
+        response = await networkService
+            .requestTraditionalApiResList<PorfolioStock>(requestModel);
+        if (response != null) {
+          listAccount.elementAt(i).portfolioStatus =
+              PortfolioStatus.fromPorfolioStock(response!);
+        }
       }
     }
     listAccountModel.refresh();

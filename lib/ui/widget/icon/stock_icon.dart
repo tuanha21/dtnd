@@ -9,33 +9,41 @@ class StockIcon extends StatelessWidget {
     this.size = 40,
     this.border,
   });
-  final String stockCode;
+  final String? stockCode;
   final double size;
   final BoxBorder? border;
   @override
   Widget build(BuildContext context) {
+    final Widget icon;
+    if (stockCode == null) {
+      icon = Container(
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          border: border ?? Border.all(color: AppColors.neutral_05),
+        ),
+      );
+    } else {
+      icon = CachedNetworkImage(
+        imageUrl: "https://info.sbsi.vn/logo/$stockCode",
+        imageBuilder: (context, imageProvider) => Container(
+          width: size,
+          height: size,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            border: border ?? Border.all(color: AppColors.neutral_05),
+            image: DecorationImage(image: imageProvider, fit: BoxFit.scaleDown),
+          ),
+        ),
+        placeholder: (context, url) => const CircularProgressIndicator(),
+        errorWidget: (context, url, error) => const Icon(Icons.error),
+      );
+    }
     return SizedBox(
       width: size,
       child: Center(
-        child: ClipOval(
-          child: SizedBox.square(
-            dimension: size,
-            child: CachedNetworkImage(
-              imageUrl: "https://info.sbsi.vn/logo/$stockCode",
-              imageBuilder: (context, imageProvider) => Container(
-                width: size,
-                height: size,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  border: border ?? Border.all(color: AppColors.neutral_05),
-                  image: DecorationImage(
-                      image: imageProvider, fit: BoxFit.scaleDown),
-                ),
-              ),
-              placeholder: (context, url) => const CircularProgressIndicator(),
-              errorWidget: (context, url, error) => const Icon(Icons.error),
-            ),
-          ),
+        child: SizedBox.square(
+          dimension: size,
+          child: icon,
         ),
       ),
     );

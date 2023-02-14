@@ -1,5 +1,5 @@
-import 'package:dtnd/=models=/core_response_model.dart';
 import 'package:dtnd/=models=/response/account/i_account.dart';
+import 'package:dtnd/=models=/response/account/portfolio_status_model.dart';
 
 class BaseNormalAccountModel implements IAccountModel {
   ///Account Info
@@ -42,6 +42,9 @@ class BaseNormalAccountModel implements IAccountModel {
   num? vsd;
   num? totalMarket;
   num? totalCost;
+
+  @override
+  PortfolioStatus? portfolioStatus;
 
   BaseNormalAccountModel(
       {this.cashBalance,
