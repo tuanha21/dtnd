@@ -38,6 +38,7 @@ import '../=models=/response/indContrib.dart';
 import '../=models=/response/index_board.dart';
 import '../=models=/response/introduct_company.dart';
 import '../=models=/response/sec_event.dart';
+import '../=models=/response/sec_trading.dart';
 import '../=models=/response/stock_board.dart';
 import '../=models=/response/stock_his.dart';
 import '../=models=/response/stock_industry.dart';
@@ -168,5 +169,7 @@ abstract class INetworkService {
   Future<List<StockHis>> getStockHis(String stockCode, String from, String to);
 
   Future<StockBoard> getStockBoard(String stockCode);
+
+  Future<List<SecTrading>> getSecTradingHistory(String stockCode);
 
 }

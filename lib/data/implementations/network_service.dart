@@ -43,11 +43,13 @@ import 'package:dtnd/utilities/logger.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
+import 'package:intl/intl.dart';
 import 'package:socket_io_client/socket_io_client.dart';
 
 import '../../=models=/response/basic_company.dart';
 import '../../=models=/response/indContrib.dart';
 import '../../=models=/response/sec_event.dart';
+import '../../=models=/response/sec_trading.dart';
 import '../../=models=/response/stock_industry.dart';
 
 class NetworkService implements INetworkService {
@@ -982,7 +984,6 @@ class NetworkService implements INetworkService {
       }
       return listSecc;
     } catch (e) {
-      print(e.toString());
       rethrow;
     }
   }
@@ -1021,4 +1022,35 @@ class NetworkService implements INetworkService {
     var res = decode(response.bodyBytes);
     return StockBoard.fromJson(res['data']);
   }
+
+  @override
+  Future<List<SecTrading>> getSecTradingHistory(String stockCode) async {
+    try {
+      var response = await client.post(
+          Uri.https(
+              'opacc-api.apec.com.vn', 'algo/pbapi/api/secTradingHistory'),
+          body: jsonEncode({
+            "lang": "vi",
+            "secCode": stockCode,
+            "startDate": DateFormat('yyyy-MM-dd')
+                .format(DateTime.now().add(const Duration(days: -5))),
+            "endDate": DateFormat('yyyy-MM-dd').format(DateTime.now())
+          }));
+      if (response.statusCode != 200) {
+        throw response;
+      }
+      var res = decode(response.bodyBytes);
+      var list = jsonDecode(res['data']) as List;
+      logger.d(list);
+      var listSecc = <SecTrading>[];
+      for (var element in list) {
+        listSecc.add(SecTrading.fromJson(element));
+      }
+      return listSecc;
+    } catch (e) {
+      rethrow;
+    }
+  }
 }
+
+
