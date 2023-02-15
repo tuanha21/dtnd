@@ -25,9 +25,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../widget/tabbar/rounded_tabbar.dart';
-import 'component/account_right_widget.dart';
 import 'component/investment_catalog_widget.dart';
-import 'logic/investment_catalog.dart';
+import 'component/portfolio_and_right_panel.dart';
 
 class AssetScreen extends StatefulWidget {
   const AssetScreen({super.key});
@@ -42,7 +41,6 @@ class _AssetScreenState extends State<AssetScreen>
   final IDataCenterService dataCenterService = DataCenterService();
   late final TabController _tabController;
 
-  late final ScrollController scrollController;
   void rebuild() => setState(() {});
 
   void changeChart() {
@@ -53,12 +51,9 @@ class _AssetScreenState extends State<AssetScreen>
 
   bool showTotalAsset = true;
 
-  bool gettingCatalog = true;
-
   @override
   void initState() {
     _tabController = TabController(length: 2, vsync: this);
-    scrollController = ScrollController();
     super.initState();
   }
 
@@ -75,9 +70,24 @@ class _AssetScreenState extends State<AssetScreen>
       final textTheme = Theme.of(context).textTheme;
       Widget chart;
       if (showTotalAsset) {
-        chart = const AssetChart(
-          lineColor: AppColors.graph_7,
-        );
+        chart = Obx(() {
+          // final data = userService.listAccountModel.value?.firstWhereOrNull(
+          //         (element) => element.runtimeType == BaseMarginAccountModel)
+          //     as BaseMarginAccountModel?;
+          logger.v((userService.listAccountModel.value?.firstWhereOrNull(
+                      (element) =>
+                          element.runtimeType == BaseMarginAccountModel)
+                  as BaseMarginAccountModel?)
+              ?.listAssetChart);
+          return AssetChart(
+            lineColor: AppColors.graph_7,
+            datas: (userService.listAccountModel.value?.firstWhereOrNull(
+                        (element) =>
+                            element.runtimeType == BaseMarginAccountModel)
+                    as BaseMarginAccountModel?)
+                ?.listAssetChart,
+          );
+        });
       } else {
         chart = const AssetDistributionChart();
       }
@@ -142,9 +152,7 @@ class _AssetScreenState extends State<AssetScreen>
                   children: [
                     Text(
                       S.of(context).asset,
-                      style: Theme.of(context)
-                          .textTheme
-                          .titleMedium!
+                      style: textTheme.titleMedium!
                           .copyWith(fontWeight: FontWeight.w700),
                     ),
                     Container(),
@@ -152,148 +160,43 @@ class _AssetScreenState extends State<AssetScreen>
                 ),
               ),
               Obx(() {
-                if (userService.listAccountModel.value?.isNotEmpty ?? false) {
-                  final data = userService.listAccountModel.value!.firstWhere(
-                          (element) =>
-                              element.runtimeType == BaseMarginAccountModel)
-                      as BaseMarginAccountModel;
-                  return AssetPerTypeWidget(
-                    values: [
-                      MoneyType(
-                          icon: AppImages.wallet_3,
-                          label: S.of(context).investment_value,
-                          value:
-                              "${NumUtils.formatDouble((data.equity ?? 0) - (data.cashBalance ?? 0) - (data.debt ?? 0))} đ"),
-                      MoneyType(
-                          icon: AppImages.money_2,
-                          label: S.of(context).cash,
-                          value:
-                              "${NumUtils.formatDouble(data.cashBalance ?? 0)} đ"),
-                      MoneyType(
-                          icon: AppImages.timer_2,
-                          label: S.of(context).sold_returning_money,
-                          value: "${NumUtils.formatDouble(data.apT0 ?? 0)} đ"),
-                      MoneyType(
-                          icon: AppImages.money_change,
-                          label: S.of(context).withdrawable_money,
-                          value:
-                              "${NumUtils.formatDouble(data.withdrawalCash ?? 0)} đ")
-                    ],
-                  );
-                } else {
-                  return AssetPerTypeWidget(
-                    values: [
-                      MoneyType(
-                          icon: AppImages.wallet_3,
-                          label: S.of(context).investment_value,
-                          value: "-"),
-                      MoneyType(
-                          icon: AppImages.money_2,
-                          label: S.of(context).cash,
-                          value: "-"),
-                      MoneyType(
-                          icon: AppImages.timer_2,
-                          label: S.of(context).sold_returning_money,
-                          value: "-"),
-                      MoneyType(
-                          icon: AppImages.money_change,
-                          label: S.of(context).withdrawable_money,
-                          value: "-")
-                    ],
-                  );
-                }
+                final data = userService.listAccountModel.value
+                        ?.firstWhereOrNull((element) =>
+                            element.runtimeType == BaseMarginAccountModel)
+                    as BaseMarginAccountModel?;
+                return AssetPerTypeWidget(
+                  values: [
+                    MoneyType(
+                        icon: AppImages.wallet_3,
+                        label: S.of(context).net_assets,
+                        value: "${NumUtils.formatDouble(data?.equity)} đ"),
+                    // "${NumUtils.formatDouble((data?.equity ?? 0) - (data?.cashBalance ?? 0) - (data?.debt ?? 0))} đ"),
+                    MoneyType(
+                        icon: AppImages.chart_2,
+                        label: S.of(context).dividend,
+                        value: "${NumUtils.formatDouble(data?.collateral)} đ"),
+                    MoneyType(
+                        icon: AppImages.money_2,
+                        label: S.of(context).cash,
+                        value:
+                            "${NumUtils.formatDouble(data?.cashBalance ?? 0)} đ"),
+                    MoneyType(
+                        icon: AppImages.money_change,
+                        label: S.of(context).total_principal_debt,
+                        value: "${NumUtils.formatDouble(data?.debt ?? 0)} đ"),
+                    MoneyType(
+                        icon: AppImages.timer_2,
+                        label: S.of(context).minimum_ee,
+                        value: "${NumUtils.formatDouble(data?.ee ?? 0)} đ"),
+                    MoneyType(
+                        icon: AppImages.chart_3,
+                        label: S.of(context).safe_ratio,
+                        value: NumUtils.formatDouble(data?.marginRatio ?? 0))
+                  ],
+                );
               }),
               const SizedBox(height: 16),
-              SizedBox(
-                width: MediaQuery.of(context).size.width,
-                height: 60,
-                child: Column(
-                  children: [
-                    // Padding(
-                    //   padding: const EdgeInsets.symmetric(vertical: 6),
-                    //   child: SizedBox(
-                    //     width: 39,
-                    //     height: 4,
-                    //     child: Container(
-                    //       decoration: const BoxDecoration(
-                    //         color: AppColors.neutral_03,
-                    //         borderRadius: BorderRadius.all(
-                    //           Radius.circular(2),
-                    //         ),
-                    //       ),
-                    //     ),
-                    //   ),
-                    // ),
-                    RoundedTabbar(
-                      controller: _tabController,
-                      tabs: [
-                        Text(S.of(context).catalog),
-                        Text(S.of(context).right),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Obx(() {
-                  final data = userService.listAccountModel.value
-                          ?.firstWhereOrNull((element) =>
-                              element.runtimeType == BaseMarginAccountModel)
-                      as BaseMarginAccountModel?;
-                  return Column(
-                    children: [
-                      for (int i = 0;
-                          i <
-                              (data?.portfolioStatus?.porfolioStocks?.length ??
-                                  0);
-                          i++)
-                        Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 4),
-                          child: InvestmentCatalogWidget(
-                            data: data!.portfolioStatus!.porfolioStocks!
-                                .elementAt(i),
-                            volPc: (data.portfolioStatus!.porfolioStocks!
-                                        .elementAt(i)
-                                        .marketValue ??
-                                    0) /
-                                (data.portfolioStatus!.marketValue ?? 1) *
-                                100,
-                          ),
-                        )
-                    ],
-                  );
-                }),
-              ),
-              // TabBarView(
-              //   controller: _tabController,
-              //   // physics: PanelScrollPhysics(controller: panelController),
-              //   // controller: scrollController,
-              //   children: <Widget>[
-              //     Column(
-              //       children: [
-              //         for (var e in list)
-              //           Padding(
-              //             padding: const EdgeInsets.symmetric(vertical: 16),
-              //             child: InvestmentCatalogWidget(
-              //               data: e,
-              //             ),
-              //           )
-              //       ],
-              //     ),
-              //     Column(
-              //       children: [
-              //         for (int i = 0; i < 3; i++)
-              //           Padding(
-              //             padding: const EdgeInsets.symmetric(vertical: 6),
-              //             child: AccountRightWidget(
-              //               index: i,
-              //             ),
-              //           )
-              //       ],
-              //     ),
-              //   ],
-              // ),
+              const PortfolioAndRightPanel(),
               const SizedBox(height: 100),
             ],
           ),

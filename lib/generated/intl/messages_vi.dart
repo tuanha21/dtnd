@@ -140,6 +140,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "derivative": MessageLookupByLibrary.simpleMessage("Phái sinh"),
         "derivative_asset":
             MessageLookupByLibrary.simpleMessage("Tài sản phái sinh"),
+        "detail": MessageLookupByLibrary.simpleMessage("Chi tiết"),
         "dividend": MessageLookupByLibrary.simpleMessage("Cổ tức"),
         "double_back_to_close_app":
             MessageLookupByLibrary.simpleMessage("Ấn thêm lần nữa để thoát"),
@@ -242,6 +243,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "matched_vol": MessageLookupByLibrary.simpleMessage("KL khớp"),
         "matching": MessageLookupByLibrary.simpleMessage("Đang khớp"),
         "million_short": MessageLookupByLibrary.simpleMessage("Tr"),
+        "minimum_ee": MessageLookupByLibrary.simpleMessage("Sức mua tối thiểu"),
         "minutes": MessageLookupByLibrary.simpleMessage(" phút"),
         "minutes_ago": m6,
         "mk_value": MessageLookupByLibrary.simpleMessage("Giá trị TT"),

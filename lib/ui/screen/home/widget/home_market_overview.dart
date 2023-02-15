@@ -7,6 +7,7 @@ import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/screen/home/widget/simple_line_chart.dart';
 import 'package:dtnd/ui/screen/stock_detail/stock_detail_screen.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
+import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:dtnd/ui/theme/app_textstyle.dart';
 import 'package:dtnd/ui/widget/icon/stock_icon.dart';
 import 'package:dtnd/utilities/logger.dart';
@@ -44,7 +45,7 @@ class _HomeMarketOverviewState extends State<HomeMarketOverview>
           child: Text(S.of(context).loading),
         );
       }
-      final List<StockModel> data;
+      List<StockModel>? data;
       switch (_tabController.index) {
         case 1:
           if (!up) {
@@ -99,9 +100,10 @@ class _HomeMarketOverviewState extends State<HomeMarketOverview>
           ],
         ),
       );
+      print("data.length ${data.length}");
       Widget list = Column(
         children: [
-          for (int i = 0; i < data.length; i++)
+          for (int i = 0; i < (data.length); i++)
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
               child: SizedBox(
@@ -130,9 +132,11 @@ class _HomeMarketOverviewState extends State<HomeMarketOverview>
                   print(_tabController.indexIsChanging);
                   if (!_tabController.indexIsChanging && value == 1) {
                     up = !up;
+                    // await homeController.changeList(_tabController.index, up);
+                  } else {
+                    // await homeController.changeList(_tabController.index, true);
                   }
                   setState(() {});
-                  await homeController.changeList(data);
                   // setState(() {});
                 },
                 tabs: <Widget>[
@@ -160,12 +164,12 @@ class HomeMarketOverviewItem extends StatelessWidget {
   const HomeMarketOverviewItem({
     super.key,
     required this.dataCenterService,
-    required this.data,
+    this.data,
     this.onHold,
     this.onTap,
   });
   final IDataCenterService dataCenterService;
-  final StockModel data;
+  final StockModel? data;
   final VoidCallback? onTap;
   final VoidCallback? onHold;
   @override
@@ -175,10 +179,18 @@ class HomeMarketOverviewItem extends StatelessWidget {
     return Material(
       borderRadius: const BorderRadius.all(Radius.circular(8)),
       child: InkWell(
-        onTap: onTap ??
-            () => Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => StockDetailScreen(stockModel: data),
-                )),
+        onTap: () {
+          if (data != null) {
+            if (onTap != null) {
+              return onTap!.call();
+            } else {
+              Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => StockDetailScreen(stockModel: data!),
+              ));
+              return;
+            }
+          }
+        },
         onLongPress: onHold,
         borderRadius: const BorderRadius.all(Radius.circular(8)),
         child: Ink(
@@ -192,7 +204,7 @@ class HomeMarketOverviewItem extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               StockIcon(
-                stockCode: data.stock.stockCode,
+                stockCode: data?.stock.stockCode,
               ),
               const SizedBox(width: 8),
               Column(
@@ -200,7 +212,7 @@ class HomeMarketOverviewItem extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    data.stock.stockCode,
+                    data?.stock.stockCode ?? "-",
                     style: Theme.of(context)
                         .textTheme
                         .titleSmall!
@@ -209,14 +221,14 @@ class HomeMarketOverviewItem extends StatelessWidget {
                   ObxValue<Rx<num?>>(
                     (lastPrice) {
                       return Text(
-                        "${data.stockData.changePc}%",
+                        "${data?.stockData.changePc ?? "-"}%",
                         style: AppTextStyle.labelMedium_12.copyWith(
                           fontWeight: FontWeight.w600,
-                          color: data.stockData.color,
+                          color: data?.stockData.color ?? AppColors.semantic_02,
                         ),
                       );
                     },
-                    data.stockData.lastPrice,
+                    data?.stockData.lastPrice ?? 0.obs,
                   ),
                 ],
               ),
@@ -227,39 +239,36 @@ class HomeMarketOverviewItem extends StatelessWidget {
                       minWidth: MediaQuery.of(context).size.width / 5,
                       maxWidth: MediaQuery.of(context).size.width / 4),
                   child: Obx(() {
-                    data.stockData.lastPrice.value;
+                    data?.stockData.lastPrice.value;
                     return SimpleLineChart(
                       data: data,
-                      getData: () async {
-                        if (data.simpleChartData.value?.isEmpty ?? true) {
-                          return await dataCenterService.getStockTradingHistory(
-                              data.stock.stockCode,
-                              "5",
-                              TimeUtilities.getPreviousDateTime(
-                                  TimeUtilities.day(1)),
-                              DateTime.now());
-                        } else {
-                          final todayHstr =
-                              await dataCenterService.getStockTradingHistory(
-                                  data.stock.stockCode,
-                                  "5",
-                                  TimeUtilities.getPreviousDateTime(
-                                      TimeUtilities.day(1)),
-                                  DateTime.now());
-                          if (todayHstr?.o?.isEmpty ?? true) {
-                            return await dataCenterService
-                                .getStockTradingHistory(
-                                    data.stock.stockCode,
-                                    "5",
-                                    TimeUtilities.getPreviousDateTime(
-                                            TimeUtilities.day(1))
-                                        .beginningOfDay,
-                                    DateTime.now());
-                          } else {
-                            return todayHstr;
-                          }
-                        }
-                      },
+                      getData: data != null
+                          ? () async {
+                              final todayHstr = await dataCenterService
+                                  .getStockTradingHistory(
+                                      data!.stock.stockCode,
+                                      "5",
+                                      DateTime.now().beginningOfDay,
+                                      DateTime.now());
+                              if (data!.simpleChartData.value?.isEmpty ??
+                                  true) {
+                                return todayHstr;
+                              } else {
+                                if (todayHstr?.o?.isEmpty ?? true) {
+                                  return await dataCenterService
+                                      .getStockTradingHistory(
+                                          data!.stock.stockCode,
+                                          "5",
+                                          TimeUtilities.getPreviousDateTime(
+                                                  TimeUtilities.day(1))
+                                              .beginningOfDay,
+                                          DateTime.now());
+                                } else {
+                                  return todayHstr;
+                                }
+                              }
+                            }
+                          : null,
                       // future: data.getTradingHistory(DataCenterService(),
                       //     resolution: "5", from: TimeUtilities.beginningOfDay),
                     );
@@ -287,25 +296,31 @@ class HomeMarketOverviewItem extends StatelessWidget {
                     (lastPrice) {
                       return Row(
                         children: [
-                          data.stockData.prefixIcon(size: 12),
+                          data?.stockData.prefixIcon(size: 12) ??
+                              Image.asset(
+                                AppImages.prefix_ref_icon,
+                                width: 12,
+                                height: 12,
+                              ),
                           Text(
-                            " ${data.stockData.lastPrice}",
+                            " ${data?.stockData.lastPrice ?? "-"}",
                             maxLines: 1,
                             style: AppTextStyle.labelMedium_12.copyWith(
                               fontWeight: FontWeight.w600,
                               fontSize: 13,
-                              color: data.stockData.color,
+                              color: data?.stockData.color ??
+                                  AppColors.semantic_02,
                             ),
                           )
                         ],
                       );
                     },
-                    data.stockData.lastPrice,
+                    data?.stockData.lastPrice ?? 0.obs,
                   ),
 
                   Obx(() {
                     return Text(
-                      "${NumUtils.formatInteger10(data.stockData.lot.value)} CP",
+                      "${NumUtils.formatInteger10(data?.stockData.lot.value ?? 0)} CP",
                       style: AppTextStyle.labelMedium_12.copyWith(
                         fontWeight: FontWeight.w500,
                         color: AppColors.neutral_03,

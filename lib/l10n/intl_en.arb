@@ -102,6 +102,8 @@
     "order_price": "Order price",
     "match_price": "Matched price",
     "match_vol": "Match vol",
+    "minimum_ee": "Minimum purchasing power",
+    "detail": "Detail",
 
     "waiting_match": "Waiting match",
     "matched": "Matched",

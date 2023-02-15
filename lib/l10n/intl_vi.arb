@@ -101,6 +101,8 @@
     "order_price": "Giá đặt",
     "match_price": "Giá khớp",
     "match_vol": "KL khớp",
+    "minimum_ee": "Sức mua tối thiểu",
+    "detail": "Chi tiết",
 
     "waiting_match": "Chờ khớp",
     "matched": "Đã khớp",

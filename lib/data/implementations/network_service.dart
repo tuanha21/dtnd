@@ -601,6 +601,7 @@ class NetworkService implements INetworkService {
         try {
           data.add(TopInterested.fromJson(element));
         } catch (e) {
+          logger.e(e);
           continue;
         }
       }
@@ -1079,5 +1080,3 @@ class NetworkService implements INetworkService {
     }
   }
 }
-
-

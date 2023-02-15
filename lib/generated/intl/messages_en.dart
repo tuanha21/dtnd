@@ -143,6 +143,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "derivative": MessageLookupByLibrary.simpleMessage("Derivative"),
         "derivative_asset":
             MessageLookupByLibrary.simpleMessage("Derivative asset"),
+        "detail": MessageLookupByLibrary.simpleMessage("Detail"),
         "dividend": MessageLookupByLibrary.simpleMessage("Dividend"),
         "double_back_to_close_app":
             MessageLookupByLibrary.simpleMessage("Back again to exit"),
@@ -242,6 +243,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "matched_vol": MessageLookupByLibrary.simpleMessage("Matched vol"),
         "matching": MessageLookupByLibrary.simpleMessage("Matching"),
         "million_short": MessageLookupByLibrary.simpleMessage("M"),
+        "minimum_ee":
+            MessageLookupByLibrary.simpleMessage("Minimum purchasing power"),
         "minutes": MessageLookupByLibrary.simpleMessage(" minutes"),
         "minutes_ago": m6,
         "mk_value": MessageLookupByLibrary.simpleMessage("MK value"),

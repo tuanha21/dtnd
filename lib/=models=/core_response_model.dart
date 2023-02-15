@@ -1,3 +1,4 @@
+import 'package:dtnd/=models=/response/account/asset_chart_element.dart';
 import 'package:dtnd/=models=/response/account/i_account.dart';
 import 'package:dtnd/=models=/response/account/list_account_model.dart';
 
@@ -14,6 +15,8 @@ abstract class CoreResponseModel {
         return IAccountResponse.fromJson(json) as T;
       case PorfolioStock:
         return PorfolioStock.fromJson(json) as T;
+      case AssetChartElementModel:
+        return AssetChartElementModel.fromJson(json) as T;
       default:
         throw UnimplementedError();
     }

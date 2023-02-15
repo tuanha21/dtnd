@@ -7,9 +7,11 @@ class RoundedTabbar extends StatelessWidget {
     super.key,
     required this.controller,
     required this.tabs,
+    this.isScrollable = true,
   });
   final TabController controller;
   final List<Widget> tabs;
+  final bool isScrollable;
   @override
   Widget build(BuildContext context) {
     final themeMode = AppService.instance.themeMode.value;
@@ -23,7 +25,7 @@ class RoundedTabbar extends StatelessWidget {
       ),
       child: TabBar(
         controller: controller,
-        isScrollable: true,
+        isScrollable: isScrollable,
         indicator: BoxDecoration(
           borderRadius: BorderRadius.circular(12.0),
           color: AppColors.primary_01,

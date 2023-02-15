@@ -110,6 +110,15 @@ class DataCenterService implements IDataCenterService {
           "{\"action\":\"ping\",\"mode\":\"sync\",\"data\":\"\"}";
       socket.emit("regs", pingMsg);
     });
+    socket.onDisconnect((data) {
+      logger.e("Socket disconnected!");
+      logger.e(data);
+      return startSocket();
+    });
+    socket.onConnecting((data) {
+      logger.i("Try to connecting...");
+      return null;
+    });
     socket.connect();
     regStocks(_listInterestedStocks.map((e) => e.stock.stockCode).toList());
     return;
@@ -655,6 +664,5 @@ class DataCenterService implements IDataCenterService {
   @override
   Future<List<StockMatch>> getListStockMatch(String stockCode) {
     return networkService.getListStockMatch(stockCode);
-
   }
 }

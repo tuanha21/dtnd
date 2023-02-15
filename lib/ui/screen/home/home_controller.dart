@@ -105,20 +105,20 @@ class HomeController {
     priceDecreaseToday = stockModels;
   }
 
-  Future<void> getTopForeign() async {
-    final topStockChange = await dataCenterService.getTopForeignTrade();
-    final stockModels = await dataCenterService.getStockModelsFromStockCodes(
-        topStockChange.map((e) => e.sTOCKCODE).toList());
-    for (var i = 0; i < stockModels.length; i++) {
-      stockModels.elementAt(i).simpleChartData.value =
-          topStockChange.elementAt(i).cHART;
-    }
-    topForeignToday = stockModels;
-  }
+  // Future<void> getTopForeign() async {
+  //   final topStockChange = await dataCenterService.getTopForeignTrade();
+  //   final stockModels = await dataCenterService.getStockModelsFromStockCodes(
+  //       topStockChange.map((e) => e.sTOCKCODE).toList());
+  //   for (var i = 0; i < stockModels.length; i++) {
+  //     stockModels.elementAt(i).simpleChartData.value =
+  //         topStockChange.elementAt(i).cHART;
+  //   }
+  //   topForeignToday = stockModels;
+  // }
 
   Future<void> getTopVolumn() async {
     final topStockChange = await dataCenterService.getTopStockTrade(8);
-    // logger.v(listStrings);
+    logger.v(topStockChange.length);
     final stockModels = await dataCenterService.getStockModelsFromStockCodes(
         topStockChange.map((e) => e.sTOCKCODE).toList());
     for (var i = 0; i < stockModels.length; i++) {
@@ -184,7 +184,21 @@ class HomeController {
     currentWorldIndexModel.value = index;
   }
 
-  Future<void> changeList(List<StockModel> list) async {
+  Future<void> changeList(int index, bool up) async {
+    switch (index) {
+      case 1:
+        if (up) {
+          await getPriceIncrease();
+          break;
+        }
+        await getPriceDecrease();
+        break;
+      case 2:
+        await getTopVolumn();
+        break;
+      default:
+        await getHotToday();
+    }
     // await Future.forEach<StockModel>(list, (item) async {
     //   await getStockIndayTradingHistory(item);
     // });

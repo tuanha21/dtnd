@@ -3,6 +3,7 @@ import 'package:dtnd/config/service/app_services.dart';
 import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_textstyle.dart';
+import 'package:dtnd/ui/widget/button/single_color_text_button.dart';
 import 'package:dtnd/ui/widget/expanded_widget.dart';
 import 'package:dtnd/ui/widget/icon/stock_icon.dart';
 import 'package:dtnd/utilities/num_utils.dart';
@@ -83,31 +84,43 @@ class _InvestmentCatalogWidgetState extends State<InvestmentCatalogWidget> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
+                              Row(
+                                children: [
+                                  Text(
+                                    widget.data?.symbol ?? "-",
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .titleSmall!
+                                        .copyWith(fontWeight: FontWeight.w600),
+                                  ),
+                                  const SizedBox(width: 8),
+                                  Text.rich(
+                                    TextSpan(children: [
+                                      WidgetSpan(
+                                          child: widget.data
+                                                  ?.prefixIcon(size: 12) ??
+                                              const SizedBox()),
+                                      TextSpan(
+                                        text:
+                                            " ${NumUtils.formatDouble(widget.data?.marketPrice)}",
+                                      )
+                                    ]),
+                                    maxLines: 1,
+                                    style: AppTextStyle.labelMedium_12.copyWith(
+                                      fontWeight: FontWeight.w600,
+                                      color: widget.data?.color,
+                                    ),
+                                  ),
+                                ],
+                              ),
                               Text(
-                                widget.data?.symbol ?? "-",
+                                widget.data?.gainLossPer ?? "-",
                                 style: Theme.of(context)
                                     .textTheme
-                                    .titleSmall!
-                                    .copyWith(fontWeight: FontWeight.w600),
-                              ),
-                              const SizedBox(width: 8),
-                              Text.rich(
-                                TextSpan(children: [
-                                  WidgetSpan(
-                                      child:
-                                          widget.data?.prefixIcon(size: 12) ??
-                                              const SizedBox()),
-                                  TextSpan(
-                                    text:
-                                        " ${NumUtils.formatDouble(widget.data?.marketPrice)}",
-                                  )
-                                ]),
-                                maxLines: 1,
-                                style: AppTextStyle.labelMedium_12.copyWith(
-                                  fontWeight: FontWeight.w600,
-                                  color: widget.data?.color,
-                                ),
+                                    .bodySmall!
+                                    .copyWith(color: AppColors.neutral_04),
                               ),
                             ],
                           ),
@@ -157,7 +170,7 @@ class _InvestmentCatalogWidgetState extends State<InvestmentCatalogWidget> {
         ExpandedSection(
           expand: expand,
           child: Container(
-            height: 90,
+            height: 146,
             padding: const EdgeInsets.all(8),
             decoration: const BoxDecoration(
               borderRadius: BorderRadius.all(Radius.circular(12)),
@@ -218,6 +231,29 @@ class _InvestmentCatalogWidgetState extends State<InvestmentCatalogWidget> {
                     ],
                   ),
                 ),
+                const SizedBox(height: 16),
+                SizedBox(
+                  height: 28,
+                  child: Row(
+                    children: [
+                      Flexible(
+                          child: SingleColorTextButton(
+                        text: S.of(context).detail,
+                        color: AppColors.neutral_04,
+                        padding: const EdgeInsets.symmetric(vertical: 4),
+                        onTap: () {},
+                      )),
+                      const SizedBox(width: 8),
+                      Flexible(
+                          child: SingleColorTextButton(
+                        text: S.of(context).sell,
+                        color: AppColors.semantic_03,
+                        padding: const EdgeInsets.symmetric(vertical: 4),
+                        onTap: () {},
+                      ))
+                    ],
+                  ),
+                )
               ],
             ),
           ),

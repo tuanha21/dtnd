@@ -1,5 +1,9 @@
+import 'dart:ui';
+
 import 'package:dtnd/=models=/core_response_model.dart';
 import 'package:dtnd/logic/stock_status.dart';
+import 'package:dtnd/ui/theme/app_color.dart';
+import 'package:dtnd/ui/theme/app_image.dart';
 
 class PortfolioStatus {
   String? symbol;
@@ -14,6 +18,45 @@ class PortfolioStatus {
   String? relized;
   String? plg;
   List<PorfolioStock>? porfolioStocks;
+
+  String get prefix {
+    if (gainLossValue == null) {
+      return "";
+    }
+    if (gainLossValue! > 0) {
+      return "+";
+    }
+    if (gainLossValue! < 0) {
+      return "-";
+    }
+    return "";
+  }
+
+  String get prefixIcon {
+    if (gainLossValue == null) {
+      return AppImages.prefix_ref_icon;
+    }
+    if (gainLossValue! > 0) {
+      return AppImages.prefix_up_icon;
+    }
+    if (gainLossValue! < 0) {
+      return AppImages.prefix_down_icon;
+    }
+    return AppImages.prefix_ref_icon;
+  }
+
+  Color get color {
+    if (gainLossValue == null) {
+      return AppColors.semantic_02;
+    }
+    if (gainLossValue! > 0) {
+      return AppColors.semantic_01;
+    }
+    if (gainLossValue! < 0) {
+      return AppColors.semantic_03;
+    }
+    return AppColors.semantic_02;
+  }
 
   PortfolioStatus({
     this.symbol,

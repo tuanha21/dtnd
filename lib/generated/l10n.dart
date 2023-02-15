@@ -1010,6 +1010,26 @@ class S {
     );
   }
 
+  /// `Minimum purchasing power`
+  String get minimum_ee {
+    return Intl.message(
+      'Minimum purchasing power',
+      name: 'minimum_ee',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Detail`
+  String get detail {
+    return Intl.message(
+      'Detail',
+      name: 'detail',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Waiting match`
   String get waiting_match {
     return Intl.message(

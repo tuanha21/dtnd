@@ -1,3 +1,5 @@
+import 'package:intl/intl.dart';
+
 extension DateTimeX on DateTime {
   DateTime get beginningOfDay {
     int cday = day;
@@ -11,6 +13,7 @@ extension DateTimeX on DateTime {
 }
 
 class TimeUtilities {
+  static final DateFormat commonTimeFormat = DateFormat("dd/MM/yyyy");
   static bool isLeapYear(DateTime dateTime) {
     if (dateTime.year % 4 == 0) {
       return true;
