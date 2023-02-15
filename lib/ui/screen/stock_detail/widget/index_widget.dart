@@ -143,15 +143,15 @@ class _IndexWidgetState extends State<IndexWidget> {
                         children: [
                           Expanded(
                               child: boxData("EPS",
-                                  "${NumUtils.formatInteger(eps?.value1)} VND")),
+                                  "${NumUtils.formatInteger(eps?.value1)} ${eps?.unit}")),
                           const SizedBox(width: 5),
                           Expanded(
                               child: boxData("PE",
-                                  "${NumUtils.formatInteger(pe?.value1)} Lần")),
+                                  "${pe?.value1} ${pe?.unit}")),
                           const SizedBox(width: 5),
                           Expanded(
                               child: boxData("PB",
-                                  "${NumUtils.formatInteger(pb?.value1)} Lần"))
+                                  "${pb?.value1} ${pb?.unit}"))
                         ],
                       ),
                       const SizedBox(height: 5),
@@ -159,15 +159,15 @@ class _IndexWidgetState extends State<IndexWidget> {
                         children: [
                           Expanded(
                               child: boxData("Tổng nợ/VCSH",
-                                  NumUtils.formatInteger(tongNoVCSH?.value1 ?? 0))),
+                                  "${NumUtils.formatInteger(tongNoVCSH?.value1 ?? 0)} ${tongNoVCSH?.unit}")),
                           const SizedBox(width: 5),
                           Expanded(
                               child: boxData("Tổng nợ/Tổng TS",
-                                  NumUtils.formatInteger(tongNoTS?.value1))),
+                                  '${NumUtils.formatInteger(tongNoTS?.value1)} ${tongNoTS?.unit}')),
                           const SizedBox(width: 5),
                           Expanded(
                               child: boxData("Thanh toán",
-                                  "${NumUtils.formatInteger(thanhToan?.value1)}%"))
+                                  "${NumUtils.formatInteger(thanhToan?.value1)} ${thanhToan?.unit}"))
                         ],
                       ),
                       const SizedBox(height: 5),
@@ -175,15 +175,15 @@ class _IndexWidgetState extends State<IndexWidget> {
                         children: [
                           Expanded(
                               child: boxData("ROE",
-                                  "${NumUtils.formatInteger(roe?.value1)}%")),
+                                  "${roe?.value1} ${roe?.unit}")),
                           const SizedBox(width: 5),
                           Expanded(
                               child: boxData("ROA",
-                                  "${NumUtils.formatInteger(roa?.value1)}%")),
+                                  "${roa?.value1} ${roa?.unit}")),
                           const SizedBox(width: 5),
                           Expanded(
                               child: boxData("Tỷ suất LN gộp",
-                                  "${NumUtils.formatInteger(tyXuatLN?.value1)}%"))
+                                  "${tyXuatLN?.value1} ${tyXuatLN?.unit}"))
                         ],
                       ),
                     ],

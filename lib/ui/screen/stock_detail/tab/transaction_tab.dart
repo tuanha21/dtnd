@@ -26,13 +26,26 @@ class _TransactionTabState extends State<TransactionTab> {
             automaticallyImplyLeading: false,
             // pinned: false,
             // toolbarHeight: 200,
-            expandedHeight: 370,
+            expandedHeight: 420,
             floating: true,
             flexibleSpace: SingleChildScrollView(
               physics: const NeverScrollableScrollPhysics(),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   TabTradingBoard(stockModel: widget.stockModel),
+                  const SizedBox(height: 10),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    child: Text(
+                      "Giao dịch nhà đầu tư nước ngoài",
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodySmall
+                          ?.copyWith(fontWeight: FontWeight.w600),
+                    ),
+                  ),
+                  const SizedBox(height: 10),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16),
                     child: Column(
@@ -98,9 +111,7 @@ class _TransactionTabState extends State<TransactionTab> {
           )
         ];
       },
-      body: TabMatchedDetail(
-        stockModel: widget.stockModel,
-      ),
+      body: TabMatchedDetail(stockModel: widget.stockModel),
     );
   }
 }

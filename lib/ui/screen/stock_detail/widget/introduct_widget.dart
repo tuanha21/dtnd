@@ -68,7 +68,11 @@ class _IntroduceWidgetState extends State<IntroduceWidget> {
                             GestureDetector(
                               onTap: () {
                                 showModalBottomSheet(
-                                    isScrollControlled: false,
+                                    isScrollControlled: true,
+                                    useSafeArea: true,
+                                    shape: const RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.vertical(
+                                            top: Radius.circular(12))),
                                     context: context,
                                     builder: (context) {
                                       return BusinessInformationSheet(
@@ -135,12 +139,17 @@ class _IntroduceWidgetState extends State<IntroduceWidget> {
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             GestureDetector(
-                              onTap: (){
-                                canLaunchUrl(Uri.parse(info?.uRL ?? ""));
+                              onTap: () async {
+                                var canLunch = await canLaunchUrl(
+                                    Uri.parse(info?.uRL ?? ""));
+                                if (canLunch) {
+                                  launchUrl(Uri.parse(info?.uRL ?? ""));
+                                }
                               },
                               child: Container(
                                   height: 28,
-                                  margin: const EdgeInsets.only(left: 16,right: 5),
+                                  margin:
+                                      const EdgeInsets.only(left: 16, right: 5),
                                   padding: const EdgeInsets.all(5),
                                   alignment: Alignment.center,
                                   decoration: BoxDecoration(
@@ -156,8 +165,13 @@ class _IntroduceWidgetState extends State<IntroduceWidget> {
                                   )),
                             ),
                             GestureDetector(
-                              onTap: (){
-                                canLaunchUrl(Uri(scheme: 'tel',path: info?.phone ?? ""));
+                              onTap: () async {
+                                var canLunch = await canLaunchUrl(Uri(
+                                    scheme: 'tel', path: info?.phone ?? ""));
+                                if (canLunch) {
+                                  launchUrl(Uri(
+                                      scheme: 'tel', path: info?.phone ?? ""));
+                                }
                               },
                               child: Container(
                                   height: 28,

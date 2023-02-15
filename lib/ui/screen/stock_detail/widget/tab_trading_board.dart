@@ -26,6 +26,11 @@ class _TabTradingBoardState extends State<TabTradingBoard> {
         shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),
         children: <Widget>[
+           Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Text("Bảng giá",style: Theme.of(context).textTheme.bodySmall?.copyWith(fontWeight: FontWeight.w600),),
+          ),
+          const SizedBox(height: 10),
           ThreePrices(stockModel: widget.stockModel),
         ],
       ),

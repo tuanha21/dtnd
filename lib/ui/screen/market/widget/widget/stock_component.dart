@@ -88,7 +88,7 @@ class _StockComponentState extends State<StockComponent> {
                 return Align(
                   alignment: Alignment.centerRight,
                   child: Text(
-                    NumUtils.formatInteger(widget.model.stockData.lot.value),
+                    NumUtils.formatInteger10(widget.model.stockData.lot.value),
                     style: Theme.of(context)
                         .textTheme
                         .bodySmall
