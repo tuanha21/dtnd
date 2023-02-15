@@ -1,3 +1,5 @@
+import 'package:intl/intl.dart';
+
 class CompanyInfo {
   String? companyCode;
   int? companyType;
@@ -44,51 +46,62 @@ class CompanyInfo {
   String? companyTypeName;
   String? exchange;
 
+  DateTime? get dateTime {
+    print(foundDate);
+    if (foundDate == null) return null;
+    return DateTime.tryParse(foundDate!);
+  }
+
+  String get foundDateString {
+    if (dateTime == null) return "";
+    return DateFormat("dd/MM/yyyy").format(dateTime!);
+  }
+
   CompanyInfo(
       {this.companyCode,
-        this.companyType,
-        this.name,
-        this.fullName,
-        this.fullNameEn,
-        this.image,
-        this.taxCode,
-        this.address,
-        this.phone,
-        this.fax,
-        this.email,
-        this.uRL,
-        this.status,
-        this.foundPermit,
-        this.foundDate,
-        this.businessPermit,
-        this.issueDate,
-        this.contactPerson,
-        this.contactPersonPosition,
-        this.identityNumber,
-        this.permanentAddress,
-        this.infoSupplier,
-        this.infoSupplierPosition,
-        this.phoneSupplier,
-        this.introduction,
-        this.capital,
-        this.notes,
-        this.otherInfo,
-        this.postUpDate,
-        this.stockFaceValue,
-        this.branch,
-        this.ctyKiemToan,
-        this.lastUpdate,
-        this.firstTradingSessionPrice,
-        this.isMargin,
-        this.isFTSE,
-        this.isVNMETF,
-        this.isVN30,
-        this.isHNX30,
-        this.industryName,
-        this.subIndustryName,
-        this.sectorName,
-        this.companyTypeName,
-        this.exchange});
+      this.companyType,
+      this.name,
+      this.fullName,
+      this.fullNameEn,
+      this.image,
+      this.taxCode,
+      this.address,
+      this.phone,
+      this.fax,
+      this.email,
+      this.uRL,
+      this.status,
+      this.foundPermit,
+      this.foundDate,
+      this.businessPermit,
+      this.issueDate,
+      this.contactPerson,
+      this.contactPersonPosition,
+      this.identityNumber,
+      this.permanentAddress,
+      this.infoSupplier,
+      this.infoSupplierPosition,
+      this.phoneSupplier,
+      this.introduction,
+      this.capital,
+      this.notes,
+      this.otherInfo,
+      this.postUpDate,
+      this.stockFaceValue,
+      this.branch,
+      this.ctyKiemToan,
+      this.lastUpdate,
+      this.firstTradingSessionPrice,
+      this.isMargin,
+      this.isFTSE,
+      this.isVNMETF,
+      this.isVN30,
+      this.isHNX30,
+      this.industryName,
+      this.subIndustryName,
+      this.sectorName,
+      this.companyTypeName,
+      this.exchange});
 
   CompanyInfo.fromJson(Map<String, dynamic> json) {
     companyCode = json['CompanyCode'];

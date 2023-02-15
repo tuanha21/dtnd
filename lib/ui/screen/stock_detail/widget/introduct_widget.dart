@@ -68,7 +68,10 @@ class _IntroduceWidgetState extends State<IntroduceWidget> {
                             GestureDetector(
                               onTap: () {
                                 showModalBottomSheet(
-                                    isScrollControlled: false,
+                                    isScrollControlled: true,
+                                    useSafeArea: true,
+                                    shape: const RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.vertical(top: Radius.circular(12))),
                                     context: context,
                                     builder: (context) {
                                       return BusinessInformationSheet(

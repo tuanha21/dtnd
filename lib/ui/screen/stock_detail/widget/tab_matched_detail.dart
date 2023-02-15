@@ -118,9 +118,7 @@ class _TabMatchedDetailState extends State<TabMatchedDetail> {
             ],
           ),
         ),
-        Visibility(
-          visible: byTime,
-            child: const _TabMatchedDetailHeader()),
+        Visibility(visible: byTime, child: const _TabMatchedDetailHeader()),
         byTime ? orderWidget() : stockMatchWidget(),
       ],
     );
@@ -293,19 +291,28 @@ class _TabMatchStock extends StatelessWidget {
           const SizedBox(width: 10),
           Expanded(
               flex: 8,
-              child: Row(children: [
-                Expanded(
-                    flex: stockMatch.buyActiveQtty?.toInt() ?? 0,
-                    child: Container(color: AppColors.semantic_01, height: 16)),
-                Expanded(
-                    flex: stockMatch.sellActiveQtty?.toInt() ?? 0,
-                    child: Container(color: AppColors.semantic_03, height: 16)),
-                Expanded(
-                    flex: stockMatch.noneActiveQtty?.toInt() ?? 0,
-                    child: Container(color: AppColors.neutral_03, height: 16))
-              ])),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(6),
+                child: Row(children: [
+                  Expanded(
+                      flex: stockMatch.buyActiveQtty?.toInt() ?? 0,
+                      child: Container(
+                          decoration:
+                              const BoxDecoration(color: AppColors.semantic_01),
+                          height: 16)),
+                  Expanded(
+                      flex: stockMatch.sellActiveQtty?.toInt() ?? 0,
+                      child:
+                          Container(color: AppColors.semantic_03, height: 16)),
+                  Expanded(
+                      flex: stockMatch.noneActiveQtty?.toInt() ?? 0,
+                      child: Container(
+                          decoration:
+                              const BoxDecoration(color: AppColors.neutral_03),
+                          height: 16))
+                ]),
+              )),
           const SizedBox(width: 10),
-
           Expanded(
             flex: 2,
             child: Align(
@@ -318,7 +325,6 @@ class _TabMatchStock extends StatelessWidget {
             ),
           ),
           const SizedBox(width: 16),
-
         ]));
   }
 }
