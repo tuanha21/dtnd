@@ -118,6 +118,7 @@ class _ForeignWidgetState extends State<ForeignWidget> {
                 return const SizedBox();
               }
               if (snapshot.connectionState == ConnectionState.done) {
+                var list = snapshot.data;
                 return SizedBox(
                   height: 150,
                   child: Padding(
@@ -130,14 +131,16 @@ class _ForeignWidgetState extends State<ForeignWidget> {
                               charts.MaterialPalette.blue.shadeDefault,
                           domainFn: (SecTrading model, _) =>
                               model.tRADEDATE ?? "",
-                          measureFn: (SecTrading model, _) => model.tOTVOLUME,
+                          measureFn: (SecTrading model, _) =>
+                              model.fNETBUYVOLUME,
                           fillColorFn: (SecTrading model, _) =>
-                              charts.ColorUtil.fromDartColor(model.tOTVOLUME! > 0
-                                  ? AppColors.semantic_01
-                                  : AppColors.semantic_03),
-                          data: snapshot.data!,
-                        )..setAttribute(charts.measureAxisIdKey,
-                            "secondaryMeasureAxisId")
+                              charts.ColorUtil.fromDartColor(
+                                  model.fNETBUYVOLUME! > 0
+                                      ? AppColors.semantic_01
+                                      : AppColors.semantic_03),
+                          data: list!,
+                        )..setAttribute(
+                            charts.measureAxisIdKey, "secondaryMeasureAxisId")
                       ],
                       animate: true,
                       defaultRenderer: charts.BarRendererConfig(

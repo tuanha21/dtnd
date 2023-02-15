@@ -40,8 +40,6 @@ class _StockDetailChartState extends State<StockDetailChart> {
 
   StockTradingHistory? stockTradingHistory;
 
-  List<StockHis> listHistory = [];
-
   @override
   void initState() {
     getStockTradingHistory();
@@ -52,7 +50,7 @@ class _StockDetailChartState extends State<StockDetailChart> {
     try {
       stockTradingHistory = await iDataCenterService.getStockTradingHistory(
           widget.stockModel.stock.stockCode,
-          "5",
+          timeSeries.type,
           timeSeries.dateTime,
           DateTime.now());
       stockTrading.sink.add(stockTradingHistory!.o!);
@@ -63,26 +61,9 @@ class _StockDetailChartState extends State<StockDetailChart> {
     }
   }
 
-  Future<void> getHistoryStock() async {
-    try {
-      listHistory = await iNetworkService.getStockHis(
-          widget.stockModel.stock.stockCode,
-          DateFormat('yyyy-MM-dd').format(timeSeries.dateTime),
-          DateFormat('yyyy-MM-dd').format(DateTime.now()));
-      stockTrading.sink.add(listHistory.map((e) => e.lastPrice!).toList());
-    } catch (e) {
-      if (kDebugMode) {
-        print(e.toString());
-      }
-    }
-  }
-
   List<num> get listTime {
-    if (timeSeries == TimeSeries.day || timeSeries == TimeSeries.week) {
-      if (stockTradingHistory == null) return [];
-      return stockTradingHistory!.t!;
-    }
-    return listHistory.map((e) => e.dateTime!.millisecondsSinceEpoch).toList();
+    if (stockTradingHistory == null) return [];
+    return stockTradingHistory!.t!;
   }
 
   num annotation = 1;
@@ -143,12 +124,7 @@ class _StockDetailChartState extends State<StockDetailChart> {
                     onTap: () {
                       setState(() {
                         timeSeries = TimeSeries.values[index];
-                        if (timeSeries == TimeSeries.day ||
-                            timeSeries == TimeSeries.week) {
-                          getStockTradingHistory();
-                        } else {
-                          getHistoryStock();
-                        }
+                        getStockTradingHistory();
                       });
                     },
                     child: Container(
@@ -178,23 +154,19 @@ class _StockDetailChartState extends State<StockDetailChart> {
   charts.NumericAxisSpec domainSpec(List<num> list) {
     return charts.NumericAxisSpec(
         tickFormatterSpec: charts.BasicNumericTickFormatterSpec((index) {
-          if (timeSeries == TimeSeries.day || timeSeries == TimeSeries.week) {
-            if (index! < list.length) {
+          if (index! < list.length) {
+            if (timeSeries == TimeSeries.day) {
               String formattedDate = DateFormat('HH:mm').format(
                   DateTime.fromMillisecondsSinceEpoch(
                       list[index.toInt()].toInt() * 1000));
               return formattedDate;
             }
-            return "";
-          } else {
-            if (index! < list.length) {
-              String formattedDate = DateFormat('dd/MM').format(
-                  DateTime.fromMillisecondsSinceEpoch(
-                      list[index.toInt()].toInt()));
-              return formattedDate;
-            }
-            return "";
+            String formattedDate = DateFormat('dd/MM').format(
+                DateTime.fromMillisecondsSinceEpoch(
+                    list[index.toInt()].toInt() * 1000));
+            return formattedDate;
           }
+          return "";
         }),
         renderSpec: const charts.GridlineRendererSpec(
             axisLineStyle: charts.LineStyleSpec(
@@ -250,7 +222,7 @@ extension TimeSeriesExt on TimeSeries {
   DateTime get dateTime {
     switch (this) {
       case TimeSeries.day:
-        return TimeUtilities.getPreviousDateTime(const Duration(days: 1));
+        return DateTime.now().beginningOfDay;
       case TimeSeries.week:
         return TimeUtilities.getPreviousDateTime(const Duration(days: 7));
       case TimeSeries.month:
@@ -263,6 +235,17 @@ extension TimeSeriesExt on TimeSeries {
         return TimeUtilities.getPreviousDateTime(const Duration(days: 365));
       case TimeSeries.year_5:
         return TimeUtilities.getPreviousDateTime(const Duration(days: 1825));
+    }
+  }
+
+  String get type {
+    switch (this) {
+      case TimeSeries.day:
+        return "5";
+      default:
+        {
+          return "D";
+        }
     }
   }
 }

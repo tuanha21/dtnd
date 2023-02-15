@@ -22,10 +22,10 @@ class _StockComponentState extends State<StockComponent> {
       : percentString;
 
   String get percentString {
-    if(widget.model.stockData.changePc.value == null){
+    if (widget.model.stockData.changePc.value == null) {
       return "-";
     }
-    if(widget.model.stockData.changePc.value == 0){
+    if (widget.model.stockData.changePc.value == 0) {
       return widget.model.stockData.changePc.value.toString();
     }
     return '${widget.model.stockData.changePc.value?.toString() ?? ""}%';
@@ -58,12 +58,14 @@ class _StockComponentState extends State<StockComponent> {
               flex: 2,
               child: Align(
                 alignment: Alignment.centerRight,
-                child: Text(
-                  widget.model.stockData.lastPrice.value?.toString() ?? "",
-                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                      fontWeight: FontWeight.w600,
-                      color: widget.model.stockData.color),
-                ),
+                child: Obx(() {
+                  return Text(
+                    widget.model.stockData.lastPrice.value?.toString() ?? "",
+                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                        fontWeight: FontWeight.w600,
+                        color: widget.model.stockData.color),
+                  );
+                }),
               ),
             ),
             Expanded(
