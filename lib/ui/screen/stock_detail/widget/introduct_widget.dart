@@ -101,6 +101,7 @@ class _IntroduceWidgetState extends State<IntroduceWidget> {
               }
               if (snapshot.connectionState == ConnectionState.done) {
                 var info = snapshot.data;
+                var colorBoder = AppColors.neutral_04;
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -110,11 +111,12 @@ class _IntroduceWidgetState extends State<IntroduceWidget> {
                         Container(
                             height: 28,
                             margin: const EdgeInsets.symmetric(horizontal: 16),
-                            padding: const EdgeInsets.symmetric(horizontal: 16),
+                            padding: const EdgeInsets.all(5),
                             alignment: Alignment.center,
                             decoration: BoxDecoration(
+                                color: Colors.transparent,
                                 borderRadius: BorderRadius.circular(6),
-                                border: Border.all(color: AppColors.dark_bg)),
+                                border: Border.all(color: colorBoder)),
                             child: Text(
                               info?.companyTypeName ?? "",
                               style: Theme.of(context)
@@ -138,18 +140,19 @@ class _IntroduceWidgetState extends State<IntroduceWidget> {
                               },
                               child: Container(
                                   height: 28,
-                                  margin: const EdgeInsets.only(left: 16,right: 10),
-                                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                                  margin: const EdgeInsets.only(left: 16,right: 5),
+                                  padding: const EdgeInsets.all(5),
                                   alignment: Alignment.center,
                                   decoration: BoxDecoration(
-                                    color: AppColors.neutral_04,
-                                      borderRadius: BorderRadius.circular(6)),
+                                      color: Colors.transparent,
+                                      borderRadius: BorderRadius.circular(6),
+                                      border: Border.all(color: colorBoder)),
                                   child: Text(
-                                    info?.uRL ?? "",
+                                    "Website công ty",
                                     style: Theme.of(context)
                                         .textTheme
                                         .bodySmall
-                                        ?.copyWith(fontWeight: FontWeight.w600,color: AppColors.light_bg),
+                                        ?.copyWith(fontWeight: FontWeight.w600),
                                   )),
                             ),
                             GestureDetector(
@@ -158,17 +161,18 @@ class _IntroduceWidgetState extends State<IntroduceWidget> {
                               },
                               child: Container(
                                   height: 28,
-                                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                                  padding: const EdgeInsets.all(5),
                                   alignment: Alignment.center,
                                   decoration: BoxDecoration(
-                                      color: AppColors.neutral_04,
-                                      borderRadius: BorderRadius.circular(6)),
+                                      color: Colors.transparent,
+                                      borderRadius: BorderRadius.circular(6),
+                                      border: Border.all(color: colorBoder)),
                                   child: Text(
                                     info?.phone ?? "",
                                     style: Theme.of(context)
                                         .textTheme
                                         .bodySmall
-                                        ?.copyWith(fontWeight: FontWeight.w600,color: AppColors.light_bg),
+                                        ?.copyWith(fontWeight: FontWeight.w600),
                                   )),
                             ),
                           ],

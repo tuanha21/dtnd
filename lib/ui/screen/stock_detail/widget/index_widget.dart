@@ -139,26 +139,6 @@ class _IndexWidgetState extends State<IndexWidget> {
 
                   return Column(
                     children: [
-                      // Row(
-                      //   children: [
-                      //     Expanded(
-                      //         child: boxData(
-                      //             "KLNN Mua",
-                      //             NumUtils.formatInteger(widget
-                      //                 .stockModel.stockData.fBVol.value))),
-                      //     const SizedBox(width: 5),
-                      //     Expanded(
-                      //         child: boxData(
-                      //             "KLNN Bán",
-                      //             NumUtils.formatInteger(widget
-                      //                 .stockModel.stockData.fSVolume.value))),
-                      //     const SizedBox(width: 5),
-                      //     Expanded(
-                      //         child: boxData("Biên LN ròng",
-                      //             "${NumUtils.formatInteger(lnRong.value1)}%"))
-                      //   ],
-                      // ),
-                      // const SizedBox(height: 5),
                       Row(
                         children: [
                           Expanded(
@@ -186,7 +166,7 @@ class _IndexWidgetState extends State<IndexWidget> {
                                   NumUtils.formatInteger(tongNoTS?.value1))),
                           const SizedBox(width: 5),
                           Expanded(
-                              child: boxData("Tổng nợ/Tổng TS",
+                              child: boxData("Thanh toán",
                                   "${NumUtils.formatInteger(thanhToan?.value1)}%"))
                         ],
                       ),

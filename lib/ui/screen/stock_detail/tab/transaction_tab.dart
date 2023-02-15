@@ -26,7 +26,7 @@ class _TransactionTabState extends State<TransactionTab> {
             automaticallyImplyLeading: false,
             // pinned: false,
             // toolbarHeight: 200,
-            expandedHeight: 340,
+            expandedHeight: 370,
             floating: true,
             flexibleSpace: SingleChildScrollView(
               physics: const NeverScrollableScrollPhysics(),
