@@ -74,18 +74,12 @@ class _AssetScreenState extends State<AssetScreen>
           // final data = userService.listAccountModel.value?.firstWhereOrNull(
           //         (element) => element.runtimeType == BaseMarginAccountModel)
           //     as BaseMarginAccountModel?;
-          logger.v((userService.listAccountModel.value?.firstWhereOrNull(
-                      (element) =>
-                          element.runtimeType == BaseMarginAccountModel)
-                  as BaseMarginAccountModel?)
-              ?.listAssetChart);
+          final data = userService.listAccountModel.value?.firstWhereOrNull(
+                  (element) => element.runtimeType == BaseMarginAccountModel)
+              as BaseMarginAccountModel?;
           return AssetChart(
             lineColor: AppColors.graph_7,
-            datas: (userService.listAccountModel.value?.firstWhereOrNull(
-                        (element) =>
-                            element.runtimeType == BaseMarginAccountModel)
-                    as BaseMarginAccountModel?)
-                ?.listAssetChart,
+            datas: data?.listAssetChart,
           );
         });
       } else {
@@ -131,12 +125,10 @@ class _AssetScreenState extends State<AssetScreen>
                 padding: const EdgeInsets.all(16),
                 child: Obx(() {
                   if (userService.listAccountModel.value?.isNotEmpty ?? false) {
-                    logger.v(userService.listAccountModel.value);
                     final data = userService.listAccountModel.value!
                             .firstWhereOrNull((element) =>
                                 element.runtimeType == BaseMarginAccountModel)
                         as BaseMarginAccountModel?;
-                    logger.v(data);
                     return AccountAssetOverviewWidget(
                       data: data,
                     );
