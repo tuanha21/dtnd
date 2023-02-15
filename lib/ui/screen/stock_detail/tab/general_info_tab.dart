@@ -73,6 +73,7 @@ class _GeneralInfoTabState extends State<GeneralInfoTab> {
                                   style: textTheme.bodyMedium!
                                       .copyWith(color: AppColors.neutral_03),
                                 ),
+                                const SizedBox(height: 8),
                                 Text(
                                   info.foundDateString,
                                   style: textTheme.titleSmall,
@@ -88,6 +89,7 @@ class _GeneralInfoTabState extends State<GeneralInfoTab> {
                                   style: textTheme.bodyMedium!
                                       .copyWith(color: AppColors.neutral_03),
                                 ),
+                                const SizedBox(height: 8),
                                 Text(
                                   info.taxCode ?? "",
                                   style: textTheme.titleSmall,
@@ -96,7 +98,7 @@ class _GeneralInfoTabState extends State<GeneralInfoTab> {
                             ))
                           ],
                         ),
-                        const SizedBox(height: 10),
+                        const SizedBox(height: 16),
                         Row(
                           children: [
                             Expanded(
@@ -108,6 +110,7 @@ class _GeneralInfoTabState extends State<GeneralInfoTab> {
                                   style: textTheme.bodyMedium!
                                       .copyWith(color: AppColors.neutral_03),
                                 ),
+                                const SizedBox(height: 8),
                                 Text(
                                   info.name ?? "",
                                   style: textTheme.titleSmall,
@@ -123,22 +126,23 @@ class _GeneralInfoTabState extends State<GeneralInfoTab> {
                                   style: textTheme.bodyMedium!
                                       .copyWith(color: AppColors.neutral_03),
                                 ),
+                                const SizedBox(height: 8),
                                 Text(
-                                  info.name ?? "",
+                                  info.infoSupplier ?? "",
                                   style: textTheme.titleSmall,
                                 ),
                               ],
                             ))
                           ],
                         ),
-                        const SizedBox(height: 10),
+                        const SizedBox(height: 16),
                         GestureDetector(
                           onTap: () async {
-                            var canLunch = await canLaunchUrl(Uri(
-                                scheme: 'tel', path: info.phone ?? ""));
+                            var canLunch = await canLaunchUrl(
+                                Uri(scheme: 'tel', path: info.phone ?? ""));
                             if (canLunch) {
-                              launchUrl(Uri(
-                                  scheme: 'tel', path: info.phone ?? ""));
+                              launchUrl(
+                                  Uri(scheme: 'tel', path: info.phone ?? ""));
                             }
                           },
                           child: Row(
@@ -155,11 +159,11 @@ class _GeneralInfoTabState extends State<GeneralInfoTab> {
                             ],
                           ),
                         ),
-                        const SizedBox(height: 10),
+                        const SizedBox(height: 16),
                         GestureDetector(
                           onTap: () async {
-                            var canLunch = await canLaunchUrl(
-                                Uri.parse(info.uRL ?? ""));
+                            var canLunch =
+                                await canLaunchUrl(Uri.parse(info.uRL ?? ""));
                             if (canLunch) {
                               launchUrl(Uri.parse(info.uRL ?? ""));
                             }
@@ -226,27 +230,34 @@ class _GeneralInfoTabState extends State<GeneralInfoTab> {
                                   )
                                 ],
                               ),
-                              Expanded(
-                                  child: LayoutBuilder(builder: (context,ctx){
-                                    return Row(
-                                      mainAxisAlignment: MainAxisAlignment.end,
-                                      children: [
-                                        Container(
-                                          width: widget.stockModel.businnessLeaders![i].personalHeldPct! * ctx.maxWidth / 300,
-                                          height: 10,
-                                          decoration: const BoxDecoration(
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(4)),color: AppColors.graph_2),
-                                        ),
-                                        const SizedBox(width: 8),
-                                        Text(
-                                          "${widget.stockModel.businnessLeaders?.elementAt(i).personalHeldPct?.toString() ?? "-"}%",
-                                          style: textTheme.labelMedium!
-                                              .copyWith(fontWeight: FontWeight.w600),
-                                        ),
-                                      ],
-                                    );
-                                  },))
+                              Expanded(child: LayoutBuilder(
+                                builder: (context, ctx) {
+                                  return Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                      Container(
+                                        width: widget
+                                                .stockModel
+                                                .businnessLeaders![i]
+                                                .personalHeldPct! *
+                                            ctx.maxWidth /
+                                            300,
+                                        height: 10,
+                                        decoration: const BoxDecoration(
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(4)),
+                                            color: AppColors.graph_2),
+                                      ),
+                                      const SizedBox(width: 8),
+                                      Text(
+                                        "${widget.stockModel.businnessLeaders?.elementAt(i).personalHeldPct?.toString() ?? "-"}%",
+                                        style: textTheme.labelMedium!.copyWith(
+                                            fontWeight: FontWeight.w600),
+                                      ),
+                                    ],
+                                  );
+                                },
+                              ))
                             ],
                           ),
                         );
@@ -265,7 +276,7 @@ class _GeneralInfoTabState extends State<GeneralInfoTab> {
                     ),
                   ),
                   Visibility(
-                    visible: widget.stockModel.businnessLeaders !=null,
+                    visible: widget.stockModel.businnessLeaders != null,
                     child: Container(
                       padding: const EdgeInsets.all(10),
                       decoration: const BoxDecoration(color: Colors.white),
@@ -307,8 +318,9 @@ class _GeneralInfoTabState extends State<GeneralInfoTab> {
                                     data.fullName,
                                 yValueMapper: (BusinnessLeaderModel data, _) =>
                                     data.personalHeldPct,
-                                dataLabelMapper: (BusinnessLeaderModel data, _) =>
-                                    "${data.personalHeldPct}%",
+                                dataLabelMapper:
+                                    (BusinnessLeaderModel data, _) =>
+                                        "${data.personalHeldPct}%",
                                 dataLabelSettings: const DataLabelSettings(
                                   isVisible: true,
                                   // Positioning the data label
