@@ -1,32 +1,44 @@
+import 'package:intl/intl.dart';
+
 class SecTrading {
- num? pPRICE1D;
- num? tOTPTVOLUME;
- num? tOTPTVALUE;
- num? cLOSEPRICE;
- num? pINETBUYVOL;
- num? rEFPRICE;
- num? tOTVOLUME;
+  num? pPRICE1D;
+  num? tOTPTVOLUME;
+  num? tOTPTVALUE;
+  num? cLOSEPRICE;
+  num? pINETBUYVOL;
+  num? rEFPRICE;
+  num? tOTVOLUME;
   String? sECURITYCODE;
- num? fLOORPRICE;
- num? cEILINGPRICE;
- num? fNETBUYVOLUME;
+  num? fLOORPRICE;
+  num? cEILINGPRICE;
+  num? fNETBUYVOLUME;
   String? tRADEDATE;
- num? tOTVALUE;
+  num? tOTVALUE;
+
+  DateTime? get dateTime {
+    if (tRADEDATE == null) return null;
+    return DateTime.tryParse(tRADEDATE!);
+  }
+
+  String get time {
+    if (dateTime == null) return "";
+    return DateFormat("dd/MM").format(dateTime!);
+  }
 
   SecTrading(
       {this.pPRICE1D,
-        this.tOTPTVOLUME,
-        this.tOTPTVALUE,
-        this.cLOSEPRICE,
-        this.pINETBUYVOL,
-        this.rEFPRICE,
-        this.tOTVOLUME,
-        this.sECURITYCODE,
-        this.fLOORPRICE,
-        this.cEILINGPRICE,
-        this.fNETBUYVOLUME,
-        this.tRADEDATE,
-        this.tOTVALUE});
+      this.tOTPTVOLUME,
+      this.tOTPTVALUE,
+      this.cLOSEPRICE,
+      this.pINETBUYVOL,
+      this.rEFPRICE,
+      this.tOTVOLUME,
+      this.sECURITYCODE,
+      this.fLOORPRICE,
+      this.cEILINGPRICE,
+      this.fNETBUYVOLUME,
+      this.tRADEDATE,
+      this.tOTVALUE});
 
   SecTrading.fromJson(Map<String, dynamic> json) {
     pPRICE1D = json['P_PRICE_1D'];

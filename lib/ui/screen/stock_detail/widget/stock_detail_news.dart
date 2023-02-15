@@ -36,7 +36,8 @@ class _StockDetailNewsState extends State<StockDetailNews> {
 
   void getStockNews() async {
     stockNews = await networkService.getStockNews(widget.stockCode);
-    shortStockNews = stockNews.getRange(0, 3).toList();
+    var length = stockNews.length > 3 ? 3 : stockNews.length;
+    shortStockNews = stockNews.getRange(0, length).toList();
     if (mounted) {
       setState(() {
         initialized = true;

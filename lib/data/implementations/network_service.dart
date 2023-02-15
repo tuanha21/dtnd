@@ -1061,7 +1061,7 @@ class NetworkService implements INetworkService {
             "lang": "vi",
             "secCode": stockCode,
             "startDate": DateFormat('yyyy-MM-dd')
-                .format(DateTime.now().add(const Duration(days: -5))),
+                .format(DateTime.now().add(const Duration(days: -20))),
             "endDate": DateFormat('yyyy-MM-dd').format(DateTime.now())
           }));
       if (response.statusCode != 200) {
@@ -1072,6 +1072,7 @@ class NetworkService implements INetworkService {
       logger.d(list);
       var listSecc = <SecTrading>[];
       for (var element in list) {
+        if (list.indexOf(element) > 9) break;
         listSecc.add(SecTrading.fromJson(element));
       }
       return listSecc;

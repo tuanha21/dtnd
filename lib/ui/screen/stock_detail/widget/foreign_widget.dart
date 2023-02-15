@@ -118,6 +118,7 @@ class _ForeignWidgetState extends State<ForeignWidget> {
                 return const SizedBox();
               }
               if (snapshot.connectionState == ConnectionState.done) {
+                var list = snapshot.data;
                 return SizedBox(
                   height: 150,
                   child: Padding(
@@ -128,33 +129,49 @@ class _ForeignWidgetState extends State<ForeignWidget> {
                           id: 'Sales',
                           colorFn: (_, __) =>
                               charts.MaterialPalette.blue.shadeDefault,
-                          domainFn: (SecTrading model, _) =>
-                              model.tRADEDATE ?? "",
-                          measureFn: (SecTrading model, _) => model.tOTVOLUME,
+                          domainFn: (SecTrading model, _) => model.time,
+                          measureFn: (SecTrading model, _) =>
+                              model.fNETBUYVOLUME,
                           fillColorFn: (SecTrading model, _) =>
-                              charts.ColorUtil.fromDartColor(model.tOTVOLUME! > 0
-                                  ? AppColors.semantic_01
-                                  : AppColors.semantic_03),
-                          data: snapshot.data!,
-                        )..setAttribute(charts.measureAxisIdKey,
-                            "secondaryMeasureAxisId")
+                              charts.ColorUtil.fromDartColor(
+                                  model.fNETBUYVOLUME! > 0
+                                      ? AppColors.semantic_01
+                                      : AppColors.semantic_03),
+                          data: list!,
+                        )..setAttribute(
+                            charts.measureAxisIdKey, "secondaryMeasureAxisId")
                       ],
                       animate: true,
                       defaultRenderer: charts.BarRendererConfig(
-                        // By default, bar renderer will draw rounded bars with a constant
-                        // radius of 100.
-                        // To not have any rounded corners, use [NoCornerStrategy]
-                        // To change the radius of the bars, use [ConstCornerStrategy]
                         cornerStrategy: const charts.ConstCornerStrategy(2),
                       ),
-                      domainAxis: charts.OrdinalAxisSpec(
+                      domainAxis: const charts.OrdinalAxisSpec(
                         renderSpec: charts.SmallTickRendererSpec(
-                            labelRotation: 270,
-                            minimumPaddingBetweenLabelsPx: 0,
-                            labelOffsetFromAxisPx: 35,
-                            labelStyle: charts.TextStyleSpec(
-                                color: charts.ColorUtil.fromDartColor(
-                                    Colors.transparent))),
+                          labelRotation: 270,
+                          minimumPaddingBetweenLabelsPx: 0,
+                          labelOffsetFromAxisPx: 35,
+                          labelStyle: charts.TextStyleSpec(fontSize: 9),
+                        ),
+                      ),
+                      secondaryMeasureAxis: charts.NumericAxisSpec(
+                        showAxisLine: true,
+                        tickFormatterSpec:
+                            charts.BasicNumericTickFormatterSpec((measure) {
+                          return NumUtils.formatInteger(measure);
+                        }),
+                        tickProviderSpec:
+                            const charts.BasicNumericTickProviderSpec(
+                                dataIsInWholeNumbers: false,
+                                desiredTickCount: 4,
+                                zeroBound: false),
+                        renderSpec: const charts.GridlineRendererSpec(
+                            axisLineStyle: charts.LineStyleSpec(
+                              dashPattern: [4],
+                              thickness: 0,
+                              color: charts.Color(r: 74, g: 85, b: 104),
+                            ),
+                            labelStyle: charts.TextStyleSpec(fontSize: 9),
+                            lineStyle: charts.LineStyleSpec(dashPattern: [4])),
                       ),
                     ),
                   ),
