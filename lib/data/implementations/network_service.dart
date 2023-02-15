@@ -32,6 +32,7 @@ import 'package:dtnd/=models=/response/stock_trading_history.dart';
 import 'package:dtnd/=models=/response/stock_vol.dart';
 import 'package:dtnd/=models=/response/subsidiaries_model.dart';
 import 'package:dtnd/=models=/response/top_influence_model.dart';
+import 'package:dtnd/=models=/response/top_interested_model.dart';
 import 'package:dtnd/=models=/response/total_asset_model.dart';
 import 'package:dtnd/=models=/response/user_token.dart';
 import 'package:dtnd/=models=/request/request_model.dart';
@@ -93,7 +94,7 @@ class NetworkService implements INetworkService {
   Uri url_board(String path) => Uri.https(board_url, path);
 
   Uri url_board_data_feed(Map<String, dynamic> queryParameters) {
-    // print(Uri.https(sbboard_url, "datafeed/history", queryParameters));
+    print(Uri.https(sbboard_url, "datafeed/history", queryParameters));
     return Uri.https(sbboard_url, "datafeed/history", queryParameters);
   }
 
@@ -186,13 +187,35 @@ class NetworkService implements INetworkService {
   }
 
   @override
-  Future<T> requestTraditionalApi<T extends CoreResponseModel>(
-      RequestModel requestModel) async {
-    // dynamic response =
-    //     await client.post(url_core_endpoint, body: requestModel.toString());
-    // response = decode(response.bodyBytes);
-    // T().fromJson(element);
-    throw UnimplementedError();
+  Future<T?> requestTraditionalApi<T extends CoreResponseModel>(
+      RequestModel requestModel,
+      {T? Function(Map<String, dynamic>)? onError}) async {
+    dynamic response =
+        await client.post(url_core_endpoint, body: requestModel.toString());
+    response = decode(response.bodyBytes);
+    if (response["rc"] != 1) {
+      return onError?.call(response);
+    }
+    response = response["data"];
+    return CoreResponseModel.fromJson<T>(response);
+  }
+
+  @override
+  Future<List<T>?> requestTraditionalApiResList<T extends CoreResponseModel>(
+      RequestModel requestModel,
+      {List<T>? Function(Map<String, dynamic>)? onError}) async {
+    dynamic response =
+        await client.post(url_core_endpoint, body: requestModel.toString());
+    response = decode(response.bodyBytes);
+    if (response["rc"] != 1) {
+      return onError?.call(response);
+    }
+    response = response["data"];
+    final List<T> result = [];
+    for (var element in response) {
+      result.add(CoreResponseModel.fromJson<T>(element));
+    }
+    return result;
   }
 
   @override
@@ -497,16 +520,17 @@ class NetworkService implements INetworkService {
   }
 
   @override
-  Future<List<String>> getTopForeignTrade(Map<String, dynamic> body) async {
+  Future<List<TopInterested>> getTopForeignTrade(
+      Map<String, dynamic> body) async {
     try {
       final http.Response response =
           await client.get(url_info_sbsi("topForeignTrade", body));
 
       final List<dynamic> responseBody = decode(response.bodyBytes)["data"];
-      List<String> data = [];
+      List<TopInterested> data = [];
       for (var element in responseBody) {
         try {
-          data.add(element["STOCK_CODE"]);
+          data.add(TopInterested.fromJson(element["STOCK_CODE"]));
         } catch (e) {
           continue;
         }
@@ -519,16 +543,17 @@ class NetworkService implements INetworkService {
   }
 
   @override
-  Future<List<String>> getTopStockChange(Map<String, dynamic> body) async {
+  Future<List<TopInterested>> getTopStockChange(
+      Map<String, dynamic> body) async {
     try {
       final http.Response response =
           await client.get(url_info_sbsi("topStockChange", body));
 
       final List<dynamic> responseBody = decode(response.bodyBytes)["data"];
-      List<String> data = [];
+      List<TopInterested> data = [];
       for (var element in responseBody) {
         try {
-          data.add(element["STOCK_CODE"]);
+          data.add(TopInterested.fromJson(element));
         } catch (e) {
           continue;
         }
@@ -541,16 +566,17 @@ class NetworkService implements INetworkService {
   }
 
   @override
-  Future<List<String>> getTopInterested(Map<String, dynamic> body) async {
+  Future<List<TopInterested>> getTopInterested(
+      Map<String, dynamic> body) async {
     try {
       final http.Response response =
           await client.get(url_info_sbsi("topStockInterested", body));
 
       final List<dynamic> responseBody = decode(response.bodyBytes)["data"];
-      List<String> data = [];
+      List<TopInterested> data = [];
       for (var element in responseBody) {
         try {
-          data.add(element["STOCK_CODE"]);
+          data.add(TopInterested.fromJson(element));
         } catch (e) {
           continue;
         }
@@ -563,16 +589,17 @@ class NetworkService implements INetworkService {
   }
 
   @override
-  Future<List<String>> getTopStockTrade(Map<String, dynamic> body) async {
+  Future<List<TopInterested>> getTopStockTrade(
+      Map<String, dynamic> body) async {
     try {
       final http.Response response =
           await client.get(url_info_sbsi("topStockTrade", body));
 
       final List<dynamic> responseBody = decode(response.bodyBytes)["data"];
-      List<String> data = [];
+      List<TopInterested> data = [];
       for (var element in responseBody) {
         try {
-          data.add(element["STOCK_CODE"]);
+          data.add(TopInterested.fromJson(element));
         } catch (e) {
           continue;
         }

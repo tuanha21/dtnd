@@ -196,19 +196,19 @@ class _CopytradeAssetScreenState extends State<CopytradeAssetScreen>
                 //   ],
                 // ),
 
-                ListView(
-                  padding: const EdgeInsets.all(16),
-                  controller: scrollController,
-                  children: [
-                    for (var e in list)
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 16),
-                        child: InvestmentCatalogWidget(
-                          data: e,
-                        ),
-                      )
-                  ],
-                ),
+                // ListView(
+                //   padding: const EdgeInsets.all(16),
+                //   controller: scrollController,
+                //   children: [
+                //     for (var e in list)
+                //       Padding(
+                //         padding: const EdgeInsets.symmetric(vertical: 16),
+                //         child: InvestmentCatalogWidget(
+                //           data: e,
+                //         ),
+                //       )
+                //   ],
+                // ),
                 const Center(
                   child: Text("Chi tiết kl"),
                 ),

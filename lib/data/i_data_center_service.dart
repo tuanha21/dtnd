@@ -18,6 +18,7 @@ import 'package:dtnd/=models=/response/stock_ranking_financial_index_model.dart'
 import 'package:dtnd/=models=/response/stock_trading_history.dart';
 import 'package:dtnd/=models=/response/subsidiaries_model.dart';
 import 'package:dtnd/=models=/response/top_influence_model.dart';
+import 'package:dtnd/=models=/response/top_interested_model.dart';
 import 'package:dtnd/=models=/ui_model/field_tree_element_model.dart';
 
 import '../=models=/response/indContrib.dart';
@@ -52,13 +53,13 @@ abstract class IDataCenterService {
 
   Future<List<Stock>> getTopSearch();
 
-  Future<List<String>> getTopInterested([int count]);
+  Future<List<TopInterested>> getTopInterested([int count]);
 
-  Future<List<String>> getTopStockTrade([int count, String type]);
+  Future<List<TopInterested>> getTopStockTrade([int count, String type]);
 
-  Future<List<String>> getTopStockChange([int count, String type]);
+  Future<List<TopInterested>> getTopStockChange([int count, String type]);
 
-  Future<List<String>> getTopForeignTrade([int count, String type]);
+  Future<List<TopInterested>> getTopForeignTrade([int count, String type]);
 
   List<Stock> searchStocksBySym(String sym, {int? maxSuggestions});
 

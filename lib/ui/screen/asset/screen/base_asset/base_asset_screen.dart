@@ -194,58 +194,56 @@ class _BaseAssetScreenState extends State<BaseAssetScreen>
             ],
           ),
         ),
-        panelBuilder: () {
-          return Padding(
-            padding: const EdgeInsets.only(top: 60),
-            child: TabBarView(
-              controller: _tabController,
-              // physics: PanelScrollPhysics(controller: panelController),
-              // controller: scrollController,
-              children: <Widget>[
-                // ListView(
-                //   physics:
-                //       PanelScrollPhysics(controller: panelController),
-                //   controller: scrollController,
-                //   shrinkWrap: true,
-                //   children: [
-                //     TabTradingBoard(
-                //       stockModel: widget.stockModel,
-                //       scrollController: scrollController,
-                //       panelController: panelController,
-                //     ),
-                //   ],
-                // ),
+        panelBuilder: () => Padding(
+          padding: const EdgeInsets.only(top: 60),
+          child: TabBarView(
+            controller: _tabController,
+            // physics: PanelScrollPhysics(controller: panelController),
+            // controller: scrollController,
+            children: <Widget>[
+              // ListView(
+              //   physics:
+              //       PanelScrollPhysics(controller: panelController),
+              //   controller: scrollController,
+              //   shrinkWrap: true,
+              //   children: [
+              //     TabTradingBoard(
+              //       stockModel: widget.stockModel,
+              //       scrollController: scrollController,
+              //       panelController: panelController,
+              //     ),
+              //   ],
+              // ),
 
-                ListView(
-                  padding: const EdgeInsets.all(16),
-                  controller: scrollController,
-                  children: [
-                    for (var e in list)
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 16),
-                        child: InvestmentCatalogWidget(
-                          data: e,
-                        ),
-                      )
-                  ],
-                ),
-                ListView(
-                  padding: const EdgeInsets.all(16),
-                  controller: scrollController,
-                  children: [
-                    for (int i = 0; i < 3; i++)
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 6),
-                        child: AccountRightWidget(
-                          index: i,
-                        ),
-                      )
-                  ],
-                ),
-              ],
-            ),
-          );
-        },
+              // ListView(
+              //   padding: const EdgeInsets.all(16),
+              //   controller: scrollController,
+              //   children: [
+              //     for (var e in list)
+              //       Padding(
+              //         padding: const EdgeInsets.symmetric(vertical: 16),
+              //         child: InvestmentCatalogWidget(
+              //           data: e,
+              //         ),
+              //       )
+              //   ],
+              // ),
+              ListView(
+                padding: const EdgeInsets.all(16),
+                controller: scrollController,
+                children: [
+                  for (int i = 0; i < 3; i++)
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 6),
+                      child: AccountRightWidget(
+                        index: i,
+                      ),
+                    )
+                ],
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }

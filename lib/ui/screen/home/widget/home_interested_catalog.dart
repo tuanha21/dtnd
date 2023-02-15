@@ -208,7 +208,7 @@ class HomeInterestedCatalogItem extends StatelessWidget {
                       maxWidth: MediaQuery.of(context).size.width / 4),
                   child: SimpleLineChart(
                     data: data,
-                    future: data.getTradingHistory(DataCenterService(),
+                    getData: () => data.getTradingHistory(DataCenterService(),
                         resolution: "1D",
                         from: TimeUtilities.getPreviousDateTime(
                             TimeUtilities.month(1))),

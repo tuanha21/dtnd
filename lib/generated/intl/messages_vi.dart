@@ -354,6 +354,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "top_search": MessageLookupByLibrary.simpleMessage("Top tìm kiếm"),
         "total_asset": MessageLookupByLibrary.simpleMessage("Tổng tài sản"),
         "total_debt": MessageLookupByLibrary.simpleMessage("Tổng nợ"),
+        "total_principal_debt":
+            MessageLookupByLibrary.simpleMessage("Tổng nợ gốc"),
         "total_vol": MessageLookupByLibrary.simpleMessage("Tổng KL"),
         "total_wvalue": m9,
         "trading": MessageLookupByLibrary.simpleMessage("Giao dịch"),

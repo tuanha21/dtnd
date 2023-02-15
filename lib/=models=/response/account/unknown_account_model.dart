@@ -1,18 +1,17 @@
-import 'package:dtnd/=models=/core_response_model.dart';
 import 'package:dtnd/=models=/response/account/i_account.dart';
+import 'package:dtnd/=models=/response/account/portfolio_status_model.dart';
 
 class UnknownAccountModel implements IAccountModel {
   @override
-  late String accountCode;
+  String accCode = "";
 
   @override
-  late num cash;
+  PortfolioStatus? portfolioStatus;
 
-  @override
-  late num nav;
-
-  @override
-  CoreResponseModel fromJson(Map<String, dynamic> json) {
+  UnknownAccountModel.fromJson(Map<String, dynamic> json) {
     throw UnimplementedError();
   }
+
+  @override
+  void updateData(IAccountResponse data) {}
 }

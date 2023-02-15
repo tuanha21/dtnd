@@ -13,12 +13,12 @@ class SimpleLineChart extends StatefulWidget {
   const SimpleLineChart({
     super.key,
     required this.data,
-    required this.future,
+    required this.getData,
   });
 
   final StockModel data;
-  final Future<StockTradingHistory?> future;
-
+  // final Future future;
+  final Future<StockTradingHistory?> Function() getData;
   @override
   State<SimpleLineChart> createState() => _SimpleLineChartState();
 }
@@ -39,7 +39,7 @@ class _SimpleLineChartState extends State<SimpleLineChart> {
 
   Future<void> getChartData() async {
     // print("calling history api");
-    final response = await widget.future;
+    final response = await widget.getData.call();
     if (response == null || response.o == null) {
       return;
     } else if (response.o!.length == 1) {
@@ -74,7 +74,8 @@ class _SimpleLineChartState extends State<SimpleLineChart> {
   @override
   void didUpdateWidget(covariant SimpleLineChart oldWidget) {
     // print(widget.data.stockData.sstatus.name);
-    if (oldWidget.data.stockData.sstatus != widget.data.stockData.sstatus ||
+    if (oldWidget.data.stock.stockCode != widget.data.stock.stockCode ||
+        oldWidget.data.stockData.sstatus != widget.data.stockData.sstatus ||
         chartData.lastUpdatedTime == null ||
         DateTime.now().difference(chartData.lastUpdatedTime!).inMinutes > 5) {
       if (mounted) {

@@ -1,8 +1,11 @@
+import 'package:dtnd/=models=/response/account/base_margin_account_model.dart';
+import 'package:dtnd/=models=/response/account/i_account.dart';
 import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:dtnd/ui/widget/button/text_icon_button.dart';
 import 'package:dtnd/ui/widget/chart/circle_process_chart.dart';
+import 'package:dtnd/utilities/num_utils.dart';
 import 'package:flutter/material.dart';
 
 enum TotalAssetWidgetType {
@@ -14,26 +17,34 @@ extension TotalAssetWidgetTypeX on TotalAssetWidgetType {
   bool get hasBG => this == TotalAssetWidgetType.withBackGround;
 }
 
-class TotalAssetWidget extends StatelessWidget {
+class TotalAssetWidget extends StatefulWidget {
   const TotalAssetWidget({
     Key? key,
     this.type = TotalAssetWidgetType.white,
     this.asset = "200.000.000đ",
     this.percent = 85,
+    this.data,
   }) : super(key: key);
+  final BaseMarginAccountModel? data;
   final TotalAssetWidgetType type;
   final String asset;
   final double percent;
+
+  @override
+  State<TotalAssetWidget> createState() => _TotalAssetWidgetState();
+}
+
+class _TotalAssetWidgetState extends State<TotalAssetWidget> {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
     Widget processChart = Container();
-    if (type.hasBG) {
+    if (widget.type.hasBG) {
       processChart = Center(
         child: SizedBox.square(
           dimension: 40,
           child: CircleProcessChart(
-            percent: percent,
+            percent: widget.percent,
           ),
         ),
       );
@@ -43,7 +54,7 @@ class TotalAssetWidget extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: const BorderRadius.all(Radius.circular(12)),
         color: Colors.white,
-        image: type.hasBG
+        image: widget.type.hasBG
             ? const DecorationImage(
                 image: AssetImage(AppImages.wallet_bg), fit: BoxFit.fitWidth)
             : null,
@@ -53,7 +64,7 @@ class TotalAssetWidget extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Row(
-            mainAxisAlignment: type.hasBG
+            mainAxisAlignment: widget.type.hasBG
                 ? MainAxisAlignment.spaceBetween
                 : MainAxisAlignment.center,
             children: [
@@ -61,10 +72,12 @@ class TotalAssetWidget extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
-                    asset,
+                    widget.data != null
+                        ? "${NumUtils.formatDouble(widget.data!.equity ?? 0)}đ"
+                        : widget.asset,
                     style: textTheme.bodyLarge!.copyWith(
                         fontWeight: FontWeight.w700,
-                        color: type.hasBG ? Colors.white : null),
+                        color: widget.type.hasBG ? Colors.white : null),
                   ),
                   const SizedBox(height: 3),
                   Row(

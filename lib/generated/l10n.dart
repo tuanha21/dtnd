@@ -770,6 +770,16 @@ class S {
     );
   }
 
+  /// `Total principal debt`
+  String get total_principal_debt {
+    return Intl.message(
+      'Total principal debt',
+      name: 'total_principal_debt',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Safe ratio`
   String get safe_ratio {
     return Intl.message(

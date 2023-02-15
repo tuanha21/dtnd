@@ -25,6 +25,7 @@ import 'package:dtnd/=models=/response/stock_trade.dart';
 import 'package:dtnd/=models=/response/stock_trading_history.dart';
 import 'package:dtnd/=models=/response/subsidiaries_model.dart';
 import 'package:dtnd/=models=/response/top_influence_model.dart';
+import 'package:dtnd/=models=/response/top_interested_model.dart';
 import 'package:dtnd/=models=/response/total_asset_model.dart';
 import 'package:dtnd/=models=/response/world_index_model.dart';
 import 'package:dtnd/=models=/ui_model/field_tree_element_model.dart';
@@ -61,7 +62,12 @@ abstract class INetworkService {
   Future<UserEntity?> checkLogin(RequestModel requestModel);
 
   Future<T?> requestTraditionalApi<T extends CoreResponseModel>(
-      RequestModel requestModel);
+      RequestModel requestModel,
+      {T? Function(Map<String, dynamic>)? onError});
+
+  Future<List<T>?> requestTraditionalApiResList<T extends CoreResponseModel>(
+      RequestModel requestModel,
+      {List<T>? Function(Map<String, dynamic>)? onError});
 
   Future<List<Stock>> getListAllStock();
 
@@ -69,13 +75,13 @@ abstract class INetworkService {
 
   Future<List<String>> getTopSearch();
 
-  Future<List<String>> getTopInterested(Map<String, dynamic> body);
+  Future<List<TopInterested>> getTopInterested(Map<String, dynamic> body);
 
-  Future<List<String>> getTopStockTrade(Map<String, dynamic> body);
+  Future<List<TopInterested>> getTopStockTrade(Map<String, dynamic> body);
 
-  Future<List<String>> getTopStockChange(Map<String, dynamic> body);
+  Future<List<TopInterested>> getTopStockChange(Map<String, dynamic> body);
 
-  Future<List<String>> getTopForeignTrade(Map<String, dynamic> body);
+  Future<List<TopInterested>> getTopForeignTrade(Map<String, dynamic> body);
 
   Future<List<StockDataResponse>> getListStockData(String listStock);
 

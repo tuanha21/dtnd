@@ -1,5 +1,7 @@
 import 'package:dtnd/=models=/response/stock_model.dart';
+import 'package:dtnd/=models=/response/stock_trading_history.dart';
 import 'package:dtnd/config/service/app_services.dart';
+import 'package:dtnd/data/i_data_center_service.dart';
 import 'package:dtnd/data/implementations/data_center_service.dart';
 import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/screen/home/widget/simple_line_chart.dart';
@@ -106,6 +108,7 @@ class _HomeMarketOverviewState extends State<HomeMarketOverview>
                 height: 72,
                 child: HomeMarketOverviewItem(
                   data: data[i],
+                  dataCenterService: homeController.dataCenterService,
                 ),
               ),
             )
@@ -156,10 +159,12 @@ class _HomeMarketOverviewState extends State<HomeMarketOverview>
 class HomeMarketOverviewItem extends StatelessWidget {
   const HomeMarketOverviewItem({
     super.key,
+    required this.dataCenterService,
     required this.data,
     this.onHold,
     this.onTap,
   });
+  final IDataCenterService dataCenterService;
   final StockModel data;
   final VoidCallback? onTap;
   final VoidCallback? onHold;
@@ -225,11 +230,36 @@ class HomeMarketOverviewItem extends StatelessWidget {
                     data.stockData.lastPrice.value;
                     return SimpleLineChart(
                       data: data,
-                      future: DataCenterService().getStockTradingHistory.call(
-                          data.stock.stockCode,
-                          "5",
-                          TimeUtilities.beginningOfDay,
-                          DateTime.now()),
+                      getData: () async {
+                        if (data.simpleChartData.value?.isEmpty ?? true) {
+                          return await dataCenterService.getStockTradingHistory(
+                              data.stock.stockCode,
+                              "5",
+                              TimeUtilities.getPreviousDateTime(
+                                  TimeUtilities.day(1)),
+                              DateTime.now());
+                        } else {
+                          final todayHstr =
+                              await dataCenterService.getStockTradingHistory(
+                                  data.stock.stockCode,
+                                  "5",
+                                  TimeUtilities.getPreviousDateTime(
+                                      TimeUtilities.day(1)),
+                                  DateTime.now());
+                          if (todayHstr?.o?.isEmpty ?? true) {
+                            return await dataCenterService
+                                .getStockTradingHistory(
+                                    data.stock.stockCode,
+                                    "5",
+                                    TimeUtilities.getPreviousDateTime(
+                                            TimeUtilities.day(1))
+                                        .beginningOfDay,
+                                    DateTime.now());
+                          } else {
+                            return todayHstr;
+                          }
+                        }
+                      },
                       // future: data.getTradingHistory(DataCenterService(),
                       //     resolution: "5", from: TimeUtilities.beginningOfDay),
                     );

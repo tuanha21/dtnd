@@ -26,6 +26,7 @@ class StockModel {
   BusinnessProfileModel? businnessProfile;
   List<BusinnessLeaderModel>? businnessLeaders;
   final BusinessSubsidiariesModel subsidiaries = BusinessSubsidiariesModel();
+  final Rx<List<num>?> simpleChartData = Rxn();
 
   List<IndayMatchedOrder> get listMatchedOrder => _listMatchedOrder;
 
@@ -74,6 +75,25 @@ class StockModel {
         resolution ?? "1D",
         from ?? TimeUtilities.getPreviousDateTime(TimeUtilities.year(1)),
         to ?? DateTime.now());
+  }
+
+  Future<StockTradingHistory?> getIndayTradingHistory(
+      IDataCenterService dataCenterService,
+      {String? resolution,
+      DateTime? from,
+      DateTime? to}) async {
+    StockTradingHistory? today = await dataCenterService.getStockTradingHistory(
+        stock.stockCode,
+        resolution ?? "5",
+        from ?? TimeUtilities.beginningOfDay,
+        to ?? DateTime.now());
+    if (today?.o?.isEmpty ?? true) {
+      today = await dataCenterService.getStockTradingHistory(
+          stock.stockCode,
+          resolution ?? "5",
+          from ?? TimeUtilities.getPreviousDateTime(TimeUtilities.day(1)),
+          to ?? DateTime.now());
+    }
   }
 
   void changeStockFinancialIndex(
