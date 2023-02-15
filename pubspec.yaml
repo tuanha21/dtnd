@@ -88,6 +88,7 @@ dependencies:
   webview_flutter: ^2.1.1
   html: ^0.15.1
   percent_indicator: ^4.2.2
+  url_launcher: ^6.1.9
 
 dev_dependencies:
   flutter_test:

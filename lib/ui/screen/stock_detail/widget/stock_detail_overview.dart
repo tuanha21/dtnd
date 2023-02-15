@@ -73,7 +73,7 @@ class StockDetailOverview extends StatelessWidget {
                   ),
                   const SizedBox(width: 10),
                   Text(
-                    NumUtils.formatInteger(stockModel.stockData.value, "-"),
+                    "${NumUtils.formatInteger(stockModel.stockData.value, "-")} tỷ",
                     style: AppTextStyle.bodySmall_8
                         .copyWith(color: AppColors.neutral_04),
                   ),

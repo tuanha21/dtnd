@@ -76,7 +76,7 @@ class _OverviewTabState extends State<OverviewTab> {
                             animationDuration: 1000,
                             lineHeight: 10,
                             percent:
-                            widget.stockModel.stockData.percent.toDouble(),
+                                widget.stockModel.stockData.percent.toDouble(),
                             progressColor: AppColors.neutral_03,
                             backgroundColor: AppColors.neutral_01,
                           );

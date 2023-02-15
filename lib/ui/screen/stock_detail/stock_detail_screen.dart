@@ -115,9 +115,6 @@ class _StockDetailScreenState extends State<StockDetailScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final themeMode = AppService.instance.themeMode.value;
-    final tabbarBgColor =
-        themeMode.isLight ? AppColors.neutral_05 : AppColors.neutral_01;
     return Scaffold(
       appBar: StockDetailAppbar(stockModel: widget.stockModel),
       // appBar: StockDetailAppbar(stock: widget.stockModel.stock),
