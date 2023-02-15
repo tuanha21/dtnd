@@ -5,6 +5,7 @@ import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:dtnd/ui/theme/app_textstyle.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../=models=/response/company_info.dart';
 import '../../../../data/i_network_service.dart';
@@ -131,32 +132,51 @@ class _GeneralInfoTabState extends State<GeneralInfoTab> {
                           ],
                         ),
                         const SizedBox(height: 10),
-                        Row(
-                          children: [
-                            Image.asset(
-                              AppImages.call,
-                              width: 15,
-                            ),
-                            const SizedBox(width: 9),
-                            Text(
-                              info.infoSupplier ?? "",
-                              style: textTheme.titleSmall,
-                            ),
-                          ],
+                        GestureDetector(
+                          onTap: () async {
+                            var canLunch = await canLaunchUrl(Uri(
+                                scheme: 'tel', path: info.phone ?? ""));
+                            if (canLunch) {
+                              launchUrl(Uri(
+                                  scheme: 'tel', path: info.phone ?? ""));
+                            }
+                          },
+                          child: Row(
+                            children: [
+                              Image.asset(
+                                AppImages.call,
+                                width: 15,
+                              ),
+                              const SizedBox(width: 9),
+                              Text(
+                                info.phone ?? "",
+                                style: textTheme.titleSmall,
+                              ),
+                            ],
+                          ),
                         ),
                         const SizedBox(height: 10),
-                        Row(
-                          children: [
-                            Image.asset(
-                              AppImages.global,
-                              width: 15,
-                            ),
-                            const SizedBox(width: 9),
-                            Text(
-                              info.uRL ?? "",
-                              style: textTheme.titleSmall,
-                            ),
-                          ],
+                        GestureDetector(
+                          onTap: () async {
+                            var canLunch = await canLaunchUrl(
+                                Uri.parse(info.uRL ?? ""));
+                            if (canLunch) {
+                              launchUrl(Uri.parse(info.uRL ?? ""));
+                            }
+                          },
+                          child: Row(
+                            children: [
+                              Image.asset(
+                                AppImages.global,
+                                width: 15,
+                              ),
+                              const SizedBox(width: 9),
+                              Text(
+                                info.uRL ?? "",
+                                style: textTheme.titleSmall,
+                              ),
+                            ],
+                          ),
                         )
                       ],
                     ),

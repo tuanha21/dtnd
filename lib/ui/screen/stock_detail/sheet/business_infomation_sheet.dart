@@ -122,7 +122,7 @@ class _BusinessInformationSheetState extends State<BusinessInformationSheet>
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(widget.stockModel.stock.stockCode ?? "",
+                                  Text(widget.stockModel.stock.stockCode ,
                                       style: Theme.of(context)
                                           .textTheme
                                           .titleMedium
