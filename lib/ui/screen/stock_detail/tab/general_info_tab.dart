@@ -207,30 +207,26 @@ class _GeneralInfoTabState extends State<GeneralInfoTab> {
                                 ],
                               ),
                               Expanded(
-                                  child: Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  Container(
-                                    width: (widget.stockModel.businnessLeaders
-                                                    ?.elementAt(i)
-                                                    .personalHeldPct ??
-                                                1)
-                                            .toDouble() *
-                                        2,
-                                    height: 10,
-                                    decoration: BoxDecoration(
-                                        borderRadius: const BorderRadius.all(
-                                            Radius.circular(4)),
-                                        color:
-                                            AppColors.graphColors.elementAt(i)),
-                                  ),
-                                  Text(
-                                    "${widget.stockModel.businnessLeaders?.elementAt(i).personalHeldPct?.toString() ?? "-"}%",
-                                    style: textTheme.labelMedium!
-                                        .copyWith(fontWeight: FontWeight.w600),
-                                  ),
-                                ],
-                              ))
+                                  child: LayoutBuilder(builder: (context,ctx){
+                                    return Row(
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      children: [
+                                        Container(
+                                          width: widget.stockModel.businnessLeaders![i].personalHeldPct! * ctx.maxWidth / 300,
+                                          height: 10,
+                                          decoration: const BoxDecoration(
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(4)),color: AppColors.graph_2),
+                                        ),
+                                        const SizedBox(width: 8),
+                                        Text(
+                                          "${widget.stockModel.businnessLeaders?.elementAt(i).personalHeldPct?.toString() ?? "-"}%",
+                                          style: textTheme.labelMedium!
+                                              .copyWith(fontWeight: FontWeight.w600),
+                                        ),
+                                      ],
+                                    );
+                                  },))
                             ],
                           ),
                         );
@@ -248,57 +244,60 @@ class _GeneralInfoTabState extends State<GeneralInfoTab> {
                           .copyWith(fontWeight: FontWeight.w700),
                     ),
                   ),
-                  Container(
-                    padding: const EdgeInsets.all(10),
-                    decoration: const BoxDecoration(color: Colors.white),
-                    child: AspectRatio(
-                      aspectRatio: 1.3,
-                      child: SfCircularChart(
-                          palette: AppColors.graphColors,
-                          legend: Legend(
-                            isVisible: true,
-                            overflowMode: LegendItemOverflowMode.wrap,
-                            position: LegendPosition.bottom,
-                          ),
-                          annotations: <CircularChartAnnotation>[
-                            CircularChartAnnotation(
-                              height: "80%",
-                              width: "80%",
-                              widget: PhysicalModel(
-                                shape: BoxShape.circle,
-                                elevation: 10,
-                                shadowColor: Colors.black,
-                                color: Colors.white,
-                                child: Center(
-                                    child: Text(
-                                  "",
-                                  style: textTheme.bodyMedium!.copyWith(
-                                      color: AppColors.color_secondary,
-                                      fontWeight: FontWeight.w700),
-                                )),
-                              ),
+                  Visibility(
+                    visible: widget.stockModel.businnessLeaders !=null,
+                    child: Container(
+                      padding: const EdgeInsets.all(10),
+                      decoration: const BoxDecoration(color: Colors.white),
+                      child: AspectRatio(
+                        aspectRatio: 1.3,
+                        child: SfCircularChart(
+                            palette: AppColors.graphColors,
+                            legend: Legend(
+                              isVisible: true,
+                              overflowMode: LegendItemOverflowMode.wrap,
+                              position: LegendPosition.bottom,
                             ),
-                          ],
-                          series: <
-                              DoughnutSeries<BusinnessLeaderModel, String>>[
-                            DoughnutSeries<BusinnessLeaderModel, String>(
-                              dataSource: widget.stockModel.businnessLeaders,
-                              innerRadius: "75%%",
-                              radius: "80%",
-                              xValueMapper: (BusinnessLeaderModel data, _) =>
-                                  data.fullName,
-                              yValueMapper: (BusinnessLeaderModel data, _) =>
-                                  data.personalHeldPct,
-                              dataLabelMapper: (BusinnessLeaderModel data, _) =>
-                                  "${data.personalHeldPct}%",
-                              dataLabelSettings: const DataLabelSettings(
-                                isVisible: true,
-                                // Positioning the data label
-                                margin: EdgeInsets.all(0),
-                                labelPosition: ChartDataLabelPosition.outside,
+                            annotations: <CircularChartAnnotation>[
+                              CircularChartAnnotation(
+                                height: "80%",
+                                width: "80%",
+                                widget: PhysicalModel(
+                                  shape: BoxShape.circle,
+                                  elevation: 10,
+                                  shadowColor: Colors.black,
+                                  color: Colors.white,
+                                  child: Center(
+                                      child: Text(
+                                    "",
+                                    style: textTheme.bodyMedium!.copyWith(
+                                        color: AppColors.color_secondary,
+                                        fontWeight: FontWeight.w700),
+                                  )),
+                                ),
                               ),
-                            )
-                          ]),
+                            ],
+                            series: <
+                                DoughnutSeries<BusinnessLeaderModel, String>>[
+                              DoughnutSeries<BusinnessLeaderModel, String>(
+                                dataSource: widget.stockModel.businnessLeaders,
+                                innerRadius: "75%%",
+                                radius: "80%",
+                                xValueMapper: (BusinnessLeaderModel data, _) =>
+                                    data.fullName,
+                                yValueMapper: (BusinnessLeaderModel data, _) =>
+                                    data.personalHeldPct,
+                                dataLabelMapper: (BusinnessLeaderModel data, _) =>
+                                    "${data.personalHeldPct}%",
+                                dataLabelSettings: const DataLabelSettings(
+                                  isVisible: true,
+                                  // Positioning the data label
+                                  margin: EdgeInsets.all(0),
+                                  labelPosition: ChartDataLabelPosition.outside,
+                                ),
+                              )
+                            ]),
+                      ),
                     ),
                   )
                 ],

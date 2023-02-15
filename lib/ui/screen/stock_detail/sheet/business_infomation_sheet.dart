@@ -118,24 +118,26 @@ class _BusinessInformationSheetState extends State<BusinessInformationSheet>
                             StockIcon(
                                 stockCode: widget.stockModel.stockData.sym),
                             const SizedBox(width: 16),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(widget.stockModel.stock.nameVn ?? "",
+                            Flexible(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(widget.stockModel.stock.stockCode ?? "",
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .titleMedium
+                                          ?.copyWith(
+                                          fontWeight: FontWeight.w600)),
+                                  const SizedBox(height: 4),
+                                  Text(
+                                    '${widget.stockModel.stock.postTo!.name} : ${widget.stockModel.stock.nameShort}',
                                     style: Theme.of(context)
                                         .textTheme
-                                        .titleMedium
-                                        ?.copyWith(
-                                        fontWeight: FontWeight.w600)),
-                                const SizedBox(height: 4),
-                                Text(
-                                  '${widget.stockModel.stock.postTo} : ${widget.stockModel.stock.nameShort}',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodySmall
-                                      ?.copyWith(color: AppColors.neutral_04),
-                                )
-                              ],
+                                        .bodySmall
+                                        ?.copyWith(color: AppColors.neutral_04),
+                                  )
+                                ],
+                              ),
                             )
                           ],
                         ),
