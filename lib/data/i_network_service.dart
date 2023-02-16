@@ -40,6 +40,7 @@ import '../=models=/response/index_board.dart';
 import '../=models=/response/introduct_company.dart';
 import '../=models=/response/sec_event.dart';
 import '../=models=/response/sec_trading.dart';
+import '../=models=/response/share_holder.dart';
 import '../=models=/response/stock_board.dart';
 import '../=models=/response/stock_his.dart';
 import '../=models=/response/stock_industry.dart';
@@ -177,5 +178,8 @@ abstract class INetworkService {
   Future<StockBoard> getStockBoard(String stockCode);
 
   Future<List<SecTrading>> getSecTradingHistory(String stockCode);
+
+  Future<List<ShareHolders>> getShareHolderCompany(String stockCode);
+
 
 }

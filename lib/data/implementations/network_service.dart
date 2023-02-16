@@ -19,6 +19,7 @@ import 'package:dtnd/=models=/response/news_detail.dart';
 import 'package:dtnd/=models=/response/news_model.dart';
 import 'package:dtnd/=models=/response/s_cash_balance.dart';
 import 'package:dtnd/=models=/response/security_basic_info_model.dart';
+import 'package:dtnd/=models=/response/share_holder.dart';
 import 'package:dtnd/=models=/response/stock.dart';
 import 'package:dtnd/=models=/response/stock_board.dart';
 import 'package:dtnd/=models=/response/stock_data.dart';
@@ -809,21 +810,30 @@ class NetworkService implements INetworkService {
 
   @override
   Future<List<BusinnessLeaderModel>?> getBusinnessLeaders(String body) async {
-    dynamic response =
-        await client.post(url_algo("companies/leaders"), body: body);
-    if (response.statusCode != 200) {
-      throw response;
+    try {
+      dynamic response =
+          await client.post(url_algo("companies/leaders"), body: body);
+
+      if (response.statusCode != 200) {
+        throw response;
+      }
+      response = decode(response.bodyBytes);
+
+      if (response["status"] != 200) {
+        throw response["message"];
+      }
+      response = response["data"];
+      final List<BusinnessLeaderModel> result = [];
+      for (var element in response) {
+        if (element['personalHeldPct'] != "0") {
+          result.add(BusinnessLeaderModel.fromJson(element));
+        }
+      }
+      return result;
+    } catch (e) {
+      logger.e(e.toString());
+      rethrow;
     }
-    response = decode(response.bodyBytes);
-    if (response["status"] != 200) {
-      throw response["message"];
-    }
-    response = response["data"];
-    final List<BusinnessLeaderModel> result = [];
-    for (var element in response) {
-      result.add(BusinnessLeaderModel.fromJson(element));
-    }
-    return result;
   }
 
   @override
@@ -1073,6 +1083,28 @@ class NetworkService implements INetworkService {
       for (var element in list) {
         if (list.indexOf(element) > 9) break;
         listSecc.add(SecTrading.fromJson(element));
+      }
+      return listSecc;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<List<ShareHolders>> getShareHolderCompany(String stockCode) async {
+    try {
+      var response = await client.post(
+          Uri.https(
+              'opacc-api.apec.com.vn', 'algo/pbapi/api/companies/shareholders'),
+          body: jsonEncode({"secCode": stockCode}));
+      if (response.statusCode != 200) {
+        throw response;
+      }
+      var res = decode(response.bodyBytes);
+      var list = res['data'] as List;
+      var listSecc = <ShareHolders>[];
+      for (var element in list) {
+        listSecc.add(ShareHolders.fromJson(element));
       }
       return listSecc;
     } catch (e) {

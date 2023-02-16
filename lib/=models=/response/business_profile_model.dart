@@ -42,9 +42,9 @@ class BusinnessLeaderModel {
     position = json['position'];
     positionEn = json['positionEn'];
     personalHeld =
-        num.parse(num.parse(json['personalHeld'] ?? "0").toStringAsFixed(2));
+        num.parse(num.parse(json['personalHeld'] ?? "0").toString());
     personalHeldPct =
-        num.parse(num.parse(json['personalHeldPct'] ?? "0").toStringAsFixed(2));
+        num.parse(num.parse(json['personalHeldPct'] ?? "0").toString());
   }
 
   Map<String, dynamic> toJson() {

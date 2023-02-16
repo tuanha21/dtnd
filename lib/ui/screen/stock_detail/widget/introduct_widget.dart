@@ -52,7 +52,7 @@ class _IntroduceWidgetState extends State<IntroduceWidget> {
                 var profile = snapshot.data?.data?.profile;
                 var document = parse(profile);
                 return HomeSection(
-                  title: "Về ${widget.stockCode.stockData.sym}",
+                  title: "Giới thiệu",
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16),
                     child: LayoutBuilder(builder: (context, ctx) {
@@ -122,7 +122,7 @@ class _IntroduceWidgetState extends State<IntroduceWidget> {
                                 borderRadius: BorderRadius.circular(6),
                                 border: Border.all(color: colorBoder)),
                             child: Text(
-                              info?.companyTypeName ?? "",
+                              info?.industryName ?? "",
                               style: Theme.of(context)
                                   .textTheme
                                   .bodySmall
