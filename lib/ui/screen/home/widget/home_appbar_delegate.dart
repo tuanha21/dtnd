@@ -63,14 +63,17 @@ class HomeAppbarDelegate extends SliverPersistentHeaderDelegate {
                         ))
                             .then((value) async {
                           if (value is Stock) {
-                            dataCenterService.getStockModelsFromStockCodes([
-                              value.stockCode
-                            ]).then((stockModels) =>
-                                Navigator.of(context).push(MaterialPageRoute(
+                            dataCenterService.getStockModelsFromStockCodes(
+                                [value.stockCode]).then((stockModels) {
+                              if (stockModels != null) {
+                                return Navigator.of(context)
+                                    .push(MaterialPageRoute(
                                   builder: (context) => StockDetailScreen(
                                     stockModel: stockModels.first,
                                   ),
-                                )));
+                                ));
+                              }
+                            });
                           }
                         });
                       },

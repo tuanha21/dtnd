@@ -120,7 +120,7 @@ class _AssetChartState extends State<AssetChart> {
       alignment: Alignment.bottomCenter,
       child: charts.TimeSeriesChart(
         assetSeriesList,
-        animate: true,
+        animate: false,
 
         // Configure a stroke width to enable borders on the bars.
         // defaultRenderer: new charts.LineRendererConfig(

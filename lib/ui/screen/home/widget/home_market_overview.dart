@@ -100,16 +100,15 @@ class _HomeMarketOverviewState extends State<HomeMarketOverview>
           ],
         ),
       );
-      print("data.length ${data.length}");
       Widget list = Column(
         children: [
-          for (int i = 0; i < (data.length); i++)
+          for (int i = 0; i < (data?.length ?? 0); i++)
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
               child: SizedBox(
                 height: 72,
                 child: HomeMarketOverviewItem(
-                  data: data[i],
+                  data: data![i],
                   dataCenterService: homeController.dataCenterService,
                 ),
               ),

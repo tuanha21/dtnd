@@ -36,76 +36,105 @@ class _AccountAssetOverviewWidgetState
         borderRadius: BorderRadius.all(Radius.circular(12)),
         color: Colors.white,
       ),
-      height: 186,
+      // height: 186,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Flexible(
-              child: Container(
-            height: 106,
-            padding: const EdgeInsets.all(8),
-            decoration: const BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(12)),
-              color: AppColors.neutral_06,
-            ),
-            child: Column(
-              children: [
-                Flexible(
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: AssetGridElement(element: {
-                          S.of(context).net_assets:
-                              "${NumUtils.formatDouble(widget.data?.equity)}đ"
-                        }),
-                      ),
-                      const SizedBox(width: 2),
-                      Expanded(
-                        child: AssetGridElement(element: {
-                          S.of(context).cash:
-                              "${NumUtils.formatDouble(widget.data?.cashBalance)}đ"
-                        }),
-                      ),
-                      const SizedBox(width: 2),
-                      Expanded(
-                        child: AssetGridElement(element: {
-                          "Sức mua tối thiểu":
-                              "${NumUtils.formatDouble(widget.data?.ee)}đ"
-                        }),
-                      )
-                    ],
+          // Flexible(
+          //   child: Container(
+          //     height: 106,
+          //     padding: const EdgeInsets.all(8),
+          //     decoration: const BoxDecoration(
+          //       borderRadius: BorderRadius.all(Radius.circular(12)),
+          //       color: AppColors.neutral_06,
+          //     ),
+          //     child: Column(
+          //       children: [
+          //         Flexible(
+          //           child: Row(
+          //             children: [
+          //               Expanded(
+          //                 child: AssetGridElement(element: {
+          //                   S.of(context).net_assets:
+          //                       "${NumUtils.formatDouble(widget.data?.equity)}đ"
+          //                 }),
+          //               ),
+          //               const SizedBox(width: 2),
+          //               Expanded(
+          //                 child: AssetGridElement(element: {
+          //                   S.of(context).cash:
+          //                       "${NumUtils.formatDouble(widget.data?.cashBalance)}đ"
+          //                 }),
+          //               ),
+          //               const SizedBox(width: 2),
+          //               Expanded(
+          //                 child: AssetGridElement(element: {
+          //                   "Sức mua tối thiểu":
+          //                       "${NumUtils.formatDouble(widget.data?.ee)}đ"
+          //                 }),
+          //               )
+          //             ],
+          //           ),
+          //         ),
+          //         const SizedBox(height: 2),
+          //         Flexible(
+          //           child: Row(
+          //             children: [
+          //               Expanded(
+          //                 child: AssetGridElement(element: {
+          //                   S.of(context).dividend:
+          //                       NumUtils.formatDouble(widget.data?.collateral),
+          //                 }),
+          //               ),
+          //               const SizedBox(width: 2),
+          //               Expanded(
+          //                 child: AssetGridElement(element: {
+          //                   S.of(context).total_principal_debt:
+          //                       NumUtils.formatDouble(widget.data?.debt)
+          //                 }),
+          //               ),
+          //               const SizedBox(width: 2),
+          //               Expanded(
+          //                 child: AssetGridElement(element: {
+          //                   S.of(context).safe_ratio:
+          //                       NumUtils.formatDouble(widget.data?.marginRatio)
+          //                 }),
+          //               )
+          //             ],
+          //           ),
+          //         ),
+          //       ],
+          //     ),
+          //   ),
+          // ),
+          Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                "${NumUtils.formatDouble(widget.data?.equity, "-")}đ",
+                style:
+                    textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.w700),
+              ),
+              const SizedBox(height: 3),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image.asset(
+                    AppImages.prefix_up_icon,
+                    width: 10,
                   ),
-                ),
-                const SizedBox(height: 2),
-                Flexible(
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: AssetGridElement(element: {
-                          S.of(context).dividend:
-                              NumUtils.formatDouble(widget.data?.collateral),
-                        }),
-                      ),
-                      const SizedBox(width: 2),
-                      Expanded(
-                        child: AssetGridElement(element: {
-                          S.of(context).total_principal_debt:
-                              NumUtils.formatDouble(widget.data?.debt)
-                        }),
-                      ),
-                      const SizedBox(width: 2),
-                      Expanded(
-                        child: AssetGridElement(element: {
-                          S.of(context).safe_ratio:
-                              NumUtils.formatDouble(widget.data?.marginRatio)
-                        }),
-                      )
-                    ],
+                  const SizedBox(width: 10),
+                  Text(
+                    "${NumUtils.formatDouble(widget.data?.portfolioStatus?.gainLossValue)} (${widget.data?.portfolioStatus?.gainLossPer?.trim()})",
+                    style: textTheme.bodySmall!.copyWith(
+                        fontWeight: FontWeight.w600,
+                        color: AppColors.semantic_01),
                   ),
-                ),
-              ],
-            ),
-          )),
+                ],
+              ),
+            ],
+          ),
+          const SizedBox(height: 16),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [

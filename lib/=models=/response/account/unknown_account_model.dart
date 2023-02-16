@@ -17,5 +17,5 @@ class UnknownAccountModel implements IAccountModel {
   }
 
   @override
-  void updateData(IAccountResponse data) {}
+  void updateDataFromJson(IAccountResponse data) {}
 }

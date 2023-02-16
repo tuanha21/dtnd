@@ -44,7 +44,7 @@ class _UserCatalogWidgetState extends State<UserCatalogWidget> {
 
   late LocalCatalog currentCatalog;
 
-  late Future<List<StockModel>> listStocks = Future.value([]);
+  late Future<List<StockModel>?> listStocks = Future.value([]);
 
   late String user;
 
@@ -189,7 +189,7 @@ class _UserCatalogWidgetState extends State<UserCatalogWidget> {
               Expanded(
                 flex: 3,
                 child: GestureDetector(
-                  onTap: (){
+                  onTap: () {
                     setState(() {
                       isPercent = !isPercent;
                     });
@@ -221,7 +221,7 @@ class _UserCatalogWidgetState extends State<UserCatalogWidget> {
           ),
         ),
         const SizedBox(height: 10),
-        FutureBuilder<List<StockModel>>(
+        FutureBuilder<List<StockModel>?>(
             future: listStocks,
             builder: (context, snapshot) {
               if (snapshot.hasData) {
@@ -265,7 +265,10 @@ class _UserCatalogWidgetState extends State<UserCatalogWidget> {
                               ),
                             ],
                           ),
-                          child: StockComponent(model: stock, isPercent: isPercent,));
+                          child: StockComponent(
+                            model: stock,
+                            isPercent: isPercent,
+                          ));
                     },
                     separatorBuilder: (context, index) {
                       return const Divider(

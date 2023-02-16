@@ -19,7 +19,7 @@ abstract class IAccountModel implements CoreResponseModel {
     }
   }
 
-  void updateData(IAccountResponse data);
+  void updateDataFromJson(IAccountResponse jsonData);
 }
 
 class IAccountResponse implements CoreResponseModel {

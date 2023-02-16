@@ -1,6 +1,4 @@
-import 'package:dtnd/=models=/core_response_model.dart';
 import 'package:dtnd/=models=/response/account/i_account.dart';
-import 'package:dtnd/utilities/logger.dart';
 
 import 'asset_chart_element.dart';
 import 'portfolio_status_model.dart';
@@ -163,8 +161,7 @@ class BaseMarginAccountModel implements IAccountModel {
   }
 
   @override
-  void updateData(IAccountResponse data) {
-    logger.v(data.json);
+  void updateDataFromJson(IAccountResponse data) {
     assets = parse(data.json['assets']);
     imKH = parse(data.json['imKH']);
     h = parse(data.json['h']);

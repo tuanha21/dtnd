@@ -102,7 +102,7 @@ class UserService implements IUserService {
         dynamic response = await networkService
             .requestTraditionalApi<IAccountResponse>(requestModel);
 
-        listAccount.elementAt(i).updateData(response!);
+        listAccount.elementAt(i).updateDataFromJson(response!);
         requestModel = RequestModel(this,
             group: "Q",
             data: RequestDataModel.stringType(

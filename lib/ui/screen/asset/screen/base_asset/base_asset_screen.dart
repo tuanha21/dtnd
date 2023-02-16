@@ -64,9 +64,9 @@ class _BaseAssetScreenState extends State<BaseAssetScreen>
     setState(() {
       gettingCatalog = true;
     });
-    final List<StockModel> _list =
+    final _list =
         await dataCenterService.getStockModelsFromStockCodes(defaultCatalog);
-    for (var element in _list) {
+    for (var element in (_list ?? [])) {
       list.add(InvestmentCatalog(stockModel: element));
     }
     setState(() {

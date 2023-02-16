@@ -1,6 +1,7 @@
 import 'package:dtnd/=models=/response/account/portfolio_status_model.dart';
 import 'package:dtnd/config/service/app_services.dart';
 import 'package:dtnd/generated/l10n.dart';
+import 'package:dtnd/ui/screen/asset/screen/asset_stock_detail/asset_stock_detail_screen.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_textstyle.dart';
 import 'package:dtnd/ui/widget/button/single_color_text_button.dart';
@@ -241,7 +242,16 @@ class _InvestmentCatalogWidgetState extends State<InvestmentCatalogWidget> {
                         text: S.of(context).detail,
                         color: AppColors.neutral_04,
                         padding: const EdgeInsets.symmetric(vertical: 4),
-                        onTap: () {},
+                        onTap: () {
+                          if (widget.data != null) {
+                            Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => AssetStockDetailScreen(
+                                stockCode: widget.data!.symbol,
+                                porfolioStock: widget.data!,
+                              ),
+                            ));
+                          }
+                        },
                       )),
                       const SizedBox(width: 8),
                       Flexible(

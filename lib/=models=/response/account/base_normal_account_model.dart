@@ -91,7 +91,7 @@ class BaseNormalAccountModel implements IAccountModel {
   }
 
   @override
-  void updateData(IAccountResponse data) {
+  void updateDataFromJson(IAccountResponse data) {
     cashBalance = parse(data.json['cash_balance']);
     debt = parse(data.json['debt']);
     cashAvai = parse(data.json['cash_avai']);

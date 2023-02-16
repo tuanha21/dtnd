@@ -42,11 +42,11 @@ class HomeController {
   Stream<double> get initProcess => _initProcess.stream;
 
   late final List<StockModel> interestedCatalog;
-  List<StockModel> hotToday = [];
-  List<StockModel> priceIncreaseToday = [];
-  List<StockModel> priceDecreaseToday = [];
-  List<StockModel> topForeignToday = [];
-  List<StockModel> topVolumnToday = [];
+  List<StockModel>? hotToday = [];
+  List<StockModel>? priceIncreaseToday = [];
+  List<StockModel>? priceDecreaseToday = [];
+  List<StockModel>? topForeignToday = [];
+  List<StockModel>? topVolumnToday = [];
   List<NewsModel> news = [];
   List<WorldIndexModel> worldIndex = [];
   late final Set<IndexModel> listIndexs;
@@ -76,8 +76,8 @@ class HomeController {
     final topInterested = await dataCenterService.getTopInterested(8);
     final stockModels = await dataCenterService.getStockModelsFromStockCodes(
         topInterested.map((e) => e.sTOCKCODE).toList());
-    for (var i = 0; i < stockModels.length; i++) {
-      stockModels.elementAt(i).simpleChartData.value =
+    for (var i = 0; i < (stockModels?.length ?? 0); i++) {
+      stockModels!.elementAt(i).simpleChartData.value =
           topInterested.elementAt(i).cHART;
     }
     hotToday = stockModels;
@@ -87,8 +87,8 @@ class HomeController {
     final topStockChange = await dataCenterService.getTopStockChange(8);
     final stockModels = await dataCenterService.getStockModelsFromStockCodes(
         topStockChange.map((e) => e.sTOCKCODE).toList());
-    for (var i = 0; i < stockModels.length; i++) {
-      stockModels.elementAt(i).simpleChartData.value =
+    for (var i = 0; i < (stockModels?.length ?? 0); i++) {
+      stockModels!.elementAt(i).simpleChartData.value =
           topStockChange.elementAt(i).cHART;
     }
     priceIncreaseToday = stockModels;
@@ -98,8 +98,8 @@ class HomeController {
     final topStockChange = await dataCenterService.getTopStockChange(8, "d");
     final stockModels = await dataCenterService.getStockModelsFromStockCodes(
         topStockChange.map((e) => e.sTOCKCODE).toList());
-    for (var i = 0; i < stockModels.length; i++) {
-      stockModels.elementAt(i).simpleChartData.value =
+    for (var i = 0; i < (stockModels?.length ?? 0); i++) {
+      stockModels!.elementAt(i).simpleChartData.value =
           topStockChange.elementAt(i).cHART;
     }
     priceDecreaseToday = stockModels;
@@ -121,8 +121,8 @@ class HomeController {
     logger.v(topStockChange.length);
     final stockModels = await dataCenterService.getStockModelsFromStockCodes(
         topStockChange.map((e) => e.sTOCKCODE).toList());
-    for (var i = 0; i < stockModels.length; i++) {
-      stockModels.elementAt(i).simpleChartData.value =
+    for (var i = 0; i < (stockModels?.length ?? 0); i++) {
+      stockModels!.elementAt(i).simpleChartData.value =
           topStockChange.elementAt(i).cHART;
     }
     topVolumnToday = stockModels;
@@ -164,8 +164,9 @@ class HomeController {
     //   _initProcess.sink.add(((2 + (i / hotToday.length)) / _initStep));
     // }
     topInitialized.value = true;
-    interestedCatalog = await dataCenterService.getStockModelsFromStockCodes(
+    final stockModels = await dataCenterService.getStockModelsFromStockCodes(
         localStorageService.getListInterestedStock() ?? defaultListStock);
+    interestedCatalog = stockModels ?? [];
     _initProcess.sink.add(4 / _initStep);
     suggestInitialized.value = true;
     getWorldIndex();

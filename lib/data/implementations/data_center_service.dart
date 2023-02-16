@@ -243,7 +243,7 @@ class DataCenterService implements IDataCenterService {
   }
 
   @override
-  Future<List<StockModel>> getStockModelsFromStockCodes(
+  Future<List<StockModel>?> getStockModelsFromStockCodes(
       List<String> stockCodes) async {
     if (registering) {
       // Wait to recall
