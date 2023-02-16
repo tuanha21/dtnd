@@ -47,7 +47,6 @@ class CompanyInfo {
   String? exchange;
 
   DateTime? get dateTime {
-    print(foundDate);
     if (foundDate == null) return null;
     return DateTime.tryParse(foundDate!);
   }

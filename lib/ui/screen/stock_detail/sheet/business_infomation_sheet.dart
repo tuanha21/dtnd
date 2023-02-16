@@ -32,7 +32,6 @@ class _BusinessInformationSheetState extends State<BusinessInformationSheet>
 
   late Future<CompanyIntroductionResponse> introduce;
 
-  bool loading = true;
   int currentIndex = 0;
 
   @override
@@ -49,15 +48,14 @@ class _BusinessInformationSheetState extends State<BusinessInformationSheet>
         .getBusinnessProfile(widget.stockModel.stock.stockCode);
     widget.stockModel.businnessLeaders ??= await dataCenterService
         .getBusinnessLeaders(widget.stockModel.stock.stockCode);
-    widget.stockModel.subsidiaries.subsidiaries ??= await dataCenterService
-        .getSubsidiaries(widget.stockModel.stock.stockCode);
-    widget.stockModel.subsidiaries.associatedCompany ??= await dataCenterService
-        .getAssociatedCompany(widget.stockModel.stock.stockCode);
-    widget.stockModel.subsidiaries.other ??= await dataCenterService
-        .getOtherCompany(widget.stockModel.stock.stockCode);
-    setState(() {
-      loading = false;
-    });
+
+    // widget.stockModel.subsidiaries.subsidiaries ??= await dataCenterService
+    //     .getSubsidiaries(widget.stockModel.stock.stockCode);
+    //
+    // widget.stockModel.subsidiaries.associatedCompany ??= await dataCenterService
+    //     .getAssociatedCompany(widget.stockModel.stock.stockCode);
+    // widget.stockModel.subsidiaries.other ??= await dataCenterService
+    //     .getOtherCompany(widget.stockModel.stock.stockCode);
   }
 
   @override

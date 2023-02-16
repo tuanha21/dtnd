@@ -839,22 +839,26 @@ class NetworkService implements INetworkService {
   @override
   Future<List<SubsidiariesModel>?> getSubsidiaries(
       Map<String, dynamic> body) async {
-    dynamic response =
-        await client.get(url_algo("companies/relatedCompanies", body));
-    if (response.statusCode != 200) {
-      throw response;
+    try {
+      var response =
+          await client.get(url_algo_apec("companies/relatedCompanies", body));
+      if (response.statusCode != 200) {
+        throw response;
+      }
+      var res = decode(response.bodyBytes);
+      if (res["status"] != 200) {
+        throw res["message"];
+      }
+      var listData = res["data"];
+      final List<SubsidiariesModel> result = [];
+      for (var element in listData) {
+        result.add(SubsidiariesModel.fromJson(element));
+      }
+      return result;
+    } catch (e) {
+      logger.e(e.toString());
+      rethrow;
     }
-    response = decode(response.bodyBytes);
-    logger.v(response);
-    if (response["status"] != 200) {
-      throw response["message"];
-    }
-    response = response["data"];
-    final List<SubsidiariesModel> result = [];
-    for (var element in response) {
-      result.add(SubsidiariesModel.fromJson(element));
-    }
-    return result;
   }
 
   @override

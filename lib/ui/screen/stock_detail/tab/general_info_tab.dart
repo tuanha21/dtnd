@@ -11,7 +11,6 @@ import '../../../../=models=/response/company_info.dart';
 import '../../../../=models=/response/share_holder.dart';
 import '../../../../data/i_network_service.dart';
 import '../../../../data/implementations/network_service.dart';
-import '../../../../utilities/logger.dart';
 
 class GeneralInfoTab extends StatefulWidget {
   const GeneralInfoTab({
