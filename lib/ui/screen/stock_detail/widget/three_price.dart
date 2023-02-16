@@ -231,17 +231,13 @@ class _ThreePriceElementState extends State<ThreePriceElement>
     return Padding(
       padding: EdgeInsets.only(
           left: widget.side.isBuy ? 16 : 0, right: !widget.side.isBuy ? 16 : 0),
-      child: LayoutBuilder(
-        builder: (context, ctx) {
-          return Row(
-            children: rowChildren(ctx),
-          );
-        },
+      child: Row(
+        children: rowChildren(),
       ),
     );
   }
 
-  List<Widget> rowChildren(BoxConstraints ctx) {
+  List<Widget> rowChildren() {
     List<Widget> rowChildren;
     if (double.tryParse(widget.price) == 0) {
       rowChildren = [];
@@ -252,38 +248,55 @@ class _ThreePriceElementState extends State<ThreePriceElement>
           style:
               AppTextStyle.labelSmall_10.copyWith(color: AppColors.neutral_04),
         ),
-        const Spacer(),
-        Text(
-          widget.price.toString(),
-          style: AppTextStyle.labelSmall_10.copyWith(color: color),
-        ),
-        const SizedBox(width: 8),
-        Container(
-          width: widget.ratio * ctx.maxWidth * 1 / 3,
-          height: 5,
-          decoration: const BoxDecoration(
-              color: AppColors.accent_dark_01,
-              borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(4), bottomLeft: Radius.circular(4))),
+        Expanded(
+          child: LayoutBuilder(builder: (context, ctx) {
+            return Align(
+              alignment: Alignment.centerRight,
+              child: CustomPaint(
+                painter: VolBGPainter(
+                    side: widget.side,
+                    ratio: widget.ratio * ctx.maxWidth,
+                    color: AppColors.semantic_01.withOpacity(0.4)),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 4,horizontal: 4),
+                  child: Align(
+                    alignment: Alignment.centerRight,
+                    child: Text(
+                      widget.price.toString(),
+                      style: AppTextStyle.labelSmall_10.copyWith(color: color),
+                    ),
+                  ),
+                ),
+              ),
+            );
+          }),
         ),
       ];
     } else {
       rowChildren = [
-        Container(
-          width: widget.ratio * ctx.maxWidth * 1 / 3,
-          height: 5,
-          decoration: const BoxDecoration(
-              color: AppColors.three_prices_sell_bg,
-              borderRadius: BorderRadius.only(
-                  bottomRight: Radius.circular(4),
-                  topRight: Radius.circular(4))),
+        Expanded(
+          child: LayoutBuilder(builder: (context, ctx) {
+            return Align(
+              alignment: Alignment.centerLeft,
+              child: CustomPaint(
+                painter: VolBGPainter(
+                    side: widget.side,
+                    ratio: widget.ratio * ctx.maxWidth,
+                    color: AppColors.semantic_03.withOpacity(0.4)),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 4,horizontal: 4),
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      widget.price.toString(),
+                      style: AppTextStyle.labelSmall_10.copyWith(color: color),
+                    ),
+                  ),
+                ),
+              ),
+            );
+          }),
         ),
-        const SizedBox(width: 8),
-        Text(
-          widget.price.toString(),
-          style: AppTextStyle.labelSmall_10.copyWith(color: color),
-        ),
-        const Spacer(),
         Text(
           NumUtils.formatInteger10(widget.vol),
           style:
@@ -315,7 +328,7 @@ class VolBGPainter extends CustomPainter {
     }
     canvas.drawRRect(
       RRect.fromRectAndCorners(
-        Rect.fromLTWH(0, 0, ratio * size.width, size.height),
+        Rect.fromLTWH(0, 0, ratio, size.height),
         topRight: const Radius.circular(4),
         bottomRight: const Radius.circular(4),
       ),

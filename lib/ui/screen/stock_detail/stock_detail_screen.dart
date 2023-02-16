@@ -101,58 +101,69 @@ class _StockDetailScreenState extends State<StockDetailScreen> {
     }
   }
 
+  bool isChart = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: StockDetailAppbar(stockModel: widget.stockModel),
+      appBar: StockDetailAppbar(
+          stockModel: widget.stockModel,
+          onTap: () {
+            setState(() {
+              isChart = !isChart;
+            });
+          },
+          isChart: isChart),
       // appBar: StockDetailAppbar(stock: widget.stockModel.stock),
-      body: Column(children: [
-        const SizedBox(height: 16),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: StockDetailOverview(stockModel: widget.stockModel),
-        ),
-        Expanded(
-          child: DefaultTabController(
-            length: DetailTab.values.length,
-            child: Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: TabBar(
-                    isScrollable: true,
-                    labelStyle: Theme.of(context)
-                        .textTheme
-                        .titleSmall
-                        ?.copyWith(color: AppColors.text_black_1),
-                    unselectedLabelStyle: Theme.of(context)
-                        .textTheme
-                        .titleSmall
-                        ?.copyWith(color: AppColors.neutral_02),
-                    labelPadding:
-                        const EdgeInsets.symmetric(horizontal: 18, vertical: 6),
-                    padding: EdgeInsets.zero,
-                    // indicatorSize: TabBarIndicatorSize.label,
-                    tabs: DetailTab.values
-                        .map((e) => Text(e.getName(context)))
-                        .toList(),
+      body: isChart
+          ? TechnicalAnalysis(stockCode: widget.stockModel.stock.stockCode)
+          : Column(children: [
+              const SizedBox(height: 16),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: StockDetailOverview(stockModel: widget.stockModel),
+              ),
+              Expanded(
+                child: DefaultTabController(
+                  length: DetailTab.values.length,
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        child: TabBar(
+                          isScrollable: true,
+                          labelStyle: Theme.of(context)
+                              .textTheme
+                              .titleSmall
+                              ?.copyWith(color: AppColors.text_black_1),
+                          unselectedLabelStyle: Theme.of(context)
+                              .textTheme
+                              .titleSmall
+                              ?.copyWith(color: AppColors.neutral_02),
+                          labelPadding: const EdgeInsets.symmetric(
+                              horizontal: 18, vertical: 6),
+                          padding: EdgeInsets.zero,
+                          // indicatorSize: TabBarIndicatorSize.label,
+                          tabs: DetailTab.values
+                              .map((e) => Text(e.getName(context)))
+                              .toList(),
+                        ),
+                      ),
+                      const SizedBox(height: 16),
+                      Expanded(
+                        child: TabBarView(children: [
+                          OverviewTab(stockModel: widget.stockModel),
+                          TransactionTab(stockModel: widget.stockModel),
+                          TechnicalAnalysis(
+                              stockCode: widget.stockModel.stock.stockCode),
+                          FinanceIndexTab(stockModel: widget.stockModel),
+                        ]),
+                      )
+                    ],
                   ),
                 ),
-                const SizedBox(height: 16),
-                Expanded(
-                  child: TabBarView(children: [
-                    OverviewTab(stockModel: widget.stockModel),
-                    TransactionTab(stockModel: widget.stockModel),
-                    TechnicalAnalysis(
-                        stockCode: widget.stockModel.stock.stockCode),
-                    FinanceIndexTab(stockModel: widget.stockModel),
-                  ]),
-                )
-              ],
-            ),
-          ),
-        )
-      ]),
+              )
+            ]),
       backgroundColor: AppColors.bg_1,
       floatingActionButton: SizedBox.square(
         dimension: 40,

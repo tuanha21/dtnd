@@ -33,18 +33,14 @@ class _TechnicalAnalysisState extends State<TechnicalAnalysis>
   Widget build(BuildContext context) {
     final ThemeMode themeMode = AppService.instance.themeMode.value;
     super.build(context);
-    return Container(
-      color: Colors.transparent,
-      padding: const EdgeInsets.all(16),
-      child: WebView(
-          javascriptMode: JavascriptMode.unrestricted,
-          backgroundColor: Colors.transparent,
-          javascriptChannels: <JavascriptChannel>{
-            _toasterJavascriptChannel(context),
-          },
-          initialUrl:
-              "https://info.sbsi.vn/chart/?symbol=${widget.stockCode}&language=vi&theme=${themeMode.isDark ? "dark" : "light"}"),
-    );
+    return WebView(
+        javascriptMode: JavascriptMode.unrestricted,
+        backgroundColor: Colors.transparent,
+        javascriptChannels: <JavascriptChannel>{
+          _toasterJavascriptChannel(context),
+        },
+        initialUrl:
+            "https://info.sbsi.vn/chart/?symbol=${widget.stockCode}&language=vi&theme=${themeMode.isDark ? "dark" : "light"}");
   }
 
   @override

@@ -19,6 +19,7 @@ import 'package:dtnd/=models=/response/news_detail.dart';
 import 'package:dtnd/=models=/response/news_model.dart';
 import 'package:dtnd/=models=/response/s_cash_balance.dart';
 import 'package:dtnd/=models=/response/security_basic_info_model.dart';
+import 'package:dtnd/=models=/response/share_holder.dart';
 import 'package:dtnd/=models=/response/stock.dart';
 import 'package:dtnd/=models=/response/stock_board.dart';
 import 'package:dtnd/=models=/response/stock_data.dart';
@@ -436,7 +437,6 @@ class NetworkService implements INetworkService {
     try {
       final http.Response response =
           await client.get(url_info_sbsi("marketDepth"));
-      logger.d(response.request?.url);
       final List<dynamic> responseBody = decode(response.bodyBytes);
       List<DeepModel> data = [];
       for (var element in responseBody) {
@@ -722,18 +722,20 @@ class NetworkService implements INetworkService {
 
   @override
   Future<List<StockFinancialIndex>> getStockFinancialIndex(String body) async {
-    dynamic response = await client.post(url_algo("secFSRatios"), body: body);
+    var response = await client.post(url_algo("secFSRatios"), body: body);
+
     if (response.statusCode != 200) {
       throw response;
     }
-    response = decode(response.bodyBytes);
+    var res = decode(response.bodyBytes);
 
-    if (response["status"] != 200) {
-      throw response["message"];
+    if (res["status"] != 200) {
+      throw res["message"];
     }
-    response = decode(response["data"]);
+    var list = decode(res["data"]) as List;
+    logger.d(list);
     final List<StockFinancialIndex> result = [];
-    for (final element in response) {
+    for (final element in list) {
       result.add(StockFinancialIndex.fromJson(element));
     }
 
@@ -810,42 +812,55 @@ class NetworkService implements INetworkService {
 
   @override
   Future<List<BusinnessLeaderModel>?> getBusinnessLeaders(String body) async {
-    dynamic response =
-        await client.post(url_algo("companies/leaders"), body: body);
-    if (response.statusCode != 200) {
-      throw response;
+    try {
+      dynamic response =
+          await client.post(url_algo("companies/leaders"), body: body);
+
+      if (response.statusCode != 200) {
+        throw response;
+      }
+      response = decode(response.bodyBytes);
+
+      if (response["status"] != 200) {
+        throw response["message"];
+      }
+      response = response["data"];
+      final List<BusinnessLeaderModel> result = [];
+      for (var element in response) {
+        if (element['personalHeldPct'] != "0") {
+          result.add(BusinnessLeaderModel.fromJson(element));
+        }
+      }
+      return result;
+    } catch (e) {
+      logger.e(e.toString());
+      rethrow;
     }
-    response = decode(response.bodyBytes);
-    if (response["status"] != 200) {
-      throw response["message"];
-    }
-    response = response["data"];
-    final List<BusinnessLeaderModel> result = [];
-    for (var element in response) {
-      result.add(BusinnessLeaderModel.fromJson(element));
-    }
-    return result;
   }
 
   @override
   Future<List<SubsidiariesModel>?> getSubsidiaries(
       Map<String, dynamic> body) async {
-    dynamic response =
-        await client.get(url_algo("companies/relatedCompanies", body));
-    if (response.statusCode != 200) {
-      throw response;
+    try {
+      var response =
+          await client.get(url_algo_apec("companies/relatedCompanies", body));
+      if (response.statusCode != 200) {
+        throw response;
+      }
+      var res = decode(response.bodyBytes);
+      if (res["status"] != 200) {
+        throw res["message"];
+      }
+      var listData = res["data"];
+      final List<SubsidiariesModel> result = [];
+      for (var element in listData) {
+        result.add(SubsidiariesModel.fromJson(element));
+      }
+      return result;
+    } catch (e) {
+      logger.e(e.toString());
+      rethrow;
     }
-    response = decode(response.bodyBytes);
-    logger.v(response);
-    if (response["status"] != 200) {
-      throw response["message"];
-    }
-    response = response["data"];
-    final List<SubsidiariesModel> result = [];
-    for (var element in response) {
-      result.add(SubsidiariesModel.fromJson(element));
-    }
-    return result;
   }
 
   @override
@@ -1069,11 +1084,34 @@ class NetworkService implements INetworkService {
       }
       var res = decode(response.bodyBytes);
       var list = jsonDecode(res['data']) as List;
-      logger.d(list);
+      list = list.reversed.toList();
       var listSecc = <SecTrading>[];
       for (var element in list) {
         if (list.indexOf(element) > 9) break;
         listSecc.add(SecTrading.fromJson(element));
+      }
+      listSecc = listSecc.reversed.toList();
+      return listSecc;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<List<ShareHolders>> getShareHolderCompany(String stockCode) async {
+    try {
+      var response = await client.post(
+          Uri.https(
+              'opacc-api.apec.com.vn', 'algo/pbapi/api/companies/shareholders'),
+          body: jsonEncode({"secCode": stockCode}));
+      if (response.statusCode != 200) {
+        throw response;
+      }
+      var res = decode(response.bodyBytes);
+      var list = res['data'] as List;
+      var listSecc = <ShareHolders>[];
+      for (var element in list) {
+        listSecc.add(ShareHolders.fromJson(element));
       }
       return listSecc;
     } catch (e) {

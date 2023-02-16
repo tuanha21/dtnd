@@ -7,15 +7,17 @@ import 'package:dtnd/ui/widget/svg_icon_button.dart';
 import 'package:flutter/material.dart';
 import '../../sheet/AddStockCatalog.dart';
 
-
 class StockDetailAppbar extends StatelessWidget implements PreferredSizeWidget {
-  const StockDetailAppbar({super.key,
+  const StockDetailAppbar({
+    super.key,
     required this.stockModel,
     this.onTap,
+    required this.isChart,
   });
 
   final VoidCallback? onTap;
   final StockModel stockModel;
+  final bool isChart;
 
   void addCatalog(BuildContext context) async {
     await AddCatalogISheet(stock: stockModel.stock.stockCode)
@@ -39,8 +41,7 @@ class StockDetailAppbar extends StatelessWidget implements PreferredSizeWidget {
               child: Ink(
                 padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
-                  borderRadius:
-                      const BorderRadius.all(Radius.circular(6)),
+                  borderRadius: const BorderRadius.all(Radius.circular(6)),
                   color: themeMode.isLight
                       ? AppColors.neutral_05
                       : AppColors.neutral_01,
@@ -55,36 +56,33 @@ class StockDetailAppbar extends StatelessWidget implements PreferredSizeWidget {
           ),
         ),
       ),
-      title: GestureDetector(
-        onTap: onTap,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text.rich(
-              TextSpan(
-                children: [
-                  TextSpan(
-                      text: stockModel.stock.stockCode,
-                      style: Theme.of(context)
-                          .textTheme
-                          .labelLarge!
-                          .copyWith(fontWeight: FontWeight.w700)),
-                  const TextSpan(text: " "),
-                  TextSpan(
-                    text: "(${stockModel.stock.postTo?.name})",
-                    style: AppTextStyle.labelLarge_18
-                        .copyWith(color: AppColors.neutral_03),
-                  ),
-                ],
-              ),
+      title: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text.rich(
+            TextSpan(
+              children: [
+                TextSpan(
+                    text: stockModel.stock.stockCode,
+                    style: Theme.of(context)
+                        .textTheme
+                        .labelLarge!
+                        .copyWith(fontWeight: FontWeight.w700)),
+                const TextSpan(text: " "),
+                TextSpan(
+                  text: "(${stockModel.stock.postTo?.name})",
+                  style: AppTextStyle.labelLarge_18
+                      .copyWith(color: AppColors.neutral_03),
+                ),
+              ],
             ),
-            Text(
-              "${stockModel.stock.nameShort}",
-              style: AppTextStyle.bottomNavLabel
-                  .copyWith(color: AppColors.neutral_03),
-            ),
-          ],
-        ),
+          ),
+          Text(
+            "${stockModel.stock.nameShort}",
+            style: AppTextStyle.bottomNavLabel
+                .copyWith(color: AppColors.neutral_03),
+          ),
+        ],
       ),
       actions: [
         SvgIconButton(
@@ -95,15 +93,18 @@ class StockDetailAppbar extends StatelessWidget implements PreferredSizeWidget {
           iconSize: 20,
           color: Theme.of(context).colorScheme.onPrimary,
         ),
-        SvgIconButton(
-          AppImages.notification_appbar_icon,
-          onPressed: () {},
-          iconSize: 20,
-          color: Theme.of(context).colorScheme.onPrimary,
+        GestureDetector(
+          onTap: onTap,
+          child: Image.asset(
+            AppImages.chart,
+            height: 24,
+            width: 24,
+            color: isChart
+                ? Theme.of(context).colorScheme.onPrimary
+                : AppColors.neutral_03,
+          ),
         ),
-        const SizedBox(
-          width: 16,
-        ),
+        const SizedBox(width: 16),
       ],
     );
   }

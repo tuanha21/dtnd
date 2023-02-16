@@ -46,62 +46,106 @@ class _ForeignWidgetState extends State<ForeignWidget> {
               }
               if (snapshot.connectionState == ConnectionState.done) {
                 var stockBoard = snapshot.data!;
-                return Padding(
+                return Container(
+                  margin: const EdgeInsets.symmetric(horizontal: 16),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(12),
+                      color: AppColors.light_bg),
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: Column(
                     children: [
                       const SizedBox(height: 16),
                       Row(
                         children: [
-                          const Spacer(),
-                          Expanded(child: Text("Mua", style: title)),
-                          Expanded(child: Text("Bán", style: title)),
-                          Expanded(child: Text("Mua bán ròng", style: title))
+                          const Spacer(flex: 8),
+                          Expanded(
+                              flex: 6,
+                              child: Text("Mua",
+                                  style: title?.copyWith(
+                                      fontWeight: FontWeight.w600,
+                                      color: AppColors.neutral_02))),
+                          Expanded(
+                              flex: 6,
+                              child: Text("Bán",
+                                  style: title?.copyWith(
+                                      fontWeight: FontWeight.w600,
+                                      color: AppColors.neutral_02))),
+                          Expanded(
+                              flex: 6,
+                              child: Text("Mua bán ròng",
+                                  style: title?.copyWith(
+                                      fontWeight: FontWeight.w600,
+                                      color: AppColors.neutral_02)))
                         ],
                       ),
-                      const SizedBox(height: 10),
+                      const Divider(
+                        thickness: 0.5,
+                        height: 16,
+                        color: AppColors.neutral_04,
+                      ),
                       Row(
                         children: [
                           Expanded(
-                              child: Text(S.of(context).volumn, style: title)),
+                              flex: 8,
+                              child: Text(S.of(context).volumn,
+                                  style: title?.copyWith(
+                                      fontWeight: FontWeight.w600,
+                                      color: AppColors.neutral_02))),
                           Expanded(
+                              flex: 6,
                               child: Text(
                                   NumUtils.formatInteger(
                                       stockBoard.fGBuyQuantity),
                                   style: title?.copyWith(
                                       fontWeight: FontWeight.w600))),
                           Expanded(
+                              flex: 6,
                               child: Text(
-                            NumUtils.formatInteger(stockBoard.fGSellQuantity),
-                            style: title?.copyWith(fontWeight: FontWeight.w600),
-                          )),
+                                NumUtils.formatInteger(
+                                    stockBoard.fGSellQuantity),
+                                style: title?.copyWith(
+                                    fontWeight: FontWeight.w600),
+                              )),
                           Expanded(
+                              flex: 6,
                               child: Text(
-                            NumUtils.formatInteger(stockBoard.fGNetQuantity),
-                            style: title?.copyWith(fontWeight: FontWeight.w600),
-                          ))
+                                NumUtils.formatInteger(
+                                    stockBoard.fGNetQuantity),
+                                style: title?.copyWith(
+                                    fontWeight: FontWeight.w600),
+                              ))
                         ],
                       ),
                       const SizedBox(height: 10),
                       Row(
                         children: [
                           Expanded(
-                              child: Text("Giá trị giao dịch", style: title)),
+                              flex: 8,
+                              child: Text("Giá trị giao dịch",
+                                  style: title?.copyWith(
+                                      fontWeight: FontWeight.w600,
+                                      color: AppColors.neutral_02))),
                           Expanded(
+                              flex: 6,
                               child: Text(
-                            NumUtils.formatInteger(stockBoard.fGBuyValue),
-                            style: title?.copyWith(fontWeight: FontWeight.w600),
-                          )),
+                                NumUtils.formatInteger(stockBoard.fGBuyValue),
+                                style: title?.copyWith(
+                                    fontWeight: FontWeight.w600),
+                              )),
                           Expanded(
+                              flex: 6,
                               child: Text(
-                            NumUtils.formatInteger(stockBoard.fGSellValue),
-                            style: title?.copyWith(fontWeight: FontWeight.w600),
-                          )),
+                                NumUtils.formatInteger(stockBoard.fGSellValue),
+                                style: title?.copyWith(
+                                    fontWeight: FontWeight.w600),
+                              )),
                           Expanded(
+                              flex: 6,
                               child: Text(
-                            NumUtils.formatInteger(stockBoard.fGNetValue),
-                            style: title?.copyWith(fontWeight: FontWeight.w600),
-                          ))
+                                NumUtils.formatInteger(stockBoard.fGNetValue),
+                                style: title?.copyWith(
+                                    fontWeight: FontWeight.w600),
+                              ))
                         ],
                       ),
                     ],
@@ -147,9 +191,7 @@ class _ForeignWidgetState extends State<ForeignWidget> {
                       ),
                       domainAxis: const charts.OrdinalAxisSpec(
                         renderSpec: charts.SmallTickRendererSpec(
-                          labelRotation: 270,
-                          minimumPaddingBetweenLabelsPx: 0,
-                          labelOffsetFromAxisPx: 35,
+                          labelOffsetFromAxisPx: 5,
                           labelStyle: charts.TextStyleSpec(fontSize: 9),
                         ),
                       ),

@@ -8,9 +8,9 @@ import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../=models=/response/company_info.dart';
+import '../../../../=models=/response/share_holder.dart';
 import '../../../../data/i_network_service.dart';
 import '../../../../data/implementations/network_service.dart';
-import '../../../../utilities/logger.dart';
 
 class GeneralInfoTab extends StatefulWidget {
   const GeneralInfoTab({
@@ -28,10 +28,14 @@ class _GeneralInfoTabState extends State<GeneralInfoTab> {
   late Future<CompanyInfo> companyInfo;
   final INetworkService iNetworkService = NetworkService();
 
+  late Future<List<ShareHolders>> listShareHolder;
+
   @override
   void initState() {
     companyInfo =
         iNetworkService.getCompanyInfo(widget.stockModel.stockData.sym);
+    listShareHolder = iNetworkService
+        .getShareHolderCompany(widget.stockModel.stock.stockCode);
     super.initState();
   }
 
@@ -213,16 +217,14 @@ class _GeneralInfoTabState extends State<GeneralInfoTab> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    widget.stockModel.businnessLeaders
-                                            ?.elementAt(i)
+                                    widget.stockModel.businnessLeaders?[i]
                                             .fullName ??
                                         "-",
                                     style: textTheme.labelMedium!
                                         .copyWith(fontWeight: FontWeight.w600),
                                   ),
                                   Text(
-                                    widget.stockModel.businnessLeaders
-                                            ?.elementAt(i)
+                                    widget.stockModel.businnessLeaders?[i]
                                             .position ??
                                         "-",
                                     style: AppTextStyle.bodySmall_8
@@ -250,7 +252,7 @@ class _GeneralInfoTabState extends State<GeneralInfoTab> {
                                       ),
                                       const SizedBox(width: 8),
                                       Text(
-                                        "${widget.stockModel.businnessLeaders?.elementAt(i).personalHeldPct?.toString() ?? "-"}%",
+                                        "${widget.stockModel.businnessLeaders?[i].personalHeldPct?.toString() ?? "-"}%",
                                         style: textTheme.labelMedium!.copyWith(
                                             fontWeight: FontWeight.w600),
                                       ),
@@ -331,7 +333,84 @@ class _GeneralInfoTabState extends State<GeneralInfoTab> {
                             ]),
                       ),
                     ),
-                  )
+                  ),
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      "Cổ đông lớn",
+                      style: textTheme.titleMedium!
+                          .copyWith(fontWeight: FontWeight.w700),
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  FutureBuilder<List<ShareHolders>>(
+                      future: listShareHolder,
+                      initialData: const [],
+                      builder: (context, snapshot) {
+                        if (snapshot.hasData) {
+                          if (snapshot.data == null) return const SizedBox();
+                          var list = snapshot.data!;
+
+                          return ListView.separated(
+                              shrinkWrap: true,
+                              physics: const NeverScrollableScrollPhysics(),
+                              itemBuilder: (context, i) {
+                                return Container(
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 8, horizontal: 16),
+                                  decoration: const BoxDecoration(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(12)),
+                                    color: AppColors.neutral_06,
+                                  ),
+                                  child: Row(
+                                    children: [
+                                      Text(
+                                        list[i].name ?? "-",
+                                        style: textTheme.labelMedium!.copyWith(
+                                            fontWeight: FontWeight.w600),
+                                      ),
+                                      Expanded(child: LayoutBuilder(
+                                        builder: (context, ctx) {
+                                          return Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.end,
+                                            children: [
+                                              Container(
+                                                width: (list[i].heldPct ?? 0) *
+                                                    ctx.maxWidth /
+                                                    300,
+                                                height: 10,
+                                                decoration: const BoxDecoration(
+                                                    borderRadius:
+                                                        BorderRadius.all(
+                                                            Radius.circular(4)),
+                                                    color: AppColors.graph_2),
+                                              ),
+                                              const SizedBox(width: 8),
+                                              Text(
+                                                "${list[i].heldPct?.toString() ?? "-"}%",
+                                                style: textTheme.labelMedium!
+                                                    .copyWith(
+                                                        fontWeight:
+                                                            FontWeight.w600),
+                                              ),
+                                            ],
+                                          );
+                                        },
+                                      ))
+                                    ],
+                                  ),
+                                );
+                              },
+                              separatorBuilder: (context, index) {
+                                return const SizedBox(height: 8);
+                              },
+                              itemCount: list.length);
+                        }
+                        return const SizedBox();
+                      }),
+                  const SizedBox(height: 24),
                 ],
               ),
             );

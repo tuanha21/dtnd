@@ -1,9 +1,21 @@
 import 'package:dtnd/=models=/response/stock_model.dart';
+import 'package:dtnd/ui/theme/app_image.dart';
+import 'package:dtnd/ui/widget/expanded_widget.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:percent_indicator/linear_percent_indicator.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:url_launcher/url_launcher.dart';
+import '../../../../=models=/response/company_info.dart';
+import '../../../../=models=/response/news_model.dart';
+import '../../../../=models=/response/stock_news.dart';
+import '../../../../data/i_network_service.dart';
+import '../../../../data/implementations/network_service.dart';
 import '../../../../generated/l10n.dart';
 import '../../../theme/app_color.dart';
+import '../../../widget/icon/stock_icon.dart';
+import '../../../widget/news_card.dart';
 import '../../home/widget/home_section.dart';
+import '../../news_detail.dart/new_detail_screen.dart';
 import '../widget/index_widget.dart';
 import '../widget/introduct_widget.dart';
 import '../widget/stock_detail_chart.dart';
@@ -34,72 +46,58 @@ class _OverviewTabState extends State<OverviewTab> {
               child: StockDetailChart(stockModel: widget.stockModel),
             )),
         const SizedBox(height: 16),
-        HomeSection(
-          title: "Chỉ số cơ bản",
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: Column(
+        BasicIndex(stockModel: widget.stockModel),
+        const SizedBox(height: 20),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: IntrinsicHeight(
+            child: Row(
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'Giá thấp nhất',
-                      style: Theme.of(context)
-                          .textTheme
-                          .labelMedium
-                          ?.copyWith(color: AppColors.neutral_04),
-                    ),
-                    Text(
-                      'Giá cao nhất',
-                      style: Theme.of(context)
-                          .textTheme
-                          .labelMedium
-                          ?.copyWith(color: AppColors.neutral_04),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 10),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      widget.stockModel.stockData.lowPrice.value.toString(),
-                      style: Theme.of(context).textTheme.titleSmall,
-                    ),
-                    Expanded(
-                      child: Builder(
-                        builder: (context) {
-                          return LinearPercentIndicator(
-                            barRadius: const Radius.circular(12),
-                            animation: true,
-                            animationDuration: 1000,
-                            lineHeight: 10,
-                            percent:
-                                widget.stockModel.stockData.percent.toDouble(),
-                            progressColor: AppColors.neutral_03,
-                            backgroundColor: AppColors.neutral_01,
-                          );
-                        },
-                      ),
-                    ),
-                    Text(
-                      widget.stockModel.stockData.highPrice.value.toString(),
-                      style: Theme.of(context).textTheme.titleSmall,
-                    )
-                  ],
+                StockIcon(stockCode: widget.stockModel.stockData.sym),
+                const SizedBox(width: 16),
+                Flexible(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(widget.stockModel.stock.stockCode,
+                          style: Theme.of(context)
+                              .textTheme
+                              .titleMedium
+                              ?.copyWith(fontWeight: FontWeight.w600)),
+                      const SizedBox(height: 4),
+                      Text(
+                        '${widget.stockModel.stock.postTo!.name} : ${widget.stockModel.stock.nameShort}',
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodySmall
+                            ?.copyWith(color: AppColors.neutral_04),
+                      )
+                    ],
+                  ),
                 )
               ],
             ),
           ),
         ),
         const SizedBox(height: 16),
-        IndexWidget(stockModel: widget.stockModel),
-        const SizedBox(height: 20),
+        CompanyInfoWidget(stockModel: widget.stockModel),
+        const SizedBox(height: 16),
         IntroduceWidget(stockCode: widget.stockModel),
         const SizedBox(height: 16),
         HomeSection(
           title: S.of(context).news,
+          onMore: () {
+            showModalBottomSheet(
+                context: context,
+                isScrollControlled: true,
+                useSafeArea: true,
+                shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.vertical(
+                        top: Radius.circular(12))),
+                builder: (context) {
+                  return ListNewsISheet(model: widget.stockModel);
+                });
+          },
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child:
@@ -118,6 +116,397 @@ class _OverviewTabState extends State<OverviewTab> {
         ),
         const SizedBox(height: 20),
       ],
+    );
+  }
+}
+
+class BasicIndex extends StatefulWidget {
+  final StockModel stockModel;
+
+  const BasicIndex({Key? key, required this.stockModel}) : super(key: key);
+
+  @override
+  State<BasicIndex> createState() => _BasicIndexState();
+}
+
+class _BasicIndexState extends State<BasicIndex> {
+  Widget indexPrice() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      child: Column(
+        children: [
+          Row(
+            children: [
+              Text(
+                "Chỉ số cơ bản",
+                style: Theme.of(context).textTheme.bodyMedium,
+              ),
+              const SizedBox(width: 6),
+              SvgPicture.asset(AppImages.circleAlert)
+            ],
+          ),
+          const SizedBox(height: 16),
+          Row(
+            children: [
+              Expanded(
+                  child: Column(
+                children: [
+                  Container(
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                        color: AppColors.neutral_06,
+                        borderRadius: BorderRadius.circular(8)),
+                    padding: const EdgeInsets.symmetric(vertical: 10),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Image.asset(AppImages.prefix_down_icon,
+                            height: 20, width: 20),
+                        const SizedBox(width: 4),
+                        Text(
+                          'Giá thấp nhất',
+                          style: Theme.of(context).textTheme.bodySmall,
+                        )
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    widget.stockModel.stockData.lowPrice.value?.toString() ??
+                        "",
+                    style: Theme.of(context).textTheme.titleMedium,
+                  )
+                ],
+              )),
+              const SizedBox(width: 12),
+              Expanded(
+                  child: Column(
+                children: [
+                  Container(
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                        color: AppColors.neutral_06,
+                        borderRadius: BorderRadius.circular(8)),
+                    padding: const EdgeInsets.symmetric(vertical: 10),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Image.asset(AppImages.prefix_up_icon,
+                            height: 20, width: 20),
+                        const SizedBox(width: 4),
+                        Text(
+                          'Giá cao nhất',
+                          style: Theme.of(context).textTheme.bodySmall,
+                        )
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    widget.stockModel.stockData.highPrice.value?.toString() ??
+                        "",
+                    style: Theme.of(context).textTheme.titleMedium,
+                  )
+                ],
+              )),
+            ],
+          )
+        ],
+      ),
+    );
+  }
+
+  bool isExpanded = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        indexPrice(),
+        ExpandedSection(
+            expand: isExpanded,
+            child: IndexWidget(stockModel: widget.stockModel)),
+        const SizedBox(height: 16),
+        GestureDetector(
+          onTap: () {
+            setState(() {
+              isExpanded = !isExpanded;
+            });
+          },
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 48, vertical: 4),
+            decoration: BoxDecoration(
+              color: AppColors.primary_04,
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: Icon(
+              !isExpanded ? Icons.arrow_drop_down : Icons.arrow_drop_up,
+              color: AppColors.light_bg,
+            ),
+          ),
+        )
+      ],
+    );
+  }
+}
+
+class CompanyInfoWidget extends StatefulWidget {
+  final StockModel stockModel;
+
+  const CompanyInfoWidget({Key? key, required this.stockModel})
+      : super(key: key);
+
+  @override
+  State<CompanyInfoWidget> createState() => _CompanyInfoWidgetState();
+}
+
+class _CompanyInfoWidgetState extends State<CompanyInfoWidget> {
+  late Future<CompanyInfo> companyInfo;
+  final INetworkService iNetworkService = NetworkService();
+
+  @override
+  void initState() {
+    companyInfo =
+        iNetworkService.getCompanyInfo(widget.stockModel.stockData.sym);
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
+
+    return FutureBuilder<CompanyInfo>(
+        future: companyInfo,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const SizedBox();
+          }
+          if (snapshot.connectionState == ConnectionState.done) {
+            var info = snapshot.data!;
+            return Container(
+              margin: const EdgeInsets.symmetric(horizontal: 16),
+              padding: const EdgeInsets.all(16),
+              decoration: const BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(12)),
+                color: AppColors.neutral_06,
+              ),
+              child: Column(
+                children: [
+                  Row(
+                    children: [
+                      Expanded(
+                          child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Ngày thành lập",
+                            style: textTheme.bodyMedium!
+                                .copyWith(color: AppColors.neutral_03),
+                          ),
+                          const SizedBox(height: 8),
+                          Text(
+                            info.foundDateString,
+                            style: textTheme.titleSmall,
+                          ),
+                        ],
+                      )),
+                      Expanded(
+                          child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Mã số thuế",
+                            style: textTheme.bodyMedium!
+                                .copyWith(color: AppColors.neutral_03),
+                          ),
+                          const SizedBox(height: 8),
+                          Text(
+                            info.taxCode ?? "",
+                            style: textTheme.titleSmall,
+                          ),
+                        ],
+                      ))
+                    ],
+                  ),
+                  const SizedBox(height: 16),
+                  Row(
+                    children: [
+                      Expanded(
+                          child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Tên viết tắt",
+                            style: textTheme.bodyMedium!
+                                .copyWith(color: AppColors.neutral_03),
+                          ),
+                          const SizedBox(height: 8),
+                          Text(
+                            info.name ?? "",
+                            style: textTheme.titleSmall,
+                          ),
+                        ],
+                      )),
+                      Expanded(
+                          child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Người đại diện",
+                            style: textTheme.bodyMedium!
+                                .copyWith(color: AppColors.neutral_03),
+                          ),
+                          const SizedBox(height: 8),
+                          Text(
+                            info.infoSupplier ?? "",
+                            style: textTheme.titleSmall,
+                          ),
+                        ],
+                      ))
+                    ],
+                  ),
+                  const SizedBox(height: 16),
+                  GestureDetector(
+                    onTap: () async {
+                      var canLunch = await canLaunchUrl(
+                          Uri(scheme: 'tel', path: info.phone ?? ""));
+                      if (canLunch) {
+                        launchUrl(Uri(scheme: 'tel', path: info.phone ?? ""));
+                      }
+                    },
+                    child: Row(
+                      children: [
+                        Image.asset(
+                          AppImages.call,
+                          width: 15,
+                        ),
+                        const SizedBox(width: 9),
+                        Text(
+                          info.phone ?? "",
+                          style: textTheme.titleSmall?.copyWith(color: AppColors.primary_01),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  GestureDetector(
+                    onTap: () async {
+                      var canLunch =
+                          await canLaunchUrl(Uri.parse(info.uRL ?? ""));
+                      if (canLunch) {
+                        launchUrl(Uri.parse(info.uRL ?? ""));
+                      }
+                    },
+                    child: Row(
+                      children: [
+                        Image.asset(
+                          AppImages.global,
+                          width: 15,
+                        ),
+                        const SizedBox(width: 9),
+                        Text(
+                          info.uRL ?? "",
+                          style: textTheme.titleSmall?.copyWith(color: AppColors.primary_01),
+                        ),
+                      ],
+                    ),
+                  )
+                ],
+              ),
+            );
+          }
+          return const SizedBox();
+        });
+  }
+}
+
+class ListNewsISheet extends StatefulWidget {
+  final StockModel model;
+
+  const ListNewsISheet({Key? key, required this.model}) : super(key: key);
+
+  @override
+  State<ListNewsISheet> createState() => _ListNewsISheetState();
+}
+
+class _ListNewsISheetState extends State<ListNewsISheet> {
+  final INetworkService networkService = NetworkService();
+
+  late Future<List<StockNews>> stockNews;
+
+  @override
+  void initState() {
+    stockNews = networkService.getStockNews(widget.model.stockData.sym);
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      child: Column(
+        children: [
+          const SizedBox(height: 18),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(S.of(context).news,style: Theme.of(context).textTheme.labelLarge,),
+              GestureDetector(
+                onTap: () {
+                  Navigator.pop(context);
+                },
+                child: Container(
+                  padding: const EdgeInsets.all(3),
+                  decoration: BoxDecoration(
+                      color: AppColors.primary_03,
+                      borderRadius: BorderRadius.circular(6)),
+                  child: const Icon(
+                    Icons.clear,
+                    color: AppColors.text_black_1,
+                    size: 20,
+                  ),
+                ),
+              )
+            ],
+          ),
+          const Divider(
+            height: 36,
+            color: AppColors.light_tabBar_bg,
+            thickness: 1,
+          ),
+          Expanded(
+            child: FutureBuilder<List<StockNews>>(
+                future: stockNews,
+                initialData: const [],
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    var listNews = snapshot.data!;
+                    return ListView.separated(
+                        shrinkWrap: true,
+                        itemBuilder: (context, index) {
+                          return GestureDetector(
+                              onTap: () {
+                                Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) => NewsDetailScreen(
+                                      newsModel: NewsModel(
+                                          title: listNews[index].title,
+                                          articleID: listNews[index].articleID,
+                                          headImg: listNews[index].imageUrl,
+                                          publishTime: listNews[index].publishTime)),
+                                ));
+                              },
+                              child: NewsCard(stockNews: listNews[index]));
+                        },
+                        separatorBuilder: (context, index) {
+                          return const SizedBox(height: 10);
+                        },
+                        itemCount: listNews.length);
+                  }
+                  return const SizedBox();
+                }),
+          ),
+        ],
+      ),
     );
   }
 }

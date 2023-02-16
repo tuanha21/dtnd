@@ -90,6 +90,8 @@ class AppImages {
   static const String money_recive = "assets/images/money_recive.png";
   static const String money_send = "assets/images/money_send.png";
 
+  static const String circleAlert = 'assets/svg/alert-circle.svg';
+
   static const String money_2 = "assets/images/money_2.png";
   static const String money_change = "assets/images/money_change.png";
   static const String timer_2 = "assets/images/timer_2.png";

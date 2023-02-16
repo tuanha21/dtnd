@@ -35,10 +35,8 @@ class _FinanceIndexTabState extends State<FinanceIndexTab> {
   }
 
   Future<void> getStockFinancialIndex() async {
-    print('asd');
     widget.stockModel.changeStockFinancialIndex(await dataCenterService
         .getStockFinancialIndex(widget.stockModel.stock.stockCode));
-    print(widget.stockModel.stockFinancialIndex.length);
   }
 
   @override
