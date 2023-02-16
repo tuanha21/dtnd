@@ -383,12 +383,12 @@ class _CompanyInfoWidgetState extends State<CompanyInfoWidget> {
                         const SizedBox(width: 9),
                         Text(
                           info.phone ?? "",
-                          style: textTheme.titleSmall,
+                          style: textTheme.titleSmall?.copyWith(color: AppColors.primary_01),
                         ),
                       ],
                     ),
                   ),
-                  const SizedBox(height: 16),
+                  const SizedBox(height: 10),
                   GestureDetector(
                     onTap: () async {
                       var canLunch =
@@ -406,7 +406,7 @@ class _CompanyInfoWidgetState extends State<CompanyInfoWidget> {
                         const SizedBox(width: 9),
                         Text(
                           info.uRL ?? "",
-                          style: textTheme.titleSmall,
+                          style: textTheme.titleSmall?.copyWith(color: AppColors.primary_01),
                         ),
                       ],
                     ),

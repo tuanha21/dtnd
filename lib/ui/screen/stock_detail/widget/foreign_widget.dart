@@ -191,9 +191,7 @@ class _ForeignWidgetState extends State<ForeignWidget> {
                       ),
                       domainAxis: const charts.OrdinalAxisSpec(
                         renderSpec: charts.SmallTickRendererSpec(
-                          labelRotation: 270,
-                          minimumPaddingBetweenLabelsPx: 0,
-                          labelOffsetFromAxisPx: 35,
+                          labelOffsetFromAxisPx: 5,
                           labelStyle: charts.TextStyleSpec(fontSize: 9),
                         ),
                       ),
