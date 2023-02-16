@@ -1078,12 +1078,13 @@ class NetworkService implements INetworkService {
       }
       var res = decode(response.bodyBytes);
       var list = jsonDecode(res['data']) as List;
-      logger.d(list);
+      list = list.reversed.toList();
       var listSecc = <SecTrading>[];
       for (var element in list) {
         if (list.indexOf(element) > 9) break;
         listSecc.add(SecTrading.fromJson(element));
       }
+      listSecc = listSecc.reversed.toList();
       return listSecc;
     } catch (e) {
       rethrow;

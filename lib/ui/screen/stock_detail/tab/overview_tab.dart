@@ -1,16 +1,21 @@
 import 'package:dtnd/=models=/response/stock_model.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:dtnd/ui/widget/expanded_widget.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../../../=models=/response/company_info.dart';
+import '../../../../=models=/response/news_model.dart';
+import '../../../../=models=/response/stock_news.dart';
 import '../../../../data/i_network_service.dart';
 import '../../../../data/implementations/network_service.dart';
 import '../../../../generated/l10n.dart';
 import '../../../theme/app_color.dart';
 import '../../../widget/icon/stock_icon.dart';
+import '../../../widget/news_card.dart';
 import '../../home/widget/home_section.dart';
+import '../../news_detail.dart/new_detail_screen.dart';
 import '../widget/index_widget.dart';
 import '../widget/introduct_widget.dart';
 import '../widget/stock_detail_chart.dart';
@@ -77,11 +82,22 @@ class _OverviewTabState extends State<OverviewTab> {
         const SizedBox(height: 16),
         CompanyInfoWidget(stockModel: widget.stockModel),
         const SizedBox(height: 16),
-
         IntroduceWidget(stockCode: widget.stockModel),
         const SizedBox(height: 16),
         HomeSection(
           title: S.of(context).news,
+          onMore: () {
+            showModalBottomSheet(
+                context: context,
+                isScrollControlled: true,
+                useSafeArea: true,
+                shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.vertical(
+                        top: Radius.circular(12))),
+                builder: (context) {
+                  return ListNewsISheet(model: widget.stockModel);
+                });
+          },
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child:
@@ -237,7 +253,8 @@ class _BasicIndexState extends State<BasicIndex> {
 class CompanyInfoWidget extends StatefulWidget {
   final StockModel stockModel;
 
-  const CompanyInfoWidget({Key? key, required this.stockModel}) : super(key: key);
+  const CompanyInfoWidget({Key? key, required this.stockModel})
+      : super(key: key);
 
   @override
   State<CompanyInfoWidget> createState() => _CompanyInfoWidgetState();
@@ -400,5 +417,96 @@ class _CompanyInfoWidgetState extends State<CompanyInfoWidget> {
           }
           return const SizedBox();
         });
+  }
+}
+
+class ListNewsISheet extends StatefulWidget {
+  final StockModel model;
+
+  const ListNewsISheet({Key? key, required this.model}) : super(key: key);
+
+  @override
+  State<ListNewsISheet> createState() => _ListNewsISheetState();
+}
+
+class _ListNewsISheetState extends State<ListNewsISheet> {
+  final INetworkService networkService = NetworkService();
+
+  late Future<List<StockNews>> stockNews;
+
+  @override
+  void initState() {
+    stockNews = networkService.getStockNews(widget.model.stockData.sym);
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      child: Column(
+        children: [
+          const SizedBox(height: 18),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(S.of(context).news,style: Theme.of(context).textTheme.labelLarge,),
+              GestureDetector(
+                onTap: () {
+                  Navigator.pop(context);
+                },
+                child: Container(
+                  padding: const EdgeInsets.all(3),
+                  decoration: BoxDecoration(
+                      color: AppColors.primary_03,
+                      borderRadius: BorderRadius.circular(6)),
+                  child: const Icon(
+                    Icons.clear,
+                    color: AppColors.text_black_1,
+                    size: 20,
+                  ),
+                ),
+              )
+            ],
+          ),
+          const Divider(
+            height: 36,
+            color: AppColors.light_tabBar_bg,
+            thickness: 1,
+          ),
+          Expanded(
+            child: FutureBuilder<List<StockNews>>(
+                future: stockNews,
+                initialData: const [],
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    var listNews = snapshot.data!;
+                    return ListView.separated(
+                        shrinkWrap: true,
+                        itemBuilder: (context, index) {
+                          return GestureDetector(
+                              onTap: () {
+                                Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) => NewsDetailScreen(
+                                      newsModel: NewsModel(
+                                          title: listNews[index].title,
+                                          articleID: listNews[index].articleID,
+                                          headImg: listNews[index].imageUrl,
+                                          publishTime: listNews[index].publishTime)),
+                                ));
+                              },
+                              child: NewsCard(stockNews: listNews[index]));
+                        },
+                        separatorBuilder: (context, index) {
+                          return const SizedBox(height: 10);
+                        },
+                        itemCount: listNews.length);
+                  }
+                  return const SizedBox();
+                }),
+          ),
+        ],
+      ),
+    );
   }
 }
