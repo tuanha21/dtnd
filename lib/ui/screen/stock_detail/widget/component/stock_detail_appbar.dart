@@ -11,13 +11,13 @@ class StockDetailAppbar extends StatelessWidget implements PreferredSizeWidget {
   const StockDetailAppbar({
     super.key,
     required this.stockModel,
-    this.onTap, required this.isChart,
+    this.onTap,
+    required this.isChart,
   });
 
   final VoidCallback? onTap;
   final StockModel stockModel;
   final bool isChart;
-
 
   void addCatalog(BuildContext context) async {
     await AddCatalogISheet(stock: stockModel.stock.stockCode)
@@ -99,7 +99,9 @@ class StockDetailAppbar extends StatelessWidget implements PreferredSizeWidget {
             AppImages.chart,
             height: 24,
             width: 24,
-            color: isChart ?Theme.of(context).colorScheme.onPrimary : AppColors.neutral_03,
+            color: isChart
+                ? Theme.of(context).colorScheme.onPrimary
+                : AppColors.neutral_03,
           ),
         ),
         const SizedBox(width: 16),

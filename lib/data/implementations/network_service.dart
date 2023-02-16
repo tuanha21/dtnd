@@ -437,7 +437,6 @@ class NetworkService implements INetworkService {
     try {
       final http.Response response =
           await client.get(url_info_sbsi("marketDepth"));
-      logger.d(response.request?.url);
       final List<dynamic> responseBody = decode(response.bodyBytes);
       List<DeepModel> data = [];
       for (var element in responseBody) {
@@ -722,18 +721,20 @@ class NetworkService implements INetworkService {
 
   @override
   Future<List<StockFinancialIndex>> getStockFinancialIndex(String body) async {
-    dynamic response = await client.post(url_algo("secFSRatios"), body: body);
+    var response = await client.post(url_algo("secFSRatios"), body: body);
+
     if (response.statusCode != 200) {
       throw response;
     }
-    response = decode(response.bodyBytes);
+    var res = decode(response.bodyBytes);
 
-    if (response["status"] != 200) {
-      throw response["message"];
+    if (res["status"] != 200) {
+      throw res["message"];
     }
-    response = decode(response["data"]);
+    var list = decode(res["data"]) as List;
+    logger.d(list);
     final List<StockFinancialIndex> result = [];
-    for (final element in response) {
+    for (final element in list) {
       result.add(StockFinancialIndex.fromJson(element));
     }
 
