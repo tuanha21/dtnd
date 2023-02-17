@@ -10,12 +10,15 @@ class BenefitChart extends StatefulWidget {
     super.key,
     required this.listStockFinancialIndex,
   });
+
   final List<StockFinancialIndex> listStockFinancialIndex;
+
   @override
   State<BenefitChart> createState() => _BenefitChartState();
 }
 
 class _BenefitChartState extends State<BenefitChart> {
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -70,19 +73,20 @@ class BenefitChartColumn extends StatelessWidget {
     super.key,
     required this.stockFinancialIndex,
   });
+
   final StockFinancialIndex stockFinancialIndex;
 
-  num get ratio =>
-      (stockFinancialIndex.nETINC ?? 0) / (stockFinancialIndex.nETREV ?? 1);
+  num get ratio {
+    var nETINC = stockFinancialIndex.nETINC ?? 0;
+    var nETREV = stockFinancialIndex.nETREV ?? 1;
+    if (nETINC < 0) {
+      nETREV += nETREV + nETINC * -1;
+    }
+    return nETINC / nETREV;
+  }
 
   @override
   Widget build(BuildContext context) {
-    final double height;
-    if (ratio == 0) {
-      height = 0;
-    } else {
-      height = 1 / ratio;
-    }
     return Column(
       children: [
         Container(
@@ -93,13 +97,20 @@ class BenefitChartColumn extends StatelessWidget {
             color: AppColors.neutral_05,
           ),
           alignment: Alignment.bottomCenter,
-          child: Container(
-            height: height,
-            width: 8,
-            decoration: const BoxDecoration(
-              borderRadius: BorderRadius.vertical(top: Radius.circular(8)),
-              color: AppColors.primary_02,
-            ),
+          child: LayoutBuilder(
+            builder: (context, ctx) {
+              var percent = ratio < 0 ? ratio * -1 : ratio;
+              return Container(
+                height: ctx.maxHeight * percent,
+                width: 8,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.vertical(
+                      top: Radius.circular(ratio > 0 ? 8 : 0),
+                      bottom: Radius.circular(ratio < 0 ? 8 : 0)),
+                  color: AppColors.primary_02,
+                ),
+              );
+            },
           ),
         ),
         const SizedBox(height: 10),
