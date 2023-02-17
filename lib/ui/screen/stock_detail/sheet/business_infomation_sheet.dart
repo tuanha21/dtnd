@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dtnd/=models=/response/stock_model.dart';
 import 'package:dtnd/data/i_data_center_service.dart';
 import 'package:dtnd/data/i_network_service.dart';
@@ -63,6 +64,7 @@ class _BusinessInformationSheetState extends State<BusinessInformationSheet>
     return Material(
       child: Container(
         decoration: const BoxDecoration(
+          color: AppColors.light_bg,
             borderRadius: BorderRadius.only(
                 topRight: Radius.circular(12), topLeft: Radius.circular(12))),
         child: DefaultTabController(
@@ -113,13 +115,35 @@ class _BusinessInformationSheetState extends State<BusinessInformationSheet>
                       child: IntrinsicHeight(
                         child: Row(
                           children: [
-                            StockIcon(
-                                stockCode: widget.stockModel.stockData.sym),
+                            CachedNetworkImage(
+                              imageUrl:
+                              'https://info.sbsi.vn/logo/${widget.stockModel.stock.stockCode}',
+                              imageBuilder: (context, provider) {
+                                return Container(
+                                  height: 63,
+                                  width: 63,
+                                  decoration: BoxDecoration(
+                                      color: AppColors.neutral_06,
+                                      borderRadius: BorderRadius.circular(4),
+                                      image: DecorationImage(image: provider,fit: BoxFit.contain)),
+                                );
+                              },
+                              errorWidget: (context,_,__){
+                                return Container(
+                                  height: 63,
+                                  width: 63,
+                                  decoration: BoxDecoration(
+                                      color: AppColors.neutral_06,
+                                      borderRadius: BorderRadius.circular(4)),
+                                );
+                              },
+                            ),
                             const SizedBox(width: 16),
                             Flexible(
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
+                                  const SizedBox(height: 4),
                                   Text(widget.stockModel.stock.stockCode ,
                                       style: Theme.of(context)
                                           .textTheme

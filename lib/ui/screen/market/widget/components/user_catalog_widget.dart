@@ -16,6 +16,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import '../../../../../=models=/local/user_catalog.dart';
 import '../../../../../=models=/response/stock.dart';
 import '../../../../../generated/l10n.dart';
 import '../../../../../utilities/logger.dart';
@@ -51,6 +52,11 @@ class _UserCatalogWidgetState extends State<UserCatalogWidget> {
   int get currentCatalogIndex => savedCatalog.catalogs
       .indexWhere((element) => element.name == currentCatalog.name);
 
+  final LocalCatalog defaultCatalog = UserCatalog(
+      "VN30",
+      "ACB,BCM,BID,BVH,CTG,FPT,GAS,GVR,HDB,HPG,MBB,MSN,MWG,NVL,PDR,PLX,POW,SAB,SSI,STB,TCB,TPB,VCB,VHM,VIB,VIC,VJC,VNM,VPB,VRE"
+          .split(","));
+
   bool isPercent = false;
 
   @override
@@ -66,13 +72,16 @@ class _UserCatalogWidgetState extends State<UserCatalogWidget> {
       user = userService.token!.user;
     }
     savedCatalog = localStorageService.getSavedCatalog(user);
-    if (savedCatalog.catalogs.isNotEmpty) {
-      currentCatalog = savedCatalog.catalogs.first;
-      if (currentCatalog.listStock.isNotEmpty) {
-        listStocks = dataCenterService
-            .getStockModelsFromStockCodes(currentCatalog.listStock);
-      }
-    }
+    currentCatalog = defaultCatalog;
+    listStocks = dataCenterService
+        .getStockModelsFromStockCodes(currentCatalog.listStock);
+    // if (savedCatalog.catalogs.isNotEmpty) {
+    //   currentCatalog = savedCatalog.catalogs.first;
+    //   if (currentCatalog.listStock.isNotEmpty) {
+    //     listStocks = dataCenterService
+    //         .getStockModelsFromStockCodes(currentCatalog.listStock);
+    //   }
+    // }
   }
 
   @override
@@ -83,7 +92,7 @@ class _UserCatalogWidgetState extends State<UserCatalogWidget> {
         Align(alignment: Alignment.centerLeft, child: rowCatalog()),
         const SizedBox(height: 10),
         Visibility(
-          visible: savedCatalog.catalogs.isNotEmpty,
+          visible: savedCatalog.catalogs.isNotEmpty && currentCatalog.name != defaultCatalog.name,
           child: Container(
             padding: const EdgeInsets.all(18),
             decoration: BoxDecoration(
@@ -189,7 +198,7 @@ class _UserCatalogWidgetState extends State<UserCatalogWidget> {
               Expanded(
                 flex: 3,
                 child: GestureDetector(
-                  onTap: (){
+                  onTap: () {
                     setState(() {
                       isPercent = !isPercent;
                     });
@@ -265,7 +274,10 @@ class _UserCatalogWidgetState extends State<UserCatalogWidget> {
                               ),
                             ],
                           ),
-                          child: StockComponent(model: stock, isPercent: isPercent,));
+                          child: StockComponent(
+                            model: stock,
+                            isPercent: isPercent,
+                          ));
                     },
                     separatorBuilder: (context, index) {
                       return const Divider(
@@ -283,31 +295,31 @@ class _UserCatalogWidgetState extends State<UserCatalogWidget> {
   }
 
   Widget rowCatalog() {
-    if (savedCatalog.catalogs.isEmpty) {
-      return GestureDetector(
-        onTap: addCatalog,
-        child: Container(
-          padding: const EdgeInsets.all(18),
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(12),
-              color: AppColors.neutral_06),
-          child: Row(
-            children: [
-              SvgPicture.asset(
-                AppImages.add_square,
-                color: AppColors.primary_01,
-              ),
-              const SizedBox(width: 8),
-              Text(
-                'Tạo danh mục theo dõi',
-                style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                    color: AppColors.primary_01, fontWeight: FontWeight.w700),
-              )
-            ],
-          ),
-        ),
-      );
-    }
+    // if (savedCatalog.catalogs.isEmpty) {
+    //   return GestureDetector(
+    //     onTap: addCatalog,
+    //     child: Container(
+    //       padding: const EdgeInsets.all(18),
+    //       decoration: BoxDecoration(
+    //           borderRadius: BorderRadius.circular(12),
+    //           color: AppColors.neutral_06),
+    //       child: Row(
+    //         children: [
+    //           SvgPicture.asset(
+    //             AppImages.add_square,
+    //             color: AppColors.primary_01,
+    //           ),
+    //           const SizedBox(width: 8),
+    //           Text(
+    //             'Tạo danh mục theo dõi',
+    //             style: Theme.of(context).textTheme.labelMedium?.copyWith(
+    //                 color: AppColors.primary_01, fontWeight: FontWeight.w700),
+    //           )
+    //         ],
+    //       ),
+    //     ),
+    //   );
+    // }
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: Row(
@@ -327,9 +339,33 @@ class _UserCatalogWidgetState extends State<UserCatalogWidget> {
           ),
           const SizedBox(width: 4),
           Row(
-            children:
-                List<Widget>.generate(savedCatalog.catalogs.length, (index) {
-              var catalog = savedCatalog.catalogs[index];
+            children: List<Widget>.generate(savedCatalog.catalogs.length + 1,
+                (index) {
+              if (index == 0) {
+                return GestureDetector(
+                  onTap: () {
+                    onTapChangeCatalog(defaultCatalog);
+                  },
+                  child: Container(
+                    margin: EdgeInsets.only(
+                        right: index == savedCatalog.catalogs.length ? 0 : 10),
+                    decoration: BoxDecoration(
+                        color: defaultCatalog.name == currentCatalog.name
+                            ? AppColors.text_blue
+                            : AppColors.neutral_04,
+                        borderRadius: BorderRadius.circular(4)),
+                    height: 28,
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    alignment: Alignment.center,
+                    child: Text(defaultCatalog.name,
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodySmall
+                            ?.copyWith(color: AppColors.light_bg)),
+                  ),
+                );
+              }
+              var catalog = savedCatalog.catalogs[index - 1];
               return GestureDetector(
                 onTap: () {
                   onTapChangeCatalog(catalog);

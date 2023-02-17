@@ -11,7 +11,9 @@ class FinanceIndexTab extends StatefulWidget {
     super.key,
     required this.stockModel,
   });
+
   final StockModel stockModel;
+
   @override
   State<FinanceIndexTab> createState() => _FinanceIndexTabState();
 }
@@ -19,6 +21,7 @@ class FinanceIndexTab extends StatefulWidget {
 class _FinanceIndexTabState extends State<FinanceIndexTab> {
   final IDataCenterService dataCenterService = DataCenterService();
   bool initialized = false;
+
   @override
   void initState() {
     super.initState();
@@ -46,8 +49,7 @@ class _FinanceIndexTabState extends State<FinanceIndexTab> {
       benefitChart = Container();
     } else {
       benefitChart = BenefitChart(
-        listStockFinancialIndex: widget.stockModel.stockFinancialIndex,
-      );
+          listStockFinancialIndex: widget.stockModel.stockFinancialIndex);
     }
     return MediaQuery.removePadding(
       context: context,
@@ -58,9 +60,7 @@ class _FinanceIndexTabState extends State<FinanceIndexTab> {
           shrinkWrap: true,
           children: <Widget>[
             const SizedBox(height: 20),
-            FinancialIndex(
-              stockModel: widget.stockModel,
-            ),
+            FinancialIndex(stockModel: widget.stockModel),
             const SizedBox(height: 20),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,

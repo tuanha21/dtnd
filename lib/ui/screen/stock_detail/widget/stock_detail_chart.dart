@@ -8,7 +8,6 @@ import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import '../../../../=models=/response/stock_his.dart';
 import '../../../../=models=/response/stock_trading_history.dart';
 import '../../../../data/i_data_center_service.dart';
 import '../../../../data/implementations/data_center_service.dart';
@@ -27,7 +26,7 @@ class StockDetailChart extends StatefulWidget {
   State<StockDetailChart> createState() => _StockDetailChartState();
 }
 
-class _StockDetailChartState extends State<StockDetailChart> {
+class _StockDetailChartState extends State<StockDetailChart> with AutomaticKeepAliveClientMixin{
   late StreamController<List<num>> stockTrading = StreamController.broadcast();
 
   final INetworkService iNetworkService = NetworkService();
@@ -72,6 +71,7 @@ class _StockDetailChartState extends State<StockDetailChart> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -195,6 +195,10 @@ class _StockDetailChartState extends State<StockDetailChart> {
           lineStyle: charts.LineStyleSpec(dashPattern: [4])),
     );
   }
+
+  @override
+  // TODO: implement wantKeepAlive
+  bool get wantKeepAlive => true;
 }
 
 enum TimeSeries { day, week, month, month_3, month_6, year, year_5 }

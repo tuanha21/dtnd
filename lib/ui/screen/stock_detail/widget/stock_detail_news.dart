@@ -75,10 +75,17 @@ class _StockDetailNewsState extends State<StockDetailNews> {
                             publishTime: shortStockNews[index].publishTime)),
                   ));
                 },
-                child: NewsCard(stockNews: shortStockNews[index]));
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: NewsCard(stockNews: shortStockNews[index]),
+                ));
           },
           separatorBuilder: (context, index) {
-            return const SizedBox(height: 10);
+            return const Divider(
+              thickness: 2,
+              color: AppColors.neutral_06,
+              height: 16,
+            );
           },
           itemCount: shortStockNews.length),
     );
