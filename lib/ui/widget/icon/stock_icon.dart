@@ -8,10 +8,12 @@ class StockIcon extends StatelessWidget {
     required this.stockCode,
     this.size = 40,
     this.border,
+    this.color,
   });
   final String? stockCode;
   final double size;
   final BoxBorder? border;
+  final Color? color;
   @override
   Widget build(BuildContext context) {
     final Widget icon;
@@ -29,6 +31,7 @@ class StockIcon extends StatelessWidget {
           width: size,
           height: size,
           decoration: BoxDecoration(
+            color: color ?? Colors.transparent,
             shape: BoxShape.circle,
             border: border ?? Border.all(color: AppColors.neutral_05),
             image: DecorationImage(image: imageProvider, fit: BoxFit.scaleDown),

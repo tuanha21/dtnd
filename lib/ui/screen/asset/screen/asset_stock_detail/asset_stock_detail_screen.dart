@@ -230,7 +230,7 @@ class _AssetStockDetailScreenState extends State<AssetStockDetailScreen>
                                   )
                                 ],
                               ),
-                            )
+                            ),
                           ],
                         ),
                         Column(

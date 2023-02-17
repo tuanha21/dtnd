@@ -1,4 +1,5 @@
 import 'package:dtnd/=models=/response/account/i_account.dart';
+import 'package:dtnd/=models=/response/account/unexecuted_right_model.dart';
 
 import 'asset_chart_element.dart';
 import 'portfolio_status_model.dart';
@@ -84,6 +85,8 @@ class BaseMarginAccountModel implements IAccountModel {
 
   @override
   List<AssetChartElementModel>? listAssetChart;
+
+  List<UnexecutedRightModel>? listUnexecutedRight;
 
   BaseMarginAccountModel(
       {this.assets,

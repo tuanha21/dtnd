@@ -1,8 +1,10 @@
 import 'package:dtnd/=models=/request/request_model.dart';
 import 'package:dtnd/=models=/response/account/asset_chart_element.dart';
+import 'package:dtnd/=models=/response/account/base_margin_account_model.dart';
 import 'package:dtnd/=models=/response/account/i_account.dart';
 import 'package:dtnd/=models=/response/account/list_account_model.dart';
 import 'package:dtnd/=models=/response/account/portfolio_status_model.dart';
+import 'package:dtnd/=models=/response/account/unexecuted_right_model.dart';
 import 'package:dtnd/=models=/response/account_info_model.dart';
 import 'package:dtnd/=models=/response/total_asset_model.dart';
 import 'package:dtnd/=models=/response/user_token.dart';
@@ -119,6 +121,14 @@ class UserService implements IUserService {
         if (response != null) {
           listAccount.elementAt(i).listAssetChart = response;
         }
+
+        response =
+            await getListUnexecutedRight(listAccount.elementAt(i).accCode);
+        if (listAccount.elementAt(i) is BaseMarginAccountModel &&
+            response != null) {
+          (listAccount.elementAt(i) as BaseMarginAccountModel)
+              .listUnexecutedRight = response;
+        }
       }
     }
     listAccountModel.refresh();
@@ -139,6 +149,19 @@ class UserService implements IUserService {
     );
     return networkService
         .requestTraditionalApiResList<AssetChartElementModel>(requestModel);
+  }
+
+  Future<List<UnexecutedRightModel>?> getListUnexecutedRight(String account) {
+    final requestModel = RequestModel(
+      this,
+      group: "B",
+      data: RequestDataModel.cursorType(
+        cmd: "ListRightUnExec",
+        p1: account,
+      ),
+    );
+    return networkService
+        .requestTraditionalApiResList<UnexecutedRightModel>(requestModel);
   }
 
   Future<UserInfo?> getUserInfo() async {

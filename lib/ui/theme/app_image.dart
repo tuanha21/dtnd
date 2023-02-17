@@ -133,6 +133,10 @@ class AppImages {
   static const String home_icon_sharing = "assets/home_icon/sharing.png";
   static const String home_icon_like = "assets/home_icon/like.png";
 
+  /// Asset Icon
+  static const String arrow_drop_down_rounded =
+      "assets/images/arrow_drop_down_rounded.png";
+
   /// BG
   static const String home_asset_card_light_bg =
       "assets/images/home_asset_card_light_bg.png";

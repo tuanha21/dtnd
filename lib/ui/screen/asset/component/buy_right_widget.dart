@@ -1,10 +1,11 @@
-import 'package:dtnd/=models=/response/account/portfolio_status_model.dart';
+import 'package:dtnd/=models=/response/account/unexecuted_right_model.dart';
 import 'package:dtnd/=models=/response/stock.dart';
 import 'package:dtnd/config/service/app_services.dart';
 import 'package:dtnd/data/i_data_center_service.dart';
 import 'package:dtnd/data/implementations/data_center_service.dart';
 import 'package:dtnd/generated/l10n.dart';
-import 'package:dtnd/ui/screen/asset/screen/asset_stock_detail/asset_stock_detail_screen.dart';
+import 'package:dtnd/ui/screen/asset/sheet/execute_right_sheet.dart';
+import 'package:dtnd/ui/screen/asset/sheet/sheet_config.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:dtnd/ui/theme/app_textstyle.dart';
@@ -16,25 +17,22 @@ import 'package:flutter/material.dart';
 
 import 'asset_grid_element.dart';
 
-class InvestmentCatalogWidget extends StatefulWidget {
-  const InvestmentCatalogWidget({
+class BuyRightWidget extends StatefulWidget {
+  const BuyRightWidget({
     super.key,
     required this.data,
     this.onHold,
     this.onExpand,
-    this.volPc,
   });
-  final PorfolioStock? data;
-  final double? volPc;
-  final ValueChanged<PorfolioStock?>? onExpand;
+  final UnexecutedRightModel? data;
+  final ValueChanged<UnexecutedRightModel?>? onExpand;
   final VoidCallback? onHold;
 
   @override
-  State<InvestmentCatalogWidget> createState() =>
-      _InvestmentCatalogWidgetState();
+  State<BuyRightWidget> createState() => _BuyRightWidgetState();
 }
 
-class _InvestmentCatalogWidgetState extends State<InvestmentCatalogWidget> {
+class _BuyRightWidgetState extends State<BuyRightWidget> {
   final IDataCenterService dataCenterService = DataCenterService();
   bool expand = false;
   Stock? stock;
@@ -51,7 +49,7 @@ class _InvestmentCatalogWidgetState extends State<InvestmentCatalogWidget> {
   @override
   void initState() {
     super.initState();
-    getStock(widget.data?.symbol);
+    getStock(widget.data?.cRECEIVESHARECODE);
   }
 
   void getStock(String? stockCode) async {
@@ -85,7 +83,7 @@ class _InvestmentCatalogWidgetState extends State<InvestmentCatalogWidget> {
                 children: [
                   StockIcon(
                     color: Colors.white,
-                    stockCode: widget.data?.symbol,
+                    stockCode: widget.data?.cRECEIVESHARECODE,
                   ),
 
                   const SizedBox(width: 8),
@@ -110,36 +108,18 @@ class _InvestmentCatalogWidgetState extends State<InvestmentCatalogWidget> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Row(
-                              children: [
-                                Text(
-                                  widget.data?.symbol ?? "-",
-                                  style: textTheme.titleSmall,
-                                ),
-                                const SizedBox(width: 8),
-                                Text.rich(
-                                  TextSpan(children: [
-                                    WidgetSpan(
-                                        child:
-                                            widget.data?.prefixIcon(size: 12) ??
-                                                const SizedBox()),
-                                    TextSpan(
-                                      text:
-                                          " ${NumUtils.formatDouble(widget.data?.marketPrice)}",
-                                    )
-                                  ]),
-                                  maxLines: 1,
-                                  style: AppTextStyle.labelMedium_12.copyWith(
-                                    fontWeight: FontWeight.w600,
-                                    color: widget.data?.color,
-                                  ),
-                                ),
-                              ],
+                            Text(
+                              widget.data?.cRECEIVESHARECODE ?? "-",
+                              style: textTheme.titleSmall,
                             ),
                             Text(
-                              "${(widget.volPc ?? 0).toStringAsFixed(2)}%",
-                              style: textTheme.bodySmall!
-                                  .copyWith(color: AppColors.neutral_04),
+                              (widget.data?.canRegistered ?? false)
+                                  ? "Có thể đăng ký"
+                                  : "Không thể đăng ký",
+                              style: textTheme.bodySmall!.copyWith(
+                                  color: (widget.data?.canRegistered ?? false)
+                                      ? AppColors.semantic_01
+                                      : AppColors.semantic_03),
                             ),
                           ],
                         ),
@@ -197,13 +177,13 @@ class _InvestmentCatalogWidgetState extends State<InvestmentCatalogWidget> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          S.of(context).owned,
+                          "Còn được mua / tiền phải nộp",
                           style: AppTextStyle.labelSmall_10
                               .copyWith(color: AppColors.neutral_01),
                         ),
                         const SizedBox(height: 4),
                         Text(
-                          NumUtils.formatDouble(widget.data?.actualVol),
+                          "${NumUtils.formatInteger(widget.data?.cSHARERIGHT)}/${NumUtils.formatDouble(widget.data?.cCASHBUYALL)}",
                           style: AppTextStyle.labelMedium_12
                               .copyWith(color: AppColors.neutral_03),
                         ),
@@ -215,15 +195,14 @@ class _InvestmentCatalogWidgetState extends State<InvestmentCatalogWidget> {
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
                         Text(
-                          "${S.of(context).profit_and_loss} (%)",
+                          "Ngày chốt",
                           style: AppTextStyle.labelSmall_10
                               .copyWith(color: AppColors.neutral_01),
                         ),
                         const SizedBox(height: 4),
                         Text(
-                          "${NumUtils.formatDouble(widget.data?.gainLossValue)}đ (${widget.data?.gainLossPer?.trim()})",
-                          style: AppTextStyle.labelMedium_12
-                              .copyWith(color: widget.data?.color),
+                          widget.data?.cCLOSEDATE ?? "-",
+                          style: AppTextStyle.labelMedium_12,
                         ),
                       ],
                     ),
@@ -234,7 +213,7 @@ class _InvestmentCatalogWidgetState extends State<InvestmentCatalogWidget> {
               ExpandedSection(
                 expand: expand,
                 child: Container(
-                  height: 88,
+                  height: 134,
                   margin: const EdgeInsets.symmetric(vertical: 8),
                   decoration: const BoxDecoration(
                     borderRadius: BorderRadius.all(Radius.circular(12)),
@@ -247,22 +226,48 @@ class _InvestmentCatalogWidgetState extends State<InvestmentCatalogWidget> {
                           children: [
                             Expanded(
                               child: AssetGridElement(element: {
-                                S.of(context).bought_returning:
-                                    NumUtils.formatInteger(widget.data?.buyTVol)
+                                "Tỷ lệ": widget.data?.cRIGHTRATE
+                                    ?.replaceAll("-", ":")
                               }),
                             ),
                             const SizedBox(width: 2),
                             Expanded(
                               child: AssetGridElement(element: {
-                                S.of(context).avg_price:
-                                    NumUtils.formatDouble(widget.data?.avgPrice)
+                                S.of(context).buy_price: NumUtils.formatDouble(
+                                    widget.data?.cBUYPRICE)
                               }),
                             ),
                             const SizedBox(width: 2),
                             Expanded(
                               child: AssetGridElement(element: {
-                                S.of(context).bonus_sh: NumUtils.formatInteger(
-                                    widget.data?.rightVol)
+                                "Số CKHQ": NumUtils.formatInteger(
+                                    widget.data?.cSHAREVOLUME)
+                              }),
+                            )
+                          ],
+                        ),
+                      ),
+                      const SizedBox(height: 2),
+                      Flexible(
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: AssetGridElement(element: {
+                                "Hạn chốt ĐK": widget.data?.cCLOSEDATE,
+                              }),
+                            ),
+                            const SizedBox(width: 2),
+                            Expanded(
+                              child: AssetGridElement(element: {
+                                "Số tiền đã nộp":
+                                    NumUtils.formatDouble(widget.data?.cCASHBUY)
+                              }),
+                            ),
+                            const SizedBox(width: 2),
+                            Expanded(
+                              child: AssetGridElement(element: {
+                                "Số CK đã ĐK": NumUtils.formatInteger(
+                                    widget.data?.cSHAREBUY)
                               }),
                             )
                           ],
@@ -275,34 +280,23 @@ class _InvestmentCatalogWidgetState extends State<InvestmentCatalogWidget> {
                           children: [
                             Flexible(
                               child: SingleColorTextButton(
-                                text: S.of(context).detail,
-                                color: AppColors.neutral_04,
+                                text: S.of(context).sign_up,
+                                color: AppColors.graph_3,
                                 padding:
                                     const EdgeInsets.symmetric(vertical: 4),
                                 onTap: () {
-                                  if (widget.data != null) {
-                                    Navigator.of(context)
-                                        .push(MaterialPageRoute(
-                                      builder: (context) =>
-                                          AssetStockDetailScreen(
-                                        stockCode: widget.data!.symbol,
-                                        porfolioStock: widget.data!,
-                                      ),
-                                    ));
+                                  if (widget.data == null || stock == null) {
+                                    return;
                                   }
+                                  IExecuteRightSheet(widget.data!).show(
+                                      context,
+                                      ExecuteRightSheet(
+                                        unexecutedRightModel: widget.data!,
+                                        stock: stock!,
+                                      ));
                                 },
                               ),
                             ),
-                            const SizedBox(width: 8),
-                            Flexible(
-                              child: SingleColorTextButton(
-                                text: S.of(context).sell,
-                                color: AppColors.semantic_03,
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 4),
-                                onTap: () {},
-                              ),
-                            )
                           ],
                         ),
                       )

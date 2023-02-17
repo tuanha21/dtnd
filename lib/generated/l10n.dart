@@ -880,11 +880,41 @@ class S {
     );
   }
 
+  /// `Sold returning`
+  String get sold_returning {
+    return Intl.message(
+      'Sold returning',
+      name: 'sold_returning',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Sold returning vol`
   String get sold_returning_vol {
     return Intl.message(
       'Sold returning vol',
       name: 'sold_returning_vol',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Bought returning`
+  String get bought_returning {
+    return Intl.message(
+      'Bought returning',
+      name: 'bought_returning',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Bought returning vol`
+  String get bought_returning_vol {
+    return Intl.message(
+      'Bought returning vol',
+      name: 'bought_returning_vol',
       desc: '',
       args: [],
     );
@@ -1025,6 +1055,56 @@ class S {
     return Intl.message(
       'Detail',
       name: 'detail',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `From date`
+  String get from_day {
+    return Intl.message(
+      'From date',
+      name: 'from_day',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `To date`
+  String get to_day {
+    return Intl.message(
+      'To date',
+      name: 'to_day',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Owned`
+  String get owned {
+    return Intl.message(
+      'Owned',
+      name: 'owned',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Avg price`
+  String get avg_price {
+    return Intl.message(
+      'Avg price',
+      name: 'avg_price',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `bonus share`
+  String get bonus_sh {
+    return Intl.message(
+      'bonus share',
+      name: 'bonus_sh',
       desc: '',
       args: [],
     );

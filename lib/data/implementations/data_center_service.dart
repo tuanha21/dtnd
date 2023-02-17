@@ -127,10 +127,15 @@ class DataCenterService implements IDataCenterService {
   void processIndexData(dynamic data) {
     if (_listIndex.toList().isEmpty) return;
     final Index index = IndexUtil.fromCode(data['data']['mc']);
-    final indexModel = _listIndex.firstWhere(
-      (element) => element.index == index,
-    );
-    indexModel.onSocketData(data);
+    late final IndexModel? indexModel;
+    try {
+      indexModel = _listIndex.firstWhere(
+        (element) => element.index == index,
+      );
+    } catch (e) {
+      indexModel = null;
+    }
+    indexModel?.onSocketData(data);
   }
 
   //

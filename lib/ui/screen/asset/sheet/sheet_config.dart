@@ -1,3 +1,4 @@
+import 'package:dtnd/=models=/response/account/unexecuted_right_model.dart';
 import 'package:dtnd/=models=/ui_model/overlay.dart';
 import 'package:dtnd/=models=/ui_model/sheet.dart';
 import 'package:flutter/material.dart';
@@ -22,6 +23,28 @@ class ExtensionsISheet extends ISheet {
 
   @override
   Future<void>? onResultNext([cmd]) => null;
+}
+
+class IExecuteRightSheet extends ISheet {
+  final UnexecutedRightModel unexecutedRightModel;
+  IExecuteRightSheet(this.unexecutedRightModel);
+  @override
+  ISheet? back([dynamic cmd]) => null;
+
+  @override
+  ISheet? next([dynamic cmd]) => null;
+
+  @override
+  Widget? backWidget([cmd]) => null;
+
+  @override
+  Widget? nextWidget([cmd]) => null;
+
+  @override
+  Future<void>? onResultBack([dynamic cmd]) => null;
+
+  @override
+  Future<void>? onResultNext([dynamic cmd]) => null;
 }
 
 class ToBaseNoteCmd extends ToOptionCmd {

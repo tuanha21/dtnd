@@ -84,6 +84,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Available balanc"),
         "available_vol": MessageLookupByLibrary.simpleMessage("Available vol"),
         "average": MessageLookupByLibrary.simpleMessage("Average"),
+        "avg_price": MessageLookupByLibrary.simpleMessage("Avg price"),
         "bank": MessageLookupByLibrary.simpleMessage("Bank"),
         "base": MessageLookupByLibrary.simpleMessage("Base"),
         "base_asset": MessageLookupByLibrary.simpleMessage("Base asset"),
@@ -93,6 +94,11 @@ class MessageLookup extends MessageLookupByLibrary {
         "billion_short": MessageLookupByLibrary.simpleMessage("B"),
         "birthday": MessageLookupByLibrary.simpleMessage("Birthday"),
         "bond": MessageLookupByLibrary.simpleMessage("Bond"),
+        "bonus_sh": MessageLookupByLibrary.simpleMessage("bonus share"),
+        "bought_returning":
+            MessageLookupByLibrary.simpleMessage("Bought returning"),
+        "bought_returning_vol":
+            MessageLookupByLibrary.simpleMessage("Bought returning vol"),
         "business_information":
             MessageLookupByLibrary.simpleMessage("Business information"),
         "buy": MessageLookupByLibrary.simpleMessage("Buy"),
@@ -171,6 +177,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Following catalog"),
         "following_catalog_with": m2,
         "foreign": MessageLookupByLibrary.simpleMessage("Foreign"),
+        "from_day": MessageLookupByLibrary.simpleMessage("From date"),
         "froom": MessageLookupByLibrary.simpleMessage("Room FR"),
         "fs_vol": MessageLookupByLibrary.simpleMessage("FS vol"),
         "fsell": MessageLookupByLibrary.simpleMessage("FR sell"),
@@ -278,6 +285,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "other_vol": MessageLookupByLibrary.simpleMessage("Other vol"),
         "otp_code_sent_to_phone_number": m7,
         "overview": MessageLookupByLibrary.simpleMessage("Overview"),
+        "owned": MessageLookupByLibrary.simpleMessage("Owned"),
         "pass_not_match":
             MessageLookupByLibrary.simpleMessage("Password not match"),
         "password": MessageLookupByLibrary.simpleMessage("Password"),
@@ -323,6 +331,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Setting and secutiry"),
         "sex": MessageLookupByLibrary.simpleMessage("Sex"),
         "sign_up": MessageLookupByLibrary.simpleMessage("Sign up"),
+        "sold_returning":
+            MessageLookupByLibrary.simpleMessage("Sold returning"),
         "sold_returning_money":
             MessageLookupByLibrary.simpleMessage("Sold returning money"),
         "sold_returning_vol":
@@ -355,6 +365,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "time": MessageLookupByLibrary.simpleMessage("Time"),
         "timeout":
             MessageLookupByLibrary.simpleMessage("No response from server"),
+        "to_day": MessageLookupByLibrary.simpleMessage("To date"),
         "top_foreign": MessageLookupByLibrary.simpleMessage("Top foreign"),
         "top_influence": MessageLookupByLibrary.simpleMessage("Top influence"),
         "top_search": MessageLookupByLibrary.simpleMessage("Top search"),

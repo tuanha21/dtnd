@@ -8,7 +8,6 @@ class AppColors {
   static const primary_03 = Color(0xFFECF1FD);
   static const primary_04 = Color(0xFF6697FF);
 
-
   static const lighter_primary = Color(0xFFDFE7FF);
   static const secondary = Color(0xFFFCC927);
   static const light_bg = Color(0xFFFFFFFF);

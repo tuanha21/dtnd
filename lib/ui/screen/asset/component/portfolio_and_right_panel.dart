@@ -11,6 +11,7 @@ import '../../../../data/i_user_service.dart';
 import '../../../../data/implementations/data_center_service.dart';
 import '../../../../data/implementations/user_service.dart';
 import '../../../widget/tabbar/rounded_tabbar.dart';
+import 'buy_right_widget.dart';
 
 class PortfolioAndRightPanel extends StatefulWidget {
   const PortfolioAndRightPanel({super.key});
@@ -34,11 +35,26 @@ class _PortfolioAndRightPanelState extends State<PortfolioAndRightPanel>
   }
 
   bool showTotalAsset = true;
+  BaseMarginAccountModel? data;
 
   @override
   void initState() {
     _tabController = TabController(length: 2, vsync: this);
     super.initState();
+    _tabController.addListener(() {
+      if (_tabController.index != _tabController.previousIndex) {
+        setState(() {});
+      }
+    });
+    // userService.listAccountModel.listen((model) {
+    //   if (model != null && data == null) {
+    //     setState(() {
+    //       data = model.firstWhereOrNull(
+    //               (element) => element.runtimeType == BaseMarginAccountModel)
+    //           as BaseMarginAccountModel?;
+    //     });
+    //   }
+    // });
   }
 
   @override
@@ -64,96 +80,116 @@ class _PortfolioAndRightPanelState extends State<PortfolioAndRightPanel>
               ],
             ),
           ),
-          Container(
-            height: 88,
-            padding: const EdgeInsets.all(16),
-            decoration: const BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.all(Radius.circular(8)),
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Obx(() {
-                  final data = userService.listAccountModel.value
-                          ?.firstWhereOrNull((element) =>
-                              element.runtimeType == BaseMarginAccountModel)
-                      as BaseMarginAccountModel?;
-                  return Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "Tổng danh mục",
-                        style: textTheme.labelMedium,
-                      ),
-                      Text(
-                        "${NumUtils.formatDouble(data?.portfolioStatus?.marketValue)}đ",
-                        style: textTheme.titleSmall,
-                      ),
-                    ],
-                  );
-                }),
-                Obx(() {
-                  final data = userService.listAccountModel.value
-                          ?.firstWhereOrNull((element) =>
-                              element.runtimeType == BaseMarginAccountModel)
-                      as BaseMarginAccountModel?;
-                  return Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "Lãi/lỗ chưa đóng",
-                        style: textTheme.labelMedium
-                            ?.copyWith(fontWeight: FontWeight.w600),
-                      ),
-                      Row(
-                        children: [
-                          if (data?.portfolioStatus?.prefixIcon != null)
-                            Image.asset(
-                              data?.portfolioStatus?.prefixIcon ?? "",
-                              width: 10,
-                              color: data?.portfolioStatus?.color,
+          if (_tabController.index == 0)
+            Container(
+              height: 88,
+              padding: const EdgeInsets.all(16),
+              decoration: const BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.all(Radius.circular(8)),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Obx(() {
+                    final data = userService.listAccountModel.value
+                            ?.firstWhereOrNull((element) =>
+                                element.runtimeType == BaseMarginAccountModel)
+                        as BaseMarginAccountModel?;
+                    return Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "Tổng danh mục",
+                          style: textTheme.labelMedium,
+                        ),
+                        Text(
+                          "${NumUtils.formatDouble(data?.portfolioStatus?.marketValue)}đ",
+                          style: textTheme.titleSmall,
+                        ),
+                      ],
+                    );
+                  }),
+                  Obx(() {
+                    final data = userService.listAccountModel.value
+                            ?.firstWhereOrNull((element) =>
+                                element.runtimeType == BaseMarginAccountModel)
+                        as BaseMarginAccountModel?;
+                    return Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "Lãi/lỗ chưa đóng",
+                          style: textTheme.labelMedium
+                              ?.copyWith(fontWeight: FontWeight.w600),
+                        ),
+                        Row(
+                          children: [
+                            if (data?.portfolioStatus?.prefixIcon != null)
+                              Image.asset(
+                                data?.portfolioStatus?.prefixIcon ?? "",
+                                width: 10,
+                                color: data?.portfolioStatus?.color,
+                              ),
+                            const SizedBox(width: 6),
+                            Text(
+                              "${NumUtils.formatDouble(data?.portfolioStatus?.gainLossValue)}đ (${data?.portfolioStatus?.gainLossPer?.trim()})",
+                              style: textTheme.titleSmall!.copyWith(
+                                  color: data?.portfolioStatus?.color),
                             ),
-                          const SizedBox(width: 6),
-                          Text(
-                            "${NumUtils.formatDouble(data?.portfolioStatus?.gainLossValue)}đ (${data?.portfolioStatus?.gainLossPer?.trim()})",
-                            style: textTheme.titleSmall!
-                                .copyWith(color: data?.portfolioStatus?.color),
-                          ),
-                        ],
-                      ),
-                    ],
-                  );
-                })
-              ],
+                          ],
+                        ),
+                      ],
+                    );
+                  })
+                ],
+              ),
             ),
-          ),
-          const Divider(
-            color: AppColors.neutral_04,
-          ),
           Obx(() {
-            final data = userService.listAccountModel.value?.firstWhereOrNull(
+            final model = userService.listAccountModel.value?.firstWhereOrNull(
                     (element) => element.runtimeType == BaseMarginAccountModel)
                 as BaseMarginAccountModel?;
-            return Column(
-              children: [
-                for (int i = 0;
-                    i < (data?.portfolioStatus?.porfolioStocks?.length ?? 0);
-                    i++)
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 4),
-                    child: InvestmentCatalogWidget(
-                      data: data!.portfolioStatus!.porfolioStocks!.elementAt(i),
-                      volPc: (data.portfolioStatus!.porfolioStocks!
-                                  .elementAt(i)
-                                  .marketValue ??
-                              0) /
-                          (data.portfolioStatus!.marketValue ?? 1) *
-                          100,
-                    ),
-                  )
-              ],
-            );
+            if (model != null && data == null) {
+              setState(() {
+                data = model;
+              });
+            }
+            if (_tabController.index == 0) {
+              return Column(
+                children: [
+                  for (int i = 0;
+                      i < (data?.portfolioStatus?.porfolioStocks?.length ?? 0);
+                      i++)
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 4),
+                      child: InvestmentCatalogWidget(
+                        data:
+                            data!.portfolioStatus!.porfolioStocks!.elementAt(i),
+                        volPc: (data!.portfolioStatus!.porfolioStocks!
+                                    .elementAt(i)
+                                    .marketValue ??
+                                0) /
+                            (data!.portfolioStatus!.marketValue ?? 1) *
+                            100,
+                      ),
+                    )
+                ],
+              );
+            } else {
+              return Column(
+                children: [
+                  for (int i = 0;
+                      i < (data?.listUnexecutedRight?.length ?? 0);
+                      i++)
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 4),
+                      child: BuyRightWidget(
+                        data: data!.listUnexecutedRight!.elementAt(i),
+                      ),
+                    )
+                ],
+              );
+            }
           }),
         ],
       ),

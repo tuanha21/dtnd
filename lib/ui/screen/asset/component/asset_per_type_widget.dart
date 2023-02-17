@@ -6,15 +6,19 @@ class AssetPerTypeWidget extends StatelessWidget {
   const AssetPerTypeWidget({
     Key? key,
     required this.values,
+    this.padding,
+    this.margin,
   }) : super(key: key);
   final List<MoneyType> values;
+  final EdgeInsetsGeometry? margin;
+  final EdgeInsetsGeometry? padding;
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         Container(
-          margin: const EdgeInsets.symmetric(horizontal: 16),
-          padding: const EdgeInsets.all(16),
+          margin: margin ?? const EdgeInsets.symmetric(horizontal: 0),
+          padding: padding ?? const EdgeInsets.all(0),
           decoration: const BoxDecoration(
             borderRadius: BorderRadius.all(Radius.circular(12)),
             color: Colors.white,
