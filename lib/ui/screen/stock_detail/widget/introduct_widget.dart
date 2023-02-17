@@ -130,69 +130,6 @@ class _IntroduceWidgetState extends State<IntroduceWidget> {
                             )),
                       ],
                     ),
-                    const SizedBox(height: 10),
-                    SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: SizedBox(
-                        height: 28,
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            GestureDetector(
-                              onTap: () async {
-                                var canLunch = await canLaunchUrl(
-                                    Uri.parse(info?.uRL ?? ""));
-                                if (canLunch) {
-                                  launchUrl(Uri.parse(info?.uRL ?? ""));
-                                }
-                              },
-                              child: Container(
-                                  height: 28,
-                                  margin:
-                                      const EdgeInsets.only(left: 16, right: 5),
-                                  padding: const EdgeInsets.all(5),
-                                  alignment: Alignment.center,
-                                  decoration: BoxDecoration(
-                                      color: Colors.transparent,
-                                      borderRadius: BorderRadius.circular(6),
-                                      border: Border.all(color: colorBoder)),
-                                  child: Text(
-                                    "Website công ty",
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodySmall
-                                        ?.copyWith(fontWeight: FontWeight.w600),
-                                  )),
-                            ),
-                            GestureDetector(
-                              onTap: () async {
-                                var canLunch = await canLaunchUrl(Uri(
-                                    scheme: 'tel', path: info?.phone ?? ""));
-                                if (canLunch) {
-                                  launchUrl(Uri(
-                                      scheme: 'tel', path: info?.phone ?? ""));
-                                }
-                              },
-                              child: Container(
-                                  height: 28,
-                                  padding: const EdgeInsets.all(5),
-                                  alignment: Alignment.center,
-                                  decoration: BoxDecoration(
-                                      color: Colors.transparent,
-                                      borderRadius: BorderRadius.circular(6),
-                                      border: Border.all(color: colorBoder)),
-                                  child: Text(
-                                    info?.phone ?? "",
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodySmall
-                                        ?.copyWith(fontWeight: FontWeight.w600),
-                                  )),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
                   ],
                 );
               }

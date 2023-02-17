@@ -158,7 +158,7 @@ class _GeneralInfoTabState extends State<GeneralInfoTab> {
                               const SizedBox(width: 9),
                               Text(
                                 info.phone ?? "",
-                                style: textTheme.titleSmall,
+                                style: textTheme.titleSmall?.copyWith(color: AppColors.primary_01),
                               ),
                             ],
                           ),
@@ -181,7 +181,7 @@ class _GeneralInfoTabState extends State<GeneralInfoTab> {
                               const SizedBox(width: 9),
                               Text(
                                 info.uRL ?? "",
-                                style: textTheme.titleSmall,
+                                style: textTheme.titleSmall?.copyWith(color: AppColors.primary_01),
                               ),
                             ],
                           ),
@@ -213,24 +213,27 @@ class _GeneralInfoTabState extends State<GeneralInfoTab> {
                           ),
                           child: Row(
                             children: [
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    widget.stockModel.businnessLeaders?[i]
-                                            .fullName ??
-                                        "-",
-                                    style: textTheme.labelMedium!
-                                        .copyWith(fontWeight: FontWeight.w600),
-                                  ),
-                                  Text(
-                                    widget.stockModel.businnessLeaders?[i]
-                                            .position ??
-                                        "-",
-                                    style: AppTextStyle.bodySmall_8
-                                        .copyWith(color: AppColors.neutral_04),
-                                  )
-                                ],
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      widget.stockModel.businnessLeaders?[i]
+                                              .fullName ??
+                                          "-",
+                                      style: textTheme.labelMedium!
+                                          .copyWith(fontWeight: FontWeight.w600),
+                                    ),
+                                    const SizedBox(height: 4),
+                                    Text(
+                                      widget.stockModel.businnessLeaders?[i]
+                                              .position ??
+                                          "-",
+                                      style: AppTextStyle.bodySmall_8
+                                          .copyWith(color: AppColors.neutral_04),
+                                    )
+                                  ],
+                                ),
                               ),
                               Expanded(child: LayoutBuilder(
                                 builder: (context, ctx) {
@@ -365,10 +368,13 @@ class _GeneralInfoTabState extends State<GeneralInfoTab> {
                                   ),
                                   child: Row(
                                     children: [
-                                      Text(
-                                        list[i].name ?? "-",
-                                        style: textTheme.labelMedium!.copyWith(
-                                            fontWeight: FontWeight.w600),
+                                      Expanded(
+                                        child: Text(
+                                          list[i].name ?? "-",
+                                          style: textTheme.labelMedium!.copyWith(
+                                            height: 24/15,
+                                              fontWeight: FontWeight.w600),
+                                        ),
                                       ),
                                       Expanded(child: LayoutBuilder(
                                         builder: (context, ctx) {

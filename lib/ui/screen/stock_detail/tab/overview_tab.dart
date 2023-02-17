@@ -1,7 +1,7 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dtnd/=models=/response/stock_model.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:dtnd/ui/widget/expanded_widget.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -12,7 +12,6 @@ import '../../../../data/i_network_service.dart';
 import '../../../../data/implementations/network_service.dart';
 import '../../../../generated/l10n.dart';
 import '../../../theme/app_color.dart';
-import '../../../widget/icon/stock_icon.dart';
 import '../../../widget/news_card.dart';
 import '../../home/widget/home_section.dart';
 import '../../news_detail.dart/new_detail_screen.dart';
@@ -34,9 +33,11 @@ class OverviewTab extends StatefulWidget {
   State<OverviewTab> createState() => _OverviewTabState();
 }
 
-class _OverviewTabState extends State<OverviewTab> {
+class _OverviewTabState extends State<OverviewTab>
+    with AutomaticKeepAliveClientMixin {
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return ListView(
       children: [
         SizedBox(
@@ -53,12 +54,35 @@ class _OverviewTabState extends State<OverviewTab> {
           child: IntrinsicHeight(
             child: Row(
               children: [
-                StockIcon(stockCode: widget.stockModel.stockData.sym),
+                CachedNetworkImage(
+                  imageUrl:
+                      'https://info.sbsi.vn/logo/${widget.stockModel.stock.stockCode}',
+                  imageBuilder: (context, provider) {
+                    return Container(
+                      height: 63,
+                      width: 63,
+                      decoration: BoxDecoration(
+                          color: AppColors.neutral_06,
+                          borderRadius: BorderRadius.circular(4),
+                          image: DecorationImage(image: provider,fit: BoxFit.contain)),
+                    );
+                  },
+                  errorWidget: (context,_,__){
+                    return Container(
+                      height: 63,
+                      width: 63,
+                      decoration: BoxDecoration(
+                          color: AppColors.neutral_06,
+                          borderRadius: BorderRadius.circular(4)),
+                    );
+                  },
+                ),
                 const SizedBox(width: 16),
                 Flexible(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      const SizedBox(height: 4),
                       Text(widget.stockModel.stock.stockCode,
                           style: Theme.of(context)
                               .textTheme
@@ -92,8 +116,8 @@ class _OverviewTabState extends State<OverviewTab> {
                 isScrollControlled: true,
                 useSafeArea: true,
                 shape: const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.vertical(
-                        top: Radius.circular(12))),
+                    borderRadius:
+                        BorderRadius.vertical(top: Radius.circular(12))),
                 builder: (context) {
                   return ListNewsISheet(model: widget.stockModel);
                 });
@@ -118,6 +142,10 @@ class _OverviewTabState extends State<OverviewTab> {
       ],
     );
   }
+
+  @override
+  // TODO: implement wantKeepAlive
+  bool get wantKeepAlive => true;
 }
 
 class BasicIndex extends StatefulWidget {
@@ -383,7 +411,8 @@ class _CompanyInfoWidgetState extends State<CompanyInfoWidget> {
                         const SizedBox(width: 9),
                         Text(
                           info.phone ?? "",
-                          style: textTheme.titleSmall?.copyWith(color: AppColors.primary_01),
+                          style: textTheme.titleSmall
+                              ?.copyWith(color: AppColors.primary_01),
                         ),
                       ],
                     ),
@@ -406,7 +435,8 @@ class _CompanyInfoWidgetState extends State<CompanyInfoWidget> {
                         const SizedBox(width: 9),
                         Text(
                           info.uRL ?? "",
-                          style: textTheme.titleSmall?.copyWith(color: AppColors.primary_01),
+                          style: textTheme.titleSmall
+                              ?.copyWith(color: AppColors.primary_01),
                         ),
                       ],
                     ),
@@ -450,7 +480,10 @@ class _ListNewsISheetState extends State<ListNewsISheet> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(S.of(context).news,style: Theme.of(context).textTheme.labelLarge,),
+              Text(
+                S.of(context).news,
+                style: Theme.of(context).textTheme.labelLarge,
+              ),
               GestureDetector(
                 onTap: () {
                   Navigator.pop(context);
@@ -492,7 +525,8 @@ class _ListNewsISheetState extends State<ListNewsISheet> {
                                           title: listNews[index].title,
                                           articleID: listNews[index].articleID,
                                           headImg: listNews[index].imageUrl,
-                                          publishTime: listNews[index].publishTime)),
+                                          publishTime:
+                                              listNews[index].publishTime)),
                                 ));
                               },
                               child: NewsCard(stockNews: listNews[index]));

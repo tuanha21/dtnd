@@ -50,7 +50,10 @@ class _StockEventState extends State<StockEvent> {
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
                 itemBuilder: (context, index) {
-                  return EventCard(event: list[index]);
+                  return Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: EventCard(event: list[index]),
+                  );
                 },
                 separatorBuilder: (context, index) {
                   return const Divider(
@@ -78,96 +81,93 @@ class EventCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {},
-      child: IntrinsicHeight(
-        child: Padding(
-          padding: const EdgeInsets.all(8),
-          child: Row(
-            children: [
-              Container(
-                decoration: BoxDecoration(
-                    color: AppColors.neutral_06,
-                    borderRadius: BorderRadius.circular(4)),
-                child: Column(
-                  children: [
-                    Container(
-                      padding:
-                          const EdgeInsets.symmetric(vertical: 2, horizontal: 12),
-                      decoration: const BoxDecoration(
-                          color: AppColors.primary_04,
-                          borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(4),
-                              topRight: Radius.circular(4))),
-                      child: Text(
-                        DateFormat('MMMM')
-                            .format(event.dateTime ?? DateTime.now()),
-                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                            fontWeight: FontWeight.w600,
-                            fontSize: 10,
-                            color: AppColors.light_tabBar_bg),
-                      ),
-                    ),
-                    const SizedBox(height: 8),
-                    Text(
-                      DateFormat('dd').format(event.dateTime ?? DateTime.now()),
-                      style: Theme.of(context)
-                          .textTheme
-                          .labelLarge
-                          ?.copyWith(fontWeight: FontWeight.w600),
-                    ),
-                    const SizedBox(height: 1),
-                    Text(
-                      DateFormat('yyyy').format(event.dateTime ?? DateTime.now()),
-                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                          fontWeight: FontWeight.w600,
-                          color: AppColors.primary_04),
-                    ),
-                    const SizedBox(height: 2),
-                  ],
+    return IntrinsicHeight(
+      child: Row(
+        children: [
+          Container(
+            height: 60,
+            width: 60,
+            decoration: BoxDecoration(
+                color: AppColors.neutral_06,
+                borderRadius: BorderRadius.circular(4)),
+            child: Column(
+              children: [
+                Container(
+                  width: 60,
+                  alignment: Alignment.center,
+                  padding: const EdgeInsets.symmetric(vertical: 2),
+                  decoration: const BoxDecoration(
+                      color: AppColors.primary_04,
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(4),
+                          topRight: Radius.circular(4))),
+                  child: Text(
+                    DateFormat('MMMM')
+                        .format(event.dateTime ?? DateTime.now()),
+                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                        fontWeight: FontWeight.w600,
+                        fontSize: 10,
+                        color: AppColors.light_tabBar_bg),
+                  ),
                 ),
-              ),
-              const SizedBox(width: 12),
-              Expanded(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Expanded(
-                      child: Text(
-                        event.eVENTDESC ?? "Title",
-                        maxLines: 2,
-                        textAlign: TextAlign.left,
-                        style: Theme.of(context).textTheme.titleSmall,
-                      ),
-                    ),
-                    Row(
-                      children: [
-                        Text(
-                          S.of(context).event,
-                          style: AppTextStyle.bottomNavLabel
-                              .copyWith(color: AppColors.primary_01),
-                        ),
-                        const SizedBox(width: 10),
-                        Container(
-                          width: 5,
-                          height: 5,
-                          decoration: const BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: AppColors.semantic_02),
-                        ),
-                        const SizedBox(width: 5),
-                        Text(event.sECURITYCODE ?? "",
-                            style: AppTextStyle.labelSmall_10
-                                .copyWith(fontWeight: FontWeight.w400)),
-                      ],
-                    ),
-                  ],
+                const SizedBox(height: 2),
+                Text(
+                  DateFormat('dd').format(event.dateTime ?? DateTime.now()),
+                  style: Theme.of(context)
+                      .textTheme
+                      .labelLarge
+                      ?.copyWith(fontWeight: FontWeight.w600),
                 ),
-              )
-            ],
+                const SizedBox(height: 2),
+                Text(
+                  DateFormat('yyyy').format(event.dateTime ?? DateTime.now()),
+                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                      fontWeight: FontWeight.w600,
+                      color: AppColors.primary_04),
+                ),
+              ],
+            ),
           ),
-        ),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(
+                  child: Text(
+                    event.eVENTDESC ?? "Title",
+                    maxLines: 2,
+                    textAlign: TextAlign.left,
+                    style: Theme.of(context).textTheme.titleSmall,
+                  ),
+                ),
+                Row(
+                  children: [
+                    Text(
+                      S.of(context).event,
+                      style: AppTextStyle.bottomNavLabel
+                          .copyWith(color: AppColors.primary_01),
+                    ),
+                    const SizedBox(width: 10),
+                    Container(
+                      width: 5,
+                      height: 5,
+                      decoration: const BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: AppColors.semantic_02),
+                    ),
+                    const SizedBox(width: 5),
+                    Text(event.sECURITYCODE ?? "",
+                        style: AppTextStyle.labelSmall_10
+                            .copyWith(fontWeight: FontWeight.w400)),
+                  ],
+                ),
+                const SizedBox(height: 5)
+              ],
+            ),
+          )
+        ],
       ),
     );
   }
