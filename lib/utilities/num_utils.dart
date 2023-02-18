@@ -89,7 +89,10 @@ class NumUtils {
     return md5.convert(utf8.encode(input)).toString();
   }
 
-  static String getMoneyWithPostfix(num num, BuildContext context) {
+  static String getMoneyWithPostfix(num? num, BuildContext context) {
+    if (num == null) {
+      return "0";
+    }
     int intValue = num ~/ 1;
     String i = intValue.toString();
     String postfix;

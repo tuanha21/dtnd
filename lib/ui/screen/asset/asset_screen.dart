@@ -17,6 +17,7 @@ import 'package:dtnd/ui/screen/market/widget/components/not_signin_catalog_widge
 import 'package:dtnd/ui/screen/virtual_assistant/va_volatolity_warning/component/asset_chart.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
+import 'package:dtnd/ui/widget/dropdown/custom_dropdown_button.dart';
 import 'package:dtnd/ui/widget/icon/icon_button.dart';
 import 'package:dtnd/ui/widget/my_appbar.dart';
 import 'package:dtnd/utilities/logger.dart';
@@ -76,12 +77,37 @@ class _AssetScreenState extends State<AssetScreen>
                   (element) => element.runtimeType == BaseMarginAccountModel)
               as BaseMarginAccountModel?;
           return AssetChart(
-            lineColor: AppColors.graph_7,
             datas: data?.listAssetChart,
           );
         });
       } else {
-        chart = const AssetDistributionChart();
+        chart = Obx(() {
+          // final data = userService.listAccountModel.value?.firstWhereOrNull(
+          //         (element) => element.runtimeType == BaseMarginAccountModel)
+          //     as BaseMarginAccountModel?;
+          final data = userService.listAccountModel.value?.firstWhereOrNull(
+                  (element) => element.runtimeType == BaseMarginAccountModel)
+              as BaseMarginAccountModel?;
+          List<ChartData> datas = [
+            ChartData(
+                "Tiền",
+                (data?.cashBalance ?? 0) *
+                    100 /
+                    ((data?.cashBalance ?? 0) +
+                        (data?.portfolioStatus?.marketValue ?? 0))),
+            ChartData(
+                "Cổ phiếu",
+                (data?.portfolioStatus?.marketValue ?? 0) *
+                    100 /
+                    ((data?.cashBalance ?? 0) +
+                        (data?.portfolioStatus?.marketValue ?? 0))),
+          ];
+          return AssetDistributionChart(
+            datas: datas,
+            total: (data?.cashBalance ?? 0) +
+                (data?.portfolioStatus?.marketValue ?? 0),
+          );
+        });
       }
       child = RefreshIndicator(
         onRefresh: () async {},
@@ -97,20 +123,45 @@ class _AssetScreenState extends State<AssetScreen>
               Padding(
                 padding: const EdgeInsets.all(16),
                 child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    AppIconButton(
-                      icon: AppImages.arrow_swap,
-                      onPressed: changeChart,
+                    Row(
+                      children: [
+                        AppIconButton(
+                          icon: AppImages.arrow_swap,
+                          onPressed: changeChart,
+                        ),
+                        const SizedBox(width: 10),
+                        Text(
+                          showTotalAsset
+                              ? S.of(context).total_asset
+                              : S.of(context).asset_distribution,
+                          style: textTheme.bodyMedium!.copyWith(
+                            color: AppColors.primary_01,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        )
+                      ],
                     ),
-                    const SizedBox(width: 10),
-                    Text(
-                      showTotalAsset
-                          ? S.of(context).total_asset
-                          : S.of(context).asset_distribution,
-                      style: textTheme.bodyMedium!.copyWith(
-                        color: AppColors.primary_01,
-                        fontWeight: FontWeight.w600,
-                      ),
+                    Row(
+                      children: [
+                        const CustomDropDownButton(
+                          items: [
+                            "Tài khoản Demo",
+                            "Tài khoản liên kết",
+                          ],
+                        ),
+                        const SizedBox(width: 8),
+                        Material(
+                          child: InkWell(
+                            onTap: () {},
+                            child: Image.asset(
+                              AppImages.asset_menu_icon,
+                              width: 36,
+                            ),
+                          ),
+                        ),
+                      ],
                     )
                   ],
                 ),

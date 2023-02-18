@@ -90,9 +90,7 @@ class _BaseAssetScreenState extends State<BaseAssetScreen>
           children: [
             const SizedBox(
               height: 215,
-              child: AssetChart(
-                lineColor: AppColors.graph_7,
-              ),
+              child: AssetChart(),
             ),
             const Padding(
               padding: EdgeInsets.all(16),

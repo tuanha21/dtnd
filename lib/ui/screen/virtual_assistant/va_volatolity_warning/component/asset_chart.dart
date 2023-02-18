@@ -1,14 +1,17 @@
 import 'dart:math';
 
+import 'package:charts_common/src/chart/common/behavior/legend/legend.dart';
 import 'package:dtnd/=models=/response/account/asset_chart_element.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/utilities/num_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
-
+import 'dart:ui' as ui;
 import 'package:charts_flutter/src/text_element.dart' as chartText;
 import 'package:charts_flutter/src/text_style.dart' as chartStyle;
 import 'package:intl/intl.dart';
+import 'package:charts_common/common.dart' as common
+    show Legend, LegendState, SeriesLegend;
 
 var label, value, date;
 final simpleCurrencyFormatter =
@@ -17,9 +20,7 @@ final simpleCurrencyFormatter =
 const percentageFormatter = PercentTickFormatterSpec();
 
 class AssetChart extends StatefulWidget {
-  const AssetChart(
-      {super.key, this.lineColor = AppColors.semantic_01, this.datas});
-  final Color lineColor;
+  const AssetChart({super.key, this.datas});
   final List<AssetChartElementModel>? datas;
   @override
   State<AssetChart> createState() => _AssetChartState();
@@ -27,6 +28,7 @@ class AssetChart extends StatefulWidget {
 
 class _AssetChartState extends State<AssetChart> {
   final Random random = Random();
+  static const secondaryMeasureAxisId = 'secondaryMeasureAxisId';
 
   late List<AssetChartElementModel> datas;
   late List<charts.Series<AssetChartElementModel, DateTime>> assetSeriesList;
@@ -53,29 +55,29 @@ class _AssetChartState extends State<AssetChart> {
             data: datas,
             domainFn: (data, _) => data.cTRADINGDATE,
             measureFn: (data, _) => data.cNETVALUE,
-            seriesColor: charts.ColorUtil.fromDartColor(AppColors.semantic_01),
-          ),
+            seriesColor: charts.ColorUtil.fromDartColor(AppColors.semantic_03),
+          )..setAttribute(charts.measureAxisIdKey, secondaryMeasureAxisId),
           charts.Series(
             id: "Tiền",
             data: datas,
             domainFn: (data, _) => data.cTRADINGDATE,
             measureFn: (data, _) => data.cCASHBALANCE,
             seriesColor: charts.ColorUtil.fromDartColor(AppColors.primary_01),
-          ),
+          )..setAttribute(charts.measureAxisIdKey, secondaryMeasureAxisId),
           charts.Series(
             id: "Nợ",
             data: datas,
             domainFn: (data, _) => data.cTRADINGDATE,
             measureFn: (data, _) => data.cLOANBALANCE,
             seriesColor: charts.ColorUtil.fromDartColor(AppColors.semantic_03),
-          ),
+          )..setAttribute(charts.measureAxisIdKey, secondaryMeasureAxisId),
           charts.Series(
             id: "Giá trị CK",
             data: datas,
             domainFn: (data, _) => data.cTRADINGDATE,
             measureFn: (data, _) => data.cSHARECLOSEVALUE,
-            seriesColor: charts.ColorUtil.fromDartColor(AppColors.semantic_02),
-          ),
+            seriesColor: charts.ColorUtil.fromDartColor(AppColors.semantic_01),
+          )..setAttribute(charts.measureAxisIdKey, secondaryMeasureAxisId),
         ];
       });
     }
@@ -155,7 +157,7 @@ class _AssetChartState extends State<AssetChart> {
             // Optionally provide a measure formatter to format the measure value.
             // If none is specified the value is formatted as a decimal.
             measureFormatter: (num? value) => "",
-            defaultHiddenSeries: const ["Tiền", "Nợ", "Giá trị CK"],
+            defaultHiddenSeries: const ["Nợ", "Tài sản"],
           ),
           charts.LinePointHighlighter(
               symbolRenderer:
@@ -192,12 +194,43 @@ class _AssetChartState extends State<AssetChart> {
           ),
         ],
         dateTimeFactory: const charts.LocalDateTimeFactory(),
-        domainAxis: const charts.DateTimeAxisSpec(
-            tickProviderSpec: charts.DayTickProviderSpec(increments: [(22)])),
+        domainAxis: charts.DateTimeAxisSpec(
+          // tickProviderSpec:
+          //     charts.DayTickProviderSpec(increments: [datas.length ~/ 3]),
+          tickFormatterSpec:
+              charts.BasicDateTimeTickFormatterSpec.fromDateFormat(
+            DateFormat("dd-MM-yyyy"),
+          ),
+          renderSpec: charts.GridlineRendererSpec(
+            labelOffsetFromAxisPx: 6,
+            axisLineStyle: charts.LineStyleSpec(
+              dashPattern: const [4],
+              thickness: 1,
+              color: charts.ColorUtil.fromDartColor(AppColors.neutral_03),
+            ),
+            labelStyle: const charts.TextStyleSpec(fontSize: 8),
+            lineStyle: const charts.LineStyleSpec(dashPattern: [4]),
+          ),
+        ),
         primaryMeasureAxis: charts.NumericAxisSpec(
-            tickProviderSpec:
-                const charts.BasicNumericTickProviderSpec(zeroBound: false),
-            tickFormatterSpec: simpleCurrencyFormatter),
+          tickProviderSpec:
+              const charts.BasicNumericTickProviderSpec(zeroBound: false),
+          tickFormatterSpec: simpleCurrencyFormatter,
+        ),
+        secondaryMeasureAxis: charts.NumericAxisSpec(
+          tickProviderSpec:
+              const charts.BasicNumericTickProviderSpec(zeroBound: false),
+          tickFormatterSpec: simpleCurrencyFormatter,
+          renderSpec: charts.GridlineRendererSpec(
+            axisLineStyle: charts.LineStyleSpec(
+              dashPattern: const [4],
+              thickness: 1,
+              color: charts.ColorUtil.fromDartColor(AppColors.neutral_03),
+            ),
+            labelStyle: const charts.TextStyleSpec(fontSize: 8),
+            lineStyle: const charts.LineStyleSpec(dashPattern: [4]),
+          ),
+        ),
       ),
     );
   }
@@ -287,3 +320,76 @@ class ToolTipMgr {
     }
   }
 }
+
+// class CustomLegendBuilder extends charts.LegendContentBuilder {
+//   /// Convert the charts common TextStlyeSpec into a standard TextStyle.
+//   TextStyle _convertTextStyle(
+//       bool isHidden, BuildContext context, charts.TextStyleSpec? textStyle) {
+//     return const TextStyle(
+//       inherit: true,
+//       fontSize: 8,
+//       color: AppColors.neutral_02,
+//     );
+//   }
+
+//   Widget createLabel(BuildContext context, common.LegendState legendEntry,
+//       common.SeriesLegend legend, bool isHidden) {
+//     TextStyle style =
+//         _convertTextStyle(isHidden, context, legendEntry.textStyle);
+//     Color color = AppColors.neutral_02;
+
+//     return GestureDetector(
+//         onTapUp: makeTapUpCallback(context, legendEntry, legend),
+//         child: Container(
+//             height: 30,
+//             width: 90,
+//             decoration: BoxDecoration(
+//               borderRadius: BorderRadius.circular(20),
+//               color: isHidden ? (color).withOpacity(0.26) : color,
+//             ),
+//             child: Center(child: Text(legendEntry.label, style: style))));
+//   }
+
+//   GestureTapUpCallback makeTapUpCallback(BuildContext context,
+//       common.LegendEntry legendEntry, common.SeriesLegend legend) {
+//     return (TapUpDetails d) {
+//       switch (legend.legendTapHandling) {
+//         case common.LegendTapHandling.hide:
+//           final seriesId = legendEntry.series.id;
+//           if (legend.isSeriesHidden(seriesId)) {
+//             // This will not be recomended since it suposed to be accessible only from inside the legend class, but it worked fine on my code.
+//             legend.showSeries(seriesId);
+//           } else {
+//             legend.hideSeries(seriesId);
+//           }
+//           legend.chart.redraw(skipLayout: true, skipAnimation: false);
+//           break;
+//         case common.LegendTapHandling.none:
+//         default:
+//           break;
+//       }
+//     };
+//   }
+
+//   @override
+//   Widget build(BuildContext context, common.LegendState legendState,
+//       common.Legend legend,
+//       {bool? showMeasures}) {
+//     final entryWidgets = legendState.legendEntries.map((legendEntry) {
+//       var isHidden = false;
+//       if (legend is common.SeriesLegend) {
+//         isHidden = legend.isSeriesHidden(legendEntry.series.id);
+//       }
+//       return createLabel(
+//           context, legendEntry, legend as common.SeriesLegend, isHidden);
+//     }).toList();
+
+//     return Padding(
+//       padding: const EdgeInsets.only(right: 40.0, top: 10),
+//       child: Row(
+//           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//           crossAxisAlignment: CrossAxisAlignment.center,
+//           children: entryWidgets),
+//     );
+//   }
+// }

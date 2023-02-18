@@ -4,6 +4,7 @@ import 'package:dtnd/config/service/app_services.dart';
 import 'package:dtnd/data/i_data_center_service.dart';
 import 'package:dtnd/data/implementations/data_center_service.dart';
 import 'package:dtnd/generated/l10n.dart';
+import 'package:dtnd/ui/screen/asset/component/asset_catalog_ratio_chart.dart';
 import 'package:dtnd/ui/screen/asset/screen/asset_stock_detail/asset_stock_detail_screen.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
@@ -136,11 +137,17 @@ class _InvestmentCatalogWidgetState extends State<InvestmentCatalogWidget> {
                                 ),
                               ],
                             ),
-                            Text(
-                              "${(widget.volPc ?? 0).toStringAsFixed(2)}%",
-                              style: textTheme.bodySmall!
-                                  .copyWith(color: AppColors.neutral_04),
+                            SizedBox.square(
+                              dimension: 32,
+                              child: AssetCatalogRatioChart(
+                                ratio: widget.volPc ?? 0,
+                              ),
                             ),
+                            // Text(
+                            //   "${(widget.volPc ?? 0).toStringAsFixed(2)}%",
+                            //   style: textTheme.bodySmall!
+                            //       .copyWith(color: AppColors.neutral_04),
+                            // ),
                           ],
                         ),
                         Row(

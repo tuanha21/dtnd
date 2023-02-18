@@ -5,10 +5,11 @@ import 'package:dtnd/data/implementations/data_center_service.dart';
 import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/screen/asset/component/asset_grid_element.dart';
 import 'package:dtnd/ui/screen/asset/screen/asset_stock_detail/component/asset_stock_detail_appbar.dart';
-import 'package:dtnd/ui/screen/stock_detail/widget/stock_detail_overview.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/utilities/num_utils.dart';
 import 'package:flutter/material.dart';
+
+import 'component/asset_stock_detail_overview.dart';
 
 class AssetStockDetailScreen extends StatefulWidget {
   const AssetStockDetailScreen({
@@ -56,7 +57,7 @@ class _AssetStockDetailScreenState extends State<AssetStockDetailScreen>
         children: [
           Padding(
             padding: const EdgeInsets.all(16.0),
-            child: StockDetailOverview(
+            child: AssetStockDetailOverview(
               stockModel: stockModel,
             ),
           ),
@@ -129,12 +130,12 @@ class _AssetStockDetailScreenState extends State<AssetStockDetailScreen>
                         S.of(context).sold_returning_vol: null,
                       },
                       subElements: {
-                        "T0":
-                            "${NumUtils.formatDouble(widget.porfolioStock.buyT0, "-")}đ",
-                        "T1":
-                            "${NumUtils.formatDouble(widget.porfolioStock.buyT1, "-")}đ",
-                        "T2":
-                            "${NumUtils.formatDouble(widget.porfolioStock.buyT2, "-")}đ",
+                        "T0": NumUtils.formatDouble(
+                            widget.porfolioStock.buyT0, "-"),
+                        "T1": NumUtils.formatDouble(
+                            widget.porfolioStock.buyT1, "-"),
+                        "T2": NumUtils.formatDouble(
+                            widget.porfolioStock.buyT2, "-"),
                       },
                     ),
                   ),
@@ -158,7 +159,7 @@ class _AssetStockDetailScreenState extends State<AssetStockDetailScreen>
                       labelStyle: textTheme.titleSmall,
                       labelPadding: const EdgeInsets.symmetric(
                           horizontal: 0, vertical: 4),
-                      tabs: [
+                      tabs: const [
                         Text(
                           "Deal chưa khớp",
                         ),

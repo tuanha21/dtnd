@@ -89,6 +89,7 @@ dependencies:
   html: ^0.15.1
   percent_indicator: ^4.2.2
   url_launcher: ^6.1.9
+  dropdown_button2: ^1.9.2
 
 dev_dependencies:
   flutter_test:
