@@ -87,6 +87,21 @@ abstract class StockStatus {
     );
   }
 
+  Widget prefixIconData({double? size, Color? color}){
+    switch (sstatus) {
+      case SStatus.ref:
+        return  Icon(Icons.arrow_right,color: AppColors.semantic_02,size: size);
+      case SStatus.up:
+        return  Icon(Icons.arrow_drop_up,color: AppColors.semantic_01,size: size);
+      case SStatus.down:
+        return  Icon(Icons.arrow_drop_down,color: AppColors.semantic_03,size: size);
+      case SStatus.ceil:
+        return  Icon(Icons.arrow_drop_up,color: AppColors.semantic_05,size: size);
+      case SStatus.floor:
+        return  Icon(Icons.arrow_drop_down,color: AppColors.semantic_04,size: size);
+    }
+  }
+
   Color get color {
     switch (sstatus) {
       case SStatus.ref:

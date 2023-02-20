@@ -77,15 +77,6 @@ class _NewsDetailScreenState extends State<NewsDetailScreen> {
                 ],
               ),
             ),
-            // HtmlWidget(
-            //   newsDetail.trim(),
-            //   textStyle: AppTextStyle.bodySmall_12,
-            //   onTapUrl: (url) async {
-            //     // await launchUrl(Uri.parse(url),
-            //     //     mode: LaunchMode.externalApplication);
-            //     return true;
-            //   },
-            // ),
             FutureBuilder<String>(
                 future: newsDetail,
                 builder: (context, snapshot) {
@@ -94,7 +85,8 @@ class _NewsDetailScreenState extends State<NewsDetailScreen> {
                   }
                   if (snapshot.connectionState == ConnectionState.done) {
                     if (snapshot.hasError) {
-                      return Center(child: Padding(
+                      return Center(
+                          child: Padding(
                         padding: const EdgeInsets.all(20),
                         child: Text(snapshot.error?.toString() ?? ""),
                       ));
@@ -112,11 +104,6 @@ class _NewsDetailScreenState extends State<NewsDetailScreen> {
                             // factoryBuilder: ,
                             onErrorBuilder: (context, element, error) =>
                                 Container(),
-                            onTapUrl: (url) async {
-                              // await launchUrl(Uri.parse(url),
-                              //     mode: LaunchMode.externalApplication);
-                              return true;
-                            },
                           ),
                           const SizedBox(height: 10),
                         ],

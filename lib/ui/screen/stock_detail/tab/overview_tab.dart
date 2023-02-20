@@ -4,6 +4,7 @@ import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:dtnd/ui/widget/expanded_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../../../=models=/response/company_info.dart';
 import '../../../../=models=/response/news_model.dart';
@@ -64,10 +65,11 @@ class _OverviewTabState extends State<OverviewTab>
                       decoration: BoxDecoration(
                           color: AppColors.neutral_06,
                           borderRadius: BorderRadius.circular(4),
-                          image: DecorationImage(image: provider,fit: BoxFit.contain)),
+                          image: DecorationImage(
+                              image: provider, fit: BoxFit.contain)),
                     );
                   },
-                  errorWidget: (context,_,__){
+                  errorWidget: (context, _, __) {
                     return Container(
                       height: 63,
                       width: 63,
@@ -201,7 +203,7 @@ class _BasicIndexState extends State<BasicIndex> {
                   const SizedBox(height: 4),
                   Text(
                     widget.stockModel.stockData.lowPrice.value?.toString() ??
-                        "",
+                        "-",
                     style: Theme.of(context).textTheme.titleMedium,
                   )
                 ],
@@ -232,7 +234,7 @@ class _BasicIndexState extends State<BasicIndex> {
                   const SizedBox(height: 4),
                   Text(
                     widget.stockModel.stockData.highPrice.value?.toString() ??
-                        "",
+                        "-",
                     style: Theme.of(context).textTheme.titleMedium,
                   )
                 ],
@@ -319,79 +321,84 @@ class _CompanyInfoWidgetState extends State<CompanyInfoWidget> {
                 color: AppColors.neutral_06,
               ),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Row(
-                    children: [
-                      Expanded(
-                          child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Ngày thành lập",
-                            style: textTheme.bodyMedium!
-                                .copyWith(color: AppColors.neutral_03),
-                          ),
-                          const SizedBox(height: 8),
-                          Text(
-                            info.foundDateString,
-                            style: textTheme.titleSmall,
-                          ),
-                        ],
-                      )),
-                      Expanded(
-                          child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Mã số thuế",
-                            style: textTheme.bodyMedium!
-                                .copyWith(color: AppColors.neutral_03),
-                          ),
-                          const SizedBox(height: 8),
-                          Text(
-                            info.taxCode ?? "",
-                            style: textTheme.titleSmall,
-                          ),
-                        ],
-                      ))
-                    ],
+                  IntrinsicHeight(
+                    child: Row(
+                      children: [
+                        Expanded(
+                            child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Ngày thành lập",
+                              style: textTheme.bodyMedium!
+                                  .copyWith(color: AppColors.neutral_03),
+                            ),
+                            const SizedBox(height: 8),
+                            Text(
+                              info.foundDateString,
+                              style: textTheme.titleSmall,
+                            ),
+                          ],
+                        )),
+                        Expanded(
+                            child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Mã số thuế",
+                              style: textTheme.bodyMedium!
+                                  .copyWith(color: AppColors.neutral_03),
+                            ),
+                            const SizedBox(height: 8),
+                            Text(
+                              info.taxCode ?? "",
+                              style: textTheme.titleSmall,
+                            ),
+                          ],
+                        ))
+                      ],
+                    ),
                   ),
                   const SizedBox(height: 16),
-                  Row(
-                    children: [
-                      Expanded(
-                          child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Tên viết tắt",
-                            style: textTheme.bodyMedium!
-                                .copyWith(color: AppColors.neutral_03),
-                          ),
-                          const SizedBox(height: 8),
-                          Text(
-                            info.name ?? "",
-                            style: textTheme.titleSmall,
-                          ),
-                        ],
-                      )),
-                      Expanded(
-                          child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Người đại diện",
-                            style: textTheme.bodyMedium!
-                                .copyWith(color: AppColors.neutral_03),
-                          ),
-                          const SizedBox(height: 8),
-                          Text(
-                            info.infoSupplier ?? "",
-                            style: textTheme.titleSmall,
-                          ),
-                        ],
-                      ))
-                    ],
+                  IntrinsicHeight(
+                    child: Row(
+                      children: [
+                        Expanded(
+                            child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Tên viết tắt",
+                              style: textTheme.bodyMedium!
+                                  .copyWith(color: AppColors.neutral_03),
+                            ),
+                            const SizedBox(height: 8),
+                            Text(
+                              info.name ?? "",
+                              style: textTheme.titleSmall,
+                            ),
+                          ],
+                        )),
+                        Expanded(
+                            child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Người đại diện",
+                              style: textTheme.bodyMedium!
+                                  .copyWith(color: AppColors.neutral_03),
+                            ),
+                            const SizedBox(height: 8),
+                            Text(
+                              info.infoSupplier ?? "",
+                              style: textTheme.titleSmall,
+                            ),
+                          ],
+                        ))
+                      ],
+                    ),
                   ),
                   const SizedBox(height: 16),
                   GestureDetector(
@@ -517,6 +524,57 @@ class _ListNewsISheetState extends State<ListNewsISheet> {
                     return ListView.separated(
                         shrinkWrap: true,
                         itemBuilder: (context, index) {
+                          if (index == 0) {
+                            return Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                CachedNetworkImage(
+                                  imageUrl: listNews[index].imageUrl!,
+                                  imageBuilder: (BuildContext context,
+                                      ImageProvider imageProvider) {
+                                    return Container(
+                                      height: 200,
+                                      width: MediaQuery.of(context).size.width,
+                                      decoration: BoxDecoration(
+                                          image: DecorationImage(
+                                              image: imageProvider,
+                                              fit: BoxFit.fill)),
+                                    );
+                                  },
+                                ),
+                                const SizedBox(height: 16),
+                                Text(listNews[index].title ?? "",
+                                    style:
+                                        Theme.of(context).textTheme.bodyLarge),
+                                const SizedBox(height: 10),
+                                Text(listNews[index].head ?? "",
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodySmall
+                                        ?.copyWith(
+                                            color: AppColors.neutral_03)),
+                                const SizedBox(height: 10),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(listNews[index].source ?? "",
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodySmall
+                                            ?.copyWith(
+                                                fontWeight: FontWeight.w700)),
+                                    Text(
+                                        DateFormat("dd/MM/yyyy")
+                                            .format(listNews[index].dateTime!),
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodySmall),
+                                  ],
+                                )
+                              ],
+                            );
+                          }
                           return GestureDetector(
                               onTap: () {
                                 Navigator.of(context).push(MaterialPageRoute(

@@ -24,7 +24,7 @@ class _TransactionTabState extends State<TransactionTab> {
             automaticallyImplyLeading: false,
             // pinned: false,
             // toolbarHeight: 200,
-            expandedHeight: 400,
+            expandedHeight: 416,
             floating: true,
             flexibleSpace: SingleChildScrollView(
               physics: const NeverScrollableScrollPhysics(),
@@ -43,6 +43,7 @@ class _TransactionTabState extends State<TransactionTab> {
                           ?.copyWith(fontWeight: FontWeight.w600),
                     ),
                   ),
+                  const SizedBox(height: 16),
                   ForeignWidget(stockModel: widget.stockModel)
                 ],
               ),

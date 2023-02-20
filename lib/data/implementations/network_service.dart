@@ -373,13 +373,13 @@ class NetworkService implements INetworkService {
   @override
   Future<String> getNewsContent(int id) async {
     final http.Response response =
-        await client.get(url_core1("pickContents/$id"));
+        await client.get(url_info_sbsi("newsDetail.pt", {"id": id.toString()}));
     var responseBody = decode(response.bodyBytes);
+    logger.d(responseBody);
     if (responseBody['rc'] == -1) {
       return Future.error(responseBody['rs']);
     }
-    final data = responseBody["data"];
-
+    final data = responseBody["Content"];
     return data;
   }
 

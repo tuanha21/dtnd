@@ -57,25 +57,34 @@ class _ForeignWidgetState extends State<ForeignWidget> {
                       const SizedBox(height: 16),
                       Row(
                         children: [
-                          const Spacer(flex: 8),
+                          const Spacer(flex: 5),
+                          Expanded(
+                              flex: 4,
+                              child: Align(
+                                alignment: Alignment.centerRight,
+                                child: Text("Mua",
+                                    style: title?.copyWith(
+                                        fontWeight: FontWeight.w600,
+                                        color: AppColors.neutral_02)),
+                              )),
+                          Expanded(
+                              flex: 4,
+                              child: Align(
+                                alignment: Alignment.centerRight,
+                                child: Text("Bán",
+                                    style: title?.copyWith(
+                                        fontWeight: FontWeight.w600,
+                                        color: AppColors.neutral_02)),
+                              )),
                           Expanded(
                               flex: 6,
-                              child: Text("Mua",
-                                  style: title?.copyWith(
-                                      fontWeight: FontWeight.w600,
-                                      color: AppColors.neutral_02))),
-                          Expanded(
-                              flex: 6,
-                              child: Text("Bán",
-                                  style: title?.copyWith(
-                                      fontWeight: FontWeight.w600,
-                                      color: AppColors.neutral_02))),
-                          Expanded(
-                              flex: 6,
-                              child: Text("Mua bán ròng",
-                                  style: title?.copyWith(
-                                      fontWeight: FontWeight.w600,
-                                      color: AppColors.neutral_02)))
+                              child: Align(
+                                alignment: Alignment.centerRight,
+                                child: Text("Mua bán ròng",
+                                    style: title?.copyWith(
+                                        fontWeight: FontWeight.w600,
+                                        color: AppColors.neutral_02)),
+                              ))
                         ],
                       ),
                       const Divider(
@@ -86,33 +95,44 @@ class _ForeignWidgetState extends State<ForeignWidget> {
                       Row(
                         children: [
                           Expanded(
-                              flex: 8,
+                              flex: 5,
                               child: Text(S.of(context).volumn,
                                   style: title?.copyWith(
                                       fontWeight: FontWeight.w600,
                                       color: AppColors.neutral_02))),
                           Expanded(
-                              flex: 6,
-                              child: Text(
-                                  NumUtils.formatInteger(
-                                      stockBoard.fGBuyQuantity),
-                                  style: title?.copyWith(
-                                      fontWeight: FontWeight.w600))),
+                              flex: 4,
+                              child: Align(
+                                alignment: Alignment.centerRight,
+                                child: Text(
+                                    NumUtils.formatInteger(
+                                        stockBoard.fGBuyQuantity),
+                                    style: title?.copyWith(
+                                        fontWeight: FontWeight.w600,
+                                        color: AppColors.primary_01)),
+                              )),
                           Expanded(
-                              flex: 6,
-                              child: Text(
-                                NumUtils.formatInteger(
-                                    stockBoard.fGSellQuantity),
-                                style: title?.copyWith(
-                                    fontWeight: FontWeight.w600),
+                              flex: 4,
+                              child: Align(
+                                alignment: Alignment.centerRight,
+                                child: Text(
+                                  NumUtils.formatInteger(
+                                      stockBoard.fGSellQuantity),
+                                  style: title?.copyWith(
+                                      fontWeight: FontWeight.w600,
+                                      color: AppColors.primary_01),
+                                ),
                               )),
                           Expanded(
                               flex: 6,
-                              child: Text(
-                                NumUtils.formatInteger(
-                                    stockBoard.fGNetQuantity),
-                                style: title?.copyWith(
-                                    fontWeight: FontWeight.w600),
+                              child: Align(
+                                alignment: Alignment.centerRight,
+                                child: Text(
+                                  NumUtils.formatInteger(
+                                      stockBoard.fGNetQuantity),
+                                  style: title?.copyWith(
+                                      fontWeight: FontWeight.w600),
+                                ),
                               ))
                         ],
                       ),
@@ -120,31 +140,42 @@ class _ForeignWidgetState extends State<ForeignWidget> {
                       Row(
                         children: [
                           Expanded(
-                              flex: 8,
+                              flex: 5,
                               child: Text("Giá trị giao dịch",
                                   style: title?.copyWith(
                                       fontWeight: FontWeight.w600,
                                       color: AppColors.neutral_02))),
                           Expanded(
-                              flex: 6,
-                              child: Text(
-                                NumUtils.formatInteger(stockBoard.fGBuyValue),
-                                style: title?.copyWith(
-                                    fontWeight: FontWeight.w600),
+                              flex: 4,
+                              child: Align(
+                                alignment: Alignment.centerRight,
+                                child: Text(
+                                  "${stockBoard.fGBuyValue?.toStringAsFixed(2)}T",
+                                  style: title?.copyWith(
+                                      fontWeight: FontWeight.w600,
+                                      color: AppColors.primary_01),
+                                ),
+                              )),
+                          Expanded(
+                              flex: 4,
+                              child: Align(
+                                alignment: Alignment.centerRight,
+                                child: Text(
+                                  "${stockBoard.fGSellValue?.toStringAsFixed(2)}T",
+                                  style: title?.copyWith(
+                                      fontWeight: FontWeight.w600,
+                                      color: AppColors.primary_01),
+                                ),
                               )),
                           Expanded(
                               flex: 6,
-                              child: Text(
-                                NumUtils.formatInteger(stockBoard.fGSellValue),
-                                style: title?.copyWith(
-                                    fontWeight: FontWeight.w600),
-                              )),
-                          Expanded(
-                              flex: 6,
-                              child: Text(
-                                NumUtils.formatInteger(stockBoard.fGNetValue),
-                                style: title?.copyWith(
-                                    fontWeight: FontWeight.w600),
+                              child: Align(
+                                alignment: Alignment.centerRight,
+                                child: Text(
+                                  NumUtils.formatInteger(stockBoard.fGNetValue),
+                                  style: title?.copyWith(
+                                      fontWeight: FontWeight.w600),
+                                ),
                               ))
                         ],
                       ),

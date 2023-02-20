@@ -82,6 +82,18 @@ class TimeUtilities {
     final after = now.add(duration);
     return after;
   }
+
+  static int getQuarter(DateTime date) {
+    if (date.month >= 4 && date.month <= 6) {
+      return 2;
+    } else if (date.month >= 7 && date.month <= 9) {
+      return 3;
+    } else if (date.month >= 10 && date.month <= 12) {
+      return 4;
+    } else {
+      return 1;
+    }
+  }
 }
 
 // abstract class Time {

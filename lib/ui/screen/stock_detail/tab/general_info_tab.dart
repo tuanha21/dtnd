@@ -65,79 +65,84 @@ class _GeneralInfoTabState extends State<GeneralInfoTab> {
                       color: AppColors.neutral_06,
                     ),
                     child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Row(
-                          children: [
-                            Expanded(
-                                child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  "Ngày thành lập",
-                                  style: textTheme.bodyMedium!
-                                      .copyWith(color: AppColors.neutral_03),
-                                ),
-                                const SizedBox(height: 8),
-                                Text(
-                                  info.foundDateString,
-                                  style: textTheme.titleSmall,
-                                ),
-                              ],
-                            )),
-                            Expanded(
-                                child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  "Mã số thuế",
-                                  style: textTheme.bodyMedium!
-                                      .copyWith(color: AppColors.neutral_03),
-                                ),
-                                const SizedBox(height: 8),
-                                Text(
-                                  info.taxCode ?? "",
-                                  style: textTheme.titleSmall,
-                                ),
-                              ],
-                            ))
-                          ],
+                        IntrinsicHeight(
+                          child: Row(
+                            children: [
+                              Expanded(
+                                  child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "Ngày thành lập",
+                                    style: textTheme.bodyMedium!
+                                        .copyWith(color: AppColors.neutral_03),
+                                  ),
+                                  const SizedBox(height: 8),
+                                  Text(
+                                    info.foundDateString,
+                                    style: textTheme.titleSmall,
+                                  ),
+                                ],
+                              )),
+                              Expanded(
+                                  child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "Mã số thuế",
+                                    style: textTheme.bodyMedium!
+                                        .copyWith(color: AppColors.neutral_03),
+                                  ),
+                                  const SizedBox(height: 8),
+                                  Text(
+                                    info.taxCode ?? "",
+                                    style: textTheme.titleSmall,
+                                  ),
+                                ],
+                              ))
+                            ],
+                          ),
                         ),
                         const SizedBox(height: 16),
-                        Row(
-                          children: [
-                            Expanded(
-                                child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  "Tên viết tắt",
-                                  style: textTheme.bodyMedium!
-                                      .copyWith(color: AppColors.neutral_03),
-                                ),
-                                const SizedBox(height: 8),
-                                Text(
-                                  info.name ?? "",
-                                  style: textTheme.titleSmall,
-                                ),
-                              ],
-                            )),
-                            Expanded(
-                                child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  "Người đại diện",
-                                  style: textTheme.bodyMedium!
-                                      .copyWith(color: AppColors.neutral_03),
-                                ),
-                                const SizedBox(height: 8),
-                                Text(
-                                  info.infoSupplier ?? "",
-                                  style: textTheme.titleSmall,
-                                ),
-                              ],
-                            ))
-                          ],
+                        IntrinsicHeight(
+                          child: Row(
+                            children: [
+                              Expanded(
+                                  child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "Tên viết tắt",
+                                    style: textTheme.bodyMedium!
+                                        .copyWith(color: AppColors.neutral_03),
+                                  ),
+                                  const SizedBox(height: 8),
+                                  Text(
+                                    info.name ?? "",
+                                    style: textTheme.titleSmall,
+                                  ),
+                                ],
+                              )),
+                              Expanded(
+                                  child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "Người đại diện",
+                                    style: textTheme.bodyMedium!
+                                        .copyWith(color: AppColors.neutral_03),
+                                  ),
+                                  const SizedBox(height: 8),
+                                  Text(
+                                    info.infoSupplier ?? "",
+                                    style: textTheme.titleSmall,
+                                  ),
+                                ],
+                              ))
+                            ],
+                          ),
                         ),
                         const SizedBox(height: 16),
                         GestureDetector(

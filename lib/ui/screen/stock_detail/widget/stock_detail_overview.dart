@@ -9,7 +9,9 @@ import 'package:get/get.dart';
 
 class StockDetailOverview extends StatelessWidget {
   const StockDetailOverview({super.key, required this.stockModel});
+
   final StockModel stockModel;
+
   @override
   Widget build(BuildContext context) {
     List<_StockDetailPriceElementData> listPrices = [
@@ -43,42 +45,43 @@ class StockDetailOverview extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  Text(
-                    stockModel.stockData.lastPrice.toString(),
-                    style: AppTextStyle.headlineSmall_24
-                        .copyWith(fontWeight: FontWeight.w700),
-                  ),
-                  const SizedBox(width: 10),
-                  stockModel.stockData.prefixIcon(size: 10),
-                  const SizedBox(width: 3),
-                  Text(
-                    "${stockModel.stockData.ot} (${stockModel.stockData.changePc}%)",
-                    style: AppTextStyle.bodySmall_8.copyWith(
-                        fontWeight: FontWeight.w500,
-                        color: stockModel.stockData.color),
+                  Text(stockModel.stockData.lastPrice.toString(),
+                      style: Theme.of(context)
+                          .textTheme
+                          .headlineLarge
+                          ?.copyWith(fontWeight: FontWeight.w700)),
+                  const SizedBox(width: 4),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          stockModel.stockData.prefixIconData(size: 24),
+                          Text(
+                            "${stockModel.stockData.ot} (${stockModel.stockData.changePc}%)",
+                            style: AppTextStyle.bodySmall_8.copyWith(
+                                fontWeight: FontWeight.w500,
+                                color: stockModel.stockData.color),
+                          ),
+                        ],
+                      ),
+                      ObxValue<Rx<num?>>(
+                        (lot) {
+                          return Padding(
+                            padding: const EdgeInsets.only(left: 2),
+                            child: Text(
+                              "${NumUtils.formatInteger10(lot.value, "-")} CP",
+                              style: AppTextStyle.bodySmall_8
+                                  .copyWith(color: AppColors.neutral_04),
+                            ),
+                          );
+                        },
+                        stockModel.stockData.lot,
+                      )
+                    ],
                   ),
                 ],
               ),
-              Row(
-                children: [
-                  ObxValue<Rx<num?>>(
-                    (lot) {
-                      return Text(
-                        "${NumUtils.formatInteger10(lot.value, "-")} CP",
-                        style: AppTextStyle.bodySmall_8
-                            .copyWith(color: AppColors.neutral_04),
-                      );
-                    },
-                    stockModel.stockData.lot,
-                  ),
-                  const SizedBox(width: 10),
-                  Text(
-                    "${NumUtils.formatInteger(stockModel.stockData.value, "-")} tỷ",
-                    style: AppTextStyle.bodySmall_8
-                        .copyWith(color: AppColors.neutral_04),
-                  ),
-                ],
-              )
             ],
           ),
         ),
@@ -99,35 +102,35 @@ class _StockDetailPriceElement extends StatelessWidget {
     required this.data,
     required this.themeMode,
   });
+
   final ThemeMode themeMode;
   final _StockDetailPriceElementData data;
+
   @override
   Widget build(BuildContext context) {
-    return SizedBox.fromSize(
-      size: const Size(54, 48),
-      child: Container(
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-          borderRadius: const BorderRadius.all(Radius.circular(8)),
-          color: themeMode.isLight ? Colors.transparent : AppColors.neutral_01,
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              data.title,
-              style: Theme.of(context).textTheme.labelMedium,
-            ),
-            const SizedBox(
-              height: 6,
-            ),
-            Text(
-              data.value ?? "-",
-              style: Theme.of(context).textTheme.labelMedium!.copyWith(
-                  fontWeight: FontWeight.w600, color: data.valueColor),
-            ),
-          ],
-        ),
+    return Container(
+      alignment: Alignment.center,
+      decoration: BoxDecoration(
+        borderRadius: const BorderRadius.all(Radius.circular(8)),
+        color: themeMode.isLight ? Colors.transparent : AppColors.neutral_01,
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            data.title,
+            style: Theme.of(context).textTheme.labelMedium?.copyWith(color: AppColors.neutral_03),
+          ),
+          const SizedBox(
+            height: 6,
+          ),
+          Text(
+            data.value ?? "-",
+            style: Theme.of(context).textTheme.labelMedium!.copyWith(
+                fontWeight: FontWeight.w600, color: data.valueColor),
+          ),
+        ],
       ),
     );
   }
@@ -140,6 +143,7 @@ class _StockDetailPriceElementData {
     required this.valueColor,
     required this.bgColor,
   });
+
   final String title;
   final String? value;
   final Color valueColor;

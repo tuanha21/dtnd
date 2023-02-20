@@ -86,7 +86,7 @@ class _SubsidiariesInfoTabState extends State<SubsidiariesInfoTab> {
                               child: Text(
                                 index.relatedCompanyName ?? "-",
                                 style: textTheme.labelMedium!
-                                    .copyWith(fontWeight: FontWeight.w600),
+                                    .copyWith(fontWeight: FontWeight.w600,height: 24/16),
                               ),
                             ),
                             Expanded(child: LayoutBuilder(
@@ -99,6 +99,7 @@ class _SubsidiariesInfoTabState extends State<SubsidiariesInfoTab> {
                                       style: textTheme.labelMedium!.copyWith(
                                           fontWeight: FontWeight.w600),
                                     ),
+                                    const SizedBox(height: 8),
                                     Row(
                                       mainAxisAlignment: MainAxisAlignment.end,
                                       children: [
@@ -176,7 +177,7 @@ class _SubsidiariesInfoTabState extends State<SubsidiariesInfoTab> {
                               child: Text(
                                 index.relatedCompanyName ?? "-",
                                 style: textTheme.labelMedium!
-                                    .copyWith(fontWeight: FontWeight.w600),
+                                    .copyWith(fontWeight: FontWeight.w600,height: 24/16),
                               ),
                             ),
                             Expanded(child: LayoutBuilder(
@@ -189,6 +190,7 @@ class _SubsidiariesInfoTabState extends State<SubsidiariesInfoTab> {
                                       style: textTheme.labelMedium!.copyWith(
                                           fontWeight: FontWeight.w600),
                                     ),
+                                    const SizedBox(height: 8),
                                     Row(
                                       mainAxisAlignment: MainAxisAlignment.end,
                                       children: [
@@ -266,7 +268,7 @@ class _SubsidiariesInfoTabState extends State<SubsidiariesInfoTab> {
                               child: Text(
                                 index.relatedCompanyName ?? "-",
                                 style: textTheme.labelMedium!
-                                    .copyWith(fontWeight: FontWeight.w600),
+                                    .copyWith(fontWeight: FontWeight.w600,height: 24/16),
                               ),
                             ),
                             Expanded(child: LayoutBuilder(
@@ -279,6 +281,7 @@ class _SubsidiariesInfoTabState extends State<SubsidiariesInfoTab> {
                                       style: textTheme.labelMedium!.copyWith(
                                           fontWeight: FontWeight.w600),
                                     ),
+                                    const SizedBox(height: 8),
                                     Row(
                                       mainAxisAlignment: MainAxisAlignment.end,
                                       children: [

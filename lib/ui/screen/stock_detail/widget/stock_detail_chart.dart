@@ -26,7 +26,8 @@ class StockDetailChart extends StatefulWidget {
   State<StockDetailChart> createState() => _StockDetailChartState();
 }
 
-class _StockDetailChartState extends State<StockDetailChart> with AutomaticKeepAliveClientMixin{
+class _StockDetailChartState extends State<StockDetailChart>
+    with AutomaticKeepAliveClientMixin {
   late StreamController<List<num>> stockTrading = StreamController.broadcast();
 
   final INetworkService iNetworkService = NetworkService();
@@ -86,7 +87,6 @@ class _StockDetailChartState extends State<StockDetailChart> with AutomaticKeepA
                   annotation = list.first;
                   max = math.max<num>(list.reduce(math.max), annotation);
                   min = math.min<num>(list.reduce(math.min), annotation);
-
                   return Padding(
                     padding: const EdgeInsets.only(left: 0, right: 20),
                     child: charts.NumericComboChart(
@@ -97,8 +97,9 @@ class _StockDetailChartState extends State<StockDetailChart> with AutomaticKeepA
                                 colorFn: (_, __) =>
                                     charts.ColorUtil.fromDartColor(
                                         widget.stockModel.stockData.color),
-                                domainFn: (num indexBoard, int? index) =>
-                                    index!,
+                                domainFn: (num indexBoard, int? index) {
+                                  return listTime[index!].toInt();
+                                },
                                 measureFn: (num sales, _) {
                                   return sales;
                                 },
@@ -152,22 +153,31 @@ class _StockDetailChartState extends State<StockDetailChart> with AutomaticKeepA
   }
 
   charts.NumericAxisSpec domainSpec(List<num> list) {
+    var now = DateTime.now();
+    var min =
+        DateTime(now.year, now.month, now.day, 9, 0).millisecondsSinceEpoch;
+    var max =
+        DateTime(now.year, now.month, now.day, 14, 30).millisecondsSinceEpoch;
+
     return charts.NumericAxisSpec(
-        tickFormatterSpec: charts.BasicNumericTickFormatterSpec((index) {
-          if (index! < list.length) {
-            if (timeSeries == TimeSeries.day) {
-              String formattedDate = DateFormat('HH:mm').format(
-                  DateTime.fromMillisecondsSinceEpoch(
-                      list[index.toInt()].toInt() * 1000));
-              return formattedDate;
-            }
-            String formattedDate = DateFormat('dd/MM').format(
-                DateTime.fromMillisecondsSinceEpoch(
-                    list[index.toInt()].toInt() * 1000));
+        tickFormatterSpec: charts.BasicNumericTickFormatterSpec((time) {
+          if (timeSeries == TimeSeries.day) {
+            String formattedDate = DateFormat('HH:mm').format(
+                DateTime.fromMillisecondsSinceEpoch(time!.toInt() * 1000));
             return formattedDate;
           }
-          return "";
+          String formattedDate = DateFormat('dd/MM').format(
+              DateTime.fromMillisecondsSinceEpoch(time!.toInt() * 1000));
+          return formattedDate;
         }),
+        tickProviderSpec: const charts.BasicNumericTickProviderSpec(
+          dataIsInWholeNumbers: true,
+          //desiredMaxTickCount: 5,
+          zeroBound: false,
+        ),
+        viewport: timeSeries == TimeSeries.day
+            ? charts.NumericExtents(min / 1000, max / 1000)
+            : null,
         renderSpec: const charts.GridlineRendererSpec(
             axisLineStyle: charts.LineStyleSpec(
               dashPattern: [4],
@@ -183,6 +193,8 @@ class _StockDetailChartState extends State<StockDetailChart> with AutomaticKeepA
       showAxisLine: true,
       tickProviderSpec: const charts.BasicNumericTickProviderSpec(
         zeroBound: false,
+        desiredTickCount: 5,
+        dataIsInWholeNumbers: false,
       ),
       viewport: charts.NumericExtents(min, max),
       renderSpec: const charts.GridlineRendererSpec(
@@ -201,7 +213,7 @@ class _StockDetailChartState extends State<StockDetailChart> with AutomaticKeepA
   bool get wantKeepAlive => true;
 }
 
-enum TimeSeries { day, week, month, month_3, month_6, year, year_5 }
+enum TimeSeries { day, week, month, month_3, month_6, year }
 
 extension TimeSeriesExt on TimeSeries {
   String get title {
@@ -218,15 +230,16 @@ extension TimeSeriesExt on TimeSeries {
         return "6M";
       case TimeSeries.year:
         return "1Y";
-      case TimeSeries.year_5:
-        return "5Y";
     }
   }
 
   DateTime get dateTime {
     switch (this) {
       case TimeSeries.day:
-        return DateTime.now().beginningOfDay;
+        {
+          var now = DateTime.now();
+          return DateTime(now.year, now.month, now.day, 9, 0);
+        }
       case TimeSeries.week:
         return TimeUtilities.getPreviousDateTime(const Duration(days: 7));
       case TimeSeries.month:
@@ -237,8 +250,6 @@ extension TimeSeriesExt on TimeSeries {
         return TimeUtilities.getPreviousDateTime(const Duration(days: 180));
       case TimeSeries.year:
         return TimeUtilities.getPreviousDateTime(const Duration(days: 365));
-      case TimeSeries.year_5:
-        return TimeUtilities.getPreviousDateTime(const Duration(days: 1825));
     }
   }
 

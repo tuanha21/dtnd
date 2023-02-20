@@ -2,22 +2,18 @@ import 'package:dtnd/=models=/response/stock_financial_index_model.dart';
 import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/utilities/num_utils.dart';
+import 'package:dtnd/utilities/time_utils.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
-class BenefitChart extends StatefulWidget {
+class BenefitChart extends StatelessWidget {
   const BenefitChart({
     super.key,
     required this.listStockFinancialIndex,
+    required this.type,
   });
 
   final List<StockFinancialIndex> listStockFinancialIndex;
-
-  @override
-  State<BenefitChart> createState() => _BenefitChartState();
-}
-
-class _BenefitChartState extends State<BenefitChart> {
+  final String type;
 
   @override
   Widget build(BuildContext context) {
@@ -27,9 +23,10 @@ class _BenefitChartState extends State<BenefitChart> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             for (final StockFinancialIndex stockFinancialIndex
-                in widget.listStockFinancialIndex)
+                in listStockFinancialIndex)
               BenefitChartColumn(
                 stockFinancialIndex: stockFinancialIndex,
+                type: type,
               )
           ],
         ),
@@ -72,9 +69,11 @@ class BenefitChartColumn extends StatelessWidget {
   const BenefitChartColumn({
     super.key,
     required this.stockFinancialIndex,
+    required this.type,
   });
 
   final StockFinancialIndex stockFinancialIndex;
+  final String type;
 
   num get ratio {
     var nETINC = stockFinancialIndex.nETINC ?? 0;
@@ -83,6 +82,18 @@ class BenefitChartColumn extends StatelessWidget {
       nETREV += nETREV + nETINC * -1;
     }
     return nETINC / nETREV;
+  }
+
+  String get time {
+    String time = "";
+    if (type == "Q") {
+      time =
+      'Q${TimeUtilities.getQuarter(stockFinancialIndex.rEPORTDATE)}/${stockFinancialIndex.rEPORTDATE.year}';
+    }
+    if (type == "Y") {
+      time = '${stockFinancialIndex.rEPORTDATE.year}';
+    }
+    return time;
   }
 
   @override
@@ -121,7 +132,7 @@ class BenefitChartColumn extends StatelessWidget {
             color: AppColors.primary_02,
           ),
           child: Text(
-            DateFormat("yyyy").format(stockFinancialIndex.rEPORTDATE),
+            time,
             style: const TextStyle(color: Colors.white),
           ),
         ),

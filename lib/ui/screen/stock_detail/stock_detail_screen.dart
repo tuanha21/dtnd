@@ -135,6 +135,7 @@ class _StockDetailScreenState extends State<StockDetailScreen> {
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: StockDetailOverview(stockModel: widget.stockModel),
               ),
+              const SizedBox(height: 15),
               Expanded(
                 child: DefaultTabController(
                   length: DetailTab.values.length,
