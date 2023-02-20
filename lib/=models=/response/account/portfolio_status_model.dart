@@ -72,6 +72,9 @@ class PortfolioStatus {
   });
 
   PortfolioStatus.fromPorfolioStock(List<PorfolioStock> list) {
+    if (list.length < 2) {
+      return;
+    }
     final total = list.first;
     symbol = total.symbol;
     account = total.account;
@@ -82,7 +85,9 @@ class PortfolioStatus {
     gainLossPer = total.gainLossPer;
     relized = total.relized;
     plg = total.plg;
-    porfolioStocks = list.sublist(1, list.length);
+    if (list.length > 1) {
+      porfolioStocks = list.sublist(1, list.length);
+    }
     if (porfolioStocks != null && porfolioStocks!.length > 1) {
       for (PorfolioStock porfolioStock in porfolioStocks!) {
         totalVol += (porfolioStock.actualVol ?? 0);

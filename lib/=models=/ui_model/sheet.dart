@@ -19,8 +19,12 @@ abstract class ISheet implements IOverlay {
       shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.vertical(top: Radius.circular(20))),
       builder: (BuildContext context) {
-        return Wrap(
-          children: [child],
+        return Padding(
+          padding:
+              EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+          child: Wrap(
+            children: [child],
+          ),
         );
       },
     ).then((result) => cmd(context, result));

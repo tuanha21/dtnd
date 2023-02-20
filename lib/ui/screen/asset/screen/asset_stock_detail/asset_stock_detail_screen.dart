@@ -6,6 +6,7 @@ import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/screen/asset/component/asset_grid_element.dart';
 import 'package:dtnd/ui/screen/asset/screen/asset_stock_detail/component/asset_stock_detail_appbar.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
+import 'package:dtnd/ui/widget/picker/datetime_picker_widget.dart';
 import 'package:dtnd/utilities/num_utils.dart';
 import 'package:flutter/material.dart';
 
@@ -236,6 +237,16 @@ class _AssetStockDetailScreenState extends State<AssetStockDetailScreen>
                         ),
                         Column(
                           children: [
+                            const SizedBox(height: 8),
+                            Row(
+                              children: [
+                                Expanded(
+                                    child: DateTimePickerWidget(
+                                  labelText: S.of(context).from_day,
+                                ))
+                              ],
+                            ),
+                            const SizedBox(height: 8),
                             Container(
                               padding: const EdgeInsets.all(16),
                               decoration: const BoxDecoration(

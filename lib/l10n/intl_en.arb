@@ -201,6 +201,7 @@
 
     "create_new_order": "Create new order",
     "create_order_successfully": "Create order successfully",
+    "create_order_failed": "Create order failed",
     "order_will_appear_in_ur_order_note": "Order will appear in your order note",
     "volatility_warning": "Volatility warning",
     "volatility_notice": "Volatility notice",
@@ -318,7 +319,10 @@
     "world": "World",
 
     "copytrade": "Copytrade",
+    "transaction": "Transaction",
 
-    "transaction": "Transaction"
+    "unknown_exception": "Unknown exception",
+
+    "end": "End"
 
 }

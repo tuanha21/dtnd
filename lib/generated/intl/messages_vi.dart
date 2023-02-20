@@ -134,6 +134,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "create_catalog": MessageLookupByLibrary.simpleMessage("Tạo danh mục"),
         "create_new_order":
             MessageLookupByLibrary.simpleMessage("Đặt lệnh mới"),
+        "create_order_failed":
+            MessageLookupByLibrary.simpleMessage("Đặt lệnh không thành công"),
         "create_order_successfully":
             MessageLookupByLibrary.simpleMessage("Đặt lệnh thành công"),
         "date_translations": MessageLookupByLibrary.simpleMessage("Ngày"),
@@ -153,6 +155,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Sửa tên danh mục"),
         "email": MessageLookupByLibrary.simpleMessage("Email"),
         "empty_catalog": MessageLookupByLibrary.simpleMessage("Danh mục rỗng"),
+        "end": MessageLookupByLibrary.simpleMessage("Kết thúc"),
         "event": MessageLookupByLibrary.simpleMessage("Sự kiện"),
         "exchange_total":
             MessageLookupByLibrary.simpleMessage("Tổng giao dịch"),
@@ -378,6 +381,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage(
                 "Bạn thử tìm kiếm lại bằng từ khoá khác nhé!"),
         "unknown_error":
+            MessageLookupByLibrary.simpleMessage("Lỗi không xác định"),
+        "unknown_exception":
             MessageLookupByLibrary.simpleMessage("Lỗi không xác định"),
         "username": MessageLookupByLibrary.simpleMessage("Tên đăng nhập"),
         "vietnam": MessageLookupByLibrary.simpleMessage("Việt nam"),

@@ -1,3 +1,4 @@
+import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:flutter/material.dart';
 
 class DateTimePickerWidget extends StatefulWidget {
@@ -17,17 +18,28 @@ class DateTimePickerWidget extends StatefulWidget {
 class _DateTimePickerWidgetState extends State<DateTimePickerWidget> {
   @override
   Widget build(BuildContext context) {
-    return TextField(
-      controller: widget.controller,
-      readOnly: true,
-      autocorrect: false,
-      enableSuggestions: false,
-      enabled: true,
-      decoration: InputDecoration(
-          labelText: widget.labelText,
-          suffix: Container(
-            color: Colors.red,
-          )),
+    return GestureDetector(
+      onTap: () {
+        print("tapped");
+      },
+      child: TextField(
+        controller: widget.controller,
+        readOnly: true,
+        autocorrect: false,
+        enableSuggestions: false,
+        enabled: false,
+        decoration: InputDecoration(
+            labelText: widget.labelText ?? "Label",
+            floatingLabelBehavior: FloatingLabelBehavior.always,
+            suffixIcon: SizedBox.square(
+              dimension: 20,
+              child: Image.asset(
+                AppImages.asset_calendar_icon,
+              ),
+            ),
+            suffixIconConstraints: const BoxConstraints(
+                minHeight: 20, maxHeight: 20, minWidth: 36, maxWidth: 36)),
+      ),
     );
   }
 }

@@ -2,7 +2,6 @@
 
 import 'package:dtnd/=models=/core_response_model.dart';
 import 'package:dtnd/=models=/index.dart';
-import 'package:dtnd/=models=/response/account/i_account.dart';
 import 'package:dtnd/=models=/response/account_info_model.dart';
 import 'package:dtnd/=models=/response/business_profile_model.dart';
 import 'package:dtnd/=models=/response/deep_model.dart';
@@ -10,7 +9,6 @@ import 'package:dtnd/=models=/response/inday_matched_order.dart';
 import 'package:dtnd/=models=/response/index_chart_data.dart';
 import 'package:dtnd/=models=/response/index_detail.dart';
 import 'package:dtnd/=models=/response/liquidity_model.dart';
-import 'package:dtnd/=models=/response/new_order.dart';
 import 'package:dtnd/=models=/response/news_detail.dart';
 import 'package:dtnd/=models=/response/news_model.dart';
 import 'package:dtnd/=models=/response/s_cash_balance.dart';
@@ -63,12 +61,16 @@ abstract class INetworkService {
   Future<UserEntity?> checkLogin(RequestModel requestModel);
 
   Future<T?> requestTraditionalApi<T extends CoreResponseModel>(
-      RequestModel requestModel,
-      {T? Function(Map<String, dynamic>)? onError});
+    RequestModel requestModel, {
+    T? Function(Map<String, dynamic>)? onError,
+    bool Function(Map<String, dynamic>)? hasError,
+  });
 
   Future<List<T>?> requestTraditionalApiResList<T extends CoreResponseModel>(
-      RequestModel requestModel,
-      {List<T>? Function(Map<String, dynamic>)? onError});
+    RequestModel requestModel, {
+    List<T>? Function(Map<String, dynamic>)? onError,
+    bool Function(Map<String, dynamic>)? hasError,
+  });
 
   Future<List<Stock>> getListAllStock();
 
@@ -117,8 +119,6 @@ abstract class INetworkService {
   Future<List<IndexBoard>> getIndexBoard(String marketCode);
 
   Future<SCashBalance> getSCashBalance(RequestModel requestModel);
-
-  Future<NewOrderResponse?> createNewOrder(RequestModel requestModel);
 
   Future<List<TopInfluenceModel>> getTopInfluence(String index);
 
@@ -180,6 +180,4 @@ abstract class INetworkService {
   Future<List<SecTrading>> getSecTradingHistory(String stockCode);
 
   Future<List<ShareHolders>> getShareHolderCompany(String stockCode);
-
-
 }

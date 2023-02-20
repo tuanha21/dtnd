@@ -10,9 +10,11 @@ class RequestModel {
   String? group;
   String? user;
   String? session;
+  String? checksum;
   RequestDataModel? data;
 
-  RequestModel(IUserService userService, {this.group, this.data}) {
+  RequestModel(IUserService userService,
+      {this.group, this.data, this.checksum}) {
     user = userService.token!.user;
     session = userService.token!.sid;
   }
@@ -24,7 +26,10 @@ class RequestModel {
     data['group'] = group;
     data['user'] = user;
     data['session'] = session ?? "";
-    data['channel'] = "M";
+    // data['channel'] = "M";
+    if (checksum != null) {
+      data['checksum'] = checksum;
+    }
     if (this.data != null) {
       data['data'] = this.data!.toJson();
     }
@@ -52,7 +57,7 @@ class RequestDataModel {
   String? account;
   String? side;
   String? symbol;
-  String? volume;
+  dynamic volume;
   String? price;
   String? advance;
   String? refId;

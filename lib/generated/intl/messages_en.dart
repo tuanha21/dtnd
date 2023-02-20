@@ -136,6 +136,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Create catalog"),
         "create_new_order":
             MessageLookupByLibrary.simpleMessage("Create new order"),
+        "create_order_failed":
+            MessageLookupByLibrary.simpleMessage("Create order failed"),
         "create_order_successfully":
             MessageLookupByLibrary.simpleMessage("Create order successfully"),
         "date_translations": MessageLookupByLibrary.simpleMessage("Date"),
@@ -158,6 +160,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "email": MessageLookupByLibrary.simpleMessage("Email"),
         "empty_catalog":
             MessageLookupByLibrary.simpleMessage("Catalog is empty"),
+        "end": MessageLookupByLibrary.simpleMessage("End"),
         "event": MessageLookupByLibrary.simpleMessage("Event"),
         "exchange_total":
             MessageLookupByLibrary.simpleMessage("Exchange total"),
@@ -384,6 +387,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage(
                 "Try searching again with another keyword!"),
         "unknown_error": MessageLookupByLibrary.simpleMessage("Unknown error"),
+        "unknown_exception":
+            MessageLookupByLibrary.simpleMessage("Unknown exception"),
         "username": MessageLookupByLibrary.simpleMessage("Username"),
         "vietnam": MessageLookupByLibrary.simpleMessage("Vietnam"),
         "virtual_assistant":

@@ -1,16 +1,21 @@
 import 'package:dtnd/=models=/exchange.dart';
+import 'package:dtnd/=models=/response/order_model/base_order_model.dart';
 import 'package:dtnd/=models=/response/stock_model.dart';
 import 'package:dtnd/=models=/side.dart';
 import 'package:dtnd/=models=/ui_model/user_cmd.dart';
 import 'package:dtnd/data/i_exchange_service.dart';
+import 'package:dtnd/data/i_user_service.dart';
 import 'package:dtnd/data/implementations/exchange_service.dart';
+import 'package:dtnd/data/implementations/user_service.dart';
 import 'package:dtnd/generated/l10n.dart';
+import 'package:dtnd/ui/screen/exchange_stock/stock_order/business/stock_order_flow.dart';
 import 'package:dtnd/ui/screen/exchange_stock/stock_order/data/order_data.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_textstyle.dart';
 import 'package:dtnd/ui/widget/button/async_single_color_text_button.dart';
 import 'package:dtnd/ui/widget/icon/sheet_header.dart';
 import 'package:dtnd/ui/widget/icon/stock_circle_icon.dart';
+import 'package:dtnd/utilities/new_order_message.dart';
 import 'package:dtnd/utilities/num_utils.dart';
 import 'package:dtnd/utilities/string_util.dart';
 import 'package:dtnd/utilities/validator.dart';
@@ -192,29 +197,33 @@ class _StockOrderConfirmSheetState extends State<StockOrderConfirmSheet> {
                     color: AppColors.semantic_01,
                     onTap: () async {
                       if (pinKey.currentState!.validate()) {
-                        await Future.delayed(const Duration(seconds: 2))
-                            .then((value) {
-                          Navigator.of(context).pop(const NextCmd());
-                        });
+                        // await Future.delayed(const Duration(seconds: 2))
+                        //     .then((value) {
+                        //   Navigator.of(context).pop(const NextCmd());
+                        // });
+                        final IUserService userService = UserService();
 
                         /// code dat lenh
-                        // final response = await exchangeService.createNewOrder(
-                        //     widget.orderData.copyWithPin(pinController.text));
-                        // if (!mounted) return;
-
-                        // if (response?.rc == 1) {
-                        //   Navigator.of(context).pop(NextCmd(response));
-                        // } else {
-                        //   Fluttertoast.showToast(
-                        //     msg: response?.rs ?? S.of(context).unknown_error,
-                        //     toastLength: Toast.LENGTH_SHORT,
-                        //     gravity: ToastGravity.CENTER,
-                        //     timeInSecForIosWeb: 1,
-                        //     backgroundColor: Colors.red,
-                        //     textColor: Colors.white,
-                        //     fontSize: 16.0,
-                        //   );
-                        // }
+                        BaseOrderModel? response;
+                        try {
+                          response = await exchangeService.createNewOrder(
+                              userService,
+                              widget.orderData.copyWithPin(pinController.text));
+                        } on int catch (rc) {
+                          response = null;
+                          Navigator.of(context).pop(OrderFailCmd(rc));
+                        }
+                        if (!mounted) return;
+                        Navigator.of(context).pop(OrderSuccessCmd(response));
+                        // Fluttertoast.showToast(
+                        //   msg: response?.rs ?? S.of(context).unknown_error,
+                        //   toastLength: Toast.LENGTH_SHORT,
+                        //   gravity: ToastGravity.CENTER,
+                        //   timeInSecForIosWeb: 1,
+                        //   backgroundColor: Colors.red,
+                        //   textColor: Colors.white,
+                        //   fontSize: 16.0,
+                        // );
                       }
                     },
                   ),

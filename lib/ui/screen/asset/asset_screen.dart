@@ -110,7 +110,7 @@ class _AssetScreenState extends State<AssetScreen>
         });
       }
       child = RefreshIndicator(
-        onRefresh: () async {},
+        onRefresh: userService.refreshAssets,
         child: ScrollConfiguration(
           behavior: ScrollConfiguration.of(context).copyWith(
             dragDevices: {

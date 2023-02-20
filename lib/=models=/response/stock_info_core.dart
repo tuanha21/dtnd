@@ -1,4 +1,6 @@
-class StockInfoCore {
+import 'package:dtnd/=models=/core_response_model.dart';
+
+class StockInfoCore implements CoreResponseModel {
   late final int id;
   late final String sym;
   num? c;

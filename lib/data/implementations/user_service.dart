@@ -77,6 +77,11 @@ class UserService implements IUserService {
   }
 
   @override
+  Future<void> refreshAssets() {
+    return getListAccount();
+  }
+
+  @override
   bool get isLogin => userToken != null;
 
   @override

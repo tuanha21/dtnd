@@ -1952,6 +1952,16 @@ class S {
     );
   }
 
+  /// `Create order failed`
+  String get create_order_failed {
+    return Intl.message(
+      'Create order failed',
+      name: 'create_order_failed',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Order will appear in your order note`
   String get order_will_appear_in_ur_order_note {
     return Intl.message(
@@ -2797,6 +2807,26 @@ class S {
     return Intl.message(
       'Transaction',
       name: 'transaction',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Unknown exception`
+  String get unknown_exception {
+    return Intl.message(
+      'Unknown exception',
+      name: 'unknown_exception',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `End`
+  String get end {
+    return Intl.message(
+      'End',
+      name: 'end',
       desc: '',
       args: [],
     );

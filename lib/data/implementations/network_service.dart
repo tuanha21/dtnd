@@ -14,7 +14,6 @@ import 'package:dtnd/=models=/response/index_chart_data.dart';
 import 'package:dtnd/=models=/index.dart';
 import 'package:dtnd/=models=/response/introduct_company.dart';
 import 'package:dtnd/=models=/response/liquidity_model.dart';
-import 'package:dtnd/=models=/response/new_order.dart';
 import 'package:dtnd/=models=/response/news_detail.dart';
 import 'package:dtnd/=models=/response/news_model.dart';
 import 'package:dtnd/=models=/response/s_cash_balance.dart';
@@ -90,7 +89,10 @@ class NetworkService implements INetworkService {
     return Uri.http(core_url1, unencodedPath, queryParameters);
   }
 
-  Uri get url_core_endpoint => Uri.https(core_url, core_endpoint);
+  Uri get url_core_endpoint {
+    print(Uri.https(core_url, core_endpoint).toString());
+    return Uri.https(core_url, core_endpoint);
+  }
 
   Uri url_board(String path) => Uri.https(board_url, path);
 
@@ -189,12 +191,15 @@ class NetworkService implements INetworkService {
 
   @override
   Future<T?> requestTraditionalApi<T extends CoreResponseModel>(
-      RequestModel requestModel,
-      {T? Function(Map<String, dynamic>)? onError}) async {
+    RequestModel requestModel, {
+    T? Function(Map<String, dynamic>)? onError,
+    bool Function(Map<String, dynamic>)? hasError,
+  }) async {
     dynamic response =
         await client.post(url_core_endpoint, body: requestModel.toString());
     response = decode(response.bodyBytes);
-    if (response["rc"] != 1) {
+    bool checkResponse = hasError?.call(response) ?? (response["rc"] != 1);
+    if (checkResponse) {
       return onError?.call(response);
     }
     response = response["data"];
@@ -203,12 +208,15 @@ class NetworkService implements INetworkService {
 
   @override
   Future<List<T>?> requestTraditionalApiResList<T extends CoreResponseModel>(
-      RequestModel requestModel,
-      {List<T>? Function(Map<String, dynamic>)? onError}) async {
+    RequestModel requestModel, {
+    List<T>? Function(Map<String, dynamic>)? onError,
+    bool Function(Map<String, dynamic>)? hasError,
+  }) async {
     dynamic response =
         await client.post(url_core_endpoint, body: requestModel.toString());
     response = decode(response.bodyBytes);
-    if (response["rc"] != 1) {
+    bool checkResponse = hasError?.call(response) ?? (response["rc"] != 1);
+    if (checkResponse) {
       return onError?.call(response);
     }
     response = response["data"];
@@ -459,13 +467,6 @@ class NetworkService implements INetworkService {
     final http.Response response =
         await client.post(url_core_endpoint, body: requestModel.toString());
     return SCashBalance.fromJson(decode(response.bodyBytes));
-  }
-
-  @override
-  Future<NewOrderResponse?> createNewOrder(RequestModel requestModel) async {
-    final http.Response response =
-        await client.post(url_core_endpoint, body: requestModel.toString());
-    return NewOrderResponse.fromJson(decode(response.bodyBytes));
   }
 
   /// Todo: User

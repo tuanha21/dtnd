@@ -1,3 +1,4 @@
+import 'package:dtnd/=models=/request/request_model.dart';
 import 'package:dtnd/=models=/response/business_profile_model.dart';
 import 'package:dtnd/=models=/response/inday_matched_order.dart';
 import 'package:dtnd/=models=/response/security_basic_info_model.dart';
@@ -10,6 +11,8 @@ import 'package:dtnd/=models=/response/stock_trade.dart';
 import 'package:dtnd/=models=/response/stock_trading_history.dart';
 import 'package:dtnd/=models=/response/subsidiaries_model.dart';
 import 'package:dtnd/data/i_data_center_service.dart';
+import 'package:dtnd/data/i_network_service.dart';
+import 'package:dtnd/data/i_user_service.dart';
 import 'package:dtnd/utilities/time_utils.dart';
 import 'package:get/get.dart';
 
@@ -94,6 +97,31 @@ class StockModel {
           from ?? TimeUtilities.getPreviousDateTime(TimeUtilities.day(1)),
           to ?? DateTime.now());
     }
+    return null;
+  }
+
+  Future<StockInfoCore?> getStockInfoCore(
+      INetworkService networkService, IUserService userService) async {
+    final RequestDataModel requestDataModel = RequestDataModel.stringType(
+      cmd: "Web.sStockInfo",
+      p1: "${userService.token!.user}6",
+      p2: stock.stockCode,
+    );
+    final RequestModel requestModel =
+        RequestModel(userService, group: "Q", data: requestDataModel);
+
+    bool hasError(Map<String, dynamic> json) {
+      return json['rc'] <= 0;
+    }
+
+    final response = await networkService
+        .requestTraditionalApi<StockInfoCore>(requestModel, hasError: hasError);
+    // if (response != null) {
+    //   return response;
+    // } else {
+    //   throw Exception();
+    // }
+    return response;
   }
 
   void changeStockFinancialIndex(

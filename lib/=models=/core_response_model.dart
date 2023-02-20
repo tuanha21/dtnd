@@ -4,6 +4,8 @@ import 'package:dtnd/=models=/response/account/list_account_model.dart';
 
 import 'response/account/portfolio_status_model.dart';
 import 'response/account/unexecuted_right_model.dart';
+import 'response/order_model/base_order_model.dart';
+import 'response/stock_info_core.dart';
 
 abstract class CoreResponseModel {
   static T fromJson<T extends CoreResponseModel>(Map<String, dynamic> json) {
@@ -20,6 +22,10 @@ abstract class CoreResponseModel {
         return AssetChartElementModel.fromJson(json) as T;
       case UnexecutedRightModel:
         return UnexecutedRightModel.fromJson(json) as T;
+      case BaseOrderModel:
+        return BaseOrderModel.fromJson(json) as T;
+      case StockInfoCore:
+        return StockInfoCore.fromJson(json) as T;
       default:
         throw UnimplementedError();
     }
