@@ -11,8 +11,12 @@ class CreateCatalogSheet extends StatefulWidget {
   const CreateCatalogSheet({
     super.key,
     required this.savedCatalog,
+    this.isBack = false,
   });
+
   final SavedCatalog savedCatalog;
+  final bool isBack;
+
   @override
   State<CreateCatalogSheet> createState() => _CreateCatalogSheetState();
 }
@@ -21,6 +25,7 @@ class _CreateCatalogSheetState extends State<CreateCatalogSheet> {
   final TextEditingController controller = TextEditingController();
   final GlobalKey<FormState> key = GlobalKey<FormState>();
   final FocusNode node = FocusNode();
+
   @override
   void initState() {
     super.initState();
@@ -36,6 +41,8 @@ class _CreateCatalogSheetState extends State<CreateCatalogSheet> {
           children: [
             SheetHeader(
               title: S.of(context).create_catalog,
+              implementBackButton: widget.isBack,
+              backData: const BackCmd(),
             ),
             Form(
               key: key,
@@ -58,13 +65,22 @@ class _CreateCatalogSheetState extends State<CreateCatalogSheet> {
                     if (key.currentState?.validate() ?? false) {
                       try {
                         final UserCatalog newCatalog =
-                            UserCatalog(controller.text);
-                        widget.savedCatalog.catalogs.add(newCatalog);
-                        widget.savedCatalog.save();
+                            UserCatalog(controller.text, []);
+                        widget.savedCatalog.addCatalog(newCatalog);
+
+                        /// trường hợp ở màn thị trường
+                        if (!widget.isBack) {
+                          Navigator.of(context).pop(BackCmd(newCatalog));
+                        }
+
+                        /// trường hợp ở màn chi tiết mã
+                        else {
+                          Navigator.of(context)
+                              .pop(BackCmd(widget.savedCatalog));
+                        }
                       } catch (e) {
-                        Navigator.of(context).pop(const BackCmd());
+                        Navigator.of(context).pop();
                       }
-                      Navigator.of(context).pop(const BackCmd());
                     }
                   },
                   child: Text(S.of(context).save),
@@ -72,6 +88,7 @@ class _CreateCatalogSheetState extends State<CreateCatalogSheet> {
               ],
             ),
             const SizedBox(height: 20),
+            SizedBox(height: MediaQuery.of(context).viewInsets.bottom)
           ],
         ),
       ),

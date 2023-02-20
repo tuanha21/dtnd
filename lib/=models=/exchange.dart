@@ -91,7 +91,7 @@ class ExchangeHelper {
       case "UPCOM":
         return Exchange.UPCOM;
       default:
-        throw NullThrownError();
+        return Exchange.HOSE;
     }
   }
 }

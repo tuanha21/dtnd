@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 
 class AppColors {
   static const primary_01 = Color(0xFF256BFF);
+  static const primary_02 = Color(0xFF0D1F44);
   static const primary_03 = Color(0xFFECF1FD);
+  static const primary_04 = Color(0xFF6697FF);
 
   static const lighter_primary = Color(0xFFDFE7FF);
   static const secondary = Color(0xFFFCC927);
@@ -13,6 +15,7 @@ class AppColors {
   static const dark_bg = Color(0xFF000000);
   static const dark_stronger_bg = Color(0xFF282828);
   static const light_blue = Color(0xFFB9D4FE);
+  static const light_tabBar_bg = Color(0xFFEDF1F7);
 
   static const yellow = Color(0xFFFCC927);
   static const color_secondary = Color(0xFF0067D3);
@@ -39,15 +42,15 @@ class AppColors {
   static const accent_light_04 = Color(0xFFD8EBFD);
   static const accent_light_05 = Color(0xFFF1E8FD);
 
-  static const accent_dark_01 = Color(0xFF1F3728);
-  static const accent_dark_03 = Color(0xFF483333);
+  static const accent_dark_01 = Color.fromRGBO(105, 224, 199, 1);
+  static const accent_dark_03 = Color(0xFFFF754C);
 
   //
   static const bg_1 = Color(0xFFFAFAFA);
   static const bg_light_1 = Color(0xFFFEFEFE);
   static const bg_2 = Color(0xFF1C1C20);
-  static const three_prices_buy_bg = Color(0xFFD6FAEB);
-  static const three_prices_sell_bg = Color(0xFFFBE3E3);
+  static const three_prices_buy_bg = Color.fromRGBO(105, 224, 199, 1);
+  static const three_prices_sell_bg = Color(0xFFFF754C);
 
   static const List<Color> chartArea = [
     Color(0x261877F2),
@@ -59,8 +62,24 @@ class AppColors {
   static const graph_3 = Color(0xFF9C90FA);
   static const graph_4 = Color(0xFFFF754C);
   static const graph_5 = Color(0xFF8F95B2);
+  static const graph_6 = Color(0xFF8EE04E);
+  static const graph_7 = Color(0xFF69E0C7);
+  static const List<Color> graphColors = [
+    graph_1,
+    graph_2,
+    graph_3,
+    graph_4,
+    graph_5,
+    graph_6,
+    graph_7,
+  ];
 
   ///Text
   static const error_text = Color(0xFFFB0000);
   static const text_main = Color(0xFF062046);
+  static const text_blue = Color(0xFF004DF0);
+  static const text_black = Color(0xFF242437);
+  static const text_black_1 = Color(0xFF232338);
+
+  static const neu_01 = Color(0xFF202033);
 }

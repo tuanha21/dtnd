@@ -1,30 +1,16 @@
-import 'package:dtnd/=models=/ui_model/field_tree_element_model.dart';
-import 'package:dtnd/ui/screen/market/controller/industry_tab_controller.dart';
+import 'dart:async';
 import 'package:dtnd/ui/theme/app_color.dart';
+import 'package:dtnd/ui/theme/app_image.dart';
+import 'package:dtnd/utilities/num_utils.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:syncfusion_flutter_treemap/treemap.dart';
-
-enum _Type { gt, kl }
-
-extension _TypeX on _Type {
-  String get label {
-    switch (this) {
-      case _Type.kl:
-        return "Khối lượng";
-      default:
-        return "Giá trị";
-    }
-  }
-
-  String get api {
-    switch (this) {
-      case _Type.kl:
-        return "KL";
-      default:
-        return "GT";
-    }
-  }
-}
+import '../../../../../=models=/response/stock_industry.dart';
+import '../../../../../data/i_data_center_service.dart';
+import '../../../../../data/implementations/data_center_service.dart';
+import '../../../../../generated/l10n.dart';
 
 class HeapMapWidget extends StatefulWidget {
   const HeapMapWidget({super.key});
@@ -33,163 +19,210 @@ class HeapMapWidget extends StatefulWidget {
   State<HeapMapWidget> createState() => _HeapMapWidgetState();
 }
 
-class _HeapMapWidgetState extends State<HeapMapWidget> {
-  final IndustryTabController controller = IndustryTabController();
-  final List<FieldTreeElementModel> _datas = [];
+class _HeapMapWidgetState extends State<HeapMapWidget>
+    with AutomaticKeepAliveClientMixin {
+  final TextEditingController searchController = TextEditingController();
 
-  double _total = 0;
-  _Type chartType = _Type.kl;
-  bool initialized = false;
+  final IDataCenterService dataCenterService = DataCenterService();
+
+  StreamController<List<String>> listIndustryStream =
+      StreamController<List<String>>.broadcast();
+
+  StreamController<List<StockIndustry>> listStockStream =
+      StreamController<List<StockIndustry>>.broadcast();
+
+  String? industry;
+
   @override
   void initState() {
-    // widget._datas.forEach((element) {
-    //   _datas.addAll(element.stocks);
-    //   _total += element.tOTALKLGD;
-    // });
-    // _datas.removeWhere((element) => element.kLGD < _total / 10000);
-    init();
+    getListIndustry();
     super.initState();
   }
 
-  @override
-  void didUpdateWidget(covariant HeapMapWidget oldWidget) {
-    newData();
-    super.didUpdateWidget(oldWidget);
-  }
-
-  void init() async {
-    await controller.getListIndustry();
-    await newData();
-    setState(() {
-      initialized = true;
-    });
-  }
-
-  Future<void> newData() async {
-    _datas.clear();
-    setState(() {});
-    _total = 0;
-
-    if (chartType == _Type.kl) {
-      await Future.forEach<FieldTreeModel>(controller.model, (element) {
-        _datas.addAll(element.stocks);
-        _total += element.tOTALKLGD;
-      });
-    } else {
-      final _list = [];
-      num __total = 0;
-      await Future.forEach<FieldTreeModel>(controller.model, (element) {
-        __total += element.tOTALKLGD;
-        _list.add(element.tOTALKLGD);
-      });
-      await Future.forEach<FieldTreeModel>(controller.model, (element) {
-        if (element.tOTALKLGD > __total / 1000) {
-          _datas.addAll(element.stocks);
-          _total += element.tOTALKLGD;
-        }
-      });
-    }
-
-    _datas.removeWhere((element) {
-      if (chartType == _Type.kl) {
-        return (element.kLGD ?? 0) < _total / 10000;
-      } else {
-        return (element.gTGD ?? 0) < _total / 1000;
+  Future<void> getListIndustry() async {
+    try {
+      var list = await dataCenterService.getListIndustry();
+      listIndustryStream.sink.add(list);
+      await getStockIndustry(list.first);
+    } catch (e) {
+      if (kDebugMode) {
+        print(e.toString());
       }
-    });
-    setState(() {});
+    }
+  }
+
+  Future<void> getStockIndustry(String indus) async {
+    industry = indus;
+    searchController.text = industry ?? "";
+    if (industry != null) {
+      var listStock = await dataCenterService.getListStockByIndust(industry!);
+      listStockStream.sink.add(listStock);
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    Widget map;
-    if (!initialized) {
-      map = Container();
-    } else {
-      map = SfTreemap(
-        dataCount: _datas.length,
-        weightValueMapper: (int index) {
-          final _data = _datas[index];
-          if (chartType == _Type.kl) {
-            return _data.kLGD?.toDouble() ?? 0;
-          } else {
-            return _data.gTGD?.toDouble() ?? 0;
-          }
-        },
-        onSelectionChanged: (TreemapTile tile) {
-          // if (tile.level.colorValueMapper != null) {
-          //   Navigator.push(
-          //     context,
-          //     MaterialPageRoute(
-          //       builder: (context) => StockDetailPage(
-          //         stockCode: tile.group,
-          //         pushStockOrder: widget.pushStockOrder,
-          //       ),
-          //     ),
-          //   );
-          // }
-        },
-        selectionSettings:
-            const TreemapSelectionSettings(color: Colors.transparent),
-        levels: [
-          TreemapLevel(
-            color: AppColors.neutral_06,
-            groupMapper: (index) {
-              // print(_datas[index].iNDUSTRY);
-              return _datas[index].iNDUSTRY ?? "";
-            },
-            labelBuilder: (BuildContext context, TreemapTile tile) {
-              return IgnorePointer(
-                child: Center(
-                  child: Text(
-                    tile.group,
-                    style: const TextStyle(fontSize: 12),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                ),
-              );
-            },
-          ),
-          TreemapLevel(
-            groupMapper: (int index) => _datas[index].sTOCKCODE ?? "",
-            colorValueMapper: (tile) => _datas[tile.indices[0]].stockColor,
-            labelBuilder: (BuildContext context, TreemapTile tile) {
-              return IgnorePointer(
-                //  _datas[tile.indices[0]].kLGD < _total / 10000
-                //     ? Container()
-                //     :
-                child: FittedBox(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 10, horizontal: 10),
-                    child: Center(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Text(
-                            tile.group,
-                            style: const TextStyle(fontSize: 10),
-                            textAlign: TextAlign.center,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                          Text(
-                            "${_datas[tile.indices[0]].pERCENTCHANGE}%",
-                            style: const TextStyle(fontSize: 8),
-                            textAlign: TextAlign.center,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-              );
-            },
-          ),
+    super.build(context);
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          const SizedBox(height: 20),
+          searchWidget,
+          const SizedBox(height: 18),
+          StreamBuilder<List<StockIndustry>>(
+              stream: listStockStream.stream,
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return SizedBox(
+                    child: Text(S.of(context).loading),
+                  );
+                }
+                if (snapshot.connectionState == ConnectionState.active) {
+                  return HeapMapTree(
+                    stock: snapshot.data!,
+                    title: industry ?? "data",
+                  );
+                }
+                return const SizedBox();
+              })
         ],
-      );
-    }
-    return map;
+      ),
+    );
+  }
+
+  Widget get searchWidget {
+    return StreamBuilder<List<String>>(
+        stream: listIndustryStream.stream,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.active) {
+            var list = snapshot.data;
+            return TypeAheadField<String>(
+                textFieldConfiguration: TextFieldConfiguration(
+                    controller: searchController,
+                    onChanged: (value) {
+                      if (value.isEmpty) {
+                        setState(() {
+                          industry = null;
+                        });
+                      }
+                    },
+                    decoration: InputDecoration(
+                        filled: true,
+                        fillColor: AppColors.neutral_06,
+                        enabledBorder: InputBorder.none,
+                        hintText: 'Tìm ngành..',
+                        suffixIcon: Padding(
+                          padding: const EdgeInsets.only(right: 20),
+                          child: SvgPicture.asset(
+                            AppImages.search_appbar_icon,
+                            height: 24,
+                            width: 24,
+                          ),
+                        ))),
+                suggestionsCallback: (text) async {
+                  return list!.toList().where((element) =>
+                      element.toLowerCase().contains(text.toLowerCase()));
+                },
+                itemBuilder: (context, industry) {
+                  return ListTile(
+                    title: Text(industry),
+                  );
+                },
+                onSuggestionSelected: (suggestion) {
+                  getStockIndustry(suggestion);
+
+                  /// viết tiếp
+                },
+                noItemsFoundBuilder: (context) {
+                  return ListTile(
+                      title: Text(
+                    'Ngành không hợp lệ',
+                    style: TextStyle(
+                        color: Theme.of(context).disabledColor, fontSize: 18.0),
+                  ));
+                });
+          }
+          return const SizedBox();
+        });
+  }
+
+  @override
+  // TODO: implement wantKeepAlive
+  bool get wantKeepAlive => true;
+}
+
+class HeapMapTree extends StatefulWidget {
+  final List<StockIndustry> stock;
+  final String title;
+
+  const HeapMapTree({Key? key, required this.stock, required this.title})
+      : super(key: key);
+
+  @override
+  State<HeapMapTree> createState() => _HeapMapTreeState();
+}
+
+class _HeapMapTreeState extends State<HeapMapTree> {
+  late List<StockIndustry> stocks;
+
+  @override
+  void initState() {
+    stocks = widget.stock;
+    stocks.removeWhere((element) => element.gTGD == 0);
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          widget.title,
+          style: Theme.of(context)
+              .textTheme
+              .labelMedium
+              ?.copyWith(fontWeight: FontWeight.w700, fontSize: 14),
+        ),
+        const SizedBox(height: 10),
+        Container(
+            height: 200,
+            color: Colors.grey,
+            child: SfTreemap(
+              dataCount: stocks.length,
+              weightValueMapper: (int index) {
+                return stocks[index].gTGD?.toDouble() ?? 0;
+              },
+              levels: <TreemapLevel>[
+                TreemapLevel(
+                  groupMapper: (int index) => stocks[index].sTOCKCODE,
+                  colorValueMapper: (tile) {
+                    return widget.stock[tile.indices[0]].stockColor;
+                  },
+                  tooltipBuilder: (BuildContext context, TreemapTile tile) {
+                    return Container(
+                      padding: const EdgeInsets.all(2.5),
+                      decoration: const BoxDecoration(color: Colors.white),
+                      child: Text(
+                        '${tile.group} : ${NumUtils.formatInteger(tile.weight)}',
+                        overflow: TextOverflow.ellipsis,
+                        textAlign: TextAlign.center,
+                      ),
+                    );
+                  },
+                  labelBuilder: (BuildContext context, TreemapTile tile) {
+                    return Center(
+                      child: Text(
+                        tile.group,
+                        overflow: TextOverflow.ellipsis,
+                        textAlign: TextAlign.center,
+                      ),
+                    );
+                  },
+                ),
+              ],
+            )),
+      ],
+    );
   }
 }

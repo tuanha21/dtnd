@@ -1,5 +1,4 @@
 import 'package:dtnd/generated/l10n.dart';
-import 'package:dtnd/ui/screen/market/controller/industry_tab_controller.dart';
 import 'package:dtnd/ui/screen/market/widget/components/heap_map_widget.dart';
 import 'package:dtnd/ui/screen/market/widget/components/industry_info_widget.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
@@ -14,7 +13,6 @@ class MarketIndustryTab extends StatefulWidget {
 }
 
 class _MarketIndustryTabState extends State<MarketIndustryTab> {
-  final IndustryTabController controller = IndustryTabController();
   bool heapMapMode = true;
 
   void changeMode(bool newValue) {

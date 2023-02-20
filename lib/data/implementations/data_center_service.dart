@@ -1,15 +1,27 @@
 import 'package:dtnd/=models=/index.dart';
+import 'package:dtnd/=models=/response/business_profile_model.dart';
 import 'package:dtnd/=models=/response/deep_model.dart';
+import 'package:dtnd/=models=/response/indContrib.dart';
 import 'package:dtnd/=models=/response/inday_matched_order.dart';
+import 'package:dtnd/=models=/response/index_detail.dart';
 import 'package:dtnd/=models=/response/index_model.dart';
+import 'package:dtnd/=models=/response/introduct_company.dart';
 import 'package:dtnd/=models=/response/liquidity_model.dart';
 import 'package:dtnd/=models=/response/news_detail.dart';
+import 'package:dtnd/=models=/response/news_model.dart';
+import 'package:dtnd/=models=/response/sec_event.dart';
+import 'package:dtnd/=models=/response/security_basic_info_model.dart';
 import 'package:dtnd/=models=/response/stock.dart';
 import 'package:dtnd/=models=/response/stock_data.dart';
+import 'package:dtnd/=models=/response/stock_financial_index_model.dart';
 import 'package:dtnd/=models=/response/stock_model.dart';
 import 'package:dtnd/=models=/response/stock_news.dart';
+import 'package:dtnd/=models=/response/stock_ranking_financial_index_model.dart';
 import 'package:dtnd/=models=/response/stock_trading_history.dart';
+import 'package:dtnd/=models=/response/stock_vol.dart';
+import 'package:dtnd/=models=/response/subsidiaries_model.dart';
 import 'package:dtnd/=models=/response/top_influence_model.dart';
+import 'package:dtnd/=models=/response/top_interested_model.dart';
 import 'package:dtnd/=models=/ui_model/field_tree_element_model.dart';
 import 'package:dtnd/data/i_data_center_service.dart';
 import 'package:dtnd/data/i_local_storage_service.dart';
@@ -21,6 +33,9 @@ import 'package:dtnd/utilities/time_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
+
+import '../../=models=/response/index_board.dart';
+import '../../=models=/response/stock_industry.dart';
 
 const List<String> defaultListStock = [
   'ACB',
@@ -95,6 +110,15 @@ class DataCenterService implements IDataCenterService {
           "{\"action\":\"ping\",\"mode\":\"sync\",\"data\":\"\"}";
       socket.emit("regs", pingMsg);
     });
+    socket.onDisconnect((data) {
+      logger.e("Socket disconnected!");
+      logger.e(data);
+      return startSocket();
+    });
+    socket.onConnecting((data) {
+      logger.i("Try to connecting...");
+      return null;
+    });
     socket.connect();
     regStocks(_listInterestedStocks.map((e) => e.stock.stockCode).toList());
     return;
@@ -103,10 +127,15 @@ class DataCenterService implements IDataCenterService {
   void processIndexData(dynamic data) {
     if (_listIndex.toList().isEmpty) return;
     final Index index = IndexUtil.fromCode(data['data']['mc']);
-    final indexModel = _listIndex.firstWhere(
-      (element) => element.index == index,
-    );
-    indexModel.onSocketData(data);
+    late final IndexModel? indexModel;
+    try {
+      indexModel = _listIndex.firstWhere(
+        (element) => element.index == index,
+      );
+    } catch (e) {
+      indexModel = null;
+    }
+    indexModel?.onSocketData(data);
   }
 
   //
@@ -219,7 +248,7 @@ class DataCenterService implements IDataCenterService {
   }
 
   @override
-  Future<List<StockModel>> getStockModelsFromStockCodes(
+  Future<List<StockModel>?> getStockModelsFromStockCodes(
       List<String> stockCodes) async {
     if (registering) {
       // Wait to recall
@@ -229,29 +258,42 @@ class DataCenterService implements IDataCenterService {
     }
     registering = true;
     final List<StockModel> listReturn = <StockModel>[];
-    final registeredCode = getRegisteredCodes(stockCodes);
-    if (registeredCode.isNotEmpty) {
-      for (final String stockCode in registeredCode) {
-        final int index = listStockReg
-            .indexWhere((element) => element.stock.stockCode == stockCode);
-        if (index != -1) {
-          listReturn.add(listStockReg[index]);
+    for (final String stockCode in stockCodes) {
+      final int index = listStockReg
+          .indexWhere((element) => element.stock.stockCode == stockCode);
+      if (index != -1) {
+        listReturn.add(listStockReg[index]);
+      } else {
+        try {
+          final stock = listAllStock
+              .firstWhere((element) => element.stockCode == stockCode);
+          final stockData = await getStockData(stockCode);
+          final stockModel = StockModel(stock: stock, stockData: stockData);
+          listStockReg.add(stockModel);
+          listReturn.add(stockModel);
+        } catch (e) {
+          continue;
         }
       }
     }
-    final unregisteredCodes = getUnregisteredCodes(stockCodes);
-    if (unregisteredCodes.isNotEmpty) {
-      for (final String code in unregisteredCodes) {
-        final stock =
-            listAllStock.firstWhere((element) => element.stockCode == code);
-        final stockData = await getStockData(code);
-        final stockModel = StockModel(stock: stock, stockData: stockData);
-        listStockReg.add(stockModel);
-        listReturn.add(stockModel);
-      }
-    }
+
     regStocks(stockCodes);
     registering = false;
+    return listReturn;
+  }
+
+  @override
+  List<Stock> getStockFromStockCodes(List<String> stockCodes) {
+    final List<Stock> listReturn = <Stock>[];
+    for (final String code in stockCodes) {
+      try {
+        final stock =
+            listAllStock.firstWhere((element) => element.stockCode == code);
+        listReturn.add(stock);
+      } catch (e) {
+        continue;
+      }
+    }
     return listReturn;
   }
 
@@ -286,20 +328,96 @@ class DataCenterService implements IDataCenterService {
   }
 
   @override
-  Future<List<StockModel>> getList30Stock(String code) async {
+  Future<List<Stock>> getList30Stock(String code) async {
     final listStocks = await networkService.getList30Stocks(code);
     if (listStocks.isEmpty) {
       return [];
     }
-
-    final List<StockModel> results =
-        await getStockModelsFromStockCodes(listStocks);
+    final List<Stock> results = [];
+    for (var e in listStocks) {
+      try {
+        final stock =
+            listAllStock.firstWhere((element) => element.stockCode == e);
+        results.add(stock);
+      } catch (e) {
+        continue;
+      }
+    }
     return results;
   }
 
   @override
-  Future<List<Stock>> searchStocksBySym(String sym,
-      {int maxSuggestions = 10}) async {
+  Future<List<Stock>> getTopSearch() async {
+    final listStrings = await networkService.getTopSearch();
+    if (listStrings.isEmpty) {
+      return [];
+    }
+    final List<Stock> results = getStockFromStockCodes(listStrings);
+
+    return results;
+  }
+
+  @override
+  Future<List<TopInterested>> getTopForeignTrade(
+      [int count = 5, String type = "i"]) async {
+    final Map<String, String> body = {
+      "count": "$count",
+      "type": type,
+    };
+    final listStrings = await networkService.getTopForeignTrade(body);
+    if (listStrings.isEmpty) {
+      return [];
+    }
+
+    return listStrings;
+  }
+
+  @override
+  Future<List<TopInterested>> getTopStockChange(
+      [int count = 5, String type = "i"]) async {
+    final Map<String, String> body = {
+      "count": "$count",
+      "type": type,
+    };
+    final listStrings = await networkService.getTopStockChange(body);
+    if (listStrings.isEmpty) {
+      return [];
+    }
+
+    return listStrings;
+  }
+
+  @override
+  Future<List<TopInterested>> getTopInterested(
+      [int count = 5, String type = "i"]) async {
+    final Map<String, String> body = {
+      "count": "$count",
+    };
+    final listStrings = await networkService.getTopInterested(body);
+    if (listStrings.isEmpty) {
+      return [];
+    }
+
+    return listStrings;
+  }
+
+  @override
+  Future<List<TopInterested>> getTopStockTrade(
+      [int count = 5, String type = "i"]) async {
+    final Map<String, String> body = {
+      "count": "$count",
+      "type": type,
+    };
+    final listStrings = await networkService.getTopStockTrade(body);
+    if (listStrings.isEmpty) {
+      return [];
+    }
+
+    return listStrings;
+  }
+
+  @override
+  List<Stock> searchStocksBySym(String sym, {int? maxSuggestions}) {
     if (sym.isEmpty) {
       return [];
     }
@@ -309,12 +427,19 @@ class DataCenterService implements IDataCenterService {
     for (final Stock stock in listAllStock) {
       if (stock.stockCode.contains(_sym)) {
         searchedStocks.add(stock);
-        if (_sym.length == maxSuggestions) {
+        if (maxSuggestions != null && _sym.length == maxSuggestions) {
           return searchedStocks;
         }
       }
     }
     return searchedStocks;
+  }
+
+  @override
+  Stock? getStocksBySym(String sym) {
+    final _sym = sym.toUpperCase();
+
+    return listAllStock.firstWhere((element) => element.stockCode == _sym);
   }
 
   @override
@@ -330,22 +455,24 @@ class DataCenterService implements IDataCenterService {
   @override
   Future<StockTradingHistory?> getStockIndayTradingHistory(String stockCode) {
     const String resolution = "5";
-    final String from =
-        TimeUtilities.timeToEpoch(TimeUtilities.beginningOfDay).toString();
-    final String to = TimeUtilities.timeToEpoch(DateTime.now()).toString();
+    final int from = TimeUtilities.timeToEpoch(TimeUtilities.beginningOfDay);
+    final int to = TimeUtilities.timeToEpoch(DateTime.now());
     return networkService.getStockTradingHistory(
         stockCode, resolution, from, to);
   }
 
   @override
   Future<StockTradingHistory?> getStockTradingHistory(
-      String stockCode, String resolution, int from, int to) {
+      String stockCode, String resolution, DateTime from, DateTime to) {
+    final int fromTime = TimeUtilities.timeToEpoch(from);
+    final int toTime = TimeUtilities.timeToEpoch(to);
     return networkService.getStockTradingHistory(
-        stockCode, resolution, from.toString(), to.toString());
+        stockCode, resolution, fromTime, toTime);
   }
 
   @override
-  Future<Set<IndexModel>> getListIndex() async {
+  Future<Set<IndexModel>> getListIndex(
+      {DateTime? fromTime, DateTime? toTime, String? resolution}) async {
     if (_listIndex.isNotEmpty) {
       return _listIndex;
     }
@@ -358,15 +485,15 @@ class DataCenterService implements IDataCenterService {
     initingListIndex = true;
     for (final Index index in Index.values) {
       final response = await networkService.getIndexDetail(index);
-      final int from = TimeUtilities.timeToEpoch(
-          TimeUtilities.getPreviousDateTime(TimeUtilities.week(1)));
-      final int to = TimeUtilities.timeToEpoch(DateTime.now());
-      final chartResponse =
-          await getStockTradingHistory(index.chartCode, "5", from, to);
+      final chartResponse = await getStockTradingHistory(
+          index.chartCode,
+          resolution ?? "5",
+          fromTime ?? TimeUtilities.getPreviousDateTime(TimeUtilities.week(1)),
+          toTime ?? DateTime.now());
       _listIndex.add(IndexModel(
         index: index,
         indexDetailResponse: response,
-        stockTradingHistory: chartResponse,
+        stockDayTradingHistory: chartResponse,
       ));
     }
     initingListIndex = false;
@@ -376,6 +503,15 @@ class DataCenterService implements IDataCenterService {
   @override
   Future<List<StockNews>> getStockNews(String stockCode) {
     return networkService.getStockNews(stockCode);
+  }
+
+  @override
+  Future<List<NewsModel>> getNews([int? page, int? records]) {
+    final Map<String, String> body = {
+      "page": "$page",
+      "records": "$records",
+    };
+    return networkService.getNews(body);
   }
 
   @override
@@ -405,7 +541,133 @@ class DataCenterService implements IDataCenterService {
 
   @override
   Future<List<FieldTreeModel>> getListIndustryHeatMap(
-      {int top = 8, String type = "KL"}) {
-    return networkService.getListIndustryHeatMap(top, type);
+      {int top = 8, String type = "KL"}) async {
+    final result = await networkService.getListIndustryHeatMap(top, type);
+    for (var field in result) {
+      for (var element in field.stocks) {
+        element.getStock(this);
+      }
+    }
+    return result;
+  }
+
+  @override
+  Future<List<StockFinancialIndex>> getStockFinancialIndex(String code,
+      [String freg = "Y", String lang = "vi"]) {
+    final body = '{"lang":"$lang", "secCode": "$code", "freq":"$freg"}';
+    return networkService.getStockFinancialIndex(body);
+  }
+
+  @override
+  Future<StockRankingFinancialIndex?> getStockRankingFinancialIndex(String code,
+      [String lang = "vi"]) {
+    final body = '{"lang":"$lang", "secCode": "$code"}';
+    return networkService.getStockRankingFinancialIndex(body);
+  }
+
+  @override
+  Future<SecurityBasicInfo?> getSecurityBasicInfo(String code,
+      [String lang = "vi"]) {
+    final body = '{"lang":"$lang", "secList":"$code", "Exchange":""}';
+    return networkService.getSecurityBasicInfo(body);
+  }
+
+  @override
+  Future<BusinnessProfileModel?> getBusinnessProfile(String stockCode) {
+    final body = '{"secCode":"$stockCode"}';
+    return networkService.getBusinnessProfile(body);
+  }
+
+  @override
+  Future<List<BusinnessLeaderModel>?> getBusinnessLeaders(String stockCode) {
+    final body = '{"secCode":"$stockCode"}';
+    return networkService.getBusinnessLeaders(body);
+  }
+
+  @override
+  Future<List<SubsidiariesModel>?> getSubsidiaries(String stockCode) {
+    final body = {
+      "ticker": stockCode,
+      "relatedType": "D933DCAE2B553EE0E055C3B42B92FC60"
+    };
+    return networkService.getSubsidiaries(body);
+  }
+
+  @override
+  Future<List<SubsidiariesModel>?> getAssociatedCompany(String stockCode) {
+    final body = {
+      "ticker": stockCode,
+      "relatedType": "D933DCAE2B563EE0E055C3B42B92FC60"
+    };
+    return networkService.getSubsidiaries(body);
+  }
+
+  @override
+  Future<List<SubsidiariesModel>?> getOtherCompany(String stockCode) {
+    final body = {
+      "ticker": stockCode,
+      "relatedType": "D933DCAE2B583EE0E055C3B42B92FC60"
+    };
+    return networkService.getSubsidiaries(body);
+  }
+
+  @override
+  Future<List<IndexBoard>> getIndexBoard(String marketCode) {
+    return networkService.getIndexBoard(marketCode);
+  }
+
+  @override
+  Future<List<String>> getSectors(String industryCode) {
+    return networkService.getSectors(industryCode);
+  }
+
+  @override
+  Future putSearchHistory(String searchString) {
+    return networkService.putSearchHistory(searchString);
+  }
+
+  @override
+  Future<IndContrib> getIndContrib(String marketCode) {
+    return networkService.getIndContrib(marketCode);
+  }
+
+  @override
+  Future<IndContrib> getFIvalue(String marketCode) {
+    return networkService.getFIvalue(marketCode);
+  }
+
+  @override
+  Future<IndContrib> getPIvalue(String marketCode) {
+    return networkService.getPIvalue(marketCode);
+  }
+
+  @override
+  Future<List<IndexDetailResponse>> getListIndexDetail() {
+    return networkService.getListIndexDetail();
+  }
+
+  @override
+  Future<List<String>> getListIndustry() {
+    return networkService.getListIndustry();
+  }
+
+  @override
+  Future<List<StockIndustry>> getListStockByIndust(String industry) {
+    return networkService.getListStockByIndust(industry);
+  }
+
+  @override
+  Future<List<SecEvent>> getListEvent(String stockCode) {
+    return networkService.getListEvent(stockCode);
+  }
+
+  @override
+  Future<CompanyIntroductionResponse> getCompanyIntroduction(String stockCode) {
+    return networkService.getCompanyIntroduction(stockCode);
+  }
+
+  @override
+  Future<List<StockMatch>> getListStockMatch(String stockCode) {
+    return networkService.getListStockMatch(stockCode);
   }
 }

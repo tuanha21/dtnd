@@ -96,9 +96,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   otpRequired: loginController.otpRequired,
                   onSuccess: loginSuccess,
                 ),
-                const SizedBox(
-                  height: 20,
-                ),
+                const SizedBox(height: 20),
               ],
             ),
           ),

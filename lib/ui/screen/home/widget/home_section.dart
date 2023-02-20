@@ -10,9 +10,13 @@ class HomeSection extends StatelessWidget {
     this.onMore,
     this.child,
     this.padding = 16,
+    this.onTitleTap,
+    this.onMoreDot,
   });
   final String title;
+  final VoidCallback? onTitleTap;
   final VoidCallback? onMore;
+  final VoidCallback? onMoreDot;
   final Widget? child;
   final double padding;
   @override
@@ -24,23 +28,33 @@ class HomeSection extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                title,
-                style: Theme.of(context)
-                    .textTheme
-                    .titleMedium!
-                    .copyWith(fontWeight: FontWeight.w700),
+              GestureDetector(
+                onTap: onTitleTap,
+                child: Text(
+                  title,
+                  style: Theme.of(context)
+                      .textTheme
+                      .titleMedium!
+                      .copyWith(fontWeight: FontWeight.w700),
+                ),
               ),
-              onMore != null
-                  ? InkWell(
-                      onTap: onMore,
-                      child: Text(
-                        S.of(context).see_more,
-                        style: AppTextStyle.labelMedium_12
-                            .copyWith(color: AppColors.primary_01),
-                      ),
-                    )
-                  : Container(),
+              if (onMore != null)
+                InkWell(
+                  onTap: onMore,
+                  child: Text(
+                    S.of(context).see_more,
+                    style: AppTextStyle.labelMedium_12
+                        .copyWith(color: AppColors.primary_01),
+                  ),
+                )
+              else if (onMoreDot != null)
+                InkWell(
+                  onTap: onMoreDot,
+                  child: const Icon(
+                    Icons.more_horiz_rounded,
+                    color: AppColors.neutral_01,
+                  ),
+                ),
             ],
           ),
         ),

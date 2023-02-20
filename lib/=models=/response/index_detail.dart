@@ -1,6 +1,28 @@
+import 'dart:ui';
 
 import 'package:dtnd/logic/stock_status.dart';
+import 'package:dtnd/ui/theme/app_color.dart';
+import 'package:dtnd/utilities/num_utils.dart';
 import 'package:get/get.dart';
+
+enum IndexStatus {
+  opening,
+  intermission,
+  closed,
+}
+
+extension IndexStatusX on IndexStatus {
+  Color get color {
+    switch (this) {
+      case IndexStatus.opening:
+        return AppColors.semantic_01;
+      case IndexStatus.intermission:
+        return AppColors.semantic_02;
+      default:
+        return AppColors.semantic_03;
+    }
+  }
+}
 
 class IndexDetail extends StockStatus {
   final int id = 1101;
@@ -10,7 +32,7 @@ class IndexDetail extends StockStatus {
   final Rx<num?> vol = Rxn<num>();
   final Rx<num?> value = Rxn<num>();
   final Rx<String?> time = Rxn();
-  final Rx<String?> status = Rxn();
+  final Rx<IndexStatus> status = Rx<IndexStatus>(IndexStatus.closed);
   final Rx<num?> accVol = Rxn<num>();
   final Rx<List<String>?> ot = Rxn();
 
@@ -31,10 +53,47 @@ class IndexDetail extends StockStatus {
   }
 
   num get change => num.tryParse(ot.value?.first ?? "0") ?? 0;
+
   String get changePc => ot.value?.elementAt(1) ?? "0%";
+
   num get upQuant => num.tryParse(ot.value?.elementAt(3) ?? "0") ?? 0;
+
   num get downQuant => num.tryParse(ot.value?.elementAt(4) ?? "0") ?? 0;
+
   num get refQuant => num.tryParse(ot.value?.elementAt(5) ?? "0") ?? 0;
+
+  void changeIndexStatus(String? stt) {
+    IndexStatus nextStt;
+    switch (stt) {
+      case "O":
+        nextStt = IndexStatus.opening;
+        break;
+      case "P":
+        nextStt = IndexStatus.opening;
+        break;
+      case "A":
+        nextStt = IndexStatus.opening;
+        break;
+      case "Undefined":
+        nextStt = IndexStatus.opening;
+        break;
+      case "undefined":
+        nextStt = IndexStatus.opening;
+        break;
+      case "I":
+        nextStt = IndexStatus.intermission;
+        break;
+      case "C":
+        nextStt = IndexStatus.closed;
+        break;
+      default:
+        nextStt = IndexStatus.closed;
+    }
+    if (status.value != nextStt) {
+      status.value = nextStt;
+    }
+    return;
+  }
 
   IndexDetail({
     required this.mc,
@@ -52,7 +111,7 @@ class IndexDetail extends StockStatus {
     this.vol.value = vol;
     this.value.value = value;
     this.time.value = time;
-    this.status.value = status;
+    changeIndexStatus(status);
     this.accVol.value = accVol;
     this.ot.value = ot;
   }
@@ -64,7 +123,7 @@ class IndexDetail extends StockStatus {
     vol.value = data.vol;
     value.value = data.value;
     time.value = data.time;
-    status.value = data.status;
+    changeIndexStatus(data.status);
     accVol.value = data.accVol;
     ot.value = data.ot;
   }
@@ -93,9 +152,49 @@ class IndexDetailResponse {
   num? vol;
   num? value;
   String? time;
+
   String? status;
   num? accVol;
   List<String>? ot;
+
+  String get valueString {
+    if (value == null) return "0";
+    try {
+      return "${NumUtils.formatInteger((value! / 1000))} tỷ";
+    } catch (e) {
+      return "0";
+    }
+  }
+
+  String get statusVN {
+    if (status == null) return "";
+    if (mc == 10 || mc == 11) {
+      if (status?.toUpperCase() == "O") return "Mở cửa";
+      if (status?.toUpperCase() == "P") return "ATO";
+      if (status?.toUpperCase() == "I") return "Nghỉ trưa";
+      if (status?.toUpperCase() == "A") return "ATC";
+      if (status?.toUpperCase() == "C" || status?.toUpperCase() == "K") {
+        return "Đóng cửa";
+      }
+      return "Đóng cửa";
+    }
+    if (mc == 2) {
+      if (status?.toUpperCase() == "O") return "Mở cửa";
+      if (status?.toUpperCase() == "I") return "Nghỉ trưa";
+      if (status?.toUpperCase() == "A") return "ATC";
+      if (status?.toUpperCase() == "C" || status?.toUpperCase() == "K") {
+        return "Đóng cửa";
+      }
+      return "Đóng cửa";
+    }
+    if (mc == 3) {
+      if (status?.toUpperCase() == "O") return "Mở cửa";
+      if (status?.toUpperCase() == "I") return "Nghỉ trưa";
+      return "Đóng cửa";
+    }
+
+    return "";
+  }
 
   IndexDetailResponse(
       {required this.mc,

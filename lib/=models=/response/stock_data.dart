@@ -51,6 +51,13 @@ class StockData extends StockStatus {
     return true;
   }
 
+  num get percent {
+    var min = lowPrice.value?.toDouble() ?? 0;
+    var max = highPrice.value?.toDouble() ?? 1;
+    var lp = lastPrice.value?.toDouble() ?? 0;
+    return (lp - min) / (max - min);
+  }
+
   num getTotalVol(Side side) {
     try {
       switch (side) {
@@ -106,7 +113,11 @@ class StockData extends StockStatus {
       if (lastPrice.value == null ||
           r.value == null ||
           c.value == null ||
-          f.value == null) {
+          f.value == null ||
+          lastPrice.value == 0 ||
+          r.value == 0 ||
+          c.value == 0 ||
+          f.value == 0) {
         return SStatus.ref;
       }
       if (lastPrice.value! == r.value) {

@@ -1,9 +1,31 @@
+import 'package:intl/intl.dart';
+
+extension DateTimeX on DateTime {
+  DateTime get beginningOfDay {
+    int cday = day;
+    if (weekday > 5) {
+      final diff = weekday - 5;
+      cday -= diff;
+    }
+    final lastMidnight = DateTime(year, month, cday);
+    return lastMidnight;
+  }
+}
+
 class TimeUtilities {
+  static final DateFormat commonTimeFormat = DateFormat("dd/MM/yyyy");
   static bool isLeapYear(DateTime dateTime) {
     if (dateTime.year % 4 == 0) {
       return true;
     }
     return false;
+  }
+
+  static Duration day(int days) {
+    if (days <= 0) {
+      return const Duration();
+    }
+    return Duration(days: days);
   }
 
   static Duration week(int weeks) {

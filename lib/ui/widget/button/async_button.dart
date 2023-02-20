@@ -39,18 +39,20 @@ class _AsyncButtonState extends State<AsyncButton> {
                 });
               }
             },
-      child: Builder(
-        builder: (context) {
-          if (loading) {
-            return const SizedBox.square(
-              dimension: 24,
-              child: CircularProgressIndicator(
-                color: Colors.white,
-              ),
-            );
-          }
-          return widget.child;
-        },
+      child: Align(
+        child: Builder(
+          builder: (context) {
+            if (loading) {
+              return const SizedBox.square(
+                dimension: 24,
+                child: CircularProgressIndicator(
+                  color: Colors.white,
+                ),
+              );
+            }
+            return widget.child;
+          },
+        ),
       ),
     );
     return button;

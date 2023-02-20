@@ -56,9 +56,6 @@ class CatalogOptionsSheet extends StatefulWidget {
 }
 
 class _CatalogOptionsSheetState extends State<CatalogOptionsSheet> {
-  final TextEditingController controller = TextEditingController();
-  final GlobalKey<FormState> key = GlobalKey<FormState>();
-  final FocusNode node = FocusNode();
   @override
   void initState() {
     super.initState();

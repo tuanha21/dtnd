@@ -1,0 +1,272 @@
+import 'package:dtnd/=models=/exchange.dart';
+import 'package:dtnd/=models=/response/account/unexecuted_right_model.dart';
+import 'package:dtnd/=models=/response/stock.dart';
+import 'package:dtnd/generated/l10n.dart';
+import 'package:dtnd/ui/theme/app_color.dart';
+import 'package:dtnd/ui/theme/app_textstyle.dart';
+import 'package:dtnd/ui/widget/button/single_color_text_button.dart';
+import 'package:dtnd/ui/widget/icon/sheet_header.dart';
+import 'package:dtnd/ui/widget/icon/stock_icon.dart';
+import 'package:dtnd/ui/widget/input/interval_input.dart';
+import 'package:dtnd/utilities/num_utils.dart';
+import 'package:dtnd/utilities/string_util.dart';
+import 'package:dtnd/utilities/validator.dart';
+import 'package:flutter/material.dart';
+
+class ExecuteRightSheet extends StatefulWidget {
+  const ExecuteRightSheet({
+    super.key,
+    required this.unexecutedRightModel,
+    required this.stock,
+  });
+  final UnexecutedRightModel unexecutedRightModel;
+  final Stock stock;
+  @override
+  State<ExecuteRightSheet> createState() => _ExecuteRightSheetState();
+}
+
+class _ExecuteRightSheetState extends State<ExecuteRightSheet> {
+  late final Set<OrderType> listOrderTypes;
+  final TextEditingController priceController = TextEditingController();
+  late final TextEditingController volumnController;
+  final GlobalKey<FormState> pinKey = GlobalKey<FormState>();
+
+  @override
+  void initState() {
+    volumnController = TextEditingController(
+        text:
+            (widget.unexecutedRightModel.cSHARERIGHT?.toInt() ?? 0).toString());
+    super.initState();
+  }
+
+  void toConfirmPanel() async {
+    Navigator.of(context).pop();
+    // await showModalBottomSheet(
+    //   context: context,
+    //   shape: const RoundedRectangleBorder(
+    //       borderRadius: BorderRadius.vertical(top: Radius.circular(20))),
+    //   builder: (BuildContext context) {
+    //     return Wrap(
+    //       children: [
+    //         // TechnicalTradings(
+    //         //   onChoosen: (value) => Navigator.of(context).pop(value),
+    //         // ),
+    //         StockOrderConfirmSheet(
+    //           stockModel: widget.stockModel,
+    //           unexecutedRightModel: unexecutedRightModel,
+    //         )
+    //       ],
+    //     );
+    //   },
+    // );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
+    return SafeArea(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const SheetHeader(
+              title: "Đăng ký mua",
+              implementBackButton: false,
+            ),
+            const SizedBox(height: 20),
+            Row(
+              children: [
+                StockIcon(
+                  color: Colors.white,
+                  stockCode: widget.unexecutedRightModel.cRECEIVESHARECODE,
+                ),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        children: [
+                          Text(
+                            widget.unexecutedRightModel.cRECEIVESHARECODE ??
+                                "-",
+                            style: textTheme.titleSmall,
+                          ),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          Flexible(
+                            child: Text(
+                              widget.stock.nameShort ?? "",
+                              overflow: TextOverflow.ellipsis,
+                              style: AppTextStyle.labelSmall_10
+                                  .copyWith(color: AppColors.neutral_03),
+                            ),
+                          ),
+                          // Expanded(
+                          //   child: Container(
+                          //     height: 4,
+                          //     decoration: const BoxDecoration(
+                          //       borderRadius:
+                          //           BorderRadius.all(Radius.circular(4)),
+                          //       color: AppColors.neutral_06,
+                          //     ),
+                          //     child: Row(
+                          //       children: [
+                          //         Flexible(
+                          //           flex: (widget.volPc ?? 0) ~/ 1,
+                          //           child: Container(
+                          //             height: 4,
+                          //             decoration: const BoxDecoration(
+                          //               borderRadius: BorderRadius.all(
+                          //                   Radius.circular(4)),
+                          //               color: AppColors.graph_7,
+                          //             ),
+                          //           ),
+                          //         ),
+                          //         Flexible(
+                          //           flex: 100 - ((widget.volPc ?? 0) ~/ 1),
+                          //           child: Container(),
+                          //         )
+                          //       ],
+                          //     ),
+                          //   ),
+                          // )
+                        ],
+                      )
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 20),
+            Container(
+              padding: const EdgeInsets.all(16),
+              decoration: const BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(12)),
+                color: AppColors.neutral_06,
+              ),
+              child: Column(
+                children: [
+                  _Row(
+                    label: "Khối lượng tối đa",
+                    value: NumUtils.formatInteger(
+                        widget.unexecutedRightModel.cSHARERIGHT),
+                  ),
+                  const SizedBox(height: 8),
+                  _Row(
+                    label: "Giá mua vào",
+                    value: NumUtils.formatInteger(
+                        widget.unexecutedRightModel.cBUYPRICE),
+                  ),
+                  const SizedBox(height: 8),
+                  _Row(
+                    label: "Tài khoản cắt tiền",
+                    value: widget.unexecutedRightModel.cACCOUNTCODE,
+                  ),
+                  const SizedBox(height: 8),
+                  _Row(
+                    label: "Tổng giao dịch",
+                    value: NumUtils.formatDouble(
+                        (num.tryParse(volumnController.text) ?? 0) *
+                            (widget.unexecutedRightModel.cBUYPRICE ?? 0)),
+                    valueColor: AppColors.primary_01,
+                  ),
+                  const SizedBox(height: 8),
+                ],
+              ),
+            ),
+            const SizedBox(height: 20),
+            Row(
+              children: [
+                Expanded(
+                  child: IntervalInput(
+                    controller: volumnController,
+                    labelText: S.of(context).volumn,
+                    interval: (p0) {
+                      return 1;
+                    },
+                    defaultValue: widget.unexecutedRightModel.cSHARERIGHT ?? 0,
+                    // onChanged: onChangedPrice,
+                  ),
+                ),
+                const SizedBox(width: 16),
+                Expanded(
+                  child: Form(
+                    key: pinKey,
+                    autovalidateMode: AutovalidateMode.disabled,
+                    child: TextFormField(
+                      controller: priceController,
+                      // onChanged: (value) => pinFormKey.currentState?.didChange(value),
+                      validator: AppValidator.pinValidator,
+                      autovalidateMode: AutovalidateMode.disabled,
+                      decoration: InputDecoration(
+                        labelText: S.of(context).pin_code,
+                        // contentPadding: const EdgeInsets.all(0),
+                        floatingLabelBehavior: FloatingLabelBehavior.always,
+                        floatingLabelAlignment: FloatingLabelAlignment.start,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 20),
+            Row(
+              children: [
+                Expanded(
+                  child: SingleColorTextButton(
+                    text: S.of(context).confirm,
+                    color: AppColors.semantic_01,
+                    onTap: () => toConfirmPanel(),
+                  ),
+                ),
+              ],
+            )
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _Row extends StatelessWidget {
+  const _Row({
+    required this.label,
+    this.value,
+    this.valueColor,
+  });
+  final String label;
+  final String? value;
+  final Color? valueColor;
+  @override
+  Widget build(BuildContext context) {
+    final textheme = Theme.of(context).textTheme;
+    final labelTheme = textheme.titleSmall!;
+    final valueTheme = textheme.bodyMedium!
+        .copyWith(fontWeight: FontWeight.w600, color: valueColor);
+    String valueTxt;
+    if (value == null) {
+      valueTxt = "-";
+    } else if (value!.isNum) {
+      valueTxt = NumUtils.formatDoubleString(value);
+    } else {
+      valueTxt = value!;
+    }
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(
+          label,
+          style: labelTheme,
+        ),
+        Text(
+          valueTxt,
+          style: valueTheme,
+        ),
+      ],
+    );
+  }
+}

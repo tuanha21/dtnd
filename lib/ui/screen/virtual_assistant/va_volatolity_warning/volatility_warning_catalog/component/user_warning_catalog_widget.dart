@@ -50,11 +50,11 @@ class _UserWarningCatalogWidgetState extends State<UserWarningCatalogWidget> {
   }
 
   void initCatalog() async {
-    if (currentCatalog?.stocks.isEmpty ?? true) {
+    if (currentCatalog?.listStock.isEmpty ?? true) {
       return;
     }
     listStocks = await dataCenterService
-        .getStockModelsFromStockCodes(currentCatalog!.stocks);
+        .getStockModelsFromStockCodes(currentCatalog!.listStock);
     setState(() {
       initialized = true;
     });
@@ -169,11 +169,11 @@ class _UserWarningCatalogWidgetState extends State<UserWarningCatalogWidget> {
               );
             },
             onSuggestionSelected: (suggestion) async {
-              final StockModel model = (await dataCenterService
+              final model = (await dataCenterService
                       .getStockModelsFromStockCodes([suggestion.stockCode]))
-                  .first;
-              final String stock = model.stock.stockCode;
-              currentCatalog!.stocks.add(stock);
+                  ?.first;
+              final String stock = model?.stock.stockCode ?? "";
+              currentCatalog!.listStock.add(stock);
               setState(() {});
             },
           );
@@ -215,8 +215,8 @@ class _UserWarningCatalogWidgetState extends State<UserWarningCatalogWidget> {
           listStocksWidget,
           Builder(builder: (context) {
             double height = 0;
-            if (currentCatalog!.stocks.length < 5) {
-              height = 100.0 * currentCatalog!.stocks.length;
+            if (currentCatalog!.listStock.length < 5) {
+              height = 100.0 * currentCatalog!.listStock.length;
             } else {
               height = 85 * 5;
             }
@@ -230,13 +230,14 @@ class _UserWarningCatalogWidgetState extends State<UserWarningCatalogWidget> {
                     height: 85,
                     child: HomeMarketOverviewItem(
                       data: listStocks!.elementAt(index),
+                      dataCenterService: dataCenterService,
                     ),
                   );
                 },
                 separatorBuilder: (context, index) => const Divider(
                   thickness: 2,
                 ),
-                itemCount: currentCatalog!.stocks.length,
+                itemCount: currentCatalog!.listStock.length,
               ),
             );
           }),

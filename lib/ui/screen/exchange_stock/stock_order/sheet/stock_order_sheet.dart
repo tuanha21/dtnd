@@ -1,7 +1,12 @@
 import 'package:dtnd/=models=/exchange.dart';
+import 'package:dtnd/=models=/response/stock_info_core.dart';
 import 'package:dtnd/=models=/response/stock_model.dart';
 import 'package:dtnd/=models=/side.dart';
 import 'package:dtnd/=models=/ui_model/user_cmd.dart';
+import 'package:dtnd/data/i_network_service.dart';
+import 'package:dtnd/data/i_user_service.dart';
+import 'package:dtnd/data/implementations/network_service.dart';
+import 'package:dtnd/data/implementations/user_service.dart';
 import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/screen/exchange_stock/stock_order/data/order_data.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
@@ -23,12 +28,16 @@ class StockOrderSheet extends StatefulWidget {
 }
 
 class _StockOrderSheetState extends State<StockOrderSheet> {
+  final INetworkService networkService = NetworkService();
+  final IUserService userService = UserService();
   late final Set<OrderType> listOrderTypes;
   final TextEditingController priceController = TextEditingController();
   final TextEditingController volumnController =
       TextEditingController(text: "100");
 
   late OrderType selectedOrderType;
+
+  StockInfoCore? stockInfoCore;
 
   @override
   void initState() {
@@ -47,6 +56,12 @@ class _StockOrderSheetState extends State<StockOrderSheet> {
       });
       select(selectedOrderType);
     }
+    getStockInfoCore();
+  }
+
+  void getStockInfoCore() async {
+    stockInfoCore =
+        await widget.stockModel.getStockInfoCore(networkService, userService);
   }
 
   void select(OrderType orderType) {

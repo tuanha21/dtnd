@@ -4,93 +4,82 @@ import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_textstyle.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class NewsCard extends StatelessWidget {
   const NewsCard({
     super.key,
     required this.stockNews,
   });
+
   final StockNews stockNews;
+
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: Colors.transparent,
-      child: InkWell(
-        onTap: () {},
-        borderRadius: const BorderRadius.all(Radius.circular(8)),
-        child: Ink(
-          padding: const EdgeInsets.all(8.0),
-          height: 88.0,
-          decoration: const BoxDecoration(
-            borderRadius: BorderRadius.all(Radius.circular(8)),
-            color: Colors.transparent,
-          ),
-          child: Row(
-            children: [
-              SizedBox.square(
-                dimension: 75,
-                child: Hero(
-                  tag: stockNews.articleID,
-                  child: CachedNetworkImage(
-                    imageUrl: stockNews.imageUrl ??
-                        "https://via.placeholder.com/75x75",
-                    imageBuilder: (context, imageProvider) => Container(
-                      decoration: BoxDecoration(
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(4)),
-                        image: DecorationImage(
-                            image: imageProvider, fit: BoxFit.fill),
-                      ),
-                    ),
-                    placeholder: (context, url) =>
-                        const CircularProgressIndicator(),
-                    errorWidget: (context, url, error) =>
-                        const Icon(Icons.error),
+    return IntrinsicHeight(
+      child: Row(
+        children: [
+          SizedBox.square(
+            dimension: 60,
+            child: Hero(
+              tag: stockNews.articleID,
+              child: CachedNetworkImage(
+                imageUrl:
+                    stockNews.imageUrl ?? "https://via.placeholder.com/75x75",
+                imageBuilder: (context, imageProvider) => Container(
+                  decoration: BoxDecoration(
+                    borderRadius: const BorderRadius.all(Radius.circular(4)),
+                    image:
+                        DecorationImage(image: imageProvider, fit: BoxFit.fill),
                   ),
                 ),
+                placeholder: (context, url) =>
+                    const CircularProgressIndicator(),
+                errorWidget: (context, url, error) => const Icon(Icons.error),
               ),
-              const SizedBox(
-                width: 10,
-              ),
-              Expanded(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            ),
+          ),
+          const SizedBox(width: 10),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(
+                  child: Text(
+                    stockNews.title ?? "Title",
+                    maxLines: 2,
+                    textAlign: TextAlign.left,
+                    style: Theme.of(context).textTheme.titleSmall,
+                  ),
+                ),
+                Text(DateFormat("dd/MM/yyyy").format(stockNews.dateTime!),
+                    style: AppTextStyle.labelSmall_10.copyWith(
+                        fontWeight: FontWeight.w400,
+                        color: AppColors.neutral_03)),
+                Row(
                   children: [
-                    Expanded(
-                      child: Text(
-                        stockNews.title ?? "Title",
-                        maxLines: 2,
-                        textAlign: TextAlign.left,
-                        style: Theme.of(context).textTheme.titleSmall,
-                      ),
+                    Text(
+                      S.of(context).news,
+                      style: AppTextStyle.bottomNavLabel
+                          .copyWith(color: AppColors.primary_01),
                     ),
-                    Row(
-                      children: [
-                        Text(
-                          S.of(context).event,
-                          style: AppTextStyle.bottomNavLabel
-                              .copyWith(color: AppColors.primary_01),
-                        ),
-                        const SizedBox(width: 10),
-                        Container(
-                          width: 5,
-                          height: 5,
-                          decoration: const BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: AppColors.semantic_02),
-                        ),
-                        const SizedBox(width: 5),
-                        Text(stockNews.stockCode ?? "",
-                            style: AppTextStyle.labelSmall_10
-                                .copyWith(fontWeight: FontWeight.w400)),
-                      ],
+                    const SizedBox(width: 10),
+                    Container(
+                      width: 5,
+                      height: 5,
+                      decoration: const BoxDecoration(
+                          shape: BoxShape.circle, color: AppColors.semantic_02),
                     ),
+                    const SizedBox(width: 5),
+                    Text(stockNews.stockCode ?? "",
+                        style: AppTextStyle.labelSmall_10
+                            .copyWith(fontWeight: FontWeight.w400)),
                   ],
                 ),
-              )
-            ],
-          ),
-        ),
+              ],
+            ),
+          )
+        ],
       ),
     );
   }

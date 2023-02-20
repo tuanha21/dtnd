@@ -15,14 +15,21 @@ abstract class IDialog implements IOverlay {
       context: context,
       barrierDismissible: barrierDismissible,
       builder: (BuildContext context) {
-        return child;
+        return Dialog(
+          insetPadding: const EdgeInsets.all(16),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: child,
+          ),
+        );
       },
     ).then((result) => cmd(context, result));
   }
 
   @override
   Future<UserCmd?> cmd(BuildContext context, UserCmd? cmd) {
-    print(cmd);
     if (cmd is BackCmd) {
       return onResultBack.call(cmd)?.then(
               (_) => back.call(cmd)?.show(context, backWidget.call(cmd))) ??

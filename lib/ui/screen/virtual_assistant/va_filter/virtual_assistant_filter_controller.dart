@@ -50,9 +50,9 @@ class VirtualAssistantFilterController {
       for (var stock in saved) {
         list.add(stock.stockCode);
       }
-      final _stockModel =
+      final stockModel =
           await dataCenterService.getStockModelsFromStockCodes(list);
-      followingCatalog.addAll(_stockModel);
+      followingCatalog.addAll(stockModel!);
     }
     initialized.value = true;
   }
@@ -66,8 +66,9 @@ class VirtualAssistantFilterController {
 
   Future<void> getList30Stocks() async {
     try {
-      listSuggestionStocks.value =
-          await dataCenterService.getList30Stock("HSX30");
+      final top = await dataCenterService.getList30Stock("HSX30");
+      listSuggestionStocks.value = await dataCenterService
+          .getStockModelsFromStockCodes(top.map((e) => e.stockCode).toList());
     } catch (e) {
       logger.e(e);
     }
@@ -99,12 +100,12 @@ class VirtualAssistantFilterController {
     }
     followingStocks.add(stock);
     final stockCode = [stock.stockCode];
-    final _stockModel =
+    final stockModel =
         await dataCenterService.getStockModelsFromStockCodes(stockCode);
-    if (_stockModel.isEmpty) {
+    if (stockModel?.isEmpty ?? true) {
       throw Exception(S.current.something_went_wrong);
     }
-    followingCatalog.add(_stockModel.first);
+    followingCatalog.add(stockModel!.first);
     followingCatalogBox.put("following_catalog", followingStocks);
   }
 }

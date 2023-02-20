@@ -80,11 +80,61 @@ class S {
     );
   }
 
+  /// `Logout`
+  String get logout {
+    return Intl.message(
+      'Logout',
+      name: 'logout',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `LOGIN`
   String get login_upper {
     return Intl.message(
       'LOGIN',
       name: 'login_upper',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Login with Google`
+  String get login_with_google {
+    return Intl.message(
+      'Login with Google',
+      name: 'login_with_google',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Login with Facebook`
+  String get login_with_facebook {
+    return Intl.message(
+      'Login with Facebook',
+      name: 'login_with_facebook',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Sign up`
+  String get sign_up {
+    return Intl.message(
+      'Sign up',
+      name: 'sign_up',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Hi you`
+  String get hi_you {
+    return Intl.message(
+      'Hi you',
+      name: 'hi_you',
       desc: '',
       args: [],
     );
@@ -210,6 +260,16 @@ class S {
     );
   }
 
+  /// `Custom`
+  String get qa_custom {
+    return Intl.message(
+      'Custom',
+      name: 'qa_custom',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Account`
   String get account {
     return Intl.message(
@@ -235,6 +295,36 @@ class S {
     return Intl.message(
       'Password',
       name: 'password',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Full name`
+  String get full_name {
+    return Intl.message(
+      'Full name',
+      name: 'full_name',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Phone number`
+  String get phone_number {
+    return Intl.message(
+      'Phone number',
+      name: 'phone_number',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Email`
+  String get email {
+    return Intl.message(
+      'Email',
+      name: 'email',
       desc: '',
       args: [],
     );
@@ -315,6 +405,96 @@ class S {
     return Intl.message(
       'Create catalog',
       name: 'create_catalog',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Order note`
+  String get order_note {
+    return Intl.message(
+      'Order note',
+      name: 'order_note',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Order history`
+  String get order_htr {
+    return Intl.message(
+      'Order history',
+      name: 'order_htr',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Bank`
+  String get bank {
+    return Intl.message(
+      'Bank',
+      name: 'bank',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Accumulate`
+  String get accumulate {
+    return Intl.message(
+      'Accumulate',
+      name: 'accumulate',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Opening`
+  String get status_open {
+    return Intl.message(
+      'Opening',
+      name: 'status_open',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Closed`
+  String get status_close {
+    return Intl.message(
+      'Closed',
+      name: 'status_close',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Intermission`
+  String get status_intermission {
+    return Intl.message(
+      'Intermission',
+      name: 'status_intermission',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Input password`
+  String get please_input_password {
+    return Intl.message(
+      'Input password',
+      name: 'please_input_password',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Password not match`
+  String get pass_not_match {
+    return Intl.message(
+      'Password not match',
+      name: 'pass_not_match',
       desc: '',
       args: [],
     );
@@ -520,11 +700,561 @@ class S {
     );
   }
 
+  /// `Net profit`
+  String get net_profit {
+    return Intl.message(
+      'Net profit',
+      name: 'net_profit',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Revenue`
+  String get revenue {
+    return Intl.message(
+      'Revenue',
+      name: 'revenue',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Investment value`
+  String get investment_value {
+    return Intl.message(
+      'Investment value',
+      name: 'investment_value',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Cash`
+  String get cash {
+    return Intl.message(
+      'Cash',
+      name: 'cash',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Sold returning money`
+  String get sold_returning_money {
+    return Intl.message(
+      'Sold returning money',
+      name: 'sold_returning_money',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Withdrawable money`
+  String get withdrawable_money {
+    return Intl.message(
+      'Withdrawable money',
+      name: 'withdrawable_money',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Total debt`
+  String get total_debt {
+    return Intl.message(
+      'Total debt',
+      name: 'total_debt',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Total principal debt`
+  String get total_principal_debt {
+    return Intl.message(
+      'Total principal debt',
+      name: 'total_principal_debt',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Safe ratio`
+  String get safe_ratio {
+    return Intl.message(
+      'Safe ratio',
+      name: 'safe_ratio',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Cash dividends`
+  String get cash_dividends {
+    return Intl.message(
+      'Cash dividends',
+      name: 'cash_dividends',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Capital value`
+  String get capital_value {
+    return Intl.message(
+      'Capital value',
+      name: 'capital_value',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `MK value`
+  String get mk_value {
+    return Intl.message(
+      'MK value',
+      name: 'mk_value',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Available balanc`
+  String get available_balanc {
+    return Intl.message(
+      'Available balanc',
+      name: 'available_balanc',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Total vol`
+  String get total_vol {
+    return Intl.message(
+      'Total vol',
+      name: 'total_vol',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Normal vol`
+  String get normal_vol {
+    return Intl.message(
+      'Normal vol',
+      name: 'normal_vol',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `FS vol`
+  String get fs_vol {
+    return Intl.message(
+      'FS vol',
+      name: 'fs_vol',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Available vol`
+  String get available_vol {
+    return Intl.message(
+      'Available vol',
+      name: 'available_vol',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Other vol`
+  String get other_vol {
+    return Intl.message(
+      'Other vol',
+      name: 'other_vol',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Sold returning`
+  String get sold_returning {
+    return Intl.message(
+      'Sold returning',
+      name: 'sold_returning',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Sold returning vol`
+  String get sold_returning_vol {
+    return Intl.message(
+      'Sold returning vol',
+      name: 'sold_returning_vol',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Bought returning`
+  String get bought_returning {
+    return Intl.message(
+      'Bought returning',
+      name: 'bought_returning',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Bought returning vol`
+  String get bought_returning_vol {
+    return Intl.message(
+      'Bought returning vol',
+      name: 'bought_returning_vol',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Extension`
+  String get extension {
+    return Intl.message(
+      'Extension',
+      name: 'extension',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `All`
+  String get all {
+    return Intl.message(
+      'All',
+      name: 'all',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Base note`
+  String get base_note {
+    return Intl.message(
+      'Base note',
+      name: 'base_note',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Debt following`
+  String get debt_following {
+    return Intl.message(
+      'Debt following',
+      name: 'debt_following',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Profit/Loss`
+  String get profit_and_loss {
+    return Intl.message(
+      'Profit/Loss',
+      name: 'profit_and_loss',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Inday ordernote`
+  String get inday_ordnote {
+    return Intl.message(
+      'Inday ordernote',
+      name: 'inday_ordnote',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Condition ordernote`
+  String get condition_ordnote {
+    return Intl.message(
+      'Condition ordernote',
+      name: 'condition_ordnote',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Order history`
+  String get order_history {
+    return Intl.message(
+      'Order history',
+      name: 'order_history',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Margin`
+  String get margin {
+    return Intl.message(
+      'Margin',
+      name: 'margin',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Order price`
+  String get order_price {
+    return Intl.message(
+      'Order price',
+      name: 'order_price',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Matched price`
+  String get match_price {
+    return Intl.message(
+      'Matched price',
+      name: 'match_price',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Match vol`
+  String get match_vol {
+    return Intl.message(
+      'Match vol',
+      name: 'match_vol',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Minimum purchasing power`
+  String get minimum_ee {
+    return Intl.message(
+      'Minimum purchasing power',
+      name: 'minimum_ee',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Detail`
+  String get detail {
+    return Intl.message(
+      'Detail',
+      name: 'detail',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `From date`
+  String get from_day {
+    return Intl.message(
+      'From date',
+      name: 'from_day',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `To date`
+  String get to_day {
+    return Intl.message(
+      'To date',
+      name: 'to_day',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Owned`
+  String get owned {
+    return Intl.message(
+      'Owned',
+      name: 'owned',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Avg price`
+  String get avg_price {
+    return Intl.message(
+      'Avg price',
+      name: 'avg_price',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `bonus share`
+  String get bonus_sh {
+    return Intl.message(
+      'bonus share',
+      name: 'bonus_sh',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Waiting match`
+  String get waiting_match {
+    return Intl.message(
+      'Waiting match',
+      name: 'waiting_match',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Matched`
+  String get matched {
+    return Intl.message(
+      'Matched',
+      name: 'matched',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Matching`
+  String get matching {
+    return Intl.message(
+      'Matching',
+      name: 'matching',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `M`
+  String get million_short {
+    return Intl.message(
+      'M',
+      name: 'million_short',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `B`
+  String get billion_short {
+    return Intl.message(
+      'B',
+      name: 'billion_short',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `b`
+  String get billion_lowercase {
+    return Intl.message(
+      'b',
+      name: 'billion_lowercase',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Bil`
+  String get billion {
+    return Intl.message(
+      'Bil',
+      name: 'billion',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `{minutes} minutes ago`
+  String minutes_ago(Object minutes) {
+    return Intl.message(
+      '$minutes minutes ago',
+      name: 'minutes_ago',
+      desc: '',
+      args: [minutes],
+    );
+  }
+
+  /// `{hours} hours ago`
+  String hours_ago(Object hours) {
+    return Intl.message(
+      '$hours hours ago',
+      name: 'hours_ago',
+      desc: '',
+      args: [hours],
+    );
+  }
+
+  /// `{days} days ago`
+  String days_ago(Object days) {
+    return Intl.message(
+      '$days days ago',
+      name: 'days_ago',
+      desc: '',
+      args: [days],
+    );
+  }
+
   /// `Total asset`
   String get total_asset {
     return Intl.message(
       'Total asset',
       name: 'total_asset',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Base asset`
+  String get base_asset {
+    return Intl.message(
+      'Base asset',
+      name: 'base_asset',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Derivative asset`
+  String get derivative_asset {
+    return Intl.message(
+      'Derivative asset',
+      name: 'derivative_asset',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `CopyTrade asset`
+  String get copyTrade_asset {
+    return Intl.message(
+      'CopyTrade asset',
+      name: 'copyTrade_asset',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Asset distribution`
+  String get asset_distribution {
+    return Intl.message(
+      'Asset distribution',
+      name: 'asset_distribution',
       desc: '',
       args: [],
     );
@@ -585,6 +1315,16 @@ class S {
     return Intl.message(
       'Financial index',
       name: 'financial_index',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Index`
+  String get index {
+    return Intl.message(
+      'Index',
+      name: 'index',
       desc: '',
       args: [],
     );
@@ -735,6 +1475,66 @@ class S {
     return Intl.message(
       'Pin code',
       name: 'pin_code',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Matched order by time`
+  String get matched_order_by_time {
+    return Intl.message(
+      'Matched order by time',
+      name: 'matched_order_by_time',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Matched order by price steps`
+  String get matched_order_by_price_step {
+    return Intl.message(
+      'Matched order by price steps',
+      name: 'matched_order_by_price_step',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Search history`
+  String get search_history {
+    return Intl.message(
+      'Search history',
+      name: 'search_history',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Top search`
+  String get top_search {
+    return Intl.message(
+      'Top search',
+      name: 'top_search',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No matching results were found`
+  String get no_matching_results_were_found {
+    return Intl.message(
+      'No matching results were found',
+      name: 'no_matching_results_were_found',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Try searching again with another keyword!`
+  String get try_searching_again_with_another_keyword {
+    return Intl.message(
+      'Try searching again with another keyword!',
+      name: 'try_searching_again_with_another_keyword',
       desc: '',
       args: [],
     );
@@ -932,11 +1732,31 @@ class S {
     );
   }
 
+  /// `Search`
+  String get search {
+    return Intl.message(
+      'Search',
+      name: 'search',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Filter stocks`
   String get filter_stock {
     return Intl.message(
       'Filter stocks',
       name: 'filter_stock',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Filter`
+  String get filter {
+    return Intl.message(
+      'Filter',
+      name: 'filter',
       desc: '',
       args: [],
     );
@@ -1072,6 +1892,46 @@ class S {
     );
   }
 
+  /// `You are not account?`
+  String get you_are_not_account {
+    return Intl.message(
+      'You are not account?',
+      name: 'you_are_not_account',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Price increase`
+  String get price_increase {
+    return Intl.message(
+      'Price increase',
+      name: 'price_increase',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Price decrease`
+  String get price_decrease {
+    return Intl.message(
+      'Price decrease',
+      name: 'price_decrease',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Top foreign`
+  String get top_foreign {
+    return Intl.message(
+      'Top foreign',
+      name: 'top_foreign',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Create new order`
   String get create_new_order {
     return Intl.message(
@@ -1087,6 +1947,16 @@ class S {
     return Intl.message(
       'Create order successfully',
       name: 'create_order_successfully',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Create order failed`
+  String get create_order_failed {
+    return Intl.message(
+      'Create order failed',
+      name: 'create_order_failed',
       desc: '',
       args: [],
     );
@@ -1162,6 +2032,26 @@ class S {
     );
   }
 
+  /// `Right`
+  String get right {
+    return Intl.message(
+      'Right',
+      name: 'right',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Catalog`
+  String get catalog {
+    return Intl.message(
+      'Catalog',
+      name: 'catalog',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Catalog name`
   String get catalog_name {
     return Intl.message(
@@ -1217,6 +2107,246 @@ class S {
     return Intl.message(
       'Save',
       name: 'save',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Deposite money`
+  String get deposite_money {
+    return Intl.message(
+      'Deposite money',
+      name: 'deposite_money',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Withdraw money`
+  String get withdraw_money {
+    return Intl.message(
+      'Withdraw money',
+      name: 'withdraw_money',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Base`
+  String get base {
+    return Intl.message(
+      'Base',
+      name: 'base',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Derivative`
+  String get derivative {
+    return Intl.message(
+      'Derivative',
+      name: 'derivative',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `TD volatility`
+  String get trading_volatility {
+    return Intl.message(
+      'TD volatility',
+      name: 'trading_volatility',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Stock trading`
+  String get stock_trading {
+    return Intl.message(
+      'Stock trading',
+      name: 'stock_trading',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Money trading`
+  String get money_trading {
+    return Intl.message(
+      'Money trading',
+      name: 'money_trading',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Account managing`
+  String get account_managing {
+    return Intl.message(
+      'Account managing',
+      name: 'account_managing',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Help center`
+  String get help_center {
+    return Intl.message(
+      'Help center',
+      name: 'help_center',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Setting and secutiry`
+  String get setting_and_secutiry {
+    return Intl.message(
+      'Setting and secutiry',
+      name: 'setting_and_secutiry',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Account information`
+  String get account_infomation {
+    return Intl.message(
+      'Account information',
+      name: 'account_infomation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Personal information`
+  String get personal_infomation {
+    return Intl.message(
+      'Personal information',
+      name: 'personal_infomation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Account number`
+  String get account_number {
+    return Intl.message(
+      'Account number',
+      name: 'account_number',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `ID`
+  String get id_or_business_id_short {
+    return Intl.message(
+      'ID',
+      name: 'id_or_business_id_short',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Issue date`
+  String get issue_date {
+    return Intl.message(
+      'Issue date',
+      name: 'issue_date',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Issue place`
+  String get issue_place {
+    return Intl.message(
+      'Issue place',
+      name: 'issue_place',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Birthday`
+  String get birthday {
+    return Intl.message(
+      'Birthday',
+      name: 'birthday',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Sex`
+  String get sex {
+    return Intl.message(
+      'Sex',
+      name: 'sex',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Contact information`
+  String get contact_infomation {
+    return Intl.message(
+      'Contact information',
+      name: 'contact_infomation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Adrress`
+  String get address {
+    return Intl.message(
+      'Adrress',
+      name: 'address',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Business information`
+  String get business_information {
+    return Intl.message(
+      'Business information',
+      name: 'business_information',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `General information`
+  String get general_information {
+    return Intl.message(
+      'General information',
+      name: 'general_information',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Subsidiaries`
+  String get subsidiaries {
+    return Intl.message(
+      'Subsidiaries',
+      name: 'subsidiaries',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Associated Company`
+  String get associated_company {
+    return Intl.message(
+      'Associated Company',
+      name: 'associated_company',
       desc: '',
       args: [],
     );
@@ -1547,6 +2677,156 @@ class S {
     return Intl.message(
       'No Internet connection',
       name: 'no_internet',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Date`
+  String get date_translations {
+    return Intl.message(
+      'Date',
+      name: 'date_translations',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Open`
+  String get open_translations {
+    return Intl.message(
+      'Open',
+      name: 'open_translations',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `High`
+  String get high_translations {
+    return Intl.message(
+      'High',
+      name: 'high_translations',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Low`
+  String get low_translations {
+    return Intl.message(
+      'Low',
+      name: 'low_translations',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Close`
+  String get close_translations {
+    return Intl.message(
+      'Close',
+      name: 'close_translations',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Change`
+  String get changeAmount_translations {
+    return Intl.message(
+      'Change',
+      name: 'changeAmount_translations',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Change%`
+  String get change_translations {
+    return Intl.message(
+      'Change%',
+      name: 'change_translations',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Amount`
+  String get amount_translations {
+    return Intl.message(
+      'Amount',
+      name: 'amount_translations',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Vietnam`
+  String get vietnam {
+    return Intl.message(
+      'Vietnam',
+      name: 'vietnam',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Foreign`
+  String get foreign {
+    return Intl.message(
+      'Foreign',
+      name: 'foreign',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `World`
+  String get world {
+    return Intl.message(
+      'World',
+      name: 'world',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Copytrade`
+  String get copytrade {
+    return Intl.message(
+      'Copytrade',
+      name: 'copytrade',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Transaction`
+  String get transaction {
+    return Intl.message(
+      'Transaction',
+      name: 'transaction',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Unknown exception`
+  String get unknown_exception {
+    return Intl.message(
+      'Unknown exception',
+      name: 'unknown_exception',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `End`
+  String get end {
+    return Intl.message(
+      'End',
+      name: 'end',
       desc: '',
       args: [],
     );

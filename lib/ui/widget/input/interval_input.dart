@@ -6,12 +6,16 @@ typedef GetInterval = num Function(num);
 class IntervalInput extends StatelessWidget {
   const IntervalInput({
     super.key,
+    this.formKey,
+    this.validator,
     required this.controller,
     this.labelText,
     required this.interval,
     this.defaultValue = 0,
     this.onChanged,
   });
+  final Key? formKey;
+  final String? Function(String?)? validator;
   final TextEditingController controller;
   final String? labelText;
   final GetInterval? interval;
@@ -82,7 +86,9 @@ class IntervalInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      key: formKey,
       controller: controller,
+      validator: validator,
       decoration: InputDecoration(
         labelText: labelText,
         contentPadding: const EdgeInsets.all(0),

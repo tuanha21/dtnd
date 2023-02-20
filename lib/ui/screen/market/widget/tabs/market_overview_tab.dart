@@ -13,7 +13,6 @@ import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/screen/market/market_controller.dart';
 import 'package:dtnd/ui/screen/market/widget/components/deep_market_chart.dart';
 import 'package:dtnd/ui/screen/market/widget/components/index_chart.dart';
-import 'package:dtnd/ui/screen/market/widget/components/not_signin_catalog_widget.dart';
 import 'package:dtnd/ui/screen/market/widget/components/user_catalog_widget.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/widget/section/section_with_title.dart';
@@ -35,7 +34,6 @@ class _MarketOverviewTabState extends State<MarketOverviewTab> {
 
   late final List<StockModel> listCatalog;
 
-  bool listCatalogInitialized = false;
 
   @override
   void initState() {
@@ -93,14 +91,6 @@ class _MarketOverviewTabState extends State<MarketOverviewTab> {
 
   @override
   Widget build(BuildContext context) {
-    Widget catalog;
-    if (!userService.isLogin) {
-      catalog = NotSigninCatalogWidget(
-        afterLogin: rebuild,
-      );
-    } else {
-      catalog = const UserCatalogWidget();
-    }
     return ListView(
       children: [
         const IndexChart(),
@@ -118,9 +108,9 @@ class _MarketOverviewTabState extends State<MarketOverviewTab> {
         }, marketController.loadingDeepModel),
         SectionWithTitle(
           title: S.of(context).interested_catalog,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: catalog,
+          child: const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16),
+            child: UserCatalogWidget(),
           ),
         ),
         const SizedBox(height: 100),

@@ -18,6 +18,8 @@ class SavedCatalogAdapter extends TypeAdapter<SavedCatalog> {
     };
     return SavedCatalog(
       fields[0] as String,
+      catalogs:
+          fields[1] == null ? [] : (fields[1] as List).cast<LocalCatalog>(),
     );
   }
 
