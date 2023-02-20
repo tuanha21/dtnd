@@ -60,9 +60,10 @@ class _FinanceIndexTabState extends State<FinanceIndexTab> {
               min = math.min<num>(
                   list.map((e) => e.rEPORTDATE.year).reduce(math.min),
                   annotation);
+              list.sort((a, b) => a.rEPORTDATE.compareTo(b.rEPORTDATE));
+              widget.stockModel.changeStockFinancialIndex(list);
             }
-            list.sort((a, b) => a.rEPORTDATE.compareTo(b.rEPORTDATE));
-            widget.stockModel.changeStockFinancialIndex(list);
+
             return MediaQuery.removePadding(
               context: context,
               removeTop: true,
@@ -176,6 +177,7 @@ class _IndexChartState extends State<IndexChart> {
 
 class DoanhThuWidget extends StatefulWidget {
   final String stockCode;
+
   const DoanhThuWidget({Key? key, required this.stockCode}) : super(key: key);
 
   @override
@@ -189,8 +191,8 @@ class _DoanhThuWidgetState extends State<DoanhThuWidget> {
 
   @override
   void initState() {
-    listFinancial = dataCenterService.getStockFinancialIndex(
-        widget.stockCode, "Y");
+    listFinancial =
+        dataCenterService.getStockFinancialIndex(widget.stockCode, "Y");
     super.initState();
   }
 
@@ -232,106 +234,80 @@ class _DoanhThuWidgetState extends State<DoanhThuWidget> {
                               [
                                 charts.Series<StockFinancialIndex, int>(
                                   id: 'ROA',
-                                  domainFn:
-                                      (StockFinancialIndex sales, _) =>
-                                  sales.rEPORTDATE.year,
-                                  measureFn:
-                                      (StockFinancialIndex sales, _) =>
-                                  sales.rOA,
-                                  radiusPxFn:
-                                      (StockFinancialIndex sales, _) =>
-                                  8,
+                                  domainFn: (StockFinancialIndex sales, _) =>
+                                      sales.rEPORTDATE.year,
+                                  measureFn: (StockFinancialIndex sales, _) =>
+                                      sales.rOA,
+                                  radiusPxFn: (StockFinancialIndex sales, _) =>
+                                      8,
                                   data: listData,
-                                  fillColorFn: (StockFinancialIndex
-                                  sales,
-                                      _) =>
+                                  fillColorFn: (StockFinancialIndex sales, _) =>
                                       charts.ColorUtil.fromDartColor(
                                           AppColors.primary_01),
-                                  colorFn: (StockFinancialIndex sales,
-                                      _) =>
+                                  colorFn: (StockFinancialIndex sales, _) =>
                                       charts.ColorUtil.fromDartColor(
                                           AppColors.primary_01),
                                 ),
                                 charts.Series<StockFinancialIndex, int>(
                                   id: 'ROE',
-                                  domainFn:
-                                      (StockFinancialIndex sales, _) =>
-                                  sales.rEPORTDATE.year,
-                                  measureFn:
-                                      (StockFinancialIndex sales, _) =>
-                                  sales.rOE,
-                                  radiusPxFn:
-                                      (StockFinancialIndex sales, _) =>
-                                  8,
+                                  domainFn: (StockFinancialIndex sales, _) =>
+                                      sales.rEPORTDATE.year,
+                                  measureFn: (StockFinancialIndex sales, _) =>
+                                      sales.rOE,
+                                  radiusPxFn: (StockFinancialIndex sales, _) =>
+                                      8,
                                   data: listData,
-                                  fillColorFn: (StockFinancialIndex
-                                  sales,
-                                      _) =>
+                                  fillColorFn: (StockFinancialIndex sales, _) =>
                                       charts.ColorUtil.fromDartColor(
                                           AppColors.neutral_04),
-                                  colorFn: (StockFinancialIndex sales,
-                                      _) =>
+                                  colorFn: (StockFinancialIndex sales, _) =>
                                       charts.ColorUtil.fromDartColor(
                                           AppColors.neutral_04),
                                 )
                               ],
-                              primaryMeasureAxis:
-                              charts.NumericAxisSpec(
+                              primaryMeasureAxis: charts.NumericAxisSpec(
                                 showAxisLine: false,
-                                renderSpec:
-                                const charts.NoneRenderSpec(),
-                                tickFormatterSpec: charts
-                                    .BasicNumericTickFormatterSpec(
-                                      (measure) => "",
+                                renderSpec: const charts.NoneRenderSpec(),
+                                tickFormatterSpec:
+                                    charts.BasicNumericTickFormatterSpec(
+                                  (measure) => "",
                                 ),
                               ),
                               domainAxis: charts.NumericAxisSpec(
-                                  viewport:
-                                  charts.NumericExtents(min, max),
-                                  renderSpec:
-                                  const charts.GridlineRendererSpec(
+                                  viewport: charts.NumericExtents(min, max),
+                                  renderSpec: const charts.GridlineRendererSpec(
                                       labelStyle:
-                                      charts.TextStyleSpec(
-                                          fontSize: 9)),
+                                          charts.TextStyleSpec(fontSize: 9)),
                                   showAxisLine: false),
                             ),
                           ),
                           Padding(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 6),
+                            padding: const EdgeInsets.symmetric(horizontal: 6),
                             child: Row(
-                              mainAxisAlignment:
-                              MainAxisAlignment.spaceBetween,
-                              children: List<Widget>.generate(
-                                  listData
-                                      .length, (index) {
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: List<Widget>.generate(listData.length,
+                                  (index) {
                                 var indexData = listData[index];
                                 return Column(
-                                  crossAxisAlignment:
-                                  CrossAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
                                     Container(
-                                      padding:
-                                      const EdgeInsets.symmetric(
-                                          horizontal: 4,
-                                          vertical: 2),
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 4, vertical: 2),
                                       decoration: const BoxDecoration(
                                         borderRadius: BorderRadius.all(
                                             Radius.circular(4)),
                                         color: AppColors.primary_02,
                                       ),
                                       child: Text(
-                                        indexData.rEPORTDATE.year
-                                            .toString(),
+                                        indexData.rEPORTDATE.year.toString(),
                                         style: Theme.of(context)
                                             .textTheme
                                             .bodySmall
                                             ?.copyWith(
-                                            fontSize: 12,
-                                            fontWeight:
-                                            FontWeight.w600,
-                                            color:
-                                            AppColors.light_bg),
+                                                fontSize: 12,
+                                                fontWeight: FontWeight.w600,
+                                                color: AppColors.light_bg),
                                       ),
                                     ),
                                     const SizedBox(height: 4),
@@ -341,9 +317,8 @@ class _DoanhThuWidgetState extends State<DoanhThuWidget> {
                                           .textTheme
                                           .bodySmall
                                           ?.copyWith(
-                                          color:
-                                          AppColors.neutral_04,
-                                          fontSize: 12),
+                                              color: AppColors.neutral_04,
+                                              fontSize: 12),
                                     ),
                                     const SizedBox(height: 4),
                                     Text(
@@ -352,9 +327,8 @@ class _DoanhThuWidgetState extends State<DoanhThuWidget> {
                                           .textTheme
                                           .bodySmall
                                           ?.copyWith(
-                                          color:
-                                          AppColors.primary_01,
-                                          fontSize: 12),
+                                              color: AppColors.primary_01,
+                                              fontSize: 12),
                                     )
                                   ],
                                 );
@@ -376,8 +350,7 @@ class _DoanhThuWidgetState extends State<DoanhThuWidget> {
                       width: 10,
                       height: 10,
                       decoration: const BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: AppColors.neutral_04),
+                          shape: BoxShape.circle, color: AppColors.neutral_04),
                     ),
                     const SizedBox(width: 10),
                     const Text('ROE'),
@@ -390,8 +363,7 @@ class _DoanhThuWidgetState extends State<DoanhThuWidget> {
                       width: 10,
                       height: 10,
                       decoration: const BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: AppColors.primary_01),
+                          shape: BoxShape.circle, color: AppColors.primary_01),
                     ),
                     const SizedBox(width: 10),
                     const Text("ROA"),
@@ -406,4 +378,3 @@ class _DoanhThuWidgetState extends State<DoanhThuWidget> {
     );
   }
 }
-

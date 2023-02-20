@@ -84,6 +84,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Available balanc"),
         "available_vol": MessageLookupByLibrary.simpleMessage("Available vol"),
         "average": MessageLookupByLibrary.simpleMessage("Average"),
+        "avg_price": MessageLookupByLibrary.simpleMessage("Avg price"),
         "bank": MessageLookupByLibrary.simpleMessage("Bank"),
         "base": MessageLookupByLibrary.simpleMessage("Base"),
         "base_asset": MessageLookupByLibrary.simpleMessage("Base asset"),
@@ -93,6 +94,11 @@ class MessageLookup extends MessageLookupByLibrary {
         "billion_short": MessageLookupByLibrary.simpleMessage("B"),
         "birthday": MessageLookupByLibrary.simpleMessage("Birthday"),
         "bond": MessageLookupByLibrary.simpleMessage("Bond"),
+        "bonus_sh": MessageLookupByLibrary.simpleMessage("bonus share"),
+        "bought_returning":
+            MessageLookupByLibrary.simpleMessage("Bought returning"),
+        "bought_returning_vol":
+            MessageLookupByLibrary.simpleMessage("Bought returning vol"),
         "business_information":
             MessageLookupByLibrary.simpleMessage("Business information"),
         "buy": MessageLookupByLibrary.simpleMessage("Buy"),
@@ -130,6 +136,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Create catalog"),
         "create_new_order":
             MessageLookupByLibrary.simpleMessage("Create new order"),
+        "create_order_failed":
+            MessageLookupByLibrary.simpleMessage("Create order failed"),
         "create_order_successfully":
             MessageLookupByLibrary.simpleMessage("Create order successfully"),
         "date_translations": MessageLookupByLibrary.simpleMessage("Date"),
@@ -143,6 +151,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "derivative": MessageLookupByLibrary.simpleMessage("Derivative"),
         "derivative_asset":
             MessageLookupByLibrary.simpleMessage("Derivative asset"),
+        "detail": MessageLookupByLibrary.simpleMessage("Detail"),
         "dividend": MessageLookupByLibrary.simpleMessage("Dividend"),
         "double_back_to_close_app":
             MessageLookupByLibrary.simpleMessage("Back again to exit"),
@@ -151,6 +160,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "email": MessageLookupByLibrary.simpleMessage("Email"),
         "empty_catalog":
             MessageLookupByLibrary.simpleMessage("Catalog is empty"),
+        "end": MessageLookupByLibrary.simpleMessage("End"),
         "event": MessageLookupByLibrary.simpleMessage("Event"),
         "exchange_total":
             MessageLookupByLibrary.simpleMessage("Exchange total"),
@@ -170,6 +180,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Following catalog"),
         "following_catalog_with": m2,
         "foreign": MessageLookupByLibrary.simpleMessage("Foreign"),
+        "from_day": MessageLookupByLibrary.simpleMessage("From date"),
         "froom": MessageLookupByLibrary.simpleMessage("Room FR"),
         "fs_vol": MessageLookupByLibrary.simpleMessage("FS vol"),
         "fsell": MessageLookupByLibrary.simpleMessage("FR sell"),
@@ -242,6 +253,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "matched_vol": MessageLookupByLibrary.simpleMessage("Matched vol"),
         "matching": MessageLookupByLibrary.simpleMessage("Matching"),
         "million_short": MessageLookupByLibrary.simpleMessage("M"),
+        "minimum_ee":
+            MessageLookupByLibrary.simpleMessage("Minimum purchasing power"),
         "minutes": MessageLookupByLibrary.simpleMessage(" minutes"),
         "minutes_ago": m6,
         "mk_value": MessageLookupByLibrary.simpleMessage("MK value"),
@@ -275,6 +288,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "other_vol": MessageLookupByLibrary.simpleMessage("Other vol"),
         "otp_code_sent_to_phone_number": m7,
         "overview": MessageLookupByLibrary.simpleMessage("Overview"),
+        "owned": MessageLookupByLibrary.simpleMessage("Owned"),
         "pass_not_match":
             MessageLookupByLibrary.simpleMessage("Password not match"),
         "password": MessageLookupByLibrary.simpleMessage("Password"),
@@ -320,6 +334,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Setting and secutiry"),
         "sex": MessageLookupByLibrary.simpleMessage("Sex"),
         "sign_up": MessageLookupByLibrary.simpleMessage("Sign up"),
+        "sold_returning":
+            MessageLookupByLibrary.simpleMessage("Sold returning"),
         "sold_returning_money":
             MessageLookupByLibrary.simpleMessage("Sold returning money"),
         "sold_returning_vol":
@@ -352,6 +368,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "time": MessageLookupByLibrary.simpleMessage("Time"),
         "timeout":
             MessageLookupByLibrary.simpleMessage("No response from server"),
+        "to_day": MessageLookupByLibrary.simpleMessage("To date"),
         "top_foreign": MessageLookupByLibrary.simpleMessage("Top foreign"),
         "top_influence": MessageLookupByLibrary.simpleMessage("Top influence"),
         "top_search": MessageLookupByLibrary.simpleMessage("Top search"),
@@ -370,6 +387,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage(
                 "Try searching again with another keyword!"),
         "unknown_error": MessageLookupByLibrary.simpleMessage("Unknown error"),
+        "unknown_exception":
+            MessageLookupByLibrary.simpleMessage("Unknown exception"),
         "username": MessageLookupByLibrary.simpleMessage("Username"),
         "vietnam": MessageLookupByLibrary.simpleMessage("Vietnam"),
         "virtual_assistant":

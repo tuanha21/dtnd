@@ -29,5 +29,7 @@ abstract class IUserService {
 
   Future<List<String>> getSearchHistory();
 
+  Future<void> refreshAssets();
+
   void putSearchHistory(String searchString);
 }

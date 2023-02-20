@@ -88,7 +88,10 @@
     "fs_vol": "KL FS",
     "available_vol": "KL khả dụng",
     "other_vol": "KL khác",
-    "sold_returning_vol": "KL mua chờ về",
+    "sold_returning": "Bán chờ về",
+    "sold_returning_vol": "KL bán chờ về",
+    "bought_returning": "Mua chờ về",
+    "bought_returning_vol": "KL mua chờ về",
     "extension": "Mở rộng",
     "all": "Tất cả",
     "base_note": "Sổ lệnh cơ sở",
@@ -101,6 +104,13 @@
     "order_price": "Giá đặt",
     "match_price": "Giá khớp",
     "match_vol": "KL khớp",
+    "minimum_ee": "Sức mua tối thiểu",
+    "detail": "Chi tiết",
+    "from_day": "Từ ngày",
+    "to_day": "Tới ngày",
+    "owned": "Sở hữu",
+    "avg_price": "Giá TB",
+    "bonus_sh": "CP thưởng",
 
     "waiting_match": "Chờ khớp",
     "matched": "Đã khớp",
@@ -190,6 +200,7 @@
 
     "create_new_order": "Đặt lệnh mới",
     "create_order_successfully": "Đặt lệnh thành công",
+    "create_order_failed": "Đặt lệnh không thành công",
     "order_will_appear_in_ur_order_note": "Lệnh đặt sẽ xuất hiện trong sổ lệnh của bạn",
     "volatility_warning": "Cảnh báo biến động",
     "volatility_notice": "Thông báo biến động",
@@ -307,6 +318,9 @@
     "world": "Thế giới",
 
     "copytrade": "Copytrade",
+    "transaction": "Giao dịch",
 
-    "transaction": "Giao dịch"
+    "unknown_exception": "Lỗi không xác định",
+
+    "end": "Kết thúc"
 }

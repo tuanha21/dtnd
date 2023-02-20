@@ -47,14 +47,16 @@ class _MarketScreenState extends State<MarketScreen>
                   ))
                       .then((value) async {
                     if (value is Stock) {
-                      dataCenterService
-                          .getStockModelsFromStockCodes([value.stockCode]).then(
-                              (stockModels) =>
-                                  Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (context) => StockDetailScreen(
-                                      stockModel: stockModels.first,
-                                    ),
-                                  )));
+                      dataCenterService.getStockModelsFromStockCodes(
+                          [value.stockCode]).then((stockModels) {
+                        if (stockModels != null) {
+                          return Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => StockDetailScreen(
+                              stockModel: stockModels.first,
+                            ),
+                          ));
+                        }
+                      });
                     }
                   });
                 },

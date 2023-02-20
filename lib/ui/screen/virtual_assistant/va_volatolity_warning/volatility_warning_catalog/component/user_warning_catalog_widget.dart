@@ -169,10 +169,10 @@ class _UserWarningCatalogWidgetState extends State<UserWarningCatalogWidget> {
               );
             },
             onSuggestionSelected: (suggestion) async {
-              final StockModel model = (await dataCenterService
+              final model = (await dataCenterService
                       .getStockModelsFromStockCodes([suggestion.stockCode]))
-                  .first;
-              final String stock = model.stock.stockCode;
+                  ?.first;
+              final String stock = model?.stock.stockCode ?? "";
               currentCatalog!.listStock.add(stock);
               setState(() {});
             },

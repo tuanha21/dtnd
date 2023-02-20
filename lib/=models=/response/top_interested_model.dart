@@ -1,13 +1,13 @@
 class TopInterested {
   late final String sTOCKCODE;
-  int? kLGD;
-  int? gTGD;
+  num? kLGD;
+  num? gTGD;
   String? sTOCKNAME;
-  double? cHANGE;
-  double? pERCENTCHANGE;
+  num? cHANGE;
+  num? pERCENTCHANGE;
   String? cOLOR;
   List<num>? cHART;
-  double? pRICE;
+  num? pRICE;
 
   TopInterested(
       {required this.sTOCKCODE,

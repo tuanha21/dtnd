@@ -1,3 +1,4 @@
+import 'package:dtnd/=models=/response/account/asset_chart_element.dart';
 import 'package:dtnd/=models=/response/account/i_account.dart';
 import 'package:dtnd/=models=/response/account/portfolio_status_model.dart';
 
@@ -46,6 +47,9 @@ class BaseNormalAccountModel implements IAccountModel {
   @override
   PortfolioStatus? portfolioStatus;
 
+  @override
+  List<AssetChartElementModel>? listAssetChart;
+
   BaseNormalAccountModel(
       {this.cashBalance,
       this.debt,
@@ -87,7 +91,7 @@ class BaseNormalAccountModel implements IAccountModel {
   }
 
   @override
-  void updateData(IAccountResponse data) {
+  void updateDataFromJson(IAccountResponse data) {
     cashBalance = parse(data.json['cash_balance']);
     debt = parse(data.json['debt']);
     cashAvai = parse(data.json['cash_avai']);
@@ -123,11 +127,4 @@ class BaseNormalAccountModel implements IAccountModel {
   num? parse(String string) {
     return num.tryParse(string);
   }
-}
-
-class BaseNormalAccountResponse implements IAccountResponse {
-  @override
-  late final Map<String, dynamic> json;
-
-  BaseNormalAccountResponse.fromJson(this.json);
 }

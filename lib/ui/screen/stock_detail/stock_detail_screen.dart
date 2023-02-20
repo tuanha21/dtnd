@@ -3,36 +3,24 @@
 import 'dart:async';
 
 import 'package:dtnd/=models=/response/stock_model.dart';
-import 'package:dtnd/config/service/app_services.dart';
 import 'package:dtnd/data/i_data_center_service.dart';
 import 'package:dtnd/data/i_user_service.dart';
 import 'package:dtnd/data/implementations/data_center_service.dart';
 import 'package:dtnd/data/implementations/user_service.dart';
-import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/screen/exchange_stock/stock_order/sheet/stock_order_sheet.dart';
 import 'package:dtnd/ui/screen/login/login_screen.dart';
 import 'package:dtnd/ui/screen/stock_detail/enum/detail_tab_enum.dart';
-import 'package:dtnd/ui/screen/stock_detail/sheet/business_infomation_sheet.dart';
 import 'package:dtnd/ui/screen/stock_detail/tab/finance_index_tab.dart';
 import 'package:dtnd/ui/screen/stock_detail/tab/overview_tab.dart';
-import 'package:dtnd/ui/screen/stock_detail/widget/component/price_alert.dart';
 import 'package:dtnd/ui/screen/stock_detail/widget/component/stock_detail_appbar.dart';
-import 'package:dtnd/ui/screen/stock_detail/widget/financial_index.dart';
-import 'package:dtnd/ui/screen/stock_detail/widget/stock_detail_chart.dart';
-import 'package:dtnd/ui/screen/stock_detail/widget/stock_detail_news.dart';
 import 'package:dtnd/ui/screen/stock_detail/widget/stock_detail_overview.dart';
-import 'package:dtnd/ui/screen/stock_detail/widget/tab_matched_detail.dart';
-import 'package:dtnd/ui/screen/stock_detail/widget/tab_trading_board.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:dtnd/ui/widget/overlay/login_first_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:sliding_up_panel2/sliding_up_panel2.dart';
 
-import '../exchange_stock/stock_order/business/stock_order_cmd.dart';
-import '../home/widget/home_section.dart';
-import 'tab/general_info_tab.dart';
+import '../exchange_stock/stock_order/business/stock_order_flow.dart';
 import 'tab/technical_analysis.dart';
 import 'tab/transaction_tab.dart';
 

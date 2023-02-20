@@ -36,7 +36,7 @@ abstract class IDataCenterService {
 
   Future<void> startSocket();
 
-  Future<List<StockModel>> getStockModelsFromStockCodes(
+  Future<List<StockModel>?> getStockModelsFromStockCodes(
       List<String> stockCodes);
 
   List<Stock> getStockFromStockCodes(List<String> stockCodes);
@@ -132,5 +132,4 @@ abstract class IDataCenterService {
   Future<CompanyIntroductionResponse> getCompanyIntroduction(String stockCode);
 
   Future<List<StockMatch>> getListStockMatch(String stockCode);
-
 }

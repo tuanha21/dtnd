@@ -8,11 +8,13 @@ class SingleColorTextButton extends StatelessWidget {
     required this.color,
     this.textStyle,
     this.onTap,
+    this.padding,
   });
   final String text;
   final Color color;
   final TextStyle? textStyle;
   final VoidCallback? onTap;
+  final EdgeInsetsGeometry? padding;
   @override
   Widget build(BuildContext context) {
     return Material(
@@ -20,7 +22,7 @@ class SingleColorTextButton extends StatelessWidget {
           onTap: onTap,
           borderRadius: const BorderRadius.all(Radius.circular(8)),
           child: Ink(
-            padding: const EdgeInsets.symmetric(vertical: 12),
+            padding: padding ?? const EdgeInsets.symmetric(vertical: 12),
             decoration: BoxDecoration(
               color: color,
               borderRadius: const BorderRadius.all(Radius.circular(8)),

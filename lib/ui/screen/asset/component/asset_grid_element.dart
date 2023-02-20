@@ -8,9 +8,13 @@ class AssetGridElement extends StatelessWidget {
     super.key,
     required this.element,
     this.subElements,
+    this.subPadding,
+    this.contentPadding,
   });
   final Map<String, String?> element;
   final Map<String, String>? subElements;
+  final EdgeInsetsGeometry? subPadding;
+  final EdgeInsetsGeometry? contentPadding;
   @override
   Widget build(BuildContext context) {
     final textTheme = AppTextStyle.labelSmall_10;
@@ -20,18 +24,21 @@ class AssetGridElement extends StatelessWidget {
     if (hasSubElements) {
       child = [];
       for (var i = 0; i < subElements!.keys.length; i++) {
-        child.add(Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              subElements!.keys.toList().elementAt(i),
-              style: labelTheme,
-            ),
-            Text(
-              subElements!.values.toList().elementAt(i),
-              style: textTheme,
-            ),
-          ],
+        child.add(Padding(
+          padding: subPadding ?? const EdgeInsets.all(0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                subElements!.keys.toList().elementAt(i),
+                style: labelTheme,
+              ),
+              Text(
+                subElements!.values.toList().elementAt(i),
+                style: textTheme,
+              ),
+            ],
+          ),
         ));
       }
     } else {
@@ -44,14 +51,14 @@ class AssetGridElement extends StatelessWidget {
     }
 
     return Container(
-      padding: const EdgeInsets.all(4),
+      padding: contentPadding ?? const EdgeInsets.all(4),
+      constraints: const BoxConstraints.expand(),
       decoration: const BoxDecoration(
         borderRadius: BorderRadius.all(Radius.circular(4)),
         color: Colors.white,
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        mainAxisSize: MainAxisSize.max,
         children: [
           Text(
             element.keys.toList().first,

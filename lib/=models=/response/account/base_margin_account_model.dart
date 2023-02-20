@@ -1,7 +1,7 @@
-import 'package:dtnd/=models=/core_response_model.dart';
 import 'package:dtnd/=models=/response/account/i_account.dart';
-import 'package:dtnd/utilities/logger.dart';
+import 'package:dtnd/=models=/response/account/unexecuted_right_model.dart';
 
+import 'asset_chart_element.dart';
 import 'portfolio_status_model.dart';
 
 class BaseMarginAccountModel implements IAccountModel {
@@ -83,6 +83,11 @@ class BaseMarginAccountModel implements IAccountModel {
   @override
   PortfolioStatus? portfolioStatus;
 
+  @override
+  List<AssetChartElementModel>? listAssetChart;
+
+  List<UnexecutedRightModel>? listUnexecutedRight;
+
   BaseMarginAccountModel(
       {this.assets,
       this.imKH,
@@ -159,8 +164,7 @@ class BaseMarginAccountModel implements IAccountModel {
   }
 
   @override
-  void updateData(IAccountResponse data) {
-    logger.v(data.json);
+  void updateDataFromJson(IAccountResponse data) {
     assets = parse(data.json['assets']);
     imKH = parse(data.json['imKH']);
     h = parse(data.json['h']);
@@ -226,17 +230,6 @@ class BaseMarginAccountModel implements IAccountModel {
     totalMarket = parse(data.json['total_market']);
     totalCost = parse(data.json['total_cost']);
   }
-
-  num? parse(String string) {
-    return num.tryParse(string);
-  }
-}
-
-class BaseMarginAccountResponse implements IAccountResponse {
-  @override
-  late final Map<String, dynamic> json;
-
-  BaseMarginAccountResponse.fromJson(this.json);
 
   num? parse(String string) {
     return num.tryParse(string);

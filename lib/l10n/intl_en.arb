@@ -89,7 +89,10 @@
     "fs_vol": "FS vol",
     "available_vol": "Available vol",
     "other_vol": "Other vol",
+    "sold_returning": "Sold returning",
     "sold_returning_vol": "Sold returning vol",
+    "bought_returning": "Bought returning",
+    "bought_returning_vol": "Bought returning vol",
     "extension": "Extension",
     "all": "All",
     "base_note": "Base note",
@@ -102,6 +105,13 @@
     "order_price": "Order price",
     "match_price": "Matched price",
     "match_vol": "Match vol",
+    "minimum_ee": "Minimum purchasing power",
+    "detail": "Detail",
+    "from_day": "From date",
+    "to_day": "To date",
+    "owned": "Owned",
+    "avg_price": "Avg price",
+    "bonus_sh": "bonus share",
 
     "waiting_match": "Waiting match",
     "matched": "Matched",
@@ -191,6 +201,7 @@
 
     "create_new_order": "Create new order",
     "create_order_successfully": "Create order successfully",
+    "create_order_failed": "Create order failed",
     "order_will_appear_in_ur_order_note": "Order will appear in your order note",
     "volatility_warning": "Volatility warning",
     "volatility_notice": "Volatility notice",
@@ -308,7 +319,10 @@
     "world": "World",
 
     "copytrade": "Copytrade",
+    "transaction": "Transaction",
 
-    "transaction": "Transaction"
+    "unknown_exception": "Unknown exception",
+
+    "end": "End"
 
 }

@@ -30,7 +30,7 @@ class _SearchScreenState extends State<SearchScreen>
   final IUserService userService = UserService();
   final TextEditingController controller = TextEditingController();
   late final TabController _tabController;
-  List<StockModel> listSearchHistory = [];
+  List<StockModel>? listSearchHistory = [];
   List<Stock> listSearch = [];
   List<Stock> listTopSearch = [];
   List<Stock> listVN30 = [];
@@ -55,7 +55,7 @@ class _SearchScreenState extends State<SearchScreen>
         await dataCenterService.getStockModelsFromStockCodes(list);
     setState(() {
       listSearchHistory = searchHistory;
-      if (searchHistory.isNotEmpty) {
+      if (searchHistory?.isNotEmpty ?? false) {
         hasHistory = true;
       } else {
         hasHistory = false;
@@ -128,9 +128,9 @@ class _SearchScreenState extends State<SearchScreen>
                 child: ListView.separated(
                   scrollDirection: Axis.horizontal,
                   shrinkWrap: true,
-                  itemCount: listSearchHistory.length,
+                  itemCount: listSearchHistory?.length ?? 0,
                   itemBuilder: (context, index) {
-                    final element = listSearchHistory.elementAt(index);
+                    final element = listSearchHistory!.elementAt(index);
                     return GestureDetector(
                       onTap: () => Navigator.of(context).pop(element.stock),
                       child: Container(

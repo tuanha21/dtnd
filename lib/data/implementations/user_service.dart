@@ -1,7 +1,10 @@
 import 'package:dtnd/=models=/request/request_model.dart';
+import 'package:dtnd/=models=/response/account/asset_chart_element.dart';
+import 'package:dtnd/=models=/response/account/base_margin_account_model.dart';
 import 'package:dtnd/=models=/response/account/i_account.dart';
 import 'package:dtnd/=models=/response/account/list_account_model.dart';
 import 'package:dtnd/=models=/response/account/portfolio_status_model.dart';
+import 'package:dtnd/=models=/response/account/unexecuted_right_model.dart';
 import 'package:dtnd/=models=/response/account_info_model.dart';
 import 'package:dtnd/=models=/response/total_asset_model.dart';
 import 'package:dtnd/=models=/response/user_token.dart';
@@ -11,6 +14,7 @@ import 'package:dtnd/data/i_user_service.dart';
 import 'package:dtnd/data/implementations/local_storage_service.dart';
 import 'package:dtnd/data/implementations/network_service.dart';
 import 'package:dtnd/utilities/logger.dart';
+import 'package:dtnd/utilities/time_utils.dart';
 import 'package:get/get.dart';
 
 class UserService implements IUserService {
@@ -73,6 +77,11 @@ class UserService implements IUserService {
   }
 
   @override
+  Future<void> refreshAssets() {
+    return getListAccount();
+  }
+
+  @override
   bool get isLogin => userToken != null;
 
   @override
@@ -100,7 +109,7 @@ class UserService implements IUserService {
         dynamic response = await networkService
             .requestTraditionalApi<IAccountResponse>(requestModel);
 
-        listAccount.elementAt(i).updateData(response!);
+        listAccount.elementAt(i).updateDataFromJson(response!);
         requestModel = RequestModel(this,
             group: "Q",
             data: RequestDataModel.stringType(
@@ -113,10 +122,51 @@ class UserService implements IUserService {
           listAccount.elementAt(i).portfolioStatus =
               PortfolioStatus.fromPorfolioStock(response!);
         }
+        response = await getListAssetChart(listAccount.elementAt(i).accCode);
+        if (response != null) {
+          listAccount.elementAt(i).listAssetChart = response;
+        }
+
+        response =
+            await getListUnexecutedRight(listAccount.elementAt(i).accCode);
+        if (listAccount.elementAt(i) is BaseMarginAccountModel &&
+            response != null) {
+          (listAccount.elementAt(i) as BaseMarginAccountModel)
+              .listUnexecutedRight = response;
+        }
       }
     }
     listAccountModel.refresh();
     return listAccountModel.value;
+  }
+
+  Future<List<AssetChartElementModel>?> getListAssetChart(String account,
+      {DateTime? fromTime, DateTime? toTime}) {
+    final requestModel = RequestModel(
+      this,
+      group: "B",
+      data: RequestDataModel.cursorType(
+          cmd: "ListAssetChart",
+          p1: account,
+          p2: TimeUtilities.commonTimeFormat.format(fromTime ??
+              TimeUtilities.getPreviousDateTime(TimeUtilities.month(3))),
+          p3: TimeUtilities.commonTimeFormat.format(toTime ?? DateTime.now())),
+    );
+    return networkService
+        .requestTraditionalApiResList<AssetChartElementModel>(requestModel);
+  }
+
+  Future<List<UnexecutedRightModel>?> getListUnexecutedRight(String account) {
+    final requestModel = RequestModel(
+      this,
+      group: "B",
+      data: RequestDataModel.cursorType(
+        cmd: "ListRightUnExec",
+        p1: account,
+      ),
+    );
+    return networkService
+        .requestTraditionalApiResList<UnexecutedRightModel>(requestModel);
   }
 
   Future<UserInfo?> getUserInfo() async {

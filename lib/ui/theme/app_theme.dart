@@ -16,7 +16,7 @@ final TextTheme lightTextTheme = TextTheme(
   headlineSmall: AppTextStyle.headlineSmall_24.copyWith(color: _lightTextColor),
   titleLarge: AppTextStyle.titleLarge_22.copyWith(color: _lightTextColor),
   titleMedium: AppTextStyle.titleMedium_16.copyWith(color: _lightTextColor),
-  titleSmall: AppTextStyle.titleSmall_14.copyWith(color: AppColors.neutral_02),
+  titleSmall: AppTextStyle.titleSmall_14.copyWith(color: _lightTextColor),
   bodyLarge: AppTextStyle.bodyLarge_16.copyWith(color: _lightTextColor),
   bodyMedium: AppTextStyle.bodyMedium_14.copyWith(color: _lightTextColor),
   bodySmall: AppTextStyle.bodySmall_12.copyWith(color: _lightTextColor),

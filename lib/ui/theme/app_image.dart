@@ -106,6 +106,8 @@ class AppImages {
   static const String setting_2 = "assets/images/setting_2.png";
   static const String call = "assets/images/call.png";
   static const String global = "assets/images/global.png";
+  static const String chart_2 = "assets/images/chart_2.png";
+  static const String chart_3 = "assets/images/chart_3.png";
 
   ///Loading
   static const String loading_light_bg = "assets/images/loading_light_bg.png";
@@ -130,6 +132,12 @@ class AppImages {
   static const String home_icon_clock = "assets/home_icon/clock.png";
   static const String home_icon_sharing = "assets/home_icon/sharing.png";
   static const String home_icon_like = "assets/home_icon/like.png";
+
+  /// Asset Icon
+  static const String arrow_drop_down_rounded =
+      "assets/images/arrow_drop_down_rounded.png";
+  static const String asset_menu_icon = "assets/images/asset_menu_icon.png";
+  static const String asset_calendar_icon = "assets/images/calendar.png";
 
   /// BG
   static const String home_asset_card_light_bg =

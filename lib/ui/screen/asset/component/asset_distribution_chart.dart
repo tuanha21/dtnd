@@ -1,10 +1,18 @@
 import 'package:dtnd/ui/theme/app_color.dart';
+import 'package:dtnd/utilities/num_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
-class AssetDistributionChart extends StatelessWidget {
-  const AssetDistributionChart({super.key});
+class AssetDistributionChart extends StatefulWidget {
+  const AssetDistributionChart({super.key, this.datas, this.total});
+  final List<ChartData>? datas;
+  final num? total;
 
+  @override
+  State<AssetDistributionChart> createState() => _AssetDistributionChartState();
+}
+
+class _AssetDistributionChartState extends State<AssetDistributionChart> {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
@@ -14,15 +22,16 @@ class AssetDistributionChart extends StatelessWidget {
           const BoxDecoration(shape: BoxShape.circle, color: Colors.white),
       child: AspectRatio(
         aspectRatio: 1.3,
-        child: SfCircularChart(palette: const [
-          AppColors.graph_1,
-          AppColors.graph_2,
-          AppColors.graph_3,
-          AppColors.graph_4,
-          AppColors.graph_5,
-          AppColors.graph_6,
-          AppColors.graph_7,
-        ],
+        child: SfCircularChart(
+            palette: const [
+              AppColors.graph_1,
+              AppColors.graph_2,
+              AppColors.graph_3,
+              AppColors.graph_4,
+              AppColors.graph_5,
+              AppColors.graph_6,
+              AppColors.graph_7,
+            ],
             // tooltipBehavior: TooltipBehavior(
             //     enable: true,
             //     color: AppColors.neutral_04,
@@ -64,45 +73,41 @@ class AssetDistributionChart extends StatelessWidget {
                   color: Colors.white,
                   child: Center(
                       child: Text(
-                    "200Tr",
+                    NumUtils.getMoneyWithPostfix(widget.total, context),
                     style: textTheme.bodyMedium!.copyWith(
                         color: AppColors.color_secondary,
                         fontWeight: FontWeight.w700),
                   )),
                 ),
               ),
-            ], series: <DoughnutSeries<_ChartData, String>>[
-          DoughnutSeries<_ChartData, String>(
-            dataSource: [
-              _ChartData("Tiền", 70.28),
-              _ChartData("Cổ phiếu", 17.38),
-              _ChartData("Phái sinh", 17.38),
-              _ChartData("Trái phiếu", 6.63),
             ],
-            innerRadius: "75%%",
-            radius: "100%",
-            xValueMapper: (_ChartData data, _) => data.label,
-            yValueMapper: (_ChartData data, _) => data.percent,
-            dataLabelMapper: (_ChartData data, _) =>
-                "${data.label}\n${data.percent}%",
-            dataLabelSettings: const DataLabelSettings(
-              isVisible: true,
-              // Positioning the data label
-              margin: EdgeInsets.all(0),
-              labelPosition: ChartDataLabelPosition.outside,
-            ),
-          )
-        ]),
+            series: <DoughnutSeries<ChartData, String>>[
+              DoughnutSeries<ChartData, String>(
+                dataSource: widget.datas,
+                innerRadius: "75%%",
+                radius: "100%",
+                xValueMapper: (ChartData data, _) => data.label,
+                yValueMapper: (ChartData data, _) => data.percent,
+                dataLabelMapper: (ChartData data, _) =>
+                    "${data.label}\n${data.percent.toStringAsFixed(2)}%",
+                dataLabelSettings: const DataLabelSettings(
+                  isVisible: true,
+                  // Positioning the data label
+                  margin: EdgeInsets.all(0),
+                  labelPosition: ChartDataLabelPosition.outside,
+                ),
+              )
+            ]),
       ),
     );
   }
 }
 
-class _ChartData {
+class ChartData {
   final String label;
   final double percent;
 
-  _ChartData(
+  ChartData(
     this.label,
     this.percent,
   );

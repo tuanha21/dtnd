@@ -233,7 +233,7 @@ class _HomeMarketTodayState extends State<HomeMarketToday>
                                       format: 'MM',
                                       transitionFormat: 'MM-dd-yyyy'),
                                   year: charts.TimeFormatterSpec(
-                                      format: 'yyy',
+                                      format: 'yyyy',
                                       transitionFormat: 'MM-dd-yyyy')),
                           showAxisLine: false,
                         ),

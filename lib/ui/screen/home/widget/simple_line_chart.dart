@@ -12,13 +12,13 @@ extension DataTypeX on DataType {}
 class SimpleLineChart extends StatefulWidget {
   const SimpleLineChart({
     super.key,
-    required this.data,
-    required this.getData,
+    this.data,
+    this.getData,
   });
 
-  final StockModel data;
+  final StockModel? data;
   // final Future future;
-  final Future<StockTradingHistory?> Function() getData;
+  final Future<StockTradingHistory?> Function()? getData;
   @override
   State<SimpleLineChart> createState() => _SimpleLineChartState();
 }
@@ -39,7 +39,7 @@ class _SimpleLineChartState extends State<SimpleLineChart> {
 
   Future<void> getChartData() async {
     // print("calling history api");
-    final response = await widget.getData.call();
+    final response = await widget.getData?.call();
     if (response == null || response.o == null) {
       return;
     } else if (response.o!.length == 1) {
@@ -52,7 +52,7 @@ class _SimpleLineChartState extends State<SimpleLineChart> {
     } else {
       setState(() {
         chartData = response;
-        annotation = widget.data.stockData.r.value ?? (response.o!.first);
+        annotation = widget.data?.stockData.r.value ?? (response.o!.first);
         max = math.max<num>(response.o!.reduce(math.max), annotation);
         min = math.min<num>(response.o!.reduce(math.min), annotation);
         length = response.o!.length;
@@ -66,16 +66,16 @@ class _SimpleLineChartState extends State<SimpleLineChart> {
           domainFn: (_, index) => index ?? 0,
           measureFn: (datum, index) => datum,
           data: chartData.o!,
-          seriesColor:
-              charts.ColorUtil.fromDartColor(widget.data.stockData.color),
+          seriesColor: charts.ColorUtil.fromDartColor(
+              widget.data?.stockData.color ?? AppColors.semantic_02),
         ),
       ];
 
   @override
   void didUpdateWidget(covariant SimpleLineChart oldWidget) {
     // print(widget.data.stockData.sstatus.name);
-    if (oldWidget.data.stock.stockCode != widget.data.stock.stockCode ||
-        oldWidget.data.stockData.sstatus != widget.data.stockData.sstatus ||
+    if (oldWidget.data?.stock.stockCode != widget.data?.stock.stockCode ||
+        oldWidget.data?.stockData.sstatus != widget.data?.stockData.sstatus ||
         chartData.lastUpdatedTime == null ||
         DateTime.now().difference(chartData.lastUpdatedTime!).inMinutes > 5) {
       if (mounted) {
@@ -107,7 +107,9 @@ class _SimpleLineChartState extends State<SimpleLineChart> {
             max,
           ),
           tickProviderSpec: const charts.BasicNumericTickProviderSpec(
-              dataIsInWholeNumbers: false, desiredTickCount: 4, zeroBound: false),
+              dataIsInWholeNumbers: false,
+              desiredTickCount: 4,
+              zeroBound: false),
         ),
         domainAxis: charts.NumericAxisSpec(
           showAxisLine: false,

@@ -45,7 +45,7 @@ class _UserCatalogWidgetState extends State<UserCatalogWidget> {
 
   late LocalCatalog currentCatalog;
 
-  late Future<List<StockModel>> listStocks = Future.value([]);
+  late Future<List<StockModel>?> listStocks = Future.value([]);
 
   late String user;
 
@@ -230,7 +230,7 @@ class _UserCatalogWidgetState extends State<UserCatalogWidget> {
           ),
         ),
         const SizedBox(height: 10),
-        FutureBuilder<List<StockModel>>(
+        FutureBuilder<List<StockModel>?>(
             future: listStocks,
             builder: (context, snapshot) {
               if (snapshot.hasData) {
