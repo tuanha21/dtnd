@@ -18,19 +18,19 @@ class StockDetailOverview extends StatelessWidget {
     List<_StockDetailPriceElementData> listPrices = [
       _StockDetailPriceElementData(
         title: S.of(context).floor,
-        value: stockModel.stockData.f.toString() ?? "-",
+        value: stockModel.stockData.f.toString(),
         valueColor: AppColors.semantic_04,
         bgColor: AppColors.accent_light_04,
       ),
       _StockDetailPriceElementData(
         title: S.of(context).ref,
-        value: stockModel.stockData.r.toString() ?? "-",
+        value: stockModel.stockData.r.toString() ,
         valueColor: AppColors.semantic_02,
         bgColor: AppColors.accent_light_02,
       ),
       _StockDetailPriceElementData(
         title: S.of(context).ceil,
-        value: stockModel.stockData.c.toString() ?? "-",
+        value: stockModel.stockData.c.toString(),
         valueColor: AppColors.semantic_05,
         bgColor: AppColors.accent_light_05,
       )
