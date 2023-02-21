@@ -21,7 +21,6 @@ class AddCatalogISheet extends ISheet {
 
   AddCatalogISheet({this.stock});
 
-
   @override
   IOverlay? back([UserCmd? cmd]) {
     return null;
@@ -36,7 +35,7 @@ class AddCatalogISheet extends ISheet {
   IOverlay? next([UserCmd? cmd]) {
     if (cmd is NextCmd) {
       var data = cmd.data as SavedCatalog;
-      return CreateCatalogISheet(data,stock: stock);
+      return CreateCatalogISheet(data, stock: stock);
     }
     return null;
   }
@@ -89,10 +88,10 @@ class _AddCatalogSheetState extends State<AddCatalogSheet> {
       return;
     }
 
-    if (userService.token == null) {
+    if (userService.token.value == null) {
       user = "default";
     } else {
-      user = userService.token!.user;
+      user = userService.token.value!.user;
     }
     savedCatalog = localStorageService.getSavedCatalog(user);
 
@@ -125,11 +124,12 @@ class _AddCatalogSheetState extends State<AddCatalogSheet> {
                           savedCatalog.catalogs[index] = catalog;
                           localStorageService.putSavedCatalog(savedCatalog);
                           Navigator.pop(context);
-                          AppSnackBar.showInfo(context, message: "Thêm mã thành công");
-                        }
-                        else {
+                          AppSnackBar.showInfo(context,
+                              message: "Thêm mã thành công");
+                        } else {
                           Navigator.pop(context);
-                          AppSnackBar.showInfo(context, message: "Mã đã thêm trong danh mục");
+                          AppSnackBar.showInfo(context,
+                              message: "Mã đã thêm trong danh mục");
                         }
                       },
                     );

@@ -1,11 +1,15 @@
 import 'package:dtnd/config/service/app_services.dart';
+import 'package:dtnd/data/i_user_service.dart';
+import 'package:dtnd/data/implementations/user_service.dart';
 import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/screen/home/widget/quick_access_element.dart';
 import 'package:dtnd/ui/screen/virtual_assistant/va_util.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:dtnd/ui/widget/seperator.dart';
+import 'package:dtnd/utilities/num_utils.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 enum QuickAccess {
   money,
@@ -128,6 +132,7 @@ class _AssetRow extends StatefulWidget {
 }
 
 class __AssetRowState extends State<_AssetRow> {
+  final IUserService userService = UserService();
   bool show = false;
   @override
   Widget build(BuildContext context) {
@@ -151,7 +156,18 @@ class __AssetRowState extends State<_AssetRow> {
             const SizedBox(
               width: 16,
             ),
-            Text("**********")
+            show
+                ? Obx(() {
+                    final String data;
+                    if (userService.totalAsset.value?.totalEnquity != null) {
+                      data = NumUtils.formatInteger(
+                          userService.totalAsset.value?.totalEnquity);
+                    } else {
+                      data = "-";
+                    }
+                    return Text("$datađ");
+                  })
+                : Text("**********")
           ],
         ),
         const Icon(

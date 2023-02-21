@@ -140,11 +140,13 @@ class _PortfolioAndRightPanelState extends State<PortfolioAndRightPanel>
                                   ),
                                 const SizedBox(width: 6),
                                 Expanded(
-                                  child: Text(
-                                    "${NumUtils.formatDouble(data?.portfolioStatus?.gainLossValue)}đ (${data?.portfolioStatus?.gainLossPer?.trim()})",
-                                    overflow: TextOverflow.ellipsis,
-                                    style: textTheme.titleSmall!.copyWith(
-                                        color: data?.portfolioStatus?.color),
+                                  child: FittedBox(
+                                    child: Text(
+                                      "${NumUtils.formatDouble(data?.portfolioStatus?.gainLossValue)}đ (${data?.portfolioStatus?.gainLossPer?.trim()})",
+                                      overflow: TextOverflow.ellipsis,
+                                      style: textTheme.titleSmall!.copyWith(
+                                          color: data?.portfolioStatus?.color),
+                                    ),
                                   ),
                                 ),
                               ],

@@ -14,7 +14,7 @@ class VAUtil {
       await showDialog<bool>(
         context: context,
         builder: (context) {
-          return const LoginFirstCatalog();
+          return const LoginFirstDialog();
         },
       ).then((toLogin) => Navigator.of(context)
           .push(MaterialPageRoute(

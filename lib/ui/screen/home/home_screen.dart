@@ -1,5 +1,7 @@
 import 'dart:ui';
 
+import 'package:dtnd/data/i_user_service.dart';
+import 'package:dtnd/data/implementations/user_service.dart';
 import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/screen/home/home_controller.dart';
 import 'package:dtnd/ui/screen/home/widget/asset_card.dart';
@@ -24,6 +26,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  final IUserService userService = UserService();
   final HomeController homeController = HomeController();
 
   // @override
@@ -38,8 +41,8 @@ class _HomeScreenState extends State<HomeScreen> {
       slivers: [
         SliverPersistentHeader(
           pinned: true,
-          delegate: HomeAppbarDelegate(
-              homeController.appService, homeController.dataCenterService),
+          delegate: HomeAppbarDelegate(homeController.appService,
+              homeController.dataCenterService, userService),
         ),
         // SliverAppBar(
         //   pinned: true,
@@ -104,75 +107,6 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
       ],
-    );
-  }
-
-  Widget builder(BuildContext context) {
-    return Scaffold(
-      appBar: MyAppBar(
-        title: "DTND",
-        actions: [
-          SvgPicture.asset(AppImages.search_appbar_icon),
-          const SizedBox(
-            width: 20,
-          ),
-          SvgPicture.asset(AppImages.notification_appbar_icon),
-          const SizedBox(
-            width: 16,
-          ),
-        ],
-      ),
-      body: RefreshIndicator(
-        onRefresh: () async => homeController.init(),
-        child: ScrollConfiguration(
-          behavior: ScrollConfiguration.of(context).copyWith(
-            dragDevices: {
-              PointerDeviceKind.touch,
-              PointerDeviceKind.mouse,
-            },
-          ),
-          child: ListView(
-            // crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              const HomeAssetCard(),
-              const SizedBox(
-                height: 20,
-              ),
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16.0),
-                child: HomeQuickAccess(),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              HomeSection(
-                title: S.of(context).market_today,
-                child: const HomeMarketToday(),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              HomeSection(
-                title: S.of(context).market_overview,
-                onMore: () {},
-                child: const HomeMarketOverview(),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              HomeSection(
-                title: S.of(context).interested_catalog,
-                onMore: () {},
-                child: const HomeInterestedCatalog(),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              Image.asset(AppImages.home_banner),
-            ],
-          ),
-        ),
-      ),
     );
   }
 }

@@ -45,7 +45,6 @@ import '../=models=/response/stock_board.dart';
 import '../=models=/response/stock_his.dart';
 import '../=models=/response/stock_industry.dart';
 import '../=models=/response/stock_vol.dart';
-import '../=models=/response/user_token.dart';
 
 abstract class INetworkService {
   late IO.Socket socket;
@@ -60,8 +59,6 @@ abstract class INetworkService {
   Future<String?> getHomeBanner();
 
   //core api
-  Future<UserEntity?> checkLogin(RequestModel requestModel);
-
   Future<T?> requestTraditionalApi<T extends CoreResponseModel>(
     RequestModel requestModel, {
     T? Function(Map<String, dynamic>)? onError,
@@ -142,7 +139,6 @@ abstract class INetworkService {
   Future<SecurityBasicInfo?> getSecurityBasicInfo(String body);
 
   // user
-  Future<UserInfo?> getUserInfo(RequestModel requestModel);
 
   Future<TotalAsset?> getTotalAsset(RequestModel requestModel);
 

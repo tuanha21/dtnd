@@ -78,7 +78,7 @@ class _StockDetailScreenState extends State<StockDetailScreen> {
       final toLogin = await showDialog<bool>(
         context: context,
         builder: (context) {
-          return const LoginFirstCatalog();
+          return const LoginFirstDialog();
         },
       );
       if (toLogin ?? false) {

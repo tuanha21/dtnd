@@ -1,4 +1,6 @@
-class UserInfo {
+import 'package:dtnd/=models=/core_response_model.dart';
+
+class UserInfo implements CoreResponseModel {
   late final String cCUSTOMERCODE;
   late final String cCUSTFULLNAME;
   late final String cIDISSUEDATE;
@@ -15,7 +17,7 @@ class UserInfo {
   late final String cMARKETINGID;
   late final String cMKTNAME;
   late final String cSIGNIMG;
-  late final String cFACEIMG;
+  late final String? cFACEIMG;
   late final String cFRONTCARD;
   late final double cBONUSINFO;
 
@@ -52,44 +54,44 @@ class UserInfo {
     cAUTHENSIGN = json['C_AUTHEN_SIGN'] ?? "";
     authenType = json['C_AUTHEN_SIGN'] ?? "";
     cCONTACTADDRESS = json['C_CONTACT_ADDRESS'] ?? "";
-    if (cCONTACTADDRESS == "null") {
-      cCONTACTADDRESS = "";
-    }
+    // if (cCONTACTADDRESS == "null") {
+    //   cCONTACTADDRESS = "";
+    // }
     cCUSTMOBILE = json['C_CUST_MOBILE'] ?? "";
     cCARDID = json['C_CARD_ID'] ?? "";
     cCUSTRESEDENCEADDRESS = json['C_CUST_RESEDENCE_ADDRESS'] ?? "";
     cMARKETINGID = json['C_MARKETING_ID'] ?? "";
     cMKTNAME = json['C_MKT_NAME'] ?? "";
     cSIGNIMG = json['C_SIGN_IMG'] ?? "";
-    cFACEIMG = json['C_FACE_IMG'] ?? "";
+    cFACEIMG = json['C_FACE_IMG'] == "null" ? null : json['C_FACE_IMG'];
     cFRONTCARD = json['C_FRONT_CARD'] ?? "";
     cBONUSINFO = json['C_BONUS_INFO'] ?? 0;
   }
 
-  UserInfo.constant() {
-    cCUSTOMERCODE = "005C666666";
-    cCUSTFULLNAME = "Nguyễn Trung Kiên";
-    cIDISSUEDATE = "07/09/2015";
-    cIDEXPIREDATE = "hfjkahsjkhjkad";
-    cIDISSUEPLACE = "CỤC TRƯỞNG CỤC CẢNH SÁT";
-    cCUSTEMAIL = "dat9d3@gmail.com";
-    cCUSTTEL = "hfjkahsjkhjkad";
-    cAUTHENSIGN = "hfjkahsjkhjkad";
-    authenType = "hfjkahsjkhjkad";
-    cCONTACTADDRESS = "Chùa Hàng, Dư Hàng, Lê Chân, Hải Phòng";
-    if (cCONTACTADDRESS == "null") {
-      cCONTACTADDRESS = "hfjkahsjkhjkad";
-    }
-    cCUSTMOBILE = "0989999999";
-    cCARDID = "031200003055";
-    cCUSTRESEDENCEADDRESS = "hfjkahsjkhjkad";
-    cMARKETINGID = "hfjkahsjkhjkad";
-    cMKTNAME = "hfjkahsjkhjkad";
-    cSIGNIMG = "hfjkahsjkhjkad";
-    cFACEIMG = "hfjkahsjkhjkad";
-    cFRONTCARD = "hfjkahsjkhjkad";
-    cBONUSINFO = 0;
-  }
+  // UserInfo.constant() {
+  //   cCUSTOMERCODE = "005C666666";
+  //   cCUSTFULLNAME = "Nguyễn Trung Kiên";
+  //   cIDISSUEDATE = "07/09/2015";
+  //   cIDEXPIREDATE = "hfjkahsjkhjkad";
+  //   cIDISSUEPLACE = "CỤC TRƯỞNG CỤC CẢNH SÁT";
+  //   cCUSTEMAIL = "dat9d3@gmail.com";
+  //   cCUSTTEL = "hfjkahsjkhjkad";
+  //   cAUTHENSIGN = "hfjkahsjkhjkad";
+  //   authenType = "hfjkahsjkhjkad";
+  //   cCONTACTADDRESS = "Chùa Hàng, Dư Hàng, Lê Chân, Hải Phòng";
+  //   if (cCONTACTADDRESS == "null") {
+  //     cCONTACTADDRESS = "hfjkahsjkhjkad";
+  //   }
+  //   cCUSTMOBILE = "0989999999";
+  //   cCARDID = "031200003055";
+  //   cCUSTRESEDENCEADDRESS = "hfjkahsjkhjkad";
+  //   cMARKETINGID = "hfjkahsjkhjkad";
+  //   cMKTNAME = "hfjkahsjkhjkad";
+  //   cSIGNIMG = "hfjkahsjkhjkad";
+  //   cFACEIMG = "hfjkahsjkhjkad";
+  //   cFRONTCARD = "hfjkahsjkhjkad";
+  //   cBONUSINFO = 0;
+  // }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};

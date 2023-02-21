@@ -1,8 +1,9 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dtnd/=models=/response/stock.dart';
 import 'package:dtnd/config/service/app_services.dart';
 import 'package:dtnd/data/i_data_center_service.dart';
+import 'package:dtnd/data/i_user_service.dart';
 import 'package:dtnd/data/implementations/network_service.dart';
-import 'package:dtnd/ui/screen/home/widget/home_appbar.dart';
 import 'package:dtnd/ui/screen/home/widget/home_quick_access.dart';
 import 'package:dtnd/ui/screen/search/search_screen.dart';
 import 'package:dtnd/ui/screen/stock_detail/stock_detail_screen.dart';
@@ -13,14 +14,65 @@ import 'package:get/get_state_manager/get_state_manager.dart';
 const imageHeight = 280.0;
 
 class HomeAppbarDelegate extends SliverPersistentHeaderDelegate {
-  const HomeAppbarDelegate(this.appService, this.dataCenterService);
+  const HomeAppbarDelegate(
+      this.appService, this.dataCenterService, this.userService);
   final AppService appService;
   final IDataCenterService dataCenterService;
+  final IUserService userService;
   @override
   Widget build(
       BuildContext context, double shrinkOffset, bool overlapsContent) {
     final size = MediaQuery.of(context).size;
     final ratio = 1 - (shrinkOffset / _difference);
+    Widget title = Obx(() {
+      String textTitle;
+      Widget avatar;
+      if (userService.userInfo.value != null) {
+        textTitle = userService.userInfo.value!.cCUSTFULLNAME;
+        if (userService.userInfo.value!.cFACEIMG != null) {
+          avatar = Container(
+            width: 40,
+            height: 40,
+            decoration: const BoxDecoration(shape: BoxShape.circle),
+            child: CachedNetworkImage(
+              imageUrl: "${userService.userInfo.value!.cFACEIMG}",
+              fit: BoxFit.fill,
+            ),
+          );
+        } else {
+          avatar = const SizedBox.square(
+            dimension: 40,
+            child: Icon(
+              Icons.account_circle_rounded,
+              color: Colors.white,
+            ),
+          );
+        }
+      } else {
+        textTitle = "DTND";
+        avatar = const SizedBox.square(
+          dimension: 36,
+          child: Icon(
+            Icons.account_circle_rounded,
+            color: Colors.white,
+          ),
+        );
+      }
+      if (userService.userInfo.value != null) {}
+      return Row(
+        children: [
+          avatar,
+          const SizedBox(width: 8),
+          Text(
+            textTitle,
+            style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                  fontWeight: FontWeight.w700,
+                  color: Colors.white,
+                ),
+          ),
+        ],
+      );
+    });
     return Material(
       child: Stack(
         children: [
@@ -46,12 +98,7 @@ class HomeAppbarDelegate extends SliverPersistentHeaderDelegate {
               height: 80,
               child: AppBar(
                 backgroundColor: ratio <= 0 ? Colors.white : Colors.transparent,
-                title: Text(
-                  "DTND",
-                  style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                      fontWeight: FontWeight.w700,
-                      color: ratio <= 0 ? Colors.black : Colors.white),
-                ),
+                title: title,
                 actions: [
                   SizedBox.square(
                     dimension: 24,

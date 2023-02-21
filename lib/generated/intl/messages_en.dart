@@ -216,6 +216,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "login": MessageLookupByLibrary.simpleMessage("Login"),
         "login_exception_required_OTP": MessageLookupByLibrary.simpleMessage(
             "Login with OTP code sent to your phone"),
+        "login_falied": MessageLookupByLibrary.simpleMessage("Login failed"),
         "login_qoute1": MessageLookupByLibrary.simpleMessage(
             "Let\'s join the exciting investment market with "),
         "login_qoute2": MessageLookupByLibrary.simpleMessage(" application"),

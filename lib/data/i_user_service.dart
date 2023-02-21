@@ -7,11 +7,11 @@ import 'package:get/get.dart';
 abstract class IUserService {
   bool get isLogin;
 
-  UserToken? get token;
+  Rx<UserToken?> get token;
 
-  UserInfo? get userInfo;
+  Rx<UserInfo?> get userInfo;
 
-  TotalAsset? get totalAsset;
+  Rx<TotalAsset?> get totalAsset;
 
   Rx<List<IAccountModel>?> get listAccountModel;
 

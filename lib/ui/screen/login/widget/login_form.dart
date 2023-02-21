@@ -4,6 +4,7 @@ import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/screen/login/login_controller.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/widget/button/async_button.dart';
+import 'package:dtnd/ui/widget/overlay/error_dialog.dart';
 import 'package:dtnd/utilities/logger.dart';
 import 'package:dtnd/utilities/typedef.dart';
 import 'package:flutter/gestures.dart';
@@ -20,12 +21,15 @@ class LoginForm extends StatefulWidget {
     required this.loginFormKey,
     required this.otpRequired,
     required this.onSuccess,
+    this.userController,
+    this.passController,
   }) : super(key: key);
 
   final GlobalKey<FormState> loginFormKey;
-  final VoidCallback onSuccess;
+  final void Function(String) onSuccess;
   final Rx<bool> otpRequired;
-
+  final TextEditingController? userController;
+  final TextEditingController? passController;
   @override
   State<LoginForm> createState() => _LoginFormState();
 }
@@ -33,8 +37,8 @@ class LoginForm extends StatefulWidget {
 class _LoginFormState extends State<LoginForm> {
   final LoginController loginController = LoginController();
   final GlobalKey<FormState> loginFormKey = GlobalKey<FormState>();
-  final TextEditingController _userController = TextEditingController();
-  final TextEditingController _passController = TextEditingController();
+  late final TextEditingController _userController;
+  late final TextEditingController _passController;
 
   final GlobalKey<FormFieldState<String?>> usernameFormKey =
       GlobalKey<FormFieldState<String?>>();
@@ -53,15 +57,16 @@ class _LoginFormState extends State<LoginForm> {
   bool hasChanged = false;
   bool typingUsername = false;
   bool typingPassword = false;
-  bool invalidUsername = false;
-  bool invalidPassword = false;
-
+  String? userNameInitialValue;
   FutureVoidCallback? login;
 
   bool canCheckLogin = false;
 
   @override
   void initState() {
+    _userController = widget.userController ?? TextEditingController();
+    _passController = widget.passController ?? TextEditingController();
+    userNameInitialValue = _userController.text;
     super.initState();
     // WidgetsBinding.instance.addPostFrameCallback((_) {
     //   _userController.addListener(() {
@@ -113,10 +118,8 @@ class _LoginFormState extends State<LoginForm> {
     if ((value?.length ?? 0) < 6) {
       return S.of(context).null_username;
     }
-    if (invalidUsername) {
-      setState(() {
-        invalidUsername = false;
-      });
+    if (loginController.invalidAccount.value) {
+      loginController.invalidAccount.value = false;
       return S.of(context).invalid_account;
     }
     return null;
@@ -126,16 +129,12 @@ class _LoginFormState extends State<LoginForm> {
     if ((value?.length ?? 0) < 6) {
       return S.of(context).null_password;
     }
-    if (invalidPassword) {
-      setState(() {
-        invalidPassword = false;
-      });
+    if (loginController.invalidPassword.value) {
+      loginController.invalidPassword.value = false;
       return S.of(context).wrong_password;
     }
-    if (invalidUsername) {
-      setState(() {
-        invalidUsername = false;
-      });
+    if (loginController.invalidAccount.value) {
+      loginController.invalidAccount.value = false;
       return S.of(context).invalid_account;
     }
     return null;
@@ -170,6 +169,7 @@ class _LoginFormState extends State<LoginForm> {
           FormField<String?>(
             key: usernameFormKey,
             validator: usernameValidator,
+            initialValue: userNameInitialValue,
             builder: (usernameState) => TextField(
               autocorrect: false,
               focusNode: usernameFocusNode,
@@ -242,7 +242,7 @@ class _LoginFormState extends State<LoginForm> {
                   width: 20,
                 ),
                 GestureDetector(
-                  onTap: (){
+                  onTap: () {
                     context.pushNamed("ekyc");
                   },
                   child: SizedBox.square(
@@ -306,19 +306,26 @@ class _LoginFormState extends State<LoginForm> {
     usernameFocusNode.unfocus();
     passwordFocusNode.unfocus();
 
-    try {
-      await 1.delay();
-      if (widget.loginFormKey.currentState!.validate()) {
-        final loginStatus = await loginController.login(
-            usernameFormKey.currentState!.value!,
+    await 1.delay();
+    if (widget.loginFormKey.currentState!.validate()) {
+      try {
+        await loginController.login(usernameFormKey.currentState!.value!,
             passwordFormKey.currentState!.value!);
-        if (loginStatus.isSuccess) {
-          widget.onSuccess.call();
+      } catch (e) {
+        logger.e(e);
+        if (mounted) {
+          return await showDialog(
+            context: context,
+            builder: (context) {
+              return ErrorDialog(
+                title: S.of(context).login_falied,
+                content: e.toString(),
+              );
+            },
+          );
         }
       }
-    } catch (e) {
-      logger.e(e);
-      return;
+      widget.onSuccess.call(usernameFormKey.currentState!.value!);
     }
   }
 }

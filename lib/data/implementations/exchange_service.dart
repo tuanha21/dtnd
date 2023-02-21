@@ -8,7 +8,6 @@ import 'package:dtnd/data/i_user_service.dart';
 import 'package:dtnd/data/implementations/network_service.dart';
 import 'package:dtnd/ui/screen/exchange_stock/stock_order/data/order_data.dart';
 import 'package:dtnd/utilities/logger.dart';
-import 'package:dtnd/utilities/new_order_message.dart';
 import 'package:dtnd/utilities/num_utils.dart';
 
 class ExchangeService implements IExchangeService {
@@ -25,7 +24,7 @@ class ExchangeService implements IExchangeService {
   @override
   Future<BaseOrderModel?> createNewOrder(
       IUserService userService, OrderData orderData) async {
-    final String user = userService.token!.user;
+    final String user = userService.token.value!.user;
     final String refId = "$user.H.${NumUtils.getRandom()}";
     final RequestDataModel requestDataModel = RequestDataModel.stringType(
         cmd: "Web.newOrder",
@@ -39,7 +38,7 @@ class ExchangeService implements IExchangeService {
         orderType: "1",
         pin: orderData.pin);
     final String checksum = NumUtils.generateMd5(
-        "${userService.token!.sid}${orderData.price}${orderData.side.code}${(orderData.volumn * 100).toString()}vpbs@456${user}1${orderData.stockModel.stock.stockCode}$refId");
+        "${userService.token.value!.sid}${orderData.price}${orderData.side.code}${(orderData.volumn * 100).toString()}vpbs@456${user}1${orderData.stockModel.stock.stockCode}$refId");
 
     final RequestModel requestModel = RequestModel(
       userService,
@@ -73,7 +72,7 @@ class ExchangeService implements IExchangeService {
       {required String stockCode, required String price, required Side side}) {
     final RequestDataModel requestDataModel = RequestDataModel.stringType(
       cmd: "Web.sCashBalance",
-      p1: userService.token!.user,
+      p1: userService.token.value!.user,
       p2: stockCode,
       p3: price,
       p4: side.code,

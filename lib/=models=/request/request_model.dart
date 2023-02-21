@@ -15,8 +15,8 @@ class RequestModel {
 
   RequestModel(IUserService userService,
       {this.group, this.data, this.checksum}) {
-    user = userService.token!.user;
-    session = userService.token!.sid;
+    user = userService.token.value!.user;
+    session = userService.token.value!.sid;
   }
 
   RequestModel.login({this.group, this.user, this.data});

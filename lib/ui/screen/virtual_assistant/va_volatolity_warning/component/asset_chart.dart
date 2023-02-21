@@ -64,13 +64,13 @@ class _AssetChartState extends State<AssetChart> {
             measureFn: (data, _) => data.cCASHBALANCE,
             seriesColor: charts.ColorUtil.fromDartColor(AppColors.primary_01),
           )..setAttribute(charts.measureAxisIdKey, secondaryMeasureAxisId),
-          charts.Series(
-            id: "Nợ",
-            data: datas,
-            domainFn: (data, _) => data.cTRADINGDATE,
-            measureFn: (data, _) => data.cLOANBALANCE,
-            seriesColor: charts.ColorUtil.fromDartColor(AppColors.semantic_03),
-          )..setAttribute(charts.measureAxisIdKey, secondaryMeasureAxisId),
+          // charts.Series(
+          //   id: "Nợ",
+          //   data: datas,
+          //   domainFn: (data, _) => data.cTRADINGDATE,
+          //   measureFn: (data, _) => data.cLOANBALANCE,
+          //   seriesColor: charts.ColorUtil.fromDartColor(AppColors.semantic_03),
+          // )..setAttribute(charts.measureAxisIdKey, secondaryMeasureAxisId),
           charts.Series(
             id: "Giá trị CK",
             data: datas,
@@ -153,11 +153,11 @@ class _AssetChartState extends State<AssetChart> {
             cellPadding: const EdgeInsets.only(right: 4.0),
             // Set show measures to true to display measures in series legend,
             // when the datum is selected.
-            showMeasures: true,
+            // showMeasures: true,
             // Optionally provide a measure formatter to format the measure value.
             // If none is specified the value is formatted as a decimal.
             measureFormatter: (num? value) => "",
-            defaultHiddenSeries: const ["Nợ", "Tài sản"],
+            // defaultHiddenSeries: const ["Nợ", "Tài sản"],
           ),
           charts.LinePointHighlighter(
               symbolRenderer:

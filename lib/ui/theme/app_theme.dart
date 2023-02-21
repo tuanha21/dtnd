@@ -283,7 +283,7 @@ const BottomSheetThemeData _darkBottomSheetTheme = BottomSheetThemeData(
 const ColorScheme _lightColorScheme = ColorScheme(
   brightness: Brightness.light,
   primary: AppColors.primary_01,
-  onPrimary: AppColors.neutral_01,
+  onPrimary: Colors.white,
   secondary: AppColors.secondary,
   onSecondary: Colors.white,
   error: AppColors.error_text,
