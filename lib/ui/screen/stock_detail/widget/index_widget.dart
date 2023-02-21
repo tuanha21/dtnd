@@ -35,10 +35,9 @@ class _IndexWidgetState extends State<IndexWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 16),
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.symmetric(vertical: 16),
       decoration: BoxDecoration(
-          color: const Color(0xffF5F8FF),
+         // color: const Color(0xffF5F8FF),
           borderRadius: BorderRadius.circular(16)),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -214,7 +213,7 @@ class _IndexWidgetState extends State<IndexWidget> {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 8),
       decoration: BoxDecoration(
-        color: AppColors.light_bg,
+        color: AppColors.neutral_06,
         borderRadius: BorderRadius.circular(4),
       ),
       child: Column(

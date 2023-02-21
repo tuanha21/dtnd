@@ -719,7 +719,6 @@ class NetworkService implements INetworkService {
       throw res["message"];
     }
     var list = decode(res["data"]) as List;
-    logger.d(list);
     final List<StockFinancialIndex> result = [];
     for (final element in list) {
       result.add(StockFinancialIndex.fromJson(element));
@@ -801,7 +800,6 @@ class NetworkService implements INetworkService {
     try {
       dynamic response =
           await client.post(url_algo("companies/leaders"), body: body);
-
       if (response.statusCode != 200) {
         throw response;
       }
@@ -945,21 +943,26 @@ class NetworkService implements INetworkService {
   @override
   Future<List<SecEvent>> getListEvent(String stockCode) async {
     try {
-      var response = await client.post(
-          Uri.https('opacc-api.apec.com.vn', 'algo/pbapi/api/secEvents'),
-          body: jsonEncode({"lang": "vi", "secCode": stockCode}));
+      var response = await client.get(
+          Uri.https('opacc-api.apec.com.vn', 'algo/pbapi/api/news/sec_news',{
+            "lang": "vi",
+            "secCode": stockCode,
+            "startDate": '2021-12-30',
+            "reqLanguage" : "VI"
+          }));
       if (response.statusCode != 200) {
         throw response;
       }
+
       var res = decode(response.bodyBytes);
-      var list = jsonDecode(res['data']) as List;
+
+      var list = res['data'] as List;
       var listSecc = <SecEvent>[];
       for (var element in list) {
         listSecc.add(SecEvent.fromJson(element));
       }
       return listSecc;
     } catch (e) {
-      logger.e(e.toString());
       logger.e((e as http.Response).request?.url);
       rethrow;
     }
@@ -973,6 +976,9 @@ class NetworkService implements INetworkService {
             'opacc-api.apec.com.vn', 'algo/pbapi/api/companies/introduction'),
         body: jsonEncode({"secCode": stockCode}));
     var res = decode(response.bodyBytes);
+    if (res['dict']['result'] == "error") {
+      return Future.error(res['dict']['errorMessage']);
+    }
     return CompanyIntroductionResponse.fromJson(res);
   }
 
