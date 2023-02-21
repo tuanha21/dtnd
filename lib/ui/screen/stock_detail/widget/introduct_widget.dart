@@ -49,6 +49,9 @@ class _IntroduceWidgetState extends State<IntroduceWidget> {
                 return const SizedBox();
               }
               if (snapshot.connectionState == ConnectionState.done) {
+                if (snapshot.hasError) {
+                  return Center(child: Text(snapshot.error.toString()));
+                }
                 var profile = snapshot.data?.data?.profile;
                 var document = parse(profile);
                 return HomeSection(

@@ -10,6 +10,7 @@ import 'package:charts_flutter/flutter.dart' as charts;
 import 'dart:math' as math;
 import '../../../../=models=/response/stock_financial_index_model.dart';
 import '../../../../utilities/logger.dart';
+import '../../../../utilities/time_utils.dart';
 import '../../../theme/app_color.dart';
 
 class FinanceIndexTab extends StatefulWidget {
@@ -37,8 +38,10 @@ class _FinanceIndexTabState extends State<FinanceIndexTab> {
 
   void initData() {
     listFinancial = dataCenterService.getStockFinancialIndex(
-        widget.stockModel.stock.stockCode, "Y");
+        widget.stockModel.stock.stockCode, type);
   }
+
+  String type = "Y";
 
   @override
   Widget build(BuildContext context) {
@@ -78,8 +81,9 @@ class _FinanceIndexTabState extends State<FinanceIndexTab> {
                       stockModel: widget.stockModel,
                       min: min,
                       max: max,
-                      getType: (String type) {
+                      getType: (String typeSTr) {
                         setState(() {
+                          type = typeSTr;
                           listFinancial =
                               dataCenterService.getStockFinancialIndex(
                                   widget.stockModel.stock.stockCode, type);
@@ -100,7 +104,10 @@ class _FinanceIndexTabState extends State<FinanceIndexTab> {
                       ],
                     ),
                     const SizedBox(height: 16),
-                    DoanhThuWidget(stockCode: widget.stockModel.stock.stockCode)
+                    DoanhThuWidget(
+                      list: list,
+                      type: type,
+                    )
                   ],
                 ),
               ),
@@ -175,172 +182,150 @@ class _IndexChartState extends State<IndexChart> {
   }
 }
 
-class DoanhThuWidget extends StatefulWidget {
-  final String stockCode;
+class DoanhThuWidget extends StatelessWidget {
+  final List<StockFinancialIndex> list;
+  final String type;
 
-  const DoanhThuWidget({Key? key, required this.stockCode}) : super(key: key);
-
-  @override
-  State<DoanhThuWidget> createState() => _DoanhThuWidgetState();
-}
-
-class _DoanhThuWidgetState extends State<DoanhThuWidget> {
-  final IDataCenterService dataCenterService = DataCenterService();
-
-  late Future<List<StockFinancialIndex>> listFinancial;
-
-  @override
-  void initState() {
-    listFinancial =
-        dataCenterService.getStockFinancialIndex(widget.stockCode, "Y");
-    super.initState();
-  }
+  const DoanhThuWidget({Key? key, required this.list, required this.type})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    var listData = list;
+    num max = 2;
+    num min = 0;
+    if (listData.isNotEmpty) {
+      max = listData
+          .map((e) => type == "Y" ? e.rEPORTDATE.year : e.rEPORTDATE.millisecondsSinceEpoch)
+          .toList()
+          .reduce(math.max);
+      min = listData
+          .map((e) => type == "Y" ? e.rEPORTDATE.year : e.rEPORTDATE.millisecondsSinceEpoch)
+          .reduce(math.min);
+    }
+
     return Column(
       children: [
         Column(
           children: [
-            FutureBuilder<List<StockFinancialIndex>>(
-                future: listFinancial,
-                initialData: const [],
-                builder: (context, snapshot) {
-                  var listData = snapshot.data!;
-                  if (snapshot.hasData) {
-                    num annotation = 1;
-                    num max = 2;
-                    num min = 0;
-                    if (listData.isNotEmpty) {
-                      annotation = listData.first.rEPORTDATE.year;
-                      max = math.max<num>(
-                          listData
-                              .map((e) => e.rEPORTDATE.year)
-                              .toList()
-                              .reduce(math.max),
-                          annotation);
-                      min = math.min<num>(
-                          listData
-                              .map((e) => e.rEPORTDATE.year)
-                              .reduce(math.min),
-                          annotation);
-                    }
-                    return SizedBox(
-                      height: 150,
-                      child: Column(
-                        children: [
-                          Expanded(
-                            child: charts.ScatterPlotChart(
-                              [
-                                charts.Series<StockFinancialIndex, int>(
-                                  id: 'ROA',
-                                  domainFn: (StockFinancialIndex sales, _) =>
-                                      sales.rEPORTDATE.year,
-                                  measureFn: (StockFinancialIndex sales, _) =>
-                                      sales.rOA,
-                                  radiusPxFn: (StockFinancialIndex sales, _) =>
-                                      8,
-                                  data: listData,
-                                  fillColorFn: (StockFinancialIndex sales, _) =>
-                                      charts.ColorUtil.fromDartColor(
-                                          AppColors.primary_01),
-                                  colorFn: (StockFinancialIndex sales, _) =>
-                                      charts.ColorUtil.fromDartColor(
-                                          AppColors.primary_01),
-                                ),
-                                charts.Series<StockFinancialIndex, int>(
-                                  id: 'ROE',
-                                  domainFn: (StockFinancialIndex sales, _) =>
-                                      sales.rEPORTDATE.year,
-                                  measureFn: (StockFinancialIndex sales, _) =>
-                                      sales.rOE,
-                                  radiusPxFn: (StockFinancialIndex sales, _) =>
-                                      8,
-                                  data: listData,
-                                  fillColorFn: (StockFinancialIndex sales, _) =>
-                                      charts.ColorUtil.fromDartColor(
-                                          AppColors.neutral_04),
-                                  colorFn: (StockFinancialIndex sales, _) =>
-                                      charts.ColorUtil.fromDartColor(
-                                          AppColors.neutral_04),
-                                )
-                              ],
-                              primaryMeasureAxis: charts.NumericAxisSpec(
-                                showAxisLine: false,
-                                renderSpec: const charts.NoneRenderSpec(),
-                                tickFormatterSpec:
-                                    charts.BasicNumericTickFormatterSpec(
-                                  (measure) => "",
-                                ),
-                              ),
-                              domainAxis: charts.NumericAxisSpec(
-                                  viewport: charts.NumericExtents(min, max),
-                                  renderSpec: const charts.GridlineRendererSpec(
-                                      labelStyle:
-                                          charts.TextStyleSpec(fontSize: 9)),
-                                  showAxisLine: false),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 6),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: List<Widget>.generate(listData.length,
-                                  (index) {
-                                var indexData = listData[index];
-                                return Column(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Container(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 4, vertical: 2),
-                                      decoration: const BoxDecoration(
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(4)),
-                                        color: AppColors.primary_02,
-                                      ),
-                                      child: Text(
-                                        indexData.rEPORTDATE.year.toString(),
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodySmall
-                                            ?.copyWith(
-                                                fontSize: 12,
-                                                fontWeight: FontWeight.w600,
-                                                color: AppColors.light_bg),
-                                      ),
-                                    ),
-                                    const SizedBox(height: 4),
-                                    Text(
-                                      indexData.rOE?.toString() ?? "",
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodySmall
-                                          ?.copyWith(
-                                              color: AppColors.neutral_04,
-                                              fontSize: 12),
-                                    ),
-                                    const SizedBox(height: 4),
-                                    Text(
-                                      indexData.rOA?.toString() ?? "",
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodySmall
-                                          ?.copyWith(
-                                              color: AppColors.primary_01,
-                                              fontSize: 12),
-                                    )
-                                  ],
-                                );
-                              }),
-                            ),
-                          )
-                        ],
+            SizedBox(
+              height: 150,
+              child: Column(
+                children: [
+                  Expanded(
+                    child: charts.ScatterPlotChart(
+                      [
+                        charts.Series<StockFinancialIndex, int>(
+                          id: 'ROA',
+                          domainFn: (StockFinancialIndex sales, _) {
+                            return type == "Y"
+                                ? sales.rEPORTDATE.year
+                                : sales.rEPORTDATE.millisecondsSinceEpoch;
+                          },
+                          measureFn: (StockFinancialIndex sales, _) =>
+                              sales.rOA,
+                          radiusPxFn: (StockFinancialIndex sales, _) => 8,
+                          data: listData,
+                          fillColorFn: (StockFinancialIndex sales, _) =>
+                              charts.ColorUtil.fromDartColor(
+                                  AppColors.primary_01),
+                          colorFn: (StockFinancialIndex sales, _) =>
+                              charts.ColorUtil.fromDartColor(
+                                  AppColors.primary_01),
+                        ),
+                        charts.Series<StockFinancialIndex, int>(
+                          id: 'ROE',
+                          domainFn: (StockFinancialIndex sales, _) {
+                            return type == "Y"
+                                ? sales.rEPORTDATE.year
+                                : sales.rEPORTDATE.millisecondsSinceEpoch;
+                          },
+                          measureFn: (StockFinancialIndex sales, _) =>
+                              sales.rOE,
+                          radiusPxFn: (StockFinancialIndex sales, _) => 8,
+                          data: listData,
+                          fillColorFn: (StockFinancialIndex sales, _) =>
+                              charts.ColorUtil.fromDartColor(
+                                  AppColors.neutral_04),
+                          colorFn: (StockFinancialIndex sales, _) =>
+                              charts.ColorUtil.fromDartColor(
+                                  AppColors.neutral_04),
+                        )
+                      ],
+                      primaryMeasureAxis: const charts.NumericAxisSpec(
+                        showAxisLine: false,
+                        renderSpec: charts.NoneRenderSpec(),
                       ),
-                    );
-                  }
-                  return const SizedBox();
-                }),
+                      domainAxis: charts.NumericAxisSpec(
+                          viewport: charts.NumericExtents(min, max),
+                          renderSpec: const charts.NoneRenderSpec(),
+                          showAxisLine: false),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 6),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: List<Widget>.generate(listData.length, (index) {
+                        String time = "";
+                        if (type == "Q") {
+                          time =
+                          'Q${TimeUtilities.getQuarter(listData[index].rEPORTDATE)}/${listData[index].rEPORTDATE.year}';
+                        }
+                        if (type == "Y") {
+                          time = '${listData[index].rEPORTDATE.year}';
+                        }
+                        var indexData = listData[index];
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Container(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 4, vertical: 2),
+                              decoration: const BoxDecoration(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(4)),
+                                color: AppColors.primary_02,
+                              ),
+                              child: Text(
+                                time,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodySmall
+                                    ?.copyWith(
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w600,
+                                        color: AppColors.light_bg),
+                              ),
+                            ),
+                            const SizedBox(height: 4),
+                            Text(
+                              indexData.rOE?.toString() ?? "",
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodySmall
+                                  ?.copyWith(
+                                      color: AppColors.neutral_04,
+                                      fontSize: 12),
+                            ),
+                            const SizedBox(height: 4),
+                            Text(
+                              indexData.rOA?.toString() ?? "",
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodySmall
+                                  ?.copyWith(
+                                      color: AppColors.primary_01,
+                                      fontSize: 12),
+                            )
+                          ],
+                        );
+                      }),
+                    ),
+                  )
+                ],
+              ),
+            ),
             const SizedBox(height: 10),
             Row(
               children: [

@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dtnd/=models=/response/stock_model.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:dtnd/ui/widget/expanded_widget.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
@@ -9,7 +10,10 @@ import 'package:url_launcher/url_launcher.dart';
 import '../../../../=models=/response/company_info.dart';
 import '../../../../=models=/response/news_model.dart';
 import '../../../../=models=/response/stock_news.dart';
+import '../../../../=models=/response/stock_trading_history.dart';
+import '../../../../data/i_data_center_service.dart';
 import '../../../../data/i_network_service.dart';
+import '../../../../data/implementations/data_center_service.dart';
 import '../../../../data/implementations/network_service.dart';
 import '../../../../generated/l10n.dart';
 import '../../../theme/app_color.dart';
@@ -21,6 +25,7 @@ import '../widget/introduct_widget.dart';
 import '../widget/stock_detail_chart.dart';
 import '../widget/stock_detail_news.dart';
 import '../widget/stock_event.dart';
+import 'dart:math' as math;
 
 class OverviewTab extends StatefulWidget {
   const OverviewTab({
@@ -160,6 +165,26 @@ class BasicIndex extends StatefulWidget {
 }
 
 class _BasicIndexState extends State<BasicIndex> {
+  final IDataCenterService iDataCenterService = DataCenterService();
+
+  late Future<StockTradingHistory?> stockTradingHistory;
+
+  TimeSeries timeSeries = TimeSeries.year;
+
+  Future<void> getStockTradingHistory() async {
+    stockTradingHistory = iDataCenterService.getStockTradingHistory(
+        widget.stockModel.stock.stockCode,
+        timeSeries.type,
+        timeSeries.dateTime,
+        DateTime.now());
+  }
+
+  @override
+  void initState() {
+    getStockTradingHistory();
+    super.initState();
+  }
+
   Widget indexPrice() {
     return Column(
       children: [
@@ -174,70 +199,79 @@ class _BasicIndexState extends State<BasicIndex> {
           ],
         ),
         const SizedBox(height: 16),
-        Row(
-          children: [
-            Expanded(
-                child: Column(
-              children: [
-                Container(
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                      color: AppColors.neutral_06,
-                      borderRadius: BorderRadius.circular(8)),
-                  padding: const EdgeInsets.symmetric(vertical: 10),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Image.asset(AppImages.prefix_down_icon,
-                          height: 20, width: 20),
-                      const SizedBox(width: 4),
-                      Text(
-                        'Giá thấp nhất',
-                        style: Theme.of(context).textTheme.bodySmall,
-                      )
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 4),
-                Text(
-                  widget.stockModel.stockData.lowPrice.value?.toString() ?? "-",
-                  style: Theme.of(context).textTheme.titleMedium,
-                )
-              ],
-            )),
-            const SizedBox(width: 12),
-            Expanded(
-                child: Column(
-              children: [
-                Container(
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                      color: AppColors.neutral_06,
-                      borderRadius: BorderRadius.circular(8)),
-                  padding: const EdgeInsets.symmetric(vertical: 10),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Image.asset(AppImages.prefix_up_icon,
-                          height: 20, width: 20),
-                      const SizedBox(width: 4),
-                      Text(
-                        'Giá cao nhất',
-                        style: Theme.of(context).textTheme.bodySmall,
-                      )
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 4),
-                Text(
-                  widget.stockModel.stockData.highPrice.value?.toString() ??
-                      "-",
-                  style: Theme.of(context).textTheme.titleMedium,
-                )
-              ],
-            )),
-          ],
-        )
+        FutureBuilder<StockTradingHistory?>(
+            future: stockTradingHistory,
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                var data = snapshot.data!;
+                var max = data.c?.reduce(math.max);
+                var min = data.c?.reduce(math.min);
+                return Row(
+                  children: [
+                    Expanded(
+                        child: Column(
+                      children: [
+                        Container(
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                              color: AppColors.neutral_06,
+                              borderRadius: BorderRadius.circular(8)),
+                          padding: const EdgeInsets.symmetric(vertical: 10),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Image.asset(AppImages.prefix_down_icon,
+                                  height: 20, width: 20),
+                              const SizedBox(width: 4),
+                              Text(
+                                'Giá thấp nhất',
+                                style: Theme.of(context).textTheme.bodySmall,
+                              )
+                            ],
+                          ),
+                        ),
+                        const SizedBox(height: 4),
+                        Text(
+                          min?.toString() ?? "-",
+                          style: Theme.of(context).textTheme.titleMedium,
+                        )
+                      ],
+                    )),
+                    const SizedBox(width: 12),
+                    Expanded(
+                        child: Column(
+                      children: [
+                        Container(
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                              color: AppColors.neutral_06,
+                              borderRadius: BorderRadius.circular(8)),
+                          padding: const EdgeInsets.symmetric(vertical: 10),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Image.asset(AppImages.prefix_up_icon,
+                                  height: 20, width: 20),
+                              const SizedBox(width: 4),
+                              Text(
+                                'Giá cao nhất',
+                                style: Theme.of(context).textTheme.bodySmall,
+                              )
+                            ],
+                          ),
+                        ),
+                        const SizedBox(height: 4),
+                        Text(
+                          max?.toString() ?? "-",
+                          style: Theme.of(context).textTheme.titleMedium,
+                        )
+                      ],
+                    )),
+                  ],
+                );
+              }
+              return const SizedBox();
+            })
       ],
     );
   }
@@ -536,7 +570,7 @@ class _ListNewsISheetState extends State<ListNewsISheet> {
                                           articleID: listNews[index].articleID,
                                           headImg: listNews[index].imageUrl,
                                           publishTime:
-                                          listNews[index].publishTime)),
+                                              listNews[index].publishTime)),
                                 ));
                               },
                               child: Column(
@@ -548,7 +582,8 @@ class _ListNewsISheetState extends State<ListNewsISheet> {
                                         ImageProvider imageProvider) {
                                       return Container(
                                         height: 200,
-                                        width: MediaQuery.of(context).size.width,
+                                        width:
+                                            MediaQuery.of(context).size.width,
                                         decoration: BoxDecoration(
                                             image: DecorationImage(
                                                 image: imageProvider,
@@ -558,8 +593,9 @@ class _ListNewsISheetState extends State<ListNewsISheet> {
                                   ),
                                   const SizedBox(height: 16),
                                   Text(listNews[index].title ?? "",
-                                      style:
-                                          Theme.of(context).textTheme.bodyLarge),
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyLarge),
                                   const SizedBox(height: 10),
                                   Text(listNews[index].head ?? "",
                                       style: Theme.of(context)
@@ -579,8 +615,8 @@ class _ListNewsISheetState extends State<ListNewsISheet> {
                                               ?.copyWith(
                                                   fontWeight: FontWeight.w700)),
                                       Text(
-                                          DateFormat("dd/MM/yyyy")
-                                              .format(listNews[index].dateTime!),
+                                          DateFormat("dd/MM/yyyy").format(
+                                              listNews[index].dateTime!),
                                           style: Theme.of(context)
                                               .textTheme
                                               .bodySmall),

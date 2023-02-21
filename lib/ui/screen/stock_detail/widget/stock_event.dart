@@ -136,7 +136,7 @@ class EventCard extends StatelessWidget {
               children: [
                 Expanded(
                   child: Text(
-                    event.eVENTDESC ?? "Title",
+                    event.title ?? "Title",
                     maxLines: 2,
                     textAlign: TextAlign.left,
                     style: Theme.of(context).textTheme.titleSmall,
@@ -158,7 +158,7 @@ class EventCard extends StatelessWidget {
                           color: AppColors.semantic_02),
                     ),
                     const SizedBox(width: 5),
-                    Text(event.sECURITYCODE ?? "",
+                    Text(event.source ?? "",
                         style: AppTextStyle.labelSmall_10
                             .copyWith(fontWeight: FontWeight.w400)),
                   ],

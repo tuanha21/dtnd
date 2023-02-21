@@ -37,7 +37,7 @@ class _StockDetailChartState extends State<StockDetailChart>
 
   StockTradingHistory chartData = StockTradingHistory.nullChartData();
 
-  TimeSeries timeSeries = TimeSeries.day;
+  TimeSeries timeSeries = TimeSeries.month_3;
 
   StockTradingHistory? stockTradingHistory;
 
@@ -194,7 +194,7 @@ class _StockDetailChartState extends State<StockDetailChart>
       showAxisLine: true,
       tickProviderSpec: const charts.BasicNumericTickProviderSpec(
         zeroBound: false,
-        desiredTickCount: 5,
+       // desiredTickCount: 5,
         dataIsInWholeNumbers: false,
       ),
       viewport: charts.NumericExtents(min, max),
