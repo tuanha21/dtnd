@@ -1,27 +1,19 @@
-import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:flutter/material.dart';
 
 import 'app_dialog.dart';
 
-class LoginFirstDialog extends StatelessWidget {
-  const LoginFirstDialog({super.key});
-
+class ErrorDialog extends StatelessWidget {
+  const ErrorDialog({super.key, required this.title, this.content});
+  final String title;
+  final String? content;
   @override
   Widget build(BuildContext context) {
     return AppDialog(
       icon: const Icon(Icons.warning_amber_rounded),
-      title: Text(S.of(context).login_required),
-      content: Text(S.of(context).login_to_continue),
+      title: Text(title),
+      content: Text(content ?? "Đã có lỗi xảy ra"),
       actions: [
-        Flexible(
-          child: InkWell(
-              onTap: () => Navigator.of(context).pop(false),
-              child: Container(
-                alignment: Alignment.center,
-                child: Text(S.of(context).cancel),
-              )),
-        ),
         Flexible(
           child: InkWell(
               onTap: () => Navigator.of(context).pop(true),

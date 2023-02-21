@@ -1,4 +1,8 @@
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:dtnd/data/i_user_service.dart';
+import 'package:dtnd/data/implementations/user_service.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../../config/service/app_services.dart';
 import '../theme/app_color.dart';
@@ -26,6 +30,7 @@ class MyAppBar extends StatefulWidget implements PreferredSizeWidget {
 }
 
 class _MyAppBarState extends State<MyAppBar> {
+  final IUserService userService = UserService();
   late List<Widget>? _actions;
 
   @override
@@ -66,19 +71,64 @@ class _MyAppBarState extends State<MyAppBar> {
     return null;
   }
 
-  Widget? get title {
-    return widget.titleWidget ??
-        Text(
-          widget.title ?? "DTND",
-          style: Theme.of(context)
-              .textTheme
-              .labelLarge
-              ?.copyWith(fontWeight: FontWeight.w700),
-        );
-  }
-
   @override
   Widget build(BuildContext context) {
+    Widget title;
+    if (widget.titleWidget != null) {
+      title = widget.titleWidget!;
+    } else if (widget.title != null) {
+      title = Text(
+        widget.title!,
+        style: Theme.of(context)
+            .textTheme
+            .labelLarge
+            ?.copyWith(fontWeight: FontWeight.w700),
+      );
+    } else {
+      title = Obx(() {
+        String textTitle;
+        Widget avatar;
+        if (userService.userInfo.value != null) {
+          textTitle = userService.userInfo.value!.cCUSTFULLNAME;
+          if (userService.userInfo.value!.cFACEIMG != null) {
+            avatar = Container(
+              width: 36,
+              height: 36,
+              decoration: BoxDecoration(shape: BoxShape.circle),
+              child: CachedNetworkImage(
+                imageUrl: "${userService.userInfo.value!.cFACEIMG}",
+                fit: BoxFit.fill,
+              ),
+            );
+          } else {
+            avatar = const SizedBox.square(
+              dimension: 36,
+              child: Icon(Icons.account_circle_rounded),
+            );
+          }
+        } else {
+          textTitle = "DTND";
+          avatar = const SizedBox.square(
+            dimension: 36,
+            child: Icon(Icons.account_circle_rounded),
+          );
+        }
+        if (userService.userInfo.value != null) {}
+        return Row(
+          children: [
+            avatar,
+            const SizedBox(width: 8),
+            Text(
+              textTitle,
+              style: Theme.of(context)
+                  .textTheme
+                  .labelLarge
+                  ?.copyWith(fontWeight: FontWeight.w700),
+            ),
+          ],
+        );
+      });
+    }
     return AppBar(
       leading: widget.leading ?? backButton,
       title: title,

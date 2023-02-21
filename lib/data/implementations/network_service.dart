@@ -182,14 +182,6 @@ class NetworkService implements INetworkService {
   }
 
   @override
-  Future<UserEntity?> checkLogin(RequestModel requestModel) async {
-    final http.Response response =
-        await client.post(url_core_endpoint, body: requestModel.toString());
-    logger.v(response.body);
-    return UserEntity.fromJson(decode(response.bodyBytes));
-  }
-
-  @override
   Future<T?> requestTraditionalApi<T extends CoreResponseModel>(
     RequestModel requestModel, {
     T? Function(Map<String, dynamic>)? onError,
@@ -470,13 +462,6 @@ class NetworkService implements INetworkService {
   }
 
   /// Todo: User
-  @override
-  Future<UserInfo?> getUserInfo(RequestModel requestModel) async {
-    final http.Response response =
-        await client.post(url_core_endpoint, body: requestModel.toString());
-    logger.v(response.body);
-    return UserInfo.constant();
-  }
 
   @override
   Future<TotalAsset?> getTotalAsset(RequestModel requestModel) async {

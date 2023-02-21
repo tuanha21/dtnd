@@ -5,6 +5,7 @@ import 'package:dtnd/data/i_user_service.dart';
 import 'package:dtnd/data/implementations/network_service.dart';
 import 'package:dtnd/data/implementations/user_service.dart';
 import 'package:dtnd/utilities/logger.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 enum LoginStatus {
@@ -23,55 +24,88 @@ extension LoginStatusX on LoginStatus {
 }
 
 class LoginController {
-  LoginController._internal();
+  LoginController._internal() {
+    loginFormKey = GlobalKey<FormState>();
+  }
   static final LoginController _instance = LoginController._internal();
   factory LoginController() => _instance;
   final INetworkService networkService = NetworkService();
   final IUserService userService = UserService();
+  late final GlobalKey<FormState> loginFormKey;
 
   final Rx<bool> loading = Rx<bool>(false);
   final Rx<bool> otpRequired = Rx<bool>(false);
 
-  Future<LoginStatus> login(String username, String password) async {
+  final invalidAccount = false.obs;
+  final invalidPassword = false.obs;
+
+  Future<void> login(String username, String password) async {
+    loading.value = true;
+    final requestDataModel = RequestDataModel(
+        type: RequestType.string,
+        cmd: "Web.sCheckLogin",
+        p1: username,
+        p2: password,
+        p3: "M",
+        p4: "");
+    final requestModel = RequestModel.login(
+      group: "L",
+      user: username,
+      data: requestDataModel,
+    );
+    UserToken? userToken;
     try {
-      loading.value = true;
-      final requestDataModel = RequestDataModel(
-          type: RequestType.string,
-          cmd: "Web.sCheckLogin",
-          p1: username,
-          p2: password,
-          p3: "M",
-          p4: "");
-      final requestModel = RequestModel.login(
-        group: "L",
-        user: username,
-        data: requestDataModel,
+      userToken = await networkService.requestTraditionalApi<UserToken>(
+        requestModel,
+        hasError: hasError,
+        onError: onError,
       );
-      final userEntity = await networkService.checkLogin(requestModel);
-      logger.v(userEntity?.toJson());
-      final loginStatus = await verifyEntity(userEntity);
-      if (loginStatus.isSuccess) {
-        await userService.saveToken(userEntity!.loginData!);
-      }
-      loading.value = false;
-      return loginStatus;
     } catch (e) {
-      logger.e(e);
-      return LoginStatus.somethingWhenWrong;
+      loginFormKey.currentState?.validate();
+      rethrow;
     }
+    logger.v(userToken?.toJson());
+    await userService.saveToken(userToken!);
+    loading.value = false;
+    return;
   }
 
-  Future<LoginStatus> verifyEntity(UserEntity? entity) async {
-    if (entity == null) return LoginStatus.somethingWhenWrong;
-    final int rc = entity.rc;
-    if (rc == 1) return LoginStatus.success;
+  bool hasError(Map<String, dynamic>? entity) {
+    if (entity == null) return true;
+    final int rc = entity["rc"];
+    if (rc == 1) return false;
+    return true;
+  }
 
+  UserToken? onError(Map<String, dynamic>? entity) {
+    if (entity == null) throw LoginStatus.somethingWhenWrong;
+
+    throw entity["rs"];
+
+    // final loginStatus = verifyEntity(entity);
+    // switch (loginStatus) {
+    //   case LoginStatus.wrongAccount:
+    //     invalidAccount.value = true;
+    //     break;
+    //   case LoginStatus.wrongPassword:
+    //     invalidPassword.value = true;
+    //     break;
+    //   default:
+    //     break;
+    // }
+    // throw loginStatus;
+  }
+
+  LoginStatus verifyEntity(Map<String, dynamic>? entity) {
+    logger.v(entity);
+    if (entity == null) return LoginStatus.somethingWhenWrong;
+    final int rc = entity["rc"];
     if (rc == 2) {
       otpRequired.value = true;
       return LoginStatus.requiredOTP;
     }
     if (rc == 0) {
-      final String? rs = entity.rs;
+      final String? rs = entity["rs"];
       if (rs?.isEmpty ?? true) return LoginStatus.somethingWhenWrong;
       if (rs!.contains("Tai khoan")) {
         return LoginStatus.wrongAccount;
@@ -82,7 +116,7 @@ class LoginController {
       return LoginStatus.somethingWhenWrong;
     }
 
-    if ((entity.loginData?.iFlag ?? 0) == 1) {
+    if ((entity["iFlag"] ?? 0) == 1) {
       return LoginStatus.changePassRequired;
     }
     return LoginStatus.failure;

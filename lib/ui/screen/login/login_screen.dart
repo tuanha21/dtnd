@@ -1,3 +1,5 @@
+import 'package:dtnd/data/i_local_storage_service.dart';
+import 'package:dtnd/data/implementations/local_storage_service.dart';
 import 'package:dtnd/ui/screen/login/login_controller.dart';
 import 'package:dtnd/ui/screen/login/widget/login_form.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
@@ -8,6 +10,8 @@ import 'package:go_router/go_router.dart';
 
 import '../../../generated/l10n.dart';
 
+const String _userKey = "_userKey";
+
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
 
@@ -16,17 +20,13 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  final ILocalStorageService localStorageService = LocalStorageService();
   final LoginController loginController = LoginController();
 
-  final GlobalKey<FormState> loginFormKey = GlobalKey<FormState>();
+  late final TextEditingController userTextEditingController;
 
-  final GlobalKey<FormFieldState<String?>> usernameFormKey =
-      GlobalKey<FormFieldState<String?>>();
-
-  final GlobalKey<FormFieldState<String?>> passwordFormKey =
-      GlobalKey<FormFieldState<String?>>();
-
-  void loginSuccess() {
+  void loginSuccess(String user) {
+    localStorageService.sharedPreferences.setString(_userKey, user);
     final NavigatorState? navigator = Navigator.maybeOf(context);
     if (navigator != null && navigator.canPop()) {
       return navigator.pop(true);
@@ -36,6 +36,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   void initState() {
+    final savedUser = localStorageService.sharedPreferences.getString(_userKey);
+    userTextEditingController = TextEditingController(text: savedUser);
     super.initState();
   }
 
@@ -92,9 +94,10 @@ class _LoginScreenState extends State<LoginScreen> {
                   height: 20,
                 ),
                 LoginForm(
-                  loginFormKey: loginFormKey,
+                  loginFormKey: loginController.loginFormKey,
                   otpRequired: loginController.otpRequired,
                   onSuccess: loginSuccess,
+                  userController: userTextEditingController,
                 ),
                 const SizedBox(height: 20),
               ],

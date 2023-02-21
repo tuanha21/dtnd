@@ -213,6 +213,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "login": MessageLookupByLibrary.simpleMessage("Đăng nhập"),
         "login_exception_required_OTP": MessageLookupByLibrary.simpleMessage(
             "Hãy đăng nhập bằng mã OTP được gửi về máy của bạn"),
+        "login_falied":
+            MessageLookupByLibrary.simpleMessage("Đăng nhập không thành công"),
         "login_qoute1": MessageLookupByLibrary.simpleMessage(
             "Cùng tham gia thị trường đầu tư đầy sôi động với ứng dụng "),
         "login_qoute2": MessageLookupByLibrary.simpleMessage(" bạn nhé"),

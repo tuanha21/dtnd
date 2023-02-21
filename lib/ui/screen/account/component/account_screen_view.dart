@@ -6,7 +6,6 @@ import 'package:dtnd/ui/screen/account/component/extensions_widget.dart';
 import 'package:dtnd/ui/screen/account/icon/account_icon.dart';
 import 'package:dtnd/ui/screen/account/sheet/sheet_config.dart';
 import 'package:dtnd/ui/screen/account/sheet/user_info_detailt_sheet.dart';
-import 'package:dtnd/ui/screen/login/login_screen.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -16,7 +15,7 @@ class AccountScreenView extends StatelessWidget {
   final IUserService userService;
   @override
   Widget build(BuildContext context) {
-    final info = userService.userInfo;
+    final info = userService.userInfo.value;
     final textTheme = Theme.of(context).textTheme;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -46,8 +45,8 @@ class AccountScreenView extends StatelessWidget {
                 borderRadius: const BorderRadius.all(Radius.circular(8)),
                 child: InkWell(
                   onTap: () {
-                    const UserInfoDetailISheet().show(context,
-                        UserInfoDetailSheet(userInfo: userService.userInfo!));
+                    const UserInfoDetailISheet()
+                        .show(context, UserInfoDetailSheet(userInfo: info!));
                   },
                   borderRadius: const BorderRadius.all(Radius.circular(8)),
                   child: Ink(

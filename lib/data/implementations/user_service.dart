@@ -2,7 +2,6 @@ import 'package:dtnd/=models=/request/request_model.dart';
 import 'package:dtnd/=models=/response/account/asset_chart_element.dart';
 import 'package:dtnd/=models=/response/account/base_margin_account_model.dart';
 import 'package:dtnd/=models=/response/account/i_account.dart';
-import 'package:dtnd/=models=/response/account/list_account_model.dart';
 import 'package:dtnd/=models=/response/account/portfolio_status_model.dart';
 import 'package:dtnd/=models=/response/account/unexecuted_right_model.dart';
 import 'package:dtnd/=models=/response/account_info_model.dart';
@@ -26,12 +25,13 @@ class UserService implements IUserService {
 
   factory UserService() => _instance;
 
-  UserToken? userToken;
   @override
-  UserInfo? userInfo;
+  final Rx<UserToken?> token = Rxn();
+  @override
+  final Rx<UserInfo?> userInfo = Rxn();
 
   @override
-  TotalAsset? totalAsset;
+  final Rx<TotalAsset?> totalAsset = Rxn();
 
   @override
   Rx<List<IAccountModel>?> listAccountModel = Rxn();
@@ -54,18 +54,18 @@ class UserService implements IUserService {
 
   @override
   Future<void> deleteToken() async {
-    userToken = null;
-    userInfo = null;
-    totalAsset = null;
+    token.value = null;
+    userInfo.value = null;
+    totalAsset.value = null;
     searchHistory = [];
     return;
   }
 
   @override
-  Future<bool> saveToken(UserToken token) async {
+  Future<bool> saveToken(UserToken userToken) async {
     try {
-      userToken = token;
-      await localStorageService.saveUserToken(token);
+      token.value = userToken;
+      await localStorageService.saveUserToken(userToken);
       getUserInfo();
       getListAccount();
       getTotalAsset();
@@ -82,10 +82,7 @@ class UserService implements IUserService {
   }
 
   @override
-  bool get isLogin => userToken != null;
-
-  @override
-  UserToken? get token => userToken;
+  bool get isLogin => token.value != null;
 
   Future<List<IAccountModel>?> getListAccount() async {
     RequestModel requestModel = RequestModel(this,
@@ -178,10 +175,12 @@ class UserService implements IUserService {
         group: "B",
         data: RequestDataModel.cursorType(
           cmd: "GetAccountInfo",
-          p1: userToken!.user,
+          p1: token.value!.user,
         ));
-    userInfo = await networkService.getUserInfo(requestModel);
-    return userInfo;
+    final listResponse = await networkService
+        .requestTraditionalApiResList<UserInfo>(requestModel);
+    userInfo.value = listResponse?.first;
+    return userInfo.value;
   }
 
   Future<TotalAsset?> getTotalAsset() async {
@@ -194,9 +193,9 @@ class UserService implements IUserService {
         data: RequestDataModel(
           cmd: "TotalAsset",
         ));
-    totalAsset = await networkService.getTotalAsset(requestModel);
-    logger.v(totalAsset!.toJson());
-    return totalAsset;
+    totalAsset.value = await networkService.getTotalAsset(requestModel);
+    logger.v(totalAsset.value!.toJson());
+    return totalAsset.value;
   }
 
   @override
@@ -204,7 +203,7 @@ class UserService implements IUserService {
     if (!isLogin) {
       return [];
     }
-    final body = '{"account":"${userToken!.user}"}';
+    final body = '{"account":"${token.value!.user}"}';
 
     searchHistory = await networkService.getSearchHistory(body);
     logger.v(searchHistory);
@@ -214,7 +213,7 @@ class UserService implements IUserService {
   @override
   void putSearchHistory(String searchString) {
     final Map<String, dynamic> body = {
-      "account": userToken!.user,
+      "account": token.value!.user,
       "textSearch": searchString,
     };
     networkService.putSearchHistory(body.toString());

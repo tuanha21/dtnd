@@ -1902,6 +1902,16 @@ class S {
     );
   }
 
+  /// `Login failed`
+  String get login_falied {
+    return Intl.message(
+      'Login failed',
+      name: 'login_falied',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Price increase`
   String get price_increase {
     return Intl.message(

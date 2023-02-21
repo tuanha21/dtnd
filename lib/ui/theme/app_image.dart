@@ -138,6 +138,7 @@ class AppImages {
       "assets/images/arrow_drop_down_rounded.png";
   static const String asset_menu_icon = "assets/images/asset_menu_icon.png";
   static const String asset_calendar_icon = "assets/images/calendar.png";
+  static const String calendar_2 = "assets/images/calendar_2.png";
 
   /// BG
   static const String home_asset_card_light_bg =

@@ -1,18 +1,13 @@
 import 'dart:ui';
 
 import 'package:dtnd/=models=/response/account/base_margin_account_model.dart';
-import 'package:dtnd/=models=/response/stock_model.dart';
 import 'package:dtnd/data/i_data_center_service.dart';
 import 'package:dtnd/data/i_user_service.dart';
 import 'package:dtnd/data/implementations/data_center_service.dart';
 import 'package:dtnd/data/implementations/user_service.dart';
 import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/screen/asset/component/account_asset_overview_widget.dart';
-import 'package:dtnd/ui/screen/asset/component/account_type_asset_widget.dart';
 import 'package:dtnd/ui/screen/asset/component/asset_distribution_chart.dart';
-import 'package:dtnd/ui/screen/asset/component/asset_per_type_widget.dart';
-import 'package:dtnd/ui/screen/asset/component/total_asset_widget.dart';
-import 'package:dtnd/ui/screen/asset/logic/money_type.dart';
 import 'package:dtnd/ui/screen/market/widget/components/not_signin_catalog_widget.dart';
 import 'package:dtnd/ui/screen/virtual_assistant/va_volatolity_warning/component/asset_chart.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
@@ -20,13 +15,9 @@ import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:dtnd/ui/widget/dropdown/custom_dropdown_button.dart';
 import 'package:dtnd/ui/widget/icon/icon_button.dart';
 import 'package:dtnd/ui/widget/my_appbar.dart';
-import 'package:dtnd/utilities/logger.dart';
-import 'package:dtnd/utilities/num_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../widget/tabbar/rounded_tabbar.dart';
-import 'component/investment_catalog_widget.dart';
 import 'component/portfolio_and_right_panel.dart';
 
 class AssetScreen extends StatefulWidget {

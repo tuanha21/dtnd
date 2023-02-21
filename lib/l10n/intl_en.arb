@@ -195,6 +195,7 @@
     "login_to_continue": "Login to continue",
     "you_are_not_logged_in": "You are not yet logged in",
     "you_are_not_account": "You are not account?",
+    "login_falied": "Login failed",
     "price_increase": "Price increase",
     "price_decrease": "Price decrease",
     "top_foreign": "Top foreign",

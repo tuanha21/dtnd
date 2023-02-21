@@ -82,6 +82,12 @@ class _MyAppState extends State<MyApp> {
         },
       ),
       GoRoute(
+        path: '/SignIn',
+        builder: (BuildContext context, GoRouterState state) {
+          return const LoginScreen();
+        },
+      ),
+      GoRoute(
         path: '/SignUp',
         builder: (BuildContext context, GoRouterState state) {
           return const SignUpPage();
@@ -106,12 +112,6 @@ class _MyAppState extends State<MyApp> {
         name: 'success',
         builder: (BuildContext context, GoRouterState state) {
           return const SuccessSignUpPage();
-        },
-      ),
-      GoRoute(
-        path: '/SignIn',
-        builder: (BuildContext context, GoRouterState state) {
-          return const LoginScreen();
         },
       ),
       GoRoute(

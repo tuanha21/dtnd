@@ -66,10 +66,10 @@ class _UserCatalogWidgetState extends State<UserCatalogWidget> {
   }
 
   void initCatalog() {
-    if (userService.token == null) {
+    if (userService.token.value == null) {
       user = "default";
     } else {
-      user = userService.token!.user;
+      user = userService.token.value!.user;
     }
     savedCatalog = localStorageService.getSavedCatalog(user);
     currentCatalog = defaultCatalog;
@@ -92,7 +92,8 @@ class _UserCatalogWidgetState extends State<UserCatalogWidget> {
         Align(alignment: Alignment.centerLeft, child: rowCatalog()),
         const SizedBox(height: 10),
         Visibility(
-          visible: savedCatalog.catalogs.isNotEmpty && currentCatalog.name != defaultCatalog.name,
+          visible: savedCatalog.catalogs.isNotEmpty &&
+              currentCatalog.name != defaultCatalog.name,
           child: Container(
             padding: const EdgeInsets.all(18),
             decoration: BoxDecoration(
