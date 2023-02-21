@@ -22,9 +22,7 @@ class _TransactionTabState extends State<TransactionTab> {
           SliverAppBar(
             title: const SizedBox(),
             automaticallyImplyLeading: false,
-            // pinned: false,
-            // toolbarHeight: 200,
-            expandedHeight: 416,
+            expandedHeight: 460,
             floating: true,
             flexibleSpace: SingleChildScrollView(
               physics: const NeverScrollableScrollPhysics(),
@@ -39,11 +37,10 @@ class _TransactionTabState extends State<TransactionTab> {
                       "Giao dịch nhà đầu tư nước ngoài",
                       style: Theme.of(context)
                           .textTheme
-                          .bodySmall
+                          .titleMedium
                           ?.copyWith(fontWeight: FontWeight.w600),
                     ),
                   ),
-                  const SizedBox(height: 16),
                   ForeignWidget(stockModel: widget.stockModel)
                 ],
               ),
