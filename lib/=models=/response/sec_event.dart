@@ -14,16 +14,17 @@ class SecEvent {
     return DateTime.tryParse(tradeDate!);
   }
 
-
+  String get link =>
+      'https://files.algoplatform.vn/getfile.aspx?path=$filePath&name=$attach&time=${DateTime.now().millisecondsSinceEpoch}';
 
   SecEvent(
       {this.tradeDate,
-        this.content,
-        this.container,
-        this.filePath,
-        this.attach,
-        this.source,
-        this.title});
+      this.content,
+      this.container,
+      this.filePath,
+      this.attach,
+      this.source,
+      this.title});
 
   SecEvent.fromJson(Map<String, dynamic> json) {
     tradeDate = json['tradeDate'];

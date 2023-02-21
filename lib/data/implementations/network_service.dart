@@ -2,6 +2,7 @@
 
 import 'dart:convert';
 
+import 'package:dtnd/=models=/algo/filter.dart';
 import 'package:dtnd/=models=/core_response_model.dart';
 import 'package:dtnd/=models=/response/account_info_model.dart';
 import 'package:dtnd/=models=/response/business_profile_model.dart';
@@ -40,6 +41,8 @@ import 'package:dtnd/=models=/response/world_index_model.dart';
 import 'package:dtnd/=models=/ui_model/field_tree_element_model.dart';
 import 'package:dtnd/config/service/environment.dart';
 import 'package:dtnd/data/i_network_service.dart';
+import 'package:dtnd/data/i_user_service.dart';
+import 'package:dtnd/data/implementations/user_service.dart';
 import 'package:dtnd/utilities/logger.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -959,12 +962,13 @@ class NetworkService implements INetworkService {
   Future<List<SecEvent>> getListEvent(String stockCode) async {
     try {
       var response = await client.get(
-          Uri.https('opacc-api.apec.com.vn', 'algo/pbapi/api/news/sec_news',{
-            "lang": "vi",
-            "secCode": stockCode,
-            "startDate": '2021-12-30',
-            "reqLanguage" : "VI"
-          }));
+          Uri.https('opacc-api.apec.com.vn', 'algo/pbapi/api/news/sec_news', {
+        "lang": "vi",
+        "secCode": stockCode,
+        "startDate": DateFormat('yyyy-MM-dd')
+            .format(DateTime.now().add(const Duration(days: -30))),
+        "reqLanguage": "VI"
+      }));
       if (response.statusCode != 200) {
         throw response;
       }
@@ -1121,5 +1125,23 @@ class NetworkService implements INetworkService {
     } catch (e) {
       rethrow;
     }
+  }
+
+  @override
+  Future<List<Filter>> getFilterAccount() async {
+    IUserService userService = UserService();
+    var user = userService.token?.user;
+    var response = await client
+        .get(url_algo_apec('getFilters'), headers: {"X-USERNAME": "332957"});
+    logger.d(response.body);
+    logger.d(response.request?.url);
+
+    var mapData = json.decode(response.body);
+    List data = mapData['data'];
+    var list = <Filter>[];
+    for (var element in data) {
+      list.add(Filter.fromJson(element));
+    }
+    return list;
   }
 }
