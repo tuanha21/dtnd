@@ -991,9 +991,6 @@ class NetworkService implements INetworkService {
             'opacc-api.apec.com.vn', 'algo/pbapi/api/companies/introduction'),
         body: jsonEncode({"secCode": stockCode}));
     var res = decode(response.bodyBytes);
-    if (res['dict']['result'] == "error") {
-      return Future.error(res['dict']['errorMessage']);
-    }
     return CompanyIntroductionResponse.fromJson(res);
   }
 
