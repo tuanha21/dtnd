@@ -31,6 +31,7 @@ import 'package:dtnd/config/service/environment.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 import '../=models=/algo/filter.dart';
+import '../=models=/algo/stock_filter.dart';
 import '../=models=/request/request_model.dart';
 import '../=models=/response/basic_company.dart';
 import '../=models=/response/company_info.dart';
@@ -183,5 +184,11 @@ abstract class INetworkService {
   Future<List<ShareHolders>> getShareHolderCompany(String stockCode);
 
   Future<List<Filter>> getFilterAccount();
+
+  Future<List<FilterRange>> getFilterRange();
+
+  Future<List<StockFilter>> getStockFilter(Filter filter);
+
+
 
 }

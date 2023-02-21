@@ -7,11 +7,15 @@ import 'package:dtnd/data/implementations/data_center_service.dart';
 import 'package:dtnd/data/implementations/network_service.dart';
 import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
+import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:dtnd/utilities/num_utils.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../../=models=/algo/filter.dart';
+import '../../../widget/input/app_text_field.dart';
 import '../filter_enum.dart';
+import 'logic/list_stock_filter.dart';
 
 class AssistantStockFilterScreen extends StatefulWidget {
   const AssistantStockFilterScreen({super.key});
@@ -110,6 +114,36 @@ class _AssistantStockFilterScreenState
                 ?.copyWith(fontWeight: FontWeight.w700),
           ),
           const SizedBox(height: 12),
+          GestureDetector(
+            onTap: () {
+              showModalBottomSheet(
+                  context: context,
+                  isScrollControlled: true,
+                  builder: (context) {
+                    return const AddFilterSheet();
+                  });
+            },
+            child: Container(
+              padding: const EdgeInsets.all(18),
+              decoration: BoxDecoration(
+                  color: AppColors.neutral_06,
+                  borderRadius: BorderRadius.circular(12)),
+              child: Row(
+                children: [
+                  SvgPicture.asset(AppImages.add_square),
+                  const SizedBox(width: 10),
+                  Text(
+                    "Thêm bộ lọc",
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyMedium
+                        ?.copyWith(color: AppColors.text_blue),
+                  )
+                ],
+              ),
+            ),
+          ),
+          const SizedBox(height: 16),
           StreamBuilder<List<Filter>>(
               stream: filterStream.stream,
               initialData: const [],
@@ -125,6 +159,11 @@ class _AssistantStockFilterScreenState
                       itemBuilder: (context, index) {
                         var filter = list[index];
                         return ListTile(
+                          onTap: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) =>
+                                    ListStockFilter(filter: filter)));
+                          },
                           tileColor: AppColors.neutral_06,
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(12)),
@@ -161,6 +200,91 @@ class _AssistantStockFilterScreenState
                 }
                 return const SizedBox();
               })
+        ],
+      ),
+    );
+  }
+}
+
+class AddFilterSheet extends StatefulWidget {
+  const AddFilterSheet({Key? key}) : super(key: key);
+
+  @override
+  State<AddFilterSheet> createState() => _AddFilterSheetState();
+}
+
+class _AddFilterSheetState extends State<AddFilterSheet> {
+  final nameController = TextEditingController();
+
+  GlobalKey nameKey = GlobalKey<FormState>();
+
+  ValueNotifier<bool> isValidator = ValueNotifier<bool>(false);
+
+  @override
+  Widget build(BuildContext context) {
+    return SafeArea(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const SizedBox(height: 18),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text('Lưu bộ lọc',
+                    style: Theme.of(context).textTheme.bodyLarge),
+                Container(
+                    padding: const EdgeInsets.all(4),
+                    decoration: BoxDecoration(
+                        color: AppColors.neutral_06,
+                        borderRadius: BorderRadius.circular(6)),
+                    child: const Icon(
+                      Icons.clear,
+                      color: AppColors.dark_bg,
+                    ))
+              ],
+            ),
+          ),
+          const Divider(
+            thickness: 1,
+            color: AppColors.neutral_05,
+            height: 36,
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Form(
+              key: nameKey,
+              child: AppTextField(
+                controller: nameController,
+                labelText: 'Tên bộ lọc',
+                onChanged: (name) {
+                  isValidator.value = name.isNotEmpty;
+                },
+              ),
+            ),
+          ),
+          const SizedBox(height: 24),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: SizedBox(
+                width: MediaQuery.of(context).size.width,
+                child: ValueListenableBuilder<bool>(
+                    valueListenable: isValidator,
+                    builder:
+                        (BuildContext context, isValidator, Widget? child) {
+                      return ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                              disabledBackgroundColor: AppColors.neutral_05,
+                              disabledForegroundColor: AppColors.neutral_04),
+                          onPressed: isValidator ? () {} : null,
+                          child: const Text("Lưu"));
+                    })),
+          ),
+          const SizedBox(height: 20),
+          SizedBox(
+            height: MediaQuery.of(context).viewInsets.bottom,
+          )
         ],
       ),
     );
