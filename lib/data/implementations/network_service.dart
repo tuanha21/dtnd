@@ -1116,7 +1116,6 @@ class NetworkService implements INetworkService {
   @override
   Future<List<Filter>> getFilterAccount() async {
     IUserService userService = UserService();
-    var user = userService.token?.user;
     var response = await client
         .get(url_algo_apec('getFilters'), headers: {"X-USERNAME": "332957"});
     var mapData = json.decode(response.body);
@@ -1131,7 +1130,6 @@ class NetworkService implements INetworkService {
   @override
   Future<List<FilterRange>> getFilterRange() async {
     IUserService userService = UserService();
-    var user = userService.token?.user;
     var response = await client.get(url_algo_apec('getFilterRange'));
     var mapData = json.decode(response.body);
     List data = mapData['data'];

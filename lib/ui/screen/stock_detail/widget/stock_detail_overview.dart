@@ -36,64 +36,66 @@ class StockDetailOverview extends StatelessWidget {
       )
     ];
     final themeMode = AppService.instance.themeMode.value;
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Row(
-                children: [
-                  Text(stockModel.stockData.lastPrice.toString(),
-                      style: Theme.of(context)
-                          .textTheme
-                          .headlineLarge
-                          ?.copyWith(fontWeight: FontWeight.w700)),
-                  const SizedBox(width: 4),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        children: [
-                          stockModel.stockData.prefixIconData(size: 24),
-                          Text(
-                            "${stockModel.stockData.ot} (${stockModel.stockData.changePc}%)",
-                            style: AppTextStyle.bodySmall_8.copyWith(
-                                fontWeight: FontWeight.w500,
-                                color: stockModel.stockData.color),
-                          ),
-                        ],
-                      ),
-                      ObxValue<Rx<num?>>(
-                        (lot) {
-                          return Padding(
-                            padding: const EdgeInsets.only(left: 2),
-                            child: Text(
-                              "${NumUtils.formatInteger10(lot.value, "-")} CP",
-                              style: AppTextStyle.bodySmall_8
-                                  .copyWith(color: AppColors.neutral_04),
+    return IntrinsicHeight(
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    Text(stockModel.stockData.lastPrice.toString(),
+                        style: Theme.of(context)
+                            .textTheme
+                            .headlineLarge
+                            ?.copyWith(fontWeight: FontWeight.w700)),
+                    const SizedBox(width: 4),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            stockModel.stockData.prefixIconData(size: 24),
+                            Text(
+                              "${stockModel.stockData.ot} (${stockModel.stockData.changePc}%)",
+                              style: AppTextStyle.bodySmall_8.copyWith(
+                                  fontWeight: FontWeight.w500,
+                                  color: stockModel.stockData.color),
                             ),
-                          );
-                        },
-                        stockModel.stockData.lot,
-                      )
-                    ],
-                  ),
-                ],
-              ),
-            ],
+                          ],
+                        ),
+                        ObxValue<Rx<num?>>(
+                          (lot) {
+                            return Padding(
+                              padding: const EdgeInsets.only(left: 2),
+                              child: Text(
+                                "${NumUtils.formatInteger10(lot.value, "-")} CP",
+                                style: AppTextStyle.bodySmall_8
+                                    .copyWith(color: AppColors.neutral_04),
+                              ),
+                            );
+                          },
+                          stockModel.stockData.lot,
+                        )
+                      ],
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
-        ),
-        ...List<Widget>.generate(
-            3,
-            (index) => Padding(
-                  padding: const EdgeInsets.only(left: 8),
-                  child: _StockDetailPriceElement(
-                      data: listPrices[index], themeMode: themeMode),
-                ))
-      ],
+          ...List<Widget>.generate(
+              3,
+              (index) => Padding(
+                    padding: const EdgeInsets.only(left: 8),
+                    child: _StockDetailPriceElement(
+                        data: listPrices[index], themeMode: themeMode),
+                  ))
+        ],
+      ),
     );
   }
 }

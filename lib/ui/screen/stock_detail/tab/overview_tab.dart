@@ -46,14 +46,7 @@ class _OverviewTabState extends State<OverviewTab>
     super.build(context);
     return ListView(
       children: [
-        SizedBox(
-            height: 200,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: StockDetailChart(stockModel: widget.stockModel),
-            )),
-        const SizedBox(height: 16),
-        BasicIndex(stockModel: widget.stockModel),
+        StockDetailChart(stockModel: widget.stockModel),
         const SizedBox(height: 20),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -157,35 +150,20 @@ class _OverviewTabState extends State<OverviewTab>
 
 class BasicIndex extends StatefulWidget {
   final StockModel stockModel;
+  final StockTradingHistory history;
 
-  const BasicIndex({Key? key, required this.stockModel}) : super(key: key);
+  const BasicIndex({Key? key, required this.stockModel, required this.history}) : super(key: key);
 
   @override
   State<BasicIndex> createState() => _BasicIndexState();
 }
 
 class _BasicIndexState extends State<BasicIndex> {
-  final IDataCenterService iDataCenterService = DataCenterService();
-
-  late Future<StockTradingHistory?> stockTradingHistory;
-
-  TimeSeries timeSeries = TimeSeries.year;
-
-  Future<void> getStockTradingHistory() async {
-    stockTradingHistory = iDataCenterService.getStockTradingHistory(
-        widget.stockModel.stock.stockCode,
-        timeSeries.type,
-        timeSeries.dateTime,
-        DateTime.now());
-  }
-
-  @override
-  void initState() {
-    getStockTradingHistory();
-    super.initState();
-  }
 
   Widget indexPrice() {
+    var data = widget.history;
+    var max = data.c?.reduce(math.max);
+    var min = data.c?.reduce(math.min);
     return Column(
       children: [
         Row(
@@ -199,79 +177,69 @@ class _BasicIndexState extends State<BasicIndex> {
           ],
         ),
         const SizedBox(height: 16),
-        FutureBuilder<StockTradingHistory?>(
-            future: stockTradingHistory,
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                var data = snapshot.data!;
-                var max = data.c?.reduce(math.max);
-                var min = data.c?.reduce(math.min);
-                return Row(
+        Row(
+          children: [
+            Expanded(
+                child: Column(
                   children: [
-                    Expanded(
-                        child: Column(
-                      children: [
-                        Container(
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                              color: AppColors.neutral_06,
-                              borderRadius: BorderRadius.circular(8)),
-                          padding: const EdgeInsets.symmetric(vertical: 10),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Image.asset(AppImages.prefix_down_icon,
-                                  height: 20, width: 20),
-                              const SizedBox(width: 4),
-                              Text(
-                                'Giá thấp nhất',
-                                style: Theme.of(context).textTheme.bodySmall,
-                              )
-                            ],
-                          ),
-                        ),
-                        const SizedBox(height: 4),
-                        Text(
-                          min?.toString() ?? "-",
-                          style: Theme.of(context).textTheme.titleMedium,
-                        )
-                      ],
-                    )),
-                    const SizedBox(width: 12),
-                    Expanded(
-                        child: Column(
-                      children: [
-                        Container(
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                              color: AppColors.neutral_06,
-                              borderRadius: BorderRadius.circular(8)),
-                          padding: const EdgeInsets.symmetric(vertical: 10),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Image.asset(AppImages.prefix_up_icon,
-                                  height: 20, width: 20),
-                              const SizedBox(width: 4),
-                              Text(
-                                'Giá cao nhất',
-                                style: Theme.of(context).textTheme.bodySmall,
-                              )
-                            ],
-                          ),
-                        ),
-                        const SizedBox(height: 4),
-                        Text(
-                          max?.toString() ?? "-",
-                          style: Theme.of(context).textTheme.titleMedium,
-                        )
-                      ],
-                    )),
+                    Container(
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                          color: AppColors.neutral_06,
+                          borderRadius: BorderRadius.circular(8)),
+                      padding: const EdgeInsets.symmetric(vertical: 10),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Image.asset(AppImages.prefix_down_icon,
+                              height: 20, width: 20),
+                          const SizedBox(width: 4),
+                          Text(
+                            'Giá thấp nhất',
+                            style: Theme.of(context).textTheme.bodySmall,
+                          )
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      min?.toString() ?? "-",
+                      style: Theme.of(context).textTheme.titleMedium,
+                    )
                   ],
-                );
-              }
-              return const SizedBox();
-            })
+                )),
+            const SizedBox(width: 12),
+            Expanded(
+                child: Column(
+                  children: [
+                    Container(
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                          color: AppColors.neutral_06,
+                          borderRadius: BorderRadius.circular(8)),
+                      padding: const EdgeInsets.symmetric(vertical: 10),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Image.asset(AppImages.prefix_up_icon,
+                              height: 20, width: 20),
+                          const SizedBox(width: 4),
+                          Text(
+                            'Giá cao nhất',
+                            style: Theme.of(context).textTheme.bodySmall,
+                          )
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      max?.toString() ?? "-",
+                      style: Theme.of(context).textTheme.titleMedium,
+                    )
+                  ],
+                )),
+          ],
+        )
       ],
     );
   }

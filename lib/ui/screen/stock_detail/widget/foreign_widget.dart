@@ -89,7 +89,7 @@ class _ForeignWidgetState extends State<ForeignWidget> {
                       ),
                       const Divider(
                         thickness: 0.5,
-                        height: 16,
+                        height: 10,
                         color: AppColors.neutral_04,
                       ),
                       Row(

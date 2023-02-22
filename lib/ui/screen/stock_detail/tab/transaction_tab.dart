@@ -22,7 +22,7 @@ class _TransactionTabState extends State<TransactionTab> {
           SliverAppBar(
             title: const SizedBox(),
             automaticallyImplyLeading: false,
-            expandedHeight: 460,
+            expandedHeight: 440,
             floating: true,
             flexibleSpace: SingleChildScrollView(
               physics: const NeverScrollableScrollPhysics(),
