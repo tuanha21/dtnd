@@ -35,10 +35,9 @@ class _IndexWidgetState extends State<IndexWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 16),
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.symmetric(vertical: 16),
       decoration: BoxDecoration(
-          color: const Color(0xffF5F8FF),
+         // color: const Color(0xffF5F8FF),
           borderRadius: BorderRadius.circular(16)),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -126,17 +125,20 @@ class _IndexWidgetState extends State<IndexWidget> {
                   var eps = list.firstWhereOrNull((element) => element.iD == 1);
                   var tongNoVCSH =
                       list.firstWhereOrNull((element) => element.iD == 46);
-                  var roe = list.firstWhereOrNull((element) => element.iD == 14);
+                  var roe =
+                      list.firstWhereOrNull((element) => element.iD == 14);
 
                   var pe = list.firstWhereOrNull((element) => element.iD == 3);
-                  var tongNoTS = list.firstWhereOrNull((element) => element.iD == 42);
-                  var roa = list.firstWhereOrNull((element) => element.iD == 16);
+                  var tongNoTS =
+                      list.firstWhereOrNull((element) => element.iD == 42);
+                  var roa =
+                      list.firstWhereOrNull((element) => element.iD == 16);
 
                   var pb = list.firstWhereOrNull((element) => element.iD == 4);
                   var thanhToan =
                       list.firstWhereOrNull((element) => element.iD == 55);
-                  var tyXuatLN = list.firstWhereOrNull((element) => element.iD == 10);
-
+                  var tyXuatLN =
+                      list.firstWhereOrNull((element) => element.iD == 10);
                   return Column(
                     children: [
                       Row(
@@ -146,40 +148,51 @@ class _IndexWidgetState extends State<IndexWidget> {
                                   "${NumUtils.formatInteger(eps?.value1)} ${eps?.unit}")),
                           const SizedBox(width: 5),
                           Expanded(
-                              child: boxData("PE",
-                                  "${pe?.value1} ${pe?.unit}")),
+                              child:
+                                  boxData("PE", "${pe?.value1} ${pe?.unit}")),
                           const SizedBox(width: 5),
                           Expanded(
-                              child: boxData("PB",
-                                  "${pb?.value1} ${pb?.unit}"))
+                              child: boxData("PB", "${pb?.value1} ${pb?.unit}"))
                         ],
                       ),
                       const SizedBox(height: 5),
                       Row(
                         children: [
                           Expanded(
-                              child: boxData("Tổng nợ/VCSH",
-                                  "${NumUtils.formatInteger(tongNoVCSH?.value1 ?? 0)} ${tongNoVCSH?.unit}")),
+                              child: boxData(
+                                  "Tổng nợ/VCSH",
+                                  (tongNoVCSH?.value1 == 0 ||
+                                          tongNoVCSH?.value1 == null)
+                                      ? "-"
+                                      : "${NumUtils.formatInteger(tongNoVCSH?.value1 ?? 0)} ${tongNoVCSH?.unit ?? ""}")),
                           const SizedBox(width: 5),
                           Expanded(
-                              child: boxData("Tổng nợ/Tổng TS",
-                                  '${NumUtils.formatInteger(tongNoTS?.value1)} ${tongNoTS?.unit}')),
+                              child: boxData(
+                                  "Tổng nợ/Tổng TS",
+                                  (tongNoTS?.value1 == 0 ||
+                                          tongNoTS?.value1 == null)
+                                      ? "-"
+                                      : '${NumUtils.formatInteger(tongNoTS?.value1)} ${tongNoTS?.unit ?? ""}')),
                           const SizedBox(width: 5),
                           Expanded(
-                              child: boxData("Thanh toán",
-                                  "${NumUtils.formatInteger(thanhToan?.value1)} ${thanhToan?.unit}"))
+                              child: boxData(
+                                  "Thanh toán",
+                                  (thanhToan?.value1 == 0 ||
+                                          thanhToan?.value1 == null)
+                                      ? "-"
+                                      : "${NumUtils.formatInteger(thanhToan?.value1)} ${thanhToan?.unit ?? ""}"))
                         ],
                       ),
                       const SizedBox(height: 5),
                       Row(
                         children: [
                           Expanded(
-                              child: boxData("ROE",
-                                  "${roe?.value1} ${roe?.unit}")),
+                              child: boxData(
+                                  "ROE", "${roe?.value1} ${roe?.unit}")),
                           const SizedBox(width: 5),
                           Expanded(
-                              child: boxData("ROA",
-                                  "${roa?.value1} ${roa?.unit}")),
+                              child: boxData(
+                                  "ROA", "${roa?.value1} ${roa?.unit}")),
                           const SizedBox(width: 5),
                           Expanded(
                               child: boxData("Tỷ suất LN gộp",
@@ -200,7 +213,7 @@ class _IndexWidgetState extends State<IndexWidget> {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 8),
       decoration: BoxDecoration(
-        color: AppColors.light_bg,
+        color: AppColors.neutral_06,
         borderRadius: BorderRadius.circular(4),
       ),
       child: Column(

@@ -90,6 +90,7 @@ dependencies:
   percent_indicator: ^4.2.2
   url_launcher: ^6.1.9
   dropdown_button2: ^1.9.3
+  linked_scroll_controller: ^0.2.0
 
 dev_dependencies:
   flutter_test:

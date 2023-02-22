@@ -2,6 +2,8 @@
 
 import 'dart:convert';
 
+import 'package:dtnd/=models=/algo/filter.dart';
+import 'package:dtnd/=models=/algo/stock_filter.dart';
 import 'package:dtnd/=models=/core_response_model.dart';
 import 'package:dtnd/=models=/response/business_profile_model.dart';
 import 'package:dtnd/=models=/response/company_info.dart';
@@ -38,6 +40,8 @@ import 'package:dtnd/=models=/ui_model/exception.dart';
 import 'package:dtnd/=models=/ui_model/field_tree_element_model.dart';
 import 'package:dtnd/config/service/environment.dart';
 import 'package:dtnd/data/i_network_service.dart';
+import 'package:dtnd/data/i_user_service.dart';
+import 'package:dtnd/data/implementations/user_service.dart';
 import 'package:dtnd/utilities/logger.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -730,7 +734,6 @@ class NetworkService implements INetworkService {
       throw res["message"];
     }
     var list = decode(res["data"]) as List;
-    logger.d(list);
     final List<StockFinancialIndex> result = [];
     for (final element in list) {
       result.add(StockFinancialIndex.fromJson(element));
@@ -811,7 +814,6 @@ class NetworkService implements INetworkService {
     try {
       dynamic response =
           await client.post(url_algo("companies/leaders"), body: body);
-
       if (response.statusCode != 200) {
         throw response;
       }
@@ -955,21 +957,27 @@ class NetworkService implements INetworkService {
   @override
   Future<List<SecEvent>> getListEvent(String stockCode) async {
     try {
-      var response = await client.post(
-          Uri.https('opacc-api.apec.com.vn', 'algo/pbapi/api/secEvents'),
-          body: jsonEncode({"lang": "vi", "secCode": stockCode}));
+      var response = await client.get(
+          Uri.https('opacc-api.apec.com.vn', 'algo/pbapi/api/news/sec_news', {
+        "lang": "vi",
+        "secCode": stockCode,
+        "startDate": DateFormat('yyyy-MM-dd')
+            .format(DateTime.now().add(const Duration(days: -30))),
+        "reqLanguage": "VI"
+      }));
       if (response.statusCode != 200) {
         throw response;
       }
+
       var res = decode(response.bodyBytes);
-      var list = jsonDecode(res['data']) as List;
+
+      var list = res['data'] as List;
       var listSecc = <SecEvent>[];
       for (var element in list) {
         listSecc.add(SecEvent.fromJson(element));
       }
       return listSecc;
     } catch (e) {
-      logger.e(e.toString());
       logger.e((e as http.Response).request?.url);
       rethrow;
     }
@@ -1110,6 +1118,62 @@ class NetworkService implements INetworkService {
         listSecc.add(ShareHolders.fromJson(element));
       }
       return listSecc;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<List<Filter>> getFilterAccount() async {
+    IUserService userService = UserService();
+    var response = await client
+        .get(url_algo_apec('getFilters'), headers: {"X-USERNAME": "332957"});
+    var mapData = json.decode(response.body);
+    List data = mapData['data'];
+    var list = <Filter>[];
+    for (var element in data) {
+      list.add(Filter.fromJson(element));
+    }
+    return list;
+  }
+
+  @override
+  Future<List<FilterRange>> getFilterRange() async {
+    IUserService userService = UserService();
+    var response = await client.get(url_algo_apec('getFilterRange'));
+    var mapData = json.decode(response.body);
+    List data = mapData['data'];
+    var list = <FilterRange>[];
+    for (var element in data) {
+      list.add(FilterRange.fromJson(element));
+    }
+    return list;
+  }
+
+  @override
+  Future<List<StockFilter>> getStockFilter(Filter filter) async {
+    try {
+      var body = {
+        "lang": "vi",
+        "action": 'R',
+        "name": filter.name,
+        "filterId": filter.filterId,
+        "exchange": filter.exchangeCode,
+        "industry": filter.industryCode,
+        "filter": filter.list
+            .map((e) => {"code": e.code, "low": e.low, "high": e.high})
+            .toList()
+      };
+      final response = await client.post(Uri.https(
+          'opacc-api.apec.com.vn', 'algo/pbapi/api/filter'),
+          body: jsonEncode(body), headers: {"X-USERNAME": "332957"});
+      var mapData = json.decode(response.body);
+      List data = mapData['data']['items'];
+      var list = <StockFilter>[];
+      for (var element in data) {
+        list.add(StockFilter.fromJson(element));
+      }
+      return list;
     } catch (e) {
       rethrow;
     }

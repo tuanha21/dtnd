@@ -15,7 +15,6 @@ import 'package:html/parser.dart' show parse;
 import '../tab/general_info_tab.dart';
 import '../tab/subsidiaries_info_tab.dart';
 
-
 class BusinessInformationSheet extends StatefulWidget {
   const BusinessInformationSheet({Key? key, required this.stockModel})
       : super(key: key);
@@ -64,7 +63,7 @@ class _BusinessInformationSheetState extends State<BusinessInformationSheet>
     return Material(
       child: Container(
         decoration: const BoxDecoration(
-          color: AppColors.light_bg,
+            color: AppColors.light_bg,
             borderRadius: BorderRadius.only(
                 topRight: Radius.circular(12), topLeft: Radius.circular(12))),
         child: DefaultTabController(
@@ -117,7 +116,7 @@ class _BusinessInformationSheetState extends State<BusinessInformationSheet>
                           children: [
                             CachedNetworkImage(
                               imageUrl:
-                              'https://info.sbsi.vn/logo/${widget.stockModel.stock.stockCode}',
+                                  'https://info.sbsi.vn/logo/${widget.stockModel.stock.stockCode}',
                               imageBuilder: (context, provider) {
                                 return Container(
                                   height: 63,
@@ -125,10 +124,12 @@ class _BusinessInformationSheetState extends State<BusinessInformationSheet>
                                   decoration: BoxDecoration(
                                       color: AppColors.neutral_06,
                                       borderRadius: BorderRadius.circular(4),
-                                      image: DecorationImage(image: provider,fit: BoxFit.contain)),
+                                      image: DecorationImage(
+                                          image: provider,
+                                          fit: BoxFit.contain)),
                                 );
                               },
-                              errorWidget: (context,_,__){
+                              errorWidget: (context, _, __) {
                                 return Container(
                                   height: 63,
                                   width: 63,
@@ -144,12 +145,12 @@ class _BusinessInformationSheetState extends State<BusinessInformationSheet>
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   const SizedBox(height: 4),
-                                  Text(widget.stockModel.stock.stockCode ,
+                                  Text(widget.stockModel.stock.stockCode,
                                       style: Theme.of(context)
                                           .textTheme
                                           .titleMedium
                                           ?.copyWith(
-                                          fontWeight: FontWeight.w600)),
+                                              fontWeight: FontWeight.w600)),
                                   const SizedBox(height: 4),
                                   Text(
                                     '${widget.stockModel.stock.postTo!.name} : ${widget.stockModel.stock.nameShort}',
@@ -169,21 +170,29 @@ class _BusinessInformationSheetState extends State<BusinessInformationSheet>
                     FutureBuilder<CompanyIntroductionResponse>(
                         future: introduce,
                         builder: (context, snapshot) {
-                          if (snapshot.connectionState == ConnectionState.waiting) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
                             return const SizedBox();
                           }
-                          if (snapshot.connectionState == ConnectionState.done) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.done) {
+                            if (snapshot.hasError) {
+                              return Center(
+                                  child: Text(snapshot.error.toString()));
+                            }
                             var profile = snapshot.data?.data?.profile;
                             var document = parse(profile!);
                             return HomeSection(
                               title: "Về ${widget.stockModel.stockData.sym}",
                               child: Padding(
-                                padding: const EdgeInsets.symmetric(horizontal: 16),
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 16),
                                 child: LayoutBuilder(builder: (context, ctx) {
                                   {
                                     return Text(
                                       document.body?.text.trim() ?? "",
-                                      style: Theme.of(context).textTheme.bodySmall,
+                                      style:
+                                          Theme.of(context).textTheme.bodySmall,
                                     );
                                   }
                                 }),
@@ -231,7 +240,7 @@ class _BusinessInformationSheetState extends State<BusinessInformationSheet>
                     const SizedBox(height: 16),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 16),
-                      child:         currentIndex == 1
+                      child: currentIndex == 1
                           ? SubsidiariesInfoTab(stockModel: widget.stockModel)
                           : GeneralInfoTab(stockModel: widget.stockModel),
                     ),

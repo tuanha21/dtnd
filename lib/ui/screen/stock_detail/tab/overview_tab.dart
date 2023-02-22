@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dtnd/=models=/response/stock_model.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:dtnd/ui/widget/expanded_widget.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
@@ -9,7 +10,10 @@ import 'package:url_launcher/url_launcher.dart';
 import '../../../../=models=/response/company_info.dart';
 import '../../../../=models=/response/news_model.dart';
 import '../../../../=models=/response/stock_news.dart';
+import '../../../../=models=/response/stock_trading_history.dart';
+import '../../../../data/i_data_center_service.dart';
 import '../../../../data/i_network_service.dart';
+import '../../../../data/implementations/data_center_service.dart';
 import '../../../../data/implementations/network_service.dart';
 import '../../../../generated/l10n.dart';
 import '../../../theme/app_color.dart';
@@ -21,6 +25,7 @@ import '../widget/introduct_widget.dart';
 import '../widget/stock_detail_chart.dart';
 import '../widget/stock_detail_news.dart';
 import '../widget/stock_event.dart';
+import 'dart:math' as math;
 
 class OverviewTab extends StatefulWidget {
   const OverviewTab({
@@ -41,14 +46,7 @@ class _OverviewTabState extends State<OverviewTab>
     super.build(context);
     return ListView(
       children: [
-        SizedBox(
-            height: 200,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: StockDetailChart(stockModel: widget.stockModel),
-            )),
-        const SizedBox(height: 16),
-        BasicIndex(stockModel: widget.stockModel),
+        StockDetailChart(stockModel: widget.stockModel),
         const SizedBox(height: 20),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -152,97 +150,97 @@ class _OverviewTabState extends State<OverviewTab>
 
 class BasicIndex extends StatefulWidget {
   final StockModel stockModel;
+  final StockTradingHistory history;
 
-  const BasicIndex({Key? key, required this.stockModel}) : super(key: key);
+  const BasicIndex({Key? key, required this.stockModel, required this.history}) : super(key: key);
 
   @override
   State<BasicIndex> createState() => _BasicIndexState();
 }
 
 class _BasicIndexState extends State<BasicIndex> {
+
   Widget indexPrice() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
-      child: Column(
-        children: [
-          Row(
-            children: [
-              Text(
-                "Chỉ số cơ bản",
-                style: Theme.of(context).textTheme.bodyMedium,
-              ),
-              const SizedBox(width: 6),
-              SvgPicture.asset(AppImages.circleAlert)
-            ],
-          ),
-          const SizedBox(height: 16),
-          Row(
-            children: [
-              Expanded(
-                  child: Column(
-                children: [
-                  Container(
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                        color: AppColors.neutral_06,
-                        borderRadius: BorderRadius.circular(8)),
-                    padding: const EdgeInsets.symmetric(vertical: 10),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Image.asset(AppImages.prefix_down_icon,
-                            height: 20, width: 20),
-                        const SizedBox(width: 4),
-                        Text(
-                          'Giá thấp nhất',
-                          style: Theme.of(context).textTheme.bodySmall,
-                        )
-                      ],
+    var data = widget.history;
+    var max = data.c?.reduce(math.max);
+    var min = data.c?.reduce(math.min);
+    return Column(
+      children: [
+        Row(
+          children: [
+            Text(
+              "Chỉ số cơ bản",
+              style: Theme.of(context).textTheme.bodyMedium,
+            ),
+            const SizedBox(width: 6),
+            SvgPicture.asset(AppImages.circleAlert)
+          ],
+        ),
+        const SizedBox(height: 16),
+        Row(
+          children: [
+            Expanded(
+                child: Column(
+                  children: [
+                    Container(
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                          color: AppColors.neutral_06,
+                          borderRadius: BorderRadius.circular(8)),
+                      padding: const EdgeInsets.symmetric(vertical: 10),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Image.asset(AppImages.prefix_down_icon,
+                              height: 20, width: 20),
+                          const SizedBox(width: 4),
+                          Text(
+                            'Giá thấp nhất',
+                            style: Theme.of(context).textTheme.bodySmall,
+                          )
+                        ],
+                      ),
                     ),
-                  ),
-                  const SizedBox(height: 4),
-                  Text(
-                    widget.stockModel.stockData.lowPrice.value?.toString() ??
-                        "-",
-                    style: Theme.of(context).textTheme.titleMedium,
-                  )
-                ],
-              )),
-              const SizedBox(width: 12),
-              Expanded(
-                  child: Column(
-                children: [
-                  Container(
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                        color: AppColors.neutral_06,
-                        borderRadius: BorderRadius.circular(8)),
-                    padding: const EdgeInsets.symmetric(vertical: 10),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Image.asset(AppImages.prefix_up_icon,
-                            height: 20, width: 20),
-                        const SizedBox(width: 4),
-                        Text(
-                          'Giá cao nhất',
-                          style: Theme.of(context).textTheme.bodySmall,
-                        )
-                      ],
+                    const SizedBox(height: 4),
+                    Text(
+                      min?.toString() ?? "-",
+                      style: Theme.of(context).textTheme.titleMedium,
+                    )
+                  ],
+                )),
+            const SizedBox(width: 12),
+            Expanded(
+                child: Column(
+                  children: [
+                    Container(
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                          color: AppColors.neutral_06,
+                          borderRadius: BorderRadius.circular(8)),
+                      padding: const EdgeInsets.symmetric(vertical: 10),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Image.asset(AppImages.prefix_up_icon,
+                              height: 20, width: 20),
+                          const SizedBox(width: 4),
+                          Text(
+                            'Giá cao nhất',
+                            style: Theme.of(context).textTheme.bodySmall,
+                          )
+                        ],
+                      ),
                     ),
-                  ),
-                  const SizedBox(height: 4),
-                  Text(
-                    widget.stockModel.stockData.highPrice.value?.toString() ??
-                        "-",
-                    style: Theme.of(context).textTheme.titleMedium,
-                  )
-                ],
-              )),
-            ],
-          )
-        ],
-      ),
+                    const SizedBox(height: 4),
+                    Text(
+                      max?.toString() ?? "-",
+                      style: Theme.of(context).textTheme.titleMedium,
+                    )
+                  ],
+                )),
+          ],
+        )
+      ],
     );
   }
 
@@ -250,32 +248,38 @@ class _BasicIndexState extends State<BasicIndex> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        indexPrice(),
-        ExpandedSection(
-            expand: isExpanded,
-            child: IndexWidget(stockModel: widget.stockModel)),
-        const SizedBox(height: 16),
-        GestureDetector(
-          onTap: () {
-            setState(() {
-              isExpanded = !isExpanded;
-            });
-          },
-          child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 48, vertical: 4),
-            decoration: BoxDecoration(
-              color: AppColors.primary_04,
-              borderRadius: BorderRadius.circular(12),
+    return Container(
+      margin: const EdgeInsets.all(16),
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+          color: AppColors.light_bg, borderRadius: BorderRadius.circular(16)),
+      child: Column(
+        children: [
+          indexPrice(),
+          ExpandedSection(
+              expand: isExpanded,
+              child: IndexWidget(stockModel: widget.stockModel)),
+          const SizedBox(height: 16),
+          GestureDetector(
+            onTap: () {
+              setState(() {
+                isExpanded = !isExpanded;
+              });
+            },
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 48, vertical: 4),
+              decoration: BoxDecoration(
+                color: AppColors.primary_04,
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Icon(
+                !isExpanded ? Icons.arrow_drop_down : Icons.arrow_drop_up,
+                color: AppColors.light_bg,
+              ),
             ),
-            child: Icon(
-              !isExpanded ? Icons.arrow_drop_down : Icons.arrow_drop_up,
-              color: AppColors.light_bg,
-            ),
-          ),
-        )
-      ],
+          )
+        ],
+      ),
     );
   }
 }
@@ -525,54 +529,69 @@ class _ListNewsISheetState extends State<ListNewsISheet> {
                         shrinkWrap: true,
                         itemBuilder: (context, index) {
                           if (index == 0) {
-                            return Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                CachedNetworkImage(
-                                  imageUrl: listNews[index].imageUrl!,
-                                  imageBuilder: (BuildContext context,
-                                      ImageProvider imageProvider) {
-                                    return Container(
-                                      height: 200,
-                                      width: MediaQuery.of(context).size.width,
-                                      decoration: BoxDecoration(
-                                          image: DecorationImage(
-                                              image: imageProvider,
-                                              fit: BoxFit.fill)),
-                                    );
-                                  },
-                                ),
-                                const SizedBox(height: 16),
-                                Text(listNews[index].title ?? "",
-                                    style:
-                                        Theme.of(context).textTheme.bodyLarge),
-                                const SizedBox(height: 10),
-                                Text(listNews[index].head ?? "",
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodySmall
-                                        ?.copyWith(
-                                            color: AppColors.neutral_03)),
-                                const SizedBox(height: 10),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(listNews[index].source ?? "",
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodySmall
-                                            ?.copyWith(
-                                                fontWeight: FontWeight.w700)),
-                                    Text(
-                                        DateFormat("dd/MM/yyyy")
-                                            .format(listNews[index].dateTime!),
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodySmall),
-                                  ],
-                                )
-                              ],
+                            return GestureDetector(
+                              onTap: () {
+                                Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) => NewsDetailScreen(
+                                      newsModel: NewsModel(
+                                          title: listNews[index].title,
+                                          articleID: listNews[index].articleID,
+                                          headImg: listNews[index].imageUrl,
+                                          publishTime:
+                                              listNews[index].publishTime)),
+                                ));
+                              },
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  CachedNetworkImage(
+                                    imageUrl: listNews[index].imageUrl!,
+                                    imageBuilder: (BuildContext context,
+                                        ImageProvider imageProvider) {
+                                      return Container(
+                                        height: 200,
+                                        width:
+                                            MediaQuery.of(context).size.width,
+                                        decoration: BoxDecoration(
+                                            image: DecorationImage(
+                                                image: imageProvider,
+                                                fit: BoxFit.fill)),
+                                      );
+                                    },
+                                  ),
+                                  const SizedBox(height: 16),
+                                  Text(listNews[index].title ?? "",
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyLarge),
+                                  const SizedBox(height: 10),
+                                  Text(listNews[index].head ?? "",
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodySmall
+                                          ?.copyWith(
+                                              color: AppColors.neutral_03)),
+                                  const SizedBox(height: 10),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(listNews[index].source ?? "",
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodySmall
+                                              ?.copyWith(
+                                                  fontWeight: FontWeight.w700)),
+                                      Text(
+                                          DateFormat("dd/MM/yyyy").format(
+                                              listNews[index].dateTime!),
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodySmall),
+                                    ],
+                                  )
+                                ],
+                              ),
                             );
                           }
                           return GestureDetector(
