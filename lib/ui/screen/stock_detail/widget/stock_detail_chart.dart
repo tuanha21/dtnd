@@ -15,6 +15,8 @@ import '../../../../data/implementations/data_center_service.dart';
 import '../../../../utilities/time_utils.dart';
 import 'dart:math' as math;
 
+import '../tab/overview_tab.dart';
+
 class StockDetailChart extends StatefulWidget {
   const StockDetailChart({
     super.key,
@@ -77,78 +79,95 @@ class _StockDetailChartState extends State<StockDetailChart>
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Expanded(
-          child: StreamBuilder<List<num>>(
-              stream: stockTrading.stream,
-              initialData: const [],
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  var list = snapshot.data;
-                  if (list == null || list.isEmpty) return const SizedBox();
-                  annotation = list.first;
-                  max = math.max<num>(list.reduce(math.max), annotation);
-                  min = math.min<num>(list.reduce(math.min), annotation);
-                  return Padding(
-                    padding: const EdgeInsets.only(left: 0, right: 20),
-                    child: charts.NumericComboChart(
-                      List<charts.Series<num, num>>.generate(
-                          list.length,
-                          (index) => charts.Series<num, num>(
-                                id: 'chart1',
-                                colorFn: (_, __) =>
-                                    charts.ColorUtil.fromDartColor(
-                                        widget.stockModel.stockData.color),
-                                domainFn: (num indexBoard, int? index) {
-                                  return listTime[index!].toInt();
-                                },
-                                measureFn: (num sales, _) {
-                                  return sales;
-                                },
-                                data: list,
-                              )..setAttribute(charts.measureAxisIdKey,
-                                  "secondaryMeasureAxisId")),
-                      defaultRenderer:
-                          charts.LineRendererConfig(smoothLine: true),
-                      domainAxis: domainSpec(listTime),
-                      secondaryMeasureAxis: axisSpec(),
-                    ),
-                  );
-                }
-                return const SizedBox();
-              }),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: SizedBox(
+            height: 150,
+            child: StreamBuilder<List<num>>(
+                stream: stockTrading.stream,
+                initialData: const [],
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    var list = snapshot.data;
+                    if (list == null || list.isEmpty) return const SizedBox();
+                    annotation = list.first;
+                    max = math.max<num>(list.reduce(math.max), annotation);
+                    min = math.min<num>(list.reduce(math.min), annotation);
+                    return Padding(
+                      padding: const EdgeInsets.only(left: 0, right: 20),
+                      child: charts.NumericComboChart(
+                        List<charts.Series<num, num>>.generate(
+                            list.length,
+                            (index) => charts.Series<num, num>(
+                                  id: 'chart1',
+                                  colorFn: (_, __) =>
+                                      charts.ColorUtil.fromDartColor(
+                                          widget.stockModel.stockData.color),
+                                  domainFn: (num indexBoard, int? index) {
+                                    return listTime[index!].toInt();
+                                  },
+                                  measureFn: (num sales, _) {
+                                    return sales;
+                                  },
+                                  data: list,
+                                )..setAttribute(charts.measureAxisIdKey,
+                                    "secondaryMeasureAxisId")),
+                        defaultRenderer:
+                            charts.LineRendererConfig(smoothLine: true),
+                        domainAxis: domainSpec(listTime),
+                        secondaryMeasureAxis: axisSpec(),
+                      ),
+                    );
+                  }
+                  return const SizedBox();
+                }),
+          ),
         ),
         const SizedBox(height: 10),
-        Row(
-          children: List<Widget>.generate(
-              TimeSeries.values.length,
-              (index) => Expanded(
-                      child: GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        timeSeries = TimeSeries.values[index];
-                        getStockTradingHistory();
-                      });
-                    },
-                    child: Container(
-                        height: 22,
-                        margin: EdgeInsets.only(left: index == 0 ? 0 : 7),
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(
-                            color: AppColors.neutral_05,
-                            borderRadius: BorderRadius.circular(4)),
-                        child: Text(
-                          TimeSeries.values[index].title,
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodySmall
-                              ?.copyWith(
-                                  fontWeight: FontWeight.w600,
-                                  color: timeSeries == TimeSeries.values[index]
-                                      ? AppColors.primary_01
-                                      : AppColors.text_black),
-                        )),
-                  ))),
-        )
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: Row(
+            children: List<Widget>.generate(
+                TimeSeries.values.length,
+                (index) => Expanded(
+                        child: GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          timeSeries = TimeSeries.values[index];
+                          getStockTradingHistory();
+                        });
+                      },
+                      child: Container(
+                          height: 22,
+                          margin: EdgeInsets.only(left: index == 0 ? 0 : 7),
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                              color: AppColors.neutral_05,
+                              borderRadius: BorderRadius.circular(4)),
+                          child: Text(
+                            TimeSeries.values[index].title,
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodySmall
+                                ?.copyWith(
+                                    fontWeight: FontWeight.w600,
+                                    color: timeSeries == TimeSeries.values[index]
+                                        ? AppColors.primary_01
+                                        : AppColors.text_black),
+                          )),
+                    ))),
+          ),
+        ),
+        const SizedBox(height: 16),
+        StreamBuilder<List<num>>(
+            stream: stockTrading.stream,
+          builder: (context, snapshot) {
+              if(snapshot.hasData) {
+                return BasicIndex(stockModel: widget.stockModel, history: stockTradingHistory!);
+              }
+              return const SizedBox();
+          }
+        ),
       ],
     );
   }

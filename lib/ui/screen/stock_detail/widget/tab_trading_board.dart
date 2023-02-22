@@ -42,7 +42,7 @@ class _TabTradingBoardState extends State<TabTradingBoard> {
           const Divider(
             thickness: 0.5,
             color: AppColors.neutral_04,
-            height: 32,
+            height: 20,
             endIndent: 32,
             indent: 32,
           ),

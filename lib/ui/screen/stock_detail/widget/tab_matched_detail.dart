@@ -76,6 +76,7 @@ class _TabMatchedDetailState extends State<TabMatchedDetail> {
   Widget build(BuildContext context) {
     return Column(
       children: [
+        const SizedBox(height: 16),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: Row(
