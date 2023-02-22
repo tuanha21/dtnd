@@ -50,11 +50,11 @@ class HomeAppbarDelegate extends SliverPersistentHeaderDelegate {
         }
       } else {
         textTitle = "DTND";
-        avatar = const SizedBox.square(
+        avatar = SizedBox.square(
           dimension: 36,
           child: Icon(
             Icons.account_circle_rounded,
-            color: Colors.white,
+            color: ratio <= 0 ? Colors.black : Colors.white,
           ),
         );
       }
@@ -67,7 +67,7 @@ class HomeAppbarDelegate extends SliverPersistentHeaderDelegate {
             textTitle,
             style: Theme.of(context).textTheme.labelLarge?.copyWith(
                   fontWeight: FontWeight.w700,
-                  color: Colors.white,
+                  color: ratio <= 0 ? Colors.black : Colors.white,
                 ),
           ),
         ],

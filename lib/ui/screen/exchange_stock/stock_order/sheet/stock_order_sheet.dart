@@ -1,18 +1,31 @@
+import 'dart:async';
+
 import 'package:dtnd/=models=/exchange.dart';
+import 'package:dtnd/=models=/response/stock.dart';
+import 'package:dtnd/=models=/response/stock_cash_balance_model.dart';
 import 'package:dtnd/=models=/response/stock_info_core.dart';
 import 'package:dtnd/=models=/response/stock_model.dart';
 import 'package:dtnd/=models=/side.dart';
 import 'package:dtnd/=models=/ui_model/user_cmd.dart';
+import 'package:dtnd/data/i_data_center_service.dart';
+import 'package:dtnd/data/i_exchange_service.dart';
 import 'package:dtnd/data/i_network_service.dart';
 import 'package:dtnd/data/i_user_service.dart';
+import 'package:dtnd/data/implementations/data_center_service.dart';
+import 'package:dtnd/data/implementations/exchange_service.dart';
 import 'package:dtnd/data/implementations/network_service.dart';
 import 'package:dtnd/data/implementations/user_service.dart';
 import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/screen/exchange_stock/stock_order/data/order_data.dart';
+import 'package:dtnd/ui/screen/search/search_screen.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
+import 'package:dtnd/ui/theme/app_textstyle.dart';
 import 'package:dtnd/ui/widget/button/single_color_text_button.dart';
 import 'package:dtnd/ui/widget/icon/sheet_header.dart';
+import 'package:dtnd/ui/widget/icon/stock_icon.dart';
 import 'package:dtnd/ui/widget/input/interval_input.dart';
+import 'package:dtnd/utilities/num_utils.dart';
+import 'package:dtnd/utilities/time_utils.dart';
 import 'package:flutter/material.dart';
 
 class StockOrderSheet extends StatefulWidget {
@@ -30,45 +43,74 @@ class StockOrderSheet extends StatefulWidget {
 class _StockOrderSheetState extends State<StockOrderSheet> {
   final INetworkService networkService = NetworkService();
   final IUserService userService = UserService();
+  final IExchangeService exchangeService = ExchangeService();
+  final IDataCenterService dataCenterService = DataCenterService();
   late final Set<OrderType> listOrderTypes;
   final TextEditingController priceController = TextEditingController();
   final TextEditingController volumnController =
       TextEditingController(text: "100");
 
+  Timer? onPriceStoppedTyping;
+  bool typingPrice = false;
+
   late OrderType selectedOrderType;
+
+  late StockModel stockModel;
 
   StockInfoCore? stockInfoCore;
 
+  StockCashBalanceModel? stockCashBalanceModel;
+
+  bool showSearchBox = false;
+
   @override
   void initState() {
+    stockModel = widget.stockModel;
     super.initState();
     if (widget.orderData != null) {
-      setState(() {
-        listOrderTypes = widget.stockModel.stock.postTo?.listOrderType ?? {};
-        selectedOrderType = widget.orderData!.orderType;
-        priceController.text = widget.orderData!.price;
-        volumnController.text = widget.orderData!.volumn.toString();
-      });
+      listOrderTypes = stockModel.stock.postTo?.listOrderType ?? {};
+      selectedOrderType = widget.orderData!.orderType;
+      priceController.text = widget.orderData!.price;
+      volumnController.text = widget.orderData!.volumn.toString();
     } else {
-      setState(() {
-        listOrderTypes = widget.stockModel.stock.postTo?.listOrderType ?? {};
-        selectedOrderType = listOrderTypes.first;
-      });
+      listOrderTypes = stockModel.stock.postTo?.listOrderType ?? {};
+      selectedOrderType = listOrderTypes.first;
+
       select(selectedOrderType);
     }
     getStockInfoCore();
+    getStockCashBalance();
+    // stockSearchFocusNode.addListener(() {
+    //   if (stockSearchFocusNode.hasFocus) {
+    //     setState(() {
+    //       showSearchBox = true;
+    //     });
+    //   } else {
+    //     setState(() {
+    //       showSearchBox = false;
+    //     });
+    //   }
+    // });
   }
 
-  void getStockInfoCore() async {
+  Future<void> getStockInfoCore() async {
     stockInfoCore =
-        await widget.stockModel.getStockInfoCore(networkService, userService);
+        await stockModel.getStockInfoCore(networkService, userService);
+  }
+
+  Future<void> getStockCashBalance() async {
+    stockCashBalanceModel = await exchangeService.getSCashBalance(
+        stockCode: stockModel.stock.stockCode,
+        price: priceController.text,
+        side: Side.buy);
+    setState(() {});
   }
 
   void select(OrderType orderType) {
     if (orderType.isLO) {
       final String currentPrice =
-          widget.stockModel.stockData.lastPrice.value?.toStringAsPrecision(4) ??
-              widget.stockModel.stockData.r.value?.toString() ??
+          stockModel.stockData.lastPrice.value?.toStringAsFixed(2) ??
+              stockModel.stockData.r.value?.toString() ??
               "0";
       priceController.value = TextEditingValue(
         text: currentPrice,
@@ -83,19 +125,21 @@ class _StockOrderSheetState extends State<StockOrderSheet> {
     setState(() {
       selectedOrderType = orderType;
     });
+    getStockCashBalance();
   }
 
   void onChangedPrice(num value) {
     setState(() {
       selectedOrderType = listOrderTypes.first;
     });
+    getStockCashBalance();
   }
 
   bool isSelected(OrderType orderType) => orderType == selectedOrderType;
 
   void toConfirmPanel(Side side) async {
     final OrderData orderData = OrderData(
-      stockModel: widget.stockModel,
+      stockModel: stockModel,
       side: side,
       orderType: selectedOrderType,
       volumn: num.parse(volumnController.text),
@@ -113,7 +157,7 @@ class _StockOrderSheetState extends State<StockOrderSheet> {
     //         //   onChoosen: (value) => Navigator.of(context).pop(value),
     //         // ),
     //         StockOrderConfirmSheet(
-    //           stockModel: widget.stockModel,
+    //           stockModel: stockModel,
     //           orderData: orderData,
     //         )
     //       ],
@@ -122,8 +166,18 @@ class _StockOrderSheetState extends State<StockOrderSheet> {
     // );
   }
 
+  void changeStock(StockModel model) {
+    setState(() {
+      stockModel = model;
+    });
+    select(selectedOrderType);
+    getStockInfoCore();
+    getStockCashBalance();
+  }
+
   @override
   Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
     return SafeArea(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
@@ -133,6 +187,149 @@ class _StockOrderSheetState extends State<StockOrderSheet> {
             SheetHeader(
               title: S.of(context).trading,
               implementBackButton: false,
+            ),
+            const SizedBox(height: 20),
+            Builder(builder: (context) {
+              return Row(
+                children: [
+                  StockIcon(
+                    color: Colors.white,
+                    stockCode: stockModel.stock.stockCode,
+                  ),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          children: [
+                            Text(
+                              stockModel.stock.stockCode,
+                              style: textTheme.titleSmall,
+                            ),
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            Flexible(
+                              child: Text(
+                                stockModel.stock.nameShort ?? "",
+                                overflow: TextOverflow.ellipsis,
+                                style: AppTextStyle.labelSmall_10
+                                    .copyWith(color: AppColors.neutral_03),
+                              ),
+                            ),
+
+                            // Expanded(
+                            //   child: Container(
+                            //     height: 4,
+                            //     decoration: const BoxDecoration(
+                            //       borderRadius:
+                            //           BorderRadius.all(Radius.circular(4)),
+                            //       color: AppColors.neutral_06,
+                            //     ),
+                            //     child: Row(
+                            //       children: [
+                            //         Flexible(
+                            //           flex: (widget.volPc ?? 0) ~/ 1,
+                            //           child: Container(
+                            //             height: 4,
+                            //             decoration: const BoxDecoration(
+                            //               borderRadius: BorderRadius.all(
+                            //                   Radius.circular(4)),
+                            //               color: AppColors.graph_7,
+                            //             ),
+                            //           ),
+                            //         ),
+                            //         Flexible(
+                            //           flex: 100 - ((widget.volPc ?? 0) ~/ 1),
+                            //           child: Container(),
+                            //         )
+                            //       ],
+                            //     ),
+                            //   ),
+                            // )
+                          ],
+                        )
+                      ],
+                    ),
+                  ),
+                  Material(
+                    child: InkWell(
+                      onTap: () {
+                        Navigator.of(context)
+                            .push(MaterialPageRoute(
+                          builder: (context) => const SearchScreen(),
+                        ))
+                            .then((value) async {
+                          if (value is Stock) {
+                            dataCenterService.getStockModelsFromStockCodes(
+                                [value.stockCode]).then((stockModels) {
+                              if (stockModels?.isNotEmpty ?? false) {
+                                return changeStock(stockModels!.first);
+                              }
+                            });
+                          }
+                        });
+                      },
+                      child: Ink(
+                        child: const Icon(
+                          Icons.cancel_outlined,
+                          fill: 1,
+                          size: 30,
+                          color: AppColors.semantic_03,
+                        ),
+                      ),
+                    ),
+                  )
+                ],
+              );
+            }),
+            const SizedBox(height: 20),
+            Row(
+              children: [
+                Row(
+                  children: [
+                    Text(
+                      "${S.of(context).purchasing_ability}: ",
+                      style: AppTextStyle.bodySmall_12.copyWith(
+                          fontWeight: FontWeight.w600,
+                          color: AppColors.neutral_04),
+                    ),
+                    Text(
+                      "${NumUtils.formatInteger(stockCashBalanceModel?.pp, "0")}đ",
+                      style: textTheme.titleSmall,
+                    ),
+                  ],
+                ),
+                const SizedBox(width: 30),
+                Row(
+                  children: [
+                    Text(
+                      "${S.of(context).maximum}: ",
+                      style: AppTextStyle.bodySmall_12.copyWith(
+                          fontWeight: FontWeight.w600,
+                          color: AppColors.neutral_04),
+                    ),
+                    Text(
+                      NumUtils.formatInteger(
+                          stockCashBalanceModel?.volumeAvaiable, "0"),
+                      style: AppTextStyle.titleSmall_14
+                          .copyWith(color: AppColors.semantic_01),
+                    ),
+                    Text(
+                      "|",
+                      style: textTheme.titleSmall,
+                    ),
+                    Text(
+                      NumUtils.formatInteger(
+                          stockCashBalanceModel?.balance, "0"),
+                      style: AppTextStyle.titleSmall_14
+                          .copyWith(color: AppColors.semantic_03),
+                    ),
+                  ],
+                ),
+              ],
             ),
             const SizedBox(height: 20),
             Wrap(
@@ -153,11 +350,12 @@ class _StockOrderSheetState extends State<StockOrderSheet> {
                   child: IntervalInput(
                     controller: priceController,
                     labelText: S.of(context).price,
-                    interval: widget.stockModel.stock.postTo?.getPriceInterval,
-                    defaultValue: widget.stockModel.stockData.lastPrice.value ??
-                        widget.stockModel.stockData.r.value ??
+                    interval: stockModel.stock.postTo?.getPriceInterval,
+                    defaultValue: stockModel.stockData.lastPrice.value ??
+                        stockModel.stockData.r.value ??
                         0,
                     onChanged: onChangedPrice,
+                    onTextChanged: _onPriceChangeHandler,
                   ),
                 ),
                 const SizedBox(width: 16),
@@ -193,6 +391,21 @@ class _StockOrderSheetState extends State<StockOrderSheet> {
           ],
         ),
       ),
+    );
+  }
+
+  void _onPriceChangeHandler(String value) {
+    if (onPriceStoppedTyping != null) {
+      setState(() {
+        typingPrice = true;
+      }); // clear timer
+      onPriceStoppedTyping!.cancel();
+    }
+    setState(
+      () => onPriceStoppedTyping = Timer(TimeUtilities.typingDelay, () {
+        typingPrice = false;
+        getStockCashBalance();
+      }),
     );
   }
 }

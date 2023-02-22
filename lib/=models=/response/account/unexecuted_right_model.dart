@@ -1,7 +1,7 @@
 import 'package:dtnd/=models=/core_response_model.dart';
 
 class UnexecutedRightModel implements CoreResponseModel {
-  String? pKRIGHTSTOCKINFO;
+  late final String pKRIGHTSTOCKINFO;
   String? cRIGHTTYPENAME;
   String? cRIGHTTYPENAMEEN;
   num? cRIGHTBUYFLAG;
@@ -48,7 +48,7 @@ class UnexecutedRightModel implements CoreResponseModel {
   }
 
   UnexecutedRightModel(
-      {this.pKRIGHTSTOCKINFO,
+      {required this.pKRIGHTSTOCKINFO,
       this.cRIGHTTYPENAME,
       this.cRIGHTTYPENAMEEN,
       this.cRIGHTBUYFLAG,

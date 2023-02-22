@@ -3,7 +3,6 @@
 import 'dart:convert';
 
 import 'package:dtnd/=models=/core_response_model.dart';
-import 'package:dtnd/=models=/response/account_info_model.dart';
 import 'package:dtnd/=models=/response/business_profile_model.dart';
 import 'package:dtnd/=models=/response/company_info.dart';
 import 'package:dtnd/=models=/response/deep_model.dart';
@@ -16,7 +15,6 @@ import 'package:dtnd/=models=/response/introduct_company.dart';
 import 'package:dtnd/=models=/response/liquidity_model.dart';
 import 'package:dtnd/=models=/response/news_detail.dart';
 import 'package:dtnd/=models=/response/news_model.dart';
-import 'package:dtnd/=models=/response/s_cash_balance.dart';
 import 'package:dtnd/=models=/response/security_basic_info_model.dart';
 import 'package:dtnd/=models=/response/share_holder.dart';
 import 'package:dtnd/=models=/response/stock.dart';
@@ -34,9 +32,9 @@ import 'package:dtnd/=models=/response/subsidiaries_model.dart';
 import 'package:dtnd/=models=/response/top_influence_model.dart';
 import 'package:dtnd/=models=/response/top_interested_model.dart';
 import 'package:dtnd/=models=/response/total_asset_model.dart';
-import 'package:dtnd/=models=/response/user_token.dart';
 import 'package:dtnd/=models=/request/request_model.dart';
 import 'package:dtnd/=models=/response/world_index_model.dart';
+import 'package:dtnd/=models=/ui_model/exception.dart';
 import 'package:dtnd/=models=/ui_model/field_tree_element_model.dart';
 import 'package:dtnd/config/service/environment.dart';
 import 'package:dtnd/data/i_network_service.dart';
@@ -53,6 +51,11 @@ import '../../=models=/response/sec_event.dart';
 import '../../=models=/response/sec_trading.dart';
 import '../../=models=/response/stock_industry.dart';
 
+const List<String> sessionExpiredMsg = [
+  "FOException.InvalidSessionException",
+  "FOException.NotLoginException: Not logged in!"
+];
+
 class NetworkService implements INetworkService {
   final http.Client client = http.Client();
 
@@ -63,6 +66,8 @@ class NetworkService implements INetworkService {
   static NetworkService get instance => _instance;
 
   factory NetworkService() => _instance;
+
+  late final void Function() onSessionExpired;
 
   late Environment environment;
 
@@ -129,13 +134,24 @@ class NetworkService implements INetworkService {
 
   dynamic decode(dynamic data) {
     try {
+      dynamic decoded;
       if (data is Uint8List) {
-        return jsonDecode(utf8Codec.decode(data));
+        decoded = jsonDecode(utf8Codec.decode(data));
       } else {
-        return jsonDecode(data);
+        decoded = jsonDecode(data);
       }
+      if (decoded is Map<String, dynamic> &&
+          decoded["rs"] != null &&
+          sessionExpiredMsg.contains(decoded["rs"])) {
+        throw const SessionExpiredException();
+      }
+      return decoded;
     } catch (e) {
       // print(data);
+      if (e is SessionExpiredException) {
+        onSessionExpired.call();
+        return;
+      }
       logger.e(e.toString());
       return null;
     }
@@ -156,6 +172,11 @@ class NetworkService implements INetworkService {
 
     initSocket(sbboard_url);
     return;
+  }
+
+  @override
+  void regSessionExpiredCallback(void Function() onSessionExpired) {
+    this.onSessionExpired = onSessionExpired;
   }
 
   @override
@@ -214,7 +235,7 @@ class NetworkService implements INetworkService {
     response = response["data"];
     final List<T> result = [];
     for (var element in response) {
-      result.add(CoreResponseModel.fromJson<T>(element));
+      result.add(CoreResponseModel.fromJson<T>(element)!);
     }
     return result;
   }
@@ -281,14 +302,12 @@ class NetworkService implements INetworkService {
       "from": "$from",
       "to": "$to",
     };
-    // logger.v(queryParameters);
     final http.Response response =
         await client.get(url_board_data_feed(queryParameters));
     final responseBody = decode(response.bodyBytes);
     if (responseBody == null) {
       return null;
     }
-    // logger.v(responseBody);
     if (responseBody == null) throw Exception();
     final StockTradingHistory data = StockTradingHistory.fromJson(responseBody);
     return data;
@@ -454,13 +473,6 @@ class NetworkService implements INetworkService {
     }
   }
 
-  @override
-  Future<SCashBalance> getSCashBalance(RequestModel requestModel) async {
-    final http.Response response =
-        await client.post(url_core_endpoint, body: requestModel.toString());
-    return SCashBalance.fromJson(decode(response.bodyBytes));
-  }
-
   /// Todo: User
 
   @override
@@ -476,7 +488,6 @@ class NetworkService implements INetworkService {
         await client.post(url_core1("searchMarket/history"), body: body);
     response = decode(response.bodyBytes);
     final List<String> list = [];
-    logger.v(response);
     if (response["rc"] == 200) {
       for (var element in response["data"]) {
         list.add(element);
@@ -741,7 +752,6 @@ class NetworkService implements INetworkService {
       throw response["message"];
     }
     response = decode(response["data"]);
-    logger.v(response);
     final StockRankingFinancialIndex result =
         StockRankingFinancialIndex.fromJson(response);
     return result;

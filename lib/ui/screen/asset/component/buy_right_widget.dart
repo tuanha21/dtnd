@@ -1,3 +1,4 @@
+import 'package:dtnd/=models=/response/account/i_account.dart';
 import 'package:dtnd/=models=/response/account/unexecuted_right_model.dart';
 import 'package:dtnd/=models=/response/stock.dart';
 import 'package:dtnd/config/service/app_services.dart';
@@ -23,10 +24,12 @@ class BuyRightWidget extends StatefulWidget {
     required this.data,
     this.onHold,
     this.onExpand,
+    required this.accountModel,
   });
   final UnexecutedRightModel? data;
   final ValueChanged<UnexecutedRightModel?>? onExpand;
   final VoidCallback? onHold;
+  final IAccountModel accountModel;
 
   @override
   State<BuyRightWidget> createState() => _BuyRightWidgetState();
@@ -291,6 +294,7 @@ class _BuyRightWidgetState extends State<BuyRightWidget> {
                                   IExecuteRightSheet(widget.data!).show(
                                       context,
                                       ExecuteRightSheet(
+                                        accountModel: widget.accountModel,
                                         unexecutedRightModel: widget.data!,
                                         stock: stock!,
                                       ));

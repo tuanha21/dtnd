@@ -1,11 +1,14 @@
 import 'package:dtnd/=models=/request/request_model.dart';
+import 'package:dtnd/=models=/response/account/unexecuted_right_model.dart';
+import 'package:dtnd/=models=/response/account/i_account.dart';
 import 'package:dtnd/=models=/response/order_model/base_order_model.dart';
-import 'package:dtnd/=models=/response/s_cash_balance.dart';
+import 'package:dtnd/=models=/response/stock_cash_balance_model.dart';
 import 'package:dtnd/=models=/side.dart';
 import 'package:dtnd/data/i_exchange_service.dart';
 import 'package:dtnd/data/i_network_service.dart';
 import 'package:dtnd/data/i_user_service.dart';
 import 'package:dtnd/data/implementations/network_service.dart';
+import 'package:dtnd/data/implementations/user_service.dart';
 import 'package:dtnd/ui/screen/exchange_stock/stock_order/data/order_data.dart';
 import 'package:dtnd/utilities/logger.dart';
 import 'package:dtnd/utilities/num_utils.dart';
@@ -20,6 +23,7 @@ class ExchangeService implements IExchangeService {
   factory ExchangeService() => _instance;
 
   final INetworkService networkService = NetworkService();
+  final IUserService userService = UserService();
 
   @override
   Future<BaseOrderModel?> createNewOrder(
@@ -68,17 +72,60 @@ class ExchangeService implements IExchangeService {
   }
 
   @override
-  Future<SCashBalance> getSCashBalance(IUserService userService,
-      {required String stockCode, required String price, required Side side}) {
+  Future<StockCashBalanceModel> getSCashBalance(
+      {required String stockCode,
+      required String price,
+      required Side side}) async {
     final RequestDataModel requestDataModel = RequestDataModel.stringType(
       cmd: "Web.sCashBalance",
-      p1: userService.token.value!.user,
+      p1: "${userService.token.value!.user}6",
       p2: stockCode,
       p3: price,
       p4: side.code,
     );
+
     final RequestModel requestModel =
         RequestModel(userService, group: "Q", data: requestDataModel);
-    return networkService.getSCashBalance(requestModel);
+    logger.v(requestModel.toJson());
+    final response = await networkService
+        .requestTraditionalApi<StockCashBalanceModel>(requestModel);
+    logger.v(response);
+    if (response == null) {
+      throw Exception();
+    }
+
+    return response;
+  }
+
+  @override
+  Future<void> registerRight(
+      {required IAccountModel accountModel,
+      required UnexecutedRightModel right,
+      required String volumn,
+      required String pin}) {
+    final RequestDataModel requestDataModel = RequestDataModel.stringType(
+      cmd: "UpdateRightRegister",
+      p1: accountModel.accCode,
+      p2: right.pKRIGHTSTOCKINFO,
+      p3: volumn,
+      p4: accountModel.accCode,
+      p6: pin,
+    );
+
+    bool hasError(dynamic json) => true;
+
+    onError(dynamic json) {
+      if (json["rc"] <= 0) {
+        throw json["rs"];
+      } else {
+        return;
+      }
+    }
+
+    final RequestModel requestModel =
+        RequestModel(userService, group: "B", data: requestDataModel);
+
+    return networkService.requestTraditionalApi(requestModel,
+        hasError: hasError, onError: onError);
   }
 }

@@ -253,7 +253,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "matched_price": MessageLookupByLibrary.simpleMessage("Giá khớp"),
         "matched_vol": MessageLookupByLibrary.simpleMessage("KL khớp"),
         "matching": MessageLookupByLibrary.simpleMessage("Đang khớp"),
+        "maximum": MessageLookupByLibrary.simpleMessage("Tối đa"),
         "million_short": MessageLookupByLibrary.simpleMessage("Tr"),
+        "minimum": MessageLookupByLibrary.simpleMessage("Tối thiểu"),
         "minimum_ee": MessageLookupByLibrary.simpleMessage("Sức mua tối thiểu"),
         "minutes": MessageLookupByLibrary.simpleMessage(" phút"),
         "minutes_ago": m6,
@@ -305,6 +307,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "price_decrease": MessageLookupByLibrary.simpleMessage("Giảm giá"),
         "price_increase": MessageLookupByLibrary.simpleMessage("Tăng giá"),
         "profit_and_loss": MessageLookupByLibrary.simpleMessage("Lãi/lỗ"),
+        "purchasing_ability": MessageLookupByLibrary.simpleMessage("Sức mua"),
         "qa_base": MessageLookupByLibrary.simpleMessage("Cơ sở"),
         "qa_bond": MessageLookupByLibrary.simpleMessage("Trái phiếu"),
         "qa_copytrade": MessageLookupByLibrary.simpleMessage("Copytrade"),
@@ -313,6 +316,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "qa_money": MessageLookupByLibrary.simpleMessage("Tiền gửi"),
         "qa_pack_enrol": MessageLookupByLibrary.simpleMessage("ĐK gói"),
         "ref": MessageLookupByLibrary.simpleMessage("TC"),
+        "register_right_failed": MessageLookupByLibrary.simpleMessage(
+            "Đăng ký quyền không thành công"),
+        "register_right_successfully":
+            MessageLookupByLibrary.simpleMessage("Đăng ký quyền thành công"),
         "rename_catalog_to": m8,
         "revenue": MessageLookupByLibrary.simpleMessage("Doanh thu"),
         "right": MessageLookupByLibrary.simpleMessage("Quyền"),
@@ -327,6 +334,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "sell_price": MessageLookupByLibrary.simpleMessage("Giá bán ra"),
         "session_expired_in":
             MessageLookupByLibrary.simpleMessage("Hết phiên đăng nhập sau "),
+        "session_had_been_expired":
+            MessageLookupByLibrary.simpleMessage("Phiên đăng nhập đã hết hạn"),
         "setting_and_secutiry":
             MessageLookupByLibrary.simpleMessage("Cài đặt và bảo mật"),
         "sex": MessageLookupByLibrary.simpleMessage("Giới tính"),

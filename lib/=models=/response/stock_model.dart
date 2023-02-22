@@ -114,14 +114,14 @@ class StockModel {
       return json['rc'] <= 0;
     }
 
-    final response = await networkService
+    stockDataCore = await networkService
         .requestTraditionalApi<StockInfoCore>(requestModel, hasError: hasError);
     // if (response != null) {
     //   return response;
     // } else {
     //   throw Exception();
     // }
-    return response;
+    return stockDataCore;
   }
 
   void changeStockFinancialIndex(

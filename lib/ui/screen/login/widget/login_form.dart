@@ -6,6 +6,7 @@ import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/widget/button/async_button.dart';
 import 'package:dtnd/ui/widget/overlay/error_dialog.dart';
 import 'package:dtnd/utilities/logger.dart';
+import 'package:dtnd/utilities/time_utils.dart';
 import 'package:dtnd/utilities/typedef.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -50,8 +51,6 @@ class _LoginFormState extends State<LoginForm> {
   final FocusNode usernameFocusNode = FocusNode();
   final FocusNode passwordFocusNode = FocusNode();
 
-  final Duration duration = const Duration(milliseconds: 500);
-
   Timer? onUsernameStoppedTyping;
   Timer? onPasswordStoppedTyping;
   bool hasChanged = false;
@@ -88,7 +87,7 @@ class _LoginFormState extends State<LoginForm> {
       onUsernameStoppedTyping!.cancel();
     }
     setState(
-      () => onUsernameStoppedTyping = Timer(duration, () {
+      () => onUsernameStoppedTyping = Timer(TimeUtilities.typingDelay, () {
         typingUsername = false;
         usernameState.validate();
         checkValidate();
@@ -106,7 +105,7 @@ class _LoginFormState extends State<LoginForm> {
       }); // clear timer
     }
     setState(
-      () => onPasswordStoppedTyping = Timer(duration, () {
+      () => onPasswordStoppedTyping = Timer(TimeUtilities.typingDelay, () {
         typingPassword = false;
         passwordState.validate();
         checkValidate();
@@ -306,7 +305,6 @@ class _LoginFormState extends State<LoginForm> {
     usernameFocusNode.unfocus();
     passwordFocusNode.unfocus();
 
-    await 1.delay();
     if (widget.loginFormKey.currentState!.validate()) {
       try {
         await loginController.login(usernameFormKey.currentState!.value!,

@@ -13,6 +13,8 @@ extension DateTimeX on DateTime {
 }
 
 class TimeUtilities {
+  static const Duration typingDelay = Duration(milliseconds: 500);
+
   static final DateFormat commonTimeFormat = DateFormat("dd/MM/yyyy");
   static bool isLeapYear(DateTime dateTime) {
     if (dateTime.year % 4 == 0) {

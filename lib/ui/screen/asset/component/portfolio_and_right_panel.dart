@@ -194,7 +194,8 @@ class _PortfolioAndRightPanelState extends State<PortfolioAndRightPanel>
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 4),
                       child: BuyRightWidget(
-                        data: data!.listUnexecutedRight!.elementAt(i),
+                        accountModel: data!,
+                        data: data.listUnexecutedRight!.elementAt(i),
                       ),
                     )
                 ],

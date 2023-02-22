@@ -1,10 +1,16 @@
+import 'package:dtnd/data/i_network_service.dart';
+import 'package:dtnd/data/implementations/network_service.dart';
+import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/screen/account/account_screen.dart';
 import 'package:dtnd/ui/screen/asset/asset_screen.dart';
 import 'package:dtnd/ui/screen/community/community_screen.dart';
 import 'package:dtnd/ui/screen/home/home_screen.dart';
 import 'package:dtnd/ui/screen/home_base/widget/home_base_bottom_nav.dart';
 import 'package:dtnd/ui/screen/home_base/widget/home_base_nav.dart';
+import 'package:dtnd/ui/screen/login/login_screen.dart';
 import 'package:dtnd/ui/screen/market/market_screen.dart';
+import 'package:dtnd/ui/widget/overlay/dialog_utilities.dart';
+import 'package:dtnd/utilities/logger.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -15,7 +21,8 @@ class HomeBase extends StatefulWidget {
   State<HomeBase> createState() => _HomeBaseState();
 }
 
-class _HomeBaseState extends State<HomeBase> {
+class _HomeBaseState extends State<HomeBase> with WidgetsBindingObserver {
+  final INetworkService networkService = NetworkService();
   final Rx<HomeNav> currentHomeNav = Rx<HomeNav>(HomeNav.home);
 
   late final Map<HomeNav, Widget> routeBuilders;
@@ -26,6 +33,24 @@ class _HomeBaseState extends State<HomeBase> {
     } else {
       currentHomeNav.value = homeNav;
     }
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    print(state);
+  }
+
+  void onSessionExpired() async {
+    logger.v("onSessionExpired called!");
+    if (!mounted) return;
+    await DialogUtilities.showErrorDialog(
+        context: context,
+        title: S.of(context).something_went_wrong,
+        content: S.of(context).session_had_been_expired);
+    if (!mounted) return;
+    await Navigator.of(context).push(MaterialPageRoute(
+      builder: (context) => const LoginScreen(),
+    ));
   }
 
   @override
@@ -40,6 +65,11 @@ class _HomeBaseState extends State<HomeBase> {
       HomeNav.account: const AccountScreen(),
     };
     super.initState();
+    WidgetsBinding.instance
+      ..addObserver(this)
+      ..addPostFrameCallback((timeStamp) {
+        networkService.regSessionExpiredCallback(onSessionExpired);
+      });
   }
 
   @override

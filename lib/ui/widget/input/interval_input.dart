@@ -1,3 +1,4 @@
+import 'package:dtnd/ui/widget/input/thousand_separator_input_formatter.dart';
 import 'package:dtnd/utilities/string_util.dart';
 import 'package:flutter/material.dart';
 
@@ -13,6 +14,7 @@ class IntervalInput extends StatelessWidget {
     required this.interval,
     this.defaultValue = 0,
     this.onChanged,
+    this.onTextChanged,
   });
   final Key? formKey;
   final String? Function(String?)? validator;
@@ -21,6 +23,7 @@ class IntervalInput extends StatelessWidget {
   final GetInterval? interval;
   final num defaultValue;
   final ValueChanged<num>? onChanged;
+  final ValueChanged<String>? onTextChanged;
 
   void _onMinus() {
     final oldValue = controller.text;
@@ -32,7 +35,8 @@ class IntervalInput extends StatelessWidget {
       if (newValue < 0) {
         newValue += interval?.call(newValue) ?? 0;
       }
-      String newString = newValue.toStringAsPrecision(4);
+      String newString = newValue.toStringAsFixed(2);
+      newString = newString.replaceAll(".00", "").replaceAll(".0", "");
       controller.value = TextEditingValue(
         text: newString,
         selection: TextSelection.collapsed(
@@ -42,6 +46,7 @@ class IntervalInput extends StatelessWidget {
       onChanged?.call(newValue);
     } else if (oldValue.isOrderType) {
       String newString = defaultValue.toString();
+      newString = newString.replaceAll(".00", "").replaceAll(".0", "");
       controller.value = TextEditingValue(
         text: newString,
         selection: TextSelection.collapsed(
@@ -61,7 +66,8 @@ class IntervalInput extends StatelessWidget {
       num newValue = num.parse(oldValue);
 
       newValue += (interval?.call(newValue) ?? 0);
-      String newString = newValue.toStringAsPrecision(4);
+      String newString = newValue.toStringAsFixed(2);
+      newString = newString.replaceAll(".00", "").replaceAll(".0", "");
       controller.value = TextEditingValue(
         text: newString,
         selection: TextSelection.collapsed(
@@ -70,7 +76,8 @@ class IntervalInput extends StatelessWidget {
       );
       onChanged?.call(newValue);
     } else if (oldValue.isOrderType) {
-      String newString = defaultValue.toStringAsPrecision(4);
+      String newString = defaultValue.toStringAsFixed(2);
+      newString = newString.replaceAll(".00", "").replaceAll(".0", "");
       controller.value = TextEditingValue(
         text: newString,
         selection: TextSelection.collapsed(
@@ -89,6 +96,9 @@ class IntervalInput extends StatelessWidget {
       key: formKey,
       controller: controller,
       validator: validator,
+      onChanged: onTextChanged,
+      keyboardType: const TextInputType.numberWithOptions(decimal: true),
+      inputFormatters: [ThousandsSeparatorInputFormatter()],
       decoration: InputDecoration(
         labelText: labelText,
         contentPadding: const EdgeInsets.all(0),

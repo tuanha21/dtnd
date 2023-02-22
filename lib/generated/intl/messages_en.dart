@@ -94,7 +94,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "billion_short": MessageLookupByLibrary.simpleMessage("B"),
         "birthday": MessageLookupByLibrary.simpleMessage("Birthday"),
         "bond": MessageLookupByLibrary.simpleMessage("Bond"),
-        "bonus_sh": MessageLookupByLibrary.simpleMessage("bonus share"),
+        "bonus_sh": MessageLookupByLibrary.simpleMessage("Bonus share"),
         "bought_returning":
             MessageLookupByLibrary.simpleMessage("Bought returning"),
         "bought_returning_vol":
@@ -253,7 +253,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "matched_price": MessageLookupByLibrary.simpleMessage("Matched price"),
         "matched_vol": MessageLookupByLibrary.simpleMessage("Matched vol"),
         "matching": MessageLookupByLibrary.simpleMessage("Matching"),
+        "maximum": MessageLookupByLibrary.simpleMessage("Maximum"),
         "million_short": MessageLookupByLibrary.simpleMessage("M"),
+        "minimum": MessageLookupByLibrary.simpleMessage("Minimum"),
         "minimum_ee":
             MessageLookupByLibrary.simpleMessage("Minimum purchasing power"),
         "minutes": MessageLookupByLibrary.simpleMessage(" minutes"),
@@ -308,6 +310,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "price_increase":
             MessageLookupByLibrary.simpleMessage("Price increase"),
         "profit_and_loss": MessageLookupByLibrary.simpleMessage("Profit/Loss"),
+        "purchasing_ability":
+            MessageLookupByLibrary.simpleMessage("Purchasing ability"),
         "qa_base": MessageLookupByLibrary.simpleMessage("Base"),
         "qa_bond": MessageLookupByLibrary.simpleMessage("Bond"),
         "qa_copytrade": MessageLookupByLibrary.simpleMessage("Copytrade"),
@@ -317,6 +321,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "qa_pack_enrol":
             MessageLookupByLibrary.simpleMessage("Pack enrollment"),
         "ref": MessageLookupByLibrary.simpleMessage("Ref"),
+        "register_right_failed":
+            MessageLookupByLibrary.simpleMessage("Register right failed"),
+        "register_right_successfully":
+            MessageLookupByLibrary.simpleMessage("Register right successfully"),
         "rename_catalog_to": m8,
         "revenue": MessageLookupByLibrary.simpleMessage("Revenue"),
         "right": MessageLookupByLibrary.simpleMessage("Right"),
@@ -331,6 +339,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "sell_price": MessageLookupByLibrary.simpleMessage("Sell price"),
         "session_expired_in":
             MessageLookupByLibrary.simpleMessage("Session expired in "),
+        "session_had_been_expired":
+            MessageLookupByLibrary.simpleMessage("Session had been expired"),
         "setting_and_secutiry":
             MessageLookupByLibrary.simpleMessage("Setting and secutiry"),
         "sex": MessageLookupByLibrary.simpleMessage("Sex"),

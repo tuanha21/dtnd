@@ -7,11 +7,12 @@ import 'response/account/unexecuted_right_model.dart';
 import 'response/account_info_model.dart';
 import 'response/order_model/base_order_model.dart';
 import 'response/share_earned_model.dart';
+import 'response/stock_cash_balance_model.dart';
 import 'response/stock_info_core.dart';
 import 'response/user_token.dart';
 
 abstract class CoreResponseModel {
-  static T fromJson<T extends CoreResponseModel>(Map<String, dynamic> json) {
+  static T? fromJson<T extends CoreResponseModel>(Map<String, dynamic> json) {
     switch (T) {
       case UserToken:
         return UserToken.fromJson(json) as T;
@@ -35,8 +36,10 @@ abstract class CoreResponseModel {
         return UserInfo.fromJson(json) as T;
       case ShareEarnedDetailModel:
         return ShareEarnedDetailModel.fromJson(json) as T;
+      case StockCashBalanceModel:
+        return StockCashBalanceModel.fromJson(json) as T;
       default:
-        throw UnimplementedError();
+        return null;
     }
   }
 }

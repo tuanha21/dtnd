@@ -106,4 +106,12 @@ class NumUtils {
     }
     return "$value $postfix";
   }
+
+  static num? parseString(String? string) {
+    if (string == null) {
+      return null;
+    }
+
+    return num.tryParse(string);
+  }
 }

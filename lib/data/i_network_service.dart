@@ -2,7 +2,6 @@
 
 import 'package:dtnd/=models=/core_response_model.dart';
 import 'package:dtnd/=models=/index.dart';
-import 'package:dtnd/=models=/response/account_info_model.dart';
 import 'package:dtnd/=models=/response/business_profile_model.dart';
 import 'package:dtnd/=models=/response/deep_model.dart';
 import 'package:dtnd/=models=/response/inday_matched_order.dart';
@@ -11,7 +10,6 @@ import 'package:dtnd/=models=/response/index_detail.dart';
 import 'package:dtnd/=models=/response/liquidity_model.dart';
 import 'package:dtnd/=models=/response/news_detail.dart';
 import 'package:dtnd/=models=/response/news_model.dart';
-import 'package:dtnd/=models=/response/s_cash_balance.dart';
 import 'package:dtnd/=models=/response/security_basic_info_model.dart';
 import 'package:dtnd/=models=/response/stock.dart';
 import 'package:dtnd/=models=/response/stock_data.dart';
@@ -55,6 +53,8 @@ abstract class INetworkService {
   Future<void> startSocket();
 
   Future<String?> getHomeBanner();
+
+  void regSessionExpiredCallback(void Function() onSessionExpired);
 
   //core api
   Future<T?> requestTraditionalApi<T extends CoreResponseModel>(
@@ -114,8 +114,6 @@ abstract class INetworkService {
   Future<List<IndayMatchedOrder>> getIndayMatchedOrders(String symbol);
 
   Future<List<IndexBoard>> getIndexBoard(String marketCode);
-
-  Future<SCashBalance> getSCashBalance(RequestModel requestModel);
 
   Future<List<TopInfluenceModel>> getTopInfluence(String index);
 

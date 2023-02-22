@@ -1,6 +1,9 @@
 import 'package:dtnd/=models=/exchange.dart';
+import 'package:dtnd/=models=/response/account/i_account.dart';
 import 'package:dtnd/=models=/response/account/unexecuted_right_model.dart';
 import 'package:dtnd/=models=/response/stock.dart';
+import 'package:dtnd/data/i_exchange_service.dart';
+import 'package:dtnd/data/implementations/exchange_service.dart';
 import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_textstyle.dart';
@@ -8,6 +11,8 @@ import 'package:dtnd/ui/widget/button/single_color_text_button.dart';
 import 'package:dtnd/ui/widget/icon/sheet_header.dart';
 import 'package:dtnd/ui/widget/icon/stock_icon.dart';
 import 'package:dtnd/ui/widget/input/interval_input.dart';
+import 'package:dtnd/ui/widget/overlay/dialog_utilities.dart';
+import 'package:dtnd/utilities/logger.dart';
 import 'package:dtnd/utilities/num_utils.dart';
 import 'package:dtnd/utilities/string_util.dart';
 import 'package:dtnd/utilities/validator.dart';
@@ -18,16 +23,18 @@ class ExecuteRightSheet extends StatefulWidget {
     super.key,
     required this.unexecutedRightModel,
     required this.stock,
+    required this.accountModel,
   });
   final UnexecutedRightModel unexecutedRightModel;
   final Stock stock;
+  final IAccountModel accountModel;
   @override
   State<ExecuteRightSheet> createState() => _ExecuteRightSheetState();
 }
 
 class _ExecuteRightSheetState extends State<ExecuteRightSheet> {
-  late final Set<OrderType> listOrderTypes;
-  final TextEditingController priceController = TextEditingController();
+  final IExchangeService exchangeService = ExchangeService();
+  final TextEditingController pinController = TextEditingController();
   late final TextEditingController volumnController;
   final GlobalKey<FormState> pinKey = GlobalKey<FormState>();
 
@@ -39,8 +46,30 @@ class _ExecuteRightSheetState extends State<ExecuteRightSheet> {
     super.initState();
   }
 
-  void toConfirmPanel() async {
-    Navigator.of(context).pop();
+  void registerRight() async {
+    try {
+      await exchangeService.registerRight(
+          accountModel: widget.accountModel,
+          right: widget.unexecutedRightModel,
+          volumn: volumnController.text,
+          pin: pinController.text);
+      if (mounted) {
+        await DialogUtilities.showErrorDialog(
+            context: context,
+            title: S.of(context).register_right_successfully,
+            content: S.of(context).register_right_successfully);
+      }
+      if (mounted) {
+        Navigator.of(context).pop();
+      }
+    } catch (e) {
+      logger.e(e);
+      await DialogUtilities.showErrorDialog(
+          context: context,
+          title: S.of(context).register_right_failed,
+          content: e.toString());
+    }
+
     // await showModalBottomSheet(
     //   context: context,
     //   shape: const RoundedRectangleBorder(
@@ -198,7 +227,7 @@ class _ExecuteRightSheetState extends State<ExecuteRightSheet> {
                     key: pinKey,
                     autovalidateMode: AutovalidateMode.disabled,
                     child: TextFormField(
-                      controller: priceController,
+                      controller: pinController,
                       // onChanged: (value) => pinFormKey.currentState?.didChange(value),
                       validator: AppValidator.pinValidator,
                       autovalidateMode: AutovalidateMode.disabled,
@@ -220,7 +249,7 @@ class _ExecuteRightSheetState extends State<ExecuteRightSheet> {
                   child: SingleColorTextButton(
                     text: S.of(context).confirm,
                     color: AppColors.semantic_01,
-                    onTap: () => toConfirmPanel(),
+                    onTap: registerRight,
                   ),
                 ),
               ],

@@ -1050,6 +1050,16 @@ class S {
     );
   }
 
+  /// `Purchasing ability`
+  String get purchasing_ability {
+    return Intl.message(
+      'Purchasing ability',
+      name: 'purchasing_ability',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Detail`
   String get detail {
     return Intl.message(
@@ -1100,11 +1110,31 @@ class S {
     );
   }
 
-  /// `bonus share`
+  /// `Bonus share`
   String get bonus_sh {
     return Intl.message(
-      'bonus share',
+      'Bonus share',
       name: 'bonus_sh',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Maximum`
+  String get maximum {
+    return Intl.message(
+      'Maximum',
+      name: 'maximum',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Minimum`
+  String get minimum {
+    return Intl.message(
+      'Minimum',
+      name: 'minimum',
       desc: '',
       args: [],
     );
@@ -1717,6 +1747,16 @@ class S {
     return Intl.message(
       'Something went erong',
       name: 'something_went_wrong',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Session had been expired`
+  String get session_had_been_expired {
+    return Intl.message(
+      'Session had been expired',
+      name: 'session_had_been_expired',
       desc: '',
       args: [],
     );
@@ -2357,6 +2397,26 @@ class S {
     return Intl.message(
       'Associated Company',
       name: 'associated_company',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Register right successfully`
+  String get register_right_successfully {
+    return Intl.message(
+      'Register right successfully',
+      name: 'register_right_successfully',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Register right failed`
+  String get register_right_failed {
+    return Intl.message(
+      'Register right failed',
+      name: 'register_right_failed',
       desc: '',
       args: [],
     );

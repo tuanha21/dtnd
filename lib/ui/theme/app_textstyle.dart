@@ -50,7 +50,7 @@ class AppTextStyle {
     fontSize: 14,
     fontWeight: FontWeight.w500,
   );
-  static final bodySmall_12 = _defaulTextStyle.copyWith(
+  static final  bodySmall_12 = _defaulTextStyle.copyWith(
     fontSize: 12,
     fontWeight: FontWeight.w400,
   );
