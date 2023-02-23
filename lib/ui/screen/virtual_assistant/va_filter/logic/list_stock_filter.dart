@@ -32,7 +32,7 @@ class _ListStockFilterState extends State<ListStockFilter> {
   final INetworkService iNetworkService = NetworkService();
 
   StreamController<List<StockFilter>> filterStream =
-      StreamController.broadcast();
+  StreamController.broadcast();
 
   late List<StockFilter> listStock;
 
@@ -43,9 +43,11 @@ class _ListStockFilterState extends State<ListStockFilter> {
   late ScrollController _letters;
   late ScrollController _numbers;
 
+  late Filter filter;
+
   Future<void> getFilterApi() async {
     try {
-      var list = await iNetworkService.getStockFilter(widget.filter);
+      var list = await iNetworkService.getStockFilter(filter);
       filterStream.sink.add(list);
       listStock = list;
     } catch (e) {
@@ -55,11 +57,12 @@ class _ListStockFilterState extends State<ListStockFilter> {
 
   @override
   void initState() {
+    filter = widget.filter;
     _controllers = LinkedScrollControllerGroup();
     _letters = _controllers.addAndGet();
     _numbers = _controllers.addAndGet();
     getFilterApi();
-    getListHead(widget.filter);
+    getListHead(filter);
     super.initState();
   }
 
@@ -86,7 +89,7 @@ class _ListStockFilterState extends State<ListStockFilter> {
   List<Widget> _buildCells(int count) {
     return List.generate(
       count,
-      (index) {
+          (index) {
         return Container(
           alignment: Alignment.centerLeft,
           height: 36,
@@ -97,7 +100,11 @@ class _ListStockFilterState extends State<ListStockFilter> {
                   ? AppColors.neutral_04
                   : AppColors.neutral_04.withOpacity(0.5)),
           child: Text(listStock[index].sECURITYCODE ?? "",
-              style: Theme.of(context).textTheme.bodySmall?.copyWith(
+              style: Theme
+                  .of(context)
+                  .textTheme
+                  .bodySmall
+                  ?.copyWith(
                   color: AppColors.neutral_02, fontWeight: FontWeight.w600)),
         );
       },
@@ -109,7 +116,7 @@ class _ListStockFilterState extends State<ListStockFilter> {
   List<Widget> _buildCellsHeader(int count) {
     return List.generate(
       count,
-      (index) {
+          (index) {
         var text = "";
         if (index <= 1) {
           text = listFilterHeader[index];
@@ -123,7 +130,11 @@ class _ListStockFilterState extends State<ListStockFilter> {
               textAlign: index <= 1 ? TextAlign.left : TextAlign.right,
               maxLines: 4,
               overflow: TextOverflow.clip,
-              style: Theme.of(context).textTheme.bodySmall?.copyWith(
+              style: Theme
+                  .of(context)
+                  .textTheme
+                  .bodySmall
+                  ?.copyWith(
                   color: AppColors.neutral_02, fontWeight: FontWeight.w600)),
         );
       },
@@ -133,7 +144,7 @@ class _ListStockFilterState extends State<ListStockFilter> {
   List<Widget> _buildCells2(int count, int indexCell) {
     return List.generate(
       count,
-      (index) {
+          (index) {
         String text = "";
         if (index == 0) {
           text = listStock[indexCell].eXCHANGECODE ?? "";
@@ -151,7 +162,11 @@ class _ListStockFilterState extends State<ListStockFilter> {
           height: 36,
           width: index == 0 ? 70 : 140,
           child: Text(text,
-              style: Theme.of(context).textTheme.bodySmall?.copyWith(
+              style: Theme
+                  .of(context)
+                  .textTheme
+                  .bodySmall
+                  ?.copyWith(
                   color: AppColors.neutral_02, fontWeight: FontWeight.w600)),
         );
       },
@@ -161,7 +176,7 @@ class _ListStockFilterState extends State<ListStockFilter> {
   List<Widget> _buildRows(int count) {
     return List.generate(
       count,
-      (index) {
+          (index) {
         return Container(
           decoration: BoxDecoration(
               color: index % 2 == 1
@@ -178,7 +193,7 @@ class _ListStockFilterState extends State<ListStockFilter> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: MyAppBar(title: widget.filter.name ?? ""),
+      appBar: MyAppBar(title: filter.name ?? ""),
       body: StreamBuilder<List<StockFilter>>(
           stream: filterStream.stream,
           builder: (context, snapshot) {
@@ -204,7 +219,10 @@ class _ListStockFilterState extends State<ListStockFilter> {
                                 alignment: Alignment.centerLeft,
                                 child: Text("Mã CK",
                                     style:
-                                        Theme.of(context).textTheme.bodySmall),
+                                    Theme
+                                        .of(context)
+                                        .textTheme
+                                        .bodySmall),
                               ),
                             ),
                             Expanded(
@@ -254,20 +272,24 @@ class _ListStockFilterState extends State<ListStockFilter> {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20),
                     child: SizedBox(
-                      width: MediaQuery.of(context).size.width,
+                      width: MediaQuery
+                          .of(context)
+                          .size
+                          .width,
                       child: ElevatedButton(
                         onPressed: () async {
-                         var isRefresh = await showModalBottomSheet(
+                          var isRefresh = await showModalBottomSheet(
                               context: context,
                               isScrollControlled: true,
                               builder: (context) {
-                                return BottomEditFilter(filter: widget.filter);
+                                return BottomEditFilter(filter: filter);
                               });
-                         if(isRefresh == true){
-                           getFilterApi();
-                           getListHead(widget.filter);
-
-                         }
+                          if (isRefresh != null) {
+                            var filterValue = isRefresh as Filter;
+                            filter = filterValue;
+                            getListHead(filter);
+                            getFilterApi();
+                          }
                         },
                         child: const Text('Chỉnh sửa bộ lọc'),
                       ),
@@ -307,100 +329,107 @@ class _BottomEditFilterState extends State<BottomEditFilter> {
   Widget build(BuildContext context) {
     return SafeArea(
         child: Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        const SizedBox(height: 18),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text('Lưu bộ lọc', style: Theme.of(context).textTheme.bodyLarge),
-              GestureDetector(
-                onTap: () {
-                  Navigator.pop(context);
-                },
-                child: Container(
-                    padding: const EdgeInsets.all(4),
-                    decoration: BoxDecoration(
-                        color: AppColors.neutral_06,
-                        borderRadius: BorderRadius.circular(6)),
-                    child: const Icon(
-                      Icons.clear,
-                      color: AppColors.dark_bg,
-                    )),
-              )
-            ],
-          ),
-        ),
-        const Divider(
-          thickness: 1,
-          color: AppColors.neutral_05,
-          height: 36,
-        ),
-        Expanded(
-          child: ListView.separated(
-              itemBuilder: (context, index) {
-                return FilterBox(
-                  filterEnum: FilterEnum.values[index],
-                  filter: widget.filter,
-                  onChanged: (FilterRange value, bool isSelect) {
-                    /// check tồn tại hay chưa
-                    var constantValue = listFilterSelect.firstWhereOrNull(
-                            (element) => element.code == value.code) !=
-                        null;
-                    if (constantValue) {
-                      /// xóa
-                      if (!isSelect) {
-                        listFilterSelect.removeWhere(
-                            (element) => element.code == value.code);
-                      } else {
-                        /// update
-                        var index = listFilterSelect.indexWhere(
-                            (element) => element.code == value.code);
-                        listFilterSelect[index] = value;
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const SizedBox(height: 18),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text('Lưu bộ lọc', style: Theme
+                      .of(context)
+                      .textTheme
+                      .bodyLarge),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                    child: Container(
+                        padding: const EdgeInsets.all(4),
+                        decoration: BoxDecoration(
+                            color: AppColors.neutral_06,
+                            borderRadius: BorderRadius.circular(6)),
+                        child: const Icon(
+                          Icons.clear,
+                          color: AppColors.dark_bg,
+                        )),
+                  )
+                ],
+              ),
+            ),
+            const Divider(
+              thickness: 1,
+              color: AppColors.neutral_05,
+              height: 36,
+            ),
+            Expanded(
+              child: ListView.separated(
+                  itemBuilder: (context, index) {
+                    return FilterBox(
+                      filterEnum: FilterEnum.values[index],
+                      filter: widget.filter,
+                      onChanged: (FilterRange value, bool isSelect) {
+                        /// check tồn tại hay chưa
+                        var constantValue = listFilterSelect.firstWhereOrNull(
+                                (element) => element.code == value.code) !=
+                            null;
+                        if (constantValue) {
+                          /// xóa
+                          if (!isSelect) {
+                            listFilterSelect.removeWhere(
+                                    (element) => element.code == value.code);
+                          } else {
+                            /// update
+                            var index = listFilterSelect.indexWhere(
+                                    (element) => element.code == value.code);
+                            listFilterSelect[index] = value;
+                          }
+                        } else {
+                          /// thêm
+                          if (isSelect) {
+                            listFilterSelect.add(value);
+                          } else {
+                            print('??????');
+                          }
+                        }
+                      },
+                    );
+                  },
+                  separatorBuilder: (context, index) {
+                    return const SizedBox(height: 16);
+                  },
+                  itemCount: FilterEnum.values.length),
+            ),
+            const SizedBox(height: 20),
+            SizedBox(
+              width: MediaQuery
+                  .of(context)
+                  .size
+                  .width,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: ElevatedButton(
+                  onPressed: () async {
+                    try {
+                      await iNetworkService.setFilter(
+                          widget.filter
+                            ..criteria = jsonEncode(listFilterSelect),
+                          "RU");
+                      if (context.mounted) {
+                        Navigator.pop(context, widget.filter);
                       }
-                    } else {
-                      /// thêm
-                      if (isSelect) {
-                        listFilterSelect.add(value);
-                      } else {
-                        print('??????');
-                      }
+                    } catch (e) {
+                      print('lỗi cái lồn');
                     }
                   },
-                );
-              },
-              separatorBuilder: (context, index) {
-                return const SizedBox(height: 16);
-              },
-              itemCount: FilterEnum.values.length),
-        ),
-        const SizedBox(height: 20),
-        SizedBox(
-          width: MediaQuery.of(context).size.width,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: ElevatedButton(
-              onPressed: () async {
-                try {
-                  await iNetworkService.setFilter(
-                      widget.filter..criteria = jsonEncode(listFilterSelect),
-                      "RU");
-                  if (context.mounted) {
-                    Navigator.pop(context, true);
-                  }
-                } catch (e) {
-                  print('lỗi cái lồn');
-                }
-              },
-              child: const Text("Áp dụng"),
+                  child: const Text("Áp dụng"),
+                ),
+              ),
             ),
-          ),
-        ),
-        const SizedBox(height: 20),
-      ],
-    ));
+            const SizedBox(height: 20),
+          ],
+        ));
   }
 }
 
@@ -409,11 +438,10 @@ class FilterBox extends StatefulWidget {
   final Filter filter;
   final OpTapCheckBox onChanged;
 
-  const FilterBox(
-      {Key? key,
-      required this.filterEnum,
-      required this.filter,
-      required this.onChanged})
+  const FilterBox({Key? key,
+    required this.filterEnum,
+    required this.filter,
+    required this.onChanged})
       : super(key: key);
 
   @override
@@ -462,7 +490,10 @@ class _FilterBoxState extends State<FilterBox> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(widget.filterEnum.name,
-                    style: Theme.of(context).textTheme.titleSmall),
+                    style: Theme
+                        .of(context)
+                        .textTheme
+                        .titleSmall),
                 SvgPicture.asset(
                     !isExpanded ? AppImages.arrowUp1 : AppImages.arrowDown)
               ],
@@ -486,9 +517,9 @@ class _FilterBoxState extends State<FilterBox> {
                             (element) => element.code == list[index].key) !=
                         null,
                     initFilter: listFilterSelect.firstWhereOrNull(
-                        (element) => element.code == list[index].key),
+                            (element) => element.code == list[index].key),
                     filterRange: logic.listFilterRange.firstWhere(
-                        (element) => element.code == list[index].key),
+                            (element) => element.code == list[index].key),
                     onChanged: widget.onChanged,
                   );
                 }),
@@ -508,13 +539,12 @@ class CheckBoxWidget extends StatefulWidget {
   final FilterRange? initFilter;
   final OpTapCheckBox onChanged;
 
-  const CheckBoxWidget(
-      {Key? key,
-      required this.title,
-      this.initValue,
-      required this.filterRange,
-      this.initFilter,
-      required this.onChanged})
+  const CheckBoxWidget({Key? key,
+    required this.title,
+    this.initValue,
+    required this.filterRange,
+    this.initFilter,
+    required this.onChanged})
       : super(key: key);
 
   @override
@@ -567,17 +597,18 @@ class _CheckBoxWidgetState extends State<CheckBoxWidget> {
         const SizedBox(width: 8),
         Flexible(
             child: GestureDetector(
-          onTap: () async {
-            await showBottomEdit(context);
-          },
-          child: Text(
-            widget.title,
-            style: Theme.of(context)
-                .textTheme
-                .labelMedium
-                ?.copyWith(color: AppColors.neutral_02),
-          ),
-        ))
+              onTap: () async {
+                await showBottomEdit(context);
+              },
+              child: Text(
+                widget.title,
+                style: Theme
+                    .of(context)
+                    .textTheme
+                    .labelMedium
+                    ?.copyWith(color: AppColors.neutral_02),
+              ),
+            ))
       ],
     );
   }
@@ -627,93 +658,102 @@ class _EditFilterDetailState extends State<EditFilterDetail> {
   Widget build(BuildContext context) {
     return SafeArea(
         child: Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        const SizedBox(height: 18),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text('Chỉ số lọc cổ phiếu',
-                  style: Theme.of(context).textTheme.bodyLarge),
-              GestureDetector(
-                onTap: () {
-                  Navigator.pop(context);
-                },
-                child: Container(
-                    padding: const EdgeInsets.all(4),
-                    decoration: BoxDecoration(
-                        color: AppColors.neutral_06,
-                        borderRadius: BorderRadius.circular(6)),
-                    child: const Icon(
-                      Icons.clear,
-                      color: AppColors.dark_bg,
-                    )),
-              )
-            ],
-          ),
-        ),
-        const Divider(
-          thickness: 1,
-          color: AppColors.neutral_05,
-          height: 36,
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: Row(
-            children: [
-              Expanded(
-                child: AppTextField(
-                  controller: min,
-                  hintText: widget.filterRange.low?.toString(),
-                ),
-              ),
-              const SizedBox(width: 23),
-              Expanded(
-                child: AppTextField(
-                  controller: max,
-                  hintText: widget.filterRange.high?.toString(),
-                ),
-              ),
-            ],
-          ),
-        ),
-        const SizedBox(height: 16),
-        SizedBox(
-            width: MediaQuery.of(context).size.width,
-            child: Padding(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const SizedBox(height: 18),
+            Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: ElevatedButton(
-                onPressed: () {
-                  num minValue = 0;
-                  num maxValue = 0;
-                  if (min.text.isEmpty) {
-                    minValue = widget.filterRange.low ?? 0;
-                  } else {
-                    minValue = num.tryParse(min.text) ?? 0;
-                  }
-                  if (max.text.isEmpty) {
-                    maxValue = widget.filterRange.high ?? 0;
-                  } else {
-                    maxValue = num.tryParse(max.text) ?? 0;
-                  }
-                  if (minValue > maxValue) {
-                    return AppSnackBar.showError(context,
-                        message: "Giá trị không hợp lệ");
-                  }
-                  var filter = FilterRange(
-                      code: widget.filterRange.code,
-                      high: maxValue,
-                      low: minValue);
-                  Navigator.pop(context, filter);
-                },
-                child: const Text('Lưu'),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text('Chỉ số lọc cổ phiếu',
+                      style: Theme
+                          .of(context)
+                          .textTheme
+                          .bodyLarge),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                    child: Container(
+                        padding: const EdgeInsets.all(4),
+                        decoration: BoxDecoration(
+                            color: AppColors.neutral_06,
+                            borderRadius: BorderRadius.circular(6)),
+                        child: const Icon(
+                          Icons.clear,
+                          color: AppColors.dark_bg,
+                        )),
+                  )
+                ],
               ),
-            )),
-        const SizedBox(height: 20),
-        SizedBox(height: MediaQuery.of(context).viewInsets.bottom),
-      ],
-    ));
+            ),
+            const Divider(
+              thickness: 1,
+              color: AppColors.neutral_05,
+              height: 36,
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: AppTextField(
+                      controller: min,
+                      hintText: widget.filterRange.low?.toString(),
+                    ),
+                  ),
+                  const SizedBox(width: 23),
+                  Expanded(
+                    child: AppTextField(
+                      controller: max,
+                      hintText: widget.filterRange.high?.toString(),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 16),
+            SizedBox(
+                width: MediaQuery
+                    .of(context)
+                    .size
+                    .width,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: ElevatedButton(
+                    onPressed: () {
+                      num minValue = 0;
+                      num maxValue = 0;
+                      if (min.text.isEmpty) {
+                        minValue = widget.filterRange.low ?? 0;
+                      } else {
+                        minValue = num.tryParse(min.text) ?? 0;
+                      }
+                      if (max.text.isEmpty) {
+                        maxValue = widget.filterRange.high ?? 0;
+                      } else {
+                        maxValue = num.tryParse(max.text) ?? 0;
+                      }
+                      if (minValue > maxValue) {
+                        return AppSnackBar.showError(context,
+                            message: "Giá trị không hợp lệ");
+                      }
+                      var filter = FilterRange(
+                          code: widget.filterRange.code,
+                          high: maxValue,
+                          low: minValue);
+                      Navigator.pop(context, filter);
+                    },
+                    child: const Text('Lưu'),
+                  ),
+                )),
+            const SizedBox(height: 20),
+            SizedBox(height: MediaQuery
+                .of(context)
+                .viewInsets
+                .bottom),
+          ],
+        ));
   }
 }
