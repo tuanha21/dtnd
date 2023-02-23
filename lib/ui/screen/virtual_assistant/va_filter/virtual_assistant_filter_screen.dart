@@ -1,9 +1,6 @@
 import 'dart:async';
-
 import 'package:dtnd/config/service/app_services.dart';
-import 'package:dtnd/data/i_data_center_service.dart';
 import 'package:dtnd/data/i_network_service.dart';
-import 'package:dtnd/data/implementations/data_center_service.dart';
 import 'package:dtnd/data/implementations/network_service.dart';
 import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
@@ -11,6 +8,7 @@ import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:dtnd/utilities/num_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 
 import '../../../../=models=/algo/filter.dart';
 import '../../../widget/input/app_text_field.dart';
@@ -30,6 +28,8 @@ class _AssistantStockFilterScreenState
   final INetworkService iNetworkService = NetworkService();
 
   StreamController<List<Filter>> filterStream = StreamController.broadcast();
+
+  var logic = Get.put(FilterStockController());
 
   @override
   void initState() {
@@ -211,6 +211,23 @@ class AddFilterSheet extends StatefulWidget {
 
   @override
   State<AddFilterSheet> createState() => _AddFilterSheetState();
+}
+
+class FilterStockController extends GetxController {
+  INetworkService iNetworkService = NetworkService();
+  final listFilterRange = <FilterRange>[].obs;
+
+  @override
+  void onInit() {
+    getListRanger();
+    super.onInit();
+  }
+
+  Future<void> getListRanger() async {
+    try {
+      listFilterRange.value = await iNetworkService.getFilterRange();
+    } catch (_) {}
+  }
 }
 
 class _AddFilterSheetState extends State<AddFilterSheet> {

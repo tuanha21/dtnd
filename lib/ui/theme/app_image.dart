@@ -167,4 +167,9 @@ class AppImages {
   static const String illust04 = "assets/images/Illust04.png";
 
   static const String scene = "assets/images/scene.png";
+
+  static const String arrowUp1 = "assets/svg/arrow-up_1.svg";
+  static const String arrowDown = "assets/svg/arrow-down.svg";
+
+
 }

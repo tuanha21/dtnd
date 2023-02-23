@@ -15,6 +15,8 @@ import 'package:dtnd/utilities/logger.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
+
+
 class VirtualAssistantFilterController {
   VirtualAssistantFilterController._internal();
 
