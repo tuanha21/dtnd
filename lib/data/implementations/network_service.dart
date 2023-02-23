@@ -1128,6 +1128,7 @@ class NetworkService implements INetworkService {
     var response = await client
         .get(url_algo_apec('getFilters'), headers: {"X-USERNAME": "332957"});
     var mapData = json.decode(response.body);
+    logger.d(mapData);
     List data = mapData['data'];
     var list = <Filter>[];
     for (var element in data) {
@@ -1138,7 +1139,6 @@ class NetworkService implements INetworkService {
 
   @override
   Future<List<FilterRange>> getFilterRange() async {
-    IUserService userService = UserService();
     var response = await client.get(url_algo_apec('getFilterRange'));
     var mapData = json.decode(response.body);
     List data = mapData['data'];
@@ -1163,9 +1163,10 @@ class NetworkService implements INetworkService {
             .map((e) => {"code": e.code, "low": e.low, "high": e.high})
             .toList()
       };
-      final response = await client.post(Uri.https(
-          'opacc-api.apec.com.vn', 'algo/pbapi/api/filter'),
-          body: jsonEncode(body), headers: {"X-USERNAME": "332957"});
+      final response = await client.post(
+          Uri.https('opacc-api.apec.com.vn', 'algo/pbapi/api/filter'),
+          body: jsonEncode(body),
+          headers: {"X-USERNAME": "332957"});
       var mapData = json.decode(response.body);
       List data = mapData['data']['items'];
       var list = <StockFilter>[];
@@ -1174,6 +1175,32 @@ class NetworkService implements INetworkService {
       }
       return list;
     } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future setFilter(Filter filter, String type) async {
+    try {
+      var body = {
+        "lang": "vi",
+        "action": type,
+        "name": filter.name,
+        "filterId": filter.filterId,
+        "exchange": filter.exchangeCode,
+        "industry": filter.industryCode,
+        "filter": filter.list
+            .map((e) => {"code": e.code, "low": e.low, "high": e.high})
+            .toList()
+      };
+      final response = await http.post(
+          Uri.https('opacc-api.apec.com.vn', 'algo/pbapi/api/filter'),
+          body: jsonEncode(body),
+          headers: {"X-USERNAME": "332957"});
+      var mapData = json.decode(response.body);
+      print(mapData);
+    } catch (e) {
+      logger.e(e);
       rethrow;
     }
   }
