@@ -160,9 +160,13 @@ class _AssistantStockFilterScreenState
                         var filter = list[index];
                         return ListTile(
                           onTap: () {
-                            Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) =>
-                                    ListStockFilter(filter: filter)));
+                            Navigator.of(context)
+                                .push(MaterialPageRoute(
+                                    builder: (context) =>
+                                        ListStockFilter(filter: filter)))
+                                .then((value) {
+                              getFilterApi();
+                            });
                           },
                           tileColor: AppColors.neutral_06,
                           shape: RoundedRectangleBorder(
