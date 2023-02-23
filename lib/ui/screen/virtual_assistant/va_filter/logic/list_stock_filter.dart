@@ -10,10 +10,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:linked_scroll_controller/linked_scroll_controller.dart';
-
 import '../../../../../data/i_network_service.dart';
 import '../../../../../data/implementations/network_service.dart';
-import '../../../../../utilities/logger.dart';
 import '../../../../theme/app_color.dart';
 import '../../../../widget/expanded_widget.dart';
 import '../../../../widget/input/app_text_field.dart';
@@ -258,13 +256,18 @@ class _ListStockFilterState extends State<ListStockFilter> {
                     child: SizedBox(
                       width: MediaQuery.of(context).size.width,
                       child: ElevatedButton(
-                        onPressed: () {
-                          showModalBottomSheet(
+                        onPressed: () async {
+                         var isRefresh = await showModalBottomSheet(
                               context: context,
                               isScrollControlled: true,
                               builder: (context) {
                                 return BottomEditFilter(filter: widget.filter);
                               });
+                         if(isRefresh == true){
+                           getFilterApi();
+                           getListHead(widget.filter);
+
+                         }
                         },
                         child: const Text('Chỉnh sửa bộ lọc'),
                       ),
@@ -379,13 +382,17 @@ class _BottomEditFilterState extends State<BottomEditFilter> {
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: ElevatedButton(
-              onPressed: () {
-                try{
-                  iNetworkService.setFilter(
+              onPressed: () async {
+                try {
+                  await iNetworkService.setFilter(
                       widget.filter..criteria = jsonEncode(listFilterSelect),
                       "RU");
+                  if (context.mounted) {
+                    Navigator.pop(context, true);
+                  }
+                } catch (e) {
+                  print('lỗi cái lồn');
                 }
-                catch(e){}
               },
               child: const Text("Áp dụng"),
             ),
