@@ -1992,6 +1992,16 @@ class S {
     );
   }
 
+  /// `Create order`
+  String get stock_order {
+    return Intl.message(
+      'Create order',
+      name: 'stock_order',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Create order successfully`
   String get create_order_successfully {
     return Intl.message(

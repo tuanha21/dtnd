@@ -204,6 +204,7 @@
     "top_foreign": "Top nước ngoài",
 
     "create_new_order": "Đặt lệnh mới",
+    "stock_order": "Đặt lệnh",
     "create_order_successfully": "Đặt lệnh thành công",
     "create_order_failed": "Đặt lệnh không thành công",
     "order_will_appear_in_ur_order_note": "Lệnh đặt sẽ xuất hiện trong sổ lệnh của bạn",

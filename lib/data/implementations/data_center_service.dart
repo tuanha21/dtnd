@@ -48,7 +48,9 @@ const List<String> defaultListStock = [
   'HPG'
 ];
 
-class DataCenterService implements IDataCenterService {
+class DataCenterService
+    with WidgetsBindingObserver
+    implements IDataCenterService {
   DataCenterService._internal()
       : networkService = NetworkService(),
         localStorageService = LocalStorageService();
@@ -66,6 +68,8 @@ class DataCenterService implements IDataCenterService {
 
   /// Data
   late IO.Socket socket;
+
+  bool socketConnecting = true;
 
   bool registering = false;
 
@@ -88,6 +92,19 @@ class DataCenterService implements IDataCenterService {
   Future<void> init() async {
     await getListAllStock();
     await startSocket();
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      if (socket.disconnected && !socketConnecting) {
+        for (StockModel element in listStockReg) {
+          element.getStockData(this);
+        }
+        startSocket();
+      }
+    }
   }
 
   @override
@@ -117,7 +134,11 @@ class DataCenterService implements IDataCenterService {
     });
     socket.onConnecting((data) {
       logger.i("Try to connecting...");
+      socketConnecting = true;
       return null;
+    });
+    socket.onConnect((data) {
+      socketConnecting = false;
     });
     socket.connect();
     regStocks(_listInterestedStocks.map((e) => e.stock.stockCode).toList());
@@ -153,13 +174,13 @@ class DataCenterService implements IDataCenterService {
   }
 
   void regStocks(List<String> stocks) {
-    final List<String> join = getUnregisteredCodes(
+    final List<String> joinList = getUnregisteredCodes(
       stocks,
       onRegisteredCode: (stock) =>
           listStockStringReg.update(stock, (value) => ++value),
       onUnregisteredCode: (stock) => listStockStringReg[stock] = 1,
     );
-    regSocketStocks(join);
+    regSocketStocks(joinList);
   }
 
   Future<List<String>> leaveStocks(List<String> stocks) async {
@@ -170,14 +191,14 @@ class DataCenterService implements IDataCenterService {
         continue;
       }
     }
-    final List<String> leave = getOneRegisteredCodes(
+    final List<String> leaveList = getOneRegisteredCodes(
       stocks,
       onOneRegisteredCode: (stockCode) => listStockStringReg.remove(stockCode),
       onUnregisteredCode: (stockCode) =>
           listStockStringReg.update(stockCode, (value) => --value),
     );
-    leaveSocketStocks(leave);
-    return leave;
+    leaveSocketStocks(leaveList);
+    return leaveList;
   }
 
   /// Join socket
@@ -299,7 +320,7 @@ class DataCenterService implements IDataCenterService {
 
   @override
   Future<void> removeStockModelsFromStockCodes(List<String> stockCodes) {
-    throw UnimplementedError();
+    return leaveStocks(stockCodes);
   }
 
   @override
@@ -437,9 +458,9 @@ class DataCenterService implements IDataCenterService {
 
   @override
   Stock? getStocksBySym(String sym) {
-    final _sym = sym.toUpperCase();
+    final sym0 = sym.toUpperCase();
 
-    return listAllStock.firstWhere((element) => element.stockCode == _sym);
+    return listAllStock.firstWhere((element) => element.stockCode == sym0);
   }
 
   @override
@@ -450,6 +471,15 @@ class DataCenterService implements IDataCenterService {
 
     final StockData result = StockData.fromResponse(listResponse.first);
     return result;
+  }
+
+  @override
+  Future<StockDataResponse> getStockDataResponse(String stockCode) async {
+    final List<StockDataResponse> listResponse =
+        await networkService.getListStockData(stockCode);
+    if (listResponse.isEmpty) return StockDataResponse(sym: stockCode);
+
+    return listResponse.first;
   }
 
   @override

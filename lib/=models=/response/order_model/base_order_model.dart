@@ -11,7 +11,7 @@ class BaseOrderModel extends CoreResponseModel implements IOrderModel {
   late final String orderAccount;
 
   @override
-  late final OrderStatus orderStatus;
+  late final String orderStatus;
 
   @override
   late final DateTime orderTime;
@@ -39,11 +39,27 @@ class BaseOrderModel extends CoreResponseModel implements IOrderModel {
   String? result;
   String? activeTime;
   String? sendTime;
+  num? reVol;
+
+  @override
+  num get matchPrice {
+    try {
+      num _matchValue = double.parse(matchValue ?? "0");
+      num _matchVol = matchVolume ?? 0;
+      if (_matchValue > 0) {
+        return _matchValue / (_matchVol * 1000);
+      } else {
+        return 0;
+      }
+    } catch (e) {
+      return 0;
+    }
+  }
 
   BaseOrderModel.fromJson(Map<String, dynamic> json) {
     logger.v(json);
     try {
-      orderNo = json['orderNo'];
+      orderNo = num.parse(json['orderNo']);
       id = json['pk_orderNo'];
       orderTime = DateFormat("HH:mm:ss").parseStrict(json['orderTime']);
       orderAccount = json['accountCode'];
@@ -52,7 +68,7 @@ class BaseOrderModel extends CoreResponseModel implements IOrderModel {
       volume = json['volume'];
       showPrice = json['showPrice'];
       orderPrice = json['orderPrice'];
-      matchVolume = json['matchVolume'];
+      matchVolume = num.parse(json['matchVolume'] ?? "0");
       status = json['status'];
       channel = json['channel'];
       group = json['group'];
@@ -67,8 +83,62 @@ class BaseOrderModel extends CoreResponseModel implements IOrderModel {
       result = json['result'];
       activeTime = json['active_time'];
       sendTime = json['send_time'];
+      orderStatus = getStatusOrder(json['status']);
+      reVol = num.parse(volume ?? "0") - (matchVolume ?? 0);
     } catch (e) {
       logger.e(e);
     }
+  }
+
+  String getStatusOrder(String status) {
+    var pStatus = status;
+    var pMatchVolume = matchVolume ?? 0;
+    var pVolume = volume ?? "0";
+
+    if ((pStatus == "PMC" || pStatus == "PCM" || pStatus == "PWM") &&
+        (pMatchVolume) < int.parse(pVolume)) {
+      return "Khớp 1 phần"; // "MATCH_PARTIAL";
+    }
+    if ((pStatus == "PMC" || pStatus == "PCM") &&
+        (pMatchVolume) == int.parse(pVolume)) {
+      return "Đã khớp"; // "MATCH_FULL";
+    }
+
+    if ((pStatus == "PMX" || pStatus == "PMWX") && (pMatchVolume) > 0) {
+      return "Khớp 1 phần đã hủy"; // "MATCH_PARTIAL_CANCELED";
+    }
+    if (pStatus == "PM" && (pMatchVolume) < int.parse(pVolume)) {
+      return "Khớp 1 phần"; // "MATCH_PARTIAL";
+    }
+    if (pStatus.substring(pStatus.length - 1, pStatus.length) == "M") {
+      //return "MATCH_FULL"
+      return "Đã khớp"; // "MATCH_FULL";
+    }
+    if (pStatus == "PM") {
+      // return "MATCH_FULL"
+      return "Đã khớp"; // "MATCH_FULL";
+    }
+    if (pStatus == "PW" || pStatus == "PMW") {
+      // return  "MATCH_PENDING"
+      return "Chờ hủy"; // "MATCH_PENDING";
+    }
+    if (pStatus == "PC") {
+      return "Chờ khớp"; // "MATCH_PENDING";
+      // if (pQuote == "Y") {
+      //   return "Chờ khớp"; // "MATCH_PENDING";
+      // } else {
+      //   return "Đã sửa"; // "EDIT_PENDING"
+      // } // Ba Ly bao sua thanh cho khop, neu sua lai thi la con cho'
+    }
+    if (pStatus.substring(pStatus.length - 1, pStatus.length) == "X") {
+      return "Đã hủy"; // "CANCELED";
+    }
+    if (pStatus == "P") {
+      return "Chờ khớp"; // "MATCH_PENDING";
+    }
+    if (pStatus.substring(pStatus.length - 1, pStatus.length) == "C") {
+      return "Chờ khớp"; // "MATCH_PENDING";
+    }
+    return pStatus;
   }
 }

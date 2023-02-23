@@ -45,6 +45,8 @@ abstract class IDataCenterService {
 
   Future<StockData> getStockData(String stockCode);
 
+  Future<StockDataResponse> getStockDataResponse(String stockCode);
+
   Future<void> getListAllStock();
 
   Future<List<StockData>> getListStockData(List<String> listStock);

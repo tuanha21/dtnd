@@ -1,5 +1,6 @@
 import 'package:dtnd/=models=/response/account/i_account.dart';
 import 'package:dtnd/=models=/response/account/unexecuted_right_model.dart';
+import 'package:dtnd/=models=/response/order_model/base_order_model.dart';
 
 import 'asset_chart_element.dart';
 import 'portfolio_status_model.dart';

@@ -182,7 +182,4 @@ abstract class INetworkService {
   Future<List<FilterRange>> getFilterRange();
 
   Future<List<StockFilter>> getStockFilter(Filter filter);
-
-
-
 }

@@ -1,8 +1,6 @@
 import 'package:dtnd/=models=/response/stock_model.dart';
-import 'package:dtnd/=models=/response/stock_trading_history.dart';
 import 'package:dtnd/config/service/app_services.dart';
 import 'package:dtnd/data/i_data_center_service.dart';
-import 'package:dtnd/data/implementations/data_center_service.dart';
 import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/screen/home/widget/simple_line_chart.dart';
 import 'package:dtnd/ui/screen/stock_detail/stock_detail_screen.dart';
@@ -10,7 +8,6 @@ import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:dtnd/ui/theme/app_textstyle.dart';
 import 'package:dtnd/ui/widget/icon/stock_icon.dart';
-import 'package:dtnd/utilities/logger.dart';
 import 'package:dtnd/utilities/num_utils.dart';
 import 'package:dtnd/utilities/responsive.dart';
 import 'package:dtnd/utilities/time_utils.dart';
@@ -128,12 +125,11 @@ class _HomeMarketOverviewState extends State<HomeMarketOverview>
                     const EdgeInsets.symmetric(horizontal: 18, vertical: 6),
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 onTap: (value) async {
-                  print(_tabController.indexIsChanging);
                   if (!_tabController.indexIsChanging && value == 1) {
                     up = !up;
-                    // await homeController.changeList(_tabController.index, up);
+                    await homeController.changeList(_tabController.index, up);
                   } else {
-                    // await homeController.changeList(_tabController.index, true);
+                    await homeController.changeList(_tabController.index, true);
                   }
                   setState(() {});
                   // setState(() {});

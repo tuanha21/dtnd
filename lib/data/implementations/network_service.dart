@@ -270,7 +270,6 @@ class NetworkService implements INetworkService {
     return data;
   }
 
-  @override
   Future<List<StockDataResponse>> getListStockData(String listStock) async {
     final String path = "getliststockdata/$listStock";
     final http.Response response = await client.get(url_board(path));

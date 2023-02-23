@@ -16,6 +16,7 @@ import 'package:dtnd/data/implementations/exchange_service.dart';
 import 'package:dtnd/data/implementations/network_service.dart';
 import 'package:dtnd/data/implementations/user_service.dart';
 import 'package:dtnd/generated/l10n.dart';
+import 'package:dtnd/ui/screen/exchange_stock/stock_order/component/order_order_note_panel.dart';
 import 'package:dtnd/ui/screen/exchange_stock/stock_order/data/order_data.dart';
 import 'package:dtnd/ui/screen/search/search_screen.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
@@ -40,7 +41,8 @@ class StockOrderSheet extends StatefulWidget {
   State<StockOrderSheet> createState() => _StockOrderSheetState();
 }
 
-class _StockOrderSheetState extends State<StockOrderSheet> {
+class _StockOrderSheetState extends State<StockOrderSheet>
+    with SingleTickerProviderStateMixin {
   final INetworkService networkService = NetworkService();
   final IUserService userService = UserService();
   final IExchangeService exchangeService = ExchangeService();
@@ -49,7 +51,7 @@ class _StockOrderSheetState extends State<StockOrderSheet> {
   final TextEditingController priceController = TextEditingController();
   final TextEditingController volumnController =
       TextEditingController(text: "100");
-
+  late final TabController tabController;
   Timer? onPriceStoppedTyping;
   bool typingPrice = false;
 
@@ -65,6 +67,7 @@ class _StockOrderSheetState extends State<StockOrderSheet> {
 
   @override
   void initState() {
+    tabController = TabController(length: 3, vsync: this);
     stockModel = widget.stockModel;
     super.initState();
     if (widget.orderData != null) {
@@ -188,6 +191,26 @@ class _StockOrderSheetState extends State<StockOrderSheet> {
               title: S.of(context).trading,
               implementBackButton: false,
             ),
+            const SizedBox(height: 20),
+            TabBar(
+              controller: tabController,
+              isScrollable: false,
+              labelStyle: textTheme.titleSmall,
+              labelPadding:
+                  const EdgeInsets.symmetric(horizontal: 0, vertical: 4),
+              tabs: [
+                Text(
+                  S.of(context).stock_order,
+                ),
+                Text(
+                  S.of(context).order_note,
+                ),
+                Text(
+                  S.of(context).owned,
+                ),
+              ],
+            ),
+            const OrderOrderNotePanel(),
             const SizedBox(height: 20),
             Builder(builder: (context) {
               return Row(

@@ -352,6 +352,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "status_open": MessageLookupByLibrary.simpleMessage("Mở cửa"),
         "stock_already_exist": MessageLookupByLibrary.simpleMessage(
             "Mã đã tồn tại trong danh mục"),
+        "stock_order": MessageLookupByLibrary.simpleMessage("Đặt lệnh"),
         "stock_trading":
             MessageLookupByLibrary.simpleMessage("Giao dịch cổ phiếu"),
         "stocks_you_interested":

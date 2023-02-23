@@ -359,6 +359,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "status_open": MessageLookupByLibrary.simpleMessage("Opening"),
         "stock_already_exist":
             MessageLookupByLibrary.simpleMessage("This stock is already exist"),
+        "stock_order": MessageLookupByLibrary.simpleMessage("Create order"),
         "stock_trading": MessageLookupByLibrary.simpleMessage("Stock trading"),
         "stocks_you_interested": MessageLookupByLibrary.simpleMessage(
             "Stocks you are interested in"),

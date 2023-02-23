@@ -5,8 +5,10 @@ import 'package:dtnd/=models=/response/account/i_account.dart';
 import 'package:dtnd/=models=/response/account/portfolio_status_model.dart';
 import 'package:dtnd/=models=/response/account/unexecuted_right_model.dart';
 import 'package:dtnd/=models=/response/account_info_model.dart';
+import 'package:dtnd/=models=/response/order_model/base_order_model.dart';
 import 'package:dtnd/=models=/response/total_asset_model.dart';
 import 'package:dtnd/=models=/response/user_token.dart';
+import 'package:dtnd/=models=/side.dart';
 import 'package:dtnd/data/i_local_storage_service.dart';
 import 'package:dtnd/data/i_network_service.dart';
 import 'package:dtnd/data/i_user_service.dart';
@@ -83,6 +85,33 @@ class UserService implements IUserService {
 
   @override
   bool get isLogin => token.value != null;
+
+  @override
+  Future<List<BaseOrderModel>?> getIndayOrder(
+      {int? page,
+      int? recordPerPage,
+      String? accountCode,
+      String? symbol,
+      int? status,
+      Side? side}) {
+    final RequestModel requestModel = RequestModel(
+      this,
+      group: "Q",
+      data: RequestDataModel.stringType(
+        cmd: "Web.Order.IndayOrder2",
+        p1: "${page ?? 1}",
+        p2: "${recordPerPage ?? 10}",
+        p3: accountCode ?? "ALL",
+        p4: [
+          symbol ?? "ALL",
+          status?.toString() ?? "ALL",
+          side?.code ?? "ALL",
+        ].join(","),
+      ),
+    );
+    return networkService
+        .requestTraditionalApiResList<BaseOrderModel>(requestModel);
+  }
 
   Future<List<IAccountModel>?> getListAccount() async {
     RequestModel requestModel = RequestModel(this,

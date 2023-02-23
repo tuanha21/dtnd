@@ -100,6 +100,13 @@ class StockModel {
     return null;
   }
 
+  Future<void> getStockData(IDataCenterService dataCenterService) async {
+    final response =
+        await dataCenterService.getStockDataResponse(stock.stockCode);
+    stockData.fromResponse(response);
+    return;
+  }
+
   Future<StockInfoCore?> getStockInfoCore(
       INetworkService networkService, IUserService userService) async {
     final RequestDataModel requestDataModel = RequestDataModel.stringType(

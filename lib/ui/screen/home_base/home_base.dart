@@ -35,10 +35,10 @@ class _HomeBaseState extends State<HomeBase> with WidgetsBindingObserver {
     }
   }
 
-  @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
-    print(state);
-  }
+  // @override
+  // void didChangeAppLifecycleState(AppLifecycleState state) {
+  //   print(state);
+  // }
 
   void onSessionExpired() async {
     logger.v("onSessionExpired called!");

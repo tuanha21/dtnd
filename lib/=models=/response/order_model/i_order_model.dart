@@ -13,5 +13,6 @@ abstract class IOrderModel {
   late final String orderAccount;
   late final String symbol;
   late final DateTime orderTime;
-  late final OrderStatus orderStatus;
+  late final String orderStatus;
+  num get matchPrice;
 }
