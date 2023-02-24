@@ -1126,7 +1126,7 @@ class NetworkService implements INetworkService {
   Future<List<Filter>> getFilterAccount() async {
     IUserService userService = UserService();
     var response = await client
-        .get(url_algo_apec('getFilters'), headers: {"X-USERNAME": "332957"});
+        .get(url_algo_apec('getFilters'), headers: {"X-USERNAME": userService.token.value?.user ?? ""});
     var mapData = json.decode(response.body);
     logger.d(mapData);
     List data = mapData['data'];
@@ -1151,6 +1151,8 @@ class NetworkService implements INetworkService {
 
   @override
   Future<List<StockFilter>> getStockFilter(Filter filter) async {
+    IUserService userService = UserService();
+
     try {
       var body = {
         "lang": "vi",
@@ -1166,7 +1168,7 @@ class NetworkService implements INetworkService {
       final response = await client.post(
           Uri.https('opacc-api.apec.com.vn', 'algo/pbapi/api/filter'),
           body: jsonEncode(body),
-          headers: {"X-USERNAME": "332957"});
+          headers: {"X-USERNAME": userService.token.value?.user ?? ""});
       var mapData = json.decode(response.body);
       List data = mapData['data']['items'];
       var list = <StockFilter>[];
@@ -1181,6 +1183,8 @@ class NetworkService implements INetworkService {
 
   @override
   Future setFilter(Filter filter, String type) async {
+    IUserService userService = UserService();
+
     try {
       var body = {
         "lang": "vi",
@@ -1196,7 +1200,25 @@ class NetworkService implements INetworkService {
       final response = await http.post(
           Uri.https('opacc-api.apec.com.vn', 'algo/pbapi/api/filter'),
           body: jsonEncode(body),
-          headers: {"X-USERNAME": "332957"});
+          headers: {"X-USERNAME": userService.token.value?.user ?? ""});
+      var mapData = json.decode(response.body);
+      print(mapData);
+    } catch (e) {
+      logger.e(e);
+      rethrow;
+    }
+  }
+
+  @override
+  Future deleteFilter(int id) async {
+    IUserService userService = UserService();
+
+    try {
+      var body = {"filterId": id};
+      final response = await http.post(
+          Uri.https('opacc-api.apec.com.vn', 'algo/pbapi/api/deleteFilter'),
+          body: jsonEncode(body),
+          headers: {"X-USERNAME": userService.token.value?.user ?? ""});
       var mapData = json.decode(response.body);
       print(mapData);
     } catch (e) {
