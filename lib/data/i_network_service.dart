@@ -186,4 +186,6 @@ abstract class INetworkService {
   Future<List<StockFilter>> getStockFilter(Filter filter);
 
   Future setFilter(Filter filter, String type);
+
+  Future deleteFilter(int id);
 }

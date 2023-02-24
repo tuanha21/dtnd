@@ -7,6 +7,7 @@ import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:dtnd/utilities/num_utils.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
@@ -115,13 +116,16 @@ class _AssistantStockFilterScreenState
           ),
           const SizedBox(height: 12),
           GestureDetector(
-            onTap: () {
-              showModalBottomSheet(
+            onTap: () async {
+              var isRefresh = await showModalBottomSheet(
                   context: context,
                   isScrollControlled: true,
                   builder: (context) {
                     return const AddFilterSheet();
                   });
+              if (isRefresh != null) {
+                getFilterApi();
+              }
             },
             child: Container(
               padding: const EdgeInsets.all(18),
@@ -158,43 +162,65 @@ class _AssistantStockFilterScreenState
                       physics: const NeverScrollableScrollPhysics(),
                       itemBuilder: (context, index) {
                         var filter = list[index];
-                        return ListTile(
-                          onTap: () {
-                            Navigator.of(context)
-                                .push(MaterialPageRoute(
-                                    builder: (context) =>
-                                        ListStockFilter(filter: filter)))
-                                .then((value) {
-                              getFilterApi();
-                            });
-                          },
-                          tileColor: AppColors.neutral_06,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12)),
-                          title: Text(
-                            filter.name ?? "",
-                            style: Theme.of(context).textTheme.bodyLarge,
+                        return Slidable(
+                          endActionPane: ActionPane(
+                            extentRatio: 0.25,
+                            motion: const ScrollMotion(),
+                            children: [
+                              SlidableAction(
+                                // An action can be bigger than the others.
+                                onPressed: (BuildContext context) async {
+                                  try {
+                                    await iNetworkService
+                                        .deleteFilter(filter.filterId!);
+                                    getFilterApi();
+                                  } catch (_) {}
+                                },
+                                backgroundColor: AppColors.semantic_03,
+                                foregroundColor: Colors.white,
+                                icon: Icons.delete_outline,
+                                spacing: 0,
+                              ),
+                            ],
                           ),
-                          subtitle: ListView.separated(
-                              shrinkWrap: true,
-                              physics: const NeverScrollableScrollPhysics(),
-                              itemBuilder: (context, index1) {
-                                var data = filter.list[index1];
-                                return Text(
-                                  '${listFilterMap[data.code]}: ${NumUtils.formatInteger10(data.low)} - ${NumUtils.formatInteger10(data.high)}',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodySmall
-                                      ?.copyWith(
-                                          color: AppColors.neutral_03,
-                                          fontWeight: FontWeight.w500),
-                                );
-                              },
-                              separatorBuilder: (context, index1) {
-                                return const SizedBox(height: 5);
-                              },
-                              itemCount: filter.list.length),
-                          trailing: const Icon(Icons.chevron_right_outlined),
+                          child: ListTile(
+                            onTap: () {
+                              Navigator.of(context)
+                                  .push(MaterialPageRoute(
+                                      builder: (context) =>
+                                          ListStockFilter(filter: filter)))
+                                  .then((value) {
+                                getFilterApi();
+                              });
+                            },
+                            tileColor: AppColors.neutral_06,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12)),
+                            title: Text(
+                              filter.name ?? "",
+                              style: Theme.of(context).textTheme.bodyLarge,
+                            ),
+                            subtitle: ListView.separated(
+                                shrinkWrap: true,
+                                physics: const NeverScrollableScrollPhysics(),
+                                itemBuilder: (context, index1) {
+                                  var data = filter.list[index1];
+                                  return Text(
+                                    '${listFilterMap[data.code]}: ${NumUtils.formatInteger10(data.low)} - ${NumUtils.formatInteger10(data.high)}',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodySmall
+                                        ?.copyWith(
+                                            color: AppColors.neutral_03,
+                                            fontWeight: FontWeight.w500),
+                                  );
+                                },
+                                separatorBuilder: (context, index1) {
+                                  return const SizedBox(height: 5);
+                                },
+                                itemCount: filter.list.length),
+                            trailing: const Icon(Icons.chevron_right_outlined),
+                          ),
                         );
                       },
                       separatorBuilder: (context, index) {
@@ -298,7 +324,24 @@ class _AddFilterSheetState extends State<AddFilterSheet> {
                           style: ElevatedButton.styleFrom(
                               disabledBackgroundColor: AppColors.neutral_05,
                               disabledForegroundColor: AppColors.neutral_04),
-                          onPressed: isValidator ? () {} : null,
+                          onPressed: isValidator
+                              ? () async {
+                                  var isRefresh =
+                                      await showModalBottomSheet<Filter>(
+                                          context: context,
+                                          isScrollControlled: true,
+                                          useSafeArea: true,
+                                          builder: (context) {
+                                            return BottomEditFilter(
+                                                name: nameController.text);
+                                          });
+                                  if (isRefresh != null) {
+                                    if (context.mounted) {
+                                      Navigator.pop(context, isRefresh);
+                                    }
+                                  }
+                                }
+                              : null,
                           child: const Text("Lưu"));
                     })),
           ),
