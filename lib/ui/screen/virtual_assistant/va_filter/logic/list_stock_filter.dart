@@ -17,6 +17,8 @@ import '../../../../widget/expanded_widget.dart';
 import '../../../../widget/input/app_text_field.dart';
 import '../../../../widget/my_appbar.dart';
 import '../../filter_enum.dart';
+import '../component/industry_box.dart';
+import '../component/market_box.dart';
 import '../virtual_assistant_filter_screen.dart';
 
 class ListStockFilter extends StatefulWidget {
@@ -32,7 +34,7 @@ class _ListStockFilterState extends State<ListStockFilter> {
   final INetworkService iNetworkService = NetworkService();
 
   StreamController<List<StockFilter>> filterStream =
-  StreamController.broadcast();
+      StreamController.broadcast();
 
   late List<StockFilter> listStock;
 
@@ -89,22 +91,15 @@ class _ListStockFilterState extends State<ListStockFilter> {
   List<Widget> _buildCells(int count) {
     return List.generate(
       count,
-          (index) {
+      (index) {
         return Container(
           alignment: Alignment.centerLeft,
           height: 36,
           width: 90,
           padding: const EdgeInsets.only(left: 20),
-          decoration: BoxDecoration(
-              color: index % 2 == 1
-                  ? AppColors.neutral_04
-                  : AppColors.neutral_04.withOpacity(0.5)),
+          decoration: const BoxDecoration(),
           child: Text(listStock[index].sECURITYCODE ?? "",
-              style: Theme
-                  .of(context)
-                  .textTheme
-                  .bodySmall
-                  ?.copyWith(
+              style: Theme.of(context).textTheme.bodySmall?.copyWith(
                   color: AppColors.neutral_02, fontWeight: FontWeight.w600)),
         );
       },
@@ -116,7 +111,7 @@ class _ListStockFilterState extends State<ListStockFilter> {
   List<Widget> _buildCellsHeader(int count) {
     return List.generate(
       count,
-          (index) {
+      (index) {
         var text = "";
         if (index <= 1) {
           text = listFilterHeader[index];
@@ -130,11 +125,7 @@ class _ListStockFilterState extends State<ListStockFilter> {
               textAlign: index <= 1 ? TextAlign.left : TextAlign.right,
               maxLines: 4,
               overflow: TextOverflow.clip,
-              style: Theme
-                  .of(context)
-                  .textTheme
-                  .bodySmall
-                  ?.copyWith(
+              style: Theme.of(context).textTheme.bodySmall?.copyWith(
                   color: AppColors.neutral_02, fontWeight: FontWeight.w600)),
         );
       },
@@ -144,7 +135,7 @@ class _ListStockFilterState extends State<ListStockFilter> {
   List<Widget> _buildCells2(int count, int indexCell) {
     return List.generate(
       count,
-          (index) {
+      (index) {
         String text = "";
         if (index == 0) {
           text = listStock[indexCell].eXCHANGECODE ?? "";
@@ -162,11 +153,7 @@ class _ListStockFilterState extends State<ListStockFilter> {
           height: 36,
           width: index == 0 ? 70 : 140,
           child: Text(text,
-              style: Theme
-                  .of(context)
-                  .textTheme
-                  .bodySmall
-                  ?.copyWith(
+              style: Theme.of(context).textTheme.bodySmall?.copyWith(
                   color: AppColors.neutral_02, fontWeight: FontWeight.w600)),
         );
       },
@@ -176,12 +163,9 @@ class _ListStockFilterState extends State<ListStockFilter> {
   List<Widget> _buildRows(int count) {
     return List.generate(
       count,
-          (index) {
+      (index) {
         return Container(
-          decoration: BoxDecoration(
-              color: index % 2 == 1
-                  ? AppColors.neutral_04
-                  : AppColors.neutral_04.withOpacity(0.5)),
+          decoration: const BoxDecoration(),
           child: Row(
             children: _buildCells2(listFilterHeader.length, index),
           ),
@@ -213,16 +197,12 @@ class _ListStockFilterState extends State<ListStockFilter> {
                               width: 90,
                               height: 60,
                               padding: const EdgeInsets.only(left: 20),
-                              decoration: const BoxDecoration(
-                                  color: AppColors.neutral_04),
+                              decoration: const BoxDecoration(),
                               child: Align(
                                 alignment: Alignment.centerLeft,
                                 child: Text("Mã CK",
                                     style:
-                                    Theme
-                                        .of(context)
-                                        .textTheme
-                                        .bodySmall),
+                                        Theme.of(context).textTheme.bodySmall),
                               ),
                             ),
                             Expanded(
@@ -243,8 +223,7 @@ class _ListStockFilterState extends State<ListStockFilter> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Container(
-                                  decoration: const BoxDecoration(
-                                      color: AppColors.neutral_04),
+                                  decoration: const BoxDecoration(),
                                   child: SizedBox(
                                     height: 60,
                                     child: Row(
@@ -272,15 +251,13 @@ class _ListStockFilterState extends State<ListStockFilter> {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20),
                     child: SizedBox(
-                      width: MediaQuery
-                          .of(context)
-                          .size
-                          .width,
+                      width: MediaQuery.of(context).size.width,
                       child: ElevatedButton(
                         onPressed: () async {
                           var isRefresh = await showModalBottomSheet(
                               context: context,
                               isScrollControlled: true,
+                              useSafeArea: true,
                               builder: (context) {
                                 return BottomEditFilter(filter: filter);
                               });
@@ -306,9 +283,10 @@ class _ListStockFilterState extends State<ListStockFilter> {
 }
 
 class BottomEditFilter extends StatefulWidget {
-  final Filter filter;
+  final Filter? filter;
+  final String? name;
 
-  const BottomEditFilter({Key? key, required this.filter}) : super(key: key);
+  const BottomEditFilter({Key? key, this.filter, this.name}) : super(key: key);
 
   @override
   State<BottomEditFilter> createState() => _BottomEditFilterState();
@@ -319,9 +297,15 @@ class _BottomEditFilterState extends State<BottomEditFilter> {
 
   List<FilterRange> listFilterSelect = [];
 
+  List<String> listMarket = [];
+
+  List<String> listIndustryCode = [];
+
   @override
   void initState() {
-    listFilterSelect = widget.filter.list;
+    listFilterSelect = widget.filter?.list ?? [];
+    listMarket = widget.filter?.listMarket ?? [];
+    listIndustryCode = widget.filter?.listIndustryCode ?? [];
     super.initState();
   }
 
@@ -329,119 +313,226 @@ class _BottomEditFilterState extends State<BottomEditFilter> {
   Widget build(BuildContext context) {
     return SafeArea(
         child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const SizedBox(height: 18),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text('Lưu bộ lọc', style: Theme
-                      .of(context)
-                      .textTheme
-                      .bodyLarge),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.pop(context);
-                    },
-                    child: Container(
-                        padding: const EdgeInsets.all(4),
-                        decoration: BoxDecoration(
-                            color: AppColors.neutral_06,
-                            borderRadius: BorderRadius.circular(6)),
-                        child: const Icon(
-                          Icons.clear,
-                          color: AppColors.dark_bg,
-                        )),
-                  )
-                ],
-              ),
-            ),
-            const Divider(
-              thickness: 1,
-              color: AppColors.neutral_05,
-              height: 36,
-            ),
-            Expanded(
-              child: ListView.separated(
-                  itemBuilder: (context, index) {
-                    return FilterBox(
-                      filterEnum: FilterEnum.values[index],
-                      filter: widget.filter,
-                      onChanged: (FilterRange value, bool isSelect) {
-                        /// check tồn tại hay chưa
-                        var constantValue = listFilterSelect.firstWhereOrNull(
-                                (element) => element.code == value.code) !=
-                            null;
-                        if (constantValue) {
-                          /// xóa
-                          if (!isSelect) {
-                            listFilterSelect.removeWhere(
-                                    (element) => element.code == value.code);
-                          } else {
-                            /// update
-                            var index = listFilterSelect.indexWhere(
-                                    (element) => element.code == value.code);
-                            listFilterSelect[index] = value;
-                          }
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        const SizedBox(height: 18),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(widget.filter != null ? 'Chỉnh sửa bộ lọc' : "Tạo bộ lọc",
+                  style: Theme.of(context).textTheme.bodyLarge),
+              GestureDetector(
+                onTap: () {
+                  Navigator.pop(context);
+                },
+                child: Container(
+                    padding: const EdgeInsets.all(4),
+                    decoration: BoxDecoration(
+                        color: AppColors.neutral_06,
+                        borderRadius: BorderRadius.circular(6)),
+                    child: const Icon(
+                      Icons.clear,
+                      color: AppColors.dark_bg,
+                    )),
+              )
+            ],
+          ),
+        ),
+        const Divider(
+          thickness: 1,
+          color: AppColors.neutral_05,
+          height: 36,
+        ),
+        Expanded(
+          child: ListView.separated(
+              itemBuilder: (context, index) {
+                if (index == 0) {
+                  return MarketBox(
+                    filter: widget.filter,
+                    onChanged: (String value, bool isSelect) {
+                      /// check tồn tại hay chưa
+                      var constantValue = listMarket.contains(value);
+                      if (constantValue) {
+                        /// xóa
+                        if (!isSelect) {
+                          listMarket.remove(value);
                         } else {
-                          /// thêm
-                          if (isSelect) {
-                            listFilterSelect.add(value);
-                          } else {
-                            print('??????');
-                          }
+                          /// update
+                          var index = listMarket
+                              .indexWhere((element) => element == value);
+                          listMarket[index] = value;
                         }
-                      },
-                    );
-                  },
-                  separatorBuilder: (context, index) {
-                    return const SizedBox(height: 16);
-                  },
-                  itemCount: FilterEnum.values.length),
-            ),
-            const SizedBox(height: 20),
-            SizedBox(
-              width: MediaQuery
-                  .of(context)
-                  .size
-                  .width,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: ElevatedButton(
-                  onPressed: () async {
-                    try {
-                      await iNetworkService.setFilter(
-                          widget.filter
-                            ..criteria = jsonEncode(listFilterSelect),
-                          "RU");
-                      if (context.mounted) {
-                        Navigator.pop(context, widget.filter);
+                      } else {
+                        /// thêm
+                        if (isSelect) {
+                          listMarket.add(value);
+                        } else {
+                          print('??????');
+                        }
                       }
-                    } catch (e) {
-                      print('lỗi cái lồn');
+                    },
+                  );
+                }
+                if (index == 1) {
+                  return IndustryBox(
+                    filter: widget.filter,
+                    onChanged: (String value, bool isSelect) {
+                      var key = mapIndustryList.entries
+                          .firstWhere((element) => element.value == value)
+                          .key;
+
+                      /// check tồn tại hay chưa
+                      var constantValue = listIndustryCode.contains(key);
+                      if (constantValue) {
+                        /// xóa
+                        if (!isSelect) {
+                          listIndustryCode.remove(key);
+                        } else {
+                          /// update
+                          var index = listIndustryCode
+                              .indexWhere((element) => element == key);
+                          listIndustryCode[index] = key;
+                        }
+                      } else {
+                        /// thêm
+                        if (isSelect) {
+                          listIndustryCode.add(key);
+                        } else {
+                          print('??????');
+                        }
+                      }
+                    },
+                  );
+                }
+                return FilterBox(
+                  filterEnum: FilterEnum.values[index - 2],
+                  filter: widget.filter,
+                  onChanged: (FilterRange value, bool isSelect) {
+                    /// check tồn tại hay chưa
+                    var constantValue = listFilterSelect.firstWhereOrNull(
+                            (element) => element.code == value.code) !=
+                        null;
+                    if (constantValue) {
+                      /// xóa
+                      if (!isSelect) {
+                        listFilterSelect.removeWhere(
+                            (element) => element.code == value.code);
+                      } else {
+                        /// update
+                        var index = listFilterSelect.indexWhere(
+                            (element) => element.code == value.code);
+                        listFilterSelect[index] = value;
+                      }
+                    } else {
+                      /// thêm
+                      if (isSelect) {
+                        listFilterSelect.add(value);
+                      } else {
+                        print('??????');
+                      }
                     }
                   },
-                  child: const Text("Áp dụng"),
-                ),
-              ),
+                );
+              },
+              separatorBuilder: (context, index) {
+                return const SizedBox(height: 16);
+              },
+              itemCount: FilterEnum.values.length + 2),
+        ),
+        const SizedBox(height: 20),
+        SizedBox(
+          width: MediaQuery.of(context).size.width,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: ElevatedButton(
+              onPressed: () async {
+                if (widget.filter != null) {
+                  await updateFilter(context);
+                } else {
+                  await createFilter(context);
+                }
+              },
+              child: const Text("Áp dụng"),
             ),
-            const SizedBox(height: 20),
-          ],
-        ));
+          ),
+        ),
+        const SizedBox(height: 20),
+      ],
+    ));
+  }
+
+  Future<void> updateFilter(BuildContext context) async {
+    try {
+      var name = await showModalBottomSheet<String>(
+          context: context,
+          useSafeArea: true,
+          isScrollControlled: true,
+          builder: (context) {
+            return EditNameSheet(
+              initName: widget.filter!.name ?? "",
+            );
+          });
+
+      /// update
+      if (name?.isNotEmpty == true) {
+        await iNetworkService.setFilter(
+            widget.filter!
+              ..criteria = jsonEncode(listFilterSelect)
+              ..name = name
+              ..industryCode = listIndustryCode.join(",")
+              ..exchangeCode = listMarket.join(","),
+            "RU");
+        if (context.mounted) {
+          Navigator.pop(context, widget.filter);
+        }
+      }
+    } catch (e) {
+      print('lỗi cái lồn');
+    }
+  }
+
+  Future<void> createFilter(BuildContext context) async {
+    try {
+      var name = await showModalBottomSheet<String>(
+          context: context,
+          useSafeArea: true,
+          isScrollControlled: true,
+          builder: (context) {
+            return EditNameSheet(
+              initName: widget.name ?? "",
+            );
+          });
+
+      /// update
+      if (name?.isNotEmpty == true) {
+        var filter = Filter()
+          ..criteria = jsonEncode(listFilterSelect)
+          ..name = name
+          ..industryCode = listIndustryCode.join(",")
+          ..exchangeCode = listMarket.join(",");
+        await iNetworkService.setFilter(filter, "RC");
+        if (context.mounted) {
+          Navigator.pop(context, filter);
+        }
+      }
+    } catch (e) {
+      print('lỗi cái lồn');
+    }
   }
 }
 
 class FilterBox extends StatefulWidget {
   final FilterEnum filterEnum;
-  final Filter filter;
+  final Filter? filter;
   final OpTapCheckBox onChanged;
 
-  const FilterBox({Key? key,
-    required this.filterEnum,
-    required this.filter,
-    required this.onChanged})
+  const FilterBox(
+      {Key? key,
+      required this.filterEnum,
+      this.filter,
+      required this.onChanged})
       : super(key: key);
 
   @override
@@ -456,7 +547,7 @@ class _FilterBoxState extends State<FilterBox> {
   FilterStockController get logic => Get.find<FilterStockController>();
 
   List<FilterRange> get listFilterSelect {
-    return widget.filter.list;
+    return widget.filter?.list ?? [];
   }
 
   @override
@@ -465,6 +556,18 @@ class _FilterBoxState extends State<FilterBox> {
       list.add(e);
     }
     super.initState();
+  }
+
+  int get count {
+    int count = 0;
+    for (var element in listFilterSelect) {
+      for (var element1 in list) {
+        if (element1.key == element.code) {
+          count++;
+        }
+      }
+    }
+    return count;
   }
 
   @override
@@ -487,13 +590,19 @@ class _FilterBoxState extends State<FilterBox> {
               });
             },
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(widget.filterEnum.name,
-                    style: Theme
-                        .of(context)
-                        .textTheme
-                        .titleSmall),
+                    style: Theme.of(context).textTheme.titleSmall),
+                Visibility(
+                    visible: count > 0,
+                    child: Text(
+                      ' (${count.toString()})',
+                      style: Theme.of(context)
+                          .textTheme
+                          .titleSmall
+                          ?.copyWith(color: AppColors.primary_01),
+                    )),
+                const Spacer(),
                 SvgPicture.asset(
                     !isExpanded ? AppImages.arrowUp1 : AppImages.arrowDown)
               ],
@@ -517,9 +626,9 @@ class _FilterBoxState extends State<FilterBox> {
                             (element) => element.code == list[index].key) !=
                         null,
                     initFilter: listFilterSelect.firstWhereOrNull(
-                            (element) => element.code == list[index].key),
+                        (element) => element.code == list[index].key),
                     filterRange: logic.listFilterRange.firstWhere(
-                            (element) => element.code == list[index].key),
+                        (element) => element.code == list[index].key),
                     onChanged: widget.onChanged,
                   );
                 }),
@@ -539,12 +648,13 @@ class CheckBoxWidget extends StatefulWidget {
   final FilterRange? initFilter;
   final OpTapCheckBox onChanged;
 
-  const CheckBoxWidget({Key? key,
-    required this.title,
-    this.initValue,
-    required this.filterRange,
-    this.initFilter,
-    required this.onChanged})
+  const CheckBoxWidget(
+      {Key? key,
+      required this.title,
+      this.initValue,
+      required this.filterRange,
+      this.initFilter,
+      required this.onChanged})
       : super(key: key);
 
   @override
@@ -574,6 +684,9 @@ class _CheckBoxWidgetState extends State<CheckBoxWidget> {
               isCheckBox = !isCheckBox;
               widget.onChanged.call(filterRangeSelect, isCheckBox);
             });
+            if (isCheckBox) {
+              showBottomEdit(context);
+            }
           },
           child: Container(
             height: 20,
@@ -597,18 +710,17 @@ class _CheckBoxWidgetState extends State<CheckBoxWidget> {
         const SizedBox(width: 8),
         Flexible(
             child: GestureDetector(
-              onTap: () async {
-                await showBottomEdit(context);
-              },
-              child: Text(
-                widget.title,
-                style: Theme
-                    .of(context)
-                    .textTheme
-                    .labelMedium
-                    ?.copyWith(color: AppColors.neutral_02),
-              ),
-            ))
+          onTap: () async {
+            await showBottomEdit(context);
+          },
+          child: Text(
+            widget.title,
+            style: Theme.of(context)
+                .textTheme
+                .labelMedium
+                ?.copyWith(color: AppColors.neutral_02),
+          ),
+        ))
       ],
     );
   }
@@ -658,102 +770,186 @@ class _EditFilterDetailState extends State<EditFilterDetail> {
   Widget build(BuildContext context) {
     return SafeArea(
         child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const SizedBox(height: 18),
-            Padding(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        const SizedBox(height: 18),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text('Chỉ số lọc cổ phiếu',
+                  style: Theme.of(context).textTheme.bodyLarge),
+              GestureDetector(
+                onTap: () {
+                  Navigator.pop(context);
+                },
+                child: Container(
+                    padding: const EdgeInsets.all(4),
+                    decoration: BoxDecoration(
+                        color: AppColors.neutral_06,
+                        borderRadius: BorderRadius.circular(6)),
+                    child: const Icon(
+                      Icons.clear,
+                      color: AppColors.dark_bg,
+                    )),
+              )
+            ],
+          ),
+        ),
+        const Divider(
+          thickness: 1,
+          color: AppColors.neutral_05,
+          height: 36,
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: Row(
+            children: [
+              Expanded(
+                child: AppTextField(
+                  controller: min,
+                  hintText: widget.filterRange.low?.toString(),
+                ),
+              ),
+              const SizedBox(width: 23),
+              Expanded(
+                child: AppTextField(
+                  controller: max,
+                  hintText: widget.filterRange.high?.toString(),
+                ),
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(height: 16),
+        SizedBox(
+            width: MediaQuery.of(context).size.width,
+            child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text('Chỉ số lọc cổ phiếu',
-                      style: Theme
-                          .of(context)
-                          .textTheme
-                          .bodyLarge),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.pop(context);
-                    },
-                    child: Container(
-                        padding: const EdgeInsets.all(4),
-                        decoration: BoxDecoration(
-                            color: AppColors.neutral_06,
-                            borderRadius: BorderRadius.circular(6)),
-                        child: const Icon(
-                          Icons.clear,
-                          color: AppColors.dark_bg,
-                        )),
-                  )
-                ],
+              child: ElevatedButton(
+                onPressed: () {
+                  num minValue = 0;
+                  num maxValue = 0;
+                  if (min.text.isEmpty) {
+                    minValue = widget.filterRange.low ?? 0;
+                  } else {
+                    minValue = num.tryParse(min.text) ?? 0;
+                  }
+                  if (max.text.isEmpty) {
+                    maxValue = widget.filterRange.high ?? 0;
+                  } else {
+                    maxValue = num.tryParse(max.text) ?? 0;
+                  }
+                  if (minValue > maxValue) {
+                    return AppSnackBar.showError(context,
+                        message: "Giá trị không hợp lệ");
+                  }
+                  var filter = FilterRange(
+                      code: widget.filterRange.code,
+                      high: maxValue,
+                      low: minValue);
+                  Navigator.pop(context, filter);
+                },
+                child: const Text('Lưu'),
+              ),
+            )),
+        const SizedBox(height: 20),
+        SizedBox(height: MediaQuery.of(context).viewInsets.bottom),
+      ],
+    ));
+  }
+}
+
+class EditNameSheet extends StatefulWidget {
+  final String initName;
+
+  const EditNameSheet({Key? key, required this.initName}) : super(key: key);
+
+  @override
+  State<EditNameSheet> createState() => _EditNameSheetState();
+}
+
+class _EditNameSheetState extends State<EditNameSheet> {
+  final nameController = TextEditingController();
+
+  final nameKey = GlobalKey<FormState>();
+
+  @override
+  void initState() {
+    nameController.text = widget.initName;
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return SafeArea(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const SizedBox(height: 18),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text('Chỉ số lọc cổ phiếu',
+                    style: Theme.of(context).textTheme.bodyLarge),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                  child: Container(
+                      padding: const EdgeInsets.all(4),
+                      decoration: BoxDecoration(
+                          color: AppColors.neutral_06,
+                          borderRadius: BorderRadius.circular(6)),
+                      child: const Icon(
+                        Icons.clear,
+                        color: AppColors.dark_bg,
+                      )),
+                )
+              ],
+            ),
+          ),
+          const Divider(
+            thickness: 1,
+            color: AppColors.neutral_05,
+            height: 36,
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Form(
+              key: nameKey,
+              child: AppTextField(
+                controller: nameController,
+                validator: (text) {
+                  if (text!.isEmpty) {
+                    return "Vui lòng nhập danh mục";
+                  }
+                  return null;
+                },
               ),
             ),
-            const Divider(
-              thickness: 1,
-              color: AppColors.neutral_05,
-              height: 36,
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: AppTextField(
-                      controller: min,
-                      hintText: widget.filterRange.low?.toString(),
-                    ),
-                  ),
-                  const SizedBox(width: 23),
-                  Expanded(
-                    child: AppTextField(
-                      controller: max,
-                      hintText: widget.filterRange.high?.toString(),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(height: 16),
-            SizedBox(
-                width: MediaQuery
-                    .of(context)
-                    .size
-                    .width,
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: ElevatedButton(
+          ),
+          const SizedBox(height: 20),
+          SizedBox(
+              width: MediaQuery.of(context).size.width,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: ElevatedButton(
                     onPressed: () {
-                      num minValue = 0;
-                      num maxValue = 0;
-                      if (min.text.isEmpty) {
-                        minValue = widget.filterRange.low ?? 0;
-                      } else {
-                        minValue = num.tryParse(min.text) ?? 0;
+                      if (!nameKey.currentState!.validate()) {
+                        return;
                       }
-                      if (max.text.isEmpty) {
-                        maxValue = widget.filterRange.high ?? 0;
-                      } else {
-                        maxValue = num.tryParse(max.text) ?? 0;
-                      }
-                      if (minValue > maxValue) {
-                        return AppSnackBar.showError(context,
-                            message: "Giá trị không hợp lệ");
-                      }
-                      var filter = FilterRange(
-                          code: widget.filterRange.code,
-                          high: maxValue,
-                          low: minValue);
-                      Navigator.pop(context, filter);
+                      Navigator.pop(context, nameController.text);
                     },
-                    child: const Text('Lưu'),
-                  ),
-                )),
-            const SizedBox(height: 20),
-            SizedBox(height: MediaQuery
-                .of(context)
-                .viewInsets
-                .bottom),
-          ],
-        ));
+                    child: const Text("Lưu")),
+              )),
+          const SizedBox(height: 24),
+          SizedBox(height: MediaQuery.of(context).viewInsets.bottom)
+        ],
+      ),
+    );
   }
 }
