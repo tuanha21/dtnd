@@ -371,6 +371,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "the_DTND_virtual_assistant_will_help_you_with_successful_transaction":
             MessageLookupByLibrary.simpleMessage(
                 "Trợ lý ảo DTND sẽ giúp bạn có những\ngiao dịch thành công"),
+        "thousand_short": MessageLookupByLibrary.simpleMessage("K"),
         "time": MessageLookupByLibrary.simpleMessage("Thời gian"),
         "timeout": MessageLookupByLibrary.simpleMessage(
             "Không nhận được phản hồi từ máy chủ"),

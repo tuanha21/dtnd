@@ -121,6 +121,7 @@
     "matching": "Matching",
 
     "million_short": "M",
+    "thousand_short": "K",
     "billion_short": "B",
     "billion_lowercase": "b",
     "billion": "Bil",

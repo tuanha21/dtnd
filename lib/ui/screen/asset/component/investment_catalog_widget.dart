@@ -3,15 +3,20 @@ import 'package:dtnd/=models=/response/stock.dart';
 import 'package:dtnd/config/service/app_services.dart';
 import 'package:dtnd/data/i_data_center_service.dart';
 import 'package:dtnd/data/implementations/data_center_service.dart';
+import 'package:dtnd/data/implementations/user_service.dart';
 import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/screen/asset/component/asset_catalog_ratio_chart.dart';
 import 'package:dtnd/ui/screen/asset/screen/asset_stock_detail/asset_stock_detail_screen.dart';
+import 'package:dtnd/ui/screen/exchange_stock/stock_order/business/stock_order_flow.dart';
+import 'package:dtnd/ui/screen/exchange_stock/stock_order/sheet/stock_order_sheet.dart';
+import 'package:dtnd/ui/screen/login/login_screen.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:dtnd/ui/theme/app_textstyle.dart';
 import 'package:dtnd/ui/widget/button/single_color_text_button.dart';
 import 'package:dtnd/ui/widget/expanded_widget.dart';
 import 'package:dtnd/ui/widget/icon/stock_icon.dart';
+import 'package:dtnd/ui/widget/overlay/login_first_dialog.dart';
 import 'package:dtnd/utilities/num_utils.dart';
 import 'package:flutter/material.dart';
 
@@ -307,7 +312,37 @@ class _InvestmentCatalogWidgetState extends State<InvestmentCatalogWidget> {
                                 color: AppColors.semantic_03,
                                 padding:
                                     const EdgeInsets.symmetric(vertical: 4),
-                                onTap: () {},
+                                onTap: () async {
+                                  if (!UserService().isLogin) {
+                                    final toLogin = await showDialog<bool>(
+                                      context: context,
+                                      builder: (context) {
+                                        return const LoginFirstDialog();
+                                      },
+                                    );
+                                    if (toLogin ?? false) {
+                                      if (!mounted) return;
+                                      await Navigator.of(context)
+                                          .push(MaterialPageRoute(
+                                        builder: (context) =>
+                                            const LoginScreen(),
+                                      ));
+                                    }
+                                  } else {
+                                    final model = await dataCenterService
+                                        .getStockModelsFromStockCodes(
+                                            [stock!.stockCode]);
+                                    if ((model?.isNotEmpty ?? false) &&
+                                        mounted) {
+                                      StockOrderISheet(model!.first).show(
+                                          context,
+                                          StockOrderSheet(
+                                            stockModel: model.first,
+                                            orderData: null,
+                                          ));
+                                    }
+                                  }
+                                },
                               ),
                             )
                           ],

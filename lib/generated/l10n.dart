@@ -1180,6 +1180,16 @@ class S {
     );
   }
 
+  /// `K`
+  String get thousand_short {
+    return Intl.message(
+      'K',
+      name: 'thousand_short',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `B`
   String get billion_short {
     return Intl.message(

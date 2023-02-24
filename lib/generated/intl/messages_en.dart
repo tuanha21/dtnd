@@ -377,6 +377,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "the_DTND_virtual_assistant_will_help_you_with_successful_transaction":
             MessageLookupByLibrary.simpleMessage(
                 "The DTND virtual assistant will help you with successful transaction"),
+        "thousand_short": MessageLookupByLibrary.simpleMessage("K"),
         "time": MessageLookupByLibrary.simpleMessage("Time"),
         "timeout":
             MessageLookupByLibrary.simpleMessage("No response from server"),

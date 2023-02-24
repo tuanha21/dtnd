@@ -38,7 +38,10 @@ class _TabTradingBoardState extends State<TabTradingBoard> {
             ),
           ),
           const SizedBox(height: 10),
-          ThreePrices(stockModel: widget.stockModel),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: ThreePrices(stockModel: widget.stockModel),
+          ),
           const Divider(
             thickness: 0.5,
             color: AppColors.neutral_04,
@@ -52,9 +55,8 @@ class _TabTradingBoardState extends State<TabTradingBoard> {
               children: [
                 Expanded(
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-
-                      children: [
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
                     Text(
                       'Thấp',
                       style: Theme.of(context)
@@ -65,62 +67,55 @@ class _TabTradingBoardState extends State<TabTradingBoard> {
                     Text(
                       widget.stockModel.stockData.lowPrice.value?.toString() ??
                           "",
-                      style: Theme.of(context)
-                          .textTheme
-                          .bodySmall
-                          ?.copyWith(color: AppColors.semantic_03,fontWeight: FontWeight.w600),
+                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                          color: AppColors.semantic_03,
+                          fontWeight: FontWeight.w600),
                     )
                   ],
                 )),
                 Expanded(
                     child: Center(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Trung bình',
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodySmall
-                                ?.copyWith(fontSize: 10, color: AppColors.neutral_03),
-                          ),
-                          Text(
-                            widget.stockModel.stockData.avePrice.value?.toString() ??
-                                "",
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodySmall
-                                ?.copyWith(color: AppColors.semantic_02,fontWeight: FontWeight.w600),
-                          )
-                        ],
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Trung bình',
+                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                            fontSize: 10, color: AppColors.neutral_03),
                       ),
-                    )),
+                      Text(
+                        widget.stockModel.stockData.avePrice.value
+                                ?.toString() ??
+                            "",
+                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                            color: AppColors.semantic_02,
+                            fontWeight: FontWeight.w600),
+                      )
+                    ],
+                  ),
+                )),
                 Expanded(
                     child: Align(
-                      alignment: Alignment.centerRight,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-
-                        children: [
-                          Text(
-                            'Cao',
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodySmall
-                                ?.copyWith(fontSize: 10, color: AppColors.neutral_03),
-                          ),
-                          Text(
-                            widget.stockModel.stockData.highPrice.value?.toString() ??
-                                "",
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodySmall
-                                ?.copyWith(color: AppColors.semantic_01,fontWeight: FontWeight.w600),
-                          )
-                        ],
+                  alignment: Alignment.centerRight,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Cao',
+                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                            fontSize: 10, color: AppColors.neutral_03),
                       ),
-                    )),
-
+                      Text(
+                        widget.stockModel.stockData.highPrice.value
+                                ?.toString() ??
+                            "",
+                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                            color: AppColors.semantic_01,
+                            fontWeight: FontWeight.w600),
+                      )
+                    ],
+                  ),
+                )),
               ],
             ),
           )

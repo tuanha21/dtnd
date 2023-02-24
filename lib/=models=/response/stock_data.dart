@@ -37,7 +37,7 @@ class StockData extends StockStatus {
     if (lot.value == null || !isValidAvePrice) {
       return 0;
     } else {
-      return lot.value! * avePrice.value!;
+      return lot.value! * avePrice.value! * 1000;
     }
   }
 
@@ -68,7 +68,7 @@ class StockData extends StockStatus {
               num.tryParse(g2.value?.split("|").elementAt(1) ?? "0") ?? 0;
           final g3Vol =
               num.tryParse(g3.value?.split("|").elementAt(1) ?? "0") ?? 0;
-          return g1Vol + g2Vol + g3Vol;
+          return (g1Vol + g2Vol + g3Vol) * 10;
         case Side.sell:
           final g1Vol =
               num.tryParse(g4.value?.split("|").elementAt(1) ?? "0") ?? 0;
@@ -76,7 +76,7 @@ class StockData extends StockStatus {
               num.tryParse(g5.value?.split("|").elementAt(1) ?? "0") ?? 0;
           final g3Vol =
               num.tryParse(g6.value?.split("|").elementAt(1) ?? "0") ?? 0;
-          return g1Vol + g2Vol + g3Vol;
+          return (g1Vol + g2Vol + g3Vol) * 10;
       }
     } catch (e) {
       logger.v(e);

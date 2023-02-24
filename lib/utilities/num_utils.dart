@@ -107,6 +107,18 @@ class NumUtils {
     return "$value $postfix";
   }
 
+  static String getMoneyWithPostfixThousand(num? num, BuildContext context) {
+    if (num == null) {
+      return "0";
+    }
+    int intValue = num ~/ 1;
+    String postfix;
+    String value;
+    value = formatDouble(intValue / 1000);
+    postfix = S.of(context).thousand_short;
+    return "$value$postfix";
+  }
+
   static num? parseString(String? string) {
     if (string == null) {
       return null;

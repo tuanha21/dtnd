@@ -17,6 +17,8 @@ import 'package:dtnd/data/implementations/network_service.dart';
 import 'package:dtnd/data/implementations/user_service.dart';
 import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/screen/exchange_stock/stock_order/component/order_order_note_panel.dart';
+import 'package:dtnd/ui/screen/exchange_stock/stock_order/component/order_order_panel.dart';
+import 'package:dtnd/ui/screen/exchange_stock/stock_order/component/order_owned_stock_panel.dart';
 import 'package:dtnd/ui/screen/exchange_stock/stock_order/data/order_data.dart';
 import 'package:dtnd/ui/screen/search/search_screen.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
@@ -210,105 +212,28 @@ class _StockOrderSheetState extends State<StockOrderSheet>
                 ),
               ],
             ),
-            const OrderOrderNotePanel(),
-            const SizedBox(height: 20),
-            Builder(builder: (context) {
-              return Row(
-                children: [
-                  StockIcon(
-                    color: Colors.white,
-                    stockCode: stockModel.stock.stockCode,
-                  ),
-                  const SizedBox(width: 8),
-                  Expanded(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Row(
-                          children: [
-                            Text(
-                              stockModel.stock.stockCode,
-                              style: textTheme.titleSmall,
-                            ),
-                          ],
-                        ),
-                        Row(
-                          children: [
-                            Flexible(
-                              child: Text(
-                                stockModel.stock.nameShort ?? "",
-                                overflow: TextOverflow.ellipsis,
-                                style: AppTextStyle.labelSmall_10
-                                    .copyWith(color: AppColors.neutral_03),
-                              ),
-                            ),
-
-                            // Expanded(
-                            //   child: Container(
-                            //     height: 4,
-                            //     decoration: const BoxDecoration(
-                            //       borderRadius:
-                            //           BorderRadius.all(Radius.circular(4)),
-                            //       color: AppColors.neutral_06,
-                            //     ),
-                            //     child: Row(
-                            //       children: [
-                            //         Flexible(
-                            //           flex: (widget.volPc ?? 0) ~/ 1,
-                            //           child: Container(
-                            //             height: 4,
-                            //             decoration: const BoxDecoration(
-                            //               borderRadius: BorderRadius.all(
-                            //                   Radius.circular(4)),
-                            //               color: AppColors.graph_7,
-                            //             ),
-                            //           ),
-                            //         ),
-                            //         Flexible(
-                            //           flex: 100 - ((widget.volPc ?? 0) ~/ 1),
-                            //           child: Container(),
-                            //         )
-                            //       ],
-                            //     ),
-                            //   ),
-                            // )
-                          ],
-                        )
-                      ],
-                    ),
-                  ),
-                  Material(
-                    child: InkWell(
-                      onTap: () {
-                        Navigator.of(context)
-                            .push(MaterialPageRoute(
-                          builder: (context) => const SearchScreen(),
-                        ))
-                            .then((value) async {
-                          if (value is Stock) {
-                            dataCenterService.getStockModelsFromStockCodes(
-                                [value.stockCode]).then((stockModels) {
-                              if (stockModels?.isNotEmpty ?? false) {
-                                return changeStock(stockModels!.first);
-                              }
-                            });
-                          }
-                        });
-                      },
-                      child: Ink(
-                        child: const Icon(
-                          Icons.cancel_outlined,
-                          fill: 1,
-                          size: 30,
-                          color: AppColors.semantic_03,
-                        ),
-                      ),
-                    ),
-                  )
-                ],
-              );
-            }),
-            const SizedBox(height: 20),
+            const SizedBox(height: 16),
+            SizedBox(
+              height: 300,
+              child: TabBarView(controller: tabController, children: [
+                OrderOrderPanel(
+                  stockModel: stockModel,
+                  onChangeStock: changeStock,
+                ),
+                const OrderOrderNotePanel(),
+                OrderOwnedStockPanel(
+                  onSell: (stockCodes) async {
+                    final model = await dataCenterService
+                        .getStockModelsFromStockCodes([stockCodes]);
+                    if (model?.isNotEmpty ?? false) {
+                      changeStock(model!.first);
+                      tabController.animateTo(0);
+                    }
+                  },
+                ),
+              ]),
+            ),
+            const SizedBox(height: 16),
             Row(
               children: [
                 Row(

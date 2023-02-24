@@ -140,19 +140,28 @@ class PorfolioStock extends StockStatus implements CoreResponseModel {
   num get buyTVol => (buyT0 ?? 0) + (buyT1 ?? 0) + (buyT2 ?? 0);
   num get sellTVol => (sellT0 ?? 0) + (sellT1 ?? 0) + (sellT1 ?? 0);
   @override
+  Color get color {
+    final value = gainLossValue ?? 0;
+    if (value > 0) {
+      return AppColors.semantic_01;
+    } else if (value < 0) {
+      return AppColors.semantic_03;
+    } else {
+      return AppColors.semantic_02;
+    }
+  }
+
+  @override
   SStatus get sstatus {
     try {
-      if (gainLossValue == null) {
+      final value = gainLossValue ?? 0;
+      if (value > 0) {
+        return SStatus.up;
+      } else if (value < 0) {
+        return SStatus.down;
+      } else {
         return SStatus.ref;
       }
-      if (gainLossValue! > 0) {
-        return SStatus.up;
-      }
-
-      if (gainLossValue! < 0) {
-        return SStatus.down;
-      }
-      return SStatus.ref;
     } catch (e) {
       return SStatus.ref;
     }
