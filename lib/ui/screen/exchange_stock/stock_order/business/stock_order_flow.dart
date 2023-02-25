@@ -92,10 +92,7 @@ class StockOrderSuccessISheet extends IStockOrderSheet {
   ISheet? next([dynamic cmd]) => StockOrderISheet(stockModel);
 
   @override
-  Widget? backWidget([cmd]) => StockOrderSheet(
-        stockModel: stockModel,
-        orderData: cmd!.data,
-      );
+  Widget? backWidget([cmd]) => null;
 
   @override
   Widget? nextWidget([cmd]) => StockOrderSheet(
@@ -114,19 +111,19 @@ class StockOrderFailISheet extends IStockOrderSheet {
   StockOrderFailISheet(super.stockModel);
 
   @override
-  ISheet? back([dynamic cmd]) => StockOrderISheet(stockModel);
+  ISheet? back([dynamic cmd]) => null;
 
   @override
-  ISheet? next([dynamic cmd]) => null;
+  ISheet? next([dynamic cmd]) => StockOrderISheet(stockModel);
 
   @override
-  Widget? backWidget([cmd]) => StockOrderSheet(
+  Widget? backWidget([cmd]) => null;
+
+  @override
+  Widget? nextWidget([cmd]) => StockOrderSheet(
         stockModel: stockModel,
         orderData: cmd!.data,
       );
-
-  @override
-  Widget? nextWidget([cmd]) => null;
 
   @override
   Future<void>? onResultBack([cmd]) => null;

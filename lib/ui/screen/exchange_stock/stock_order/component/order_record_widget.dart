@@ -1,4 +1,5 @@
 import 'package:dtnd/=models=/response/order_model/base_order_model.dart';
+import 'package:dtnd/=models=/side.dart';
 import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_textstyle.dart';
@@ -23,14 +24,12 @@ class OrderRecordWidget extends StatelessWidget {
                 child: Container(
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
-                    color: data.side == "B"
-                        ? AppColors.semantic_01
-                        : AppColors.semantic_01,
+                    color: data.side.kColor,
                     borderRadius: BorderRadius.circular(4),
                   ),
                   // padding: const EdgeInsets.symmetric(horizontal: 5),
                   child: Text(
-                    data.side == "B" ? "M" : "B",
+                    data.side.nameShort(context),
                     style: AppTextStyle.titleSmall_14
                         .copyWith(color: Colors.white),
                   ),
@@ -54,6 +53,7 @@ class OrderRecordWidget extends StatelessWidget {
               ))
             ],
           ),
+          const SizedBox(height: 8),
           Row(
             children: [
               Expanded(

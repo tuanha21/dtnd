@@ -1,4 +1,5 @@
 import 'package:dtnd/=models=/core_response_model.dart';
+import 'package:dtnd/utilities/logger.dart';
 import 'package:dtnd/utilities/num_utils.dart';
 
 class StockCashBalanceModel implements CoreResponseModel {
@@ -15,6 +16,7 @@ class StockCashBalanceModel implements CoreResponseModel {
   String? accName;
 
   StockCashBalanceModel.fromJson(Map<String, dynamic> json) {
+    logger.v(json);
     accCode = json['accCode'];
     accType = json['accType'];
     sym = json['sym'];

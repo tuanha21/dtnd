@@ -9,7 +9,6 @@ import 'package:dtnd/ui/widget/overlay/error_dialog.dart';
 import 'package:dtnd/utilities/logger.dart';
 import 'package:dtnd/utilities/time_utils.dart';
 import 'package:dtnd/utilities/typedef.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -17,8 +16,8 @@ import 'package:go_router/go_router.dart';
 
 import '../../../theme/app_image.dart';
 
-class LoginForm extends StatefulWidget {
-  const LoginForm({
+class NotFirstLoginForm extends StatefulWidget {
+  const NotFirstLoginForm({
     Key? key,
     required this.loginFormKey,
     required this.otpRequired,
@@ -33,23 +32,20 @@ class LoginForm extends StatefulWidget {
   final TextEditingController? userController;
   final TextEditingController? passController;
   @override
-  State<LoginForm> createState() => _LoginFormState();
+  State<NotFirstLoginForm> createState() => _NotFirstLoginFormState();
 }
 
-class _LoginFormState extends State<LoginForm> {
+class _NotFirstLoginFormState extends State<NotFirstLoginForm> {
   final LoginController loginController = LoginController();
   final GlobalKey<FormState> loginFormKey = GlobalKey<FormState>();
   late final TextEditingController _userController;
   late final TextEditingController _passController;
 
-  final GlobalKey<FormFieldState<String?>> usernameFormKey =
-      GlobalKey<FormFieldState<String?>>();
   final GlobalKey<FormFieldState<String?>> passwordFormKey =
       GlobalKey<FormFieldState<String?>>();
   final GlobalKey<FormFieldState<String?>>? otpFormKey =
       GlobalKey<FormFieldState<String?>>();
 
-  final FocusNode usernameFocusNode = FocusNode();
   final FocusNode passwordFocusNode = FocusNode();
 
   Timer? onUsernameStoppedTyping;
@@ -78,24 +74,6 @@ class _LoginFormState extends State<LoginForm> {
     // });
   }
 
-  void _onUsernameChangeHandler(
-      FormFieldState<String?> usernameState, String value) {
-    usernameState.didChange(value);
-    if (onUsernameStoppedTyping != null) {
-      setState(() {
-        typingUsername = true;
-      }); // clear timer
-      onUsernameStoppedTyping!.cancel();
-    }
-    setState(
-      () => onUsernameStoppedTyping = Timer(TimeUtilities.typingDelay, () {
-        typingUsername = false;
-        usernameState.validate();
-        checkValidate();
-      }),
-    );
-  }
-
   void _onPasswordChangeHandler(
       FormFieldState<String?> passwordState, String value) {
     passwordState.didChange(value);
@@ -112,17 +90,6 @@ class _LoginFormState extends State<LoginForm> {
         checkValidate();
       }),
     );
-  }
-
-  String? usernameValidator(String? value) {
-    if ((value?.length ?? 0) < 6) {
-      return S.of(context).null_username;
-    }
-    if (loginController.invalidAccount.value) {
-      loginController.invalidAccount.value = false;
-      return S.of(context).invalid_account;
-    }
-    return null;
   }
 
   String? passwordValidator(String? value) {
@@ -142,19 +109,13 @@ class _LoginFormState extends State<LoginForm> {
 
   void checkValidate() {
     setState(() {
-      if (usernameHasError || passwordHasError) {
-        if (login == null) {
-          return;
-        }
+      if (passwordHasError) {
         login = null;
       } else {
         login = checkLogin;
       }
     });
   }
-
-  bool get usernameHasError =>
-      (usernameFormKey.currentState?.hasError ?? true) && !typingUsername;
 
   bool get passwordHasError =>
       (passwordFormKey.currentState?.hasError ?? true) && !typingPassword;
@@ -166,28 +127,6 @@ class _LoginFormState extends State<LoginForm> {
       key: widget.loginFormKey,
       child: Column(
         children: [
-          FormField<String?>(
-            key: usernameFormKey,
-            validator: usernameValidator,
-            initialValue: userNameInitialValue,
-            builder: (usernameState) => TextField(
-              autocorrect: false,
-              focusNode: usernameFocusNode,
-              controller: _userController,
-              onChanged: (value) =>
-                  _onUsernameChangeHandler(usernameState, value),
-              decoration: InputDecoration(
-                labelText: S.of(context).username,
-                hintText: S.of(context).username,
-                errorText: usernameHasError
-                    ? usernameFormKey.currentState?.errorText
-                    : null,
-              ),
-            ),
-          ),
-          const SizedBox(
-            height: 20,
-          ),
           FormField<String?>(
             key: passwordFormKey,
             validator: passwordValidator,
@@ -207,26 +146,6 @@ class _LoginFormState extends State<LoginForm> {
               ),
             ),
           ),
-          // ObxValue<Rx<bool>>((otpRequired) {
-          //   if (!otpRequired.value) {
-          //     return Container();
-          //   }
-          //   return FormField<String?>(
-          //     key: widget.otpFormKey,
-          //     validator: widget.otpValidator,
-          //     builder: (otpFieldState) {
-          //       return TextFormField(
-          //         controller: _passController,
-          //         onChanged: (otp) =>
-          //             _onChangeHandler(otpFieldState, null, otp, null),
-          //         decoration: InputDecoration(
-          //           labelText: "OTP",
-          //           hintText: S.of(context).fill_OTP,
-          //         ),
-          //       );
-          //     },
-          //   );
-          // }, widget.otpRequired),
           const SizedBox(height: 20),
           IntrinsicHeight(
             child: Row(
@@ -252,26 +171,17 @@ class _LoginFormState extends State<LoginForm> {
               ],
             ),
           ),
-          const SizedBox(height: 16),
-          socialButton(AppImages.google, S.of(context).login_with_google),
-          const SizedBox(height: 16),
-          socialButton(AppImages.facebook, S.of(context).login_with_facebook),
           const SizedBox(height: 50),
-          RichText(
-              text: TextSpan(children: [
-            TextSpan(
-                text: '${S.of(context).you_are_not_account} ',
-                style: titleSmall?.copyWith(
-                    fontWeight: FontWeight.w500, color: AppColors.neutral_04)),
-            TextSpan(
-                text: S.of(context).sign_up,
-                style: titleSmall?.copyWith(
-                    fontWeight: FontWeight.w500, color: AppColors.primary_01),
-                recognizer: TapGestureRecognizer()
-                  ..onTap = () {
-                    GoRouter.of(context).push('/SignUp');
-                  })
-          ]))
+          GestureDetector(
+            onTap: () {
+              GoRouter.of(context).push('/SignUp');
+            },
+            child: Text(
+              S.of(context).login_with_another_account,
+              style: titleSmall?.copyWith(
+                  fontWeight: FontWeight.w500, color: AppColors.primary_01),
+            ),
+          )
         ],
       ),
     );
@@ -303,15 +213,13 @@ class _LoginFormState extends State<LoginForm> {
   }
 
   Future<void> checkLogin() async {
-    usernameFocusNode.unfocus();
     passwordFocusNode.unfocus();
 
     if (widget.loginFormKey.currentState!.validate()) {
       late final UserToken? userToken;
       try {
         userToken = await loginController.login(
-            usernameFormKey.currentState!.value!,
-            passwordFormKey.currentState!.value!);
+            _userController.text, passwordFormKey.currentState!.value!);
       } catch (e) {
         userToken = null;
         logger.e(e);

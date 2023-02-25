@@ -103,6 +103,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Business information"),
         "buy": MessageLookupByLibrary.simpleMessage("Buy"),
         "buy_price": MessageLookupByLibrary.simpleMessage("Buy price"),
+        "buy_short": MessageLookupByLibrary.simpleMessage("B"),
         "cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
         "capital_value": MessageLookupByLibrary.simpleMessage("Capital value"),
         "cash": MessageLookupByLibrary.simpleMessage("Cash"),
@@ -225,6 +226,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "login_to_continue":
             MessageLookupByLibrary.simpleMessage("Login to continue"),
         "login_upper": MessageLookupByLibrary.simpleMessage("LOGIN"),
+        "login_with_another_account":
+            MessageLookupByLibrary.simpleMessage("Login with another account"),
         "login_with_facebook":
             MessageLookupByLibrary.simpleMessage("Login with Facebook"),
         "login_with_google":
@@ -273,6 +276,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "no_matching_results_were_found": MessageLookupByLibrary.simpleMessage(
             "No matching results were found"),
         "normal_vol": MessageLookupByLibrary.simpleMessage("Normal vol"),
+        "not_first_login_quote": MessageLookupByLibrary.simpleMessage(
+            "Welcome back, please fill the password to continue"),
         "null_password": MessageLookupByLibrary.simpleMessage(
             "Password requires at least 8 characters"),
         "null_username": MessageLookupByLibrary.simpleMessage(
@@ -285,6 +290,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "order_note": MessageLookupByLibrary.simpleMessage("Order note"),
         "order_price": MessageLookupByLibrary.simpleMessage("Order price"),
         "order_type": MessageLookupByLibrary.simpleMessage("Order type"),
+        "order_value": MessageLookupByLibrary.simpleMessage("Order value"),
         "order_will_appear_in_ur_order_note":
             MessageLookupByLibrary.simpleMessage(
                 "Order will appear in your order note"),
@@ -337,6 +343,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "see_more": MessageLookupByLibrary.simpleMessage("See more"),
         "sell": MessageLookupByLibrary.simpleMessage("Sell"),
         "sell_price": MessageLookupByLibrary.simpleMessage("Sell price"),
+        "sell_short": MessageLookupByLibrary.simpleMessage("S"),
         "session_expired_in":
             MessageLookupByLibrary.simpleMessage("Session expired in "),
         "session_had_been_expired":

@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:dtnd/=models=/exchange.dart';
-import 'package:dtnd/=models=/response/stock.dart';
 import 'package:dtnd/=models=/response/stock_cash_balance_model.dart';
 import 'package:dtnd/=models=/response/stock_info_core.dart';
 import 'package:dtnd/=models=/response/stock_model.dart';
@@ -20,12 +19,10 @@ import 'package:dtnd/ui/screen/exchange_stock/stock_order/component/order_order_
 import 'package:dtnd/ui/screen/exchange_stock/stock_order/component/order_order_panel.dart';
 import 'package:dtnd/ui/screen/exchange_stock/stock_order/component/order_owned_stock_panel.dart';
 import 'package:dtnd/ui/screen/exchange_stock/stock_order/data/order_data.dart';
-import 'package:dtnd/ui/screen/search/search_screen.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_textstyle.dart';
 import 'package:dtnd/ui/widget/button/single_color_text_button.dart';
 import 'package:dtnd/ui/widget/icon/sheet_header.dart';
-import 'package:dtnd/ui/widget/icon/stock_icon.dart';
 import 'package:dtnd/ui/widget/input/interval_input.dart';
 import 'package:dtnd/utilities/num_utils.dart';
 import 'package:dtnd/utilities/time_utils.dart';
@@ -193,7 +190,6 @@ class _StockOrderSheetState extends State<StockOrderSheet>
               title: S.of(context).trading,
               implementBackButton: false,
             ),
-            const SizedBox(height: 20),
             TabBar(
               controller: tabController,
               isScrollable: false,
@@ -280,16 +276,42 @@ class _StockOrderSheetState extends State<StockOrderSheet>
               ],
             ),
             const SizedBox(height: 20),
-            Wrap(
-              spacing: 8,
-              children: [
-                for (final OrderType orderType in listOrderTypes)
-                  _OrderTypeButton(
-                    orderType: orderType,
-                    isSelected: isSelected,
-                    select: select,
+            SizedBox(
+              height: 28,
+              child: Row(
+                children: [
+                  Expanded(
+                    child: ListView(
+                      scrollDirection: Axis.horizontal,
+                      children: [
+                        for (final OrderType orderType in listOrderTypes)
+                          Padding(
+                            padding: const EdgeInsets.only(right: 8),
+                            child: _OrderTypeButton(
+                              orderType: orderType,
+                              isSelected: isSelected,
+                              select: select,
+                            ),
+                          )
+                      ],
+                    ),
+                  ),
+                  Container(
+                    padding:
+                        const EdgeInsets.symmetric(vertical: 4, horizontal: 12),
+                    decoration: const BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(4)),
+                        color: AppColors.primary_01),
+                    child: Text(
+                      "Ký quỹ ${stockCashBalanceModel?.imCk}%",
+                      style: AppTextStyle.labelSmall_10.copyWith(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
                   )
-              ],
+                ],
+              ),
             ),
             const SizedBox(height: 20),
             Row(
@@ -334,6 +356,28 @@ class _StockOrderSheetState extends State<StockOrderSheet>
                     onTap: () => toConfirmPanel(Side.sell),
                   ),
                 ),
+              ],
+            ),
+            const SizedBox(height: 16),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(S.of(context).order_value),
+                Builder(
+                  builder: (context) {
+                    num price;
+                    num vol = num.tryParse(volumnController.text) ?? 0;
+                    switch (selectedOrderType) {
+                      case OrderType.LO:
+                        price = num.tryParse(priceController.text) ?? 0;
+                        break;
+                      default:
+                        price = stockModel.stockData.c.value ?? 0;
+                    }
+                    num value = price * vol * 1000;
+                    return Text("${NumUtils.formatInteger(value)} VND");
+                  },
+                )
               ],
             )
           ],

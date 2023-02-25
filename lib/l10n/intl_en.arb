@@ -61,8 +61,10 @@
     "froom": "Room FR",
     "fsell": "FR sell",
     "buy": "Buy",
+    "buy_short": "B",
     "buy_price": "Buy price",
     "sell": "Sell",
+    "sell_short": "S",
     "sell_price": "Sell price",
     "volumn": "Volumn",
     "dividend": "Dividend",
@@ -115,6 +117,7 @@
     "bonus_sh": "Bonus share",
     "maximum": "Maximum",
     "minimum": "Minimum",
+    "order_value": "Order value",
 
     "waiting_match": "Waiting match",
     "matched": "Matched",
@@ -200,6 +203,7 @@
     "login_to_continue": "Login to continue",
     "you_are_not_logged_in": "You are not yet logged in",
     "you_are_not_account": "You are not account?",
+    "login_with_another_account": "Login with another account",
     "login_falied": "Login failed",
     "price_increase": "Price increase",
     "price_decrease": "Price decrease",
@@ -259,6 +263,7 @@
 
     "login_qoute1": "Let's join the exciting investment market with ",
     "login_qoute2": " application",
+    "not_first_login_quote": "Welcome back, please fill the password to continue",
     "technical_trading_newbie": "You are a newbie and want to make trading easier",
     "technical_trading_pro": "You trade like a Professional Investor",
 

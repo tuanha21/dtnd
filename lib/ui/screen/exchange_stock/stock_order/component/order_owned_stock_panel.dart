@@ -113,6 +113,7 @@ class _OrderOwnedStockWidgetState extends State<OrderOwnedStockWidget> {
             )
           ],
         ),
+        const SizedBox(height: 2),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [

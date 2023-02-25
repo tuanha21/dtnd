@@ -60,8 +60,10 @@
     "froom": "Room NN",
     "fsell": "NN bán",
     "buy": "Mua",
+    "buy_short": "M",
     "buy_price": "Giá mua vào",
     "sell": "Bán",
+    "sell_short": "B",
     "sell_price": "Giá bán ra",
     "volumn": "Khối lượng",
     "dividend": "Cổ tức",
@@ -114,6 +116,7 @@
     "bonus_sh": "CP thưởng",
     "maximum": "Tối đa",
     "minimum": "Tối thiểu",
+    "order_value": "Giá trị đặt lệnh",
 
     "waiting_match": "Chờ khớp",
     "matched": "Đã khớp",
@@ -199,6 +202,7 @@
     "login_to_continue": "Hãy đăng nhập để tiếp tục",
     "you_are_not_logged_in": "Bạn chưa đăng nhập",
     "you_are_not_account": "Bạn chưa có tài khoản?",
+    "login_with_another_account": "Đăng nhập bằng tài khoản khác",
     "login_falied": "Đăng nhập không thành công",
     "price_increase": "Tăng giá",
     "price_decrease": "Giảm giá",
@@ -258,6 +262,7 @@
 
     "login_qoute1": "Cùng tham gia thị trường đầu tư đầy sôi động với ứng dụng ",
     "login_qoute2": " bạn nhé",
+    "not_first_login_quote": "Chào mừng bạn quay trở lại, vui lòng nhập mật khẩu để tiếp tục nhé",
     "technical_trading_newbie": "Bạn là 1 newbie và muốn giao dịch dễ dàng hơn",
     "technical_trading_pro": "Bạn giao dịch như 1 nhà đầu tư Chuyên nghiệp",
 

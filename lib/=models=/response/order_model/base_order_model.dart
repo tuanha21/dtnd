@@ -1,5 +1,6 @@
 import 'package:dtnd/=models=/core_response_model.dart';
 import 'package:dtnd/=models=/response/order_model/i_order_model.dart';
+import 'package:dtnd/=models=/side.dart';
 import 'package:dtnd/utilities/logger.dart';
 import 'package:intl/intl.dart';
 
@@ -20,7 +21,7 @@ class BaseOrderModel extends CoreResponseModel implements IOrderModel {
   late final String symbol;
 
   num? orderNo;
-  String? side;
+  late final Side side;
   String? volume;
   String? showPrice;
   String? orderPrice;
@@ -63,7 +64,7 @@ class BaseOrderModel extends CoreResponseModel implements IOrderModel {
       id = json['pk_orderNo'];
       orderTime = DateFormat("HH:mm:ss").parseStrict(json['orderTime']);
       orderAccount = json['accountCode'];
-      side = json['side'];
+      side = SideHelper.fromString(json['side']);
       symbol = json['symbol'];
       volume = json['volume'];
       showPrice = json['showPrice'];

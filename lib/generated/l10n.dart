@@ -600,6 +600,16 @@ class S {
     );
   }
 
+  /// `B`
+  String get buy_short {
+    return Intl.message(
+      'B',
+      name: 'buy_short',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Buy price`
   String get buy_price {
     return Intl.message(
@@ -615,6 +625,16 @@ class S {
     return Intl.message(
       'Sell',
       name: 'sell',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `S`
+  String get sell_short {
+    return Intl.message(
+      'S',
+      name: 'sell_short',
       desc: '',
       args: [],
     );
@@ -1135,6 +1155,16 @@ class S {
     return Intl.message(
       'Minimum',
       name: 'minimum',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Order value`
+  String get order_value {
+    return Intl.message(
+      'Order value',
+      name: 'order_value',
       desc: '',
       args: [],
     );
@@ -1952,6 +1982,16 @@ class S {
     );
   }
 
+  /// `Login with another account`
+  String get login_with_another_account {
+    return Intl.message(
+      'Login with another account',
+      name: 'login_with_another_account',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Login failed`
   String get login_falied {
     return Intl.message(
@@ -2507,6 +2547,16 @@ class S {
     return Intl.message(
       ' application',
       name: 'login_qoute2',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Welcome back, please fill the password to continue`
+  String get not_first_login_quote {
+    return Intl.message(
+      'Welcome back, please fill the password to continue',
+      name: 'not_first_login_quote',
       desc: '',
       args: [],
     );

@@ -101,6 +101,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Thông tin doanh nghiệp"),
         "buy": MessageLookupByLibrary.simpleMessage("Mua"),
         "buy_price": MessageLookupByLibrary.simpleMessage("Giá mua vào"),
+        "buy_short": MessageLookupByLibrary.simpleMessage("M"),
         "cancel": MessageLookupByLibrary.simpleMessage("Huỷ"),
         "capital_value": MessageLookupByLibrary.simpleMessage("Giá trị vốn"),
         "cash": MessageLookupByLibrary.simpleMessage("Tiền mặt"),
@@ -223,6 +224,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "login_to_continue":
             MessageLookupByLibrary.simpleMessage("Hãy đăng nhập để tiếp tục"),
         "login_upper": MessageLookupByLibrary.simpleMessage("ĐĂNG NHẬP"),
+        "login_with_another_account": MessageLookupByLibrary.simpleMessage(
+            "Đăng nhập bằng tài khoản khác"),
         "login_with_facebook":
             MessageLookupByLibrary.simpleMessage("Đăng nhập với Facebook"),
         "login_with_google":
@@ -272,6 +275,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "no_matching_results_were_found": MessageLookupByLibrary.simpleMessage(
             "Không tìm thấy kết quả phù hợp"),
         "normal_vol": MessageLookupByLibrary.simpleMessage("KL thường"),
+        "not_first_login_quote": MessageLookupByLibrary.simpleMessage(
+            "Chào mừng bạn quay trở lại, vui lòng nhập mật khẩu để tiếp tục nhé"),
         "null_password": MessageLookupByLibrary.simpleMessage(
             "Mật khẩu cần tối thiểu 8 ký tự"),
         "null_username": MessageLookupByLibrary.simpleMessage(
@@ -284,6 +289,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "order_note": MessageLookupByLibrary.simpleMessage("Sổ lệnh"),
         "order_price": MessageLookupByLibrary.simpleMessage("Giá đặt"),
         "order_type": MessageLookupByLibrary.simpleMessage("Loại lệnh"),
+        "order_value": MessageLookupByLibrary.simpleMessage("Giá trị đặt lệnh"),
         "order_will_appear_in_ur_order_note":
             MessageLookupByLibrary.simpleMessage(
                 "Lệnh đặt sẽ xuất hiện trong sổ lệnh của bạn"),
@@ -332,6 +338,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "see_more": MessageLookupByLibrary.simpleMessage("Xem thêm"),
         "sell": MessageLookupByLibrary.simpleMessage("Bán"),
         "sell_price": MessageLookupByLibrary.simpleMessage("Giá bán ra"),
+        "sell_short": MessageLookupByLibrary.simpleMessage("B"),
         "session_expired_in":
             MessageLookupByLibrary.simpleMessage("Hết phiên đăng nhập sau "),
         "session_had_been_expired":

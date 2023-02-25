@@ -11,6 +11,15 @@ extension SideX on Side {
 
   String get code => isBuy ? "B" : "S";
 
+  String nameShort(BuildContext context) {
+    switch (this) {
+      case Side.sell:
+        return S.of(context).sell_short;
+      case Side.buy:
+        return S.of(context).buy_short;
+    }
+  }
+
   String name(BuildContext context) {
     switch (this) {
       case Side.sell:
@@ -37,6 +46,19 @@ extension SideX on Side {
       case Side.buy:
         if (themeMode.isDark) return AppColors.accent_dark_03;
         return AppColors.accent_light_03;
+    }
+  }
+}
+
+class SideHelper {
+  static Side fromString(String string) {
+    switch (string) {
+      case "B":
+        return Side.buy;
+      case "S":
+        return Side.sell;
+      default:
+        throw Exception();
     }
   }
 }

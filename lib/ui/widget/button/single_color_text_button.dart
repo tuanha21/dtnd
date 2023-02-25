@@ -18,6 +18,7 @@ class SingleColorTextButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
+      borderRadius: const BorderRadius.all(Radius.circular(8)),
       child: InkWell(
           onTap: onTap,
           borderRadius: const BorderRadius.all(Radius.circular(8)),

@@ -39,7 +39,7 @@ class LoginController {
   final invalidAccount = false.obs;
   final invalidPassword = false.obs;
 
-  Future<void> login(String username, String password) async {
+  Future<UserToken?> login(String username, String password) async {
     loading.value = true;
     final requestDataModel = RequestDataModel(
         type: RequestType.string,
@@ -67,7 +67,7 @@ class LoginController {
     logger.v(userToken?.toJson());
     await userService.saveToken(userToken!);
     loading.value = false;
-    return;
+    return userToken;
   }
 
   bool hasError(Map<String, dynamic>? entity) {

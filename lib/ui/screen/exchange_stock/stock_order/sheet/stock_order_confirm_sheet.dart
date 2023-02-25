@@ -2,7 +2,6 @@ import 'package:dtnd/=models=/exchange.dart';
 import 'package:dtnd/=models=/response/order_model/base_order_model.dart';
 import 'package:dtnd/=models=/response/stock_model.dart';
 import 'package:dtnd/=models=/side.dart';
-import 'package:dtnd/=models=/ui_model/user_cmd.dart';
 import 'package:dtnd/data/i_exchange_service.dart';
 import 'package:dtnd/data/i_user_service.dart';
 import 'package:dtnd/data/implementations/exchange_service.dart';
@@ -15,7 +14,6 @@ import 'package:dtnd/ui/theme/app_textstyle.dart';
 import 'package:dtnd/ui/widget/button/async_single_color_text_button.dart';
 import 'package:dtnd/ui/widget/icon/sheet_header.dart';
 import 'package:dtnd/ui/widget/icon/stock_circle_icon.dart';
-import 'package:dtnd/utilities/new_order_message.dart';
 import 'package:dtnd/utilities/num_utils.dart';
 import 'package:dtnd/utilities/string_util.dart';
 import 'package:dtnd/utilities/validator.dart';
@@ -212,6 +210,7 @@ class _StockOrderConfirmSheetState extends State<StockOrderConfirmSheet> {
                         } on int catch (rc) {
                           response = null;
                           Navigator.of(context).pop(OrderFailCmd(rc));
+                          return;
                         }
                         if (!mounted) return;
                         Navigator.of(context).pop(OrderSuccessCmd(response));
