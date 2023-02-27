@@ -1,30 +1,25 @@
-import 'package:dtnd/=models=/response/stock_model.dart';
-import 'package:dtnd/=models=/response/stock_trading_history.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'dart:math' as math;
 
-enum DataType { inday, month, year }
-
-extension DataTypeX on DataType {}
-
 class SimpleLineChart extends StatefulWidget {
   const SimpleLineChart({
     super.key,
     this.data,
-    this.getData,
+    this.annotation,
+    this.color,
   });
 
-  final StockModel? data;
-  // final Future future;
-  final Future<StockTradingHistory?> Function()? getData;
+  final List<num>? data;
+  final num? annotation;
+  final Color? color;
   @override
   State<SimpleLineChart> createState() => _SimpleLineChartState();
 }
 
 class _SimpleLineChartState extends State<SimpleLineChart> {
-  StockTradingHistory chartData = StockTradingHistory.nullChartData();
+  List<num> chartData = [];
   num annotation = 1;
   num max = 2;
   num min = 0;
@@ -33,58 +28,70 @@ class _SimpleLineChartState extends State<SimpleLineChart> {
   @override
   void initState() {
     super.initState();
-    // print("init");
-    getChartData();
-  }
-
-  Future<void> getChartData() async {
-    // print("calling history api");
-    final response = await widget.getData?.call();
-    if (response == null || response.o == null) {
+    if (widget.data?.isEmpty ?? true) {
       return;
-    } else if (response.o!.length == 1) {
-      chartData =
-          StockTradingHistory.oneChartData(defaultValue: response.o!.first);
-      annotation = response.o!.first;
+    } else if (widget.data!.length == 1) {
+      chartData = widget.data!;
+      annotation = chartData.first;
       max = annotation + 1;
       min = annotation - 1;
       length = 2;
     } else {
-      setState(() {
-        chartData = response;
-        annotation = widget.data?.stockData.r.value ?? (response.o!.first);
-        max = math.max<num>(response.o!.reduce(math.max), annotation);
-        min = math.min<num>(response.o!.reduce(math.min), annotation);
-        length = response.o!.length;
-      });
+      chartData = widget.data!;
+      annotation = widget.annotation ?? chartData.first;
+      max = math.max<num>(chartData.reduce(math.max), annotation);
+      min = math.min<num>(chartData.reduce(math.min), annotation);
+      length = chartData.length;
     }
   }
 
-  List<charts.Series<num, int>> toSeries(StockTradingHistory chartData) => [
+  Future<void> getChartData() async {
+    // print("calling history api");
+    if (widget.data?.isEmpty ?? true) {
+      return;
+    } else if (widget.data!.length == 1) {
+      chartData = widget.data!;
+      annotation = chartData.first;
+      max = annotation + 1;
+      min = annotation - 1;
+      length = 2;
+    } else {
+      chartData = widget.data!;
+      annotation = widget.annotation ?? chartData.first;
+      max = math.max<num>(chartData.reduce(math.max), annotation);
+      min = math.min<num>(chartData.reduce(math.min), annotation);
+      length = chartData.length;
+    }
+    if (mounted) {
+      setState(() {});
+    }
+  }
+
+  List<charts.Series<num, int>> toSeries(List<num> chartData) => [
         charts.Series<num, int>(
           id: "SimpleChart",
           domainFn: (_, index) => index ?? 0,
           measureFn: (datum, index) => datum,
-          data: chartData.o!,
+          data: chartData,
           seriesColor: charts.ColorUtil.fromDartColor(
-              widget.data?.stockData.color ?? AppColors.semantic_02),
+              widget.color ?? AppColors.semantic_02),
         ),
       ];
 
-  @override
-  void didUpdateWidget(covariant SimpleLineChart oldWidget) {
-    // print(widget.data.stockData.sstatus.name);
-    if (oldWidget.data?.stock.stockCode != widget.data?.stock.stockCode ||
-        oldWidget.data?.stockData.sstatus != widget.data?.stockData.sstatus ||
-        chartData.lastUpdatedTime == null ||
-        DateTime.now().difference(chartData.lastUpdatedTime!).inMinutes > 5) {
-      if (mounted) {
-        // print("rebuilt");
-        getChartData();
-      }
-    }
-    super.didUpdateWidget(oldWidget);
-  }
+  // @override
+  // void didUpdateWidget(covariant SimpleLineChart oldWidget) {
+  //   // print(widget.data.stockData.sstatus.name);
+  //   if (oldWidget.data?.stock.stockCode != widget.data?.stock.stockCode ||
+  //       oldWidget.data?.stockData.sstatus != widget.data?.stockData.sstatus ||
+  //       chartData.lastUpdatedTime == null ||
+  //       DateTime.now().difference(chartData.lastUpdatedTime!).inMinutes > 5) {
+  //     if (mounted) {
+  //       // print("rebuilt");
+  //       getChartData();
+  //     }
+  //   }
+  //   super.didUpdateWidget(oldWidget);
+  // }
 
   @override
   Widget build(BuildContext context) {

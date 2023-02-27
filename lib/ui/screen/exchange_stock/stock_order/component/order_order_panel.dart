@@ -172,7 +172,7 @@ class _OrderOrderPanelState extends State<OrderOrderPanel> {
                       ),
                       const SizedBox(width: 4),
                       Text(
-                        widget.stockModel.stockData.f.value.toString(),
+                        widget.stockModel.stockDataCore?.f?.toString() ?? "-",
                         style: AppTextStyle.labelMedium_12.copyWith(
                             color: AppColors.semantic_04,
                             fontWeight: FontWeight.w600),
@@ -188,7 +188,7 @@ class _OrderOrderPanelState extends State<OrderOrderPanel> {
                       ),
                       const SizedBox(width: 4),
                       Text(
-                        widget.stockModel.stockData.r.value.toString(),
+                        widget.stockModel.stockDataCore?.r?.toString() ?? "-",
                         style: AppTextStyle.labelMedium_12.copyWith(
                             color: AppColors.semantic_02,
                             fontWeight: FontWeight.w600),
@@ -204,7 +204,7 @@ class _OrderOrderPanelState extends State<OrderOrderPanel> {
                       ),
                       const SizedBox(width: 4),
                       Text(
-                        widget.stockModel.stockData.c.value.toString(),
+                        widget.stockModel.stockDataCore?.c?.toString() ?? "-",
                         style: AppTextStyle.labelMedium_12.copyWith(
                             color: AppColors.semantic_05,
                             fontWeight: FontWeight.w600),

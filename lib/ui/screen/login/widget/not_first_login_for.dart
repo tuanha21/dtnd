@@ -5,6 +5,7 @@ import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/screen/login/login_controller.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/widget/button/async_button.dart';
+import 'package:dtnd/ui/widget/expanded_widget.dart';
 import 'package:dtnd/ui/widget/overlay/error_dialog.dart';
 import 'package:dtnd/utilities/logger.dart';
 import 'package:dtnd/utilities/time_utils.dart';
@@ -58,6 +59,8 @@ class _NotFirstLoginFormState extends State<NotFirstLoginForm> {
 
   bool canCheckLogin = false;
 
+  String? errorMsg;
+
   @override
   void initState() {
     _userController = widget.userController ?? TextEditingController();
@@ -87,6 +90,9 @@ class _NotFirstLoginFormState extends State<NotFirstLoginForm> {
       () => onPasswordStoppedTyping = Timer(TimeUtilities.typingDelay, () {
         typingPassword = false;
         passwordState.validate();
+        setState(() {
+          errorMsg = null;
+        });
         checkValidate();
       }),
     );
@@ -146,7 +152,17 @@ class _NotFirstLoginFormState extends State<NotFirstLoginForm> {
               ),
             ),
           ),
-          const SizedBox(height: 20),
+          const SizedBox(height: 10),
+          ExpandedSection(
+              expand: errorMsg != null,
+              child: Text(
+                errorMsg ?? "",
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyMedium!
+                    .copyWith(color: AppColors.semantic_03),
+              )),
+          const SizedBox(height: 10),
           IntrinsicHeight(
             child: Row(
               children: [
@@ -214,7 +230,11 @@ class _NotFirstLoginFormState extends State<NotFirstLoginForm> {
 
   Future<void> checkLogin() async {
     passwordFocusNode.unfocus();
-
+    if (errorMsg != null) {
+      setState(() {
+        errorMsg = null;
+      });
+    }
     if (widget.loginFormKey.currentState!.validate()) {
       late final UserToken? userToken;
       try {
@@ -224,15 +244,19 @@ class _NotFirstLoginFormState extends State<NotFirstLoginForm> {
         userToken = null;
         logger.e(e);
         if (mounted) {
-          return await showDialog(
-            context: context,
-            builder: (context) {
-              return ErrorDialog(
-                title: S.of(context).login_falied,
-                content: e.toString(),
-              );
-            },
-          );
+          setState(() {
+            errorMsg = e.toString();
+          });
+          return;
+          // return await showDialog(
+          //   context: context,
+          //   builder: (context) {
+          //     return ErrorDialog(
+          //       title: S.of(context).login_falied,
+          //       content: e.toString(),
+          //     );
+          //   },
+          // );
         }
       }
       widget.onSuccess.call(userToken!);

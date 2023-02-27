@@ -97,6 +97,8 @@
     "extension": "Mở rộng",
     "all": "Tất cả",
     "base_note": "Sổ lệnh cơ sở",
+    "inday_note": "SL trong ngày",
+    "conditional_note": "SL điều kiện",
     "debt_following": "Theo dõi dư nợ",
     "profit_and_loss": "Lãi/lỗ",
     "inday_ordnote": "SL trong ngày",
@@ -253,6 +255,7 @@
     "associated_company": "Công ty liên kết",
     "register_right_successfully": "Đăng ký quyền thành công",
     "register_right_failed": "Đăng ký quyền không thành công",
+    "other_functions": "Các chức năng khác",
 
     "login_exception_required_OTP": "Hãy đăng nhập bằng mã OTP được gửi về máy của bạn",
     "invalid_account": "Tài khoản chưa đăng ký hoặc đã hết hiệu lực giao dịch Internet",

@@ -48,6 +48,7 @@ class AppImages {
   static const String card = "assets/svg/card.svg";
   static const String edit2 = "assets/svg/edit-2.svg";
   static const String filter = "assets/svg/filter.svg";
+  static const String filter_icon = "assets/images/filter.png";
 
   static const String qa_base = "assets/svg/qa_base.svg";
   static const String qa_bond = "assets/svg/qa_bond.svg";
@@ -170,6 +171,4 @@ class AppImages {
 
   static const String arrowUp1 = "assets/svg/arrow-up_1.svg";
   static const String arrowDown = "assets/svg/arrow-down.svg";
-
-
 }

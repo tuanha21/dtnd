@@ -1,7 +1,9 @@
 import 'package:dtnd/ui/widget/icon/back_button.dart';
 import 'package:flutter/material.dart';
 
-class SimpleAppbar extends StatelessWidget implements PreferredSizeWidget {
+import 'i_appbar.dart';
+
+class SimpleAppbar extends IAppbar {
   const SimpleAppbar({
     super.key,
     required this.title,
@@ -9,18 +11,24 @@ class SimpleAppbar extends StatelessWidget implements PreferredSizeWidget {
   });
   final String title;
   final List<Widget>? actions;
+
+  @override
+  Widget titleBuilder(BuildContext context) => Text(title);
+
+  @override
+  List<Widget>? actionsBuilder(BuildContext context) => actions;
   @override
   Widget build(BuildContext context) {
     return AppBar(
       leading: SheetBackButton(
         onTap: () {},
       ),
-      title: Text(title),
+      title: titleBuilder(context),
       titleTextStyle: Theme.of(context)
           .textTheme
           .labelLarge!
           .copyWith(fontWeight: FontWeight.w700),
-      actions: actions,
+      actions: actionsBuilder(context),
     );
   }
 

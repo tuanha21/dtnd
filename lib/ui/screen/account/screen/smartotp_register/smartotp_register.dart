@@ -4,7 +4,7 @@ import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/screen/account/screen/smartotp_register/page/authen_smsotp_pin.dart';
 import 'package:dtnd/ui/screen/account/screen/smartotp_register/page/create_smartotp_pin.dart';
 import 'package:dtnd/ui/screen/account/screen/smartotp_register/page/recreate_smartotp_pin.dart';
-import 'package:dtnd/ui/widget/section/simple_appbar.dart';
+import 'package:dtnd/ui/widget/appbar/simple_appbar.dart';
 import 'package:flutter/material.dart';
 
 class SmartOTPRegister extends StatefulWidget {

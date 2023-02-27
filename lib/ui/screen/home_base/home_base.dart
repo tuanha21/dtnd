@@ -14,6 +14,8 @@ import 'package:dtnd/utilities/logger.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+final sessionExpiredKey = GlobalKey();
+
 class HomeBase extends StatefulWidget {
   const HomeBase({super.key});
 
@@ -24,6 +26,8 @@ class HomeBase extends StatefulWidget {
 class _HomeBaseState extends State<HomeBase> with WidgetsBindingObserver {
   final INetworkService networkService = NetworkService();
   final Rx<HomeNav> currentHomeNav = Rx<HomeNav>(HomeNav.home);
+
+  bool onSessionExpiredCalled = false;
 
   late final Map<HomeNav, Widget> routeBuilders;
 
@@ -42,8 +46,15 @@ class _HomeBaseState extends State<HomeBase> with WidgetsBindingObserver {
 
   void onSessionExpired() async {
     logger.v("onSessionExpired called!");
-    if (!mounted) return;
+    if (onSessionExpiredCalled) {
+      return;
+    }
+    onSessionExpiredCalled = true;
+    if (!mounted) {
+      return;
+    }
     await DialogUtilities.showErrorDialog(
+        key: sessionExpiredKey,
         context: context,
         title: S.of(context).something_went_wrong,
         content: S.of(context).session_had_been_expired);
@@ -51,6 +62,7 @@ class _HomeBaseState extends State<HomeBase> with WidgetsBindingObserver {
     await Navigator.of(context).push(MaterialPageRoute(
       builder: (context) => const LoginScreen(),
     ));
+    onSessionExpiredCalled = false;
   }
 
   @override

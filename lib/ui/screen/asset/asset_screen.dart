@@ -8,6 +8,7 @@ import 'package:dtnd/data/implementations/user_service.dart';
 import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/screen/asset/component/account_asset_overview_widget.dart';
 import 'package:dtnd/ui/screen/asset/component/asset_distribution_chart.dart';
+import 'package:dtnd/ui/screen/asset/sheet/extensions_sheet.dart';
 import 'package:dtnd/ui/screen/market/widget/components/not_signin_catalog_widget.dart';
 import 'package:dtnd/ui/screen/virtual_assistant/va_volatolity_warning/component/asset_chart.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
@@ -19,6 +20,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'component/portfolio_and_right_panel.dart';
+import 'sheet/sheet_config.dart';
 
 class AssetScreen extends StatefulWidget {
   const AssetScreen({super.key});
@@ -144,11 +146,28 @@ class _AssetScreenState extends State<AssetScreen>
                         ),
                         const SizedBox(width: 8),
                         Material(
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(6)),
                           child: InkWell(
-                            onTap: () {},
-                            child: Image.asset(
-                              AppImages.asset_menu_icon,
-                              width: 36,
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(6)),
+                            onTap: () {
+                              const ExtensionsISheet()
+                                  .show(context, const ExtensionsSheet());
+                            },
+                            child: Ink(
+                              padding: const EdgeInsets.all(8),
+                              decoration: const BoxDecoration(
+                                color: AppColors.primary_03,
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(6)),
+                              ),
+                              child: SizedBox.square(
+                                dimension: 20,
+                                child: Image.asset(
+                                  AppImages.asset_menu_icon,
+                                ),
+                              ),
                             ),
                           ),
                         ),

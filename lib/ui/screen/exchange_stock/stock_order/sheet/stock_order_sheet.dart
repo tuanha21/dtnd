@@ -15,15 +15,18 @@ import 'package:dtnd/data/implementations/exchange_service.dart';
 import 'package:dtnd/data/implementations/network_service.dart';
 import 'package:dtnd/data/implementations/user_service.dart';
 import 'package:dtnd/generated/l10n.dart';
+import 'package:dtnd/ui/screen/exchange_stock/order_note/screen/order_note_screen.dart';
 import 'package:dtnd/ui/screen/exchange_stock/stock_order/component/order_order_note_panel.dart';
 import 'package:dtnd/ui/screen/exchange_stock/stock_order/component/order_order_panel.dart';
 import 'package:dtnd/ui/screen/exchange_stock/stock_order/component/order_owned_stock_panel.dart';
 import 'package:dtnd/ui/screen/exchange_stock/stock_order/data/order_data.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
+import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:dtnd/ui/theme/app_textstyle.dart';
 import 'package:dtnd/ui/widget/button/single_color_text_button.dart';
 import 'package:dtnd/ui/widget/icon/sheet_header.dart';
 import 'package:dtnd/ui/widget/input/interval_input.dart';
+import 'package:dtnd/utilities/logger.dart';
 import 'package:dtnd/utilities/num_utils.dart';
 import 'package:dtnd/utilities/time_utils.dart';
 import 'package:flutter/material.dart';
@@ -96,8 +99,10 @@ class _StockOrderSheetState extends State<StockOrderSheet>
   }
 
   Future<void> getStockInfoCore() async {
-    stockInfoCore =
+    stockModel.stockDataCore =
         await stockModel.getStockInfoCore(networkService, userService);
+    select(selectedOrderType);
+    setState(() {});
   }
 
   Future<void> getStockCashBalance() async {
@@ -109,10 +114,11 @@ class _StockOrderSheetState extends State<StockOrderSheet>
   }
 
   void select(OrderType orderType) {
-    if (orderType.isLO) {
+    if (orderType.isLO && stockModel.stockDataCore != null) {
       final String currentPrice =
-          stockModel.stockData.lastPrice.value?.toStringAsFixed(2) ??
-              stockModel.stockData.r.value?.toString() ??
+          stockModel.stockDataCore!.lastPrice?.toStringAsFixed(2) ??
+              stockModel.stockDataCore!.r?.toString() ??
+              stockModel.stockData.lastPrice.value?.toStringAsFixed(2) ??
               "0";
       priceController.value = TextEditingValue(
         text: currentPrice,
@@ -190,44 +196,75 @@ class _StockOrderSheetState extends State<StockOrderSheet>
               title: S.of(context).trading,
               implementBackButton: false,
             ),
-            TabBar(
-              controller: tabController,
-              isScrollable: false,
-              labelStyle: textTheme.titleSmall,
-              labelPadding:
-                  const EdgeInsets.symmetric(horizontal: 0, vertical: 4),
-              tabs: [
-                Text(
-                  S.of(context).stock_order,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                TabBar(
+                  controller: tabController,
+                  isScrollable: true,
+                  labelStyle: textTheme.titleSmall,
+                  labelPadding:
+                      const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  tabs: [
+                    Text(
+                      S.of(context).stock_order,
+                    ),
+                    Text(
+                      S.of(context).order_note,
+                    ),
+                    Text(
+                      S.of(context).owned,
+                    ),
+                  ],
                 ),
-                Text(
-                  S.of(context).order_note,
-                ),
-                Text(
-                  S.of(context).owned,
+                Material(
+                  borderRadius: const BorderRadius.all(Radius.circular(6)),
+                  child: InkWell(
+                    onTap: () {
+                      Navigator.of(context)
+                        ..pop()
+                        ..push(MaterialPageRoute(
+                          builder: (context) => const OrderNoteScreen(),
+                        ));
+                    },
+                    borderRadius: const BorderRadius.all(Radius.circular(6)),
+                    child: Ink(
+                      padding: const EdgeInsets.all(8),
+                      decoration: const BoxDecoration(
+                        color: AppColors.primary_03,
+                        borderRadius: BorderRadius.all(Radius.circular(6)),
+                      ),
+                      child: SizedBox.square(
+                          dimension: 16,
+                          child: Image.asset(AppImages.filter_icon)),
+                    ),
+                  ),
                 ),
               ],
             ),
             const SizedBox(height: 16),
             SizedBox(
               height: 300,
-              child: TabBarView(controller: tabController, children: [
-                OrderOrderPanel(
-                  stockModel: stockModel,
-                  onChangeStock: changeStock,
-                ),
-                const OrderOrderNotePanel(),
-                OrderOwnedStockPanel(
-                  onSell: (stockCodes) async {
-                    final model = await dataCenterService
-                        .getStockModelsFromStockCodes([stockCodes]);
-                    if (model?.isNotEmpty ?? false) {
-                      changeStock(model!.first);
-                      tabController.animateTo(0);
-                    }
-                  },
-                ),
-              ]),
+              child: TabBarView(
+                  controller: tabController,
+                  physics: const NeverScrollableScrollPhysics(),
+                  children: [
+                    OrderOrderPanel(
+                      stockModel: stockModel,
+                      onChangeStock: changeStock,
+                    ),
+                    const OrderOrderNotePanel(),
+                    OrderOwnedStockPanel(
+                      onSell: (stockCodes) async {
+                        final model = await dataCenterService
+                            .getStockModelsFromStockCodes([stockCodes]);
+                        if (model?.isNotEmpty ?? false) {
+                          changeStock(model!.first);
+                          tabController.animateTo(0);
+                        }
+                      },
+                    ),
+                  ]),
             ),
             const SizedBox(height: 16),
             Row(

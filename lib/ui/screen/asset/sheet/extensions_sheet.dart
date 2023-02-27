@@ -34,7 +34,7 @@ class _ExtensionsSheetState extends State<ExtensionsSheet> {
           children: [
             SheetHeader(
               implementBackButton: false,
-              title: S.of(context).extension,
+              title: S.of(context).other_functions,
             ),
             const SizedBox(height: 20),
             Container(

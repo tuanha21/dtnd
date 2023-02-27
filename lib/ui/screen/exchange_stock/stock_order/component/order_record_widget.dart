@@ -1,4 +1,5 @@
 import 'package:dtnd/=models=/response/order_model/base_order_model.dart';
+import 'package:dtnd/=models=/response/order_model/i_order_model.dart';
 import 'package:dtnd/=models=/side.dart';
 import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
@@ -49,7 +50,13 @@ class OrderRecordWidget extends StatelessWidget {
               Expanded(
                   child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
-                children: [Text(data.orderStatus)],
+                children: [
+                  Text(
+                    data.orderStatus.statusName(context),
+                    style: AppTextStyle.titleSmall_14
+                        .copyWith(color: data.orderStatus.color),
+                  )
+                ],
               ))
             ],
           ),

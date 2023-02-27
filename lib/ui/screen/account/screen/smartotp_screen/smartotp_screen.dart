@@ -1,7 +1,7 @@
 import 'package:dtnd/data/i_user_service.dart';
 import 'package:dtnd/data/implementations/user_service.dart';
 import 'package:dtnd/ui/screen/account/screen/smartotp_register/smartotp_register.dart';
-import 'package:dtnd/ui/widget/section/simple_appbar.dart';
+import 'package:dtnd/ui/widget/appbar/simple_appbar.dart';
 import 'package:flutter/material.dart';
 
 class SmartotpScreen extends StatefulWidget {

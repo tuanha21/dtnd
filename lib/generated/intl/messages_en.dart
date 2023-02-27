@@ -124,6 +124,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "community": MessageLookupByLibrary.simpleMessage("Community"),
         "condition_ordnote":
             MessageLookupByLibrary.simpleMessage("Condition ordernote"),
+        "conditional_note":
+            MessageLookupByLibrary.simpleMessage("Conditional note"),
         "confirm": MessageLookupByLibrary.simpleMessage("Confirm"),
         "contact_infomation":
             MessageLookupByLibrary.simpleMessage("Contact information"),
@@ -198,6 +200,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "home": MessageLookupByLibrary.simpleMessage("Home"),
         "hours_ago": m4,
         "id_or_business_id_short": MessageLookupByLibrary.simpleMessage("ID"),
+        "inday_note": MessageLookupByLibrary.simpleMessage("Inday note"),
         "inday_ordnote":
             MessageLookupByLibrary.simpleMessage("Inday ordernote"),
         "index": MessageLookupByLibrary.simpleMessage("Index"),
@@ -294,6 +297,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "order_will_appear_in_ur_order_note":
             MessageLookupByLibrary.simpleMessage(
                 "Order will appear in your order note"),
+        "other_functions":
+            MessageLookupByLibrary.simpleMessage("Other functions"),
         "other_vol": MessageLookupByLibrary.simpleMessage("Other vol"),
         "otp_code_sent_to_phone_number": m7,
         "overview": MessageLookupByLibrary.simpleMessage("Overview"),

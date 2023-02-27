@@ -5,14 +5,14 @@
 // import 'package:dtnd/ui/theme/app_textstyle.dart';
 // import 'package:flutter/material.dart';
 
-// class OrderHistoryTab extends StatefulWidget {
-//   const OrderHistoryTab({super.key});
+// class IndayOrderPanel extends StatefulWidget {
+//   const IndayOrderPanel({super.key});
 
 //   @override
-//   State<OrderHistoryTab> createState() => _OrderHistoryTabState();
+//   State<IndayOrderPanel> createState() => _IndayOrderPanelState();
 // }
 
-// class _OrderHistoryTabState extends State<OrderHistoryTab> {
+// class _IndayOrderPanelState extends State<IndayOrderPanel> {
 //   final List<OrderHistory> list = [
 //     OrderHistory(
 //         stockCode: "HPG",

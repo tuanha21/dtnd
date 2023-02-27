@@ -2,11 +2,12 @@ import 'package:dtnd/=models=/response/stock_model.dart';
 import 'package:dtnd/config/service/app_services.dart';
 import 'package:dtnd/data/i_data_center_service.dart';
 import 'package:dtnd/generated/l10n.dart';
-import 'package:dtnd/ui/screen/home/widget/simple_line_chart.dart';
+import 'package:dtnd/ui/screen/home/widget/home_simple_line_chart.dart';
 import 'package:dtnd/ui/screen/stock_detail/stock_detail_screen.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:dtnd/ui/theme/app_textstyle.dart';
+import 'package:dtnd/ui/widget/chart/simple_line_chart.dart';
 import 'package:dtnd/ui/widget/icon/stock_icon.dart';
 import 'package:dtnd/utilities/num_utils.dart';
 import 'package:dtnd/utilities/responsive.dart';
@@ -236,34 +237,37 @@ class HomeMarketOverviewItem extends StatelessWidget {
                   child: Obx(() {
                     data?.stockData.lastPrice.value;
                     return SimpleLineChart(
-                      data: data,
-                      getData: data != null
-                          ? () async {
-                              final todayHstr = await dataCenterService
-                                  .getStockTradingHistory(
-                                      data!.stock.stockCode,
-                                      "5",
-                                      DateTime.now().beginningOfDay,
-                                      DateTime.now());
-                              if (data!.simpleChartData.value?.isEmpty ??
-                                  true) {
-                                return todayHstr;
-                              } else {
-                                if (todayHstr?.o?.isEmpty ?? true) {
-                                  return await dataCenterService
-                                      .getStockTradingHistory(
-                                          data!.stock.stockCode,
-                                          "5",
-                                          TimeUtilities.getPreviousDateTime(
-                                                  TimeUtilities.day(1))
-                                              .beginningOfDay,
-                                          DateTime.now());
-                                } else {
-                                  return todayHstr;
-                                }
-                              }
-                            }
-                          : null,
+                      data: data?.simpleChartData.value,
+                      annotation: data?.stockData.r.value ??
+                          data?.simpleChartData.value?.first,
+                      color: data?.stockData.color,
+                      // getData: data != null
+                      //     ? () async {
+                      //         final todayHstr = await dataCenterService
+                      //             .getStockTradingHistory(
+                      //                 data!.stock.stockCode,
+                      //                 "5",
+                      //                 DateTime.now().beginningOfDay,
+                      //                 DateTime.now());
+                      //         if (data!.simpleChartData.value?.isEmpty ??
+                      //             true) {
+                      //           return todayHstr;
+                      //         } else {
+                      //           if (todayHstr?.o?.isEmpty ?? true) {
+                      //             return await dataCenterService
+                      //                 .getStockTradingHistory(
+                      //                     data!.stock.stockCode,
+                      //                     "5",
+                      //                     TimeUtilities.getPreviousDateTime(
+                      //                             TimeUtilities.day(1))
+                      //                         .beginningOfDay,
+                      //                     DateTime.now());
+                      //           } else {
+                      //             return todayHstr;
+                      //           }
+                      //         }
+                      //       }
+                      //     : null,
                       // future: data.getTradingHistory(DataCenterService(),
                       //     resolution: "5", from: TimeUtilities.beginningOfDay),
                     );

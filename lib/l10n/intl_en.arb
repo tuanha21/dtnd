@@ -98,6 +98,8 @@
     "extension": "Extension",
     "all": "All",
     "base_note": "Base note",
+    "inday_note": "Inday note",
+    "conditional_note": "Conditional note",
     "debt_following": "Debt following",
     "profit_and_loss": "Profit/Loss",
     "inday_ordnote": "Inday ordernote",
@@ -254,6 +256,7 @@
     "associated_company": "Associated Company",
     "register_right_successfully": "Register right successfully",
     "register_right_failed": "Register right failed",
+    "other_functions": "Other functions",
 
     "login_exception_required_OTP": "Login with OTP code sent to your phone",
     "invalid_account": "This account has not been registered or Internet trading feature is no longer available",

@@ -16,73 +16,77 @@ class OverboughtSellWidget extends StatefulWidget {
 class _OverboughtSellWidgetState extends State<OverboughtSellWidget> {
   @override
   Widget build(BuildContext context) {
-    return Obx(() => Column(
-          children: [
-            Row(
-              children: [
-                Expanded(
-                  child: CustomPaint(
-                    painter: OverboughtSellRatioPainter(
-                        widget.stockModel.stockData.getTotalVol(Side.buy) /
-                            (widget.stockModel.stockData.getTotalVol(Side.buy) +
-                                widget.stockModel.stockData
-                                    .getTotalVol(Side.sell))),
+    return Obx(() {
+      final num totalVolBuy = widget.stockModel.stockData.getTotalVol(Side.buy);
+      final num totalVolSell =
+          widget.stockModel.stockData.getTotalVol(Side.sell);
+      final num overboughtSellRatio;
+      if (totalVolBuy == 0 && totalVolSell == 0) {
+        overboughtSellRatio = 0.5;
+      } else {
+        overboughtSellRatio = totalVolBuy / (totalVolBuy + totalVolSell);
+      }
+      return Column(
+        children: [
+          Row(
+            children: [
+              Expanded(
+                child: CustomPaint(
+                  painter: OverboughtSellRatioPainter(overboughtSellRatio),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(
+            height: 8,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Row(
+                children: [
+                  Text(
+                    "Dư mua ",
+                    style: AppTextStyle.labelSmall_10
+                        .copyWith(color: AppColors.neutral_03),
                   ),
-                ),
-              ],
-            ),
-            const SizedBox(
-              height: 8,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
-                  children: [
-                    Text(
-                      "Dư mua ",
-                      style: AppTextStyle.labelSmall_10
-                          .copyWith(color: AppColors.neutral_03),
-                    ),
-                    Text(
-                      NumUtils.getMoneyWithPostfixThousand(
-                          widget.stockModel.stockData.getTotalVol(Side.buy),
-                          context),
-                      style: AppTextStyle.labelMedium_12.copyWith(
-                          color: AppColors.semantic_01,
-                          fontWeight: FontWeight.w600),
-                    ),
-                  ],
-                ),
-                Row(
-                  children: [
-                    Text(
-                      "Dư bán ",
-                      style: AppTextStyle.labelSmall_10
-                          .copyWith(color: AppColors.neutral_03),
-                    ),
-                    Text(
-                      NumUtils.getMoneyWithPostfixThousand(
-                          widget.stockModel.stockData.getTotalVol(Side.sell),
-                          context),
-                      style: AppTextStyle.labelMedium_12.copyWith(
-                          color: AppColors.semantic_03,
-                          fontWeight: FontWeight.w600),
-                    ),
-                  ],
-                )
-              ],
-            ),
-          ],
-        ));
+                  Text(
+                    NumUtils.getMoneyWithPostfixThousand(totalVolBuy, context),
+                    style: AppTextStyle.labelMedium_12.copyWith(
+                        color: AppColors.semantic_01,
+                        fontWeight: FontWeight.w600),
+                  ),
+                ],
+              ),
+              Row(
+                children: [
+                  Text(
+                    "Dư bán ",
+                    style: AppTextStyle.labelSmall_10
+                        .copyWith(color: AppColors.neutral_03),
+                  ),
+                  Text(
+                    NumUtils.getMoneyWithPostfixThousand(totalVolSell, context),
+                    style: AppTextStyle.labelMedium_12.copyWith(
+                        color: AppColors.semantic_03,
+                        fontWeight: FontWeight.w600),
+                  ),
+                ],
+              )
+            ],
+          ),
+        ],
+      );
+    });
   }
 }
 
 class OverboughtSellRatioPainter extends CustomPainter {
   const OverboughtSellRatioPainter(this.buyRatio);
-  final num buyRatio;
+  final num? buyRatio;
   @override
   void paint(Canvas canvas, Size size) {
+    final num _buyRatio = buyRatio ?? 0.5;
     final double width = size.width;
     const radius = Radius.circular(4);
     Paint paint = Paint()
@@ -92,17 +96,17 @@ class OverboughtSellRatioPainter extends CustomPainter {
 
     canvas.drawRRect(
       RRect.fromRectAndCorners(
-        Rect.fromLTWH(0, 0, (width * buyRatio) - 1, 4),
+        Rect.fromLTWH(0, 0, (width * _buyRatio) - 1, 4),
         topLeft: radius,
         bottomLeft: radius,
       ),
       paint,
     );
     paint.color = AppColors.semantic_03;
-    canvas.translate((width * buyRatio) + 1, 0);
+    canvas.translate((width * _buyRatio) + 1, 0);
     canvas.drawRRect(
       RRect.fromRectAndCorners(
-        Rect.fromLTWH(0, 0, (width * (1 - buyRatio)) - 1, 4),
+        Rect.fromLTWH(0, 0, (width * (1 - _buyRatio)) - 1, 4),
         topRight: radius,
         bottomRight: radius,
       ),

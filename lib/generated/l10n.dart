@@ -970,6 +970,26 @@ class S {
     );
   }
 
+  /// `Inday note`
+  String get inday_note {
+    return Intl.message(
+      'Inday note',
+      name: 'inday_note',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Conditional note`
+  String get conditional_note {
+    return Intl.message(
+      'Conditional note',
+      name: 'conditional_note',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Debt following`
   String get debt_following {
     return Intl.message(
@@ -2477,6 +2497,16 @@ class S {
     return Intl.message(
       'Register right failed',
       name: 'register_right_failed',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Other functions`
+  String get other_functions {
+    return Intl.message(
+      'Other functions',
+      name: 'other_functions',
       desc: '',
       args: [],
     );

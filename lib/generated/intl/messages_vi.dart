@@ -124,6 +124,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "community": MessageLookupByLibrary.simpleMessage("Cộng đồng"),
         "condition_ordnote":
             MessageLookupByLibrary.simpleMessage("SL điều kiện"),
+        "conditional_note":
+            MessageLookupByLibrary.simpleMessage("SL điều kiện"),
         "confirm": MessageLookupByLibrary.simpleMessage("Xác nhận"),
         "contact_infomation":
             MessageLookupByLibrary.simpleMessage("Thông tin liên lạc"),
@@ -195,6 +197,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "hours_ago": m4,
         "id_or_business_id_short":
             MessageLookupByLibrary.simpleMessage("CMND/ĐKKD"),
+        "inday_note": MessageLookupByLibrary.simpleMessage("SL trong ngày"),
         "inday_ordnote": MessageLookupByLibrary.simpleMessage("SL trong ngày"),
         "index": MessageLookupByLibrary.simpleMessage("Chỉ số"),
         "industry": MessageLookupByLibrary.simpleMessage("Ngành"),
@@ -293,6 +296,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "order_will_appear_in_ur_order_note":
             MessageLookupByLibrary.simpleMessage(
                 "Lệnh đặt sẽ xuất hiện trong sổ lệnh của bạn"),
+        "other_functions":
+            MessageLookupByLibrary.simpleMessage("Các chức năng khác"),
         "other_vol": MessageLookupByLibrary.simpleMessage("KL khác"),
         "otp_code_sent_to_phone_number": m7,
         "overview": MessageLookupByLibrary.simpleMessage("Tổng quan"),
