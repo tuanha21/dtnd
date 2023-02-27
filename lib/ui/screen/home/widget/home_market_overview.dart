@@ -9,6 +9,7 @@ import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:dtnd/ui/theme/app_textstyle.dart';
 import 'package:dtnd/ui/widget/chart/simple_line_chart.dart';
 import 'package:dtnd/ui/widget/icon/stock_icon.dart';
+import 'package:dtnd/utilities/logger.dart';
 import 'package:dtnd/utilities/num_utils.dart';
 import 'package:dtnd/utilities/responsive.dart';
 import 'package:dtnd/utilities/time_utils.dart';
@@ -44,20 +45,7 @@ class _HomeMarketOverviewState extends State<HomeMarketOverview>
         );
       }
       List<StockModel>? data;
-      switch (_tabController.index) {
-        case 1:
-          if (!up) {
-            data = homeController.priceDecreaseToday;
-          } else {
-            data = homeController.priceIncreaseToday;
-          }
-          break;
-        case 2:
-          data = homeController.topVolumnToday;
-          break;
-        default:
-          data = homeController.hotToday;
-      }
+
       // Widget grid = SizedBox(
       //   height: 72 * 3 + 16 * 2,
       //   child: GridView.builder(
@@ -98,21 +86,38 @@ class _HomeMarketOverviewState extends State<HomeMarketOverview>
           ],
         ),
       );
-      Widget list = Column(
-        children: [
-          for (int i = 0; i < (data?.length ?? 0); i++)
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-              child: SizedBox(
-                height: 72,
-                child: HomeMarketOverviewItem(
-                  data: data![i],
-                  dataCenterService: homeController.dataCenterService,
+      Widget list = Obx(() {
+        switch (_tabController.index) {
+          case 1:
+            if (!up) {
+              data = homeController.priceDecreaseToday.value;
+            } else {
+              data = homeController.priceIncreaseToday.value;
+            }
+            break;
+          case 2:
+            data = homeController.topVolumnToday.value;
+            break;
+          default:
+            data = homeController.hotToday.value;
+        }
+        return Column(
+          children: [
+            for (int i = 0; i < (data?.length ?? 0); i++)
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                child: SizedBox(
+                  height: 72,
+                  child: HomeMarketOverviewItem(
+                    data: data![i],
+                    dataCenterService: homeController.dataCenterService,
+                  ),
                 ),
-              ),
-            )
-        ],
-      );
+              )
+          ],
+        );
+      });
       Widget grid = Column(
         children: [
           PreferredSize(
@@ -236,6 +241,10 @@ class HomeMarketOverviewItem extends StatelessWidget {
                       maxWidth: MediaQuery.of(context).size.width / 4),
                   child: Obx(() {
                     data?.stockData.lastPrice.value;
+                    print(data?.stock.stockCode);
+                    if (data?.stock.stockCode == "SCR") {
+                      logger.v(data?.simpleChartData.value);
+                    }
                     return SimpleLineChart(
                       data: data?.simpleChartData.value,
                       annotation: data?.stockData.r.value ??

@@ -28,21 +28,7 @@ class _SimpleLineChartState extends State<SimpleLineChart> {
   @override
   void initState() {
     super.initState();
-    if (widget.data?.isEmpty ?? true) {
-      return;
-    } else if (widget.data!.length == 1) {
-      chartData = widget.data!;
-      annotation = chartData.first;
-      max = annotation + 1;
-      min = annotation - 1;
-      length = 2;
-    } else {
-      chartData = widget.data!;
-      annotation = widget.annotation ?? chartData.first;
-      max = math.max<num>(chartData.reduce(math.max), annotation);
-      min = math.min<num>(chartData.reduce(math.min), annotation);
-      length = chartData.length;
-    }
+    getChartData();
   }
 
   Future<void> getChartData() async {
@@ -78,23 +64,21 @@ class _SimpleLineChartState extends State<SimpleLineChart> {
         ),
       ];
 
-  // @override
-  // void didUpdateWidget(covariant SimpleLineChart oldWidget) {
-  //   // print(widget.data.stockData.sstatus.name);
-  //   if (oldWidget.data?.stock.stockCode != widget.data?.stock.stockCode ||
-  //       oldWidget.data?.stockData.sstatus != widget.data?.stockData.sstatus ||
-  //       chartData.lastUpdatedTime == null ||
-  //       DateTime.now().difference(chartData.lastUpdatedTime!).inMinutes > 5) {
-  //     if (mounted) {
-  //       // print("rebuilt");
-  //       getChartData();
-  //     }
-  //   }
-  //   super.didUpdateWidget(oldWidget);
-  // }
+  @override
+  void didUpdateWidget(covariant SimpleLineChart oldWidget) {
+    // print(widget.data.stockData.sstatus.name);
+    if (oldWidget.data != widget.data) {
+      if (mounted) {
+        // print("rebuilt");
+        getChartData();
+      }
+    }
+    super.didUpdateWidget(oldWidget);
+  }
 
   @override
   Widget build(BuildContext context) {
+    // logger.v(widget.data);
     // print("built code ${widget.data.stock.stockCode}");
     return AbsorbPointer(
       child: charts.LineChart(

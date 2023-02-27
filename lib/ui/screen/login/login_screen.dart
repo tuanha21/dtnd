@@ -50,6 +50,7 @@ class _LoginScreenState extends State<LoginScreen> {
           .getString(_userNameKey(savedUser));
       firstTimeLogin = false;
     } else {
+      userTextEditingController = TextEditingController();
       name = null;
       firstTimeLogin = true;
     }

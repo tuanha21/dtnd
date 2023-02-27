@@ -42,11 +42,11 @@ class HomeController {
   Stream<double> get initProcess => _initProcess.stream;
 
   late final List<StockModel> interestedCatalog;
-  List<StockModel>? hotToday = [];
-  List<StockModel>? priceIncreaseToday = [];
-  List<StockModel>? priceDecreaseToday = [];
-  List<StockModel>? topForeignToday = [];
-  List<StockModel>? topVolumnToday = [];
+  final Rx<List<StockModel>?> hotToday = Rxn();
+  final Rx<List<StockModel>?> priceIncreaseToday = Rxn();
+  final Rx<List<StockModel>?> priceDecreaseToday = Rxn();
+  final Rx<List<StockModel>?> topForeignToday = Rxn();
+  final Rx<List<StockModel>?> topVolumnToday = Rxn();
   List<NewsModel> news = [];
   List<WorldIndexModel> worldIndex = [];
   late final Set<IndexModel> listIndexs;
@@ -80,7 +80,8 @@ class HomeController {
       stockModels!.elementAt(i).simpleChartData.value =
           topInterested.elementAt(i).cHART;
     }
-    hotToday = stockModels;
+    hotToday.value = stockModels;
+    hotToday.refresh();
   }
 
   Future<void> getPriceIncrease() async {
@@ -91,7 +92,8 @@ class HomeController {
       stockModels!.elementAt(i).simpleChartData.value =
           topStockChange.elementAt(i).cHART;
     }
-    priceIncreaseToday = stockModels;
+    priceIncreaseToday.value = stockModels;
+    priceIncreaseToday.refresh();
   }
 
   Future<void> getPriceDecrease() async {
@@ -102,7 +104,8 @@ class HomeController {
       stockModels!.elementAt(i).simpleChartData.value =
           topStockChange.elementAt(i).cHART;
     }
-    priceDecreaseToday = stockModels;
+    priceDecreaseToday.value = stockModels;
+    priceDecreaseToday.refresh();
   }
 
   // Future<void> getTopForeign() async {
@@ -122,10 +125,12 @@ class HomeController {
     final stockModels = await dataCenterService.getStockModelsFromStockCodes(
         topStockChange.map((e) => e.sTOCKCODE).toList());
     for (var i = 0; i < (stockModels?.length ?? 0); i++) {
-      stockModels!.elementAt(i).simpleChartData.value =
-          topStockChange.elementAt(i).cHART;
+      stockModels!.elementAt(i).simpleChartData
+        ..value = topStockChange.elementAt(i).cHART
+        ..refresh();
     }
-    topVolumnToday = stockModels;
+    topVolumnToday.value = stockModels;
+    topVolumnToday.refresh();
   }
 
   Future<List<NewsModel>> getNews() async {
@@ -189,16 +194,13 @@ class HomeController {
     switch (index) {
       case 1:
         if (up) {
-          await getPriceIncrease();
-          break;
+          return getPriceIncrease();
         }
-        await getPriceDecrease();
-        break;
+        return getPriceDecrease();
       case 2:
-        await getTopVolumn();
-        break;
+        return getTopVolumn();
       default:
-        await getHotToday();
+        return getHotToday();
     }
     // await Future.forEach<StockModel>(list, (item) async {
     //   await getStockIndayTradingHistory(item);
