@@ -19,7 +19,7 @@ import '../../../../generated/l10n.dart';
 import '../../../theme/app_color.dart';
 import '../../../widget/news_card.dart';
 import '../../home/widget/home_section.dart';
-import '../../news_detail.dart/new_detail_screen.dart';
+import '../../news_detail/new_detail_screen.dart';
 import '../widget/index_widget.dart';
 import '../widget/introduct_widget.dart';
 import '../widget/stock_detail_chart.dart';
@@ -152,14 +152,14 @@ class BasicIndex extends StatefulWidget {
   final StockModel stockModel;
   final StockTradingHistory history;
 
-  const BasicIndex({Key? key, required this.stockModel, required this.history}) : super(key: key);
+  const BasicIndex({Key? key, required this.stockModel, required this.history})
+      : super(key: key);
 
   @override
   State<BasicIndex> createState() => _BasicIndexState();
 }
 
 class _BasicIndexState extends State<BasicIndex> {
-
   Widget indexPrice() {
     var data = widget.history;
     var max = data.c?.reduce(math.max);
@@ -180,64 +180,65 @@ class _BasicIndexState extends State<BasicIndex> {
         Row(
           children: [
             Expanded(
-                child: Column(
-                  children: [
-                    Container(
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                          color: AppColors.neutral_06,
-                          borderRadius: BorderRadius.circular(8)),
-                      padding: const EdgeInsets.symmetric(vertical: 10),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Image.asset(AppImages.prefix_down_icon,
-                              height: 20, width: 20),
-                          const SizedBox(width: 4),
-                          Text(
-                            'Giá thấp nhất',
-                            style: Theme.of(context).textTheme.bodySmall,
-                          )
-                        ],
-                      ),
+              child: Column(
+                children: [
+                  Container(
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                        color: AppColors.neutral_06,
+                        borderRadius: BorderRadius.circular(8)),
+                    padding: const EdgeInsets.symmetric(vertical: 10),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Image.asset(AppImages.prefix_down_icon,
+                            height: 20, width: 20),
+                        const SizedBox(width: 4),
+                        Text(
+                          'Giá thấp nhất',
+                          style: Theme.of(context).textTheme.bodySmall,
+                        )
+                      ],
                     ),
-                    const SizedBox(height: 4),
-                    Text(
-                      min?.toString() ?? "-",
-                      style: Theme.of(context).textTheme.titleMedium,
-                    )
-                  ],
-                )),
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    min?.toString() ?? "-",
+                    style: Theme.of(context).textTheme.titleMedium,
+                  )
+                ],
+              ),
+            ),
             const SizedBox(width: 12),
             Expanded(
                 child: Column(
-                  children: [
-                    Container(
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                          color: AppColors.neutral_06,
-                          borderRadius: BorderRadius.circular(8)),
-                      padding: const EdgeInsets.symmetric(vertical: 10),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Image.asset(AppImages.prefix_up_icon,
-                              height: 20, width: 20),
-                          const SizedBox(width: 4),
-                          Text(
-                            'Giá cao nhất',
-                            style: Theme.of(context).textTheme.bodySmall,
-                          )
-                        ],
-                      ),
-                    ),
-                    const SizedBox(height: 4),
-                    Text(
-                      max?.toString() ?? "-",
-                      style: Theme.of(context).textTheme.titleMedium,
-                    )
-                  ],
-                )),
+              children: [
+                Container(
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                      color: AppColors.neutral_06,
+                      borderRadius: BorderRadius.circular(8)),
+                  padding: const EdgeInsets.symmetric(vertical: 10),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image.asset(AppImages.prefix_up_icon,
+                          height: 20, width: 20),
+                      const SizedBox(width: 4),
+                      Text(
+                        'Giá cao nhất',
+                        style: Theme.of(context).textTheme.bodySmall,
+                      )
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  max?.toString() ?? "-",
+                  style: Theme.of(context).textTheme.titleMedium,
+                )
+              ],
+            )),
           ],
         )
       ],

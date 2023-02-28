@@ -80,16 +80,20 @@ class _DateTimePickerWidgetState extends State<DateTimePickerWidget> {
         enableSuggestions: false,
         enabled: false,
         decoration: InputDecoration(
+          isDense: true,
           labelText: widget.labelText ?? "Label",
           floatingLabelBehavior: FloatingLabelBehavior.always,
-          suffixIcon: SizedBox.square(
-            dimension: 20,
-            child: Image.asset(
-              AppImages.asset_calendar_icon,
+          suffixIcon: Padding(
+            padding: const EdgeInsets.only(right: 8, left: 0),
+            child: SizedBox.square(
+              dimension: 20,
+              child: Image.asset(
+                AppImages.asset_calendar_icon,
+              ),
             ),
           ),
-          suffixIconConstraints: const BoxConstraints(
-              minHeight: 20, maxHeight: 20, minWidth: 36, maxWidth: 36),
+          contentPadding: EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+          suffixIconConstraints: const BoxConstraints(maxWidth: 28),
         ),
       ),
     );

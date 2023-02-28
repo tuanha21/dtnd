@@ -26,9 +26,10 @@ class _LoginScreenState extends State<LoginScreen> {
   final ILocalStorageService localStorageService = LocalStorageService();
   final LoginController loginController = LoginController();
 
-  late final TextEditingController userTextEditingController;
-  late final String? name;
-  late final bool firstTimeLogin;
+  final TextEditingController userTextEditingController =
+      TextEditingController();
+  late String? name;
+  late bool firstTimeLogin;
 
   void loginSuccess(UserToken userToken) {
     localStorageService.sharedPreferences.setString(_userKey, userToken.user);
@@ -43,18 +44,21 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   void initState() {
+    init();
+    super.initState();
+  }
+
+  void init() {
     final savedUser = localStorageService.sharedPreferences.getString(_userKey);
     if (savedUser != null) {
-      userTextEditingController = TextEditingController(text: savedUser);
+      userTextEditingController.text = savedUser;
       name = localStorageService.sharedPreferences
           .getString(_userNameKey(savedUser));
       firstTimeLogin = false;
     } else {
-      userTextEditingController = TextEditingController();
       name = null;
       firstTimeLogin = true;
     }
-    super.initState();
   }
 
   @override
@@ -108,6 +112,14 @@ class _LoginScreenState extends State<LoginScreen> {
         otpRequired: loginController.otpRequired,
         onSuccess: loginSuccess,
         userController: userTextEditingController,
+        onBack: () async {
+          await localStorageService.sharedPreferences
+              .remove(_userNameKey(_userKey));
+          await localStorageService.sharedPreferences.remove(_userKey);
+          init();
+
+          setState(() {});
+        },
       );
     }
     return LoginScaffold(

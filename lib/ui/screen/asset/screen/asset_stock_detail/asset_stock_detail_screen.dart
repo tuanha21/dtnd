@@ -3,13 +3,19 @@ import 'package:dtnd/=models=/response/share_earned_model.dart';
 import 'package:dtnd/=models=/response/stock_model.dart';
 import 'package:dtnd/data/i_data_center_service.dart';
 import 'package:dtnd/data/implementations/data_center_service.dart';
+import 'package:dtnd/data/implementations/user_service.dart';
 import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/screen/asset/component/asset_grid_element.dart';
 import 'package:dtnd/ui/screen/asset/screen/asset_stock_detail/asset_stock_detail_controller.dart';
 import 'package:dtnd/ui/screen/asset/screen/asset_stock_detail/component/asset_stock_detail_appbar.dart';
+import 'package:dtnd/ui/screen/exchange_stock/stock_order/business/stock_order_flow.dart';
+import 'package:dtnd/ui/screen/exchange_stock/stock_order/sheet/stock_order_sheet.dart';
+import 'package:dtnd/ui/screen/login/login_screen.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:dtnd/ui/theme/app_textstyle.dart';
+import 'package:dtnd/ui/widget/button/single_color_text_button.dart';
+import 'package:dtnd/ui/widget/overlay/login_first_dialog.dart';
 import 'package:dtnd/ui/widget/picker/datetime_picker_widget.dart';
 import 'package:dtnd/utilities/num_utils.dart';
 import 'package:dtnd/utilities/time_utils.dart';
@@ -72,6 +78,58 @@ class _AssetStockDetailScreenState extends State<AssetStockDetailScreen>
         stockCode: widget.stockCode,
         stockModel: stockModel,
       ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButton: SizedBox(
+        height: 48,
+        child: Row(
+          children: [
+            Builder(
+              builder: (context) {
+                if ((widget.porfolioStock.avaiableVol ?? 0) > 0) {
+                  return Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      child: SingleColorTextButton(
+                          onTap: () async {
+                            if (!UserService().isLogin) {
+                              final toLogin = await showDialog<bool>(
+                                context: context,
+                                builder: (context) {
+                                  return const LoginFirstDialog();
+                                },
+                              );
+                              if (toLogin ?? false) {
+                                if (!mounted) return;
+                                await Navigator.of(context)
+                                    .push(MaterialPageRoute(
+                                  builder: (context) => const LoginScreen(),
+                                ));
+                              }
+                            } else {
+                              final model = await dataCenterService
+                                  .getStockModelsFromStockCodes(
+                                      [widget.stockCode]);
+                              if ((model?.isNotEmpty ?? false) && mounted) {
+                                StockOrderISheet(model!.first).show(
+                                    context,
+                                    StockOrderSheet(
+                                      stockModel: model.first,
+                                      orderData: null,
+                                    ));
+                              }
+                            }
+                          },
+                          text: S.of(context).sell,
+                          color: AppColors.semantic_03),
+                    ),
+                  );
+                }
+                return Container();
+              },
+            ),
+          ],
+        ),
+      ),
       body: Column(
         children: [
           Padding(
@@ -107,9 +165,8 @@ class _AssetStockDetailScreenState extends State<AssetStockDetailScreen>
                               const SizedBox(height: 2),
                               Expanded(
                                 child: AssetGridElement(element: {
-                                  S.of(context).net_assets:
-                                      NumUtils.formatInteger(
-                                          widget.porfolioStock.rightVol)
+                                  "CP thưởng": NumUtils.formatInteger(
+                                      widget.porfolioStock.rightVol)
                                 }),
                               ),
                             ],
@@ -130,7 +187,7 @@ class _AssetStockDetailScreenState extends State<AssetStockDetailScreen>
                               Expanded(
                                 child: AssetGridElement(element: {
                                   S.of(context).mk_value: NumUtils.formatDouble(
-                                      widget.porfolioStock.marketPrice)
+                                      widget.porfolioStock.marketValue)
                                 }),
                               ),
                             ],
@@ -146,7 +203,7 @@ class _AssetStockDetailScreenState extends State<AssetStockDetailScreen>
                       subPadding: const EdgeInsets.symmetric(horizontal: 16),
                       contentPadding: const EdgeInsets.only(top: 4, bottom: 10),
                       element: {
-                        S.of(context).sold_returning_vol: null,
+                        S.of(context).bought_returning_vol: null,
                       },
                       subElements: {
                         "T0": NumUtils.formatDouble(
@@ -324,8 +381,8 @@ class _AssetStockDetailScreenState extends State<AssetStockDetailScreen>
                                 return Container();
                               }
                               return Container(
-                                padding: EdgeInsets.all(16),
-                                decoration: BoxDecoration(
+                                padding: const EdgeInsets.all(16),
+                                decoration: const BoxDecoration(
                                     color: AppColors.neutral_06,
                                     borderRadius:
                                         BorderRadius.all(Radius.circular(12))),
@@ -488,35 +545,3 @@ class _AssetStockDetailScreenState extends State<AssetStockDetailScreen>
     );
   }
 }
-
-// onTap: () async {
-//                                   if (!UserService().isLogin) {
-//                                     final toLogin = await showDialog<bool>(
-//                                       context: context,
-//                                       builder: (context) {
-//                                         return const LoginFirstDialog();
-//                                       },
-//                                     );
-//                                     if (toLogin ?? false) {
-//                                       if (!mounted) return;
-//                                       await Navigator.of(context)
-//                                           .push(MaterialPageRoute(
-//                                         builder: (context) =>
-//                                             const LoginScreen(),
-//                                       ));
-//                                     }
-//                                   } else {
-//                                     final model = await dataCenterService
-//                                         .getStockModelsFromStockCodes(
-//                                             [stock!.stockCode]);
-//                                     if ((model?.isNotEmpty ?? false) &&
-//                                         mounted) {
-//                                       StockOrderISheet(model!.first).show(
-//                                           context,
-//                                           StockOrderSheet(
-//                                             stockModel: model.first,
-//                                             orderData: null,
-//                                           ));
-//                                     }
-//                                   }
-//                                 },

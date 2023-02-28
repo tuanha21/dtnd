@@ -175,82 +175,89 @@ class _HomeMarketTodayState extends State<HomeMarketToday>
               if (cwIndex == null) {
                 return Container();
               }
-              return FutureBuilder<List<WorldIndexData>?>(
-                future: cwIndex.getHistoryData(NetworkService.instance),
-                builder: (context, snapshot) {
-                  if (snapshot.hasData) {
-                    return SizedBox(
-                      height: 250,
-                      child: charts.TimeSeriesChart(
-                        [
-                          charts.Series<WorldIndexData, DateTime>(
-                            id: 'Headcount',
-                            domainFn: (WorldIndexData row, _) => row.dateTime!,
-                            measureFn: (WorldIndexData row, _) => row.value,
-                            data: snapshot.data!,
-                          )
-                        ],
-                        animate: false,
-                        behaviors: [
-                          charts.RangeAnnotation([
-                            if (cwIndex.openPoint != null)
-                              charts.LineAnnotationSegment(cwIndex.openPoint!,
-                                  charts.RangeAnnotationAxisType.measure,
-                                  endLabel:
-                                      NumUtils.formatDouble(cwIndex.openPoint),
-                                  // startLabel: 'Measure 1 End',
-                                  dashPattern: [5, 5],
-                                  color: charts.MaterialPalette.gray.shade300),
-                          ]),
-                        ],
-                        // Provide a tickProviderSpec which does NOT require that zero is
-                        // included.
-                        primaryMeasureAxis: const charts.NumericAxisSpec(
-                            renderSpec: charts.NoneRenderSpec(),
-                            tickProviderSpec:
-                                charts.BasicNumericTickProviderSpec(
-                                    zeroBound: false)),
-                        domainAxis: const charts.DateTimeAxisSpec(
-                          // Make sure that we draw the domain axis line.
-                          // But don't draw anything else.
-                          renderSpec: charts.SmallTickRendererSpec(
-                              // labelRotation: 45,
-                              // Tick and Label styling here.
-                              labelOffsetFromAxisPx: 10,
-                              // minimumPaddingBetweenLabelsPx: 5,
-                              // labelCollisionOffsetFromAxisPx: 5,
-                              // labelCollisionOffsetFromTickPx: 5,
-                              // labelOffsetFromTickPx: 5,
-                              // Change the line colors to match text color.
-                              lineStyle: charts.LineStyleSpec(
-                                  color: charts.MaterialPalette.transparent)),
-                          tickFormatterSpec:
-                              charts.AutoDateTimeTickFormatterSpec(
-                                  day: charts.TimeFormatterSpec(
-                                      format: 'dd',
-                                      transitionFormat: 'MM-dd-yyyy'),
-                                  month: charts.TimeFormatterSpec(
-                                      format: 'MM',
-                                      transitionFormat: 'MM-dd-yyyy'),
-                                  year: charts.TimeFormatterSpec(
-                                      format: 'yyyy',
-                                      transitionFormat: 'MM-dd-yyyy')),
-                          showAxisLine: false,
+              return Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: FutureBuilder<List<WorldIndexData>?>(
+                  future: cwIndex.getHistoryData(NetworkService.instance),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      return SizedBox(
+                        height: 250,
+                        child: charts.TimeSeriesChart(
+                          [
+                            charts.Series<WorldIndexData, DateTime>(
+                              id: 'Headcount',
+                              domainFn: (WorldIndexData row, _) =>
+                                  row.dateTime!,
+                              measureFn: (WorldIndexData row, _) => row.value,
+                              data: snapshot.data!,
+                            )
+                          ],
+                          animate: false,
+                          behaviors: [
+                            charts.RangeAnnotation([
+                              if (cwIndex.openPoint != null)
+                                charts.LineAnnotationSegment(cwIndex.openPoint!,
+                                    charts.RangeAnnotationAxisType.measure,
+                                    endLabel: NumUtils.formatDouble(
+                                        cwIndex.openPoint),
+                                    // startLabel: 'Measure 1 End',
+                                    dashPattern: [5, 5],
+                                    color:
+                                        charts.MaterialPalette.gray.shade300),
+                            ]),
+                          ],
+                          // Provide a tickProviderSpec which does NOT require that zero is
+                          // included.
+                          primaryMeasureAxis: const charts.NumericAxisSpec(
+                              renderSpec: charts.NoneRenderSpec(),
+                              tickProviderSpec:
+                                  charts.BasicNumericTickProviderSpec(
+                                      zeroBound: false)),
+                          domainAxis: const charts.DateTimeAxisSpec(
+                            // Make sure that we draw the domain axis line.
+                            // But don't draw anything else.
+                            renderSpec: charts.SmallTickRendererSpec(
+                                // labelRotation: 45,
+                                // Tick and Label styling here.
+                                labelOffsetFromAxisPx: 10,
+                                // minimumPaddingBetweenLabelsPx: 5,
+                                // labelCollisionOffsetFromAxisPx: 5,
+                                // labelCollisionOffsetFromTickPx: 5,
+                                // labelOffsetFromTickPx: 5,
+                                // Change the line colors to match text color.
+                                lineStyle: charts.LineStyleSpec(
+                                    color: charts.MaterialPalette.transparent)),
+                            tickFormatterSpec:
+                                charts.AutoDateTimeTickFormatterSpec(
+                                    day:
+                                        charts.TimeFormatterSpec(
+                                            format: 'dd',
+                                            transitionFormat: 'MM-dd-yyyy'),
+                                    month:
+                                        charts.TimeFormatterSpec(
+                                            format: 'MM',
+                                            transitionFormat: 'MM-dd-yyyy'),
+                                    year: charts.TimeFormatterSpec(
+                                        format: 'yyyy',
+                                        transitionFormat: 'MM-dd-yyyy')),
+                            showAxisLine: false,
+                          ),
+                          layoutConfig: charts.LayoutConfig(
+                            leftMarginSpec: charts.MarginSpec.fixedPixel(0),
+                            topMarginSpec: charts.MarginSpec.fixedPixel(16),
+                            rightMarginSpec: charts.MarginSpec.fixedPixel(0),
+                            bottomMarginSpec: charts.MarginSpec.fixedPixel(16),
+                          ),
+                          defaultRenderer:
+                              charts.LineRendererConfig(includeArea: true),
                         ),
-                        layoutConfig: charts.LayoutConfig(
-                          leftMarginSpec: charts.MarginSpec.fixedPixel(16),
-                          topMarginSpec: charts.MarginSpec.fixedPixel(16),
-                          rightMarginSpec: charts.MarginSpec.fixedPixel(16),
-                          bottomMarginSpec: charts.MarginSpec.fixedPixel(16),
-                        ),
-                        defaultRenderer:
-                            charts.LineRendererConfig(includeArea: true),
-                      ),
-                    );
-                  } else {
-                    return Container();
-                  }
-                },
+                      );
+                    } else {
+                      return Container();
+                    }
+                  },
+                ),
               );
             })
         ],

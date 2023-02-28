@@ -1,6 +1,6 @@
 import 'package:dtnd/=models=/response/news_model.dart';
 import 'package:dtnd/ui/screen/home/home_controller.dart';
-import 'package:dtnd/ui/screen/news_detail.dart/new_detail_screen.dart';
+import 'package:dtnd/ui/screen/news_detail/new_detail_screen.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:dtnd/utilities/logger.dart';
 import 'package:flutter/material.dart';

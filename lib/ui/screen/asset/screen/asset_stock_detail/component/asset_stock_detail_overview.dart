@@ -47,11 +47,15 @@ class AssetStockDetailOverview extends StatelessWidget {
               ),
               const SizedBox(width: 10),
               Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Row(
                     children: [
                       if (stockModel?.stockData != null)
-                        stockModel!.stockData.prefixIcon(size: 10),
+                        Padding(
+                          padding: const EdgeInsets.only(right: 3),
+                          child: stockModel!.stockData.prefixIcon(size: 10),
+                        ),
                       Text(
                         "${stockModel?.stockData.ot ?? "-"} (${stockModel?.stockData.changePc ?? "-"}%)",
                         style: AppTextStyle.bodySmall_8.copyWith(

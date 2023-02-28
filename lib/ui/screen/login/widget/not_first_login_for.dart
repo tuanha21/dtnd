@@ -25,6 +25,7 @@ class NotFirstLoginForm extends StatefulWidget {
     required this.onSuccess,
     this.userController,
     this.passController,
+    this.onBack,
   }) : super(key: key);
 
   final GlobalKey<FormState> loginFormKey;
@@ -32,6 +33,7 @@ class NotFirstLoginForm extends StatefulWidget {
   final Rx<bool> otpRequired;
   final TextEditingController? userController;
   final TextEditingController? passController;
+  final VoidCallback? onBack;
   @override
   State<NotFirstLoginForm> createState() => _NotFirstLoginFormState();
 }
@@ -190,7 +192,7 @@ class _NotFirstLoginFormState extends State<NotFirstLoginForm> {
           const SizedBox(height: 50),
           GestureDetector(
             onTap: () {
-              GoRouter.of(context).push('/SignUp');
+              widget.onBack?.call();
             },
             child: Text(
               S.of(context).login_with_another_account,

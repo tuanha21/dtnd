@@ -7,7 +7,7 @@ import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/widget/news_card.dart';
 import 'package:flutter/material.dart';
 
-import '../../news_detail.dart/new_detail_screen.dart';
+import '../../news_detail/new_detail_screen.dart';
 
 class StockDetailNews extends StatefulWidget {
   const StockDetailNews({

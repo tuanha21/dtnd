@@ -49,6 +49,17 @@ class _AccountScreenState extends State<AccountScreen> {
     } else {
       accountView = AccountScreenView(
         userService: userService,
+        onLogOut: () async {
+          await userService.deleteToken();
+          if (mounted) {}
+          setState(() {});
+          Navigator.of(context)
+              .push(MaterialPageRoute(
+                builder: (context) => const LoginScreen(),
+              ))
+              .then((value) => setState(() {}));
+          return;
+        },
       );
     }
     return Scaffold(

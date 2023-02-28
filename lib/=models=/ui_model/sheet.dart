@@ -14,6 +14,7 @@ abstract class ISheet implements IOverlay {
     return showModalBottomSheet<UserCmd>(
       context: context,
       isScrollControlled: true,
+      // enableDrag: false,
       shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.vertical(top: Radius.circular(20))),
       builder: (BuildContext context) {

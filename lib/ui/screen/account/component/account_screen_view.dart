@@ -10,9 +10,13 @@ import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../login/login_screen.dart';
+
 class AccountScreenView extends StatelessWidget {
-  const AccountScreenView({super.key, required this.userService});
+  const AccountScreenView(
+      {super.key, required this.userService, this.onLogOut});
   final IUserService userService;
+  final VoidCallback? onLogOut;
   @override
   Widget build(BuildContext context) {
     final info = userService.userInfo.value;
@@ -82,9 +86,7 @@ class AccountScreenView extends StatelessWidget {
             children: [
               Expanded(
                 child: TextButton(
-                  onPressed: () {
-                    context.go("/SignIn");
-                  },
+                  onPressed: onLogOut,
                   style: const ButtonStyle(
                       padding: MaterialStatePropertyAll(EdgeInsets.all(14))),
                   child: Text(S.of(context).logout),
