@@ -48,6 +48,7 @@ class _OrderNoteScreenState extends State<OrderNoteScreen>
           ),
           Expanded(
               child: TabBarView(
+            physics: const NeverScrollableScrollPhysics(),
             controller: tabController,
             children: [
               const IndayOrderTab(),

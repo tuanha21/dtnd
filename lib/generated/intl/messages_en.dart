@@ -65,6 +65,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "account_number":
             MessageLookupByLibrary.simpleMessage("Account number"),
         "accumulate": MessageLookupByLibrary.simpleMessage("Accumulate"),
+        "accumulation": MessageLookupByLibrary.simpleMessage("Accumulation"),
         "add_catalog": MessageLookupByLibrary.simpleMessage("Add catalog"),
         "add_following_stock":
             MessageLookupByLibrary.simpleMessage("Add following stocks"),
@@ -147,6 +148,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "days_ago": m1,
         "debt_following":
             MessageLookupByLibrary.simpleMessage("Debt following"),
+        "delete": MessageLookupByLibrary.simpleMessage("Delete"),
         "delete_catalog":
             MessageLookupByLibrary.simpleMessage("Delete catalog"),
         "deposite_money":
@@ -158,6 +160,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "dividend": MessageLookupByLibrary.simpleMessage("Dividend"),
         "double_back_to_close_app":
             MessageLookupByLibrary.simpleMessage("Back again to exit"),
+        "edit": MessageLookupByLibrary.simpleMessage("Edit"),
         "edit_catalog_name":
             MessageLookupByLibrary.simpleMessage("Edit catalog name"),
         "email": MessageLookupByLibrary.simpleMessage("Email"),
@@ -337,6 +340,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "register_right_successfully":
             MessageLookupByLibrary.simpleMessage("Register right successfully"),
         "rename_catalog_to": m8,
+        "returning_money":
+            MessageLookupByLibrary.simpleMessage("Returning money"),
         "revenue": MessageLookupByLibrary.simpleMessage("Revenue"),
         "right": MessageLookupByLibrary.simpleMessage("Right"),
         "safe_ratio": MessageLookupByLibrary.simpleMessage("Safe ratio"),
@@ -373,6 +378,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("This stock is already exist"),
         "stock_order": MessageLookupByLibrary.simpleMessage("Create order"),
         "stock_trading": MessageLookupByLibrary.simpleMessage("Stock trading"),
+        "stock_value": MessageLookupByLibrary.simpleMessage("Stock value"),
         "stocks_you_interested": MessageLookupByLibrary.simpleMessage(
             "Stocks you are interested in"),
         "subsidiaries": MessageLookupByLibrary.simpleMessage("Subsidiaries"),
@@ -398,6 +404,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "top_influence": MessageLookupByLibrary.simpleMessage("Top influence"),
         "top_search": MessageLookupByLibrary.simpleMessage("Top search"),
         "total_asset": MessageLookupByLibrary.simpleMessage("Total asset"),
+        "total_cash": MessageLookupByLibrary.simpleMessage("Total cash"),
         "total_debt": MessageLookupByLibrary.simpleMessage("Total debt"),
         "total_principal_debt":
             MessageLookupByLibrary.simpleMessage("Total principal debt"),

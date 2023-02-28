@@ -64,6 +64,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Thông báo tài khoản"),
         "account_number": MessageLookupByLibrary.simpleMessage("Số tài khoản"),
         "accumulate": MessageLookupByLibrary.simpleMessage("Tích luỹ"),
+        "accumulation": MessageLookupByLibrary.simpleMessage("Tích lũy"),
         "add_catalog": MessageLookupByLibrary.simpleMessage("Thêm danh mục"),
         "add_following_stock":
             MessageLookupByLibrary.simpleMessage("Thêm mã theo dõi"),
@@ -145,6 +146,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "days_ago": m1,
         "debt_following":
             MessageLookupByLibrary.simpleMessage("Theo dõi dư nợ"),
+        "delete": MessageLookupByLibrary.simpleMessage("Xoá"),
         "delete_catalog": MessageLookupByLibrary.simpleMessage("Xoá danh mục"),
         "deposite_money": MessageLookupByLibrary.simpleMessage("Nộp tiền"),
         "derivative": MessageLookupByLibrary.simpleMessage("Phái sinh"),
@@ -154,6 +156,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "dividend": MessageLookupByLibrary.simpleMessage("Cổ tức"),
         "double_back_to_close_app":
             MessageLookupByLibrary.simpleMessage("Ấn thêm lần nữa để thoát"),
+        "edit": MessageLookupByLibrary.simpleMessage("Chỉnh sửa"),
         "edit_catalog_name":
             MessageLookupByLibrary.simpleMessage("Sửa tên danh mục"),
         "email": MessageLookupByLibrary.simpleMessage("Email"),
@@ -332,6 +335,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "register_right_successfully":
             MessageLookupByLibrary.simpleMessage("Đăng ký quyền thành công"),
         "rename_catalog_to": m8,
+        "returning_money": MessageLookupByLibrary.simpleMessage("Tiền chờ về"),
         "revenue": MessageLookupByLibrary.simpleMessage("Doanh thu"),
         "right": MessageLookupByLibrary.simpleMessage("Quyền"),
         "safe_ratio": MessageLookupByLibrary.simpleMessage("Tỷ lệ an toàn"),
@@ -367,6 +371,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "stock_order": MessageLookupByLibrary.simpleMessage("Đặt lệnh"),
         "stock_trading":
             MessageLookupByLibrary.simpleMessage("Giao dịch cổ phiếu"),
+        "stock_value":
+            MessageLookupByLibrary.simpleMessage("Giá trị chứng khoán"),
         "stocks_you_interested":
             MessageLookupByLibrary.simpleMessage("Các mã CK mà bạn quan tâm"),
         "subsidiaries": MessageLookupByLibrary.simpleMessage("Công ty con"),
@@ -392,6 +398,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "top_influence": MessageLookupByLibrary.simpleMessage("Top ảnh hưởng"),
         "top_search": MessageLookupByLibrary.simpleMessage("Top tìm kiếm"),
         "total_asset": MessageLookupByLibrary.simpleMessage("Tổng tài sản"),
+        "total_cash": MessageLookupByLibrary.simpleMessage("Tổng tiền"),
         "total_debt": MessageLookupByLibrary.simpleMessage("Tổng nợ"),
         "total_principal_debt":
             MessageLookupByLibrary.simpleMessage("Tổng nợ gốc"),

@@ -650,6 +650,16 @@ class S {
     );
   }
 
+  /// `Accumulation`
+  String get accumulation {
+    return Intl.message(
+      'Accumulation',
+      name: 'accumulation',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Volumn`
   String get volumn {
     return Intl.message(
@@ -730,6 +740,16 @@ class S {
     );
   }
 
+  /// `Total cash`
+  String get total_cash {
+    return Intl.message(
+      'Total cash',
+      name: 'total_cash',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Revenue`
   String get revenue {
     return Intl.message(
@@ -755,6 +775,16 @@ class S {
     return Intl.message(
       'Cash',
       name: 'cash',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Returning money`
+  String get returning_money {
+    return Intl.message(
+      'Returning money',
+      name: 'returning_money',
       desc: '',
       args: [],
     );
@@ -825,6 +855,16 @@ class S {
     return Intl.message(
       'Capital value',
       name: 'capital_value',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Stock value`
+  String get stock_value {
+    return Intl.message(
+      'Stock value',
+      name: 'stock_value',
       desc: '',
       args: [],
     );
@@ -2677,6 +2717,26 @@ class S {
     return Intl.message(
       'Next',
       name: 'next',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Edit`
+  String get edit {
+    return Intl.message(
+      'Edit',
+      name: 'edit',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Delete`
+  String get delete {
+    return Intl.message(
+      'Delete',
+      name: 'delete',
       desc: '',
       args: [],
     );

@@ -65,5 +65,5 @@ abstract class IOrderModel {
   late final String symbol;
   late final DateTime orderTime;
   late final OrderStatus orderStatus;
-  num get matchPrice;
+  num? get matchPrice;
 }

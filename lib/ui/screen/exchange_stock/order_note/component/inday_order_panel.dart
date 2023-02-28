@@ -50,7 +50,7 @@ class _IndayOrderPanelState extends State<IndayOrderPanel> {
               for (int i = 0; i < (listOrder?.length ?? 0); i++)
                 Column(
                   children: [
-                    i != 0 ? const Divider() : Container(),
+                    i != 0 ? const Divider(height: 1) : Container(),
                     OrderRecordWidget(
                       data: listOrder!.elementAt(i),
                     )

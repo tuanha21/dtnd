@@ -43,17 +43,17 @@ class BaseOrderModel extends CoreResponseModel implements IOrderModel {
   num? reVol;
 
   @override
-  num get matchPrice {
+  num? get matchPrice {
     try {
-      num _matchValue = double.parse(matchValue ?? "0");
-      num _matchVol = matchVolume ?? 0;
-      if (_matchValue > 0) {
-        return _matchValue / (_matchVol * 1000);
+      num matchValueParse = double.parse(matchValue ?? "0");
+      num matchVolParse = matchVolume ?? 0;
+      if (matchValueParse > 0) {
+        return matchValueParse / (matchVolParse * 1000);
       } else {
-        return 0;
+        return null;
       }
     } catch (e) {
-      return 0;
+      return null;
     }
   }
 

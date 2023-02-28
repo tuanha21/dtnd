@@ -196,67 +196,6 @@ class _AssetScreenState extends State<AssetScreen>
                   }
                 }),
               ),
-              // Padding(
-              //   padding: const EdgeInsets.symmetric(horizontal: 16),
-              //   child: Row(
-              //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              //     children: [
-              //       Text(
-              //         S.of(context).asset,
-              //         style: textTheme.titleMedium!
-              //             .copyWith(fontWeight: FontWeight.w700),
-              //       ),
-              //       Container(),
-              //     ],
-              //   ),
-              // ),
-              // Obx(() {
-              //   final data = userService.listAccountModel.value
-              //           ?.firstWhereOrNull((element) =>
-              //               element.runtimeType == BaseMarginAccountModel)
-              //       as BaseMarginAccountModel?;
-              //   return AssetPerTypeWidget(
-              //     values: [
-              //       MoneyType(
-              //           icon: AppImages.wallet_3,
-              //           label: S.of(context).net_assets,
-              //           value: "${NumUtils.formatDouble(data?.equity)} đ"),
-              //       // "${NumUtils.formatDouble((data?.equity ?? 0) - (data?.cashBalance ?? 0) - (data?.debt ?? 0))} đ"),
-              //       MoneyType(
-              //           icon: AppImages.chart_2,
-              //           label: S.of(context).dividend,
-              //           value: "${NumUtils.formatDouble(data?.collateral)} đ"),
-              //       MoneyType(
-              //           icon: AppImages.money_2,
-              //           label: S.of(context).cash,
-              //           value:
-              //               "${NumUtils.formatDouble(data?.cashBalance ?? 0)} đ"),
-              //       MoneyType(
-              //           icon: AppImages.money_change,
-              //           label: S.of(context).total_principal_debt,
-              //           value: "${NumUtils.formatDouble(data?.debt ?? 0)} đ"),
-              //       MoneyType(
-              //           icon: AppImages.timer_2,
-              //           label: S.of(context).minimum_ee,
-              //           value: "${NumUtils.formatDouble(data?.ee ?? 0)} đ"),
-              //       MoneyType(
-              //           icon: AppImages.chart_3,
-              //           label: S.of(context).safe_ratio,
-              //           value: NumUtils.formatDouble(data?.marginRatio ?? 0))
-              //     ],
-              //   );
-              // }),
-              // const SizedBox(height: 16),
-              // Obx(() {
-              //   final data = userService.listAccountModel.value!
-              //           .firstWhereOrNull((element) =>
-              //               element.runtimeType == BaseMarginAccountModel)
-              //       as BaseMarginAccountModel?;
-              //   return PortfolioAndRightPanel(
-              //     portfolioStatus: data?.portfolioStatus,
-              //   );
-              // }),
-
               const PortfolioAndRightPanel(),
               const SizedBox(height: 100),
             ],

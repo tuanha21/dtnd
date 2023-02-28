@@ -82,7 +82,11 @@ class AppImages {
       "assets/images/less_or_equal_icon.png";
   static const String additem_icon = "assets/images/additem_icon.png";
   static const String edit_icon = "assets/images/edit_icon.png";
+  static const String edit_slidable_icon =
+      "assets/images/edit_slidable_icon.png";
   static const String trash_icon = "assets/images/trash_icon.png";
+  static const String trash_slidable_icon =
+      "assets/images/trash_slidable_icon.png";
   static const String element_3 = "assets/images/element_3.png";
   static const String textalign_justifycenter =
       "assets/images/textalign_justifycenter.png";
@@ -90,6 +94,9 @@ class AppImages {
   static const String timer = "assets/images/timer.png";
   static const String money_recive = "assets/images/money_recive.png";
   static const String money_send = "assets/images/money_send.png";
+  static const String chart_star_icon = "assets/images/chart_star_icon.png";
+  static const String simple_line_chart_icon =
+      "assets/images/simple_line_chart_icon.png";
 
   static const String circleAlert = 'assets/svg/alert-circle.svg';
 
