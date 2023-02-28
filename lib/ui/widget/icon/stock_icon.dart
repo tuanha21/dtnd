@@ -9,11 +9,13 @@ class StockIcon extends StatelessWidget {
     this.size = 40,
     this.border,
     this.color,
+    this.onTap,
   });
   final String? stockCode;
   final double size;
   final BoxBorder? border;
   final Color? color;
+  final VoidCallback? onTap;
   @override
   Widget build(BuildContext context) {
     final Widget icon;
@@ -41,12 +43,21 @@ class StockIcon extends StatelessWidget {
         errorWidget: (context, url, error) => const Icon(Icons.error),
       );
     }
-    return SizedBox(
-      width: size,
-      child: Center(
-        child: SizedBox.square(
-          dimension: size,
-          child: icon,
+    return Material(
+      shape: const CircleBorder(),
+      child: InkWell(
+        onTap: onTap,
+        child: Ink(
+          width: size,
+          decoration: const BoxDecoration(
+            shape: BoxShape.circle,
+          ),
+          child: Center(
+            child: SizedBox.square(
+              dimension: size,
+              child: icon,
+            ),
+          ),
         ),
       ),
     );

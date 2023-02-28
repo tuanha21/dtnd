@@ -488,3 +488,35 @@ class _AssetStockDetailScreenState extends State<AssetStockDetailScreen>
     );
   }
 }
+
+// onTap: () async {
+//                                   if (!UserService().isLogin) {
+//                                     final toLogin = await showDialog<bool>(
+//                                       context: context,
+//                                       builder: (context) {
+//                                         return const LoginFirstDialog();
+//                                       },
+//                                     );
+//                                     if (toLogin ?? false) {
+//                                       if (!mounted) return;
+//                                       await Navigator.of(context)
+//                                           .push(MaterialPageRoute(
+//                                         builder: (context) =>
+//                                             const LoginScreen(),
+//                                       ));
+//                                     }
+//                                   } else {
+//                                     final model = await dataCenterService
+//                                         .getStockModelsFromStockCodes(
+//                                             [stock!.stockCode]);
+//                                     if ((model?.isNotEmpty ?? false) &&
+//                                         mounted) {
+//                                       StockOrderISheet(model!.first).show(
+//                                           context,
+//                                           StockOrderSheet(
+//                                             stockModel: model.first,
+//                                             orderData: null,
+//                                           ));
+//                                     }
+//                                   }
+//                                 },

@@ -2,6 +2,7 @@ import 'package:dtnd/=models=/response/account/base_margin_account_model.dart';
 import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/screen/asset/component/investment_catalog_widget.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
+import 'package:dtnd/ui/theme/app_textstyle.dart';
 import 'package:dtnd/utilities/num_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -26,8 +27,6 @@ class _PortfolioAndRightPanelState extends State<PortfolioAndRightPanel>
   final IDataCenterService dataCenterService = DataCenterService();
   late final TabController _tabController;
 
-  void rebuild() => setState(() {});
-
   void changeChart() {
     setState(() {
       showTotalAsset = !showTotalAsset;
@@ -35,6 +34,7 @@ class _PortfolioAndRightPanelState extends State<PortfolioAndRightPanel>
   }
 
   bool showTotalAsset = true;
+  bool showProfitAndLoss = false;
 
   @override
   void initState() {
@@ -81,83 +81,64 @@ class _PortfolioAndRightPanelState extends State<PortfolioAndRightPanel>
           ),
           if (_tabController.index == 0)
             Container(
-              height: 88,
-              padding: const EdgeInsets.all(16),
+              height: 56,
               decoration: const BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.all(Radius.circular(8)),
               ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
-                    child: Obx(() {
-                      final data = userService.listAccountModel.value
-                              ?.firstWhereOrNull((element) =>
-                                  element.runtimeType == BaseMarginAccountModel)
-                          as BaseMarginAccountModel?;
-                      return Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            "Tổng danh mục",
-                            style: textTheme.labelMedium?.copyWith(
-                              color: AppColors.neutral_03,
-                            ),
+              child: Obx(() {
+                final data = userService.listAccountModel.value
+                        ?.firstWhereOrNull((element) =>
+                            element.runtimeType == BaseMarginAccountModel)
+                    as BaseMarginAccountModel?;
+                return Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      children: [
+                        Text(
+                          "Lãi/lỗ chưa đóng",
+                          style: AppTextStyle.labelMedium_12.copyWith(
+                            color: AppColors.neutral_03,
                           ),
-                          Text(
-                            "${NumUtils.formatDouble(data?.portfolioStatus?.marketValue)}đ",
-                            style: textTheme.titleSmall,
+                        ),
+                        const SizedBox(width: 4),
+                        GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              showProfitAndLoss = !showProfitAndLoss;
+                            });
+                          },
+                          child: Icon(
+                            showProfitAndLoss
+                                ? Icons.visibility_outlined
+                                : Icons.visibility_off_outlined,
+                            size: 16,
+                            weight: 300,
                           ),
-                        ],
-                      );
-                    }),
-                  ),
-                  Expanded(
-                    child: Obx(() {
-                      final data = userService.listAccountModel.value
-                              ?.firstWhereOrNull((element) =>
-                                  element.runtimeType == BaseMarginAccountModel)
-                          as BaseMarginAccountModel?;
-                      return Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            "Lãi/lỗ chưa đóng",
-                            style: textTheme.labelMedium?.copyWith(
-                              fontWeight: FontWeight.w600,
-                              color: AppColors.neutral_03,
-                            ),
+                        )
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        if (data?.portfolioStatus?.prefixIcon != null)
+                          Image.asset(
+                            data?.portfolioStatus?.prefixIcon ?? "",
+                            width: 10,
+                            color: data?.portfolioStatus?.color,
                           ),
-                          Flexible(
-                            child: Row(
-                              children: [
-                                if (data?.portfolioStatus?.prefixIcon != null)
-                                  Image.asset(
-                                    data?.portfolioStatus?.prefixIcon ?? "",
-                                    width: 10,
-                                    color: data?.portfolioStatus?.color,
-                                  ),
-                                const SizedBox(width: 6),
-                                Expanded(
-                                  child: FittedBox(
-                                    child: Text(
-                                      "${NumUtils.formatDouble(data?.portfolioStatus?.gainLossValue)}đ (${data?.portfolioStatus?.gainLossPer?.trim()})",
-                                      overflow: TextOverflow.ellipsis,
-                                      style: textTheme.titleSmall!.copyWith(
-                                          color: data?.portfolioStatus?.color),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      );
-                    }),
-                  )
-                ],
-              ),
+                        const SizedBox(width: 6),
+                        Text(
+                          "${showProfitAndLoss ? NumUtils.formatDouble(data?.portfolioStatus?.gainLossValue) : "********"}đ (${data?.portfolioStatus?.gainLossPer?.trim()})",
+                          overflow: TextOverflow.ellipsis,
+                          style: AppTextStyle.titleSmall_14
+                              .copyWith(color: data?.portfolioStatus?.color),
+                        ),
+                      ],
+                    ),
+                  ],
+                );
+              }),
             ),
           Obx(() {
             final data = userService.listAccountModel.value?.firstWhereOrNull(
@@ -173,6 +154,7 @@ class _PortfolioAndRightPanelState extends State<PortfolioAndRightPanel>
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 4),
                       child: InvestmentCatalogWidget(
+                        showFullMode: showProfitAndLoss,
                         data:
                             data!.portfolioStatus!.porfolioStocks!.elementAt(i),
                         volPc: (data.portfolioStatus!.porfolioStocks!

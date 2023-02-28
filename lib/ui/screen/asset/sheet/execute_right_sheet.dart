@@ -279,8 +279,6 @@ class _Row extends StatelessWidget {
     String valueTxt;
     if (value == null) {
       valueTxt = "-";
-    } else if (value!.isNum) {
-      valueTxt = NumUtils.formatDoubleString(value);
     } else {
       valueTxt = value!;
     }
