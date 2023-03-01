@@ -19,6 +19,8 @@ import 'package:dtnd/ui/widget/section/section_with_title.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../components/heap_map_kl.dart';
+
 class MarketOverviewTab extends StatefulWidget {
   const MarketOverviewTab({super.key});
 
@@ -40,9 +42,6 @@ class _MarketOverviewTabState extends State<MarketOverviewTab> {
     super.initState();
   }
 
-  void rebuild() {
-    return setState(() {});
-  }
 
   List<charts.Series<DeepModel, String>> _generateData(List<DeepModel> datas) {
     datas.removeWhere((element) => element.tYPE == "Total");
@@ -106,13 +105,7 @@ class _MarketOverviewTabState extends State<MarketOverviewTab> {
             child: DeepMarketChart(seriesList),
           );
         }, marketController.loadingDeepModel),
-        SectionWithTitle(
-          title: S.of(context).interested_catalog,
-          child: const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16),
-            child: UserCatalogWidget(),
-          ),
-        ),
+        const HeapMapKL(),
         const SizedBox(height: 100),
       ],
     );

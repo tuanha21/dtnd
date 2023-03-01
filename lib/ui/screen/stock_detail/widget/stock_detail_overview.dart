@@ -47,7 +47,9 @@ class StockDetailOverview extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                    Text(stockModel.stockData.lastPrice.toString(),
+                    Text((stockModel.stockData.lastPrice.value == 0
+                        ? stockModel.stockData.r.value
+                        : stockModel.stockData.lastPrice.value).toString(),
                         style: Theme.of(context)
                             .textTheme
                             .headlineLarge
