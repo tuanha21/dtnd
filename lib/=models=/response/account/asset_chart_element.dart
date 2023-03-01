@@ -1,4 +1,5 @@
 import 'package:dtnd/=models=/core_response_model.dart';
+import 'package:dtnd/utilities/logger.dart';
 import 'package:dtnd/utilities/time_utils.dart';
 
 class AssetChartElementModel implements CoreResponseModel {

@@ -80,7 +80,7 @@ class _OrderOrderPanelState extends State<OrderOrderPanel> {
                               NumUtils.formatDouble(
                                   widget.stockModel.stockData.lastPrice.value),
                               style: AppTextStyle.bodyMedium_14.copyWith(
-                                color: AppColors.semantic_01,
+                                color: widget.stockModel.stockData.color,
                                 fontWeight: FontWeight.w700,
                               ),
                             ),
@@ -88,7 +88,7 @@ class _OrderOrderPanelState extends State<OrderOrderPanel> {
                             Text(
                               "(${NumUtils.formatDouble(widget.stockModel.stockData.ot.value)} ${NumUtils.formatDouble(widget.stockModel.stockData.changePc.value)}%)",
                               style: AppTextStyle.labelSmall_10.copyWith(
-                                  color: AppColors.semantic_01,
+                                  color: widget.stockModel.stockData.color,
                                   fontWeight: FontWeight.w500),
                             )
                           ],
@@ -172,7 +172,7 @@ class _OrderOrderPanelState extends State<OrderOrderPanel> {
                       ),
                       const SizedBox(width: 4),
                       Text(
-                        widget.stockModel.stockDataCore?.f?.toString() ?? "-",
+                        widget.stockModel.stockData.f.value?.toString() ?? "-",
                         style: AppTextStyle.labelMedium_12.copyWith(
                             color: AppColors.semantic_04,
                             fontWeight: FontWeight.w600),
@@ -188,7 +188,7 @@ class _OrderOrderPanelState extends State<OrderOrderPanel> {
                       ),
                       const SizedBox(width: 4),
                       Text(
-                        widget.stockModel.stockDataCore?.r?.toString() ?? "-",
+                        widget.stockModel.stockData.r.value?.toString() ?? "-",
                         style: AppTextStyle.labelMedium_12.copyWith(
                             color: AppColors.semantic_02,
                             fontWeight: FontWeight.w600),
@@ -204,7 +204,7 @@ class _OrderOrderPanelState extends State<OrderOrderPanel> {
                       ),
                       const SizedBox(width: 4),
                       Text(
-                        widget.stockModel.stockDataCore?.c?.toString() ?? "-",
+                        widget.stockModel.stockData.c.value?.toString() ?? "-",
                         style: AppTextStyle.labelMedium_12.copyWith(
                             color: AppColors.semantic_05,
                             fontWeight: FontWeight.w600),

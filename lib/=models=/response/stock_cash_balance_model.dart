@@ -16,7 +16,6 @@ class StockCashBalanceModel implements CoreResponseModel {
   String? accName;
 
   StockCashBalanceModel.fromJson(Map<String, dynamic> json) {
-    logger.v(json);
     accCode = json['accCode'];
     accType = json['accType'];
     sym = json['sym'];

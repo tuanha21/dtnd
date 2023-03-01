@@ -183,17 +183,13 @@ class _AssetScreenState extends State<AssetScreen>
               Padding(
                 padding: const EdgeInsets.all(16),
                 child: Obx(() {
-                  if (userService.listAccountModel.value?.isNotEmpty ?? false) {
-                    final data = userService.listAccountModel.value!
-                            .firstWhereOrNull((element) =>
-                                element.runtimeType == BaseMarginAccountModel)
-                        as BaseMarginAccountModel?;
-                    return AccountAssetOverviewWidget(
-                      data: data,
-                    );
-                  } else {
-                    return const AccountAssetOverviewWidget();
-                  }
+                  final data = userService.listAccountModel.value!
+                          .firstWhereOrNull((element) =>
+                              element.runtimeType == BaseMarginAccountModel)
+                      as BaseMarginAccountModel?;
+                  return AccountAssetOverviewWidget(
+                    data: data,
+                  );
                 }),
               ),
               const PortfolioAndRightPanel(),

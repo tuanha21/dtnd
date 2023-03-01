@@ -27,16 +27,15 @@ class IntervalInput extends StatelessWidget {
 
   void _onMinus() {
     final oldValue = controller.text;
-
+    String newString;
     if (oldValue.isNum) {
       num newValue = num.parse(oldValue);
-
       newValue -= (interval?.call(newValue) ?? 0);
       if (newValue < 0) {
         newValue += interval?.call(newValue) ?? 0;
       }
       String newString = newValue.toStringAsFixed(2);
-      newString = newString.replaceAll(".00", "").replaceAll(".0", "");
+      newString = newString.replaceAll(".00", "");
       controller.value = TextEditingValue(
         text: newString,
         selection: TextSelection.collapsed(
@@ -45,8 +44,8 @@ class IntervalInput extends StatelessWidget {
       );
       onChanged?.call(newValue);
     } else if (oldValue.isOrderType) {
-      String newString = defaultValue.toString();
-      newString = newString.replaceAll(".00", "").replaceAll(".0", "");
+      newString = defaultValue.toString();
+      newString = newString.replaceAll(".00", "");
       controller.value = TextEditingValue(
         text: newString,
         selection: TextSelection.collapsed(
@@ -64,10 +63,9 @@ class IntervalInput extends StatelessWidget {
 
     if (oldValue.isNum) {
       num newValue = num.parse(oldValue);
-
       newValue += (interval?.call(newValue) ?? 0);
       String newString = newValue.toStringAsFixed(2);
-      newString = newString.replaceAll(".00", "").replaceAll(".0", "");
+      newString = newString.replaceAll(".00", "");
       controller.value = TextEditingValue(
         text: newString,
         selection: TextSelection.collapsed(
@@ -77,7 +75,7 @@ class IntervalInput extends StatelessWidget {
       onChanged?.call(newValue);
     } else if (oldValue.isOrderType) {
       String newString = defaultValue.toStringAsFixed(2);
-      newString = newString.replaceAll(".00", "").replaceAll(".0", "");
+      newString = newString.replaceAll(".00", "");
       controller.value = TextEditingValue(
         text: newString,
         selection: TextSelection.collapsed(
@@ -92,22 +90,24 @@ class IntervalInput extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
-      key: formKey,
-      controller: controller,
-      validator: validator,
-      onChanged: onTextChanged,
-      keyboardType: const TextInputType.numberWithOptions(decimal: true),
-      inputFormatters: [ThousandsSeparatorInputFormatter()],
-      decoration: InputDecoration(
-        labelText: labelText,
-        contentPadding: const EdgeInsets.all(0),
-        floatingLabelBehavior: FloatingLabelBehavior.always,
-        floatingLabelAlignment: FloatingLabelAlignment.start,
-        prefixIcon:
-            InkWell(onTap: _onMinus, child: const Icon(Icons.remove_rounded)),
-        suffixIcon:
-            InkWell(onTap: _onAdd, child: const Icon(Icons.add_rounded)),
+    return Material(
+      child: TextFormField(
+        key: formKey,
+        controller: controller,
+        validator: validator,
+        onChanged: onTextChanged,
+        keyboardType: const TextInputType.numberWithOptions(decimal: true),
+        inputFormatters: [ThousandsSeparatorInputFormatter()],
+        decoration: InputDecoration(
+          labelText: labelText,
+          contentPadding: const EdgeInsets.all(0),
+          floatingLabelBehavior: FloatingLabelBehavior.always,
+          floatingLabelAlignment: FloatingLabelAlignment.start,
+          prefixIcon:
+              InkWell(onTap: _onMinus, child: const Icon(Icons.remove_rounded)),
+          suffixIcon:
+              InkWell(onTap: _onAdd, child: const Icon(Icons.add_rounded)),
+        ),
       ),
     );
   }

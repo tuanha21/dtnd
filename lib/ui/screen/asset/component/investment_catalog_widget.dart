@@ -130,80 +130,89 @@ class _InvestmentCatalogWidgetState extends State<InvestmentCatalogWidget> {
                           AnimatedOpacity(
                             opacity: expand ? 1 : 0,
                             duration: const Duration(milliseconds: 200),
-                            child: Row(
-                              children: [
-                                Expanded(
-                                  child: Column(
-                                    children: [
-                                      Row(
-                                        children: [
-                                          Text(
-                                            widget.data?.symbol ?? "-",
-                                            style: textTheme.titleSmall,
-                                          ),
-                                          const SizedBox(width: 8),
-                                          Text.rich(
-                                            TextSpan(children: [
-                                              WidgetSpan(
-                                                  child: widget.data
-                                                          ?.prefixIcon(
-                                                              size: 12) ??
-                                                      const SizedBox()),
-                                              TextSpan(
-                                                text:
-                                                    " ${NumUtils.formatDouble(widget.data?.marketPrice)}",
-                                              )
-                                            ]),
-                                            maxLines: 1,
-                                            style: AppTextStyle.labelMedium_12
-                                                .copyWith(
-                                              fontWeight: FontWeight.w600,
-                                              color: widget.data?.color,
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 2),
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Row(
+                                          children: [
+                                            Text(
+                                              widget.data?.symbol ?? "-",
+                                              style: textTheme.titleSmall,
                                             ),
-                                          ),
-                                        ],
-                                      ),
-                                      Row(
-                                        children: [
-                                          Flexible(
-                                            child: Text(
-                                              stock?.nameShort ?? "",
-                                              overflow: TextOverflow.ellipsis,
-                                              style: AppTextStyle.labelSmall_10
+                                            const SizedBox(width: 8),
+                                            Text.rich(
+                                              TextSpan(children: [
+                                                WidgetSpan(
+                                                    child: widget.data
+                                                            ?.prefixIcon(
+                                                                size: 12) ??
+                                                        const SizedBox()),
+                                                TextSpan(
+                                                  text:
+                                                      " ${NumUtils.formatDouble(widget.data?.marketPrice)}",
+                                                )
+                                              ]),
+                                              maxLines: 1,
+                                              style: AppTextStyle.labelMedium_12
                                                   .copyWith(
-                                                      color:
-                                                          AppColors.neutral_03),
+                                                fontWeight: FontWeight.w600,
+                                                color: widget.data?.color,
+                                              ),
                                             ),
-                                          ),
-                                        ],
-                                      ),
-                                      // Text(
-                                      //   "${(widget.volPc ?? 0).toStringAsFixed(2)}%",
-                                      //   style: textTheme.bodySmall!
-                                      //       .copyWith(color: AppColors.neutral_04),
-                                      // ),
-                                    ],
+                                          ],
+                                        ),
+                                        Row(
+                                          children: [
+                                            Flexible(
+                                              child: Text(
+                                                stock?.nameShort ?? "",
+                                                overflow: TextOverflow.ellipsis,
+                                                style: AppTextStyle
+                                                    .labelSmall_10
+                                                    .copyWith(
+                                                        color: AppColors
+                                                            .neutral_03),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        // Text(
+                                        //   "${(widget.volPc ?? 0).toStringAsFixed(2)}%",
+                                        //   style: textTheme.bodySmall!
+                                        //       .copyWith(color: AppColors.neutral_04),
+                                        // ),
+                                      ],
+                                    ),
                                   ),
-                                ),
-                                SizedBox.square(
-                                  dimension: 32,
-                                  child: AssetCatalogRatioChart(
-                                    ratio: widget.volPc ?? 0,
+                                  SizedBox.square(
+                                    dimension: 32,
+                                    child: AssetCatalogRatioChart(
+                                      ratio: widget.volPc ?? 0,
+                                    ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
                           ),
                           AnimatedOpacity(
                             opacity: expand ? 0 : 1,
                             duration: const Duration(milliseconds: 200),
                             child: Padding(
-                              padding: const EdgeInsets.only(left: 8),
+                              padding: const EdgeInsets.only(
+                                  left: 8, top: 2, bottom: 2),
                               child: Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
                                   Column(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
@@ -233,6 +242,8 @@ class _InvestmentCatalogWidgetState extends State<InvestmentCatalogWidget> {
                                     ],
                                   ),
                                   Column(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
                                     children: [
                                       Text(
                                         S.of(context).mk_value,
@@ -260,6 +271,8 @@ class _InvestmentCatalogWidgetState extends State<InvestmentCatalogWidget> {
                                     ],
                                   ),
                                   Column(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
                                     crossAxisAlignment: CrossAxisAlignment.end,
                                     children: [
                                       Row(
@@ -298,7 +311,6 @@ class _InvestmentCatalogWidgetState extends State<InvestmentCatalogWidget> {
                   ],
                 ),
               ),
-              const SizedBox(height: 8),
               ExpandedSection(
                 expand: expand,
                 child: Container(

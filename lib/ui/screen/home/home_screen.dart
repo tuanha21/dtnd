@@ -97,7 +97,7 @@ class _HomeScreenState extends State<HomeScreen> {
               title: S.of(context).news,
               onTitleTap: () => HomeController().getNews(),
               onMore: () {
-                ListNewsISheet().show(context, ListNewsSheet());
+                const ListNewsISheet().show(context, const ListNewsSheet());
               },
               child: const HomeNews(),
             ),

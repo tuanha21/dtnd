@@ -82,10 +82,11 @@ class _AccountAssetOverviewWidgetState
                           ),
                           const SizedBox(width: 10),
                           Text(
-                            "${NumUtils.formatDouble(widget.data?.portfolioStatus?.gainLossValue)} (${widget.data?.portfolioStatus?.gainLossPer?.trim()})",
+                            "${NumUtils.formatDouble(widget.data?.portfolioStatus?.gainLossValue)} (${widget.data?.portfolioStatus?.gainLossPer?.trim() ?? "-"})",
                             style: textTheme.bodySmall!.copyWith(
                                 fontWeight: FontWeight.w600,
-                                color: AppColors.semantic_01),
+                                color: widget.data?.portfolioStatus?.color ??
+                                    AppColors.semantic_02),
                           ),
                         ],
                       ),

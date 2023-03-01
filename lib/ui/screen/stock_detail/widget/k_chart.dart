@@ -15,10 +15,12 @@ class KChart extends StatefulWidget {
     this.translations,
     this.mainState,
     this.secondaryState,
+    this.showMA = false,
   });
 
   final IndexModel indexModel;
   final bool isLine;
+  final bool showMA;
   final bool showNowPrice;
   final List<String>? dateTimeFormat;
   final Map<String, ChartTranslations>? translations;
@@ -61,7 +63,9 @@ class _KChartState extends State<KChart> {
           vol: widget.indexModel.stockDayTradingHistory.value!.v![i]
               .toDouble()));
     }
-    // DataUtil.calculate(datas);
+    if (widget.showMA) {
+      DataUtil.calculate(datas);
+    }
     setState(() {
       initializing = false;
     });
@@ -79,6 +83,9 @@ class _KChartState extends State<KChart> {
       datas.last.close =
           widget.indexModel.stockDayTradingHistory.value!.c!.last.toDouble();
       // DataUtil.calculate(datas);
+      if (widget.showMA) {
+        DataUtil.calculate(datas);
+      }
     }
   }
 

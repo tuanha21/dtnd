@@ -5,6 +5,7 @@ import 'package:dtnd/=models=/response/account/list_account_model.dart';
 import 'response/account/portfolio_status_model.dart';
 import 'response/account/unexecuted_right_model.dart';
 import 'response/account_info_model.dart';
+import 'response/order_history_model.dart';
 import 'response/order_model/base_order_model.dart';
 import 'response/share_earned_model.dart';
 import 'response/stock_cash_balance_model.dart';
@@ -38,6 +39,8 @@ abstract class CoreResponseModel {
         return ShareEarnedDetailModel.fromJson(json) as T;
       case StockCashBalanceModel:
         return StockCashBalanceModel.fromJson(json) as T;
+      case OrderHistoryModel:
+        return OrderHistoryModel.fromJson(json) as T;
       default:
         return null;
     }

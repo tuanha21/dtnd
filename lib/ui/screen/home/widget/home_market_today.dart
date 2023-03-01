@@ -20,6 +20,7 @@ import 'package:get/get.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:k_chart/chart_translations.dart';
 import 'package:k_chart/flutter_k_chart.dart' as kcharts;
+import 'package:k_chart/k_chart_widget.dart';
 
 class HomeMarketToday extends StatefulWidget {
   const HomeMarketToday({super.key});
@@ -162,6 +163,8 @@ class _HomeMarketTodayState extends State<HomeMarketToday>
                       showNowPrice: true,
                       indexModel: homeController.currentIndexModel.value!,
                       isLine: true,
+                      showMA: true,
+                      mainState: MainState.MA,
                       dateTimeFormat: const [kcharts.dd, "/", kcharts.mm],
                       translations: kChartTranslations,
                     ),

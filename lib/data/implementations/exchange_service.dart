@@ -1,6 +1,7 @@
 import 'package:dtnd/=models=/request/request_model.dart';
 import 'package:dtnd/=models=/response/account/unexecuted_right_model.dart';
 import 'package:dtnd/=models=/response/account/i_account.dart';
+import 'package:dtnd/=models=/response/order_history_model.dart';
 import 'package:dtnd/=models=/response/order_model/base_order_model.dart';
 import 'package:dtnd/=models=/response/stock_cash_balance_model.dart';
 import 'package:dtnd/=models=/side.dart';
@@ -12,6 +13,7 @@ import 'package:dtnd/data/implementations/user_service.dart';
 import 'package:dtnd/ui/screen/exchange_stock/stock_order/data/order_data.dart';
 import 'package:dtnd/utilities/logger.dart';
 import 'package:dtnd/utilities/num_utils.dart';
+import 'package:dtnd/utilities/time_utils.dart';
 
 class ExchangeService implements IExchangeService {
   ExchangeService._internal();
@@ -72,6 +74,46 @@ class ExchangeService implements IExchangeService {
   }
 
   @override
+  Future<BaseOrderModel?> changeOrder(
+      IUserService userService, BaseOrderModel model, OrderData data) async {
+    final RequestDataModel requestDataModel = RequestDataModel.stringType(
+      cmd: "Web.changeOrder",
+      orderNo: "${model.orderNo}",
+      nvol: data.volumn.toInt(),
+      nprice: data.price,
+      orderType: "1",
+      pin: "",
+    );
+
+    final RequestModel requestModel = RequestModel(
+      userService,
+      group: "O",
+      data: requestDataModel,
+      checksum: "",
+    );
+    logger.v(requestModel.toJson());
+    hasError(Map<String, dynamic> json) {
+      logger.v(json);
+      final int rc = json['rc'];
+      return rc <= 0;
+    }
+
+    onError(Map<String, dynamic> json) {
+      final int rc = json['rc'];
+      throw rc;
+    }
+
+    final response = await networkService
+        .requestTraditionalApiResList<BaseOrderModel>(requestModel,
+            hasError: hasError, onError: onError);
+    logger.v(response);
+    if (response?.isNotEmpty ?? false) {
+      return response!.first;
+    }
+    return null;
+  }
+
+  @override
   Future<StockCashBalanceModel> getSCashBalance(
       {required String stockCode,
       required String price,
@@ -86,14 +128,42 @@ class ExchangeService implements IExchangeService {
 
     final RequestModel requestModel =
         RequestModel(userService, group: "Q", data: requestDataModel);
-    logger.v(requestModel.toJson());
     final response = await networkService
         .requestTraditionalApi<StockCashBalanceModel>(requestModel);
-    logger.v(response);
     if (response == null) {
       throw Exception();
     }
 
+    return response;
+  }
+
+  @override
+  Future<List<OrderHistoryModel>> getOrdersHistory(IUserService userService,
+      {String? stockCode,
+      DateTime? fromDay,
+      DateTime? toDay,
+      String? status,
+      int? page,
+      int? recordPerPage}) async {
+    final RequestDataModel requestDataModel = RequestDataModel.cursorType(
+      cmd: "ListOrder",
+      p1: "${userService.token.value!.user}6",
+      p2: stockCode ?? "",
+      p3: TimeUtilities.commonTimeFormat.format(
+          fromDay ?? TimeUtilities.getPreviousDateTime(TimeUtilities.month(1))),
+      p4: TimeUtilities.commonTimeFormat.format(fromDay ?? DateTime.now()),
+      p5: status ?? "M",
+      p7: page?.toString() ?? "1",
+      p8: recordPerPage?.toString() ?? "10",
+    );
+
+    final RequestModel requestModel =
+        RequestModel(userService, group: "B", data: requestDataModel);
+    final response = await networkService
+        .requestTraditionalApiResList<OrderHistoryModel>(requestModel);
+    if (response == null) {
+      throw Exception();
+    }
     return response;
   }
 

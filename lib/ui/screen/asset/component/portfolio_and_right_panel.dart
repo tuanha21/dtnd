@@ -129,7 +129,7 @@ class _PortfolioAndRightPanelState extends State<PortfolioAndRightPanel>
                           ),
                         const SizedBox(width: 6),
                         Text(
-                          "${showProfitAndLoss ? NumUtils.formatDouble(data?.portfolioStatus?.gainLossValue) : "********"}đ (${data?.portfolioStatus?.gainLossPer?.trim()})",
+                          "${showProfitAndLoss ? NumUtils.formatDouble(data?.portfolioStatus?.gainLossValue) : "********"}đ (${data?.portfolioStatus?.gainLossPer?.trim() ?? "-"})",
                           overflow: TextOverflow.ellipsis,
                           style: AppTextStyle.titleSmall_14
                               .copyWith(color: data?.portfolioStatus?.color),

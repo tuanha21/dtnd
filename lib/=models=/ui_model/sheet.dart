@@ -19,8 +19,9 @@ abstract class ISheet implements IOverlay {
           borderRadius: BorderRadius.vertical(top: Radius.circular(20))),
       builder: (BuildContext context) {
         return Padding(
-          padding:
-              EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+          padding: EdgeInsets.only(
+              bottom: MediaQuery.of(context).viewInsets.bottom,
+              top: MediaQuery.of(context).viewInsets.top),
           child: Wrap(
             children: [child],
           ),

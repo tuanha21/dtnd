@@ -26,7 +26,6 @@ import 'package:dtnd/ui/theme/app_textstyle.dart';
 import 'package:dtnd/ui/widget/button/single_color_text_button.dart';
 import 'package:dtnd/ui/widget/icon/sheet_header.dart';
 import 'package:dtnd/ui/widget/input/interval_input.dart';
-import 'package:dtnd/utilities/logger.dart';
 import 'package:dtnd/utilities/num_utils.dart';
 import 'package:dtnd/utilities/time_utils.dart';
 import 'package:flutter/material.dart';
@@ -141,6 +140,10 @@ class _StockOrderSheetState extends State<StockOrderSheet>
       selectedOrderType = listOrderTypes.first;
     });
     getStockCashBalance();
+  }
+
+  void onChangeVol(num value) {
+    setState(() {});
   }
 
   bool isSelected(OrderType orderType) => orderType == selectedOrderType;
@@ -268,6 +271,7 @@ class _StockOrderSheetState extends State<StockOrderSheet>
             ),
             const SizedBox(height: 16),
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Row(
                   children: [
@@ -371,26 +375,7 @@ class _StockOrderSheetState extends State<StockOrderSheet>
                     controller: volumnController,
                     labelText: S.of(context).volumn,
                     interval: (value) => 100,
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 20),
-            Row(
-              children: [
-                Expanded(
-                  child: SingleColorTextButton(
-                    text: S.of(context).buy,
-                    color: AppColors.semantic_01,
-                    onTap: () => toConfirmPanel(Side.buy),
-                  ),
-                ),
-                const SizedBox(width: 16),
-                Expanded(
-                  child: SingleColorTextButton(
-                    text: S.of(context).sell,
-                    color: AppColors.semantic_03,
-                    onTap: () => toConfirmPanel(Side.sell),
+                    onChanged: onChangeVol,
                   ),
                 ),
               ],
@@ -416,7 +401,27 @@ class _StockOrderSheetState extends State<StockOrderSheet>
                   },
                 )
               ],
-            )
+            ),
+            const SizedBox(height: 16),
+            Row(
+              children: [
+                Expanded(
+                  child: SingleColorTextButton(
+                    text: S.of(context).buy,
+                    color: AppColors.semantic_01,
+                    onTap: () => toConfirmPanel(Side.buy),
+                  ),
+                ),
+                const SizedBox(width: 16),
+                Expanded(
+                  child: SingleColorTextButton(
+                    text: S.of(context).sell,
+                    color: AppColors.semantic_03,
+                    onTap: () => toConfirmPanel(Side.sell),
+                  ),
+                ),
+              ],
+            ),
           ],
         ),
       ),

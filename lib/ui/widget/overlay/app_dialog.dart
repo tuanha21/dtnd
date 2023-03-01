@@ -263,10 +263,10 @@ class _DialogDefaultsM2 extends DialogTheme {
   Color? get backgroundColor => Theme.of(context).dialogBackgroundColor;
 
   @override
-  TextStyle? get titleTextStyle => _textTheme.headline6;
+  TextStyle? get titleTextStyle => _textTheme.titleLarge;
 
   @override
-  TextStyle? get contentTextStyle => _textTheme.subtitle1;
+  TextStyle? get contentTextStyle => _textTheme.titleMedium;
 
   @override
   EdgeInsetsGeometry? get actionsPadding => EdgeInsets.zero;

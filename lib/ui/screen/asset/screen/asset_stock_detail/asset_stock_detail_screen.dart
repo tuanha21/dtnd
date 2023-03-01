@@ -8,6 +8,7 @@ import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/screen/asset/component/asset_grid_element.dart';
 import 'package:dtnd/ui/screen/asset/screen/asset_stock_detail/asset_stock_detail_controller.dart';
 import 'package:dtnd/ui/screen/asset/screen/asset_stock_detail/component/asset_stock_detail_appbar.dart';
+import 'package:dtnd/ui/screen/asset/screen/asset_stock_detail/tab/unclosed_deal_tab.dart';
 import 'package:dtnd/ui/screen/exchange_stock/stock_order/business/stock_order_flow.dart';
 import 'package:dtnd/ui/screen/exchange_stock/stock_order/sheet/stock_order_sheet.dart';
 import 'package:dtnd/ui/screen/login/login_screen.dart';
@@ -248,67 +249,8 @@ class _AssetStockDetailScreenState extends State<AssetStockDetailScreen>
                     const SizedBox(height: 16),
                     Expanded(
                       child: TabBarView(controller: tabController, children: [
-                        Column(
-                          children: [
-                            Container(
-                              padding: const EdgeInsets.all(16),
-                              decoration: const BoxDecoration(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(8)),
-                                  color: AppColors.neutral_06),
-                              child: Column(
-                                children: [
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(
-                                        "Deal chưa khớp",
-                                        style: textTheme.labelMedium?.copyWith(
-                                            fontWeight: FontWeight.w600),
-                                      ),
-                                      Text(
-                                        "0",
-                                        style: textTheme.labelMedium,
-                                      ),
-                                    ],
-                                  ),
-                                  const SizedBox(height: 8),
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(
-                                        "Tổng giá vốn",
-                                        style: textTheme.labelMedium?.copyWith(
-                                            fontWeight: FontWeight.w600),
-                                      ),
-                                      Text(
-                                        "0",
-                                        style: textTheme.labelMedium,
-                                      ),
-                                    ],
-                                  ),
-                                  const SizedBox(height: 8),
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(
-                                        "Lãi/lỗ chưa đóng",
-                                        style: textTheme.labelMedium?.copyWith(
-                                            fontWeight: FontWeight.w600),
-                                      ),
-                                      Text(
-                                        "0",
-                                        style: textTheme.labelMedium,
-                                      ),
-                                    ],
-                                  )
-                                ],
-                              ),
-                            ),
-                          ],
+                        UnclosedDealTab(
+                          stockCode: widget.stockCode,
                         ),
                         Column(
                           children: [

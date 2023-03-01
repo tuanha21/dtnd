@@ -63,6 +63,9 @@ class RequestDataModel {
   String? refId;
   String? orderType;
   String? pin;
+  String? orderNo;
+  dynamic nvol;
+  String? nprice;
 
   RequestDataModel({
     this.type,
@@ -87,6 +90,9 @@ class RequestDataModel {
     this.refId,
     this.orderType,
     this.pin,
+    this.orderNo,
+    this.nvol,
+    this.nprice,
   });
   RequestDataModel.stringType({
     this.cmd,
@@ -110,6 +116,9 @@ class RequestDataModel {
     this.refId,
     this.orderType,
     this.pin,
+    this.orderNo,
+    this.nvol,
+    this.nprice,
   }) : type = RequestType.string;
   RequestDataModel.cursorType({
     this.cmd,
@@ -133,6 +142,9 @@ class RequestDataModel {
     this.refId,
     this.orderType,
     this.pin,
+    this.orderNo,
+    this.nvol,
+    this.nprice,
   }) : type = RequestType.cursor;
 
   Map<String, dynamic> toJson() {
@@ -200,6 +212,15 @@ class RequestDataModel {
     }
     if (pin != null) {
       data['pin'] = pin;
+    }
+    if (orderNo != null) {
+      data['orderNo'] = orderNo;
+    }
+    if (nvol != null) {
+      data['nvol'] = nvol;
+    }
+    if (nprice != null) {
+      data['nprice'] = nprice;
     }
     return data;
   }
