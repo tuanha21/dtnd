@@ -69,9 +69,11 @@ class _StockDetailChartState extends State<StockDetailChart>
     return stockTradingHistory!.t!;
   }
 
-  num annotation = 1;
   num max = 2;
   num min = 0;
+
+  num maxX = 1;
+  num minX = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -90,9 +92,10 @@ class _StockDetailChartState extends State<StockDetailChart>
                   if (snapshot.hasData) {
                     var list = snapshot.data;
                     if (list == null || list.isEmpty) return const SizedBox();
-                    annotation = list.first;
-                    max = math.max<num>(list.reduce(math.max), annotation);
-                    min = math.min<num>(list.reduce(math.min), annotation);
+                    max = list.reduce(math.max);
+                    min = list.reduce(math.min);
+                    maxX = listTime.reduce(math.max);
+                    minX = listTime.reduce(math.min);
                     return Padding(
                       padding: const EdgeInsets.only(left: 0, right: 20),
                       child: charts.NumericComboChart(
@@ -114,7 +117,7 @@ class _StockDetailChartState extends State<StockDetailChart>
                                     "secondaryMeasureAxisId")),
                         defaultRenderer:
                             charts.LineRendererConfig(smoothLine: true),
-                        domainAxis: domainSpec(listTime),
+                        domainAxis: domainSpec(minX,maxX),
                         secondaryMeasureAxis: axisSpec(),
                       ),
                     );
@@ -151,9 +154,10 @@ class _StockDetailChartState extends State<StockDetailChart>
                                 .bodySmall
                                 ?.copyWith(
                                     fontWeight: FontWeight.w600,
-                                    color: timeSeries == TimeSeries.values[index]
-                                        ? AppColors.primary_01
-                                        : AppColors.text_black),
+                                    color:
+                                        timeSeries == TimeSeries.values[index]
+                                            ? AppColors.primary_01
+                                            : AppColors.text_black),
                           )),
                     ))),
           ),
@@ -161,24 +165,24 @@ class _StockDetailChartState extends State<StockDetailChart>
         const SizedBox(height: 16),
         StreamBuilder<List<num>>(
             stream: stockTrading.stream,
-          builder: (context, snapshot) {
-              if(snapshot.hasData) {
-                return BasicIndex(stockModel: widget.stockModel, history: stockTradingHistory!);
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                return BasicIndex(
+                    stockModel: widget.stockModel,
+                    history: stockTradingHistory!);
               }
               return const SizedBox();
-          }
-        ),
+            }),
       ],
     );
   }
 
-  charts.NumericAxisSpec domainSpec(List<num> list) {
+  charts.NumericAxisSpec domainSpec( num minX, num maxX) {
     var now = DateTime.now();
-    var min =
+    num min =
         DateTime(now.year, now.month, now.day, 9, 0).millisecondsSinceEpoch;
-    var max =
+    num max =
         DateTime(now.year, now.month, now.day, 14, 30).millisecondsSinceEpoch;
-
     return charts.NumericAxisSpec(
         tickFormatterSpec: charts.BasicNumericTickFormatterSpec((time) {
           if (timeSeries == TimeSeries.day) {
@@ -196,8 +200,8 @@ class _StockDetailChartState extends State<StockDetailChart>
           zeroBound: false,
         ),
         viewport: timeSeries == TimeSeries.day
-            ? charts.NumericExtents(min / 1000, max / 1000)
-            : null,
+            ? charts.NumericExtents(min / 1000,maxX)
+            : charts.NumericExtents(minX, maxX),
         renderSpec: const charts.GridlineRendererSpec(
             axisLineStyle: charts.LineStyleSpec(
               dashPattern: [4],
@@ -213,7 +217,7 @@ class _StockDetailChartState extends State<StockDetailChart>
       showAxisLine: true,
       tickProviderSpec: const charts.BasicNumericTickProviderSpec(
         zeroBound: false,
-       // desiredTickCount: 5,
+        // desiredTickCount: 5,
         dataIsInWholeNumbers: false,
       ),
       viewport: charts.NumericExtents(min, max),
