@@ -29,18 +29,18 @@ class MarketAnalysisTab extends StatefulWidget {
 class _MarketAnalysisTabState extends State<MarketAnalysisTab>
     with AutomaticKeepAliveClientMixin {
   final IDataCenterService dataCenterService = DataCenterService();
-  late Future<List<TopInfluenceModel>> topInfluenceList;
-  late Future<List<IndexBoard>> indexBoard;
-  late Future<LiquidityModel> liquidityModel;
-  late Future<IndContrib> topIndex;
+  // late Future<List<TopInfluenceModel>> topInfluenceList;
+  // late Future<List<IndexBoard>> indexBoard;
+  // late Future<LiquidityModel> liquidityModel;
+  // late Future<IndContrib> topIndex;
   late Future<IndContrib> piValue;
   late Future<IndContrib> fiValue;
 
   void initData() {
-    topInfluenceList = dataCenterService.getTopInfluence(indexSelect);
-    indexBoard = dataCenterService.getIndexBoard(indexSelect.exchangeName);
-    liquidityModel = dataCenterService.getLiquidity(indexSelect);
-    topIndex = dataCenterService.getIndContrib(indexSelect.market);
+    // topInfluenceList = dataCenterService.getTopInfluence(indexSelect);
+    // indexBoard = dataCenterService.getIndexBoard(indexSelect.exchangeName);
+    // liquidityModel = dataCenterService.getLiquidity(indexSelect);
+    // topIndex = dataCenterService.getIndContrib(indexSelect.market);
     piValue = dataCenterService.getPIvalue(indexSelect.market);
     fiValue = dataCenterService.getFIvalue(indexSelect.market);
   }
@@ -58,46 +58,46 @@ class _MarketAnalysisTabState extends State<MarketAnalysisTab>
     super.build(context);
     return ListView(
       children: [
-        const SizedBox(height: 32),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: GestureDetector(
-            onTap: () async {
-              var index = await showCupertinoModalPopup<Index>(
-                  context: context,
-                  builder: (context) {
-                    return BottomSheet(index: indexSelect);
-                  });
-              if (index != null) {
-                indexSelect = index;
-                setState(() {
-                  initData();
-                });
-              }
-            },
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Text(
-                  S.of(context).filter,
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodySmall
-                      ?.copyWith(color: AppColors.color_secondary),
-                ),
-                const SizedBox(width: 4),
-                SvgPicture.asset(AppImages.filter),
-              ],
-            ),
-          ),
-        ),
-        TopInfluenceChart(topInfluenceList: topInfluenceList),
-        LiquidityChart(liquidityModel: liquidityModel),
-        MoneyChart(indexBoard: indexBoard),
-        TopIndexWidgetChart(topIndex: topIndex),
+       // const SizedBox(height: 32),
+        // Padding(
+        //   padding: const EdgeInsets.symmetric(horizontal: 20),
+        //   child: GestureDetector(
+        //     onTap: () async {
+        //       var index = await showCupertinoModalPopup<Index>(
+        //           context: context,
+        //           builder: (context) {
+        //             return BottomSheet(index: indexSelect);
+        //           });
+        //       if (index != null) {
+        //         indexSelect = index;
+        //         setState(() {
+        //           initData();
+        //         });
+        //       }
+        //     },
+        //     child: Row(
+        //       mainAxisAlignment: MainAxisAlignment.end,
+        //       children: [
+        //         Text(
+        //           S.of(context).filter,
+        //           style: Theme.of(context)
+        //               .textTheme
+        //               .bodySmall
+        //               ?.copyWith(color: AppColors.color_secondary),
+        //         ),
+        //         const SizedBox(width: 4),
+        //         SvgPicture.asset(AppImages.filter),
+        //       ],
+        //     ),
+        //   ),
+        // ),
+        // TopInfluenceChart(topInfluenceList: topInfluenceList),
+        // LiquidityChart(liquidityModel: liquidityModel),
+        // MoneyChart(indexBoard: indexBoard),
+        //TopIndexWidgetChart(topIndex: topIndex),
         PiValueChart(pIValue: piValue),
         FiChartValue(fIValue: fiValue),
-        const SizedBox(height: 150)
+        const SizedBox(height: 100)
       ],
     );
   }

@@ -1,5 +1,6 @@
 import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/screen/market/market_controller.dart';
+import 'package:dtnd/ui/screen/market/widget/tabs/interested_tab.dart';
 import 'package:dtnd/ui/screen/market/widget/tabs/market_analysis_tab.dart';
 import 'package:dtnd/ui/screen/market/widget/tabs/market_industry_tab.dart';
 import 'package:dtnd/ui/screen/market/widget/tabs/market_overview_tab.dart';
@@ -29,7 +30,7 @@ class _MarketScreenState extends State<MarketScreen>
 
   @override
   void initState() {
-    _tabController = TabController(length: 3, vsync: this);
+    _tabController = TabController(length: 4, vsync: this);
     marketController.init();
     super.initState();
   }
@@ -84,7 +85,8 @@ class _MarketScreenState extends State<MarketScreen>
                   padding: EdgeInsets.zero,
                   tabs: <Widget>[
                     Text(S.of(context).overview),
-                    Text(S.of(context).analysis),
+                    Text(S.of(context).interested),
+                    const Text("Tổ chức"),
                     Text(S.of(context).industry),
                   ],
                 ),
@@ -95,6 +97,7 @@ class _MarketScreenState extends State<MarketScreen>
                 controller: _tabController,
                 children: const [
                   MarketOverviewTab(),
+                  InterestedTab(),
                   MarketAnalysisTab(),
                   MarketIndustryTab(),
                 ],

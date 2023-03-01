@@ -231,66 +231,67 @@ class _UserCatalogWidgetState extends State<UserCatalogWidget> {
           ),
         ),
         const SizedBox(height: 10),
-        FutureBuilder<List<StockModel>?>(
-            future: listStocks,
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                var list = snapshot.data;
-                return ListView.separated(
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemBuilder: (context, index) {
-                      var stock = dataCenterService.listStockReg.firstWhere(
-                          (element) =>
-                              element.stock.stockCode ==
-                              list![index].stock.stockCode);
-                      return Slidable(
-                          endActionPane: ActionPane(
-                            extentRatio: 0.25,
-                            motion: const ScrollMotion(),
-                            children: [
-                              SlidableAction(
-                                // An action can be bigger than the others.
-                                onPressed: (BuildContext context) {
-                                  setState(() {
-                                    currentCatalog.listStock
-                                        .remove(list![index].stock.stockCode);
-                                    savedCatalog.catalogs[currentCatalogIndex] =
-                                        currentCatalog;
-                                    localStorageService
-                                        .putSavedCatalog(savedCatalog);
-                                    if (currentCatalog.listStock.isNotEmpty) {
-                                      listStocks = dataCenterService
-                                          .getStockModelsFromStockCodes(
-                                              currentCatalog.listStock);
-                                    } else {
-                                      listStocks = Future.value([]);
-                                    }
-                                  });
-                                },
-                                backgroundColor: AppColors.semantic_03,
-                                foregroundColor: Colors.white,
-                                icon: Icons.delete_outline,
-                                spacing: 0,
-                              ),
-                            ],
-                          ),
-                          child: StockComponent(
-                            model: stock,
-                            isPercent: isPercent,
-                          ));
-                    },
-                    separatorBuilder: (context, index) {
-                      return const Divider(
-                        thickness: 2,
-                        height: 0,
-                        color: Color.fromRGBO(245, 248, 255, 1),
-                      );
-                    },
-                    itemCount: list!.length);
-              }
-              return const SizedBox();
-            })
+        Expanded(
+          child: FutureBuilder<List<StockModel>?>(
+              future: listStocks,
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  var list = snapshot.data;
+                  return ListView.separated(
+                      shrinkWrap: true,
+                      itemBuilder: (context, index) {
+                        var stock = dataCenterService.listStockReg.firstWhere(
+                            (element) =>
+                                element.stock.stockCode ==
+                                list![index].stock.stockCode);
+                        return Slidable(
+                            endActionPane: ActionPane(
+                              extentRatio: 0.25,
+                              motion: const ScrollMotion(),
+                              children: [
+                                SlidableAction(
+                                  // An action can be bigger than the others.
+                                  onPressed: (BuildContext context) {
+                                    setState(() {
+                                      currentCatalog.listStock
+                                          .remove(list![index].stock.stockCode);
+                                      savedCatalog.catalogs[currentCatalogIndex] =
+                                          currentCatalog;
+                                      localStorageService
+                                          .putSavedCatalog(savedCatalog);
+                                      if (currentCatalog.listStock.isNotEmpty) {
+                                        listStocks = dataCenterService
+                                            .getStockModelsFromStockCodes(
+                                                currentCatalog.listStock);
+                                      } else {
+                                        listStocks = Future.value([]);
+                                      }
+                                    });
+                                  },
+                                  backgroundColor: AppColors.semantic_03,
+                                  foregroundColor: Colors.white,
+                                  icon: Icons.delete_outline,
+                                  spacing: 0,
+                                ),
+                              ],
+                            ),
+                            child: StockComponent(
+                              model: stock,
+                              isPercent: isPercent,
+                            ));
+                      },
+                      separatorBuilder: (context, index) {
+                        return const Divider(
+                          thickness: 2,
+                          height: 0,
+                          color: Color.fromRGBO(245, 248, 255, 1),
+                        );
+                      },
+                      itemCount: list!.length);
+                }
+                return const SizedBox();
+              }),
+        )
       ],
     );
   }

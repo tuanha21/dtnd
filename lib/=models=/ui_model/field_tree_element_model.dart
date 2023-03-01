@@ -8,6 +8,8 @@ class FieldTreeModel {
   late final num tOTALKLGD;
   final List<FieldTreeElementModel> stocks = [];
 
+
+
   FieldTreeModel(
       {required this.iNDUSTRY,
       required this.tOTALKLGD,

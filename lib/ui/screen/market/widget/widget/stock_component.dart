@@ -60,7 +60,11 @@ class _StockComponentState extends State<StockComponent> {
                 alignment: Alignment.centerRight,
                 child: Obx(() {
                   return Text(
-                    widget.model.stockData.lastPrice.value?.toString() ?? "",
+                    (widget.model.stockData.lastPrice.value == 0
+                                ? widget.model.stockData.r.value
+                                : widget.model.stockData.lastPrice.value)
+                            ?.toString() ??
+                        "",
                     style: Theme.of(context).textTheme.bodySmall?.copyWith(
                         fontWeight: FontWeight.w600,
                         color: widget.model.stockData.color),

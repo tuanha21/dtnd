@@ -702,6 +702,7 @@ class NetworkService implements INetworkService {
     }
     response = decode(response.bodyBytes);
     response = response["data"];
+    logger.d(response);
     final List<FieldTreeModel> result = [];
     for (var element in response) {
       result.add(FieldTreeModel.fromJson(element));
