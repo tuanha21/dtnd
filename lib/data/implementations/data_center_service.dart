@@ -716,4 +716,9 @@ class DataCenterService
   Future<List<StockMatch>> getListStockMatch(String stockCode) {
     return networkService.getListStockMatch(stockCode);
   }
+
+  @override
+  Future<IndContrib> getIndFvalue(String marketCode) {
+    return networkService.getIndFvalue(marketCode);
+  }
 }

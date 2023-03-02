@@ -716,7 +716,6 @@ class NetworkService implements INetworkService {
     }
     response = decode(response.bodyBytes);
     response = response["data"];
-    logger.d(response);
     final List<FieldTreeModel> result = [];
     for (var element in response) {
       result.add(FieldTreeModel.fromJson(element));
@@ -1227,6 +1226,22 @@ class NetworkService implements INetworkService {
       print(mapData);
     } catch (e) {
       logger.e(e);
+      rethrow;
+    }
+  }
+
+  @override
+  Future<IndContrib> getIndFvalue(String marketCode) async {
+    try {
+      var response =
+          await client.get(url_algo_apec("IndFvalue", {"id": marketCode}));
+      if (response.statusCode != 200) {
+        throw response;
+      }
+      var res = decode(response.bodyBytes);
+      return IndContrib.fromJson(res);
+    } catch (e) {
+      logger.e(e.toString());
       rethrow;
     }
   }

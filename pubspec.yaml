@@ -91,6 +91,7 @@ dependencies:
   url_launcher: ^6.1.9
   dropdown_button2: ^1.9.3
   linked_scroll_controller: ^0.2.0
+  flutter_staggered_grid_view: ^0.6.2
 
 dev_dependencies:
   flutter_test:

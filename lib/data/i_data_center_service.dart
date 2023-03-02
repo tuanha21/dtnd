@@ -134,4 +134,7 @@ abstract class IDataCenterService {
   Future<CompanyIntroductionResponse> getCompanyIntroduction(String stockCode);
 
   Future<List<StockMatch>> getListStockMatch(String stockCode);
+
+  Future<IndContrib> getIndFvalue(String marketCode);
+
 }
