@@ -134,7 +134,9 @@ class ChangeStockOrderISheet extends IStockOrderSheet {
   @override
   Widget? nextWidget([UserCmd? cmd]) {
     if (cmd is OrderSuccessCmd) {
-      return const ChangeOrderSuccessSheet();
+      return const ChangeOrderSuccessSheet(
+        showButton: true,
+      );
     } else {
       return StockOrderFailSheet(rc: cmd!.data as int);
     }
@@ -172,7 +174,9 @@ class CancelStockOrderISheet extends IStockOrderSheet {
   @override
   Widget? nextWidget([UserCmd? cmd]) {
     if (cmd is OrderSuccessCmd) {
-      return const CancelOrderSuccessSheet();
+      return const CancelOrderSuccessSheet(
+        showButton: true,
+      );
     } else {
       return StockOrderFailSheet(rc: cmd!.data as int);
     }

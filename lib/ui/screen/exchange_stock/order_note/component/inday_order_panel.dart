@@ -2,6 +2,7 @@ import 'package:dtnd/=models=/response/order_model/base_order_model.dart';
 import 'package:dtnd/data/i_user_service.dart';
 import 'package:dtnd/data/implementations/user_service.dart';
 import 'package:dtnd/ui/screen/exchange_stock/stock_order/component/order_record_widget.dart';
+import 'package:dtnd/ui/screen/exchange_stock/stock_order/sheet/cancel_order_sheet.dart';
 import 'package:dtnd/ui/screen/exchange_stock/stock_order/sheet/change_stock_order_sheet.dart';
 import 'package:flutter/material.dart';
 
@@ -57,10 +58,20 @@ class _IndayOrderPanelState extends State<IndayOrderPanel> {
                     OrderRecordWidget(
                       data: listOrder!.elementAt(i),
                       onChange: () async {
-                        ChangeStockOrderISheet(listOrder!.elementAt(i)).show(
-                            context,
-                            ChangeStockOrderSheet(
-                                data: listOrder!.elementAt(i)));
+                        ChangeStockOrderISheet(listOrder!.elementAt(i))
+                            .show(
+                                context,
+                                ChangeStockOrderSheet(
+                                    data: listOrder!.elementAt(i)))
+                            .then((value) => getIndayOrder());
+                      },
+                      onCancel: () async {
+                        CancelStockOrderISheet(listOrder!.elementAt(i))
+                            .show(
+                                context,
+                                CancelStockOrderSheet(
+                                    data: listOrder!.elementAt(i)))
+                            .then((value) => getIndayOrder());
                       },
                     )
                   ],

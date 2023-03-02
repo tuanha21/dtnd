@@ -7,7 +7,9 @@ import 'package:flutter/material.dart';
 class ChangeOrderSuccessSheet extends StatelessWidget {
   const ChangeOrderSuccessSheet({
     super.key,
+    this.showButton = false,
   });
+  final bool showButton;
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
@@ -55,17 +57,19 @@ class ChangeOrderSuccessSheet extends StatelessWidget {
                 )
               ],
             ),
-            const SizedBox(height: 90),
-            Row(
-              children: [
-                Expanded(
-                    child: TextButton(
-                        onPressed: () {
-                          Navigator.of(context).pop(const NextCmd());
-                        },
-                        child: Text(S.of(context).create_new_order))),
-              ],
-            ),
+            SizedBox(height: showButton ? 90 : 0),
+            showButton
+                ? Row(
+                    children: [
+                      Expanded(
+                          child: TextButton(
+                              onPressed: () {
+                                Navigator.of(context).pop(const NextCmd());
+                              },
+                              child: Text(S.of(context).create_new_order))),
+                    ],
+                  )
+                : Container(),
             const SizedBox(height: 90),
           ],
         ),
