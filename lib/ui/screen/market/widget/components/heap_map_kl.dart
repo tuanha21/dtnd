@@ -39,7 +39,7 @@ class _HeapMapKLState extends State<HeapMapKL> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text("Top cổ phiếu giao dutch theo ngành"),
+              const Text("Top cổ phiếu giao dịch theo ngành"),
               GestureDetector(
                 onTap: () {
                   setState(() {
