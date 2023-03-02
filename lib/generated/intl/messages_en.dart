@@ -106,6 +106,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "buy_price": MessageLookupByLibrary.simpleMessage("Buy price"),
         "buy_short": MessageLookupByLibrary.simpleMessage("B"),
         "cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
+        "cancel_order_successfully":
+            MessageLookupByLibrary.simpleMessage("Cancel order successfully"),
         "capital_value": MessageLookupByLibrary.simpleMessage("Capital value"),
         "cash": MessageLookupByLibrary.simpleMessage("Cash"),
         "cash_dividends":
@@ -118,6 +120,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "ceil": MessageLookupByLibrary.simpleMessage("Ceil"),
         "changeAmount_translations":
             MessageLookupByLibrary.simpleMessage("Change"),
+        "change_order_successfully":
+            MessageLookupByLibrary.simpleMessage("Change order successfully"),
         "change_translations": MessageLookupByLibrary.simpleMessage("Change%"),
         "choose_stocks_you_interested": MessageLookupByLibrary.simpleMessage(
             "Select the stocks you are interested in. You can update later"),

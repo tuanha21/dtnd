@@ -69,7 +69,9 @@ class DataCenterService
   /// Data
   late IO.Socket socket;
 
-  bool socketConnecting = true;
+  bool socketConnecting = false;
+
+  AppLifecycleState appLifecycleState = AppLifecycleState.resumed;
 
   bool registering = false;
 
@@ -81,8 +83,6 @@ class DataCenterService
 
   late final List<Stock> listAllStock;
 
-  final List<StockModel> _listInterestedStocks = [];
-
   final Set<IndexModel> _listIndex = {};
 
   @override
@@ -91,25 +91,28 @@ class DataCenterService
   @override
   Future<void> init() async {
     await getListAllStock();
+    socket = networkService.socket;
     await startSocket();
     WidgetsBinding.instance.addObserver(this);
   }
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
+    print(state);
+    appLifecycleState = state;
     if (state == AppLifecycleState.resumed) {
-      if (socket.disconnected && !socketConnecting) {
+      print(socket.disconnected);
+      if (socket.disconnected) {
         for (StockModel element in listStockReg) {
           element.getStockData(this);
         }
-        startSocket();
+        socket.connect();
       }
     }
   }
 
   @override
   Future<void> startSocket() async {
-    socket = networkService.socket;
     socket.on("public", (data) {
       if (data['data']['id'] == 1101) {
         // print(data);
@@ -120,7 +123,6 @@ class DataCenterService
           data['data']['id'] == 3250) {
         return processStockData(data);
       }
-      // print(data);
     });
     socket.onPing((data) {
       const String pingMsg =
@@ -128,20 +130,29 @@ class DataCenterService
       socket.emit("regs", pingMsg);
     });
     socket.onDisconnect((data) {
-      logger.e("Socket disconnected!");
-      logger.e(data);
-      return startSocket();
+      print("Socket disconnected!");
+      if (appLifecycleState == AppLifecycleState.resumed) {
+        return socket.connect();
+      } else {
+        return null;
+      }
     });
     socket.onConnecting((data) {
-      logger.i("Try to connecting...");
+      print("Try to connecting...");
+      print(data.toString());
       socketConnecting = true;
-      return null;
+    });
+    socket.onConnectError((data) {
+      print("Socket connect error!");
+      socketConnecting = false;
+      return socket.connect();
     });
     socket.onConnect((data) {
+      print("Socket connected!");
+      regSocketStocks(listStockReg.map((e) => e.stock.stockCode).toList());
       socketConnecting = false;
     });
     socket.connect();
-    regStocks(_listInterestedStocks.map((e) => e.stock.stockCode).toList());
     return;
   }
 
@@ -180,7 +191,9 @@ class DataCenterService
           listStockStringReg.update(stock, (value) => ++value),
       onUnregisteredCode: (stock) => listStockStringReg[stock] = 1,
     );
-    regSocketStocks(joinList);
+    if (joinList.isNotEmpty) {
+      regSocketStocks(joinList);
+    }
   }
 
   Future<List<String>> leaveStocks(List<String> stocks) async {
@@ -206,6 +219,7 @@ class DataCenterService
     final String codes = stocks.join(",");
     String joinMsg = "{\"action\":\"join\",\"data\":\"$codes\"}";
     socket.emit("regs", joinMsg);
+    print(joinMsg);
     return;
   }
 
@@ -291,12 +305,14 @@ class DataCenterService
           final stockData = await getStockData(stockCode);
           final stockModel = StockModel(stock: stock, stockData: stockData);
           listStockReg.add(stockModel);
+          print("added stock");
           listReturn.add(stockModel);
         } catch (e) {
           continue;
         }
       }
     }
+    print(listStockReg.length);
 
     regStocks(stockCodes);
     registering = false;

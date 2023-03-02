@@ -217,6 +217,8 @@
     "create_new_order": "Đặt lệnh mới",
     "stock_order": "Đặt lệnh",
     "create_order_successfully": "Đặt lệnh thành công",
+    "change_order_successfully": "Sửa lệnh thành công",
+    "cancel_order_successfully": "Huỷ lệnh thành công",
     "create_order_failed": "Đặt lệnh không thành công",
     "order_will_appear_in_ur_order_note": "Lệnh đặt sẽ xuất hiện trong sổ lệnh của bạn",
     "volatility_warning": "Cảnh báo biến động",

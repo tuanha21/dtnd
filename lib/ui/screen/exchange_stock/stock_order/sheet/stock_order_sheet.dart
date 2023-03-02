@@ -26,6 +26,7 @@ import 'package:dtnd/ui/theme/app_textstyle.dart';
 import 'package:dtnd/ui/widget/button/single_color_text_button.dart';
 import 'package:dtnd/ui/widget/icon/sheet_header.dart';
 import 'package:dtnd/ui/widget/input/interval_input.dart';
+import 'package:dtnd/utilities/logger.dart';
 import 'package:dtnd/utilities/num_utils.dart';
 import 'package:dtnd/utilities/time_utils.dart';
 import 'package:flutter/material.dart';
@@ -101,6 +102,7 @@ class _StockOrderSheetState extends State<StockOrderSheet>
     stockModel.stockDataCore =
         await stockModel.getStockInfoCore(networkService, userService);
     select(selectedOrderType);
+    logger.v(stockModel.stockDataCore?.toJson());
     setState(() {});
   }
 
@@ -361,7 +363,8 @@ class _StockOrderSheetState extends State<StockOrderSheet>
                   child: IntervalInput(
                     controller: priceController,
                     labelText: S.of(context).price,
-                    interval: stockModel.stock.postTo?.getPriceInterval,
+                    interval: stockModel.stock.postTo?.getPriceInterval ??
+                        (value) => 0.1,
                     defaultValue: stockModel.stockData.lastPrice.value ??
                         stockModel.stockData.r.value ??
                         0,

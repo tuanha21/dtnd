@@ -1,6 +1,7 @@
 import 'package:dtnd/=models=/response/order_model/base_order_model.dart';
 import 'package:dtnd/data/i_user_service.dart';
 import 'package:dtnd/data/implementations/user_service.dart';
+import 'package:dtnd/ui/screen/exchange_stock/stock_order/business/stock_order_flow.dart';
 import 'package:flutter/material.dart';
 
 import 'order_record_widget.dart';
@@ -36,6 +37,8 @@ class _OrderOrderNotePanelState extends State<OrderOrderNotePanel> {
       for (BaseOrderModel record in listOrder!) {
         records.add(OrderRecordWidget(
           data: record,
+          onChange: () => Navigator.of(context).pop(ToChangeOrderCmd(record)),
+          onCancel: () => Navigator.of(context).pop(ToCancelOrderCmd(record)),
         ));
       }
     }

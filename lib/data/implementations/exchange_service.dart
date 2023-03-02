@@ -3,6 +3,7 @@ import 'package:dtnd/=models=/response/account/unexecuted_right_model.dart';
 import 'package:dtnd/=models=/response/account/i_account.dart';
 import 'package:dtnd/=models=/response/order_history_model.dart';
 import 'package:dtnd/=models=/response/order_model/base_order_model.dart';
+import 'package:dtnd/=models=/response/order_model/change_order_model.dart';
 import 'package:dtnd/=models=/response/stock_cash_balance_model.dart';
 import 'package:dtnd/=models=/side.dart';
 import 'package:dtnd/data/i_exchange_service.dart';
@@ -74,15 +75,15 @@ class ExchangeService implements IExchangeService {
   }
 
   @override
-  Future<BaseOrderModel?> changeOrder(
-      IUserService userService, BaseOrderModel model, OrderData data) async {
+  Future<ChangeOrderModel?> changeOrder(IUserService userService,
+      BaseOrderModel baseOrderModel, num vol, String price, String pin) async {
     final RequestDataModel requestDataModel = RequestDataModel.stringType(
       cmd: "Web.changeOrder",
-      orderNo: "${model.orderNo}",
-      nvol: data.volumn.toInt(),
-      nprice: data.price,
+      orderNo: "${baseOrderModel.orderNo}",
+      nvol: vol.toInt(),
+      nprice: price,
       orderType: "1",
-      pin: "",
+      pin: pin,
     );
 
     final RequestModel requestModel = RequestModel(
@@ -104,7 +105,45 @@ class ExchangeService implements IExchangeService {
     }
 
     final response = await networkService
-        .requestTraditionalApiResList<BaseOrderModel>(requestModel,
+        .requestTraditionalApiResList<ChangeOrderModel>(requestModel,
+            hasError: hasError, onError: onError);
+    logger.v(response);
+    if (response?.isNotEmpty ?? false) {
+      return response!.first;
+    }
+    return null;
+  }
+
+  @override
+  Future<ChangeOrderModel?> cancelOrder(IUserService userService,
+      BaseOrderModel baseOrderModel, String pin) async {
+    final RequestDataModel requestDataModel = RequestDataModel.stringType(
+      cmd: "Web.cancelOrder",
+      orderNo: "${baseOrderModel.orderNo}",
+      orderType: "1",
+      pin: pin,
+    );
+
+    final RequestModel requestModel = RequestModel(
+      userService,
+      group: "O",
+      data: requestDataModel,
+      checksum: "",
+    );
+    logger.v(requestModel.toJson());
+    hasError(Map<String, dynamic> json) {
+      logger.v(json);
+      final int rc = json['rc'];
+      return rc <= 0;
+    }
+
+    onError(Map<String, dynamic> json) {
+      final String rc = json['rs'];
+      throw rc;
+    }
+
+    final response = await networkService
+        .requestTraditionalApiResList<ChangeOrderModel>(requestModel,
             hasError: hasError, onError: onError);
     logger.v(response);
     if (response?.isNotEmpty ?? false) {

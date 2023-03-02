@@ -175,10 +175,10 @@ class HomeController {
     _initProcess.sink.add(4 / _initStep);
     suggestInitialized.value = true;
     getWorldIndex();
-    getPriceIncrease();
-    getPriceDecrease();
-    // getTopForeign();
-    getTopVolumn();
+    // getPriceIncrease();
+    // getPriceDecrease();
+    // // getTopForeign();
+    // getTopVolumn();
   }
 
   void changeIndex(Index index) {

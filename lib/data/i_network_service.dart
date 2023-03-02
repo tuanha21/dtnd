@@ -45,7 +45,7 @@ import '../=models=/response/stock_industry.dart';
 import '../=models=/response/stock_vol.dart';
 
 abstract class INetworkService {
-  late IO.Socket socket;
+  late final IO.Socket socket;
 
   //init service
   Future<void> init(Environment environment);

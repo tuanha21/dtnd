@@ -218,6 +218,8 @@
     "create_new_order": "Create new order",
     "stock_order": "Create order",
     "create_order_successfully": "Create order successfully",
+    "change_order_successfully": "Change order successfully",
+    "cancel_order_successfully": "Cancel order successfully",
     "create_order_failed": "Create order failed",
     "order_will_appear_in_ur_order_note": "Order will appear in your order note",
     "volatility_warning": "Volatility warning",

@@ -2122,6 +2122,26 @@ class S {
     );
   }
 
+  /// `Change order successfully`
+  String get change_order_successfully {
+    return Intl.message(
+      'Change order successfully',
+      name: 'change_order_successfully',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Cancel order successfully`
+  String get cancel_order_successfully {
+    return Intl.message(
+      'Cancel order successfully',
+      name: 'cancel_order_successfully',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Create order failed`
   String get create_order_failed {
     return Intl.message(

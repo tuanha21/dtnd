@@ -7,6 +7,7 @@ import 'response/account/unexecuted_right_model.dart';
 import 'response/account_info_model.dart';
 import 'response/order_history_model.dart';
 import 'response/order_model/base_order_model.dart';
+import 'response/order_model/change_order_model.dart';
 import 'response/share_earned_model.dart';
 import 'response/stock_cash_balance_model.dart';
 import 'response/stock_info_core.dart';
@@ -41,6 +42,8 @@ abstract class CoreResponseModel {
         return StockCashBalanceModel.fromJson(json) as T;
       case OrderHistoryModel:
         return OrderHistoryModel.fromJson(json) as T;
+      case ChangeOrderModel:
+        return ChangeOrderModel.fromJson(json) as T;
       default:
         return null;
     }

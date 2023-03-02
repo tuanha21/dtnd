@@ -64,7 +64,7 @@ class _KChartState extends State<KChart> {
               .toDouble()));
     }
     if (widget.showMA) {
-      DataUtil.calculate(datas);
+      DataUtil.calculate(datas, const [5, 20]);
     }
     setState(() {
       initializing = false;
@@ -84,7 +84,7 @@ class _KChartState extends State<KChart> {
           widget.indexModel.stockDayTradingHistory.value!.c!.last.toDouble();
       // DataUtil.calculate(datas);
       if (widget.showMA) {
-        DataUtil.calculate(datas);
+        DataUtil.calculate(datas, const [5, 20]);
       }
     }
   }
@@ -133,6 +133,7 @@ class _KChartState extends State<KChart> {
       secondaryState: widget.secondaryState ?? SecondaryState.NONE,
       hideGrid: true,
       translations: widget.translations ?? kChartTranslations,
+      maDayList: const [5, 20],
     );
   }
 }

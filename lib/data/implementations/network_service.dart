@@ -190,6 +190,9 @@ class NetworkService implements INetworkService {
         OptionBuilder()
             .setTransports(['websocket']) // for Flutter or Dart VM
             .disableAutoConnect() // disable auto-connection
+            .disableReconnection()
+            .disableForceNewConnection()
+            .setTimeout(8000)
             .build());
     return;
   }
@@ -1126,8 +1129,8 @@ class NetworkService implements INetworkService {
   @override
   Future<List<Filter>> getFilterAccount() async {
     IUserService userService = UserService();
-    var response = await client
-        .get(url_algo_apec('getFilters'), headers: {"X-USERNAME": userService.token.value?.user ?? ""});
+    var response = await client.get(url_algo_apec('getFilters'),
+        headers: {"X-USERNAME": userService.token.value?.user ?? ""});
     var mapData = json.decode(response.body);
     logger.d(mapData);
     List data = mapData['data'];

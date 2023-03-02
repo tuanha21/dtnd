@@ -21,37 +21,40 @@ class SheetHeader extends StatelessWidget {
     final textTheme = Theme.of(context).textTheme;
     final titleTextStyle =
         textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.w700);
-    return Column(
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            implementBackButton
-                ? Row(
-                    children: [
-                      SheetBackButton(
-                        onTap: backData,
-                      ),
-                      const SizedBox(width: 10),
-                      Text(
-                        title ?? "",
-                        style: titleTextStyle,
-                      ),
-                    ],
-                  )
-                : Text(
-                    title ?? "",
-                    style: titleTextStyle,
-                  ),
-            const SheetCloseButton(),
-          ],
-        ),
-        implementDivider
-            ? const Divider(
-                thickness: 1,
-              )
-            : Container(),
-      ],
+    return SizedBox(
+      height: 52,
+      child: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              implementBackButton
+                  ? Row(
+                      children: [
+                        SheetBackButton(
+                          onTap: backData,
+                        ),
+                        const SizedBox(width: 10),
+                        Text(
+                          title ?? "",
+                          style: titleTextStyle,
+                        ),
+                      ],
+                    )
+                  : Text(
+                      title ?? "",
+                      style: titleTextStyle,
+                    ),
+              const SheetCloseButton(),
+            ],
+          ),
+          implementDivider
+              ? const Divider(
+                  thickness: 1,
+                )
+              : Container(),
+        ],
+      ),
     );
   }
 }

@@ -7,8 +7,6 @@ import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/screen/home/widget/home_news.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/widget/icon/sheet_header.dart';
-import 'package:dtnd/ui/widget/news_card.dart';
-import 'package:dtnd/utilities/time_utils.dart';
 import 'package:flutter/material.dart';
 
 import 'new_detail_screen.dart';
@@ -117,19 +115,21 @@ class _ListNewsSheetState extends State<ListNewsSheet> {
           itemCount: listNews!.length);
     }
     return SafeArea(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SheetHeader(
-              implementBackButton: false,
-              title: S.of(context).news,
-            ),
-            const SizedBox(height: 20),
-            SizedBox(
-                height: MediaQuery.of(context).size.height - 200, child: list),
-          ],
+      child: SizedBox(
+        height: MediaQuery.of(context).size.height,
+        child: Padding(
+          padding: const EdgeInsets.only(left: 8, right: 8, top: 20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SheetHeader(
+                implementBackButton: false,
+                title: S.of(context).news,
+              ),
+              const SizedBox(height: 20),
+              Expanded(child: list),
+            ],
+          ),
         ),
       ),
     );

@@ -5,26 +5,34 @@ import 'package:flutter/material.dart';
 abstract class ISheet implements IOverlay {
   const ISheet();
   @override
-  Future<UserCmd?> show(BuildContext context, Widget? child) {
+  Future<UserCmd?> show(BuildContext context, Widget? child,
+      {bool wrap = true}) {
     if (child == null) {
       return Future(
         () => null,
       );
     }
+    Widget content = wrap
+        ? Wrap(
+            children: [child],
+          )
+        : SizedBox(
+            height: MediaQuery.of(context).size.height -
+                MediaQuery.of(context).padding.top,
+            child: child);
     return showModalBottomSheet<UserCmd>(
       context: context,
       isScrollControlled: true,
+      // useSafeArea: true,
       // enableDrag: false,
       shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.vertical(top: Radius.circular(20))),
       builder: (BuildContext context) {
         return Padding(
           padding: EdgeInsets.only(
-              bottom: MediaQuery.of(context).viewInsets.bottom,
-              top: MediaQuery.of(context).viewInsets.top),
-          child: Wrap(
-            children: [child],
+            bottom: MediaQuery.of(context).viewInsets.bottom,
           ),
+          child: content,
         );
       },
     ).then((result) => cmd(context, result));

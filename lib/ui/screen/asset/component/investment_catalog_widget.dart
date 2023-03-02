@@ -278,7 +278,7 @@ class _InvestmentCatalogWidgetState extends State<InvestmentCatalogWidget> {
                                       Row(
                                         children: [
                                           Text(
-                                            S.of(context).mk_value,
+                                            S.of(context).profit_and_loss,
                                             style: AppTextStyle.labelSmall_10,
                                           ),
                                           Text(

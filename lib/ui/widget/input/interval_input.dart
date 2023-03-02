@@ -20,7 +20,7 @@ class IntervalInput extends StatelessWidget {
   final String? Function(String?)? validator;
   final TextEditingController controller;
   final String? labelText;
-  final GetInterval? interval;
+  final GetInterval interval;
   final num defaultValue;
   final ValueChanged<num>? onChanged;
   final ValueChanged<String>? onTextChanged;
@@ -30,9 +30,9 @@ class IntervalInput extends StatelessWidget {
     String newString;
     if (oldValue.isNum) {
       num newValue = num.parse(oldValue);
-      newValue -= (interval?.call(newValue) ?? 0);
+      newValue -= (interval.call(newValue));
       if (newValue < 0) {
-        newValue += interval?.call(newValue) ?? 0;
+        newValue += interval.call(newValue);
       }
       String newString = newValue.toStringAsFixed(2);
       newString = newString.replaceAll(".00", "");
@@ -63,7 +63,7 @@ class IntervalInput extends StatelessWidget {
 
     if (oldValue.isNum) {
       num newValue = num.parse(oldValue);
-      newValue += (interval?.call(newValue) ?? 0);
+      newValue += (interval.call(newValue));
       String newString = newValue.toStringAsFixed(2);
       newString = newString.replaceAll(".00", "");
       controller.value = TextEditingValue(

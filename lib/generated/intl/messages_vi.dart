@@ -104,6 +104,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "buy_price": MessageLookupByLibrary.simpleMessage("Giá mua vào"),
         "buy_short": MessageLookupByLibrary.simpleMessage("M"),
         "cancel": MessageLookupByLibrary.simpleMessage("Huỷ"),
+        "cancel_order_successfully":
+            MessageLookupByLibrary.simpleMessage("Huỷ lệnh thành công"),
         "capital_value": MessageLookupByLibrary.simpleMessage("Giá trị vốn"),
         "cash": MessageLookupByLibrary.simpleMessage("Tiền mặt"),
         "cash_dividends":
@@ -116,6 +118,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "ceil": MessageLookupByLibrary.simpleMessage("Trần"),
         "changeAmount_translations":
             MessageLookupByLibrary.simpleMessage("Thay đổi"),
+        "change_order_successfully":
+            MessageLookupByLibrary.simpleMessage("Sửa lệnh thành công"),
         "change_translations":
             MessageLookupByLibrary.simpleMessage("% Thay đổi"),
         "choose_stocks_you_interested": MessageLookupByLibrary.simpleMessage(
