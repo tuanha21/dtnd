@@ -161,6 +161,8 @@ abstract class INetworkService {
 
   Future<IndContrib> getFIvalue(String marketCode);
 
+  Future<IndContrib> getIndFvalue(String marketCode);
+
   Future<CompanyIntroductionResponse> getCompanyIntroduction(String stockCode);
 
   Future<BasicCompany> getBasicProfile(String stockCode);

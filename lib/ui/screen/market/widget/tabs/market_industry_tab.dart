@@ -69,10 +69,11 @@ class _MarketIndustryTabState extends State<MarketIndustryTab> {
     return SingleChildScrollView(
       child: Column(
         children: [
-          TopInfluenceChart(topInfluenceList: topInfluenceList),
+          //TopInfluenceChart(topInfluenceList: topInfluenceList),
           LiquidityChart(liquidityModel: liquidityModel),
           MoneyChart(indexBoard: indexBoard),
           TopIndexWidgetChart(topIndex: topIndex),
+          const SizedBox(height: 100)
         ],
       ),
     );
