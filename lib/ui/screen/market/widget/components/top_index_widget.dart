@@ -22,7 +22,7 @@ class _TopIndexWidgetChartState extends State<TopIndexWidgetChart> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const SizedBox(height: 24),
+        const SizedBox(height: 32),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: Text('Top ngành ảnh hưởng đến INDEX',
