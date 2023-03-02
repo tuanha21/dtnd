@@ -47,6 +47,7 @@ class AppImages {
   static const String image = "assets/svg/Image_icon.svg";
   static const String card = "assets/svg/card.svg";
   static const String edit2 = "assets/svg/edit-2.svg";
+  static const String edit1 = "assets/svg/edit1.svg";
   static const String filter = "assets/svg/filter.svg";
   static const String filter_icon = "assets/images/filter.png";
 

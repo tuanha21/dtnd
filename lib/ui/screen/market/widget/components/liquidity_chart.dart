@@ -90,12 +90,6 @@ class _LiquidityChartState extends State<LiquidityChart> {
                   ),
                   customSeriesRenderers: [
                     charts.LineRendererConfig(customRendererId: 'customLine'),
-                    // charts.LineRendererConfig(
-                    //     customRendererId: 'week1Val'),
-                    // charts.LineRendererConfig(
-                    //     customRendererId: 'week2Val'),
-                    // charts.LineRendererConfig(
-                    //     customRendererId: 'monthVal'),
                   ],
                   behaviors: [
                     charts.SeriesLegend(
@@ -115,10 +109,10 @@ class _LiquidityChartState extends State<LiquidityChart> {
                       horizontalFirst: false,
                       // By setting this value to 2, the legend entries will grow up to two
                       // rows before adding a new column.
-                      desiredMaxRows: 2,
+                      desiredMaxRows: 1,
                       // This defines the padding around each legend entry.
                       cellPadding:
-                      const EdgeInsets.symmetric(horizontal: 4, vertical: 4.0),
+                      const EdgeInsets.symmetric(horizontal: 4, vertical: 10),
                       // Render the legend entry text with custom styles.
                       // entryTextStyle: const charts.TextStyleSpec(
                       //     color: charts.Color(r: 127, g: 63, b: 191),

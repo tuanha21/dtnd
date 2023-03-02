@@ -87,7 +87,7 @@ class _MarketScreenState extends State<MarketScreen>
                     Text(S.of(context).overview),
                     Text(S.of(context).interested),
                     const Text("Tổ chức"),
-                    Text(S.of(context).industry),
+                    Text(S.of(context).cash_flow),
                   ],
                 ),
               ),

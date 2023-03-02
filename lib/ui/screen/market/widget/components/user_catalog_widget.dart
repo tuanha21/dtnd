@@ -102,6 +102,32 @@ class _UserCatalogWidgetState extends State<UserCatalogWidget> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
+
+                GestureDetector(
+                  onTap: () async {
+                    await updateCatalog(currentCatalog);
+                  },
+                  child: Row(
+                    children: [
+                      SvgPicture.asset(
+                        AppImages.edit1,
+                        color: AppColors.primary_01,
+                        height: 20,
+                        width: 20,
+                      ),
+                      const SizedBox(width: 8),
+                      Text(
+                        'Chỉnh sửa',
+                        style: Theme.of(context)
+                            .textTheme
+                            .labelMedium
+                            ?.copyWith(
+                                color: AppColors.primary_01,
+                                fontWeight: FontWeight.w700),
+                      )
+                    ],
+                  ),
+                ),
                 GestureDetector(
                   onTap: () async {
                     await showCupertinoModalBottomSheet(
@@ -121,50 +147,11 @@ class _UserCatalogWidgetState extends State<UserCatalogWidget> {
                       }
                     });
                   },
-                  child: Row(
-                    children: [
-                      SvgPicture.asset(
-                        AppImages.add_square,
-                        color: AppColors.primary_01,
-                        height: 20,
-                        width: 20,
-                      ),
-                      const SizedBox(width: 8),
-                      Text(
-                        'Thêm mã',
-                        style: Theme.of(context)
-                            .textTheme
-                            .labelMedium
-                            ?.copyWith(
-                                color: AppColors.primary_01,
-                                fontWeight: FontWeight.w700),
-                      )
-                    ],
-                  ),
-                ),
-                GestureDetector(
-                  onTap: () async {
-                    await updateCatalog(currentCatalog);
-                  },
-                  child: Row(
-                    children: [
-                      SvgPicture.asset(
-                        AppImages.edit2,
-                        color: AppColors.primary_01,
-                        height: 20,
-                        width: 20,
-                      ),
-                      const SizedBox(width: 8),
-                      Text(
-                        'Chỉnh sửa',
-                        style: Theme.of(context)
-                            .textTheme
-                            .labelMedium
-                            ?.copyWith(
-                                color: AppColors.primary_01,
-                                fontWeight: FontWeight.w700),
-                      )
-                    ],
+                  child: SvgPicture.asset(
+                    AppImages.add_square,
+                    color: AppColors.primary_01,
+                    height: 20,
+                    width: 20,
                   ),
                 ),
               ],
