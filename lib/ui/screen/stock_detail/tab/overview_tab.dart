@@ -152,14 +152,14 @@ class BasicIndex extends StatefulWidget {
   final StockModel stockModel;
   final StockTradingHistory history;
 
-  const BasicIndex({Key? key, required this.stockModel, required this.history}) : super(key: key);
+  const BasicIndex({Key? key, required this.stockModel, required this.history})
+      : super(key: key);
 
   @override
   State<BasicIndex> createState() => _BasicIndexState();
 }
 
 class _BasicIndexState extends State<BasicIndex> {
-
   Widget indexPrice() {
     var data = widget.history;
     var max = data.c?.reduce(math.max);
@@ -178,68 +178,81 @@ class _BasicIndexState extends State<BasicIndex> {
         ),
         const SizedBox(height: 16),
         Row(
-          children: [
-            Expanded(
-                child: Column(
-                  children: [
-                    Container(
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                          color: AppColors.neutral_06,
-                          borderRadius: BorderRadius.circular(8)),
-                      padding: const EdgeInsets.symmetric(vertical: 10),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Image.asset(AppImages.prefix_down_icon,
-                              height: 20, width: 20),
-                          const SizedBox(width: 4),
-                          Text(
-                            'Giá thấp nhất',
-                            style: Theme.of(context).textTheme.bodySmall,
-                          )
-                        ],
-                      ),
-                    ),
-                    const SizedBox(height: 4),
-                    Text(
-                      min?.toString() ?? "-",
-                      style: Theme.of(context).textTheme.titleMedium,
-                    )
-                  ],
-                )),
-            const SizedBox(width: 12),
-            Expanded(
-                child: Column(
-                  children: [
-                    Container(
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                          color: AppColors.neutral_06,
-                          borderRadius: BorderRadius.circular(8)),
-                      padding: const EdgeInsets.symmetric(vertical: 10),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Image.asset(AppImages.prefix_up_icon,
-                              height: 20, width: 20),
-                          const SizedBox(width: 4),
-                          Text(
-                            'Giá cao nhất',
-                            style: Theme.of(context).textTheme.bodySmall,
-                          )
-                        ],
-                      ),
-                    ),
-                    const SizedBox(height: 4),
-                    Text(
-                      max?.toString() ?? "-",
-                      style: Theme.of(context).textTheme.titleMedium,
-                    )
-                  ],
-                )),
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: const [
+            Text("Giá thấp nhất"),
+            Text("Giá cao nhất"),
           ],
+        ),
+        const SizedBox(height: 5),
+        PercentPrice(
+          min: min!,
+          max: max!,
+          lastPrice: widget.stockModel.stockData.lastPrice.value!,
         )
+        // Row(
+        //   children: [
+        //     Expanded(
+        //         child: Column(
+        //       children: [
+        //         Container(
+        //           alignment: Alignment.center,
+        //           decoration: BoxDecoration(
+        //               color: AppColors.neutral_06,
+        //               borderRadius: BorderRadius.circular(8)),
+        //           padding: const EdgeInsets.symmetric(vertical: 10),
+        //           child: Row(
+        //             mainAxisAlignment: MainAxisAlignment.center,
+        //             children: [
+        //               Image.asset(AppImages.prefix_down_icon,
+        //                   height: 20, width: 20),
+        //               const SizedBox(width: 4),
+        //               Text(
+        //                 'Giá thấp nhất',
+        //                 style: Theme.of(context).textTheme.bodySmall,
+        //               )
+        //             ],
+        //           ),
+        //         ),
+        //         const SizedBox(height: 4),
+        //         Text(
+        //           min?.toString() ?? "-",
+        //           style: Theme.of(context).textTheme.titleMedium,
+        //         )
+        //       ],
+        //     )),
+        //     const SizedBox(width: 12),
+        //     Expanded(
+        //         child: Column(
+        //       children: [
+        //         Container(
+        //           alignment: Alignment.center,
+        //           decoration: BoxDecoration(
+        //               color: AppColors.neutral_06,
+        //               borderRadius: BorderRadius.circular(8)),
+        //           padding: const EdgeInsets.symmetric(vertical: 10),
+        //           child: Row(
+        //             mainAxisAlignment: MainAxisAlignment.center,
+        //             children: [
+        //               Image.asset(AppImages.prefix_up_icon,
+        //                   height: 20, width: 20),
+        //               const SizedBox(width: 4),
+        //               Text(
+        //                 'Giá cao nhất',
+        //                 style: Theme.of(context).textTheme.bodySmall,
+        //               )
+        //             ],
+        //           ),
+        //         ),
+        //         const SizedBox(height: 4),
+        //         Text(
+        //           max?.toString() ?? "-",
+        //           style: Theme.of(context).textTheme.titleMedium,
+        //         )
+        //       ],
+        //     )),
+        //   ],
+        // )
       ],
     );
   }
@@ -281,6 +294,103 @@ class _BasicIndexState extends State<BasicIndex> {
         ],
       ),
     );
+  }
+}
+
+class PercentPrice extends StatelessWidget {
+  final num min;
+  final num max;
+  final num lastPrice;
+
+  const PercentPrice(
+      {Key? key, required this.min, required this.max, required this.lastPrice})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          min.toString(),
+          style:
+              Theme.of(context).textTheme.titleMedium?.copyWith(fontSize: 14),
+        ),
+        const SizedBox(width: 10),
+        Expanded(
+          child: LayoutBuilder(builder: (context, ctx) {
+            var length = max - min;
+            var percent = (lastPrice - min) / length * 100;
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(height: 3),
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(20),
+                  child: SizedBox(
+                    height: 10,
+                    child: Row(
+                      children: [
+                        Container(
+                          width: ctx.maxWidth * percent / 100,
+                          decoration:
+                              const BoxDecoration(color: AppColors.neutral_03),
+                        ),
+                        Container(
+                          width: ctx.maxWidth * (100 - percent) / 100,
+                          decoration:
+                              const BoxDecoration(color: AppColors.neutral_02),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 3),
+                Padding(
+                  padding:
+                      EdgeInsets.only(left: ctx.maxWidth * percent / 100 - 7.5),
+                  child: CustomPaint(
+                      size: const Size(15, 15), painter: DrawTriangleShape()),
+                )
+              ],
+            );
+          }),
+        ),
+        const SizedBox(width: 10),
+        Text(
+          max.toString(),
+          style:
+              Theme.of(context).textTheme.titleMedium?.copyWith(fontSize: 14),
+        ),
+      ],
+    );
+  }
+}
+
+class DrawTriangleShape extends CustomPainter {
+  late Paint painter;
+
+  DrawTriangleShape() {
+    painter = Paint()
+      ..color = AppColors.neutral_03
+      ..style = PaintingStyle.fill;
+  }
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    var path = Path();
+
+    path.moveTo(size.width / 2, 0);
+    path.lineTo(0, size.height);
+    path.lineTo(size.height, size.width);
+    path.close();
+
+    canvas.drawPath(path, painter);
+  }
+
+  @override
+  bool shouldRepaint(CustomPainter oldDelegate) {
+    return false;
   }
 }
 

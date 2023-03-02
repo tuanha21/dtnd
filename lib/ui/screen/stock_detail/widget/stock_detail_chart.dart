@@ -5,7 +5,6 @@ import 'package:dtnd/=models=/response/stock_model.dart';
 import 'package:dtnd/data/i_network_service.dart';
 import 'package:dtnd/data/implementations/network_service.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
-import 'package:dtnd/utilities/logger.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -96,30 +95,33 @@ class _StockDetailChartState extends State<StockDetailChart>
                     min = list.reduce(math.min);
                     maxX = listTime.reduce(math.max);
                     minX = listTime.reduce(math.min);
-                    return Padding(
-                      padding: const EdgeInsets.only(left: 0, right: 20),
-                      child: charts.NumericComboChart(
-                        List<charts.Series<num, num>>.generate(
-                            list.length,
-                            (index) => charts.Series<num, num>(
-                                  id: 'chart1',
-                                  colorFn: (_, __) =>
-                                      charts.ColorUtil.fromDartColor(
-                                          widget.stockModel.stockData.color),
-                                  domainFn: (num indexBoard, int? index) {
-                                    return listTime[index!].toInt();
-                                  },
-                                  measureFn: (num sales, _) {
-                                    return sales;
-                                  },
-                                  data: list,
-                                )..setAttribute(charts.measureAxisIdKey,
-                                    "secondaryMeasureAxisId")),
-                        defaultRenderer:
-                            charts.LineRendererConfig(smoothLine: true),
-                        domainAxis: domainSpec(minX,maxX),
-                        secondaryMeasureAxis: axisSpec(),
+                    return charts.NumericComboChart(
+                      List<charts.Series<num, num>>.generate(
+                          list.length,
+                          (index) => charts.Series<num, num>(
+                                id: 'chart1',
+                                colorFn: (_, __) =>
+                                    charts.ColorUtil.fromDartColor(
+                                        widget.stockModel.stockData.color),
+                                domainFn: (num indexBoard, int? index) {
+                                  return listTime[index!].toInt();
+                                },
+                                measureFn: (num sales, _) {
+                                  return sales;
+                                },
+                                data: list,
+                              )..setAttribute(charts.measureAxisIdKey,
+                                  "secondaryMeasureAxisId")),
+                      layoutConfig: charts.LayoutConfig(
+                        bottomMarginSpec: charts.MarginSpec.defaultSpec,
+                        leftMarginSpec: charts.MarginSpec.defaultSpec,
+                        rightMarginSpec: charts.MarginSpec.defaultSpec,
+                        topMarginSpec: charts.MarginSpec.defaultSpec
                       ),
+                      defaultRenderer:
+                          charts.LineRendererConfig(smoothLine: true),
+                      domainAxis: domainSpec(minX,maxX),
+                      secondaryMeasureAxis: axisSpec(),
                     );
                   }
                   return const SizedBox();

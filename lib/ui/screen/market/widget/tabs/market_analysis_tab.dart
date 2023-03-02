@@ -15,6 +15,7 @@ import '../../../../../data/implementations/data_center_service.dart';
 import '../../../../../generated/l10n.dart';
 import '../../../../theme/app_color.dart';
 import '../components/Fi_chart.dart';
+import '../components/IndFvalue.dart';
 import '../components/PI_chart.dart';
 import '../components/money_chart.dart';
 import '../components/top_index_widget.dart';
@@ -36,6 +37,9 @@ class _MarketAnalysisTabState extends State<MarketAnalysisTab>
   late Future<IndContrib> piValue;
   late Future<IndContrib> fiValue;
 
+  late Future<IndContrib> indFvalue;
+
+
   void initData() {
     // topInfluenceList = dataCenterService.getTopInfluence(indexSelect);
     // indexBoard = dataCenterService.getIndexBoard(indexSelect.exchangeName);
@@ -43,6 +47,7 @@ class _MarketAnalysisTabState extends State<MarketAnalysisTab>
     // topIndex = dataCenterService.getIndContrib(indexSelect.market);
     piValue = dataCenterService.getPIvalue(indexSelect.market);
     fiValue = dataCenterService.getFIvalue(indexSelect.market);
+    indFvalue = dataCenterService.getIndFvalue(indexSelect.market);
   }
 
   @override
@@ -97,6 +102,7 @@ class _MarketAnalysisTabState extends State<MarketAnalysisTab>
         //TopIndexWidgetChart(topIndex: topIndex),
         PiValueChart(pIValue: piValue),
         FiChartValue(fIValue: fiValue),
+        IndFvalue(fIValue: indFvalue,),
         const SizedBox(height: 100)
       ],
     );
