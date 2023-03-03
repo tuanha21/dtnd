@@ -32,19 +32,19 @@ extension SideX on Side {
   Color get kColor {
     switch (this) {
       case Side.sell:
-        return AppColors.semantic_01;
-      case Side.buy:
         return AppColors.semantic_03;
+      case Side.buy:
+        return AppColors.semantic_01;
     }
   }
 
   Color kBGColor(ThemeMode themeMode) {
     switch (this) {
       case Side.sell:
-        if (themeMode.isDark) return AppColors.accent_dark_01;
+        if (themeMode.isDark) return AppColors.accent_dark_03;
         return AppColors.accent_light_01;
       case Side.buy:
-        if (themeMode.isDark) return AppColors.accent_dark_03;
+        if (themeMode.isDark) return AppColors.accent_dark_01;
         return AppColors.accent_light_03;
     }
   }

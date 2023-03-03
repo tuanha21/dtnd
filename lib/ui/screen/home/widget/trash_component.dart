@@ -95,7 +95,7 @@ class _TrashComponentState extends State<TrashComponent> {
         ],
       );
       volWidget = Text(
-        "${NumUtils.formatInteger(snapshotData.kLGD ?? 0)} CP",
+        "${NumUtils.formatInteger10(snapshotData.kLGD)} CP",
         style: AppTextStyle.labelMedium_12.copyWith(
           fontWeight: FontWeight.w500,
           color: AppColors.neutral_03,
@@ -179,7 +179,7 @@ class _TrashComponentState extends State<TrashComponent> {
               ));
         } else {
           return Text(
-            "${NumUtils.formatInteger(snapshotData.kLGD ?? 0)} CP",
+            "${NumUtils.formatInteger10(snapshotData.kLGD)} CP",
             style: AppTextStyle.labelMedium_12.copyWith(
               fontWeight: FontWeight.w500,
               color: AppColors.neutral_03,

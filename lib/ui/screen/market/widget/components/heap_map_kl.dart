@@ -152,18 +152,18 @@ class _HeapMapKLState extends State<HeapMapKL> {
                                         },
                                         labelBuilder: (BuildContext context,
                                             TreemapTile tile) {
-                                          final _gr =
-                                              (tile.group ?? '').split('/');
-                                          if (_gr.length < 2)
+                                          final gr = (tile.group).split('/');
+                                          if (gr.length < 2) {
                                             return Center(
                                               child: Text(
                                                 tile.group,
                                                 overflow: TextOverflow.ellipsis,
                                                 textAlign: TextAlign.center,
-                                                style: TextStyle(
+                                                style: const TextStyle(
                                                     color: AppColors.light_bg),
                                               ),
                                             );
+                                          }
 
                                           return Center(
                                             child: SingleChildScrollView(
@@ -173,23 +173,19 @@ class _HeapMapKLState extends State<HeapMapKL> {
                                               crossAxisAlignment:
                                                   CrossAxisAlignment.center,
                                               children: [
-                                                Text(
-                                                    (tile.group ?? '')
-                                                        .split('/')[0],
+                                                Text((tile.group).split('/')[0],
                                                     overflow:
                                                         TextOverflow.ellipsis,
                                                     textAlign: TextAlign.center,
-                                                    style: TextStyle(
+                                                    style: const TextStyle(
                                                         fontSize: 14,
                                                         color: AppColors
                                                             .light_bg)),
-                                                Text(
-                                                    (tile.group ?? '')
-                                                        .split('/')[1],
+                                                Text((tile.group).split('/')[1],
                                                     overflow:
                                                         TextOverflow.ellipsis,
                                                     textAlign: TextAlign.center,
-                                                    style: TextStyle(
+                                                    style: const TextStyle(
                                                         fontSize: 12,
                                                         fontWeight:
                                                             FontWeight.w400,

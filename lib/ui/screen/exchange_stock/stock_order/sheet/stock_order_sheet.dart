@@ -116,6 +116,7 @@ class _StockOrderSheetState extends State<StockOrderSheet>
 
   void select(OrderType orderType) {
     if (orderType.isLO && stockModel.stockDataCore != null) {
+      print(stockModel.stockDataCore!.lastPrice);
       final String currentPrice =
           stockModel.stockDataCore!.lastPrice?.toStringAsFixed(2) ??
               stockModel.stockDataCore!.r?.toString() ??
@@ -358,33 +359,6 @@ class _StockOrderSheetState extends State<StockOrderSheet>
             ),
             const SizedBox(height: 20),
             Row(
-              children: [
-                Expanded(
-                  child: IntervalInput(
-                    controller: priceController,
-                    labelText: S.of(context).price,
-                    interval: stockModel.stock.postTo?.getPriceInterval ??
-                        (value) => 0.1,
-                    defaultValue: stockModel.stockData.lastPrice.value ??
-                        stockModel.stockData.r.value ??
-                        0,
-                    onChanged: onChangedPrice,
-                    onTextChanged: _onPriceChangeHandler,
-                  ),
-                ),
-                const SizedBox(width: 16),
-                Expanded(
-                  child: IntervalInput(
-                    controller: volumnController,
-                    labelText: S.of(context).volumn,
-                    interval: (value) => 100,
-                    onChanged: onChangeVol,
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 16),
-            Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(S.of(context).order_value),
@@ -403,6 +377,33 @@ class _StockOrderSheetState extends State<StockOrderSheet>
                     return Text("${NumUtils.formatInteger(value)} VND");
                   },
                 )
+              ],
+            ),
+            const SizedBox(height: 16),
+            Row(
+              children: [
+                Expanded(
+                  child: IntervalInput(
+                    controller: priceController,
+                    labelText: S.of(context).price,
+                    interval: stockModel.stock.postTo?.getPriceInterval ??
+                        (value) => 0.1,
+                    defaultValue: stockModel.stockDataCore?.lastPrice ??
+                        stockModel.stockData.r.value ??
+                        0,
+                    onChanged: onChangedPrice,
+                    onTextChanged: _onPriceChangeHandler,
+                  ),
+                ),
+                const SizedBox(width: 16),
+                Expanded(
+                  child: IntervalInput(
+                    controller: volumnController,
+                    labelText: S.of(context).volumn,
+                    interval: (value) => 100,
+                    onChanged: onChangeVol,
+                  ),
+                ),
               ],
             ),
             const SizedBox(height: 16),

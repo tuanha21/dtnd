@@ -47,7 +47,7 @@ class _IndayOrderTabState extends State<IndayOrderTab> {
     List<BaseOrderModel> toRemove = [];
     if (data.orderType != null) {
       for (var i = 0; i < listOrderShow!.length; i++) {
-        if (listOrderShow!.elementAt(i).side == data.orderType) {
+        if (listOrderShow!.elementAt(i).side != data.orderType) {
           toRemove.add(listOrderShow!.elementAt(i));
         }
       }

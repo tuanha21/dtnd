@@ -4,7 +4,7 @@ import 'package:dtnd/logic/stock_status.dart';
 
 class TrashModel extends StockStatus {
   late final String sTOCKCODE;
-  num? kLGD;
+  late final num kLGD;
   num? gTGD;
   String? sTOCKNAME;
   num? cHANGE;
@@ -15,7 +15,7 @@ class TrashModel extends StockStatus {
 
   TrashModel.fromJson(Map<String, dynamic> json) {
     sTOCKCODE = json['STOCK_CODE'];
-    kLGD = json['KLGD'];
+    kLGD = (json['KLGD'] ?? 0);
     gTGD = json['GTGD'];
     sTOCKNAME = json['STOCK_NAME'];
     cHANGE = json['CHANGE'];
