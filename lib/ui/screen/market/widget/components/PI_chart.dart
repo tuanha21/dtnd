@@ -4,6 +4,7 @@ import 'package:syncfusion_flutter_treemap/treemap.dart';
 import '../../../../../=models=/response/indContrib.dart';
 import '../../../../../generated/l10n.dart';
 import '../../../../../utilities/num_utils.dart';
+import '../../../../theme/app_color.dart';
 
 class PiValueChart extends StatefulWidget {
   final Future<IndContrib> pIValue;
@@ -41,9 +42,10 @@ class _PiValueChartState extends State<PiValueChart> {
                 );
               }
               if (snapshot.connectionState == ConnectionState.done) {
-                if(snapshot.data == null) return const SizedBox();
+                if (snapshot.data == null) return const SizedBox();
                 var data = snapshot.data!.listMapValue;
                 data.removeWhere((element) => element['ptvalue'] == 0);
+
                 return Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: Container(
@@ -74,11 +76,14 @@ class _PiValueChartState extends State<PiValueChart> {
                             },
                             labelBuilder:
                                 (BuildContext context, TreemapTile tile) {
+                              // print(tile.group);
                               return Center(
                                 child: Text(
                                   tile.group,
                                   overflow: TextOverflow.ellipsis,
                                   textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      fontSize: 14, color: AppColors.light_bg),
                                 ),
                               );
                             },

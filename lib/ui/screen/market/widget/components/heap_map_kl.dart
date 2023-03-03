@@ -121,8 +121,18 @@ class _HeapMapKLState extends State<HeapMapKL> {
                                     },
                                     levels: [
                                       TreemapLevel(
-                                        groupMapper: (int index) =>
-                                            listStock[index].sTOCKCODE,
+                                        groupMapper: (int index) {
+                                          // print('index: ' + index.toString());
+                                          // if (index > 4)
+                                          //   return listStock[index].sTOCKCODE;
+                                          return (listStock[index].sTOCKCODE ??
+                                                  '') +
+                                              "/" +
+                                              listStock[index]
+                                                  .pERCENTCHANGE
+                                                  .toString() +
+                                              '%';
+                                        },
                                         colorValueMapper: (tile) {
                                           return listStock[tile.indices[0]]
                                               .stockColor;
@@ -142,12 +152,51 @@ class _HeapMapKLState extends State<HeapMapKL> {
                                         },
                                         labelBuilder: (BuildContext context,
                                             TreemapTile tile) {
+                                          final _gr =
+                                              (tile.group ?? '').split('/');
+                                          if (_gr.length < 2)
+                                            return Center(
+                                              child: Text(
+                                                tile.group,
+                                                overflow: TextOverflow.ellipsis,
+                                                textAlign: TextAlign.center,
+                                                style: TextStyle(
+                                                    color: AppColors.light_bg),
+                                              ),
+                                            );
+
                                           return Center(
-                                            child: Text(
-                                              tile.group,
-                                              overflow: TextOverflow.ellipsis,
-                                              textAlign: TextAlign.center,
-                                            ),
+                                            child: SingleChildScrollView(
+                                                child: Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.center,
+                                              children: [
+                                                Text(
+                                                    (tile.group ?? '')
+                                                        .split('/')[0],
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                    textAlign: TextAlign.center,
+                                                    style: TextStyle(
+                                                        fontSize: 14,
+                                                        color: AppColors
+                                                            .light_bg)),
+                                                Text(
+                                                    (tile.group ?? '')
+                                                        .split('/')[1],
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                    textAlign: TextAlign.center,
+                                                    style: TextStyle(
+                                                        fontSize: 12,
+                                                        fontWeight:
+                                                            FontWeight.w400,
+                                                        color:
+                                                            AppColors.light_bg))
+                                              ],
+                                            )),
                                           );
                                         },
                                       ),

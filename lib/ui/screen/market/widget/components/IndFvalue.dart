@@ -4,6 +4,7 @@ import 'package:syncfusion_flutter_treemap/treemap.dart';
 import '../../../../../=models=/response/indContrib.dart';
 import '../../../../../generated/l10n.dart';
 import '../../../../../utilities/num_utils.dart';
+import '../../../../theme/app_color.dart';
 
 class IndFvalue extends StatefulWidget {
   final Future<IndContrib> fIValue;
@@ -41,7 +42,7 @@ class _IndFvalueState extends State<IndFvalue> {
                 );
               }
               if (snapshot.connectionState == ConnectionState.done) {
-                if(snapshot.data == null) return const SizedBox();
+                if (snapshot.data == null) return const SizedBox();
                 var data = snapshot.data!.listMapValue;
                 data.removeWhere((element) => element['ptvalue'] == 0);
                 return Padding(
@@ -58,13 +59,13 @@ class _IndFvalueState extends State<IndFvalue> {
                           TreemapLevel(
                             groupMapper: (int index) => data[index]['name'],
                             colorValueMapper: (tile) =>
-                            data[tile.indices[0]]['ptcolor'],
+                                data[tile.indices[0]]['ptcolor'],
                             tooltipBuilder:
                                 (BuildContext context, TreemapTile tile) {
                               return Container(
                                 padding: const EdgeInsets.all(2.5),
                                 decoration:
-                                const BoxDecoration(color: Colors.white),
+                                    const BoxDecoration(color: Colors.white),
                                 child: Text(
                                   '${tile.group} : ${NumUtils.formatInteger(tile.weight)}',
                                   overflow: TextOverflow.ellipsis,
@@ -79,6 +80,8 @@ class _IndFvalueState extends State<IndFvalue> {
                                   tile.group,
                                   overflow: TextOverflow.ellipsis,
                                   textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      fontSize: 14, color: AppColors.light_bg),
                                 ),
                               );
                             },
