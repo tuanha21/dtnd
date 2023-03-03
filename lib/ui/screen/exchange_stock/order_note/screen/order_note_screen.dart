@@ -1,13 +1,13 @@
 import 'package:dtnd/generated/l10n.dart';
+import 'package:dtnd/ui/screen/exchange_stock/order_note/tab/conditional_order_tab.dart';
 import 'package:dtnd/ui/screen/exchange_stock/order_note/tab/inday_order_tab.dart';
-import 'package:dtnd/ui/theme/app_color.dart';
-import 'package:dtnd/ui/theme/app_image.dart';
+import 'package:dtnd/ui/screen/exchange_stock/order_note/tab/order_history_tab.dart';
 import 'package:dtnd/ui/widget/appbar/simple_appbar.dart';
 import 'package:flutter/material.dart';
 
 class OrderNoteScreen extends StatefulWidget {
-  const OrderNoteScreen({super.key});
-
+  const OrderNoteScreen({super.key, this.defaultab = 0});
+  final int defaultab;
   @override
   State<OrderNoteScreen> createState() => _OrderNoteScreenState();
 }
@@ -19,6 +19,9 @@ class _OrderNoteScreenState extends State<OrderNoteScreen>
   void initState() {
     tabController = TabController(length: 3, vsync: this);
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      tabController.animateTo(widget.defaultab);
+    });
   }
 
   @override
@@ -50,10 +53,10 @@ class _OrderNoteScreenState extends State<OrderNoteScreen>
               child: TabBarView(
             physics: const NeverScrollableScrollPhysics(),
             controller: tabController,
-            children: [
-              const IndayOrderTab(),
-              Container(),
-              Container(),
+            children: const [
+              IndayOrderTab(),
+              ConditionalOrderTab(),
+              OrderHistoryTab(),
             ],
           ))
         ],

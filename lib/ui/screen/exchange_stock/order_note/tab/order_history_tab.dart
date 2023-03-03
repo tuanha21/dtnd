@@ -1,41 +1,40 @@
-import 'package:dtnd/=models=/response/order_model/base_order_model.dart';
+import 'package:dtnd/=models=/response/order_history_model.dart';
 import 'package:dtnd/=models=/ui_model/user_cmd.dart';
+import 'package:dtnd/data/i_exchange_service.dart';
 import 'package:dtnd/data/i_user_service.dart';
+import 'package:dtnd/data/implementations/exchange_service.dart';
 import 'package:dtnd/data/implementations/user_service.dart';
 import 'package:dtnd/generated/l10n.dart';
+import 'package:dtnd/ui/screen/exchange_stock/order_note/component/order_history_element.dart';
 import 'package:dtnd/ui/screen/exchange_stock/order_note/data/order_filter_data.dart';
-import 'package:dtnd/ui/screen/exchange_stock/order_note/flow/flow.dart';
 import 'package:dtnd/ui/screen/exchange_stock/order_note/sheet/order_filter_flow.dart';
 import 'package:dtnd/ui/screen/exchange_stock/order_note/sheet/order_filter_sheet.dart';
-import 'package:dtnd/ui/screen/exchange_stock/stock_order/component/order_record_widget.dart';
-import 'package:dtnd/ui/screen/exchange_stock/stock_order/sheet/cancel_order_sheet.dart';
-import 'package:dtnd/ui/screen/exchange_stock/stock_order/sheet/change_stock_order_sheet.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:flutter/material.dart';
 
-class IndayOrderTab extends StatefulWidget {
-  const IndayOrderTab({super.key});
+class OrderHistoryTab extends StatefulWidget {
+  const OrderHistoryTab({super.key});
 
   @override
-  State<IndayOrderTab> createState() => _IndayOrderTabState();
+  State<OrderHistoryTab> createState() => _OrderHistoryTabState();
 }
 
-class _IndayOrderTabState extends State<IndayOrderTab> {
+class _OrderHistoryTabState extends State<OrderHistoryTab> {
   final IUserService userService = UserService();
-  List<BaseOrderModel>? listOrder;
-  List<BaseOrderModel>? listOrderShow;
+  final IExchangeService exchangeService = ExchangeService();
+  List<OrderHistoryModel>? listOrder;
+  List<OrderHistoryModel>? listOrderShow;
   OrderFilterData? orderFilterData;
   @override
   void initState() {
     super.initState();
-    getIndayOrder();
+    getData();
   }
 
-  Future<void> getIndayOrder() async {
-    listOrder = await userService.getIndayOrder(
-        accountCode: "${userService.token.value!.user}6", recordPerPage: 10);
-    listOrderShow = List<BaseOrderModel>.from(listOrder ?? []);
+  Future<void> getData() async {
+    listOrder = await exchangeService.getOrdersHistory(userService);
+    listOrderShow = List<OrderHistoryModel>.from(listOrder ?? []);
     if (mounted) {
       setState(() {});
     }
@@ -43,8 +42,8 @@ class _IndayOrderTabState extends State<IndayOrderTab> {
 
   void filter(OrderFilterData data) {
     orderFilterData = data;
-    listOrderShow = List<BaseOrderModel>.from(listOrder ?? []);
-    List<BaseOrderModel> toRemove = [];
+    listOrderShow = List<OrderHistoryModel>.from(listOrder ?? []);
+    List<OrderHistoryModel> toRemove = [];
     if (data.orderType != null) {
       for (var i = 0; i < listOrderShow!.length; i++) {
         if (listOrderShow!.elementAt(i).side == data.orderType) {
@@ -114,6 +113,14 @@ class _IndayOrderTabState extends State<IndayOrderTab> {
           const SizedBox(height: 8),
           Expanded(child: Builder(
             builder: (context) {
+              // final List<Widget> records = [];
+              // if (listOrderShow?.isNotEmpty ?? false) {
+              //   for (OrderHistoryModel record in listOrderShow!) {
+              //     records.add(OrderRecordWidget(
+              //       data: record,
+              //     ));
+              //   }
+              // }
               return ListView(
                 children: [
                   Container(
@@ -127,29 +134,12 @@ class _IndayOrderTabState extends State<IndayOrderTab> {
                           Column(
                             children: [
                               i != 0 ? const Divider(height: 1) : Container(),
-                              OrderRecordWidget(
-                                data: listOrderShow!.elementAt(i),
-                                onChange: () async {
-                                  ChangeStockOrderISheet(
-                                          listOrderShow!.elementAt(i))
-                                      .show(
-                                          context,
-                                          ChangeStockOrderSheet(
-                                              data:
-                                                  listOrderShow!.elementAt(i)))
-                                      .then((value) => getIndayOrder());
-                                },
-                                onCancel: () async {
-                                  CancelStockOrderISheet(
-                                          listOrderShow!.elementAt(i))
-                                      .show(
-                                          context,
-                                          CancelStockOrderSheet(
-                                              data:
-                                                  listOrderShow!.elementAt(i)))
-                                      .then((value) => getIndayOrder());
-                                },
-                              )
+                              Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 4),
+                                child: OrderHistoryElement(
+                                    model: listOrderShow!.elementAt(i)),
+                              ),
                             ],
                           )
                       ],

@@ -1,19 +1,22 @@
 import 'package:dtnd/=models=/core_response_model.dart';
+import 'package:dtnd/=models=/side.dart';
+
+import 'order_model/i_order_model.dart';
 
 class OrderHistoryModel implements CoreResponseModel {
   num? rOWNUM;
   String? pKORDER;
   num? cORDERNO;
   String? cACCOUNTCODE;
-  String? cSHARECODE;
-  String? cSIDE;
+  late final String stockCode;
+  late final Side side;
   String? cCHANEL;
   String? cCHANELNAME;
   String? cORDERDATE;
   String? cORDERTIME;
   num? cORDERVOLUME;
   num? cORDERPRICE;
-  String? cORDERSTATUS;
+  late final OrderStatus orderStatus;
   String? cSHOWSTATUS;
   String? cSTATUSNAME;
   String? cSTATUSNAMEEN;
@@ -29,49 +32,19 @@ class OrderHistoryModel implements CoreResponseModel {
   num? cMATCHEDVALUE;
   num? cTOTALRECORD;
 
-  OrderHistoryModel(
-      {this.rOWNUM,
-      this.pKORDER,
-      this.cORDERNO,
-      this.cACCOUNTCODE,
-      this.cSHARECODE,
-      this.cSIDE,
-      this.cCHANEL,
-      this.cCHANELNAME,
-      this.cORDERDATE,
-      this.cORDERTIME,
-      this.cORDERVOLUME,
-      this.cORDERPRICE,
-      this.cORDERSTATUS,
-      this.cSHOWSTATUS,
-      this.cSTATUSNAME,
-      this.cSTATUSNAMEEN,
-      this.cSHOWPRICE,
-      this.cSETORDERTYPE,
-      this.cCONFIRMSTATUS,
-      this.cCONFIRMTIME,
-      this.cMATCHVOL,
-      this.cUNMATCHVOL,
-      this.cMATCHPRICE,
-      this.cFEEVALUE,
-      this.cTAXVALUE,
-      this.cMATCHEDVALUE,
-      this.cTOTALRECORD});
-
   OrderHistoryModel.fromJson(Map<String, dynamic> json) {
     rOWNUM = json['ROW_NUM'];
     pKORDER = json['PK_ORDER'];
     cORDERNO = json['C_ORDER_NO'];
     cACCOUNTCODE = json['C_ACCOUNT_CODE'];
-    cSHARECODE = json['C_SHARE_CODE'];
-    cSIDE = json['C_SIDE'];
+    stockCode = json['C_SHARE_CODE'];
+    side = SideHelper.fromString(json['C_SIDE']);
     cCHANEL = json['C_CHANEL'];
     cCHANELNAME = json['C_CHANEL_NAME'];
     cORDERDATE = json['C_ORDER_DATE'];
     cORDERTIME = json['C_ORDER_TIME'];
     cORDERVOLUME = json['C_ORDER_VOLUME'];
     cORDERPRICE = json['C_ORDER_PRICE'];
-    cORDERSTATUS = json['C_ORDER_STATUS'];
     cSHOWSTATUS = json['C_SHOW_STATUS'];
     cSTATUSNAME = json['C_STATUS_NAME'];
     cSTATUSNAMEEN = json['C_STATUS_NAME_EN'];
@@ -86,6 +59,7 @@ class OrderHistoryModel implements CoreResponseModel {
     cTAXVALUE = json['C_TAX_VALUE'];
     cMATCHEDVALUE = json['C_MATCHED_VALUE'];
     cTOTALRECORD = json['C_TOTAL_RECORD'];
+    orderStatus = _getStatusOrder(json['C_ORDER_STATUS']);
   }
 
   Map<String, dynamic> toJson() {
@@ -94,15 +68,15 @@ class OrderHistoryModel implements CoreResponseModel {
     data['PK_ORDER'] = pKORDER;
     data['C_ORDER_NO'] = cORDERNO;
     data['C_ACCOUNT_CODE'] = cACCOUNTCODE;
-    data['C_SHARE_CODE'] = cSHARECODE;
-    data['C_SIDE'] = cSIDE;
+    data['C_SHARE_CODE'] = stockCode;
+    data['C_SIDE'] = side;
     data['C_CHANEL'] = cCHANEL;
     data['C_CHANEL_NAME'] = cCHANELNAME;
     data['C_ORDER_DATE'] = cORDERDATE;
     data['C_ORDER_TIME'] = cORDERTIME;
     data['C_ORDER_VOLUME'] = cORDERVOLUME;
     data['C_ORDER_PRICE'] = cORDERPRICE;
-    data['C_ORDER_STATUS'] = cORDERSTATUS;
+    data['C_ORDER_STATUS'] = orderStatus;
     data['C_SHOW_STATUS'] = cSHOWSTATUS;
     data['C_STATUS_NAME'] = cSTATUSNAME;
     data['C_STATUS_NAME_EN'] = cSTATUSNAMEEN;
@@ -118,5 +92,57 @@ class OrderHistoryModel implements CoreResponseModel {
     data['C_MATCHED_VALUE'] = cMATCHEDVALUE;
     data['C_TOTAL_RECORD'] = cTOTALRECORD;
     return data;
+  }
+
+  OrderStatus _getStatusOrder(String status) {
+    var pStatus = status;
+    var pMatchVolume = cMATCHVOL ?? 0;
+    var pVolume = cORDERVOLUME?.toInt().toString() ?? "0";
+
+    if ((pStatus == "PMC" || pStatus == "PCM" || pStatus == "PWM") &&
+        (pMatchVolume) < int.parse(pVolume)) {
+      return OrderStatus.partialMatch; // "MATCH_PARTIAL";
+    }
+    if ((pStatus == "PMC" || pStatus == "PCM") &&
+        (pMatchVolume) == int.parse(pVolume)) {
+      return OrderStatus.fullMatch; // "MATCH_FULL";
+    }
+
+    if ((pStatus == "PMX" || pStatus == "PMWX") && (pMatchVolume) > 0) {
+      return OrderStatus.partialMatchCanceled; // "MATCH_PARTIAL_CANCELED";
+    }
+    if (pStatus == "PM" && (pMatchVolume) < int.parse(pVolume)) {
+      return OrderStatus.partialMatch; // "MATCH_PARTIAL";
+    }
+    if (pStatus.substring(pStatus.length - 1, pStatus.length) == "M") {
+      //return "MATCH_FULL"
+      return OrderStatus.fullMatch; // "MATCH_FULL";
+    }
+    if (pStatus == "PM") {
+      // return "MATCH_FULL"
+      return OrderStatus.fullMatch; // "MATCH_FULL";
+    }
+    if (pStatus == "PW" || pStatus == "PMW") {
+      // return  "MATCH_PENDING"
+      return OrderStatus.pendingCanceled; // "MATCH_PENDING";
+    }
+    if (pStatus == "PC") {
+      return OrderStatus.pendingMatch; // "MATCH_PENDING";
+      // if (pQuote == "Y") {
+      //   return "Chờ khớp"; // "MATCH_PENDING";
+      // } else {
+      //   return "Đã sửa"; // "EDIT_PENDING"
+      // } // Ba Ly bao sua thanh cho khop, neu sua lai thi la con cho'
+    }
+    if (pStatus.substring(pStatus.length - 1, pStatus.length) == "X") {
+      return OrderStatus.canceled; // "CANCELED";
+    }
+    if (pStatus == "P") {
+      return OrderStatus.pendingMatch; // "MATCH_PENDING";
+    }
+    if (pStatus.substring(pStatus.length - 1, pStatus.length) == "C") {
+      return OrderStatus.pendingMatch; // "MATCH_PENDING";
+    }
+    return OrderStatus.unidentified;
   }
 }

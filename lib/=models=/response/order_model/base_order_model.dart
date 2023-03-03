@@ -58,7 +58,6 @@ class BaseOrderModel extends CoreResponseModel implements IOrderModel {
   }
 
   BaseOrderModel.fromJson(Map<String, dynamic> json) {
-    logger.v(json);
     try {
       orderNo = num.parse(json['orderNo']);
       id = json['pk_orderNo'];

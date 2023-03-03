@@ -191,7 +191,7 @@ class ExchangeService implements IExchangeService {
       p3: TimeUtilities.commonTimeFormat.format(
           fromDay ?? TimeUtilities.getPreviousDateTime(TimeUtilities.month(1))),
       p4: TimeUtilities.commonTimeFormat.format(fromDay ?? DateTime.now()),
-      p5: status ?? "M",
+      p5: status ?? "",
       p7: page?.toString() ?? "1",
       p8: recordPerPage?.toString() ?? "10",
     );

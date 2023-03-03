@@ -29,7 +29,8 @@ class StockModel {
   BusinnessProfileModel? businnessProfile;
   List<BusinnessLeaderModel>? businnessLeaders;
   final BusinessSubsidiariesModel subsidiaries = BusinessSubsidiariesModel();
-  final Rx<List<num>?> simpleChartData = Rxn();
+
+  final Rx<bool> hasSocketData = false.obs;
 
   List<IndayMatchedOrder> get listMatchedOrder => _listMatchedOrder;
 
@@ -138,6 +139,9 @@ class StockModel {
   }
 
   void onSocketData(dynamic data) {
+    if (!hasSocketData.value) {
+      hasSocketData.value = true;
+    }
     if (data["data"]["id"] == 3220) {
       stockData
         ..lastPrice.value = data["data"]["lastPrice"]

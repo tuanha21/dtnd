@@ -28,6 +28,11 @@ class _HomeInterestedCatalogState extends State<HomeInterestedCatalog> {
   final HomeController homeController = HomeController();
 
   @override
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Container(
       color: AppColors.neutral_07,

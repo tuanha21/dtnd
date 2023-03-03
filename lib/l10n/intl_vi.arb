@@ -105,6 +105,8 @@
     "conditional_note": "SL điều kiện",
     "debt_following": "Theo dõi dư nợ",
     "profit_and_loss": "Lãi/lỗ",
+    "executed_profit_and_loss": "Lãi/lỗ đã thực hiện",
+    "margin_debt": "Công nợ margin",
     "inday_ordnote": "SL trong ngày",
     "condition_ordnote": "SL điều kiện",
     "order_history": "Lịch sử lệnh",

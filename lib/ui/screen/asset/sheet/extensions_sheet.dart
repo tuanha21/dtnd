@@ -1,6 +1,6 @@
 import 'package:dtnd/config/service/app_services.dart';
 import 'package:dtnd/generated/l10n.dart';
-import 'package:dtnd/ui/screen/asset/sheet/sheet_config.dart';
+import 'package:dtnd/ui/screen/asset/sheet/sheet_flow.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:dtnd/ui/widget/icon/sheet_header.dart';
@@ -52,24 +52,28 @@ class _ExtensionsSheetState extends State<ExtensionsSheet> {
                   _RowButton(
                     themeMode: themeMode,
                     icon: AppImages.document,
-                    label: S.of(context).all,
-                  ),
-                  _RowButton(
-                    themeMode: themeMode,
-                    icon: AppImages.document_filter,
-                    label: S.of(context).base_note,
+                    label: S.of(context).order_note,
                     onTap: () =>
                         Navigator.of(context).pop(const ToBaseNoteCmd()),
                   ),
                   _RowButton(
                     themeMode: themeMode,
+                    icon: AppImages.document_filter,
+                    label: S.of(context).order_history,
+                    onTap: () =>
+                        Navigator.of(context).pop(const ToOrderHistoryCmd()),
+                  ),
+                  _RowButton(
+                    themeMode: themeMode,
                     icon: AppImages.wallet,
-                    label: S.of(context).debt_following,
+                    label: S.of(context).executed_profit_and_loss,
+                    onTap: () =>
+                        Navigator.of(context).pop(const ToProfitAndLossCmd()),
                   ),
                   _RowButton(
                     themeMode: themeMode,
                     icon: AppImages.card_tick,
-                    label: S.of(context).profit_and_loss,
+                    label: S.of(context).margin_debt,
                     onTap: () =>
                         Navigator.of(context).pop(const ToProfitAndLossCmd()),
                   ),

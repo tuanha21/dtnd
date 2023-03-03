@@ -5,6 +5,7 @@ import 'package:dtnd/=models=/response/index_model.dart';
 import 'package:dtnd/=models=/response/news_model.dart';
 import 'package:dtnd/=models=/response/stock_model.dart';
 import 'package:dtnd/=models=/response/top_interested_model.dart';
+import 'package:dtnd/=models=/response/trash_model.dart';
 import 'package:dtnd/=models=/response/world_index_model.dart';
 import 'package:dtnd/config/service/app_services.dart';
 import 'package:dtnd/config/service/environment.dart';
@@ -42,11 +43,10 @@ class HomeController {
   Stream<double> get initProcess => _initProcess.stream;
 
   late final List<StockModel> interestedCatalog;
-  final Rx<List<StockModel>?> hotToday = Rxn();
-  final Rx<List<StockModel>?> priceIncreaseToday = Rxn();
-  final Rx<List<StockModel>?> priceDecreaseToday = Rxn();
-  final Rx<List<StockModel>?> topForeignToday = Rxn();
-  final Rx<List<StockModel>?> topVolumnToday = Rxn();
+  final Rx<List<TrashModel>?> hotToday = Rxn();
+  final Rx<List<TrashModel>?> priceIncreaseToday = Rxn();
+  final Rx<List<TrashModel>?> priceDecreaseToday = Rxn();
+  final Rx<List<TrashModel>?> topVolumnToday = Rxn();
   List<NewsModel> news = [];
   List<WorldIndexModel> worldIndex = [];
   late final Set<IndexModel> listIndexs;
@@ -74,37 +74,20 @@ class HomeController {
   Future<void> getHotToday() async {
     // hotToday.clear();
     final topInterested = await dataCenterService.getTopInterested(8);
-    final stockModels = await dataCenterService.getStockModelsFromStockCodes(
-        topInterested.map((e) => e.sTOCKCODE).toList());
-    for (var i = 0; i < (stockModels?.length ?? 0); i++) {
-      stockModels!.elementAt(i).simpleChartData.value =
-          topInterested.elementAt(i).cHART;
-    }
-    hotToday.value = stockModels;
+    hotToday.value = topInterested;
     hotToday.refresh();
   }
 
   Future<void> getPriceIncrease() async {
     final topStockChange = await dataCenterService.getTopStockChange(8);
-    final stockModels = await dataCenterService.getStockModelsFromStockCodes(
-        topStockChange.map((e) => e.sTOCKCODE).toList());
-    for (var i = 0; i < (stockModels?.length ?? 0); i++) {
-      stockModels!.elementAt(i).simpleChartData.value =
-          topStockChange.elementAt(i).cHART;
-    }
-    priceIncreaseToday.value = stockModels;
+
+    priceIncreaseToday.value = topStockChange;
     priceIncreaseToday.refresh();
   }
 
   Future<void> getPriceDecrease() async {
     final topStockChange = await dataCenterService.getTopStockChange(8, "d");
-    final stockModels = await dataCenterService.getStockModelsFromStockCodes(
-        topStockChange.map((e) => e.sTOCKCODE).toList());
-    for (var i = 0; i < (stockModels?.length ?? 0); i++) {
-      stockModels!.elementAt(i).simpleChartData.value =
-          topStockChange.elementAt(i).cHART;
-    }
-    priceDecreaseToday.value = stockModels;
+    priceDecreaseToday.value = topStockChange;
     priceDecreaseToday.refresh();
   }
 
@@ -121,15 +104,7 @@ class HomeController {
 
   Future<void> getTopVolumn() async {
     final topStockChange = await dataCenterService.getTopStockTrade(8);
-    logger.v(topStockChange.length);
-    final stockModels = await dataCenterService.getStockModelsFromStockCodes(
-        topStockChange.map((e) => e.sTOCKCODE).toList());
-    for (var i = 0; i < (stockModels?.length ?? 0); i++) {
-      stockModels!.elementAt(i).simpleChartData
-        ..value = topStockChange.elementAt(i).cHART
-        ..refresh();
-    }
-    topVolumnToday.value = stockModels;
+    topVolumnToday.value = topStockChange;
     topVolumnToday.refresh();
   }
 
@@ -190,7 +165,11 @@ class HomeController {
     currentWorldIndexModel.value = index;
   }
 
-  Future<void> changeList(int index, bool up) async {
+  Future<void> changeList(
+      int index, bool up, List<String>? listStockCodes) async {
+    if (listStockCodes != null) {
+      dataCenterService.removeStockModelsFromStockCodes(listStockCodes);
+    }
     switch (index) {
       case 1:
         if (up) {

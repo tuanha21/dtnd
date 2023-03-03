@@ -106,6 +106,8 @@
     "conditional_note": "Conditional note",
     "debt_following": "Debt following",
     "profit_and_loss": "Profit/Loss",
+    "executed_profit_and_loss": "Executed profit/Loss",
+    "margin_debt": "Margin debt",
     "inday_ordnote": "Inday ordernote",
     "condition_ordnote": "Condition ordernote",
     "order_history": "Order history",

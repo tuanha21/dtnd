@@ -174,6 +174,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "event": MessageLookupByLibrary.simpleMessage("Event"),
         "exchange_total":
             MessageLookupByLibrary.simpleMessage("Exchange total"),
+        "executed_profit_and_loss":
+            MessageLookupByLibrary.simpleMessage("Executed profit/Loss"),
         "extension": MessageLookupByLibrary.simpleMessage("Extension"),
         "fbuy": MessageLookupByLibrary.simpleMessage("FR buy"),
         "fill_OTP": MessageLookupByLibrary.simpleMessage("Fill OTP"),
@@ -247,6 +249,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "low": MessageLookupByLibrary.simpleMessage("Low"),
         "low_translations": MessageLookupByLibrary.simpleMessage("Low"),
         "margin": MessageLookupByLibrary.simpleMessage("Margin"),
+        "margin_debt": MessageLookupByLibrary.simpleMessage("Margin debt"),
         "market": MessageLookupByLibrary.simpleMessage("Market"),
         "market_breadth":
             MessageLookupByLibrary.simpleMessage("Market breadth"),

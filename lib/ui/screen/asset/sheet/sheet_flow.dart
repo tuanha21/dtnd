@@ -29,10 +29,10 @@ class IExecuteRightSheet extends ISheet {
   final UnexecutedRightModel unexecutedRightModel;
   IExecuteRightSheet(this.unexecutedRightModel);
   @override
-  ISheet? back([dynamic cmd]) => null;
+  ISheet? back([cmd]) => null;
 
   @override
-  ISheet? next([dynamic cmd]) => null;
+  ISheet? next([cmd]) => null;
 
   @override
   Widget? backWidget([cmd]) => null;
@@ -53,4 +53,8 @@ class ToBaseNoteCmd extends ToOptionCmd {
 
 class ToProfitAndLossCmd extends ToOptionCmd {
   const ToProfitAndLossCmd([super.data]);
+}
+
+class ToOrderHistoryCmd extends ToOptionCmd {
+  const ToOrderHistoryCmd([super.data]);
 }

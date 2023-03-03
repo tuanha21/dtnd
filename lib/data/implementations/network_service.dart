@@ -35,6 +35,7 @@ import 'package:dtnd/=models=/response/top_influence_model.dart';
 import 'package:dtnd/=models=/response/top_interested_model.dart';
 import 'package:dtnd/=models=/response/total_asset_model.dart';
 import 'package:dtnd/=models=/request/request_model.dart';
+import 'package:dtnd/=models=/response/trash_model.dart';
 import 'package:dtnd/=models=/response/world_index_model.dart';
 import 'package:dtnd/=models=/ui_model/exception.dart';
 import 'package:dtnd/=models=/ui_model/field_tree_element_model.dart';
@@ -523,17 +524,16 @@ class NetworkService implements INetworkService {
   }
 
   @override
-  Future<List<TopInterested>> getTopForeignTrade(
-      Map<String, dynamic> body) async {
+  Future<List<TrashModel>> getTopForeignTrade(Map<String, dynamic> body) async {
     try {
       final http.Response response =
           await client.get(url_info_sbsi("topForeignTrade", body));
 
       final List<dynamic> responseBody = decode(response.bodyBytes)["data"];
-      List<TopInterested> data = [];
+      List<TrashModel> data = [];
       for (var element in responseBody) {
         try {
-          data.add(TopInterested.fromJson(element["STOCK_CODE"]));
+          data.add(TrashModel.fromJson(element["STOCK_CODE"]));
         } catch (e) {
           continue;
         }
@@ -546,17 +546,16 @@ class NetworkService implements INetworkService {
   }
 
   @override
-  Future<List<TopInterested>> getTopStockChange(
-      Map<String, dynamic> body) async {
+  Future<List<TrashModel>> getTopStockChange(Map<String, dynamic> body) async {
     try {
       final http.Response response =
           await client.get(url_info_sbsi("topStockChange", body));
 
       final List<dynamic> responseBody = decode(response.bodyBytes)["data"];
-      List<TopInterested> data = [];
+      List<TrashModel> data = [];
       for (var element in responseBody) {
         try {
-          data.add(TopInterested.fromJson(element));
+          data.add(TrashModel.fromJson(element));
         } catch (e) {
           continue;
         }
@@ -569,17 +568,16 @@ class NetworkService implements INetworkService {
   }
 
   @override
-  Future<List<TopInterested>> getTopInterested(
-      Map<String, dynamic> body) async {
+  Future<List<TrashModel>> getTopInterested(Map<String, dynamic> body) async {
     try {
       final http.Response response =
           await client.get(url_info_sbsi("topStockInterested", body));
 
       final List<dynamic> responseBody = decode(response.bodyBytes)["data"];
-      List<TopInterested> data = [];
+      List<TrashModel> data = [];
       for (var element in responseBody) {
         try {
-          data.add(TopInterested.fromJson(element));
+          data.add(TrashModel.fromJson(element));
         } catch (e) {
           continue;
         }
@@ -592,17 +590,16 @@ class NetworkService implements INetworkService {
   }
 
   @override
-  Future<List<TopInterested>> getTopStockTrade(
-      Map<String, dynamic> body) async {
+  Future<List<TrashModel>> getTopStockTrade(Map<String, dynamic> body) async {
     try {
       final http.Response response =
           await client.get(url_info_sbsi("topStockTrade", body));
 
       final List<dynamic> responseBody = decode(response.bodyBytes)["data"];
-      List<TopInterested> data = [];
+      List<TrashModel> data = [];
       for (var element in responseBody) {
         try {
-          data.add(TopInterested.fromJson(element));
+          data.add(TrashModel.fromJson(element));
         } catch (e) {
           logger.e(e);
           continue;

@@ -22,6 +22,7 @@ import 'package:dtnd/=models=/response/stock_vol.dart';
 import 'package:dtnd/=models=/response/subsidiaries_model.dart';
 import 'package:dtnd/=models=/response/top_influence_model.dart';
 import 'package:dtnd/=models=/response/top_interested_model.dart';
+import 'package:dtnd/=models=/response/trash_model.dart';
 import 'package:dtnd/=models=/ui_model/field_tree_element_model.dart';
 import 'package:dtnd/data/i_data_center_service.dart';
 import 'package:dtnd/data/i_local_storage_service.dart';
@@ -228,6 +229,7 @@ class DataCenterService
     final String codes = stocks.join(",");
     String leaveMsg = "{\"action\":\"leave\",\"data\":\"$codes\"}";
     socket.emit("regs", leaveMsg);
+    print(leaveMsg);
     return;
   }
 
@@ -395,7 +397,7 @@ class DataCenterService
   }
 
   @override
-  Future<List<TopInterested>> getTopForeignTrade(
+  Future<List<TrashModel>> getTopForeignTrade(
       [int count = 5, String type = "i"]) async {
     final Map<String, String> body = {
       "count": "$count",
@@ -410,7 +412,7 @@ class DataCenterService
   }
 
   @override
-  Future<List<TopInterested>> getTopStockChange(
+  Future<List<TrashModel>> getTopStockChange(
       [int count = 5, String type = "i"]) async {
     final Map<String, String> body = {
       "count": "$count",
@@ -425,7 +427,7 @@ class DataCenterService
   }
 
   @override
-  Future<List<TopInterested>> getTopInterested(
+  Future<List<TrashModel>> getTopInterested(
       [int count = 5, String type = "i"]) async {
     final Map<String, String> body = {
       "count": "$count",
@@ -439,7 +441,7 @@ class DataCenterService
   }
 
   @override
-  Future<List<TopInterested>> getTopStockTrade(
+  Future<List<TrashModel>> getTopStockTrade(
       [int count = 5, String type = "i"]) async {
     final Map<String, String> body = {
       "count": "$count",

@@ -3,5 +3,10 @@ import 'package:dtnd/=models=/side.dart';
 
 class OrderFilterData {
   Side? orderType;
-  OrderStatus? orderStatus;
+  List<OrderStatus>? orderStatus;
+}
+
+class OrderHistoryFilterData {
+  Side? orderType;
+  List<OrderStatus>? orderStatus;
 }

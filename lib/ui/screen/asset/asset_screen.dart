@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:dtnd/=models=/response/account/base_margin_account_model.dart';
+import 'package:dtnd/=models=/ui_model/user_cmd.dart';
 import 'package:dtnd/data/i_data_center_service.dart';
 import 'package:dtnd/data/i_user_service.dart';
 import 'package:dtnd/data/implementations/data_center_service.dart';
@@ -9,6 +10,7 @@ import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/screen/asset/component/account_asset_overview_widget.dart';
 import 'package:dtnd/ui/screen/asset/component/asset_distribution_chart.dart';
 import 'package:dtnd/ui/screen/asset/sheet/extensions_sheet.dart';
+import 'package:dtnd/ui/screen/exchange_stock/order_note/screen/order_note_screen.dart';
 import 'package:dtnd/ui/screen/market/widget/components/not_signin_catalog_widget.dart';
 import 'package:dtnd/ui/screen/virtual_assistant/va_volatolity_warning/component/asset_chart.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
@@ -20,7 +22,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'component/portfolio_and_right_panel.dart';
-import 'sheet/sheet_config.dart';
+import 'sheet/sheet_flow.dart';
 
 class AssetScreen extends StatefulWidget {
   const AssetScreen({super.key});
@@ -151,10 +153,26 @@ class _AssetScreenState extends State<AssetScreen>
                           child: InkWell(
                             borderRadius:
                                 const BorderRadius.all(Radius.circular(6)),
-                            onTap: () {
-                              const ExtensionsISheet()
-                                  .show(context, const ExtensionsSheet());
-                            },
+                            onTap: () => const ExtensionsISheet()
+                                .show(context, const ExtensionsSheet())
+                                .then((value) {
+                              switch (value.runtimeType) {
+                                case ToBaseNoteCmd:
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) =>
+                                        const OrderNoteScreen(),
+                                  ));
+                                  break;
+                                case ToOrderHistoryCmd:
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) =>
+                                        const OrderNoteScreen(defaultab: 2),
+                                  ));
+                                  break;
+                                default:
+                                  break;
+                              }
+                            }),
                             child: Ink(
                               padding: const EdgeInsets.all(8),
                               decoration: const BoxDecoration(

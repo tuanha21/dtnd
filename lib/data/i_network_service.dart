@@ -23,6 +23,7 @@ import 'package:dtnd/=models=/response/subsidiaries_model.dart';
 import 'package:dtnd/=models=/response/top_influence_model.dart';
 import 'package:dtnd/=models=/response/top_interested_model.dart';
 import 'package:dtnd/=models=/response/total_asset_model.dart';
+import 'package:dtnd/=models=/response/trash_model.dart';
 import 'package:dtnd/=models=/response/world_index_model.dart';
 import 'package:dtnd/=models=/ui_model/field_tree_element_model.dart';
 import 'package:dtnd/config/service/environment.dart';
@@ -77,13 +78,13 @@ abstract class INetworkService {
 
   Future<List<String>> getTopSearch();
 
-  Future<List<TopInterested>> getTopInterested(Map<String, dynamic> body);
+  Future<List<TrashModel>> getTopInterested(Map<String, dynamic> body);
 
-  Future<List<TopInterested>> getTopStockTrade(Map<String, dynamic> body);
+  Future<List<TrashModel>> getTopStockTrade(Map<String, dynamic> body);
 
-  Future<List<TopInterested>> getTopStockChange(Map<String, dynamic> body);
+  Future<List<TrashModel>> getTopStockChange(Map<String, dynamic> body);
 
-  Future<List<TopInterested>> getTopForeignTrade(Map<String, dynamic> body);
+  Future<List<TrashModel>> getTopForeignTrade(Map<String, dynamic> body);
 
   Future<List<StockDataResponse>> getListStockData(String listStock);
 

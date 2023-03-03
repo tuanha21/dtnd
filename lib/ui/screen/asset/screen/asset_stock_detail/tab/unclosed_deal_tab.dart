@@ -30,7 +30,7 @@ class _UnclosedDealTabState extends State<UnclosedDealTab> {
   Future<void> getData() async {
     list.clear();
     final res = await exchangeService.getOrdersHistory(userService,
-        stockCode: widget.stockCode);
+        stockCode: widget.stockCode, status: "M");
     logger.v(res);
     if (res.isNotEmpty) {
       list.addAll(res);

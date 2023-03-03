@@ -228,10 +228,10 @@ class _UserWarningCatalogWidgetState extends State<UserWarningCatalogWidget> {
                 itemBuilder: (context, index) {
                   return SizedBox(
                     height: 85,
-                    child: HomeMarketOverviewItem(
-                      data: listStocks!.elementAt(index),
-                      dataCenterService: dataCenterService,
-                    ),
+                    // child: HomeMarketOverviewItem(
+                    //   data: listStocks!.elementAt(index),
+                    //   dataCenterService: dataCenterService,
+                    // ),
                   );
                 },
                 separatorBuilder: (context, index) => const Divider(

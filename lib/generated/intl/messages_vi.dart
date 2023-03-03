@@ -169,6 +169,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "event": MessageLookupByLibrary.simpleMessage("Sự kiện"),
         "exchange_total":
             MessageLookupByLibrary.simpleMessage("Tổng giao dịch"),
+        "executed_profit_and_loss":
+            MessageLookupByLibrary.simpleMessage("Lãi/lỗ đã thực hiện"),
         "extension": MessageLookupByLibrary.simpleMessage("Mở rộng"),
         "fbuy": MessageLookupByLibrary.simpleMessage("NN mua"),
         "fill_OTP": MessageLookupByLibrary.simpleMessage("Nhập mã OTP"),
@@ -245,6 +247,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "low": MessageLookupByLibrary.simpleMessage("Thấp"),
         "low_translations": MessageLookupByLibrary.simpleMessage("Thấp"),
         "margin": MessageLookupByLibrary.simpleMessage("Ký quỹ"),
+        "margin_debt": MessageLookupByLibrary.simpleMessage("Công nợ margin"),
         "market": MessageLookupByLibrary.simpleMessage("Thị trường"),
         "market_breadth":
             MessageLookupByLibrary.simpleMessage("Độ rộng thị trường"),

@@ -1050,6 +1050,26 @@ class S {
     );
   }
 
+  /// `Executed profit/Loss`
+  String get executed_profit_and_loss {
+    return Intl.message(
+      'Executed profit/Loss',
+      name: 'executed_profit_and_loss',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Margin debt`
+  String get margin_debt {
+    return Intl.message(
+      'Margin debt',
+      name: 'margin_debt',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Inday ordernote`
   String get inday_ordnote {
     return Intl.message(
