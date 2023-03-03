@@ -20,6 +20,7 @@ class _InterestedTabState extends State<InterestedTab> {
           Text("Danh mục theo dõi",style: Theme.of(context).textTheme.bodyLarge,),
           const SizedBox(height: 8),
           const Expanded(child: UserCatalogWidget()),
+          const SizedBox(height: 65),
         ],
       ),
     );
