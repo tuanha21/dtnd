@@ -38,6 +38,7 @@ import 'package:dtnd/=models=/response/top_interested_model.dart';
 import 'package:dtnd/=models=/response/total_asset_model.dart';
 import 'package:dtnd/=models=/request/request_model.dart';
 import 'package:dtnd/=models=/response/world_index_model.dart';
+import 'package:dtnd/=models=/response/stock_derivative_model.dart';
 import 'package:dtnd/=models=/ui_model/field_tree_element_model.dart';
 import 'package:dtnd/config/service/environment.dart';
 import 'package:dtnd/data/i_network_service.dart';
@@ -98,6 +99,11 @@ class NetworkService implements INetworkService {
   }
 
   Uri url_board(String path) => Uri.https(board_url, path);
+
+  Uri url_board_sbsi(String path) {
+    print(Uri.https(sbboard_url, path));
+    return Uri.https(sbboard_url, path);
+  }
 
   Uri url_board_data_feed(Map<String, dynamic> queryParameters) {
     print(Uri.https(sbboard_url, "datafeed/history", queryParameters));
@@ -1115,8 +1121,8 @@ class NetworkService implements INetworkService {
   @override
   Future<List<Filter>> getFilterAccount() async {
     IUserService userService = UserService();
-    var response = await client
-        .get(url_algo_apec('getFilters'), headers: {"X-USERNAME": userService.token.value?.user ?? ""});
+    var response = await client.get(url_algo_apec('getFilters'),
+        headers: {"X-USERNAME": userService.token.value?.user ?? ""});
     var mapData = json.decode(response.body);
     logger.d(mapData);
     List data = mapData['data'];
@@ -1227,6 +1233,34 @@ class NetworkService implements INetworkService {
       }
       var res = decode(response.bodyBytes);
       return IndContrib.fromJson(res);
+    } catch (e) {
+      logger.e(e.toString());
+      rethrow;
+    }
+  }
+
+  @override
+  Future<List<DerivativeResModel>> getListDerivative() async {
+    var response = await client.get(url_board_sbsi("pslistdata"));
+    var data = jsonDecode(response.body);
+    var list = data as List;
+    List<String> listString = [];
+    for (var element in list) {
+      listString.add(element.toString());
+    }
+
+    try {
+      final http.Response _res = await client
+          .get(url_board_sbsi("getpsalldatalsnapshot/" + listString.join(',')));
+          
+    final List<dynamic> responseBody = decode(_res.bodyBytes);
+    if (responseBody.isEmpty) throw Exception();
+
+    List<DerivativeResModel>? dataS = [];
+    for (var element in responseBody) {
+      dataS.add(DerivativeResModel.fromJson(element));
+    }
+    return dataS;
     } catch (e) {
       logger.e(e.toString());
       rethrow;

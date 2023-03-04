@@ -14,6 +14,7 @@ import 'package:dtnd/ui/screen/market/market_controller.dart';
 import 'package:dtnd/ui/screen/market/widget/components/deep_market_chart.dart';
 import 'package:dtnd/ui/screen/market/widget/components/index_chart.dart';
 import 'package:dtnd/ui/screen/market/widget/components/user_catalog_widget.dart';
+import 'package:dtnd/ui/screen/market/widget/components/derivative_widget.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/widget/section/section_with_title.dart';
 import 'package:flutter/material.dart';
@@ -36,12 +37,10 @@ class _MarketOverviewTabState extends State<MarketOverviewTab> {
 
   late final List<StockModel> listCatalog;
 
-
   @override
   void initState() {
     super.initState();
   }
-
 
   List<charts.Series<DeepModel, String>> _generateData(List<DeepModel> datas) {
     datas.removeWhere((element) => element.tYPE == "Total");
@@ -93,18 +92,19 @@ class _MarketOverviewTabState extends State<MarketOverviewTab> {
     return ListView(
       children: [
         const IndexChart(),
-        ObxValue<Rx<bool>>((loading) {
-          if (loading.value) {
-            return Center(
-              child: Text(S.of(context).loading),
-            );
-          }
-          final seriesList = _generateData(marketController.listDeepMarket);
-          return Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: DeepMarketChart(seriesList),
-          );
-        }, marketController.loadingDeepModel),
+        const DerivativeWidget(),
+        // ObxValue<Rx<bool>>((loading) {
+        //   if (loading.value) {
+        //     return Center(
+        //       child: Text(S.of(context).loading),
+        //     );
+        //   }
+        //   final seriesList = _generateData(marketController.listDeepMarket);
+        //   return Padding(
+        //     padding: const EdgeInsets.symmetric(horizontal: 20),
+        //     child: DeepMarketChart(seriesList),
+        //   );
+        // }, marketController.loadingDeepModel),
         const HeapMapKL(),
         const SizedBox(height: 100),
       ],

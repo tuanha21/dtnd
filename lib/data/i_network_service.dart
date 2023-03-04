@@ -45,6 +45,7 @@ import '../=models=/response/stock_board.dart';
 import '../=models=/response/stock_his.dart';
 import '../=models=/response/stock_industry.dart';
 import '../=models=/response/stock_vol.dart';
+import '../=models=/response/stock_derivative_model.dart';
 
 abstract class INetworkService {
   late IO.Socket socket;
@@ -190,4 +191,7 @@ abstract class INetworkService {
   Future setFilter(Filter filter, String type);
 
   Future deleteFilter(int id);
+
+  // derivative
+  Future<List<DerivativeResModel>> getListDerivative();
 }
