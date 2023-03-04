@@ -36,6 +36,7 @@ import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 import '../../=models=/response/index_board.dart';
 import '../../=models=/response/stock_industry.dart';
+import '../../=models=/response/stock_derivative_model.dart';
 
 const List<String> defaultListStock = [
   'ACB',
@@ -674,5 +675,10 @@ class DataCenterService implements IDataCenterService {
   @override
   Future<IndContrib> getIndFvalue(String marketCode) {
     return networkService.getIndFvalue(marketCode);
+  }
+
+  @override
+  Future<List<DerivativeResModel>> getListDerivative() {
+    return networkService.getListDerivative();
   }
 }
