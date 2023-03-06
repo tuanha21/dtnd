@@ -29,6 +29,7 @@ import '../=models=/response/introduct_company.dart';
 import '../=models=/response/sec_event.dart';
 import '../=models=/response/stock_industry.dart';
 import '../=models=/response/stock_vol.dart';
+import '../=models=/response/stock_derivative_model.dart';
 
 abstract class IDataCenterService {
   Set<IndexModel> get listIndexs;
@@ -137,4 +138,7 @@ abstract class IDataCenterService {
   Future<List<StockMatch>> getListStockMatch(String stockCode);
 
   Future<IndContrib> getIndFvalue(String marketCode);
+
+  // phái sinh
+  Future<List<DerivativeResModel>> getListDerivative();
 }

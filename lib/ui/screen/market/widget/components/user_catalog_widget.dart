@@ -102,7 +102,6 @@ class _UserCatalogWidgetState extends State<UserCatalogWidget> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-
                 GestureDetector(
                   onTap: () async {
                     await updateCatalog(currentCatalog);
@@ -242,7 +241,8 @@ class _UserCatalogWidgetState extends State<UserCatalogWidget> {
                                     setState(() {
                                       currentCatalog.listStock
                                           .remove(list![index].stock.stockCode);
-                                      savedCatalog.catalogs[currentCatalogIndex] =
+                                      savedCatalog
+                                              .catalogs[currentCatalogIndex] =
                                           currentCatalog;
                                       localStorageService
                                           .putSavedCatalog(savedCatalog);
