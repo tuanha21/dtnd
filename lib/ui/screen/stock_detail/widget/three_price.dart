@@ -14,10 +14,10 @@ import 'package:get/get.dart';
 class ThreePrices extends StatelessWidget {
   const ThreePrices({
     super.key,
-    required this.stockModel,
+    this.stockModel,
   });
 
-  final StockModel stockModel;
+  final StockModel? stockModel;
 
   @override
   Widget build(BuildContext context) {
@@ -37,22 +37,22 @@ class ThreePrices extends StatelessWidget {
                   ThreePriceElement(
                     themeMode: themeMode.value,
                     side: Side.buy,
-                    totalVol: stockModel.stockData.getTotalVol(Side.buy),
-                    data: stockModel.stockData.g1.value,
+                    totalVol: stockModel?.stockData.getTotalVol(Side.buy),
+                    data: stockModel?.stockData.g1.value,
                   ),
                   const SizedBox(height: 8),
                   ThreePriceElement(
                     themeMode: themeMode.value,
                     side: Side.buy,
-                    totalVol: stockModel.stockData.getTotalVol(Side.buy),
-                    data: stockModel.stockData.g2.value,
+                    totalVol: stockModel?.stockData.getTotalVol(Side.buy),
+                    data: stockModel?.stockData.g2.value,
                   ),
                   const SizedBox(height: 8),
                   ThreePriceElement(
                     themeMode: themeMode.value,
                     side: Side.buy,
-                    totalVol: stockModel.stockData.getTotalVol(Side.buy),
-                    data: stockModel.stockData.g3.value,
+                    totalVol: stockModel?.stockData.getTotalVol(Side.buy),
+                    data: stockModel?.stockData.g3.value,
                   ),
                   const SizedBox(height: 8),
                 ],
@@ -70,22 +70,22 @@ class ThreePrices extends StatelessWidget {
                   ThreePriceElement(
                     themeMode: themeMode.value,
                     side: Side.sell,
-                    totalVol: stockModel.stockData.getTotalVol(Side.sell),
-                    data: stockModel.stockData.g4.value,
+                    totalVol: stockModel?.stockData.getTotalVol(Side.sell),
+                    data: stockModel?.stockData.g4.value,
                   ),
                   const SizedBox(height: 8),
                   ThreePriceElement(
                     themeMode: themeMode.value,
                     side: Side.sell,
-                    totalVol: stockModel.stockData.getTotalVol(Side.sell),
-                    data: stockModel.stockData.g5.value,
+                    totalVol: stockModel?.stockData.getTotalVol(Side.sell),
+                    data: stockModel?.stockData.g5.value,
                   ),
                   const SizedBox(height: 8),
                   ThreePriceElement(
                     themeMode: themeMode.value,
                     side: Side.sell,
-                    totalVol: stockModel.stockData.getTotalVol(Side.sell),
-                    data: stockModel.stockData.g6.value,
+                    totalVol: stockModel?.stockData.getTotalVol(Side.sell),
+                    data: stockModel?.stockData.g6.value,
                   ),
                   const SizedBox(height: 8),
                 ],
@@ -162,17 +162,17 @@ class ThreePriceElement extends StatefulWidget {
 
   final Side side;
   final ThemeMode themeMode;
-  final num totalVol;
+  final num? totalVol;
   final String? data;
 
-  String get price => data?.split('|').elementAt(0) ?? "0";
+  String get price => data?.split('|').elementAt(0) ?? "-";
 
   double get vol =>
       (double.tryParse(data?.split('|').elementAt(1) ?? "0") ?? 0) * 10;
 
   String get status => data?.split('|').elementAt(2) ?? "r";
 
-  double get ratio => totalVol == 0 ? 0 : vol / totalVol;
+  double get ratio => totalVol == 0 ? 0 : vol / (totalVol ?? 1);
 
   @override
   State<ThreePriceElement> createState() => _ThreePriceElementState();
@@ -230,9 +230,7 @@ class _ThreePriceElementState extends State<ThreePriceElement>
 
   List<Widget> rowChildren() {
     List<Widget> rowChildren;
-    if (double.tryParse(widget.price) == 0) {
-      rowChildren = [];
-    } else if (widget.side.isBuy) {
+    if (widget.side.isBuy) {
       rowChildren = [
         Text(
           NumUtils.formatInteger10(widget.vol),
@@ -319,14 +317,25 @@ class VolBGPainter extends CustomPainter {
       canvas.translate(size.width, size.height);
       canvas.rotate(pi);
     }
-    canvas.drawRRect(
-      RRect.fromRectAndCorners(
-        Rect.fromLTWH(0, 0, ratio, size.height),
-        topRight: const Radius.circular(4),
-        bottomRight: const Radius.circular(4),
-      ),
-      paint,
-    );
+    if (ratio == 0) {
+      canvas.drawRRect(
+        RRect.fromRectAndCorners(
+          Rect.fromLTWH(0, 0, 1, size.height),
+          topRight: const Radius.circular(4),
+          bottomRight: const Radius.circular(4),
+        ),
+        paint,
+      );
+    } else {
+      canvas.drawRRect(
+        RRect.fromRectAndCorners(
+          Rect.fromLTWH(0, 0, ratio, size.height),
+          topRight: const Radius.circular(4),
+          bottomRight: const Radius.circular(4),
+        ),
+        paint,
+      );
+    }
   }
 
   @override

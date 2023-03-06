@@ -22,10 +22,8 @@ import 'package:flutter/material.dart';
 class StockOrderConfirmSheet extends StatefulWidget {
   const StockOrderConfirmSheet({
     super.key,
-    required this.stockModel,
     required this.orderData,
   });
-  final StockModel stockModel;
   final OrderData orderData;
   @override
   State<StockOrderConfirmSheet> createState() => _StockOrderConfirmSheetState();
@@ -61,21 +59,21 @@ class _StockOrderConfirmSheetState extends State<StockOrderConfirmSheet> {
                 Row(
                   children: [
                     StockCirleIcon(
-                      stockCode: widget.stockModel.stock.stockCode,
+                      stockCode: widget.orderData.stockModel.stock.stockCode,
                     ),
                     const SizedBox(width: 8),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          widget.stockModel.stock.stockCode,
+                          widget.orderData.stockModel.stock.stockCode,
                           style: Theme.of(context)
                               .textTheme
                               .bodyMedium!
                               .copyWith(fontWeight: FontWeight.w600),
                         ),
                         Text(
-                          widget.stockModel.stock.postTo!.name,
+                          widget.orderData.stockModel.stock.postTo!.name,
                           style: Theme.of(context)
                               .textTheme
                               .titleSmall!

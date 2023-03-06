@@ -3,6 +3,7 @@ import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/screen/asset/component/investment_catalog_widget.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_textstyle.dart';
+import 'package:dtnd/ui/widget/empty_list_widget.dart';
 import 'package:dtnd/utilities/num_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -91,53 +92,58 @@ class _PortfolioAndRightPanelState extends State<PortfolioAndRightPanel>
                         ?.firstWhereOrNull((element) =>
                             element.runtimeType == BaseMarginAccountModel)
                     as BaseMarginAccountModel?;
-                return Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      children: [
-                        Text(
-                          "Lãi/lỗ chưa đóng",
-                          style: AppTextStyle.labelMedium_12.copyWith(
-                            color: AppColors.neutral_03,
+                if (data?.portfolioStatus?.porfolioStocks?.isNotEmpty ??
+                    false) {
+                  return Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        children: [
+                          Text(
+                            "Lãi/lỗ chưa đóng",
+                            style: AppTextStyle.labelMedium_12.copyWith(
+                              color: AppColors.neutral_03,
+                            ),
                           ),
-                        ),
-                        const SizedBox(width: 4),
-                        GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              showProfitAndLoss = !showProfitAndLoss;
-                            });
-                          },
-                          child: Icon(
-                            showProfitAndLoss
-                                ? Icons.visibility_outlined
-                                : Icons.visibility_off_outlined,
-                            size: 16,
-                            weight: 300,
+                          const SizedBox(width: 4),
+                          GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                showProfitAndLoss = !showProfitAndLoss;
+                              });
+                            },
+                            child: Icon(
+                              showProfitAndLoss
+                                  ? Icons.visibility_outlined
+                                  : Icons.visibility_off_outlined,
+                              size: 16,
+                              weight: 300,
+                            ),
+                          )
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          if (data?.portfolioStatus?.prefixIcon != null)
+                            Image.asset(
+                              data?.portfolioStatus?.prefixIcon ?? "",
+                              width: 10,
+                              color: data?.portfolioStatus?.color,
+                            ),
+                          const SizedBox(width: 6),
+                          Text(
+                            "${showProfitAndLoss ? NumUtils.formatDouble(data?.portfolioStatus?.gainLossValue) : "********"}đ (${data?.portfolioStatus?.gainLossPer?.trim() ?? "-"})",
+                            overflow: TextOverflow.ellipsis,
+                            style: AppTextStyle.titleSmall_14
+                                .copyWith(color: data?.portfolioStatus?.color),
                           ),
-                        )
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        if (data?.portfolioStatus?.prefixIcon != null)
-                          Image.asset(
-                            data?.portfolioStatus?.prefixIcon ?? "",
-                            width: 10,
-                            color: data?.portfolioStatus?.color,
-                          ),
-                        const SizedBox(width: 6),
-                        Text(
-                          "${showProfitAndLoss ? NumUtils.formatDouble(data?.portfolioStatus?.gainLossValue) : "********"}đ (${data?.portfolioStatus?.gainLossPer?.trim() ?? "-"})",
-                          overflow: TextOverflow.ellipsis,
-                          style: AppTextStyle.titleSmall_14
-                              .copyWith(color: data?.portfolioStatus?.color),
-                        ),
-                      ],
-                    ),
-                  ],
-                );
+                        ],
+                      ),
+                    ],
+                  );
+                } else {
+                  return Container();
+                }
               }),
             ),
           Obx(() {
@@ -146,6 +152,12 @@ class _PortfolioAndRightPanelState extends State<PortfolioAndRightPanel>
                 as BaseMarginAccountModel?;
 
             if (_tabController.index == 0) {
+              if (data?.portfolioStatus?.porfolioStocks?.isEmpty ?? true) {
+                return const Padding(
+                  padding: EdgeInsets.symmetric(vertical: 16),
+                  child: EmptyListWidget(),
+                );
+              }
               return Column(
                 children: [
                   for (int i = 0;
@@ -168,6 +180,12 @@ class _PortfolioAndRightPanelState extends State<PortfolioAndRightPanel>
                 ],
               );
             } else {
+              if (data?.listUnexecutedRight?.isEmpty ?? true) {
+                return const Padding(
+                  padding: EdgeInsets.symmetric(vertical: 16),
+                  child: EmptyListWidget(),
+                );
+              }
               return Column(
                 children: [
                   for (int i = 0;

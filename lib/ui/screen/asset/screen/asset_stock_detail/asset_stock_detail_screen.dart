@@ -16,6 +16,7 @@ import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:dtnd/ui/theme/app_textstyle.dart';
 import 'package:dtnd/ui/widget/button/single_color_text_button.dart';
+import 'package:dtnd/ui/widget/empty_list_widget.dart';
 import 'package:dtnd/ui/widget/overlay/login_first_dialog.dart';
 import 'package:dtnd/ui/widget/picker/datetime_picker_widget.dart';
 import 'package:dtnd/utilities/num_utils.dart';
@@ -320,7 +321,10 @@ class _AssetStockDetailScreenState extends State<AssetStockDetailScreen>
                               if (assetStockDetailController.shareEarnedModel
                                       .value?.listDetail.isEmpty ??
                                   true) {
-                                return Container();
+                                return const Padding(
+                                  padding: EdgeInsets.symmetric(vertical: 16),
+                                  child: EmptyListWidget(),
+                                );
                               }
                               return Container(
                                 padding: const EdgeInsets.all(16),
@@ -473,7 +477,12 @@ class _AssetStockDetailScreenState extends State<AssetStockDetailScreen>
                           ],
                         ),
                         Column(
-                          children: [],
+                          children: const [
+                            Padding(
+                              padding: EdgeInsets.symmetric(vertical: 16),
+                              child: EmptyListWidget(),
+                            )
+                          ],
                         )
                       ]),
                     )

@@ -13,132 +13,245 @@ import 'package:get/get.dart';
 
 import 'overbought_sell_widget.dart';
 
-class OrderOrderPanel extends StatefulWidget {
-  const OrderOrderPanel(
-      {super.key, required this.stockModel, required this.onChangeStock});
-  final StockModel stockModel;
-  final void Function(StockModel) onChangeStock;
-  @override
-  State<OrderOrderPanel> createState() => _OrderOrderPanelState();
-}
+final GlobalKey<FormFieldState<StockModel?>> stockModelFormKey =
+    GlobalKey<FormFieldState<StockModel?>>();
 
-class _OrderOrderPanelState extends State<OrderOrderPanel> {
+class OrderOrderPanel extends StatelessWidget {
+  const OrderOrderPanel(
+      {super.key,
+      this.stockModel,
+      required this.onChangeStock,
+      required this.onValidate});
+  final StockModel? stockModel;
+  final void Function(StockModel) onChangeStock;
+  final ValueChanged<String?> onValidate;
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
     return Column(
       children: [
-        Material(
-          borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
-          child: InkWell(
-            borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
-            onTap: () {
-              Navigator.of(context)
-                  .push(MaterialPageRoute(
-                builder: (context) => const SearchScreen(),
-              ))
-                  .then((value) async {
-                if (value is Stock) {
-                  DataCenterService().getStockModelsFromStockCodes(
-                      [value.stockCode]).then((stockModels) {
-                    if (stockModels?.isNotEmpty ?? false) {
-                      return widget.onChangeStock.call(stockModels!.first);
-                    }
-                  });
-                }
-              });
+        FormField<StockModel?>(
+            key: stockModelFormKey,
+            validator: (value) {
+              if (value == null) {
+                const String errorTxt = "Vui lòng chọn mã CK";
+                onValidate.call(errorTxt);
+                return errorTxt;
+              }
+              onValidate.call(null);
+              return null;
             },
-            child: Ink(
-              // height: 60,
-              padding: const EdgeInsets.only(
-                  top: 16, bottom: 8, left: 16, right: 16),
-              decoration: const BoxDecoration(
-                borderRadius: BorderRadius.vertical(top: Radius.circular(12)),
-                color: AppColors.neutral_05,
-              ),
-              child: Row(
-                children: [
-                  Row(
-                    children: [
-                      Text(
-                        "${widget.stockModel.stock.stockCode} (${widget.stockModel.stock.postTo?.name})",
-                        style: textTheme.titleSmall,
-                      ),
-                      const SizedBox(width: 4),
-                      SizedBox.square(
-                          dimension: 13,
-                          child: Image.asset(AppImages.search_icon))
-                    ],
-                  ),
-                  Expanded(child: Obx(() {
-                    return Column(
+            initialValue: stockModel,
+            builder: (formState) {
+              final BoxBorder? border;
+              if (formState.hasError) {
+                border = Border.all(color: AppColors.semantic_03);
+              } else {
+                border = null;
+              }
+              return Material(
+                borderRadius:
+                    const BorderRadius.vertical(top: Radius.circular(12)),
+                child: InkWell(
+                  borderRadius:
+                      const BorderRadius.vertical(top: Radius.circular(12)),
+                  onTap: () {
+                    Navigator.of(context)
+                        .push(MaterialPageRoute(
+                      builder: (context) => const SearchScreen(),
+                    ))
+                        .then((value) async {
+                      if (value is Stock) {
+                        DataCenterService().getStockModelsFromStockCodes(
+                            [value.stockCode]).then((stockModels) {
+                          if (stockModels?.isNotEmpty ?? false) {
+                            formState.didChange(stockModels!.first);
+                            formState.validate();
+                            return onChangeStock.call(stockModels.first);
+                          }
+                        });
+                      }
+                    });
+                  },
+                  child: Ink(
+                    // height: 60,
+                    padding: const EdgeInsets.only(
+                        top: 16, bottom: 8, left: 16, right: 16),
+                    decoration: BoxDecoration(
+                      border: border,
+                      borderRadius:
+                          const BorderRadius.vertical(top: Radius.circular(12)),
+                      color: AppColors.neutral_05,
+                    ),
+                    child: Row(
                       children: [
                         Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             Text(
-                              NumUtils.formatDouble(
-                                  widget.stockModel.stockData.lastPrice.value),
-                              style: AppTextStyle.bodyMedium_14.copyWith(
-                                color: widget.stockModel.stockData.color,
-                                fontWeight: FontWeight.w700,
-                              ),
+                              "${stockModel?.stock.stockCode ?? "-"} (${stockModel?.stock.postTo?.name ?? "-"})",
+                              style: textTheme.titleSmall,
                             ),
-                            const SizedBox(width: 3),
-                            Text(
-                              "(${NumUtils.formatDouble(widget.stockModel.stockData.ot.value)} ${NumUtils.formatDouble(widget.stockModel.stockData.changePc.value)}%)",
-                              style: AppTextStyle.labelSmall_10.copyWith(
-                                  color: widget.stockModel.stockData.color,
-                                  fontWeight: FontWeight.w500),
+                            const SizedBox(width: 4),
+                            SizedBox.square(
+                              dimension: 13,
+                              child: Image.asset(AppImages.search_icon),
                             )
                           ],
                         ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            Text(
-                              NumUtils.formatInteger10(
-                                  widget.stockModel.stockData.lot.value, "-"),
-                              style: AppTextStyle.labelSmall_10.copyWith(
-                                color: AppColors.neutral_02,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                            Text(
-                              " CP",
-                              style: AppTextStyle.labelSmall_10.copyWith(
-                                color: AppColors.neutral_03,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                            const SizedBox(width: 8),
-                            Text(
-                              NumUtils.formatDouble(
-                                  (widget.stockModel.stockData.value ?? 0) /
-                                      1000000000,
-                                  "-"),
-                              style: AppTextStyle.labelSmall_10.copyWith(
-                                color: AppColors.neutral_02,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                            Text(
-                              " Tỷ",
-                              style: AppTextStyle.labelSmall_10.copyWith(
-                                color: AppColors.neutral_03,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                          ],
+                        Expanded(
+                          child: Builder(
+                            builder: (context) {
+                              if (stockModel != null) {
+                                return Obx(
+                                  () => Column(
+                                    children: [
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.end,
+                                        children: [
+                                          Text(
+                                            NumUtils.formatDouble(stockModel!
+                                                .stockData.lastPrice.value),
+                                            style: AppTextStyle.bodyMedium_14
+                                                .copyWith(
+                                              color:
+                                                  stockModel!.stockData.color,
+                                              fontWeight: FontWeight.w700,
+                                            ),
+                                          ),
+                                          const SizedBox(width: 3),
+                                          Text(
+                                            "(${NumUtils.formatDouble(stockModel?.stockData.ot.value)} ${NumUtils.formatDouble(stockModel?.stockData.changePc.value)}%)",
+                                            style: AppTextStyle.labelSmall_10
+                                                .copyWith(
+                                                    color: stockModel!
+                                                        .stockData.color,
+                                                    fontWeight:
+                                                        FontWeight.w500),
+                                          )
+                                        ],
+                                      ),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.end,
+                                        children: [
+                                          Text(
+                                            NumUtils.formatInteger10(
+                                                stockModel!.stockData.lot.value,
+                                                "-"),
+                                            style: AppTextStyle.labelSmall_10
+                                                .copyWith(
+                                              color: AppColors.neutral_02,
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                          ),
+                                          Text(
+                                            " CP",
+                                            style: AppTextStyle.labelSmall_10
+                                                .copyWith(
+                                              color: AppColors.neutral_03,
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                          ),
+                                          const SizedBox(width: 8),
+                                          Text(
+                                            NumUtils.formatDouble(
+                                                (stockModel!.stockData.value ??
+                                                        0) /
+                                                    1000000000,
+                                                "-"),
+                                            style: AppTextStyle.labelSmall_10
+                                                .copyWith(
+                                              color: AppColors.neutral_02,
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                          ),
+                                          Text(
+                                            " Tỷ",
+                                            style: AppTextStyle.labelSmall_10
+                                                .copyWith(
+                                              color: AppColors.neutral_03,
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                          ),
+                                        ],
+                                      )
+                                    ],
+                                  ),
+                                );
+                              }
+                              return Column(
+                                children: [
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                      Text(
+                                        "-",
+                                        style:
+                                            AppTextStyle.bodyMedium_14.copyWith(
+                                          color: AppColors.semantic_02,
+                                          fontWeight: FontWeight.w700,
+                                        ),
+                                      ),
+                                      const SizedBox(width: 3),
+                                      Text(
+                                        "(- -%)",
+                                        style: AppTextStyle.labelSmall_10
+                                            .copyWith(
+                                                color: AppColors.semantic_02,
+                                                fontWeight: FontWeight.w500),
+                                      )
+                                    ],
+                                  ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                      Text(
+                                        "-",
+                                        style:
+                                            AppTextStyle.labelSmall_10.copyWith(
+                                          color: AppColors.neutral_02,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ),
+                                      Text(
+                                        " CP",
+                                        style:
+                                            AppTextStyle.labelSmall_10.copyWith(
+                                          color: AppColors.neutral_03,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ),
+                                      const SizedBox(width: 8),
+                                      Text(
+                                        "-",
+                                        style:
+                                            AppTextStyle.labelSmall_10.copyWith(
+                                          color: AppColors.neutral_02,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ),
+                                      Text(
+                                        " Tỷ",
+                                        style:
+                                            AppTextStyle.labelSmall_10.copyWith(
+                                          color: AppColors.neutral_03,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ),
+                                    ],
+                                  )
+                                ],
+                              );
+                            },
+                          ),
                         )
                       ],
-                    );
-                  }))
-                ],
-              ),
-            ),
-          ),
-        ),
+                    ),
+                  ),
+                ),
+              );
+            }),
         Container(
           padding:
               const EdgeInsets.only(bottom: 16, top: 40, left: 16, right: 16),
@@ -148,12 +261,12 @@ class _OrderOrderPanelState extends State<OrderOrderPanel> {
           ),
           child: Column(
             children: [
-              ThreePrices(stockModel: widget.stockModel),
+              ThreePrices(stockModel: stockModel),
               // Obx(() => Container(
               //       height: 4,
               //     )),
               const SizedBox(height: 4),
-              OverboughtSellWidget(stockModel: widget.stockModel),
+              OverboughtSellWidget(stockModel: stockModel),
               const Padding(
                 padding: EdgeInsets.symmetric(vertical: 8),
                 child: Divider(
@@ -172,7 +285,7 @@ class _OrderOrderPanelState extends State<OrderOrderPanel> {
                       ),
                       const SizedBox(width: 4),
                       Text(
-                        widget.stockModel.stockData.f.value?.toString() ?? "-",
+                        stockModel?.stockData.f.value?.toString() ?? "-",
                         style: AppTextStyle.labelMedium_12.copyWith(
                             color: AppColors.semantic_04,
                             fontWeight: FontWeight.w600),
@@ -188,7 +301,7 @@ class _OrderOrderPanelState extends State<OrderOrderPanel> {
                       ),
                       const SizedBox(width: 4),
                       Text(
-                        widget.stockModel.stockData.r.value?.toString() ?? "-",
+                        stockModel?.stockData.r.value?.toString() ?? "-",
                         style: AppTextStyle.labelMedium_12.copyWith(
                             color: AppColors.semantic_02,
                             fontWeight: FontWeight.w600),
@@ -204,7 +317,7 @@ class _OrderOrderPanelState extends State<OrderOrderPanel> {
                       ),
                       const SizedBox(width: 4),
                       Text(
-                        widget.stockModel.stockData.c.value?.toString() ?? "-",
+                        stockModel?.stockData.c.value?.toString() ?? "-",
                         style: AppTextStyle.labelMedium_12.copyWith(
                             color: AppColors.semantic_05,
                             fontWeight: FontWeight.w600),

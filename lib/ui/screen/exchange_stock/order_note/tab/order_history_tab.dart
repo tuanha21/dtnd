@@ -11,6 +11,9 @@ import 'package:dtnd/ui/screen/exchange_stock/order_note/sheet/order_filter_flow
 import 'package:dtnd/ui/screen/exchange_stock/order_note/sheet/order_filter_sheet.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
+import 'package:dtnd/ui/widget/empty_list_widget.dart';
+import 'package:dtnd/ui/widget/picker/datetime_picker_widget.dart';
+import 'package:dtnd/utilities/time_utils.dart';
 import 'package:flutter/material.dart';
 
 class OrderHistoryTab extends StatefulWidget {
@@ -23,17 +26,32 @@ class OrderHistoryTab extends StatefulWidget {
 class _OrderHistoryTabState extends State<OrderHistoryTab> {
   final IUserService userService = UserService();
   final IExchangeService exchangeService = ExchangeService();
+
+  late final TextEditingController fromdayController;
+  late final TextEditingController todayController;
+
   List<OrderHistoryModel>? listOrder;
   List<OrderHistoryModel>? listOrderShow;
   OrderFilterData? orderFilterData;
+
   @override
   void initState() {
+    fromdayController = TextEditingController(
+        text: TimeUtilities.commonTimeFormat
+            .format(DateTime.now().subtract(const Duration(days: 1))));
+    todayController = TextEditingController(
+        text: TimeUtilities.commonTimeFormat.format(DateTime.now()));
     super.initState();
     getData();
   }
 
-  Future<void> getData() async {
-    listOrder = await exchangeService.getOrdersHistory(userService);
+  Future<void> getData({DateTime? fromDay, DateTime? toDay}) async {
+    final from =
+        fromDay ?? TimeUtilities.commonTimeFormat.parse(fromdayController.text);
+    final to =
+        toDay ?? TimeUtilities.commonTimeFormat.parse(todayController.text);
+    listOrder = await exchangeService.getOrdersHistory(userService,
+        fromDay: from, toDay: to);
     listOrderShow = List<OrderHistoryModel>.from(listOrder ?? []);
     if (mounted) {
       setState(() {});
@@ -72,6 +90,27 @@ class _OrderHistoryTabState extends State<OrderHistoryTab> {
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
       child: Column(
         children: [
+          const SizedBox(height: 8),
+          Row(
+            children: [
+              Expanded(
+                  child: DateTimePickerWidget(
+                controller: fromdayController,
+                labelText: S.of(context).from_day,
+                firstDate:
+                    TimeUtilities.getPreviousDateTime(TimeUtilities.month(3)),
+                onChanged: (value) => getData(fromDay: value),
+              )),
+              const SizedBox(width: 16),
+              Expanded(
+                  child: DateTimePickerWidget(
+                controller: todayController,
+                labelText: S.of(context).to_day,
+                onChanged: (value) => getData(toDay: value),
+              ))
+            ],
+          ),
+          const SizedBox(height: 8),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -121,6 +160,12 @@ class _OrderHistoryTabState extends State<OrderHistoryTab> {
               //     ));
               //   }
               // }
+              if (listOrderShow?.isEmpty ?? true) {
+                return const Padding(
+                  padding: EdgeInsets.symmetric(vertical: 16),
+                  child: EmptyListWidget(),
+                );
+              }
               return ListView(
                 children: [
                   Container(

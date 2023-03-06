@@ -71,6 +71,7 @@ class _DateTimePickerWidgetState extends State<DateTimePickerWidget> {
         if (selectedDate != null) {
           _controller.text =
               TimeUtilities.commonTimeFormat.format(selectedDate);
+          widget.onChanged?.call(selectedDate);
         }
       },
       child: TextField(

@@ -24,6 +24,7 @@ import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:dtnd/ui/theme/app_textstyle.dart';
 import 'package:dtnd/ui/widget/button/single_color_text_button.dart';
+import 'package:dtnd/ui/widget/expanded_widget.dart';
 import 'package:dtnd/ui/widget/icon/sheet_header.dart';
 import 'package:dtnd/ui/widget/input/interval_input.dart';
 import 'package:dtnd/utilities/logger.dart';
@@ -37,7 +38,7 @@ class StockOrderSheet extends StatefulWidget {
     required this.stockModel,
     this.orderData,
   });
-  final StockModel stockModel;
+  final StockModel? stockModel;
   final OrderData? orderData;
   @override
   State<StockOrderSheet> createState() => _StockOrderSheetState();
@@ -49,6 +50,9 @@ class _StockOrderSheetState extends State<StockOrderSheet>
   final IUserService userService = UserService();
   final IExchangeService exchangeService = ExchangeService();
   final IDataCenterService dataCenterService = DataCenterService();
+
+  final GlobalKey<FormState> orderKey = GlobalKey<FormState>();
+
   late final Set<OrderType> listOrderTypes;
   final TextEditingController priceController = TextEditingController();
   final TextEditingController volumnController =
@@ -59,29 +63,29 @@ class _StockOrderSheetState extends State<StockOrderSheet>
 
   late OrderType selectedOrderType;
 
-  late StockModel stockModel;
+  StockModel? stockModel;
 
   StockInfoCore? stockInfoCore;
 
   StockCashBalanceModel? stockCashBalanceModel;
 
-  bool showSearchBox = false;
+  String? errorText;
 
   @override
   void initState() {
     tabController = TabController(length: 3, vsync: this);
     stockModel = widget.stockModel;
     super.initState();
-    if (widget.orderData != null) {
-      listOrderTypes = stockModel.stock.postTo?.listOrderType ?? {};
-      selectedOrderType = widget.orderData!.orderType;
-      priceController.text = widget.orderData!.price;
-      volumnController.text = widget.orderData!.volumn.toString();
-    } else {
-      listOrderTypes = stockModel.stock.postTo?.listOrderType ?? {};
+    if (stockModel == null) {
+      listOrderTypes = {OrderType.LO};
       selectedOrderType = listOrderTypes.first;
+    } else {
+      listOrderTypes = stockModel!.stock.postTo?.listOrderType ?? {};
+      selectedOrderType = widget.orderData?.orderType ?? listOrderTypes.first;
+      priceController.text = widget.orderData?.price ?? "0";
+      volumnController.text = widget.orderData?.volumn.toString() ?? "100";
 
-      select(selectedOrderType);
+      // select(selectedOrderType);
     }
     getStockInfoCore();
     getStockCashBalance();
@@ -99,28 +103,34 @@ class _StockOrderSheetState extends State<StockOrderSheet>
   }
 
   Future<void> getStockInfoCore() async {
-    stockModel.stockDataCore =
-        await stockModel.getStockInfoCore(networkService, userService);
+    if (stockModel == null) {
+      return;
+    }
+    stockModel!.stockDataCore =
+        await stockModel!.getStockInfoCore(networkService, userService);
     select(selectedOrderType);
-    logger.v(stockModel.stockDataCore?.toJson());
+    logger.v(stockModel!.stockDataCore?.toJson());
     setState(() {});
   }
 
   Future<void> getStockCashBalance() async {
+    if (stockModel == null) {
+      return;
+    }
     stockCashBalanceModel = await exchangeService.getSCashBalance(
-        stockCode: stockModel.stock.stockCode,
+        stockCode: stockModel!.stock.stockCode,
         price: priceController.text,
         side: Side.buy);
     setState(() {});
   }
 
   void select(OrderType orderType) {
-    if (orderType.isLO && stockModel.stockDataCore != null) {
-      print(stockModel.stockDataCore!.lastPrice);
+    if (orderType.isLO && stockModel?.stockDataCore != null) {
+      print(stockModel!.stockDataCore!.lastPrice);
       final String currentPrice =
-          stockModel.stockDataCore!.lastPrice?.toStringAsFixed(2) ??
-              stockModel.stockDataCore!.r?.toString() ??
-              stockModel.stockData.lastPrice.value?.toStringAsFixed(2) ??
+          stockModel!.stockDataCore!.lastPrice?.toStringAsFixed(2) ??
+              stockModel!.stockDataCore!.r?.toString() ??
+              stockModel!.stockData.lastPrice.value?.toStringAsFixed(2) ??
               "0";
       priceController.value = TextEditingValue(
         text: currentPrice,
@@ -152,14 +162,17 @@ class _StockOrderSheetState extends State<StockOrderSheet>
   bool isSelected(OrderType orderType) => orderType == selectedOrderType;
 
   void toConfirmPanel(Side side) async {
-    final OrderData orderData = OrderData(
-      stockModel: stockModel,
-      side: side,
-      orderType: selectedOrderType,
-      volumn: num.parse(volumnController.text),
-      price: priceController.text,
-    );
-    Navigator.of(context).pop(NextCmd(orderData));
+    if (orderKey.currentState?.validate() ?? false) {
+      final OrderData orderData = OrderData(
+        stockModel: stockModel!,
+        side: side,
+        orderType: selectedOrderType,
+        volumn: num.parse(volumnController.text),
+        price: priceController.text,
+      );
+      Navigator.of(context).pop(NextCmd(orderData));
+    }
+
     // await showModalBottomSheet(
     //   context: context,
     //   shape: const RoundedRectangleBorder(
@@ -192,241 +205,257 @@ class _StockOrderSheetState extends State<StockOrderSheet>
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
-    return SafeArea(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SheetHeader(
-              title: S.of(context).trading,
-              implementBackButton: false,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                TabBar(
-                  controller: tabController,
-                  isScrollable: true,
-                  labelStyle: textTheme.titleSmall,
-                  labelPadding:
-                      const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                  tabs: [
-                    Text(
-                      S.of(context).stock_order,
-                    ),
-                    Text(
-                      S.of(context).order_note,
-                    ),
-                    Text(
-                      S.of(context).owned,
-                    ),
-                  ],
-                ),
-                Material(
-                  borderRadius: const BorderRadius.all(Radius.circular(6)),
-                  child: InkWell(
-                    onTap: () {
-                      Navigator.of(context)
-                        ..pop()
-                        ..push(MaterialPageRoute(
-                          builder: (context) => const OrderNoteScreen(),
-                        ));
-                    },
-                    borderRadius: const BorderRadius.all(Radius.circular(6)),
-                    child: Ink(
-                      padding: const EdgeInsets.all(8),
-                      decoration: const BoxDecoration(
-                        color: AppColors.primary_03,
-                        borderRadius: BorderRadius.all(Radius.circular(6)),
-                      ),
-                      child: SizedBox.square(
-                          dimension: 16,
-                          child: Image.asset(AppImages.filter_icon)),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 16),
-            SizedBox(
-              height: 300,
-              child: TabBarView(
-                  controller: tabController,
-                  physics: const NeverScrollableScrollPhysics(),
-                  children: [
-                    OrderOrderPanel(
-                      stockModel: stockModel,
-                      onChangeStock: changeStock,
-                    ),
-                    const OrderOrderNotePanel(),
-                    OrderOwnedStockPanel(
-                      onSell: (stockCodes) async {
-                        final model = await dataCenterService
-                            .getStockModelsFromStockCodes([stockCodes]);
-                        if (model?.isNotEmpty ?? false) {
-                          changeStock(model!.first);
-                          tabController.animateTo(0);
-                        }
-                      },
-                    ),
-                  ]),
-            ),
-            const SizedBox(height: 16),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
-                  children: [
-                    Text(
-                      "${S.of(context).purchasing_ability}: ",
-                      style: AppTextStyle.bodySmall_12.copyWith(
-                          fontWeight: FontWeight.w600,
-                          color: AppColors.neutral_04),
-                    ),
-                    Text(
-                      "${NumUtils.formatInteger(stockCashBalanceModel?.pp, "0")}đ",
-                      style: textTheme.titleSmall,
-                    ),
-                  ],
-                ),
-                const SizedBox(width: 30),
-                Row(
-                  children: [
-                    Text(
-                      "${S.of(context).maximum}: ",
-                      style: AppTextStyle.bodySmall_12.copyWith(
-                          fontWeight: FontWeight.w600,
-                          color: AppColors.neutral_04),
-                    ),
-                    Text(
-                      NumUtils.formatInteger(
-                          stockCashBalanceModel?.volumeAvaiable, "0"),
-                      style: AppTextStyle.titleSmall_14
-                          .copyWith(color: AppColors.semantic_01),
-                    ),
-                    Text(
-                      "|",
-                      style: textTheme.titleSmall,
-                    ),
-                    Text(
-                      NumUtils.formatInteger(
-                          stockCashBalanceModel?.balance, "0"),
-                      style: AppTextStyle.titleSmall_14
-                          .copyWith(color: AppColors.semantic_03),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-            const SizedBox(height: 20),
-            SizedBox(
-              height: 28,
-              child: Row(
+    return Form(
+      key: orderKey,
+      child: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SheetHeader(
+                title: S.of(context).trading,
+                implementBackButton: false,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Expanded(
-                    child: ListView(
-                      scrollDirection: Axis.horizontal,
-                      children: [
-                        for (final OrderType orderType in listOrderTypes)
-                          Padding(
-                            padding: const EdgeInsets.only(right: 8),
-                            child: _OrderTypeButton(
-                              orderType: orderType,
-                              isSelected: isSelected,
-                              select: select,
-                            ),
-                          )
-                      ],
-                    ),
+                  TabBar(
+                    controller: tabController,
+                    isScrollable: true,
+                    labelStyle: textTheme.titleSmall,
+                    labelPadding:
+                        const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                    tabs: [
+                      Text(
+                        S.of(context).stock_order,
+                      ),
+                      Text(
+                        S.of(context).order_note,
+                      ),
+                      Text(
+                        S.of(context).owned,
+                      ),
+                    ],
                   ),
-                  Container(
-                    padding:
-                        const EdgeInsets.symmetric(vertical: 4, horizontal: 12),
-                    decoration: const BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(4)),
-                        color: AppColors.primary_01),
-                    child: Text(
-                      "Ký quỹ ${stockCashBalanceModel?.imCk}%",
-                      style: AppTextStyle.labelSmall_10.copyWith(
-                        color: Colors.white,
-                        fontWeight: FontWeight.w600,
+                  Material(
+                    borderRadius: const BorderRadius.all(Radius.circular(6)),
+                    child: InkWell(
+                      onTap: () {
+                        Navigator.of(context)
+                          ..pop()
+                          ..push(MaterialPageRoute(
+                            builder: (context) => const OrderNoteScreen(),
+                          ));
+                      },
+                      borderRadius: const BorderRadius.all(Radius.circular(6)),
+                      child: Ink(
+                        padding: const EdgeInsets.all(8),
+                        decoration: const BoxDecoration(
+                          color: AppColors.primary_03,
+                          borderRadius: BorderRadius.all(Radius.circular(6)),
+                        ),
+                        child: SizedBox.square(
+                            dimension: 16,
+                            child: Image.asset(AppImages.filter_icon)),
                       ),
                     ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 16),
+              SizedBox(
+                height: 300,
+                child: TabBarView(
+                    controller: tabController,
+                    physics: const NeverScrollableScrollPhysics(),
+                    children: [
+                      OrderOrderPanel(
+                        stockModel: stockModel,
+                        onChangeStock: changeStock,
+                        onValidate: (value) {
+                          setState(() {
+                            errorText = value;
+                          });
+                        },
+                      ),
+                      const OrderOrderNotePanel(),
+                      OrderOwnedStockPanel(
+                        onSell: (stockCodes) async {
+                          final model = await dataCenterService
+                              .getStockModelsFromStockCodes([stockCodes]);
+                          if (model?.isNotEmpty ?? false) {
+                            changeStock(model!.first);
+                            tabController.animateTo(0);
+                          }
+                        },
+                      ),
+                    ]),
+              ),
+              const SizedBox(height: 16),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    children: [
+                      Text(
+                        "${S.of(context).purchasing_ability}: ",
+                        style: AppTextStyle.bodySmall_12.copyWith(
+                            fontWeight: FontWeight.w600,
+                            color: AppColors.neutral_04),
+                      ),
+                      Text(
+                        "${NumUtils.formatInteger(stockCashBalanceModel?.pp, "0")}đ",
+                        style: textTheme.titleSmall,
+                      ),
+                    ],
+                  ),
+                  const SizedBox(width: 30),
+                  Row(
+                    children: [
+                      Text(
+                        "${S.of(context).maximum}: ",
+                        style: AppTextStyle.bodySmall_12.copyWith(
+                            fontWeight: FontWeight.w600,
+                            color: AppColors.neutral_04),
+                      ),
+                      Text(
+                        NumUtils.formatInteger(
+                            stockCashBalanceModel?.volumeAvaiable, "0"),
+                        style: AppTextStyle.titleSmall_14
+                            .copyWith(color: AppColors.semantic_01),
+                      ),
+                      Text(
+                        "|",
+                        style: textTheme.titleSmall,
+                      ),
+                      Text(
+                        NumUtils.formatInteger(
+                            stockCashBalanceModel?.balance, "0"),
+                        style: AppTextStyle.titleSmall_14
+                            .copyWith(color: AppColors.semantic_03),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+              const SizedBox(height: 20),
+              SizedBox(
+                height: 28,
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: ListView(
+                        scrollDirection: Axis.horizontal,
+                        children: [
+                          for (final OrderType orderType in listOrderTypes)
+                            Padding(
+                              padding: const EdgeInsets.only(right: 8),
+                              child: _OrderTypeButton(
+                                orderType: orderType,
+                                isSelected: isSelected,
+                                select: select,
+                              ),
+                            )
+                        ],
+                      ),
+                    ),
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 4, horizontal: 12),
+                      decoration: const BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(4)),
+                          color: AppColors.primary_01),
+                      child: Text(
+                        "Ký quỹ ${stockCashBalanceModel?.imCk}%",
+                        style: AppTextStyle.labelSmall_10.copyWith(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              ),
+              const SizedBox(height: 20),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(S.of(context).order_value),
+                  Builder(
+                    builder: (context) {
+                      num price;
+                      num vol = num.tryParse(volumnController.text) ?? 0;
+                      switch (selectedOrderType) {
+                        case OrderType.LO:
+                          price = num.tryParse(priceController.text) ?? 0;
+                          break;
+                        default:
+                          price = stockModel?.stockData.c.value ?? 0;
+                      }
+                      num value = price * vol * 1000;
+                      return Text("${NumUtils.formatInteger(value)} VND");
+                    },
                   )
                 ],
               ),
-            ),
-            const SizedBox(height: 20),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(S.of(context).order_value),
-                Builder(
-                  builder: (context) {
-                    num price;
-                    num vol = num.tryParse(volumnController.text) ?? 0;
-                    switch (selectedOrderType) {
-                      case OrderType.LO:
-                        price = num.tryParse(priceController.text) ?? 0;
-                        break;
-                      default:
-                        price = stockModel.stockData.c.value ?? 0;
-                    }
-                    num value = price * vol * 1000;
-                    return Text("${NumUtils.formatInteger(value)} VND");
-                  },
-                )
-              ],
-            ),
-            const SizedBox(height: 16),
-            Row(
-              children: [
-                Expanded(
-                  child: IntervalInput(
-                    controller: priceController,
-                    labelText: S.of(context).price,
-                    interval: stockModel.stock.postTo?.getPriceInterval ??
-                        (value) => 0.1,
-                    defaultValue: stockModel.stockDataCore?.lastPrice ??
-                        stockModel.stockData.r.value ??
-                        0,
-                    onChanged: onChangedPrice,
-                    onTextChanged: _onPriceChangeHandler,
+              const SizedBox(height: 16),
+              Row(
+                children: [
+                  Expanded(
+                    child: IntervalInput(
+                      controller: priceController,
+                      labelText: S.of(context).price,
+                      interval: stockModel?.stock.postTo?.getPriceInterval ??
+                          (value) => 0.1,
+                      defaultValue: stockModel?.stockDataCore?.lastPrice ??
+                          stockModel?.stockData.r.value ??
+                          0,
+                      onChanged: onChangedPrice,
+                      onTextChanged: _onPriceChangeHandler,
+                    ),
                   ),
-                ),
-                const SizedBox(width: 16),
-                Expanded(
-                  child: IntervalInput(
-                    controller: volumnController,
-                    labelText: S.of(context).volumn,
-                    interval: (value) => 100,
-                    onChanged: onChangeVol,
+                  const SizedBox(width: 16),
+                  Expanded(
+                    child: IntervalInput(
+                      controller: volumnController,
+                      labelText: S.of(context).volumn,
+                      interval: (value) => 100,
+                      onChanged: onChangeVol,
+                    ),
                   ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 16),
-            Row(
-              children: [
-                Expanded(
-                  child: SingleColorTextButton(
-                    text: S.of(context).buy,
-                    color: AppColors.semantic_01,
-                    onTap: () => toConfirmPanel(Side.buy),
+                ],
+              ),
+              const SizedBox(height: 8),
+              ExpandedSection(
+                  expand: errorText != null,
+                  child: Text(
+                    errorText ?? "",
+                    style: AppTextStyle.bodyMedium_14
+                        .copyWith(color: AppColors.semantic_03),
+                  )),
+              const SizedBox(height: 8),
+              Row(
+                children: [
+                  Expanded(
+                    child: SingleColorTextButton(
+                      text: S.of(context).buy,
+                      color: AppColors.semantic_01,
+                      onTap: () => toConfirmPanel(Side.buy),
+                    ),
                   ),
-                ),
-                const SizedBox(width: 16),
-                Expanded(
-                  child: SingleColorTextButton(
-                    text: S.of(context).sell,
-                    color: AppColors.semantic_03,
-                    onTap: () => toConfirmPanel(Side.sell),
+                  const SizedBox(width: 16),
+                  Expanded(
+                    child: SingleColorTextButton(
+                      text: S.of(context).sell,
+                      color: AppColors.semantic_03,
+                      onTap: () => toConfirmPanel(Side.sell),
+                    ),
                   ),
-                ),
-              ],
-            ),
-          ],
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );

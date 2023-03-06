@@ -22,12 +22,5 @@ class ConditionalOrderTab extends StatelessWidget {
         ],
       ),
     );
-    // return Container(
-    //   padding: const EdgeInsets.all(16),
-    //   decoration: const BoxDecoration(
-    //       color: Colors.white,
-    //       borderRadius: BorderRadius.all(Radius.circular(12))),
-    //   child: const EmptyListWidget(),
-    // );
   }
 }

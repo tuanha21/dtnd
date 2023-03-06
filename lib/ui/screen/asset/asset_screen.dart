@@ -11,6 +11,9 @@ import 'package:dtnd/ui/screen/asset/component/account_asset_overview_widget.dar
 import 'package:dtnd/ui/screen/asset/component/asset_distribution_chart.dart';
 import 'package:dtnd/ui/screen/asset/sheet/extensions_sheet.dart';
 import 'package:dtnd/ui/screen/exchange_stock/order_note/screen/order_note_screen.dart';
+import 'package:dtnd/ui/screen/exchange_stock/stock_order/business/stock_order_flow.dart';
+import 'package:dtnd/ui/screen/exchange_stock/stock_order/sheet/stock_order_sheet.dart';
+import 'package:dtnd/ui/screen/login/login_screen.dart';
 import 'package:dtnd/ui/screen/market/widget/components/not_signin_catalog_widget.dart';
 import 'package:dtnd/ui/screen/virtual_assistant/va_volatolity_warning/component/asset_chart.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
@@ -18,7 +21,9 @@ import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:dtnd/ui/widget/dropdown/custom_dropdown_button.dart';
 import 'package:dtnd/ui/widget/icon/icon_button.dart';
 import 'package:dtnd/ui/widget/my_appbar.dart';
+import 'package:dtnd/ui/widget/overlay/login_first_dialog.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
 import 'component/portfolio_and_right_panel.dart';
@@ -224,6 +229,58 @@ class _AssetScreenState extends State<AssetScreen>
     return Scaffold(
       appBar: const MyAppBar(),
       body: child,
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.only(bottom: 60),
+        child: SizedBox.square(
+          dimension: 40,
+          child: Material(
+            borderRadius: const BorderRadius.all(Radius.circular(6)),
+            child: InkWell(
+              borderRadius: const BorderRadius.all(Radius.circular(6)),
+              onTap: _onFABTapped,
+              child: Ink(
+                padding: const EdgeInsets.all(8),
+                decoration: const BoxDecoration(
+                  borderRadius: BorderRadius.all(Radius.circular(6)),
+                  color: AppColors.primary_01,
+                ),
+                child: SvgPicture.asset(
+                  AppImages.arrange_circle,
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );
+  }
+
+  void _onFABTapped() async {
+    if (!userService.isLogin) {
+      final toLogin = await showDialog<bool>(
+        context: context,
+        builder: (context) {
+          return const LoginFirstDialog();
+        },
+      );
+      if (toLogin ?? false) {
+        if (!mounted) return;
+        final result = await Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => const LoginScreen(),
+        ));
+        if (result) {
+          return _onFABTapped();
+        }
+      }
+    } else {
+      // return StockOrderISheet(widget.stockModel).showSheet(context, );
+      StockOrderISheet(null).show(
+          context,
+          const StockOrderSheet(
+            stockModel: null,
+            orderData: null,
+          ));
+    }
   }
 }

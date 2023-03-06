@@ -5,6 +5,7 @@ import 'package:dtnd/data/implementations/exchange_service.dart';
 import 'package:dtnd/data/implementations/user_service.dart';
 import 'package:dtnd/ui/screen/asset/screen/asset_stock_detail/component/unclosed_deal_element.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
+import 'package:dtnd/ui/widget/empty_list_widget.dart';
 import 'package:dtnd/utilities/logger.dart';
 import 'package:flutter/material.dart';
 
@@ -105,6 +106,11 @@ class _UnclosedDealTabState extends State<UnclosedDealTab> {
               borderRadius: BorderRadius.all(Radius.circular(12))),
           child: Column(
             children: [
+              if (list.isEmpty)
+                const Padding(
+                  padding: EdgeInsets.symmetric(vertical: 16),
+                  child: EmptyListWidget(),
+                ),
               for (OrderHistoryModel model in list)
                 UnclosedDealElement(model: model)
             ],

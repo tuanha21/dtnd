@@ -274,7 +274,7 @@ class DataCenterService
       ValueChanged<String>? onUnregisteredCode}) {
     final List<String> oneRegisteredCodes = [];
     for (final String stockCode in codes) {
-      if (listStockStringReg[stockCode]! <= 1) {
+      if ((listStockStringReg[stockCode] ?? 0) <= 1) {
         oneRegisteredCodes.add(stockCode);
         onOneRegisteredCode?.call(stockCode);
       } else {

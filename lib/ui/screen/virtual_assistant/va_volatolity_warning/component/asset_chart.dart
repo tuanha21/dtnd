@@ -1,17 +1,13 @@
 import 'dart:math';
 
-import 'package:charts_common/src/chart/common/behavior/legend/legend.dart';
 import 'package:dtnd/=models=/response/account/asset_chart_element.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/utilities/num_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
-import 'dart:ui' as ui;
 import 'package:charts_flutter/src/text_element.dart' as chartText;
 import 'package:charts_flutter/src/text_style.dart' as chartStyle;
 import 'package:intl/intl.dart';
-import 'package:charts_common/common.dart' as common
-    show Legend, LegendState, SeriesLegend;
 
 var label, value, date;
 final simpleCurrencyFormatter =

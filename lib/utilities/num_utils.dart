@@ -89,11 +89,11 @@ class NumUtils {
     return md5.convert(utf8.encode(input)).toString();
   }
 
-  static String getMoneyWithPostfix(num? num, BuildContext context) {
-    if (num == null) {
+  static String getMoneyWithPostfix(num? number, BuildContext context) {
+    if (number == null) {
       return "0";
     }
-    int intValue = num ~/ 1;
+    int intValue = number ~/ 1;
     String i = intValue.toString();
     String postfix;
     String value;
@@ -107,11 +107,12 @@ class NumUtils {
     return "$value $postfix";
   }
 
-  static String getMoneyWithPostfixThousand(num? num, BuildContext context) {
-    if (num == null) {
-      return "0";
+  static String getMoneyWithPostfixThousand(num? number, BuildContext context,
+      [String nullDefault = "-"]) {
+    if (number == null) {
+      return nullDefault;
     }
-    int intValue = num ~/ 1;
+    int intValue = number ~/ 1;
     String postfix;
     String value;
     value = formatDouble(intValue / 1000);

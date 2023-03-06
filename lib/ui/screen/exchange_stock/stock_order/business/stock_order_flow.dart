@@ -29,7 +29,7 @@ class ToCancelOrderCmd extends NextCmd {
 }
 
 abstract class IStockOrderSheet extends ISheet {
-  final StockModel stockModel;
+  final StockModel? stockModel;
   IStockOrderSheet(this.stockModel);
 }
 
@@ -60,7 +60,6 @@ class StockOrderISheet extends IStockOrderSheet {
       return CancelStockOrderSheet(data: cmd.data);
     }
     return StockOrderConfirmSheet(
-      stockModel: stockModel,
       orderData: cmd!.data,
     );
   }

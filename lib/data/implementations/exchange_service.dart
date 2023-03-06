@@ -190,7 +190,7 @@ class ExchangeService implements IExchangeService {
       p2: stockCode ?? "",
       p3: TimeUtilities.commonTimeFormat.format(
           fromDay ?? TimeUtilities.getPreviousDateTime(TimeUtilities.month(1))),
-      p4: TimeUtilities.commonTimeFormat.format(fromDay ?? DateTime.now()),
+      p4: TimeUtilities.commonTimeFormat.format(toDay ?? DateTime.now()),
       p5: status ?? "",
       p7: page?.toString() ?? "1",
       p8: recordPerPage?.toString() ?? "10",
@@ -198,11 +198,14 @@ class ExchangeService implements IExchangeService {
 
     final RequestModel requestModel =
         RequestModel(userService, group: "B", data: requestDataModel);
+    logger.v(requestModel.toJson());
+
     final response = await networkService
         .requestTraditionalApiResList<OrderHistoryModel>(requestModel);
     if (response == null) {
       throw Exception();
     }
+    logger.v(response);
     return response;
   }
 

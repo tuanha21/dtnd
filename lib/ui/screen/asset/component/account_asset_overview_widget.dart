@@ -1,15 +1,11 @@
 import 'package:dtnd/=models=/response/account/base_margin_account_model.dart';
 import 'package:dtnd/generated/l10n.dart';
-import 'package:dtnd/ui/screen/asset/logic/money_type.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:dtnd/ui/theme/app_textstyle.dart';
-import 'package:dtnd/ui/widget/button/text_icon_button.dart';
 import 'package:dtnd/ui/widget/expanded_widget.dart';
 import 'package:dtnd/utilities/num_utils.dart';
 import 'package:flutter/material.dart';
-
-import 'asset_per_type_widget.dart';
 
 class AccountAssetOverviewWidget extends StatefulWidget {
   const AccountAssetOverviewWidget({
@@ -77,7 +73,8 @@ class _AccountAssetOverviewWidgetState
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Image.asset(
-                            AppImages.prefix_up_icon,
+                            widget.data?.portfolioStatus?.prefixIcon ??
+                                AppImages.prefix_ref_icon,
                             width: 10,
                           ),
                           const SizedBox(width: 10),
