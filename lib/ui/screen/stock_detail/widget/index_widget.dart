@@ -37,7 +37,7 @@ class _IndexWidgetState extends State<IndexWidget> {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 16),
       decoration: BoxDecoration(
-         // color: const Color(0xffF5F8FF),
+          // color: const Color(0xffF5F8FF),
           borderRadius: BorderRadius.circular(16)),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -116,6 +116,9 @@ class _IndexWidgetState extends State<IndexWidget> {
               future: stockReport,
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const SizedBox();
+                }
+                if(!snapshot.hasData){
                   return const SizedBox();
                 }
                 if (snapshot.connectionState == ConnectionState.done) {

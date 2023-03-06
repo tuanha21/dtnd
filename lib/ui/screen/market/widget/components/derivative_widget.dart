@@ -3,7 +3,6 @@ import 'package:dtnd/=models=/response/stock_derivative_model.dart';
 import 'package:dtnd/data/implementations/data_center_service.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import '../../../../../generated/l10n.dart';
 import '../widget/derivative_component.dart';
 
@@ -99,36 +98,32 @@ class _DerivativeWidgetState extends State<DerivativeWidget> {
             ],
           ),
         ),
-        Container(
-          child: FutureBuilder<List<DerivativeResModel>?>(
-              future: listStocks,
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  var list = snapshot.data;
+        FutureBuilder<List<DerivativeResModel>?>(
+            future: listStocks,
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                var list = snapshot.data;
 
-                  return ListView.separated(
-                      shrinkWrap: true,
-                      itemCount: list!.length,
-                      itemBuilder: (context, index) {
-                        return DerivativeComponent(model: list[index]);
-                      },
-                      separatorBuilder: (context, index) {
-                        return const Divider(
-                          thickness: 2,
-                          height: 0,
-                          color: Color.fromRGBO(245, 248, 255, 1),
-                        );
-                      });
-                } else {
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
-                }
-              }),
-        ),
-        SizedBox(
-          height: 10,
-        )
+                return ListView.separated(
+                    shrinkWrap: true,
+                    itemCount: list!.length,
+                    itemBuilder: (context, index) {
+                      return DerivativeComponent(model: list[index]);
+                    },
+                    separatorBuilder: (context, index) {
+                      return const Divider(
+                        thickness: 2,
+                        height: 0,
+                        color: Color.fromRGBO(245, 248, 255, 1),
+                      );
+                    });
+              } else {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+            }),
+        const SizedBox(height: 10)
       ],
     );
   }

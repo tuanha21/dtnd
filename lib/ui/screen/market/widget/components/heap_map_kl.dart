@@ -23,7 +23,7 @@ class _HeapMapKLState extends State<HeapMapKL> {
 
   @override
   initState() {
-    listField = dataCenterService.getListIndustryHeatMap(top: 8, type: "KL");
+    listField = dataCenterService.getListIndustryHeatMap(top: 10, type: "KL");
     super.initState();
   }
 
@@ -45,7 +45,7 @@ class _HeapMapKLState extends State<HeapMapKL> {
                   setState(() {
                     isVol = !isVol;
                     listField = dataCenterService.getListIndustryHeatMap(
-                        top: 8, type: isVol ? "KL" : "GT");
+                        top: 10, type: isVol ? "KL" : "GT");
                   });
                 },
                 child: Row(
@@ -79,8 +79,8 @@ class _HeapMapKLState extends State<HeapMapKL> {
                 return Padding(
                   padding: const EdgeInsets.all(16),
                   child: StaggeredGrid.count(
-                    crossAxisCount: 4,
-                    mainAxisSpacing: 4,
+                    crossAxisCount: 2,
+                    mainAxisSpacing: 2,
                     crossAxisSpacing: 4,
                     children: List<Widget>.generate(data.length, (idx) {
                       var listStock = data[idx].stocks;
@@ -95,7 +95,7 @@ class _HeapMapKLState extends State<HeapMapKL> {
                       }
                       return StaggeredGridTile.count(
                         crossAxisCellCount: 2,
-                        mainAxisCellCount: idx % 2 == 0 ? 2 : 1,
+                        mainAxisCellCount: 1,
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -203,6 +203,7 @@ class _HeapMapKLState extends State<HeapMapKL> {
                                     ],
                                   )),
                             ),
+                            const SizedBox(height: 5),
                           ],
                         ),
                       );
