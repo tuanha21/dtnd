@@ -64,13 +64,16 @@ class _MarketAnalysisTabState extends State<MarketAnalysisTab>
 
     return ListView(
       children: [
-        // const SizedBox(height: 32),
+        const SizedBox(height: 16),
         // TopInfluenceChart(topInfluenceList: topInfluenceList),
         // LiquidityChart(liquidityModel: liquidityModel),
         // MoneyChart(indexBoard: indexBoard),
         //TopIndexWidgetChart(topIndex: topIndex),
-        Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 10),
+        Container(
+            padding: const EdgeInsets.all(8),
+            decoration: const BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(12)),
+                color: AppColors.light_bg),
             child: Container(
                 padding: const EdgeInsets.symmetric(horizontal: 8),
                 child: Row(children: [
@@ -78,139 +81,179 @@ class _MarketAnalysisTabState extends State<MarketAnalysisTab>
                     flex: 1,
                     child: Container(
                         margin: const EdgeInsets.only(right: 8),
-                        padding: const EdgeInsets.symmetric(vertical: 8),
-                        decoration: BoxDecoration(
-                            border: Border.all(color: AppColors.neutral_05),
-                            borderRadius:
-                                const BorderRadius.all(Radius.circular(8)),
-                            color: AppColors.neutral_07),
+                        padding: const EdgeInsets.only(bottom: 8),
+                        decoration: const BoxDecoration(
+                            borderRadius: BorderRadius.all(Radius.circular(8)),
+                            color: AppColors.neutral_06),
                         child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Text(
-                                "Cá nhân",
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodySmall
-                                    ?.copyWith(
-                                        fontWeight: FontWeight.w700,
-                                        color: AppColors.neutral_04),
-                              ),
-                              const SizedBox(height: 8),
+                              Container(
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 8),
+                                  decoration: const BoxDecoration(
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(8)),
+                                      color: AppColors.primary_02),
+                                  child: Center(
+                                    child: Text(
+                                      "Cá nhân",
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodySmall
+                                          ?.copyWith(
+                                              fontWeight: FontWeight.w500,
+                                              color: AppColors.neutral_07,
+                                              fontSize: 12),
+                                    ),
+                                  )),
+                              const SizedBox(height: 10),
                               FutureBuilder(
                                 future: Future.wait([piValue, fiValue]),
                                 builder: (context,
                                     AsyncSnapshot<List<dynamic>> snapshot) {
-                                  if (!snapshot.hasData) return SizedBox();
+                                  if (!snapshot.hasData) {
+                                    return const SizedBox();
+                                  }
 
-                                  var _piValue = snapshot.data![0]; //piValue
-                                  var _fiValue = snapshot.data![1]; //fiValue
+                                  var piValue = snapshot.data![0]; //piValue
+                                  var fiValue = snapshot.data![1]; //fiValue
 
-                                  var _totalBuy =
-                                      double.parse(_piValue.totalBuy) +
-                                          double.parse(_fiValue.totalBuy);
-                                  var _totalSell =
-                                      double.parse(_piValue.totalSell) +
-                                          double.parse(_fiValue.totalSell);
+                                  var totalBuy =
+                                      double.parse(piValue.totalBuy) +
+                                          double.parse(fiValue.totalBuy);
+                                  var totalSell =
+                                      double.parse(piValue.totalSell) +
+                                          double.parse(fiValue.totalSell);
                                   return Text(
-                                    NumUtils.formatDouble(
-                                            _totalSell - _totalBuy) +
-                                        ' tỷ',
+                                    '${NumUtils.formatDouble(totalSell - totalBuy)} Tỷ',
                                     style: Theme.of(context)
                                         .textTheme
                                         .bodySmall
-                                        ?.copyWith(fontWeight: FontWeight.w700),
+                                        ?.copyWith(
+                                            fontWeight: FontWeight.w500,
+                                            color: AppColors.primary_02,
+                                            fontSize: 16),
                                   );
                                 },
-                              )
+                              ),
+                              const SizedBox(height: 4),
                             ])),
                   ),
                   Expanded(
                     flex: 1,
                     child: Container(
                         margin: const EdgeInsets.only(right: 8),
-                        padding: const EdgeInsets.symmetric(vertical: 8),
-                        decoration: BoxDecoration(
-                            border: Border.all(color: AppColors.neutral_05),
-                            borderRadius:
-                                const BorderRadius.all(Radius.circular(8)),
-                            color: AppColors.neutral_07),
+                        padding: const EdgeInsets.only(bottom: 8),
+                        decoration: const BoxDecoration(
+                            borderRadius: BorderRadius.all(Radius.circular(8)),
+                            color: AppColors.neutral_06),
                         child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Text(
-                                "Tự doanh",
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodySmall
-                                    ?.copyWith(
-                                        fontWeight: FontWeight.w700,
-                                        color: AppColors.neutral_04),
-                              ),
+                              Container(
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 8),
+                                  decoration: const BoxDecoration(
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(8)),
+                                      color: AppColors.primary_02),
+                                  child: Center(
+                                    child: Text(
+                                      "Tự doanh",
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodySmall
+                                          ?.copyWith(
+                                              fontWeight: FontWeight.w500,
+                                              color: AppColors.neutral_07,
+                                              fontSize: 12),
+                                    ),
+                                  )),
                               const SizedBox(height: 8),
                               FutureBuilder<IndContrib>(
                                 future: piValue,
                                 builder: (context, snapshot) {
-                                  if (!snapshot.hasData) return SizedBox();
+                                  if (!snapshot.hasData) {
+                                    return const SizedBox();
+                                  }
 
-                                  var _piValue = snapshot.data!; //fiValue
+                                  var piValue = snapshot.data!; //fiValue
 
-                                  var _piTotal = double.parse(
-                                          _piValue.totalBuy ?? '0') -
-                                      double.parse(_piValue.totalSell ?? '0');
+                                  var piTotal = double.parse(
+                                          piValue.totalBuy ?? '0') -
+                                      double.parse(piValue.totalSell ?? '0');
                                   return Text(
-                                    NumUtils.formatDouble(_piTotal) + ' tỷ',
+                                    '${NumUtils.formatDouble(piTotal)} Tỷ',
                                     style: Theme.of(context)
                                         .textTheme
                                         .bodySmall
-                                        ?.copyWith(fontWeight: FontWeight.w700),
+                                        ?.copyWith(
+                                            fontWeight: FontWeight.w500,
+                                            color: AppColors.primary_02,
+                                            fontSize: 16),
                                   );
                                 },
-                              )
+                              ),
+                              const SizedBox(height: 4),
                             ])),
                   ),
                   Expanded(
                     flex: 1,
                     child: Container(
                         margin: const EdgeInsets.only(right: 8),
-                        padding: const EdgeInsets.symmetric(vertical: 8),
-                        decoration: BoxDecoration(
-                            border: Border.all(color: AppColors.neutral_05),
-                            borderRadius:
-                                const BorderRadius.all(Radius.circular(8)),
-                            color: AppColors.neutral_07),
+                        padding: const EdgeInsets.only(bottom: 8),
+                        decoration: const BoxDecoration(
+                            borderRadius: BorderRadius.all(Radius.circular(8)),
+                            color: AppColors.neutral_06),
                         child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Text(
-                                "Nước ngoài",
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodySmall
-                                    ?.copyWith(
-                                        fontWeight: FontWeight.w700,
-                                        color: AppColors.neutral_04),
-                              ),
+                              Container(
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 8),
+                                  decoration: const BoxDecoration(
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(8)),
+                                      color: AppColors.primary_02),
+                                  child: Center(
+                                    child: Text(
+                                      "Tự doanh",
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodySmall
+                                          ?.copyWith(
+                                              fontWeight: FontWeight.w500,
+                                              color: AppColors.neutral_07,
+                                              fontSize: 12),
+                                    ),
+                                  )),
                               const SizedBox(height: 8),
                               FutureBuilder<IndContrib>(
                                 future: fiValue,
                                 builder: (context, snapshot) {
-                                  if (!snapshot.hasData) return SizedBox();
+                                  if (!snapshot.hasData) {
+                                    return const SizedBox();
+                                  }
 
-                                  var _piValue = snapshot.data!; //fiValue
+                                  var piValue = snapshot.data!; //fiValue
 
-                                  var _piTotal = double.parse(
-                                          _piValue.totalBuy ?? '0') -
-                                      double.parse(_piValue.totalSell ?? '0');
+                                  var piTotal = double.parse(
+                                          piValue.totalBuy ?? '0') -
+                                      double.parse(piValue.totalSell ?? '0');
                                   return Text(
-                                    NumUtils.formatDouble(_piTotal) + ' tỷ',
+                                    '${NumUtils.formatDouble(piTotal)} Tỷ',
                                     style: Theme.of(context)
                                         .textTheme
                                         .bodySmall
-                                        ?.copyWith(fontWeight: FontWeight.w700),
+                                        ?.copyWith(
+                                            fontWeight: FontWeight.w500,
+                                            color: AppColors.primary_02,
+                                            fontSize: 16),
                                   );
                                 },
-                              )
+                              ),
+                              const SizedBox(height: 4),
                             ])),
                   ),
                 ]))),

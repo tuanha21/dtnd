@@ -55,8 +55,8 @@ class _StockDetailChartState extends State<StockDetailChart>
           timeSeries.type,
           timeSeries.dateTime,
           DateTime.now());
-      print(stockTradingHistory);
-      stockTrading.sink.add(stockTradingHistory!.o!);
+      // print(stockTradingHistory);
+      stockTrading.sink.add(stockTradingHistory!.c!);
     } catch (e) {
       if (kDebugMode) {
         print(e.toString());

@@ -159,12 +159,15 @@ class BasicIndex extends StatefulWidget {
 class _BasicIndexState extends State<BasicIndex> {
   Widget indexPrice() {
     var data = widget.history;
-    var max = data.c?.reduce(math.max) ?? widget.stockModel.stockData.c.value! ?? 1;
-    var min = data.c?.reduce(math.min) ?? widget.stockModel.stockData.f.value! ?? 0;
+    var max =
+        data.c?.reduce(math.max) ?? widget.stockModel.stockData.c.value! ?? 1;
+    var min =
+        data.c?.reduce(math.min) ?? widget.stockModel.stockData.f.value! ?? 0;
 
     print('max: ' + max.toString());
     print('min: ' + min.toString());
-    print('lastPrice: ' + widget.stockModel.stockData.lastPrice.value.toString());
+    print(
+        'lastPrice: ' + widget.stockModel.stockData.lastPrice.value.toString());
 
     return Column(
       children: [
@@ -322,7 +325,14 @@ class PercentPrice extends StatelessWidget {
         Expanded(
           child: LayoutBuilder(builder: (context, ctx) {
             var length = max - min;
-            var percent = (lastPrice - min) / length * 100;
+
+            var _lastPrice = lastPrice > max
+                ? max
+                : lastPrice < min
+                    ? min
+                    : lastPrice;
+
+            var percent = (_lastPrice - min) / length * 100;
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [

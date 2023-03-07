@@ -52,7 +52,7 @@ class _DerivativeWidgetState extends State<DerivativeWidget> {
           child: Row(
             children: [
               Expanded(
-                flex: 2,
+                flex: 3,
                 child: Text(
                   "Mã CK",
                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
@@ -60,7 +60,7 @@ class _DerivativeWidgetState extends State<DerivativeWidget> {
                 ),
               ),
               Expanded(
-                flex: 2,
+                flex: 3,
                 child: Align(
                   alignment: Alignment.centerRight,
                   child: Text(
@@ -72,7 +72,7 @@ class _DerivativeWidgetState extends State<DerivativeWidget> {
                 ),
               ),
               Expanded(
-                flex: 3,
+                flex: 2,
                 child: Align(
                   alignment: Alignment.centerRight,
                   child: Text(
