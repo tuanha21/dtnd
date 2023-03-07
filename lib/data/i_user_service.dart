@@ -27,7 +27,7 @@ abstract class IUserService {
 
   Future<void> deleteToken();
 
-  Future<bool> saveToken(UserToken token);
+  Future<bool> saveToken(UserToken token, String password);
 
   Future<List<BaseOrderModel>?> getIndayOrder(
       {int? page,

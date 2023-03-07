@@ -1,7 +1,9 @@
 import 'package:dtnd/=models=/request/request_model.dart';
 import 'package:dtnd/=models=/response/user_token.dart';
+import 'package:dtnd/data/i_local_storage_service.dart';
 import 'package:dtnd/data/i_network_service.dart';
 import 'package:dtnd/data/i_user_service.dart';
+import 'package:dtnd/data/implementations/local_storage_service.dart';
 import 'package:dtnd/data/implementations/network_service.dart';
 import 'package:dtnd/data/implementations/user_service.dart';
 import 'package:dtnd/utilities/logger.dart';
@@ -29,8 +31,11 @@ class LoginController {
   }
   static final LoginController _instance = LoginController._internal();
   factory LoginController() => _instance;
+
+  final ILocalStorageService localStorageService = LocalStorageService();
   final INetworkService networkService = NetworkService();
   final IUserService userService = UserService();
+
   late final GlobalKey<FormState> loginFormKey;
 
   final Rx<bool> loading = Rx<bool>(false);
@@ -65,9 +70,53 @@ class LoginController {
       rethrow;
     }
     logger.v(userToken?.toJson());
-    await userService.saveToken(userToken!);
+    await userService.saveToken(userToken!, password);
     loading.value = false;
     return userToken;
+  }
+
+  Future<UserToken?> loginWithBio() async {
+    loading.value = true;
+    if (!localStorageService.biometricsRegistered) {
+      throw "Tài khoản chưa đăng ký đăng nhập bằng sinh trắc học";
+    }
+    final bioAuth = await localStorageService.biometricsValidate();
+    if (!bioAuth) {
+      throw "Đăng nhập bằng sinh trắc học thất bại";
+    }
+    final username = localStorageService.usernameRegistered;
+    final password = localStorageService.passwordRegistered;
+    final requestDataModel = RequestDataModel(
+        type: RequestType.string,
+        cmd: "Web.sCheckLogin",
+        p1: username,
+        p2: password,
+        p3: "M",
+        p4: "");
+    final requestModel = RequestModel.login(
+      group: "L",
+      user: username,
+      data: requestDataModel,
+    );
+    UserToken? userToken;
+    try {
+      userToken = await networkService.requestTraditionalApi<UserToken>(
+        requestModel,
+        hasError: hasError,
+        onError: onError,
+      );
+    } catch (e) {
+      loginFormKey.currentState?.validate();
+      rethrow;
+    }
+    logger.v(userToken?.toJson());
+    await userService.saveToken(userToken!, password);
+    loading.value = false;
+    return userToken;
+  }
+
+  Future<void> changeAccount() {
+    return localStorageService.cancelBiometrics();
   }
 
   bool hasError(Map<String, dynamic>? entity) {

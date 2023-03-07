@@ -5,7 +5,10 @@ import 'package:dtnd/=models=/local/volatility_warning_stock.dart';
 import 'package:dtnd/=models=/response/stock.dart';
 import 'package:dtnd/=models=/response/user_token.dart';
 import 'package:dtnd/utilities/logger.dart';
+import 'package:flutter/services.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:local_auth/local_auth.dart';
+import 'package:local_auth/error_codes.dart' as auth_error;
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../i_local_storage_service.dart';
@@ -16,6 +19,10 @@ const String savedUserTokenBoxKey = "savedUserTokenBoxKey";
 const String savedAllListStockBoxKey = "savedAllListStock";
 const String savedInterestedStocksBoxKey = "savedInterestedStocksBoxKey";
 const String listSavedCatalogKey = "listSavedCatalogKey";
+
+const String regBioKey = "regBioKey";
+const String usernameKey = "usernameKey";
+const String passwordKey = "passwordKey";
 
 class LocalStorageService implements ILocalStorageService {
   LocalStorageService._internal();
@@ -29,13 +36,36 @@ class LocalStorageService implements ILocalStorageService {
   late final SharedPreferences _sharedPreferences;
   late final Box _box;
 
+  late final LocalAuthentication _localAuthentication;
+
   @override
   SharedPreferences get sharedPreferences => _sharedPreferences;
 
   @override
   Box get box => _box;
 
-  /// Local Storage data
+  @override
+  LocalAuthentication get localAuthentication => _localAuthentication;
+
+  @override
+  bool get biometricsRegistered =>
+      sharedPreferences.getBool(regBioKey) ?? false;
+
+  @override
+  String get usernameRegistered {
+    if (!biometricsRegistered) {
+      throw Exception();
+    }
+    return sharedPreferences.getString(usernameKey)!;
+  }
+
+  @override
+  String get passwordRegistered {
+    if (!biometricsRegistered) {
+      throw Exception();
+    }
+    return sharedPreferences.getString(passwordKey)!;
+  }
 
   late final int _appAccessTime;
 
@@ -47,7 +77,7 @@ class LocalStorageService implements ILocalStorageService {
   Future<void> init() async {
     await Hive.initFlutter();
     _sharedPreferences = await SharedPreferences.getInstance();
-
+    _localAuthentication = LocalAuthentication();
     Hive.registerAdapter(UserTokenAdapter());
     Hive.registerAdapter(ExchangeAdapter());
     Hive.registerAdapter(StockAdapter());
@@ -84,7 +114,9 @@ class LocalStorageService implements ILocalStorageService {
   }
 
   @override
-  Future<void> saveUserToken(UserToken token) {
+  Future<void> saveUserToken(UserToken token, String password) {
+    sharedPreferences.setString(usernameKey, token.user);
+    sharedPreferences.setString(passwordKey, password);
     return _box.put(savedUserTokenBoxKey, token);
   }
 
@@ -100,7 +132,7 @@ class LocalStorageService implements ILocalStorageService {
     if (_box.containsKey("saved_catalog_$user")) {
       return _box.get("saved_catalog_$user");
     }
-    return SavedCatalog(user,catalogs: []);
+    return SavedCatalog(user, catalogs: []);
   }
 
   @override
@@ -115,7 +147,55 @@ class LocalStorageService implements ILocalStorageService {
 
   @override
   Stock? geStock(String code) {
-    // TODO: implement geStock
     throw UnimplementedError();
   }
+
+  @override
+  Future<bool> biometricsValidate() async {
+    final bool canAuthenticateWithBiometrics =
+        await _localAuthentication.canCheckBiometrics;
+    final bool canAuthenticate = canAuthenticateWithBiometrics ||
+        await _localAuthentication.isDeviceSupported();
+
+    if (canAuthenticate) {
+      final List<BiometricType> availableBiometrics =
+          await _localAuthentication.getAvailableBiometrics();
+
+      if (availableBiometrics.isEmpty) {
+        throw Exception();
+      }
+      try {
+        final bool didAuthenticate = await _localAuthentication.authenticate(
+          localizedReason: 'Please authenticate to register',
+        );
+        return didAuthenticate;
+        // ···
+      } on PlatformException catch (e) {
+        if (e.code == auth_error.notAvailable) {
+          // Add handling of no hardware here.
+        } else if (e.code == auth_error.notEnrolled) {
+          // ...
+        } else {
+          // ...
+        }
+        rethrow;
+      }
+
+      // if (availableBiometrics.contains(BiometricType.strong) ||
+      //     availableBiometrics.contains(BiometricType.face)) {
+      //   // Specific types of biometrics are available.
+      //   // Use checks like this with caution!
+      // }
+    } else {
+      throw Exception();
+    }
+  }
+
+  @override
+  Future<void> registerBiometrics() =>
+      sharedPreferences.setBool(regBioKey, true);
+
+  @override
+  Future<void> cancelBiometrics() =>
+      sharedPreferences.setBool(regBioKey, false);
 }

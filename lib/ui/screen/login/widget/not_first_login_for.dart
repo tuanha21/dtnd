@@ -6,6 +6,7 @@ import 'package:dtnd/ui/screen/login/login_controller.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/widget/button/async_button.dart';
 import 'package:dtnd/ui/widget/expanded_widget.dart';
+import 'package:dtnd/ui/widget/overlay/app_dialog.dart';
 import 'package:dtnd/ui/widget/overlay/error_dialog.dart';
 import 'package:dtnd/utilities/logger.dart';
 import 'package:dtnd/utilities/time_utils.dart';
@@ -179,9 +180,7 @@ class _NotFirstLoginFormState extends State<NotFirstLoginForm> {
                   width: 20,
                 ),
                 GestureDetector(
-                  onTap: () {
-                    context.pushNamed("ekyc");
-                  },
+                  onTap: bioLogin,
                   child: SizedBox.square(
                     child: SvgPicture.asset(AppImages.login_face_id_icon),
                   ),
@@ -191,8 +190,45 @@ class _NotFirstLoginFormState extends State<NotFirstLoginForm> {
           ),
           const SizedBox(height: 50),
           GestureDetector(
-            onTap: () {
-              widget.onBack?.call();
+            onTap: () async {
+              final change = await showDialog<bool>(
+                context: context,
+                builder: (context) {
+                  return AppDialog(
+                    icon: const Icon(Icons.warning_amber_rounded),
+                    title: const Text("Xác nhận"),
+                    content: const Text(
+                        "Bạn có chắc chắn muốn dùng tài khoản khác?"),
+                    actions: [
+                      Flexible(
+                        child: InkWell(
+                            onTap: () => Navigator.of(context).pop(false),
+                            child: Container(
+                              alignment: Alignment.center,
+                              child: Text(S.of(context).cancel),
+                            )),
+                      ),
+                      Flexible(
+                        child: InkWell(
+                            onTap: () => Navigator.of(context).pop(true),
+                            child: Container(
+                              alignment: Alignment.center,
+                              decoration: const BoxDecoration(
+                                border: Border(
+                                  left: BorderSide(color: AppColors.neutral_05),
+                                ),
+                              ),
+                              child: const Text("OK"),
+                            )),
+                      )
+                    ],
+                  );
+                },
+              );
+              if (change ?? false) {
+                await loginController.changeAccount();
+                widget.onBack?.call();
+              }
             },
             child: Text(
               S.of(context).login_with_another_account,
@@ -263,5 +299,36 @@ class _NotFirstLoginFormState extends State<NotFirstLoginForm> {
       }
       widget.onSuccess.call(userToken!);
     }
+  }
+
+  Future<void> bioLogin() async {
+    if (errorMsg != null) {
+      setState(() {
+        errorMsg = null;
+      });
+    }
+    late final UserToken? userToken;
+    try {
+      userToken = await loginController.loginWithBio();
+    } catch (e) {
+      userToken = null;
+      logger.e(e);
+      if (mounted) {
+        setState(() {
+          errorMsg = e.toString();
+        });
+        return;
+        // return await showDialog(
+        //   context: context,
+        //   builder: (context) {
+        //     return ErrorDialog(
+        //       title: S.of(context).login_falied,
+        //       content: e.toString(),
+        //     );
+        //   },
+        // );
+      }
+    }
+    widget.onSuccess.call(userToken!);
   }
 }

@@ -29,6 +29,8 @@ class UserService implements IUserService {
 
   @override
   final Rx<UserToken?> token = Rxn();
+
+  final Rx<String?> _currentPassword = Rxn();
   @override
   final Rx<UserInfo?> userInfo = Rxn();
 
@@ -64,10 +66,11 @@ class UserService implements IUserService {
   }
 
   @override
-  Future<bool> saveToken(UserToken userToken) async {
+  Future<bool> saveToken(UserToken userToken, String password) async {
     try {
       token.value = userToken;
-      await localStorageService.saveUserToken(userToken);
+      _currentPassword.value = password;
+      await localStorageService.saveUserToken(userToken, password);
       getUserInfo();
       getListAccount();
       getTotalAsset();

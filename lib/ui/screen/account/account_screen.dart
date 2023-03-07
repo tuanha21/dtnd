@@ -1,12 +1,16 @@
-import 'package:dtnd/config/service/app_services.dart';
+import 'package:dtnd/data/i_local_storage_service.dart';
 import 'package:dtnd/data/i_user_service.dart';
+import 'package:dtnd/data/implementations/local_storage_service.dart';
 import 'package:dtnd/data/implementations/user_service.dart';
 import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/screen/account/component/account_screen_view.dart';
 import 'package:dtnd/ui/screen/account/icon/account_icon.dart';
 import 'package:dtnd/ui/screen/login/login_screen.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
+import 'package:dtnd/ui/widget/overlay/app_dialog.dart';
 import 'package:flutter/material.dart';
+
+import '../../widget/overlay/login_first_dialog.dart';
 
 class AccountScreen extends StatefulWidget {
   const AccountScreen({super.key});
@@ -17,6 +21,7 @@ class AccountScreen extends StatefulWidget {
 
 class _AccountScreenState extends State<AccountScreen> {
   final IUserService userService = UserService();
+  final ILocalStorageService localStorageService = LocalStorageService();
   @override
   Widget build(BuildContext context) {
     final isLogin = userService.isLogin;
@@ -31,10 +36,61 @@ class _AccountScreenState extends State<AccountScreen> {
                 child: TextButton(
                   onPressed: () {
                     Navigator.of(context)
-                        .push(MaterialPageRoute(
-                          builder: (context) => const LoginScreen(),
-                        ))
-                        .then((value) => setState(() {}));
+                        .push<bool>(MaterialPageRoute(
+                      builder: (context) => const LoginScreen(),
+                    ))
+                        .then((login) async {
+                      setState(() {});
+                      if ((login ?? false) &&
+                          !localStorageService.biometricsRegistered) {
+                        final reg = await showDialog<bool>(
+                          context: context,
+                          builder: (context) {
+                            return AppDialog(
+                              icon: const Icon(Icons.warning_amber_rounded),
+                              title: const Text("Đăng nhập bằng sinh trắc học"),
+                              content: const Text(
+                                  "Bạn chưa đăng ký đăng nhập bằng sinh trắc học\nBạn có muốn đăng ký ngay bây giờ không?"),
+                              actions: [
+                                Flexible(
+                                  child: InkWell(
+                                      onTap: () =>
+                                          Navigator.of(context).pop(false),
+                                      child: Container(
+                                        alignment: Alignment.center,
+                                        child: Text(S.of(context).cancel),
+                                      )),
+                                ),
+                                Flexible(
+                                  child: InkWell(
+                                      onTap: () =>
+                                          Navigator.of(context).pop(true),
+                                      child: Container(
+                                        alignment: Alignment.center,
+                                        decoration: const BoxDecoration(
+                                          border: Border(
+                                            left: BorderSide(
+                                                color: AppColors.neutral_05),
+                                          ),
+                                        ),
+                                        child: const Text("OK"),
+                                      )),
+                                )
+                              ],
+                            );
+                          },
+                        );
+                        if (reg ?? false) {
+                          if (!mounted) return;
+                          final auth = await localStorageService
+                              .biometricsValidate()
+                              .onError((error, stackTrace) => false);
+                          if (auth) {
+                            await localStorageService.registerBiometrics();
+                          }
+                        }
+                      }
+                    });
                     return;
                   },
                   style: const ButtonStyle(
@@ -55,9 +111,56 @@ class _AccountScreenState extends State<AccountScreen> {
           setState(() {});
           Navigator.of(context)
               .push(MaterialPageRoute(
-                builder: (context) => const LoginScreen(),
-              ))
-              .then((value) => setState(() {}));
+            builder: (context) => const LoginScreen(),
+          ))
+              .then((login) async {
+            setState(() {});
+            if ((login ?? false) && !localStorageService.biometricsRegistered) {
+              final reg = await showDialog<bool>(
+                context: context,
+                builder: (context) {
+                  return AppDialog(
+                    icon: const Icon(Icons.warning_amber_rounded),
+                    title: const Text("Đăng nhập bằng sinh trắc học"),
+                    content: const Text(
+                        "Bạn chưa đăng ký đăng nhập bằng sinh trắc học\nBạn có muốn đăng ký ngay bây giờ không?"),
+                    actions: [
+                      Flexible(
+                        child: InkWell(
+                            onTap: () => Navigator.of(context).pop(false),
+                            child: Container(
+                              alignment: Alignment.center,
+                              child: Text(S.of(context).cancel),
+                            )),
+                      ),
+                      Flexible(
+                        child: InkWell(
+                            onTap: () => Navigator.of(context).pop(true),
+                            child: Container(
+                              alignment: Alignment.center,
+                              decoration: const BoxDecoration(
+                                border: Border(
+                                  left: BorderSide(color: AppColors.neutral_05),
+                                ),
+                              ),
+                              child: const Text("OK"),
+                            )),
+                      )
+                    ],
+                  );
+                },
+              );
+              if (reg ?? false) {
+                if (!mounted) return;
+                final auth = await localStorageService
+                    .biometricsValidate()
+                    .onError((error, stackTrace) => false);
+                if (auth) {
+                  await localStorageService.registerBiometrics();
+                }
+              }
+            }
+          });
           return;
         },
       );
@@ -101,7 +204,7 @@ class _AccountScreenState extends State<AccountScreen> {
               height: 80,
               decoration: const BoxDecoration(
                   shape: BoxShape.circle, color: Colors.white),
-              child: Icon(
+              child: const Icon(
                 Icons.account_circle_outlined,
                 color: AppColors.neutral_03,
                 size: 72,

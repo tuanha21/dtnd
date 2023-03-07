@@ -238,17 +238,17 @@ class _LoginFormState extends State<LoginForm> {
                     child: Text(S.of(context).login),
                   ),
                 ),
-                const SizedBox(
-                  width: 20,
-                ),
-                GestureDetector(
-                  onTap: () {
-                    context.pushNamed("ekyc");
-                  },
-                  child: SizedBox.square(
-                    child: SvgPicture.asset(AppImages.login_face_id_icon),
-                  ),
-                ),
+                // const SizedBox(
+                //   width: 20,
+                // ),
+                // GestureDetector(
+                //   onTap: () {
+                //     context.pushNamed("ekyc");
+                //   },
+                //   child: SizedBox.square(
+                //     child: SvgPicture.asset(AppImages.login_face_id_icon),
+                //   ),
+                // ),
               ],
             ),
           ),

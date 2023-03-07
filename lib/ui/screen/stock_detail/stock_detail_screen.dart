@@ -4,9 +4,12 @@ import 'dart:async';
 
 import 'package:dtnd/=models=/response/stock_model.dart';
 import 'package:dtnd/data/i_data_center_service.dart';
+import 'package:dtnd/data/i_local_storage_service.dart';
 import 'package:dtnd/data/i_user_service.dart';
 import 'package:dtnd/data/implementations/data_center_service.dart';
+import 'package:dtnd/data/implementations/local_storage_service.dart';
 import 'package:dtnd/data/implementations/user_service.dart';
+import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/screen/exchange_stock/stock_order/sheet/stock_order_sheet.dart';
 import 'package:dtnd/ui/screen/login/login_screen.dart';
 import 'package:dtnd/ui/screen/stock_detail/enum/detail_tab_enum.dart';
@@ -16,6 +19,7 @@ import 'package:dtnd/ui/screen/stock_detail/widget/component/stock_detail_appbar
 import 'package:dtnd/ui/screen/stock_detail/widget/stock_detail_overview.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
+import 'package:dtnd/ui/widget/overlay/app_dialog.dart';
 import 'package:dtnd/ui/widget/overlay/login_first_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -38,6 +42,7 @@ class StockDetailScreen extends StatefulWidget {
 class _StockDetailScreenState extends State<StockDetailScreen> {
   final IDataCenterService dataCenterService = DataCenterService();
   final IUserService userService = UserService();
+  final ILocalStorageService localStorageService = LocalStorageService();
 
   @override
   void initState() {
@@ -86,7 +91,52 @@ class _StockDetailScreenState extends State<StockDetailScreen> {
         final result = await Navigator.of(context).push(MaterialPageRoute(
           builder: (context) => const LoginScreen(),
         ));
-        if (result) {
+        if (result && mounted) {
+          if (!localStorageService.biometricsRegistered) {
+            final reg = await showDialog<bool>(
+              context: context,
+              builder: (context) {
+                return AppDialog(
+                  icon: const Icon(Icons.warning_amber_rounded),
+                  title: const Text("Đăng nhập bằng sinh trắc học"),
+                  content: const Text(
+                      "Bạn chưa đăng ký đăng nhập bằng sinh trắc học\nBạn có muốn đăng ký ngay bây giờ không?"),
+                  actions: [
+                    Flexible(
+                      child: InkWell(
+                          onTap: () => Navigator.of(context).pop(false),
+                          child: Container(
+                            alignment: Alignment.center,
+                            child: Text(S.of(context).cancel),
+                          )),
+                    ),
+                    Flexible(
+                      child: InkWell(
+                          onTap: () => Navigator.of(context).pop(true),
+                          child: Container(
+                            alignment: Alignment.center,
+                            decoration: const BoxDecoration(
+                              border: Border(
+                                left: BorderSide(color: AppColors.neutral_05),
+                              ),
+                            ),
+                            child: const Text("OK"),
+                          )),
+                    )
+                  ],
+                );
+              },
+            );
+            if (reg ?? false) {
+              if (!mounted) return;
+              final auth = await localStorageService
+                  .biometricsValidate()
+                  .onError((error, stackTrace) => false);
+              if (auth) {
+                await localStorageService.registerBiometrics();
+              }
+            }
+          }
           return _onFABTapped();
         }
       }

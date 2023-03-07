@@ -4,6 +4,8 @@ import 'package:dtnd/ui/screen/account/logic/account_extension_button.dart';
 import 'package:dtnd/ui/widget/appbar/simple_appbar.dart';
 import 'package:flutter/material.dart';
 
+import 'biometrics_register/biometrics_register_screen.dart';
+
 class FullExtensionsScreen extends StatefulWidget {
   const FullExtensionsScreen({Key? key}) : super(key: key);
 
@@ -97,6 +99,7 @@ class _FullExtensionsScreenState extends State<FullExtensionsScreen> {
       AccountExtensionButton(
         icon: AccountIcon.finger_cricle,
         label: "Face/Touch ID",
+        route: const BiometricsRegisterScreen(),
       ),
       // AccountExtensionButton(
       //     icon: AccountIcon.more,
@@ -158,6 +161,42 @@ class _Panel extends StatelessWidget {
         borderRadius: BorderRadius.all(Radius.circular(12)),
         color: Colors.white,
       ),
+      // child: Wrap(
+      //   // alignment: WrapAlignment.spaceBetween,
+      //   children: [
+      //     for (int i = 0; i < list.length; i++)
+      //       Material(
+      //         color: Colors.transparent,
+      //         child: InkWell(
+      //           onTap: () {
+      //             if (list.elementAt(i).route != null) {
+      //               Navigator.of(context).push(MaterialPageRoute(
+      //                 builder: (context) => list.elementAt(i).route!,
+      //               ));
+      //             }
+      //           },
+      //           child: Ink(
+      //             width: 80,
+      //             height: 62,
+      //             child: Column(
+      //               mainAxisAlignment: MainAxisAlignment.start,
+      //               children: [
+      //                 Image.asset(
+      //                   list.elementAt(i).icon,
+      //                   width: 28,
+      //                   height: 28,
+      //                 ),
+      //                 Text(
+      //                   list.elementAt(i).label,
+      //                   textAlign: TextAlign.center,
+      //                 ),
+      //               ],
+      //             ),
+      //           ),
+      //         ),
+      //       ),
+      //   ],
+      // ),
       child: Column(
         children: [
           for (int i = 0; i < list.length; i += 4)
@@ -182,7 +221,7 @@ class _Panel extends StatelessWidget {
                             },
                             child: Ink(
                               width: 80,
-                              height: 60,
+                              height: 62,
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [

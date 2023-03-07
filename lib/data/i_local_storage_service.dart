@@ -2,6 +2,7 @@ import 'package:dtnd/=models=/local/saved_catalog.dart';
 import 'package:dtnd/=models=/response/stock.dart';
 import 'package:dtnd/=models=/response/user_token.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:local_auth/local_auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 abstract class ILocalStorageService {
@@ -9,7 +10,15 @@ abstract class ILocalStorageService {
 
   Box get box;
 
+  LocalAuthentication get localAuthentication;
+
   SharedPreferences get sharedPreferences;
+
+  bool get biometricsRegistered;
+
+  String get usernameRegistered;
+
+  String get passwordRegistered;
 
   Future<void> init();
 
@@ -21,11 +30,17 @@ abstract class ILocalStorageService {
 
   UserToken? getSavedUserToken();
 
-  Future<void> saveUserToken(UserToken token);
+  Future<void> saveUserToken(UserToken token, String password);
 
   List<String>? getListInterestedStock();
 
   SavedCatalog getSavedCatalog(String user);
 
   Future<void> putSavedCatalog(SavedCatalog savedCatalog);
+
+  Future<bool> biometricsValidate();
+
+  Future<void> registerBiometrics();
+
+  Future<void> cancelBiometrics();
 }

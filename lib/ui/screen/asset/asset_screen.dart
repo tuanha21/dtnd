@@ -3,8 +3,10 @@ import 'dart:ui';
 import 'package:dtnd/=models=/response/account/base_margin_account_model.dart';
 import 'package:dtnd/=models=/ui_model/user_cmd.dart';
 import 'package:dtnd/data/i_data_center_service.dart';
+import 'package:dtnd/data/i_local_storage_service.dart';
 import 'package:dtnd/data/i_user_service.dart';
 import 'package:dtnd/data/implementations/data_center_service.dart';
+import 'package:dtnd/data/implementations/local_storage_service.dart';
 import 'package:dtnd/data/implementations/user_service.dart';
 import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/screen/asset/component/account_asset_overview_widget.dart';
@@ -21,6 +23,7 @@ import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:dtnd/ui/widget/dropdown/custom_dropdown_button.dart';
 import 'package:dtnd/ui/widget/icon/icon_button.dart';
 import 'package:dtnd/ui/widget/my_appbar.dart';
+import 'package:dtnd/ui/widget/overlay/app_dialog.dart';
 import 'package:dtnd/ui/widget/overlay/login_first_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -40,6 +43,7 @@ class _AssetScreenState extends State<AssetScreen>
     with SingleTickerProviderStateMixin {
   final IUserService userService = UserService();
   final IDataCenterService dataCenterService = DataCenterService();
+  final ILocalStorageService localStorageService = LocalStorageService();
 
   void rebuild() => setState(() {});
 
@@ -63,6 +67,7 @@ class _AssetScreenState extends State<AssetScreen>
       child = Center(
         child: NotSigninCatalogWidget(
           afterLogin: rebuild,
+          localStorageService: localStorageService,
         ),
       );
     } else {
@@ -266,12 +271,60 @@ class _AssetScreenState extends State<AssetScreen>
       );
       if (toLogin ?? false) {
         if (!mounted) return;
-        final result = await Navigator.of(context).push(MaterialPageRoute(
+        final result = await Navigator.of(context)
+            .push<bool>(MaterialPageRoute(
           builder: (context) => const LoginScreen(),
-        ));
-        if (result) {
-          return _onFABTapped();
-        }
+        ))
+            .then((result) async {
+          if ((result ?? false)) {
+            if (!localStorageService.biometricsRegistered) {
+              final reg = await showDialog<bool>(
+                context: context,
+                builder: (context) {
+                  return AppDialog(
+                    icon: const Icon(Icons.warning_amber_rounded),
+                    title: const Text("Đăng nhập bằng sinh trắc học"),
+                    content: const Text(
+                        "Bạn chưa đăng ký đăng nhập bằng sinh trắc học\nBạn có muốn đăng ký ngay bây giờ không?"),
+                    actions: [
+                      Flexible(
+                        child: InkWell(
+                            onTap: () => Navigator.of(context).pop(false),
+                            child: Container(
+                              alignment: Alignment.center,
+                              child: Text(S.of(context).cancel),
+                            )),
+                      ),
+                      Flexible(
+                        child: InkWell(
+                            onTap: () => Navigator.of(context).pop(true),
+                            child: Container(
+                              alignment: Alignment.center,
+                              decoration: const BoxDecoration(
+                                border: Border(
+                                  left: BorderSide(color: AppColors.neutral_05),
+                                ),
+                              ),
+                              child: const Text("OK"),
+                            )),
+                      )
+                    ],
+                  );
+                },
+              );
+              if (reg ?? false) {
+                if (!mounted) return;
+                final auth = await localStorageService
+                    .biometricsValidate()
+                    .onError((error, stackTrace) => false);
+                if (auth) {
+                  await localStorageService.registerBiometrics();
+                }
+              }
+            }
+            return _onFABTapped();
+          }
+        });
       }
     } else {
       // return StockOrderISheet(widget.stockModel).showSheet(context, );
