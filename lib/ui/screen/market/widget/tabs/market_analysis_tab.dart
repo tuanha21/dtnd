@@ -56,7 +56,7 @@ class _MarketAnalysisTabState extends State<MarketAnalysisTab>
     super.initState();
   }
 
-  Index indexSelect = Index.VN30;
+  Index indexSelect = Index.VNI;
 
   @override
   Widget build(BuildContext context) {

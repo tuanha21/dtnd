@@ -76,14 +76,31 @@ class _IndFvalueState extends State<IndFvalue> {
                             labelBuilder:
                                 (BuildContext context, TreemapTile tile) {
                               return Center(
-                                child: Text(
-                                  tile.group,
-                                  overflow: TextOverflow.ellipsis,
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                      fontSize: 14, color: AppColors.light_bg),
+                                  child: SingleChildScrollView(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      tile.group,
+                                      overflow: TextOverflow.ellipsis,
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                          fontSize: 14,
+                                          color: AppColors.light_bg),
+                                    ),
+                                    Text(
+                                      NumUtils.formatInteger(tile.weight),
+                                      overflow: TextOverflow.ellipsis,
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w400,
+                                          color: AppColors.light_bg),
+                                    )
+                                  ],
                                 ),
-                              );
+                              ));
                             },
                           ),
                         ],
