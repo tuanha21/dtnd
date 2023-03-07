@@ -22,7 +22,7 @@ class _DerivativeComponentState extends State<DerivativeComponent> {
       child: Row(
         children: [
           Expanded(
-            flex: 2,
+            flex: 3,
             child: Text(widget.model?.sym ?? "",
                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
                     fontWeight: FontWeight.w700,
@@ -30,11 +30,13 @@ class _DerivativeComponentState extends State<DerivativeComponent> {
                         .getPriceColor(widget.model.lastPrice ?? 0))),
           ),
           Expanded(
-            flex: 2,
+            flex: 3,
             child: Align(
                 alignment: Alignment.centerRight,
                 child: Text(
-                  widget.model?.lastPrice.toString() ?? "",
+                  (widget.model?.lastPrice ?? widget.model?.r ?? 0)
+                          .toString() ??
+                      "",
                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
                       fontWeight: FontWeight.w600,
                       color: widget.model
@@ -42,12 +44,13 @@ class _DerivativeComponentState extends State<DerivativeComponent> {
                 )),
           ),
           Expanded(
-              flex: 3,
+              flex: 2,
               child: Align(
                 alignment: Alignment.centerRight,
                 child: Text(
                   NumUtils.formatDouble(
-                      (widget.model?.lastPrice ?? 0) - (widget.model?.r ?? 0)),
+                      (widget.model?.lastPrice ?? widget.model?.r ?? 0) -
+                          (widget.model?.r ?? 0)),
                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
                       fontWeight: FontWeight.w600,
                       color: widget.model

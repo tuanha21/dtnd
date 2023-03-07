@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 enum DetailTab {
   Overview,
   Transaction,
-  TechnicalAnalysis,
+  // TechnicalAnalysis,
   FinancialIndex,
 }
 
@@ -15,8 +15,8 @@ extension DetailTabX on DetailTab {
     switch (this) {
       case DetailTab.Overview:
         return S.of(context).overview;
-      case DetailTab.TechnicalAnalysis:
-        return S.of(context).technical_analysis;
+      // case DetailTab.TechnicalAnalysis:
+      //   return S.of(context).technical_analysis;
       case DetailTab.FinancialIndex:
         return S.of(context).financial_index;
       case DetailTab.Transaction:

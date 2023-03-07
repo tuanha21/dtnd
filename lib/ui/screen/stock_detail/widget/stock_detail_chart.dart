@@ -55,7 +55,8 @@ class _StockDetailChartState extends State<StockDetailChart>
           timeSeries.type,
           timeSeries.dateTime,
           DateTime.now());
-      stockTrading.sink.add(stockTradingHistory!.o!);
+      // print(stockTradingHistory);
+      stockTrading.sink.add(stockTradingHistory!.c!);
     } catch (e) {
       if (kDebugMode) {
         print(e.toString());
@@ -91,6 +92,7 @@ class _StockDetailChartState extends State<StockDetailChart>
                   if (snapshot.hasData) {
                     var list = snapshot.data;
                     if (list == null || list.isEmpty) return const SizedBox();
+
                     max = list.reduce(math.max);
                     min = list.reduce(math.min);
                     maxX = listTime.reduce(math.max);
@@ -113,14 +115,13 @@ class _StockDetailChartState extends State<StockDetailChart>
                               )..setAttribute(charts.measureAxisIdKey,
                                   "secondaryMeasureAxisId")),
                       layoutConfig: charts.LayoutConfig(
-                        bottomMarginSpec: charts.MarginSpec.defaultSpec,
-                        leftMarginSpec: charts.MarginSpec.defaultSpec,
-                        rightMarginSpec: charts.MarginSpec.defaultSpec,
-                        topMarginSpec: charts.MarginSpec.defaultSpec
-                      ),
+                          bottomMarginSpec: charts.MarginSpec.defaultSpec,
+                          leftMarginSpec: charts.MarginSpec.defaultSpec,
+                          rightMarginSpec: charts.MarginSpec.defaultSpec,
+                          topMarginSpec: charts.MarginSpec.defaultSpec),
                       defaultRenderer:
                           charts.LineRendererConfig(smoothLine: true),
-                      domainAxis: domainSpec(minX,maxX),
+                      domainAxis: domainSpec(minX, maxX),
                       secondaryMeasureAxis: axisSpec(),
                     );
                   }
@@ -179,7 +180,7 @@ class _StockDetailChartState extends State<StockDetailChart>
     );
   }
 
-  charts.NumericAxisSpec domainSpec( num minX, num maxX) {
+  charts.NumericAxisSpec domainSpec(num minX, num maxX) {
     var now = DateTime.now();
     num min =
         DateTime(now.year, now.month, now.day, 9, 0).millisecondsSinceEpoch;
@@ -202,7 +203,7 @@ class _StockDetailChartState extends State<StockDetailChart>
           zeroBound: false,
         ),
         viewport: timeSeries == TimeSeries.day
-            ? charts.NumericExtents(min / 1000,maxX)
+            ? charts.NumericExtents(min / 1000, maxX)
             : charts.NumericExtents(minX, maxX),
         renderSpec: const charts.GridlineRendererSpec(
             axisLineStyle: charts.LineStyleSpec(
@@ -245,9 +246,9 @@ extension TimeSeriesExt on TimeSeries {
   String get title {
     switch (this) {
       case TimeSeries.day:
-        return "1D";
+        return "D";
       case TimeSeries.week:
-        return "1W";
+        return "W";
       case TimeSeries.month:
         return "1M";
       case TimeSeries.month_3:

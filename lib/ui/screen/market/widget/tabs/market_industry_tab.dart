@@ -39,8 +39,6 @@ class _MarketIndustryTabState extends State<MarketIndustryTab> {
 
   final IDataCenterService dataCenterService = DataCenterService();
 
-
-
   late Future<List<TopInfluenceModel>> topInfluenceList;
   late Future<List<IndexBoard>> indexBoard;
   late Future<LiquidityModel> liquidityModel;
@@ -66,6 +64,7 @@ class _MarketIndustryTabState extends State<MarketIndustryTab> {
     } else {
       tab = const IndustryInfoWidget();
     }
+
     return SingleChildScrollView(
       child: Column(
         children: [

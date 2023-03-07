@@ -13,6 +13,8 @@ class IndContrib {
   List<num>? ptcolor1;
   List<num>? ptvalue1;
   List<num>? contribPoint;
+  String? totalBuy;
+  String? totalSell;
 
   List<Map<String, dynamic>> get listMapValue {
     List<Map<String, dynamic>> list = [];
@@ -40,7 +42,9 @@ class IndContrib {
       this.ptvalue,
       this.ptcolor1,
       this.ptvalue1,
-      this.contribPoint});
+      this.contribPoint,
+      this.totalBuy,
+      this.totalSell});
 
   IndContrib.fromJson(Map<String, dynamic> json) {
     if (json['dataDate'] != null) {
@@ -76,6 +80,12 @@ class IndContrib {
     if (json['contribPoint'] != null) {
       contribPoint = json['contribPoint'].cast<double>();
     }
+    if (json['totalBuy'] != null) {
+      totalBuy = json['totalBuy'];
+    }
+    if (json['totalSell'] != null) {
+      totalSell = json['totalSell'];
+    }
   }
 
   Map<String, dynamic> toJson() {
@@ -91,6 +101,8 @@ class IndContrib {
     data['ptcolor1'] = ptcolor1;
     data['ptvalue1'] = ptvalue1;
     data['contribPoint'] = contribPoint;
+    data['totalBuy'] = totalBuy;
+    data['totalSell'] = totalSell;
     return data;
   }
 }

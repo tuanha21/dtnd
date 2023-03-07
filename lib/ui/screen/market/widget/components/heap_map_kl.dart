@@ -23,7 +23,7 @@ class _HeapMapKLState extends State<HeapMapKL> {
 
   @override
   initState() {
-    listField = dataCenterService.getListIndustryHeatMap(top: 8, type: "KL");
+    listField = dataCenterService.getListIndustryHeatMap(top: 10, type: "KL");
     super.initState();
   }
 
@@ -45,7 +45,7 @@ class _HeapMapKLState extends State<HeapMapKL> {
                   setState(() {
                     isVol = !isVol;
                     listField = dataCenterService.getListIndustryHeatMap(
-                        top: 8, type: isVol ? "KL" : "GT");
+                        top: 10, type: isVol ? "KL" : "GT");
                   });
                 },
                 child: Row(
@@ -94,8 +94,8 @@ class _HeapMapKLState extends State<HeapMapKL> {
                         });
                       }
                       return StaggeredGridTile.count(
-                        crossAxisCellCount: 2,
-                        mainAxisCellCount: idx % 2 == 0 ? 2 : 1,
+                        crossAxisCellCount: idx > 7 ? 2 : 4,
+                        mainAxisCellCount: 2,
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
                           crossAxisAlignment: CrossAxisAlignment.start,

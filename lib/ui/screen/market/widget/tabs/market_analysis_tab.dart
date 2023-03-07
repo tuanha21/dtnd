@@ -1,6 +1,7 @@
 import 'package:dtnd/ui/screen/market/widget/components/liquidity_chart.dart';
 import 'package:dtnd/ui/screen/market/widget/components/top_influence_chart.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
+import 'package:dtnd/utilities/num_utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -39,7 +40,6 @@ class _MarketAnalysisTabState extends State<MarketAnalysisTab>
 
   late Future<IndContrib> indFvalue;
 
-
   void initData() {
     // topInfluenceList = dataCenterService.getTopInfluence(indexSelect);
     // indexBoard = dataCenterService.getIndexBoard(indexSelect.exchangeName);
@@ -61,48 +61,207 @@ class _MarketAnalysisTabState extends State<MarketAnalysisTab>
   @override
   Widget build(BuildContext context) {
     super.build(context);
+
     return ListView(
       children: [
-       // const SizedBox(height: 32),
-        // Padding(
-        //   padding: const EdgeInsets.symmetric(horizontal: 20),
-        //   child: GestureDetector(
-        //     onTap: () async {
-        //       var index = await showCupertinoModalPopup<Index>(
-        //           context: context,
-        //           builder: (context) {
-        //             return BottomSheet(index: indexSelect);
-        //           });
-        //       if (index != null) {
-        //         indexSelect = index;
-        //         setState(() {
-        //           initData();
-        //         });
-        //       }
-        //     },
-        //     child: Row(
-        //       mainAxisAlignment: MainAxisAlignment.end,
-        //       children: [
-        //         Text(
-        //           S.of(context).filter,
-        //           style: Theme.of(context)
-        //               .textTheme
-        //               .bodySmall
-        //               ?.copyWith(color: AppColors.color_secondary),
-        //         ),
-        //         const SizedBox(width: 4),
-        //         SvgPicture.asset(AppImages.filter),
-        //       ],
-        //     ),
-        //   ),
-        // ),
+        const SizedBox(height: 16),
         // TopInfluenceChart(topInfluenceList: topInfluenceList),
         // LiquidityChart(liquidityModel: liquidityModel),
         // MoneyChart(indexBoard: indexBoard),
         //TopIndexWidgetChart(topIndex: topIndex),
+        Container(
+            padding: const EdgeInsets.all(8),
+            decoration: const BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(12)),
+                color: AppColors.light_bg),
+            child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 8),
+                child: Row(children: [
+                  Expanded(
+                    flex: 1,
+                    child: Container(
+                        margin: const EdgeInsets.only(right: 8),
+                        padding: const EdgeInsets.only(bottom: 8),
+                        decoration: const BoxDecoration(
+                            borderRadius: BorderRadius.all(Radius.circular(8)),
+                            color: AppColors.neutral_06),
+                        child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Container(
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 8),
+                                  decoration: const BoxDecoration(
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(8)),
+                                      color: AppColors.primary_02),
+                                  child: Center(
+                                    child: Text(
+                                      "Cá nhân",
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodySmall
+                                          ?.copyWith(
+                                              fontWeight: FontWeight.w500,
+                                              color: AppColors.neutral_07,
+                                              fontSize: 12),
+                                    ),
+                                  )),
+                              const SizedBox(height: 10),
+                              FutureBuilder(
+                                future: Future.wait([piValue, fiValue]),
+                                builder: (context,
+                                    AsyncSnapshot<List<dynamic>> snapshot) {
+                                  if (!snapshot.hasData) {
+                                    return const SizedBox();
+                                  }
+
+                                  var piValue = snapshot.data![0]; //piValue
+                                  var fiValue = snapshot.data![1]; //fiValue
+
+                                  var totalBuy =
+                                      double.parse(piValue.totalBuy) +
+                                          double.parse(fiValue.totalBuy);
+                                  var totalSell =
+                                      double.parse(piValue.totalSell) +
+                                          double.parse(fiValue.totalSell);
+                                  return Text(
+                                    '${NumUtils.formatDouble(totalSell - totalBuy)} Tỷ',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodySmall
+                                        ?.copyWith(
+                                            fontWeight: FontWeight.w500,
+                                            color: AppColors.primary_02,
+                                            fontSize: 16),
+                                  );
+                                },
+                              ),
+                              const SizedBox(height: 4),
+                            ])),
+                  ),
+                  Expanded(
+                    flex: 1,
+                    child: Container(
+                        margin: const EdgeInsets.only(right: 8),
+                        padding: const EdgeInsets.only(bottom: 8),
+                        decoration: const BoxDecoration(
+                            borderRadius: BorderRadius.all(Radius.circular(8)),
+                            color: AppColors.neutral_06),
+                        child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Container(
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 8),
+                                  decoration: const BoxDecoration(
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(8)),
+                                      color: AppColors.primary_02),
+                                  child: Center(
+                                    child: Text(
+                                      "Tự doanh",
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodySmall
+                                          ?.copyWith(
+                                              fontWeight: FontWeight.w500,
+                                              color: AppColors.neutral_07,
+                                              fontSize: 12),
+                                    ),
+                                  )),
+                              const SizedBox(height: 8),
+                              FutureBuilder<IndContrib>(
+                                future: piValue,
+                                builder: (context, snapshot) {
+                                  if (!snapshot.hasData) {
+                                    return const SizedBox();
+                                  }
+
+                                  var piValue = snapshot.data!; //fiValue
+
+                                  var piTotal = double.parse(
+                                          piValue.totalBuy ?? '0') -
+                                      double.parse(piValue.totalSell ?? '0');
+                                  return Text(
+                                    '${NumUtils.formatDouble(piTotal)} Tỷ',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodySmall
+                                        ?.copyWith(
+                                            fontWeight: FontWeight.w500,
+                                            color: AppColors.primary_02,
+                                            fontSize: 16),
+                                  );
+                                },
+                              ),
+                              const SizedBox(height: 4),
+                            ])),
+                  ),
+                  Expanded(
+                    flex: 1,
+                    child: Container(
+                        margin: const EdgeInsets.only(right: 8),
+                        padding: const EdgeInsets.only(bottom: 8),
+                        decoration: const BoxDecoration(
+                            borderRadius: BorderRadius.all(Radius.circular(8)),
+                            color: AppColors.neutral_06),
+                        child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Container(
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 8),
+                                  decoration: const BoxDecoration(
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(8)),
+                                      color: AppColors.primary_02),
+                                  child: Center(
+                                    child: Text(
+                                      "Tự doanh",
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodySmall
+                                          ?.copyWith(
+                                              fontWeight: FontWeight.w500,
+                                              color: AppColors.neutral_07,
+                                              fontSize: 12),
+                                    ),
+                                  )),
+                              const SizedBox(height: 8),
+                              FutureBuilder<IndContrib>(
+                                future: fiValue,
+                                builder: (context, snapshot) {
+                                  if (!snapshot.hasData) {
+                                    return const SizedBox();
+                                  }
+
+                                  var piValue = snapshot.data!; //fiValue
+
+                                  var piTotal = double.parse(
+                                          piValue.totalBuy ?? '0') -
+                                      double.parse(piValue.totalSell ?? '0');
+                                  return Text(
+                                    '${NumUtils.formatDouble(piTotal)} Tỷ',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodySmall
+                                        ?.copyWith(
+                                            fontWeight: FontWeight.w500,
+                                            color: AppColors.primary_02,
+                                            fontSize: 16),
+                                  );
+                                },
+                              ),
+                              const SizedBox(height: 4),
+                            ])),
+                  ),
+                ]))),
         PiValueChart(pIValue: piValue),
         FiChartValue(fIValue: fiValue),
-        IndFvalue(fIValue: indFvalue,),
+        IndFvalue(
+          fIValue: indFvalue,
+        ),
         const SizedBox(height: 100)
       ],
     );

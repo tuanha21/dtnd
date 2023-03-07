@@ -2,7 +2,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dtnd/=models=/response/stock_model.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:dtnd/ui/widget/expanded_widget.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
@@ -11,9 +10,7 @@ import '../../../../=models=/response/company_info.dart';
 import '../../../../=models=/response/news_model.dart';
 import '../../../../=models=/response/stock_news.dart';
 import '../../../../=models=/response/stock_trading_history.dart';
-import '../../../../data/i_data_center_service.dart';
 import '../../../../data/i_network_service.dart';
-import '../../../../data/implementations/data_center_service.dart';
 import '../../../../data/implementations/network_service.dart';
 import '../../../../generated/l10n.dart';
 import '../../../theme/app_color.dart';
@@ -162,8 +159,16 @@ class BasicIndex extends StatefulWidget {
 class _BasicIndexState extends State<BasicIndex> {
   Widget indexPrice() {
     var data = widget.history;
-    var max = data.c?.reduce(math.max);
-    var min = data.c?.reduce(math.min);
+    var max =
+        data.c?.reduce(math.max) ?? widget.stockModel.stockData.c.value! ?? 1;
+    var min =
+        data.c?.reduce(math.min) ?? widget.stockModel.stockData.f.value! ?? 0;
+
+    print('max: ' + max.toString());
+    print('min: ' + min.toString());
+    print(
+        'lastPrice: ' + widget.stockModel.stockData.lastPrice.value.toString());
+
     return Column(
       children: [
         Row(
@@ -320,7 +325,14 @@ class PercentPrice extends StatelessWidget {
         Expanded(
           child: LayoutBuilder(builder: (context, ctx) {
             var length = max - min;
-            var percent = (lastPrice - min) / length * 100;
+
+            var _lastPrice = lastPrice > max
+                ? max
+                : lastPrice < min
+                    ? min
+                    : lastPrice;
+
+            var percent = (_lastPrice - min) / length * 100;
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
