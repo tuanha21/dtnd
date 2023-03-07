@@ -45,6 +45,10 @@ class _PiValueChartState extends State<PiValueChart> {
                 if (snapshot.data == null) return const SizedBox();
                 var data = snapshot.data!.listMapValue;
                 data.removeWhere((element) => element['ptvalue'] == 0);
+                data.sort((a, b) => a['ptvalue'].compareTo(b['ptvalue']));
+
+                var _take = data.length > 30 ? 30 : data.length;
+                var _data = data.reversed.take(_take).toList();
 
                 return Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -52,15 +56,15 @@ class _PiValueChartState extends State<PiValueChart> {
                       height: 200,
                       color: Colors.grey,
                       child: SfTreemap(
-                        dataCount: data.length,
+                        dataCount: _data.length,
                         weightValueMapper: (int index) {
-                          return data[index]['ptvalue'] ?? 0.0;
+                          return _data[index]['ptvalue'] ?? 0.0;
                         },
                         levels: <TreemapLevel>[
                           TreemapLevel(
-                            groupMapper: (int index) => data[index]['name'],
+                            groupMapper: (int index) => _data[index]['name'],
                             colorValueMapper: (tile) =>
-                                data[tile.indices[0]]['ptcolor'],
+                                _data[tile.indices[0]]['ptcolor'],
                             tooltipBuilder:
                                 (BuildContext context, TreemapTile tile) {
                               return Container(
@@ -76,16 +80,32 @@ class _PiValueChartState extends State<PiValueChart> {
                             },
                             labelBuilder:
                                 (BuildContext context, TreemapTile tile) {
-                              // print(tile.group);
                               return Center(
-                                child: Text(
-                                  tile.group,
-                                  overflow: TextOverflow.ellipsis,
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                      fontSize: 14, color: AppColors.light_bg),
+                                  child: SingleChildScrollView(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      tile.group,
+                                      overflow: TextOverflow.ellipsis,
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                          fontSize: 14,
+                                          color: AppColors.light_bg),
+                                    ),
+                                    Text(
+                                      NumUtils.formatInteger(tile.weight),
+                                      overflow: TextOverflow.ellipsis,
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                          fontSize: 11,
+                                          fontWeight: FontWeight.w400,
+                                          color: AppColors.light_bg),
+                                    )
+                                  ],
                                 ),
-                              );
+                              ));
                             },
                           ),
                         ],

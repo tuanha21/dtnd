@@ -1,4 +1,5 @@
 import 'package:dtnd/generated/l10n.dart';
+import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:dtnd/utilities/responsive.dart';
 import 'package:flutter/material.dart';
@@ -58,7 +59,11 @@ class _RegisterRegisteredState extends State<RegisterRegistered> {
               onPressed: widget.nextPage,
               style: const ButtonStyle(
                   padding: MaterialStatePropertyAll(EdgeInsets.all(14))),
-              child: Text(S.of(context).next),
+              child: Text(S.of(context).next,
+                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w700,
+                      color: AppColors.neutral_07)),
             ),
           ),
         ],
