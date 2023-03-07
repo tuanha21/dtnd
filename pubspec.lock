@@ -904,6 +904,46 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.1"
+  local_auth:
+    dependency: "direct main"
+    description:
+      name: local_auth
+      sha256: "0cf238be2bfa51a6c9e7e9cfc11c05ea39f2a3a4d3e5bb255d0ebc917da24401"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.1.6"
+  local_auth_android:
+    dependency: transitive
+    description:
+      name: local_auth_android
+      sha256: "6e97e997530f7bfcc696cc0ed84a019209719dd6e854675da81803d02f10d8fc"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.20"
+  local_auth_ios:
+    dependency: transitive
+    description:
+      name: local_auth_ios
+      sha256: b4b7a02eec2bd8ffea78026658264e7a720c841cca7732dfa27e36af2f727dd8
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.1.0"
+  local_auth_platform_interface:
+    dependency: transitive
+    description:
+      name: local_auth_platform_interface
+      sha256: "9e160d59ef0743e35f1b50f4fb84dc64f55676b1b8071e319ef35e7f3bc13367"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.7"
+  local_auth_windows:
+    dependency: transitive
+    description:
+      name: local_auth_windows
+      sha256: "69c4a6b1201e7b5467e7180c7dd84cf96c308982680cc1778984552bea84b0bc"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.6"
   logger:
     dependency: "direct main"
     description:

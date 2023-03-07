@@ -39,9 +39,10 @@ class _TrashComponentState extends State<TrashComponent> {
     final response = await dataCenterService
         .getStockModelsFromStockCodes([widget.snapshotData.sTOCKCODE]);
     if (response?.isNotEmpty ?? false) {
-      setState(() {
-        stockModel = response!.first;
-      });
+      stockModel = response!.first;
+      if (mounted) {
+        setState(() {});
+      }
     }
   }
 

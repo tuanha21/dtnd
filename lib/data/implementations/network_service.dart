@@ -32,7 +32,6 @@ import 'package:dtnd/=models=/response/stock_trading_history.dart';
 import 'package:dtnd/=models=/response/stock_vol.dart';
 import 'package:dtnd/=models=/response/subsidiaries_model.dart';
 import 'package:dtnd/=models=/response/top_influence_model.dart';
-import 'package:dtnd/=models=/response/top_interested_model.dart';
 import 'package:dtnd/=models=/response/total_asset_model.dart';
 import 'package:dtnd/=models=/request/request_model.dart';
 import 'package:dtnd/=models=/response/trash_model.dart';
@@ -1262,15 +1261,15 @@ class NetworkService implements INetworkService {
     try {
       final http.Response _res = await client
           .get(url_board_sbsi("getpsalldatalsnapshot/" + listString.join(',')));
-          
-    final List<dynamic> responseBody = decode(_res.bodyBytes);
-    if (responseBody.isEmpty) throw Exception();
 
-    List<DerivativeResModel>? dataS = [];
-    for (var element in responseBody) {
-      dataS.add(DerivativeResModel.fromJson(element));
-    }
-    return dataS;
+      final List<dynamic> responseBody = decode(_res.bodyBytes);
+      if (responseBody.isEmpty) throw Exception();
+
+      List<DerivativeResModel>? dataS = [];
+      for (var element in responseBody) {
+        dataS.add(DerivativeResModel.fromJson(element));
+      }
+      return dataS;
     } catch (e) {
       logger.e(e.toString());
       rethrow;
