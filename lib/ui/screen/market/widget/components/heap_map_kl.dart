@@ -79,8 +79,8 @@ class _HeapMapKLState extends State<HeapMapKL> {
                 return Padding(
                   padding: const EdgeInsets.all(16),
                   child: StaggeredGrid.count(
-                    crossAxisCount: 2,
-                    mainAxisSpacing: 2,
+                    crossAxisCount: 4,
+                    mainAxisSpacing: 4,
                     crossAxisSpacing: 4,
                     children: List<Widget>.generate(data.length, (idx) {
                       var listStock = data[idx].stocks;
@@ -94,8 +94,8 @@ class _HeapMapKLState extends State<HeapMapKL> {
                         });
                       }
                       return StaggeredGridTile.count(
-                        crossAxisCellCount: 2,
-                        mainAxisCellCount: 1,
+                        crossAxisCellCount: idx > 7 ? 2 : 4,
+                        mainAxisCellCount: 2,
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -203,7 +203,6 @@ class _HeapMapKLState extends State<HeapMapKL> {
                                     ],
                                   )),
                             ),
-                            const SizedBox(height: 5),
                           ],
                         ),
                       );

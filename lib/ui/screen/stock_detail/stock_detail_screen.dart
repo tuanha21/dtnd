@@ -155,8 +155,8 @@ class _StockDetailScreenState extends State<StockDetailScreen> {
                         child: TabBarView(children: [
                           OverviewTab(stockModel: widget.stockModel),
                           TransactionTab(stockModel: widget.stockModel),
-                          TechnicalAnalysis(
-                              stockCode: widget.stockModel.stock.stockCode),
+                          // TechnicalAnalysis(
+                          //     stockCode: widget.stockModel.stock.stockCode),
                           FinanceIndexTab(stockModel: widget.stockModel),
                         ]),
                       )
