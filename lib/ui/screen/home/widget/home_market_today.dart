@@ -140,6 +140,7 @@ class _HomeMarketTodayState extends State<HomeMarketToday>
                     null) {
                   return Container();
                 }
+                homeController.currentIndexModel.value?.indexDetail.vol.value;
                 final locale = Localizations.localeOf(context);
                 final languageTag =
                     '${locale.languageCode}_${locale.countryCode}';
@@ -152,7 +153,7 @@ class _HomeMarketTodayState extends State<HomeMarketToday>
                     close: S.of(context).close_translations,
                     changeAmount: S.of(context).changeAmount_translations,
                     change: S.of(context).change_translations,
-                    amount: S.of(context).amount_translations,
+                    volumn: S.of(context).volumn_translations,
                   ),
                 };
                 return Padding(
@@ -198,7 +199,7 @@ class _HomeMarketTodayState extends State<HomeMarketToday>
                           ],
                           animate: false,
                           behaviors: [
-                            charts.RangeAnnotation([
+                            charts.RangeAnnotation([e
                               if (cwIndex.openPoint != null)
                                 charts.LineAnnotationSegment(cwIndex.openPoint!,
                                     charts.RangeAnnotationAxisType.measure,
@@ -207,7 +208,7 @@ class _HomeMarketTodayState extends State<HomeMarketToday>
                                     // startLabel: 'Measure 1 End',
                                     dashPattern: [5, 5],
                                     color:
-                                        charts.MaterialPalette.gray.shade300),
+                                        charts.MaterialPalett.gray.shade300),
                             ]),
                           ],
                           // Provide a tickProviderSpec which does NOT require that zero is

@@ -51,17 +51,16 @@ class _KChartState extends State<KChart> {
       list.add(
           widget.indexModel.stockDayTradingHistory.value!.o![i].toDouble());
       datas.add(KLineEntity.fromCustom(
-          open:
-              widget.indexModel.stockDayTradingHistory.value!.o![i].toDouble(),
-          close:
-              widget.indexModel.stockDayTradingHistory.value!.c![i].toDouble(),
-          time: widget.indexModel.stockDayTradingHistory.value!.t![i].toInt() *
-              1000,
-          high:
-              widget.indexModel.stockDayTradingHistory.value!.h![i].toDouble(),
-          low: widget.indexModel.stockDayTradingHistory.value!.l![i].toDouble(),
-          vol: widget.indexModel.stockDayTradingHistory.value!.v![i]
-              .toDouble()));
+        open: widget.indexModel.stockDayTradingHistory.value!.o![i].toDouble(),
+        close: widget.indexModel.stockDayTradingHistory.value!.c![i].toDouble(),
+        time: widget.indexModel.stockDayTradingHistory.value!.t![i].toInt() *
+            1000,
+        high: widget.indexModel.stockDayTradingHistory.value!.h![i].toDouble(),
+        low: widget.indexModel.stockDayTradingHistory.value!.l![i].toDouble(),
+        vol: widget.indexModel.stockDayTradingHistory.value!.v![i].toDouble(),
+        // amount:
+        //     widget.indexModel.stockDayTradingHistory.value!.v![i].toDouble(),
+      ));
     }
     if (widget.showMA) {
       DataUtil.calculate(datas, const [5, 20]);
@@ -82,6 +81,15 @@ class _KChartState extends State<KChart> {
             widget.indexModel.stockDayTradingHistory.value!.c!.last) {
       datas.last.close =
           widget.indexModel.stockDayTradingHistory.value!.c!.last.toDouble();
+      // DataUtil.calculate(datas);
+      if (widget.showMA) {
+        DataUtil.calculate(datas, const [5, 20]);
+      }
+    }
+    if (widget.indexModel.stockDayTradingHistory.value?.v?.last != null &&
+        datas.last.vol != widget.indexModel.indexDetail.vol.value) {
+      datas.last.vol =
+          widget.indexModel.indexDetail.vol.value?.toDouble() ?? datas.last.vol;
       // DataUtil.calculate(datas);
       if (widget.showMA) {
         DataUtil.calculate(datas, const [5, 20]);

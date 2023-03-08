@@ -1,16 +1,8 @@
-import 'package:dtnd/ui/screen/market/widget/components/liquidity_chart.dart';
-import 'package:dtnd/ui/screen/market/widget/components/top_influence_chart.dart';
-import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:dtnd/utilities/num_utils.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 
 import '../../../../../=models=/index.dart';
 import '../../../../../=models=/response/indContrib.dart';
-import '../../../../../=models=/response/index_board.dart';
-import '../../../../../=models=/response/liquidity_model.dart';
-import '../../../../../=models=/response/top_influence_model.dart';
 import '../../../../../data/i_data_center_service.dart';
 import '../../../../../data/implementations/data_center_service.dart';
 import '../../../../../generated/l10n.dart';
@@ -18,8 +10,6 @@ import '../../../../theme/app_color.dart';
 import '../components/Fi_chart.dart';
 import '../components/IndFvalue.dart';
 import '../components/PI_chart.dart';
-import '../components/money_chart.dart';
-import '../components/top_index_widget.dart';
 
 class MarketAnalysisTab extends StatefulWidget {
   const MarketAnalysisTab({super.key});

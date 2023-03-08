@@ -338,7 +338,8 @@
     "close_translations": "Giá đóng cửa",
     "changeAmount_translations": "Thay đổi",
     "change_translations": "% Thay đổi",
-    "amount_translations": "khối lượng",
+    "volumn_translations": "Khối lượng",
+    "amount_translations": "Số lượng",
 
     "vietnam": "Việt nam",
     "foreign": "Nước ngoài",

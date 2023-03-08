@@ -161,6 +161,7 @@ class LocalStorageService implements ILocalStorageService {
       final List<BiometricType> availableBiometrics =
           await _localAuthentication.getAvailableBiometrics();
 
+      logger.v(availableBiometrics);
       if (availableBiometrics.isEmpty) {
         throw Exception();
       }
@@ -178,6 +179,7 @@ class LocalStorageService implements ILocalStorageService {
         } else {
           // ...
         }
+        logger.e(e);
         rethrow;
       }
 

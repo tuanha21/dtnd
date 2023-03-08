@@ -117,7 +117,7 @@ class DataCenterService
   Future<void> startSocket() async {
     socket.on("public", (data) {
       if (data['data']['id'] == 1101) {
-        // print(data);
+        print(data);
         return processIndexData(data);
       }
       if (data['data']['id'] == 3220 ||

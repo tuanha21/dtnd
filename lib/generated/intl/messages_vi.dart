@@ -36,7 +36,7 @@ class MessageLookup extends MessageLookupByLibrary {
   static String m6(minutes) => "${minutes} phút trước";
 
   static String m7(value) =>
-      "Mã OTP đã được gửi email ${value} của bạn. Nhập mã 6 số để tiếp tục.";
+      "Mã OTP đã được gửi về số điện thoại đuôi ${value} của bạn. Nhập mã 6 số để tiếp tục.";
 
   static String m8(name) => "Sửa tên danh mục “${name}” thành";
 
@@ -72,8 +72,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "address": MessageLookupByLibrary.simpleMessage("Địa chỉ"),
         "agree_with": MessageLookupByLibrary.simpleMessage("Đồng ý với "),
         "all": MessageLookupByLibrary.simpleMessage("Tất cả"),
-        "amount_translations":
-            MessageLookupByLibrary.simpleMessage("khối lượng"),
+        "amount_translations": MessageLookupByLibrary.simpleMessage("Số lượng"),
         "analysis": MessageLookupByLibrary.simpleMessage("Phân tích"),
         "are_you_sure_to_delete_catalog": m0,
         "asset": MessageLookupByLibrary.simpleMessage("Tài sản"),
@@ -426,8 +425,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "username": MessageLookupByLibrary.simpleMessage("Tên đăng nhập"),
         "vietnam": MessageLookupByLibrary.simpleMessage("Việt nam"),
         "virtual_assistant": MessageLookupByLibrary.simpleMessage("Trợ lý ảo"),
-        "virtual_assistant_available": MessageLookupByLibrary.simpleMessage(
-            "Trợ lý ảo DTND sẽ giúp bạn có những giao dịch nhanh và thông minh"),
+        "virtual_assistant_available":
+            MessageLookupByLibrary.simpleMessage("Trợ lý ảo đã sẵn sàng"),
         "vol_analysis": MessageLookupByLibrary.simpleMessage("Phân tích KL"),
         "volatility_notice":
             MessageLookupByLibrary.simpleMessage("Thông báo biến động"),
@@ -436,6 +435,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "volatility_warning":
             MessageLookupByLibrary.simpleMessage("Cảnh báo biến động"),
         "volumn": MessageLookupByLibrary.simpleMessage("Khối lượng"),
+        "volumn_translations":
+            MessageLookupByLibrary.simpleMessage("Khối lượng"),
         "waiting_match": MessageLookupByLibrary.simpleMessage("Chờ khớp"),
         "withdraw_money": MessageLookupByLibrary.simpleMessage("Rút tiền"),
         "withdrawable_money":

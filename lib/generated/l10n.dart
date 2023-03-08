@@ -1763,7 +1763,7 @@ class S {
   /// `The OTP has been sent to your {value} extension phone number. Enter the 6-digit code to continue.`
   String otp_code_sent_to_phone_number(Object value) {
     return Intl.message(
-      'The OTP has been sent to your email $value. Enter the 6-digit code to continue.',
+      'The OTP has been sent to your $value extension phone number. Enter the 6-digit code to continue.',
       name: 'otp_code_sent_to_phone_number',
       desc: '',
       args: [value],
@@ -3017,6 +3017,16 @@ class S {
     return Intl.message(
       'Change%',
       name: 'change_translations',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Volumn`
+  String get volumn_translations {
+    return Intl.message(
+      'Volumn',
+      name: 'volumn_translations',
       desc: '',
       args: [],
     );

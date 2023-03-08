@@ -81,10 +81,10 @@ class IndContrib {
       contribPoint = json['contribPoint'].cast<double>();
     }
     if (json['totalBuy'] != null) {
-      totalBuy = json['totalBuy'];
+      totalBuy = json['totalBuy'].replaceAll(",", "");
     }
     if (json['totalSell'] != null) {
-      totalSell = json['totalSell'];
+      totalSell = json['totalSell'].replaceAll(",", "");
     }
   }
 
