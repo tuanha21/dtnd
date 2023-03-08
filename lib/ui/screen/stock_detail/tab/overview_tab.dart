@@ -164,10 +164,10 @@ class _BasicIndexState extends State<BasicIndex> {
     var min =
         data.l?.reduce(math.min) ?? widget.stockModel.stockData.f.value! ?? 0;
 
-    // print('max: ' + max.toString());
-    // print('min: ' + min.toString());
-    // print(
-    //     'lastPrice: ' + widget.stockModel.stockData.lastPrice.value.toString());
+    print('max: ' + max.toString());
+    print('min: ' + min.toString());
+    print(
+        'lastPrice: ' + widget.stockModel.stockData.lastPrice.value.toString());
 
     return Column(
       children: [
