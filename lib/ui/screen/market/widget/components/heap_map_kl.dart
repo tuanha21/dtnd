@@ -160,7 +160,7 @@ class _HeapMapKLState extends State<HeapMapKL> {
                                             decoration: const BoxDecoration(
                                                 color: Colors.white),
                                             child: Text(
-                                              '${tile.group} : ${NumUtils.formatInteger10(tile.weight)}',
+                                              '${tile.group} : ${NumUtils.formatInteger(tile.weight * 10)}',
                                               overflow: TextOverflow.ellipsis,
                                               textAlign: TextAlign.center,
                                             ),

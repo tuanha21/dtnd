@@ -15,7 +15,7 @@ class SecEvent {
   }
 
   String get link =>
-      'https://files.algoplatform.vn/getfile.aspx?path=$filePath&name=$attach&time=${DateTime.now().millisecondsSinceEpoch}';
+      'http://files.algoplatform.vn/algonews?container=$container&vos_path=$filePath&file_name=$attach&timestamp=${DateTime.now().millisecondsSinceEpoch}';
 
   SecEvent(
       {this.tradeDate,
