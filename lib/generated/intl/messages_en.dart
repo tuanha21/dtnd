@@ -35,7 +35,7 @@ class MessageLookup extends MessageLookupByLibrary {
   static String m6(minutes) => "${minutes} minutes ago";
 
   static String m7(value) =>
-      "The OTP has been sent to your ${value} extension phone number. Enter the 6-digit code to continue.";
+      "The OTP has been sent to your email ${value}. Enter the 6-digit code to continue.";
 
   static String m8(name) => "Rename catalog “${name}” to";
 

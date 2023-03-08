@@ -1,5 +1,6 @@
 import 'package:dtnd/data/i_data_center_service.dart';
 import 'package:dtnd/data/implementations/data_center_service.dart';
+import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:syncfusion_flutter_treemap/treemap.dart';
@@ -73,6 +74,21 @@ class _HeapMapKLState extends State<HeapMapKL> {
                 );
               }
               if (snapshot.connectionState == ConnectionState.done) {
+                if (!snapshot.hasData)
+                  return Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const SizedBox(height: 50),
+                      Center(
+                        child: Image.asset(
+                          AppImages.scene,
+                          height: 200,
+                        ),
+                      ),
+                      const SizedBox(height: 100),
+                    ],
+                  );
+
                 var data = snapshot.data!;
                 data.removeWhere((element) => element.tOTALKLGD == 0);
 
@@ -144,7 +160,7 @@ class _HeapMapKLState extends State<HeapMapKL> {
                                             decoration: const BoxDecoration(
                                                 color: Colors.white),
                                             child: Text(
-                                              '${tile.group} : ${NumUtils.formatInteger(tile.weight)}',
+                                              '${tile.group} : ${NumUtils.formatInteger10(tile.weight)}',
                                               overflow: TextOverflow.ellipsis,
                                               textAlign: TextAlign.center,
                                             ),

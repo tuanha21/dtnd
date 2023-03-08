@@ -55,7 +55,8 @@ class _StockDetailChartState extends State<StockDetailChart>
           timeSeries.type,
           timeSeries.dateTime,
           DateTime.now());
-      // print(stockTradingHistory);
+      // print("timeSeries: " + timeSeries.type);
+
       stockTrading.sink.add(stockTradingHistory!.c!);
     } catch (e) {
       if (kDebugMode) {
@@ -91,12 +92,17 @@ class _StockDetailChartState extends State<StockDetailChart>
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
                     var list = snapshot.data;
-                    if (list == null || list.isEmpty) return const SizedBox();
+                    if (list == null || list.isEmpty) {
+                      return const SizedBox(
+                        height: 20,
+                      );
+                    }
 
                     max = list.reduce(math.max);
                     min = list.reduce(math.min);
                     maxX = listTime.reduce(math.max);
                     minX = listTime.reduce(math.min);
+
                     return charts.NumericComboChart(
                       List<charts.Series<num, num>>.generate(
                           list.length,
@@ -125,7 +131,10 @@ class _StockDetailChartState extends State<StockDetailChart>
                       secondaryMeasureAxis: axisSpec(),
                     );
                   }
-                  return const SizedBox();
+
+                  return const SizedBox(
+                    height: 15,
+                  );
                 }),
           ),
         ),
@@ -170,11 +179,19 @@ class _StockDetailChartState extends State<StockDetailChart>
             stream: stockTrading.stream,
             builder: (context, snapshot) {
               if (snapshot.hasData) {
+                var list = snapshot.data;
+                if (list == null || list.isEmpty) {
+                  return const SizedBox(
+                    height: 20,
+                  );
+                }
                 return BasicIndex(
                     stockModel: widget.stockModel,
                     history: stockTradingHistory!);
               }
-              return const SizedBox();
+              return const SizedBox(
+                height: 15,
+              );
             }),
       ],
     );

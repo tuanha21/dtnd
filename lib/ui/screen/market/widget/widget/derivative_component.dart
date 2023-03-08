@@ -34,7 +34,10 @@ class _DerivativeComponentState extends State<DerivativeComponent> {
             child: Align(
                 alignment: Alignment.centerRight,
                 child: Text(
-                  (widget.model?.lastPrice ?? widget.model?.r ?? 0)
+                  ((widget.model?.lastPrice == 0
+                                  ? widget.model?.r
+                                  : widget.model?.lastPrice) ??
+                              0)
                           .toString() ??
                       "",
                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
@@ -48,9 +51,11 @@ class _DerivativeComponentState extends State<DerivativeComponent> {
               child: Align(
                 alignment: Alignment.centerRight,
                 child: Text(
-                  NumUtils.formatDouble(
-                      (widget.model?.lastPrice ?? widget.model?.r ?? 0) -
-                          (widget.model?.r ?? 0)),
+                  NumUtils.formatDouble(((widget.model?.lastPrice == 0
+                              ? widget.model?.r
+                              : widget.model?.lastPrice) ??
+                          0) -
+                      (widget.model?.r ?? 0)),
                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
                       fontWeight: FontWeight.w600,
                       color: widget.model

@@ -36,7 +36,7 @@ class MessageLookup extends MessageLookupByLibrary {
   static String m6(minutes) => "${minutes} phút trước";
 
   static String m7(value) =>
-      "Mã OTP đã được gửi về số điện thoại đuôi ${value} của bạn. Nhập mã 6 số để tiếp tục.";
+      "Mã OTP đã được gửi email ${value} của bạn. Nhập mã 6 số để tiếp tục.";
 
   static String m8(name) => "Sửa tên danh mục “${name}” thành";
 
@@ -426,8 +426,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "username": MessageLookupByLibrary.simpleMessage("Tên đăng nhập"),
         "vietnam": MessageLookupByLibrary.simpleMessage("Việt nam"),
         "virtual_assistant": MessageLookupByLibrary.simpleMessage("Trợ lý ảo"),
-        "virtual_assistant_available":
-            MessageLookupByLibrary.simpleMessage("Trợ lý ảo đã sẵn sàng"),
+        "virtual_assistant_available": MessageLookupByLibrary.simpleMessage(
+            "Trợ lý ảo DTND sẽ giúp bạn có những giao dịch nhanh và thông minh"),
         "vol_analysis": MessageLookupByLibrary.simpleMessage("Phân tích KL"),
         "volatility_notice":
             MessageLookupByLibrary.simpleMessage("Thông báo biến động"),

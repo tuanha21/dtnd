@@ -160,9 +160,9 @@ class _BasicIndexState extends State<BasicIndex> {
   Widget indexPrice() {
     var data = widget.history;
     var max =
-        data.c?.reduce(math.max) ?? widget.stockModel.stockData.c.value! ?? 1;
+        data.h?.reduce(math.max) ?? widget.stockModel.stockData.c.value! ?? 1;
     var min =
-        data.c?.reduce(math.min) ?? widget.stockModel.stockData.f.value! ?? 0;
+        data.l?.reduce(math.min) ?? widget.stockModel.stockData.f.value! ?? 0;
 
     print('max: ' + max.toString());
     print('min: ' + min.toString());
@@ -195,69 +195,6 @@ class _BasicIndexState extends State<BasicIndex> {
           max: max!,
           lastPrice: widget.stockModel.stockData.lastPrice.value!,
         )
-        // Row(
-        //   children: [
-        //     Expanded(
-        //         child: Column(
-        //       children: [
-        //         Container(
-        //           alignment: Alignment.center,
-        //           decoration: BoxDecoration(
-        //               color: AppColors.neutral_06,
-        //               borderRadius: BorderRadius.circular(8)),
-        //           padding: const EdgeInsets.symmetric(vertical: 10),
-        //           child: Row(
-        //             mainAxisAlignment: MainAxisAlignment.center,
-        //             children: [
-        //               Image.asset(AppImages.prefix_down_icon,
-        //                   height: 20, width: 20),
-        //               const SizedBox(width: 4),
-        //               Text(
-        //                 'Giá thấp nhất',
-        //                 style: Theme.of(context).textTheme.bodySmall,
-        //               )
-        //             ],
-        //           ),
-        //         ),
-        //         const SizedBox(height: 4),
-        //         Text(
-        //           min?.toString() ?? "-",
-        //           style: Theme.of(context).textTheme.titleMedium,
-        //         )
-        //       ],
-        //     )),
-        //     const SizedBox(width: 12),
-        //     Expanded(
-        //         child: Column(
-        //       children: [
-        //         Container(
-        //           alignment: Alignment.center,
-        //           decoration: BoxDecoration(
-        //               color: AppColors.neutral_06,
-        //               borderRadius: BorderRadius.circular(8)),
-        //           padding: const EdgeInsets.symmetric(vertical: 10),
-        //           child: Row(
-        //             mainAxisAlignment: MainAxisAlignment.center,
-        //             children: [
-        //               Image.asset(AppImages.prefix_up_icon,
-        //                   height: 20, width: 20),
-        //               const SizedBox(width: 4),
-        //               Text(
-        //                 'Giá cao nhất',
-        //                 style: Theme.of(context).textTheme.bodySmall,
-        //               )
-        //             ],
-        //           ),
-        //         ),
-        //         const SizedBox(height: 4),
-        //         Text(
-        //           max?.toString() ?? "-",
-        //           style: Theme.of(context).textTheme.titleMedium,
-        //         )
-        //       ],
-        //     )),
-        //   ],
-        // )
       ],
     );
   }

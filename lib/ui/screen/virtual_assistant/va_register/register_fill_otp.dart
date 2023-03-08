@@ -28,7 +28,7 @@ class _RegisterFillOTPState extends State<RegisterFillOTP> {
             S.of(context).fill_OTP,
             style: theme.headlineSmall!.copyWith(fontWeight: FontWeight.w700),
           ),
-          const SizedBox(height: 20),
+          const SizedBox(height: 16),
           Row(
             children: [
               Expanded(
@@ -36,7 +36,7 @@ class _RegisterFillOTPState extends State<RegisterFillOTP> {
                       Text(S.of(context).otp_code_sent_to_phone_number("*sdk")))
             ],
           ),
-          const SizedBox(height: 20),
+          const SizedBox(height: 36),
           Builder(builder: (context) {
             final defaultPinTheme = PinTheme(
               width: 49,
@@ -105,7 +105,11 @@ class _RegisterFillOTPState extends State<RegisterFillOTP> {
               ],
             );
           }),
-          const SizedBox(height: 20),
+          const SizedBox(height: 16),
+          Row(
+            children: [Expanded(child: Text('Gửi lại mã?'))],
+          ),
+          const SizedBox(height: 36),
           Builder(builder: (context) {
             late final VoidCallback? next;
             if (canNext) {
@@ -120,7 +124,13 @@ class _RegisterFillOTPState extends State<RegisterFillOTP> {
                 onPressed: next,
                 style: const ButtonStyle(
                     padding: MaterialStatePropertyAll(EdgeInsets.all(14))),
-                child: Text(S.of(context).confirm),
+                child: Text(
+                  S.of(context).confirm,
+                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w700,
+                      color: AppColors.neutral_07),
+                ),
               ),
             );
           }),
