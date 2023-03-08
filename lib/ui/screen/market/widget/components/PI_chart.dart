@@ -72,7 +72,7 @@ class _PiValueChartState extends State<PiValueChart> {
                                 decoration:
                                     const BoxDecoration(color: Colors.white),
                                 child: Text(
-                                  '${tile.group} : ${NumUtils.formatInteger(tile.weight)}',
+                                  '${tile.group} : ${NumUtils.formatInteger(tile.weight)} (triệu)',
                                   overflow: TextOverflow.ellipsis,
                                   textAlign: TextAlign.center,
                                 ),

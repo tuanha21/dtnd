@@ -17,7 +17,6 @@ class MoneyChart extends StatefulWidget {
 }
 
 class _MoneyChartState extends State<MoneyChart> {
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -45,7 +44,7 @@ class _MoneyChartState extends State<MoneyChart> {
                 }
                 if (snapshot.connectionState == ConnectionState.done) {
                   var list = snapshot.data;
-                  if(list == null) return const SizedBox();
+                  if (list == null) return const SizedBox();
                   return Padding(
                     padding: const EdgeInsets.only(left: 0, right: 20),
                     child: charts.NumericComboChart(
@@ -97,7 +96,7 @@ class _MoneyChartState extends State<MoneyChart> {
                 }
                 if (snapshot.connectionState == ConnectionState.done) {
                   var list = snapshot.data;
-                  if(list == null) return const SizedBox();
+                  if (list == null) return const SizedBox();
                   return Padding(
                     padding: const EdgeInsets.only(left: 20, right: 40),
                     child: charts.NumericComboChart(
@@ -114,9 +113,7 @@ class _MoneyChartState extends State<MoneyChart> {
                       secondaryMeasureAxis: const charts.NumericAxisSpec(
                         viewport: charts.NumericExtents(0, 100),
                         tickProviderSpec: charts.BasicNumericTickProviderSpec(
-                          desiredTickCount: 5
-                        ),
-
+                            desiredTickCount: 5),
                       ),
                       domainAxis: domainSpec(list),
                     ),
@@ -144,8 +141,8 @@ class _MoneyChartState extends State<MoneyChart> {
           measureFn: (IndexBoard sales, _) {
             return sales.declinesPer;
           },
-          data: list)..setAttribute(charts.measureAxisIdKey,
-          "secondaryMeasureAxisId"),
+          data: list)
+        ..setAttribute(charts.measureAxisIdKey, "secondaryMeasureAxisId"),
       charts.Series<IndexBoard, num>(
         id: 'NoChanges',
         // colorFn specifies that the line will be green.
@@ -157,8 +154,7 @@ class _MoneyChartState extends State<MoneyChart> {
         domainFn: (IndexBoard sales, index) => index!,
         measureFn: (IndexBoard sales, _) => sales.noChangesPer,
         data: list,
-      )..setAttribute(charts.measureAxisIdKey,
-          "secondaryMeasureAxisId"),
+      )..setAttribute(charts.measureAxisIdKey, "secondaryMeasureAxisId"),
       charts.Series<IndexBoard, num>(
         id: 'Advances',
         // colorFn specifies that the line will be blue.
@@ -171,8 +167,7 @@ class _MoneyChartState extends State<MoneyChart> {
         domainFn: (IndexBoard sales, index) => index!,
         measureFn: (IndexBoard sales, _) => sales.advancesPer,
         data: list,
-      )..setAttribute(charts.measureAxisIdKey,
-          "secondaryMeasureAxisId"),
+      )..setAttribute(charts.measureAxisIdKey, "secondaryMeasureAxisId"),
     ];
   }
 

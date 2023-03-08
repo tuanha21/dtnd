@@ -51,7 +51,7 @@ class SecTrading {
     sECURITYCODE = json['SECURITY_CODE'];
     fLOORPRICE = json['FLOOR_PRICE'];
     cEILINGPRICE = json['CEILING_PRICE'];
-    fNETBUYVOLUME = json['F_NET_BUY_VOLUME'];
+    fNETBUYVOLUME = json['F_NET_BUY_VOLUME'] / 1000;
     tRADEDATE = json['TRADE_DATE'];
     tOTVALUE = json['TOT_VALUE'];
   }

@@ -1,12 +1,12 @@
 import 'package:dtnd/=models=/response/stock_model.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../=models=/response/sec_event.dart';
 import '../../../../data/i_data_center_service.dart';
 import '../../../../data/implementations/data_center_service.dart';
 import '../../../../generated/l10n.dart';
-import '../../../../utilities/logger.dart';
 import '../../../theme/app_color.dart';
 import '../../../theme/app_textstyle.dart';
 
@@ -17,6 +17,15 @@ class StockEvent extends StatefulWidget {
 
   @override
   State<StockEvent> createState() => _StockEventState();
+}
+
+_launchURL(url) async {
+  final uri = Uri.parse(url);
+  if (await canLaunchUrl(uri)) {
+    await launchUrl(uri);
+  } else {
+    throw 'Could not launch $url';
+  }
 }
 
 class _StockEventState extends State<StockEvent> {
@@ -82,8 +91,9 @@ class EventCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: (){
+      onTap: () {
         print(event.link);
+        _launchURL(event.link);
       },
       child: IntrinsicHeight(
         child: Row(

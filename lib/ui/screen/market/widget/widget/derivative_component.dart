@@ -16,14 +16,14 @@ class DerivativeComponent extends StatefulWidget {
 class _DerivativeComponentState extends State<DerivativeComponent> {
   @override
   Widget build(BuildContext context) {
-    print(widget.model?.sym ?? "");
+    print(widget.model.sym ?? "");
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
       child: Row(
         children: [
           Expanded(
             flex: 3,
-            child: Text(widget.model?.sym ?? "",
+            child: Text(widget.model.sym ?? "",
                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
                     fontWeight: FontWeight.w700,
                     color: widget.model
@@ -34,9 +34,9 @@ class _DerivativeComponentState extends State<DerivativeComponent> {
             child: Align(
                 alignment: Alignment.centerRight,
                 child: Text(
-                  ((widget.model?.lastPrice == 0
-                                  ? widget.model?.r
-                                  : widget.model?.lastPrice) ??
+                  ((widget.model.lastPrice == 0
+                                  ? widget.model.r
+                                  : widget.model.lastPrice) ??
                               0)
                           .toString() ??
                       "",
@@ -51,11 +51,11 @@ class _DerivativeComponentState extends State<DerivativeComponent> {
               child: Align(
                 alignment: Alignment.centerRight,
                 child: Text(
-                  NumUtils.formatDouble(((widget.model?.lastPrice == 0
-                              ? widget.model?.r
-                              : widget.model?.lastPrice) ??
+                  NumUtils.formatDouble(((widget.model.lastPrice == 0
+                              ? widget.model.r
+                              : widget.model.lastPrice) ??
                           0) -
-                      (widget.model?.r ?? 0)),
+                      (widget.model.r ?? 0)),
                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
                       fontWeight: FontWeight.w600,
                       color: widget.model
@@ -67,7 +67,7 @@ class _DerivativeComponentState extends State<DerivativeComponent> {
               child: Align(
                 alignment: Alignment.centerRight,
                 child: Text(
-                  NumUtils.formatInteger(widget.model?.lot),
+                  NumUtils.formatInteger(widget.model.lot),
                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
                       fontWeight: FontWeight.w600, color: AppColors.neutral_04),
                 ),
