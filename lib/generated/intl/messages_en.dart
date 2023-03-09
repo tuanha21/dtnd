@@ -103,6 +103,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "business_information":
             MessageLookupByLibrary.simpleMessage("Business information"),
         "buy": MessageLookupByLibrary.simpleMessage("Buy"),
+        "buy_date": MessageLookupByLibrary.simpleMessage("Buy date"),
         "buy_price": MessageLookupByLibrary.simpleMessage("Buy price"),
         "buy_short": MessageLookupByLibrary.simpleMessage("B"),
         "cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
@@ -359,6 +360,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "search_stock": MessageLookupByLibrary.simpleMessage("Search stock"),
         "see_more": MessageLookupByLibrary.simpleMessage("See more"),
         "sell": MessageLookupByLibrary.simpleMessage("Sell"),
+        "sell_date": MessageLookupByLibrary.simpleMessage("Sell date"),
         "sell_price": MessageLookupByLibrary.simpleMessage("Sell price"),
         "sell_short": MessageLookupByLibrary.simpleMessage("S"),
         "session_expired_in":

@@ -16,6 +16,7 @@ class TimeUtilities {
   static const Duration typingDelay = Duration(milliseconds: 500);
 
   static final DateFormat commonTimeFormat = DateFormat("dd/MM/yyyy");
+  static final DateFormat dateMonthTimeFormat = DateFormat("dd/MM");
   static final DateFormat onlyHourFormat = DateFormat("HH:mm");
   static bool isLeapYear(DateTime dateTime) {
     if (dateTime.year % 4 == 0) {

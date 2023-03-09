@@ -1170,6 +1170,26 @@ class S {
     );
   }
 
+  /// `Buy date`
+  String get buy_date {
+    return Intl.message(
+      'Buy date',
+      name: 'buy_date',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Sell date`
+  String get sell_date {
+    return Intl.message(
+      'Sell date',
+      name: 'sell_date',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `From date`
   String get from_day {
     return Intl.message(

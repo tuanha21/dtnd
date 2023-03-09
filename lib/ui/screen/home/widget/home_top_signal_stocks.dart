@@ -1,11 +1,12 @@
 import 'dart:ui';
 
+import 'package:dtnd/=models=/response/top_signal_stock_model.dart';
 import 'package:dtnd/=models=/response/stock_model.dart';
 import 'package:dtnd/config/service/app_services.dart';
 import 'package:dtnd/data/implementations/data_center_service.dart';
 import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/screen/home/widget/home_simple_line_chart.dart';
-import 'package:dtnd/ui/screen/stock_detail/stock_detail_screen.dart';
+import 'package:dtnd/ui/screen/virtual_assistant/signal/signal_screen.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:dtnd/ui/theme/app_textstyle.dart';
@@ -15,16 +16,15 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../home_controller.dart';
-import 'home_market_overview.dart';
 
-class HomeInterestedCatalog extends StatefulWidget {
-  const HomeInterestedCatalog({super.key});
+class HomeTopSignalStocks extends StatefulWidget {
+  const HomeTopSignalStocks({super.key});
 
   @override
-  State<HomeInterestedCatalog> createState() => _HomeInterestedCatalogState();
+  State<HomeTopSignalStocks> createState() => _HomeTopSignalStocksState();
 }
 
-class _HomeInterestedCatalogState extends State<HomeInterestedCatalog> {
+class _HomeTopSignalStocksState extends State<HomeTopSignalStocks> {
   final HomeController homeController = HomeController();
 
   @override
@@ -97,10 +97,10 @@ class _HomeInterestedCatalogState extends State<HomeInterestedCatalog> {
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   scrollDirection: Axis.horizontal,
                   physics: const AlwaysScrollableScrollPhysics(),
-                  itemCount: homeController.interestedCatalog.length,
-                  itemBuilder: (context, index) => HomeInterestedCatalogItem(
+                  itemCount: homeController.topSignalStocks.length,
+                  itemBuilder: (context, index) => HomeTopSignalItem(
                     index: index,
-                    data: homeController.interestedCatalog[index],
+                    data: homeController.topSignalStocks[index],
                   ),
                   separatorBuilder: (BuildContext context, int index) =>
                       const SizedBox(
@@ -116,107 +116,118 @@ class _HomeInterestedCatalogState extends State<HomeInterestedCatalog> {
   }
 }
 
-class HomeInterestedCatalogItem extends StatelessWidget {
-  const HomeInterestedCatalogItem(
-      {super.key, required this.data, required this.index});
+class HomeTopSignalItem extends StatelessWidget {
+  const HomeTopSignalItem({super.key, required this.data, required this.index});
 
   final int index;
-  final StockModel data;
+  final TopSignalStockModel data;
 
   @override
   Widget build(BuildContext context) {
+    final stockData = data.stockModel.stockData;
     final themeMode = AppService.instance.themeMode.value;
     return GestureDetector(
       onTap: () => Navigator.of(context).push(MaterialPageRoute(
-        builder: (context) => StockDetailScreen(stockModel: data),
+        builder: (context) => SignalScreen(data: data),
       )),
       child: SizedBox.fromSize(
         size: const Size(148, 136),
         child: Container(
           alignment: Alignment.center,
           padding: const EdgeInsets.all(12.0),
-          decoration: BoxDecoration(
-            borderRadius: const BorderRadius.all(Radius.circular(12)),
-            color: data.stockData.bgColor(themeMode),
+          decoration: const BoxDecoration(
+            borderRadius: BorderRadius.all(Radius.circular(12)),
+            color: AppColors.accent_light_01,
           ),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Expanded(
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "${index + 1}",
-                      style: AppTextStyle.headlineSmall_24.copyWith(
-                        color: data.stockData.color,
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "${index + 1}",
+                    style: AppTextStyle.headlineSmall_24.copyWith(
+                      color: AppColors.semantic_01,
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            data.stockModel.stock.stockCode,
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleSmall!
+                                .copyWith(fontWeight: FontWeight.w600),
+                          ),
+                          const SizedBox(width: 4),
+                          ObxValue<Rx<num?>>(
+                            (lastPrice) {
+                              return Text.rich(
+                                TextSpan(children: [
+                                  WidgetSpan(
+                                      child: Image.asset(
+                                    AppImages.prefix_up_icon,
+                                    color: AppColors.semantic_01,
+                                    width: 16,
+                                    height: 16,
+                                  )),
+                                  TextSpan(
+                                    text: "  ${lastPrice.value}",
+                                  )
+                                ]),
+                                style: AppTextStyle.labelMedium_12.copyWith(
+                                  fontWeight: FontWeight.w600,
+                                  color: AppColors.semantic_01,
+                                ),
+                              );
+                            },
+                            stockData.lastPrice,
+                          ),
+                        ],
                       ),
-                    ),
-                    const SizedBox(width: 8),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              data.stock.stockCode,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .titleSmall!
-                                  .copyWith(fontWeight: FontWeight.w600),
-                            ),
-                            const SizedBox(width: 4),
-                            ObxValue<Rx<num?>>(
-                              (lastPrice) {
-                                return Text.rich(
-                                  TextSpan(children: [
-                                    WidgetSpan(
-                                        child: data.stockData
-                                            .prefixIcon(size: 16)),
-                                    TextSpan(
-                                      text: "  ${lastPrice.value}",
-                                    )
-                                  ]),
-                                  style: AppTextStyle.labelMedium_12.copyWith(
-                                    fontWeight: FontWeight.w600,
-                                    color: data.stockData.color,
-                                  ),
-                                );
-                              },
-                              data.stockData.lastPrice,
-                            ),
-                          ],
+                      const SizedBox(height: 3),
+                      // ObxValue<Rx<num?>>(
+                      //   (lot) {
+                      //     return Text(
+                      //       NumUtils.formatInteger10(lot.value, "-"),
+                      //       style: AppTextStyle.labelMedium_12.copyWith(
+                      //         fontWeight: FontWeight.w500,
+                      //         color: AppColors.neutral_03,
+                      //       ),
+                      //     );
+                      //   },
+                      //   stockData.lot,
+                      // ),
+                      Text(
+                        "T+${data.t}",
+                        style: AppTextStyle.labelMedium_12.copyWith(
+                          fontWeight: FontWeight.w500,
+                          color: AppColors.neutral_03,
                         ),
-                        const SizedBox(height: 3),
-                        ObxValue<Rx<num?>>(
-                          (lot) {
-                            return Text(
-                              NumUtils.formatInteger10(lot.value, "-"),
-                              style: AppTextStyle.labelMedium_12.copyWith(
-                                fontWeight: FontWeight.w500,
-                                color: AppColors.neutral_03,
-                              ),
-                            );
-                          },
-                          data.stockData.lot,
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
+                      ),
+                    ],
+                  ),
+                ],
               ),
+              const SizedBox(height: 16),
               Expanded(
                 child: Container(
                   constraints: BoxConstraints(
                       minWidth: MediaQuery.of(context).size.width / 5,
                       maxWidth: MediaQuery.of(context).size.width / 4),
                   child: HomeSimpleLineChart(
-                    data: data,
-                    getData: () => data.getTradingHistory(DataCenterService(),
+                    kColor: AppColors.semantic_01,
+                    data: data.stockModel,
+                    getData: () => data.stockModel.getTradingHistory(
+                        DataCenterService(),
                         resolution: "1D",
                         from: TimeUtilities.getPreviousDateTime(
-                            TimeUtilities.month(1))),
+                            TimeUtilities.day((data.t ?? 20) * 3 ~/ 2))),
                   ),
                 ),
               ),

@@ -117,6 +117,8 @@
     "minimum_ee": "Sức mua tối thiểu",
     "purchasing_ability": "Sức mua",
     "detail": "Chi tiết",
+    "buy_date": "Ngày mua",
+    "sell_date": "Ngày bán",
     "from_day": "Từ ngày",
     "to_day": "Tới ngày",
     "owned": "Sở hữu",

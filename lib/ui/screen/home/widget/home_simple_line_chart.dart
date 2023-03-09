@@ -14,9 +14,11 @@ class HomeSimpleLineChart extends StatefulWidget {
     super.key,
     this.data,
     this.getData,
+    this.kColor,
   });
 
   final StockModel? data;
+  final Color? kColor;
   // final Future future;
   final Future<StockTradingHistory?> Function()? getData;
   @override
@@ -66,8 +68,9 @@ class _HomeSimpleLineChartState extends State<HomeSimpleLineChart> {
           domainFn: (_, index) => index ?? 0,
           measureFn: (datum, index) => datum,
           data: chartData.o!,
-          seriesColor: charts.ColorUtil.fromDartColor(
-              widget.data?.stockData.color ?? AppColors.semantic_02),
+          seriesColor: charts.ColorUtil.fromDartColor(widget.kColor ??
+              widget.data?.stockData.color ??
+              AppColors.semantic_02),
         ),
       ];
 

@@ -50,6 +50,7 @@ class AppImages {
   static const String edit1 = "assets/svg/edit1.svg";
   static const String filter = "assets/svg/filter.svg";
   static const String filter_icon = "assets/images/filter.png";
+  static const String signal_icon = "assets/images/signal_icon.png";
 
   static const String qa_base = "assets/svg/qa_base.svg";
   static const String qa_bond = "assets/svg/qa_bond.svg";

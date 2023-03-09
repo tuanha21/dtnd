@@ -7,6 +7,8 @@ import 'package:dtnd/=models=/response/deep_model.dart';
 import 'package:dtnd/=models=/response/inday_matched_order.dart';
 import 'package:dtnd/=models=/response/index_chart_data.dart';
 import 'package:dtnd/=models=/response/index_detail.dart';
+import 'package:dtnd/=models=/response/top_signal_detail_model.dart';
+import 'package:dtnd/=models=/response/top_signal_stock_model.dart';
 import 'package:dtnd/=models=/response/liquidity_model.dart';
 import 'package:dtnd/=models=/response/news_detail.dart';
 import 'package:dtnd/=models=/response/news_model.dart';
@@ -86,6 +88,11 @@ abstract class INetworkService {
   Future<List<TrashModel>> getTopStockChange(Map<String, dynamic> body);
 
   Future<List<TrashModel>> getTopForeignTrade(Map<String, dynamic> body);
+
+  Future<List<TopSignalStockModel>?> getTopSignalStocks(
+      Map<String, String> body);
+
+  Future<TopSignalDetailModel?> getTopSignalDetail(Map<String, String> body);
 
   Future<List<StockDataResponse>> getListStockData(String listStock);
 

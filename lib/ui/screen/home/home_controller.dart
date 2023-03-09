@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:dtnd/=models=/index.dart';
 import 'package:dtnd/=models=/response/index_model.dart';
+import 'package:dtnd/=models=/response/top_signal_stock_model.dart';
 import 'package:dtnd/=models=/response/news_model.dart';
 import 'package:dtnd/=models=/response/stock_model.dart';
 import 'package:dtnd/=models=/response/top_interested_model.dart';
@@ -42,7 +43,7 @@ class HomeController {
       StreamController<double>.broadcast();
   Stream<double> get initProcess => _initProcess.stream;
 
-  late final List<StockModel> interestedCatalog;
+  late final List<TopSignalStockModel> topSignalStocks;
   final Rx<List<TrashModel>?> hotToday = Rxn();
   final Rx<List<TrashModel>?> priceIncreaseToday = Rxn();
   final Rx<List<TrashModel>?> priceDecreaseToday = Rxn();
@@ -144,9 +145,7 @@ class HomeController {
     //   _initProcess.sink.add(((2 + (i / hotToday.length)) / _initStep));
     // }
     topInitialized.value = true;
-    final stockModels = await dataCenterService.getStockModelsFromStockCodes(
-        localStorageService.getListInterestedStock() ?? defaultListStock);
-    interestedCatalog = stockModels ?? [];
+    topSignalStocks = await dataCenterService.getTopSignalStocks();
     _initProcess.sink.add(4 / _initStep);
     suggestInitialized.value = true;
     getWorldIndex();

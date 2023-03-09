@@ -199,7 +199,7 @@ class _HomeMarketTodayState extends State<HomeMarketToday>
                           ],
                           animate: false,
                           behaviors: [
-                            charts.RangeAnnotation([e
+                            charts.RangeAnnotation([
                               if (cwIndex.openPoint != null)
                                 charts.LineAnnotationSegment(cwIndex.openPoint!,
                                     charts.RangeAnnotationAxisType.measure,
@@ -208,7 +208,7 @@ class _HomeMarketTodayState extends State<HomeMarketToday>
                                     // startLabel: 'Measure 1 End',
                                     dashPattern: [5, 5],
                                     color:
-                                        charts.MaterialPalett.gray.shade300),
+                                        charts.MaterialPalette.gray.shade300),
                             ]),
                           ],
                           // Provide a tickProviderSpec which does NOT require that zero is

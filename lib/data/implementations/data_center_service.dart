@@ -5,6 +5,8 @@ import 'package:dtnd/=models=/response/indContrib.dart';
 import 'package:dtnd/=models=/response/inday_matched_order.dart';
 import 'package:dtnd/=models=/response/index_detail.dart';
 import 'package:dtnd/=models=/response/index_model.dart';
+import 'package:dtnd/=models=/response/top_signal_detail_model.dart';
+import 'package:dtnd/=models=/response/top_signal_stock_model.dart';
 import 'package:dtnd/=models=/response/introduct_company.dart';
 import 'package:dtnd/=models=/response/liquidity_model.dart';
 import 'package:dtnd/=models=/response/news_detail.dart';
@@ -21,7 +23,6 @@ import 'package:dtnd/=models=/response/stock_trading_history.dart';
 import 'package:dtnd/=models=/response/stock_vol.dart';
 import 'package:dtnd/=models=/response/subsidiaries_model.dart';
 import 'package:dtnd/=models=/response/top_influence_model.dart';
-import 'package:dtnd/=models=/response/top_interested_model.dart';
 import 'package:dtnd/=models=/response/trash_model.dart';
 import 'package:dtnd/=models=/ui_model/field_tree_element_model.dart';
 import 'package:dtnd/data/i_data_center_service.dart';
@@ -117,7 +118,6 @@ class DataCenterService
   Future<void> startSocket() async {
     socket.on("public", (data) {
       if (data['data']['id'] == 1101) {
-        print(data);
         return processIndexData(data);
       }
       if (data['data']['id'] == 3220 ||
@@ -308,14 +308,12 @@ class DataCenterService
           final stockData = await getStockData(stockCode);
           final stockModel = StockModel(stock: stock, stockData: stockData);
           listStockReg.add(stockModel);
-          print("added stock");
           listReturn.add(stockModel);
         } catch (e) {
           continue;
         }
       }
     }
-    print(listStockReg.length);
 
     regStocks(stockCodes);
     registering = false;
@@ -454,6 +452,46 @@ class DataCenterService
     }
 
     return listStrings;
+  }
+
+  @override
+  Future<List<TopSignalStockModel>> getTopSignalStocks({int count = 5}) async {
+    final Map<String, String> body = {
+      "cmd": "top_signal",
+      "params": "$count",
+    };
+    final listTop = await networkService.getTopSignalStocks(body);
+    if (listTop?.isEmpty ?? true) {
+      return [];
+    }
+    final List<String> listStrings = listTop!.map((e) => e.cSHARECODE).toList();
+    final stockModels = await getStockModelsFromStockCodes(listStrings);
+    if (stockModels?.isEmpty ?? true) {
+      return listTop;
+    }
+    if (stockModels!.length != listTop.length) {
+      for (final StockModel stockModel in stockModels) {
+        listTop
+            .firstWhere(
+                (element) => element.cSHARECODE == stockModel.stock.stockCode)
+            .stockModel = stockModel;
+      }
+    } else {
+      for (int i = 0; i < listTop.length; i++) {
+        listTop[i].stockModel = stockModels[i];
+      }
+    }
+    return listTop;
+  }
+
+  @override
+  Future<TopSignalDetailModel?> getTopSignalDetail(
+      String stockCode, String type) {
+    final Map<String, String> body = {
+      "cmd": "signal_detail",
+      "params": "$stockCode,$type",
+    };
+    return networkService.getTopSignalDetail(body);
   }
 
   @override

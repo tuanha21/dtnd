@@ -100,6 +100,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "business_information":
             MessageLookupByLibrary.simpleMessage("Thông tin doanh nghiệp"),
         "buy": MessageLookupByLibrary.simpleMessage("Mua"),
+        "buy_date": MessageLookupByLibrary.simpleMessage("Ngày mua"),
         "buy_price": MessageLookupByLibrary.simpleMessage("Giá mua vào"),
         "buy_short": MessageLookupByLibrary.simpleMessage("M"),
         "cancel": MessageLookupByLibrary.simpleMessage("Huỷ"),
@@ -352,6 +353,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "search_stock": MessageLookupByLibrary.simpleMessage("Tìm mã CP"),
         "see_more": MessageLookupByLibrary.simpleMessage("Xem thêm"),
         "sell": MessageLookupByLibrary.simpleMessage("Bán"),
+        "sell_date": MessageLookupByLibrary.simpleMessage("Ngày bán"),
         "sell_price": MessageLookupByLibrary.simpleMessage("Giá bán ra"),
         "sell_short": MessageLookupByLibrary.simpleMessage("B"),
         "session_expired_in":

@@ -13,6 +13,8 @@ import 'package:dtnd/=models=/response/index_board.dart';
 import 'package:dtnd/=models=/response/index_detail.dart';
 import 'package:dtnd/=models=/response/index_chart_data.dart';
 import 'package:dtnd/=models=/index.dart';
+import 'package:dtnd/=models=/response/top_signal_detail_model.dart';
+import 'package:dtnd/=models=/response/top_signal_stock_model.dart';
 import 'package:dtnd/=models=/response/introduct_company.dart';
 import 'package:dtnd/=models=/response/liquidity_model.dart';
 import 'package:dtnd/=models=/response/news_detail.dart';
@@ -279,6 +281,7 @@ class NetworkService implements INetworkService {
     return data;
   }
 
+  @override
   Future<List<StockDataResponse>> getListStockData(String listStock) async {
     final String path = "getliststockdata/$listStock";
     final http.Response response = await client.get(url_board(path));
@@ -614,6 +617,47 @@ class NetworkService implements INetworkService {
     } catch (e) {
       logger.e(e);
       return [];
+    }
+  }
+
+  @override
+  Future<List<TopSignalStockModel>?> getTopSignalStocks(
+      Map<String, String> body) async {
+    try {
+      final http.Response response =
+          await client.get(url_info_sbsi("proxy", body));
+      logger.v(response.body);
+      final List<dynamic> responseBody = decode(response.bodyBytes)["data"];
+      List<TopSignalStockModel> data = [];
+      for (var element in responseBody) {
+        try {
+          data.add(TopSignalStockModel.fromJson(element));
+        } catch (e) {
+          logger.e(e);
+          continue;
+        }
+      }
+      return data;
+    } catch (e) {
+      logger.e(e);
+      return [];
+    }
+  }
+
+  @override
+  Future<TopSignalDetailModel?> getTopSignalDetail(
+      Map<String, String> body) async {
+    try {
+      final http.Response response =
+          await client.get(url_info_sbsi("proxy", body));
+      logger.v(response.body);
+      final List<dynamic> responseBody = decode(response.bodyBytes)["data"];
+      TopSignalDetailModel data =
+          TopSignalDetailModel.fromJson(responseBody.first);
+      return data;
+    } catch (e) {
+      logger.e(e);
+      rethrow;
     }
   }
 

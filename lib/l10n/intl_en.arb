@@ -118,6 +118,8 @@
     "minimum_ee": "Minimum purchasing power",
     "purchasing_ability": "Purchasing ability",
     "detail": "Detail",
+    "buy_date": "Buy date",
+    "sell_date": "Sell date",
     "from_day": "From date",
     "to_day": "To date",
     "owned": "Owned",

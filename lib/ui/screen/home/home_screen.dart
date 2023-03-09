@@ -3,7 +3,7 @@ import 'package:dtnd/data/implementations/user_service.dart';
 import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/screen/home/home_controller.dart';
 import 'package:dtnd/ui/screen/home/widget/home_appbar_delegate.dart';
-import 'package:dtnd/ui/screen/home/widget/home_interested_catalog.dart';
+import 'package:dtnd/ui/screen/home/widget/home_top_signal_stocks.dart';
 import 'package:dtnd/ui/screen/home/widget/home_market_overview.dart';
 import 'package:dtnd/ui/screen/home/widget/home_market_today.dart';
 import 'package:dtnd/ui/screen/home/widget/home_news.dart';
@@ -87,7 +87,7 @@ class _HomeScreenState extends State<HomeScreen> {
         const SliverPadding(
           padding: EdgeInsets.symmetric(vertical: 24),
           sliver: SliverToBoxAdapter(
-            child: HomeInterestedCatalog(),
+            child: HomeTopSignalStocks(),
           ),
         ),
         SliverPadding(
