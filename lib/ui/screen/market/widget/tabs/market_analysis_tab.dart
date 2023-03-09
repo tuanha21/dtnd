@@ -42,7 +42,6 @@ class _MarketAnalysisTabState extends State<MarketAnalysisTab>
   }
 
   Index indexSelect = Index.VNI;
-
   // bool _isPT = false;
 
   // void onChangedPT(bool? val) {
