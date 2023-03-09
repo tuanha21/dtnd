@@ -47,8 +47,8 @@ class _PiValueChartState extends State<PiValueChart> {
                 data.removeWhere((element) => element['ptvalue'] == 0);
                 data.sort((a, b) => a['ptvalue'].compareTo(b['ptvalue']));
 
-                var _take = data.length > 30 ? 30 : data.length;
-                var _data = data.reversed.take(_take).toList();
+                var take = data.length > 30 ? 30 : data.length;
+                var data0 = data.reversed.take(take).toList();
 
                 return Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -56,15 +56,15 @@ class _PiValueChartState extends State<PiValueChart> {
                       height: 200,
                       color: Colors.grey,
                       child: SfTreemap(
-                        dataCount: _data.length,
+                        dataCount: data0.length,
                         weightValueMapper: (int index) {
-                          return _data[index]['ptvalue'] ?? 0.0;
+                          return data0[index]['ptvalue'] ?? 0.0;
                         },
                         levels: <TreemapLevel>[
                           TreemapLevel(
-                            groupMapper: (int index) => _data[index]['name'],
+                            groupMapper: (int index) => data0[index]['name'],
                             colorValueMapper: (tile) =>
-                                _data[tile.indices[0]]['ptcolor'],
+                                data0[tile.indices[0]]['ptcolor'],
                             tooltipBuilder:
                                 (BuildContext context, TreemapTile tile) {
                               return Container(
@@ -90,7 +90,7 @@ class _PiValueChartState extends State<PiValueChart> {
                                       tile.group,
                                       overflow: TextOverflow.ellipsis,
                                       textAlign: TextAlign.center,
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                           fontSize: 14,
                                           color: AppColors.light_bg),
                                     ),
@@ -98,7 +98,7 @@ class _PiValueChartState extends State<PiValueChart> {
                                       NumUtils.formatInteger(tile.weight),
                                       overflow: TextOverflow.ellipsis,
                                       textAlign: TextAlign.center,
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                           fontSize: 11,
                                           fontWeight: FontWeight.w400,
                                           color: AppColors.light_bg),

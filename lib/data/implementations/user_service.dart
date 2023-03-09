@@ -43,8 +43,16 @@ class UserService implements IUserService {
   bool regSmartOTP = false;
 
   @override
+  bool regVA = false;
+
+  @override
   void changeRegSmartOTP(bool value) {
     regSmartOTP = value;
+  }
+
+  @override
+  void changeRegVA(bool value) {
+    regVA = value;
   }
 
   @override
