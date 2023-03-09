@@ -32,8 +32,10 @@ class VAUtil {
           MaterialPageRoute(builder: (context) => const VAScreen()));
     } else {
       Navigator.of(context)
-          .push<bool>(
-              MaterialPageRoute(builder: (context) => const VARegister()))
+          .push<bool>(MaterialPageRoute(
+              builder: (context) => VARegister(
+                    onChanged: (bool? val) => {},
+                  )))
           .then((registered) {
         if (registered ?? false) {
           Navigator.of(context).push<void>(

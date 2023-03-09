@@ -21,17 +21,17 @@ class _PiValueChartState extends State<PiValueChart> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const SizedBox(height: 24),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: Text(
-            'Top mã tự doanh mua ròng',
-            style: Theme.of(context)
-                .textTheme
-                .labelMedium
-                ?.copyWith(fontWeight: FontWeight.w700, fontSize: 14),
-          ),
-        ),
+        // const SizedBox(height: 24),
+        // Padding(
+        //   padding: const EdgeInsets.symmetric(horizontal: 16),
+        //   child: Text(
+        //     'Top mã tự doanh mua ròng',
+        //     style: Theme.of(context)
+        //         .textTheme
+        //         .labelMedium
+        //         ?.copyWith(fontWeight: FontWeight.w700, fontSize: 14),
+        //   ),
+        // ),
         const SizedBox(height: 20),
         FutureBuilder<IndContrib>(
             future: widget.pIValue,

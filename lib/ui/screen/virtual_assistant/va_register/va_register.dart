@@ -3,11 +3,11 @@ import 'package:dtnd/data/implementations/user_service.dart';
 import 'package:dtnd/ui/screen/virtual_assistant/va_register/register_fill_otp.dart';
 import 'package:dtnd/ui/screen/virtual_assistant/va_register/register_intro.dart';
 import 'package:dtnd/ui/screen/virtual_assistant/va_register/register_registered.dart';
-import 'package:dtnd/ui/screen/virtual_assistant/va_screen.dart';
 import 'package:flutter/material.dart';
 
 class VARegister extends StatefulWidget {
-  const VARegister({super.key});
+  final Function(bool?) onChanged;
+  const VARegister({super.key, required this.onChanged});
 
   @override
   State<VARegister> createState() => _VARegisterState();
@@ -28,14 +28,15 @@ class _VARegisterState extends State<VARegister> {
         curve: Curves.easeInOutCubic);
   }
 
-  void switchTermAgreement(bool? newValue, context) async {
+  void switchTermAgreement(bool newValue) {
     // call method update
 
-    userService.changeRegVA(newValue!);
-    await Future.delayed(const Duration(milliseconds: 500));
-    Navigator.of(context).push(MaterialPageRoute(
-      builder: (context) => const VAScreen(),
-    ));
+    userService.changeRegVA(newValue);
+    widget.onChanged(newValue);
+    // await Future.delayed(const Duration(milliseconds: 500));
+    // Navigator.of(context).push(MaterialPageRoute(
+    //   builder: (context) => const VAScreen(),
+    // ));
   }
 
   @override
@@ -80,8 +81,7 @@ class _VARegisterState extends State<VARegister> {
             nextPage: nextPage,
           ),
           RegisterFillOTP(nextPage: nextPage),
-          RegisterRegistered(
-              nextPage: () => switchTermAgreement(true, context)),
+          RegisterRegistered(nextPage: () => switchTermAgreement(true)),
         ],
       ),
     );

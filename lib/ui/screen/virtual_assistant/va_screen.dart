@@ -56,12 +56,19 @@ class VAScreen extends StatefulWidget {
 
 class _VAScreenState extends State<VAScreen> {
   final IUserService userService = UserService();
+  bool _regVA = false;
+
+  void onChanged(bool? val) {
+    setState(() {
+      _regVA = val ?? false;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     final themeMode = AppService.instance.themeMode.value;
     final textTheme = Theme.of(context).textTheme;
-    bool regVA = userService.regVA;
+    _regVA = userService.regVA;
 
     return Scaffold(
       appBar: AppBar(
@@ -94,7 +101,7 @@ class _VAScreenState extends State<VAScreen> {
           style: textTheme.labelLarge?.copyWith(fontWeight: FontWeight.w700),
         ),
       ),
-      body: regVA
+      body: _regVA
           ? ListView.separated(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               itemCount: VAFeature.values.length,
@@ -115,7 +122,7 @@ class _VAScreenState extends State<VAScreen> {
                 width: 8,
               ),
             )
-          : const VARegister(),
+          : VARegister(onChanged: onChanged),
     );
   }
 }
