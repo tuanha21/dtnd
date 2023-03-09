@@ -1,11 +1,6 @@
-import 'dart:math';
-
-import 'package:dtnd/=models=/ui_model/field_tree_element_model.dart';
-import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/screen/market/controller/industry_tab_controller.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
-import 'package:dtnd/utilities/logger.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';

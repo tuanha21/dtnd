@@ -90,9 +90,9 @@ class _MarketOverviewTabState extends State<MarketOverviewTab> {
   @override
   Widget build(BuildContext context) {
     return ListView(
-      children: [
-        const IndexChart(),
-        const DerivativeWidget(),
+      children: const [
+        IndexChart(),
+        DerivativeWidget(),
         // ObxValue<Rx<bool>>((loading) {
         //   if (loading.value) {
         //     return Center(
@@ -105,8 +105,8 @@ class _MarketOverviewTabState extends State<MarketOverviewTab> {
         //     child: DeepMarketChart(seriesList),
         //   );
         // }, marketController.loadingDeepModel),
-        const HeapMapKL(),
-        const SizedBox(height: 100),
+        HeapMapKL(),
+        SizedBox(height: 100),
       ],
     );
   }

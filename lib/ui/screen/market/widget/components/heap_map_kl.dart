@@ -74,7 +74,7 @@ class _HeapMapKLState extends State<HeapMapKL> {
                 );
               }
               if (snapshot.connectionState == ConnectionState.done) {
-                if (!snapshot.hasData)
+                if (!snapshot.hasData) {
                   return Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -88,6 +88,7 @@ class _HeapMapKLState extends State<HeapMapKL> {
                       const SizedBox(height: 100),
                     ],
                   );
+                }
 
                 var data = snapshot.data!;
                 data.removeWhere((element) => element.tOTALKLGD == 0);

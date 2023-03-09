@@ -1,3 +1,4 @@
+import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:dtnd/utilities/num_utils.dart';
 import 'package:flutter/material.dart';
 
@@ -21,20 +22,12 @@ class MarketAnalysisTab extends StatefulWidget {
 class _MarketAnalysisTabState extends State<MarketAnalysisTab>
     with AutomaticKeepAliveClientMixin {
   final IDataCenterService dataCenterService = DataCenterService();
-  // late Future<List<TopInfluenceModel>> topInfluenceList;
-  // late Future<List<IndexBoard>> indexBoard;
-  // late Future<LiquidityModel> liquidityModel;
-  // late Future<IndContrib> topIndex;
   late Future<IndContrib> piValue;
   late Future<IndContrib> fiValue;
 
   late Future<IndContrib> indFvalue;
 
   void initData() {
-    // topInfluenceList = dataCenterService.getTopInfluence(indexSelect);
-    // indexBoard = dataCenterService.getIndexBoard(indexSelect.exchangeName);
-    // liquidityModel = dataCenterService.getLiquidity(indexSelect);
-    // topIndex = dataCenterService.getIndContrib(indexSelect.market);
     piValue = dataCenterService.getPIvalue(indexSelect.market);
     fiValue = dataCenterService.getFIvalue(indexSelect.market);
     indFvalue = dataCenterService.getIndFvalue(indexSelect.market);
@@ -47,6 +40,13 @@ class _MarketAnalysisTabState extends State<MarketAnalysisTab>
   }
 
   Index indexSelect = Index.VNI;
+  // bool _isPT = false;
+
+  // void onChangedPT(bool? val) {
+  //   setState(() {
+  //     _isPT = val ?? false;
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -55,10 +55,6 @@ class _MarketAnalysisTabState extends State<MarketAnalysisTab>
     return ListView(
       children: [
         const SizedBox(height: 16),
-        // TopInfluenceChart(topInfluenceList: topInfluenceList),
-        // LiquidityChart(liquidityModel: liquidityModel),
-        // MoneyChart(indexBoard: indexBoard),
-        //TopIndexWidgetChart(topIndex: topIndex),
         Container(
             padding: const EdgeInsets.all(8),
             decoration: const BoxDecoration(
@@ -109,12 +105,16 @@ class _MarketAnalysisTabState extends State<MarketAnalysisTab>
                                   var piValue = snapshot.data![0]; //piValue
                                   var fiValue = snapshot.data![1]; //fiValue
 
-                                  var totalBuy =
-                                      double.parse((piValue.totalBuy ?? '0').replaceAll(RegExp(r','), '')) +
-                                          double.parse((fiValue.totalBuy ?? '0').replaceAll(RegExp(r','), ''));
-                                  var totalSell =
-                                      double.parse((piValue.totalSell ?? '0').replaceAll(RegExp(r','), '')) +
-                                          double.parse((fiValue.totalSell ?? '0').replaceAll(RegExp(r','), ''));
+                                  var totalBuy = double.parse(
+                                          (piValue.totalBuy ?? '0')
+                                              .replaceAll(RegExp(r','), '')) +
+                                      double.parse((fiValue.totalBuy ?? '0')
+                                          .replaceAll(RegExp(r','), ''));
+                                  var totalSell = double.parse(
+                                          (piValue.totalSell ?? '0')
+                                              .replaceAll(RegExp(r','), '')) +
+                                      double.parse((fiValue.totalSell ?? '0')
+                                          .replaceAll(RegExp(r','), ''));
                                   return Text(
                                     '${NumUtils.formatDouble((totalSell - totalBuy))} Tỷ',
                                     style: Theme.of(context)
@@ -171,8 +171,10 @@ class _MarketAnalysisTabState extends State<MarketAnalysisTab>
                                   var piValue = snapshot.data!; //fiValue
 
                                   var piTotal = double.parse(
-                                          (piValue.totalBuy ?? '0').replaceAll(RegExp(r','), '')) -
-                                      double.parse((piValue.totalSell ?? '0').replaceAll(RegExp(r','), ''));
+                                          (piValue.totalBuy ?? '0')
+                                              .replaceAll(RegExp(r','), '')) -
+                                      double.parse((piValue.totalSell ?? '0')
+                                          .replaceAll(RegExp(r','), ''));
                                   return Text(
                                     '${NumUtils.formatDouble(piTotal)} Tỷ',
                                     style: Theme.of(context)
@@ -208,7 +210,7 @@ class _MarketAnalysisTabState extends State<MarketAnalysisTab>
                                       color: AppColors.primary_02),
                                   child: Center(
                                     child: Text(
-                                      "Tự doanh",
+                                      "Nước ngoài",
                                       style: Theme.of(context)
                                           .textTheme
                                           .bodySmall
@@ -227,11 +229,11 @@ class _MarketAnalysisTabState extends State<MarketAnalysisTab>
                                   }
 
                                   var piValue = snapshot.data!; //fiValue
-                                  print(piValue.totalBuy);
-                                  print(piValue.totalSell);
                                   var piTotal = double.parse(
-                                          (piValue.totalBuy ?? '0').replaceAll(RegExp(r','), '')) -
-                                      double.parse((piValue.totalSell ?? '0').replaceAll(RegExp(r','), ''));
+                                          (piValue.totalBuy ?? '0')
+                                              .replaceAll(RegExp(r','), '')) -
+                                      double.parse((piValue.totalSell ?? '0')
+                                          .replaceAll(RegExp(r','), ''));
                                   return Text(
                                     '${NumUtils.formatDouble(piTotal)} Tỷ',
                                     style: Theme.of(context)
@@ -248,6 +250,49 @@ class _MarketAnalysisTabState extends State<MarketAnalysisTab>
                             ])),
                   ),
                 ]))),
+        const SizedBox(height: 24),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child:
+              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+            Text(
+              'Top mã tự doanh mua ròng',
+              style: Theme.of(context)
+                  .textTheme
+                  .labelMedium
+                  ?.copyWith(fontWeight: FontWeight.w700, fontSize: 14),
+            ),
+            GestureDetector(
+              onTap: () async {
+                var index = await showCupertinoModalPopup<Index>(
+                    context: context,
+                    builder: (context) {
+                      return BottomSheet(index: indexSelect);
+                    });
+                if (index != null) {
+                  indexSelect = index;
+                  setState(() {
+                    initData();
+                  });
+                }
+              },
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Text(
+                    S.of(context).filter,
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodySmall
+                        ?.copyWith(color: AppColors.color_secondary),
+                  ),
+                  const SizedBox(width: 4),
+                  SvgPicture.asset(AppImages.filter),
+                ],
+              ),
+            ),
+          ]),
+        ),
         PiValueChart(pIValue: piValue),
         FiChartValue(fIValue: fiValue),
         IndFvalue(
@@ -355,7 +400,7 @@ class _BottomSheetState extends State<BottomSheet> {
                       onPressed: () {
                         Navigator.pop(context, indexSelected);
                       },
-                      child: const Text("Áp dung")),
+                      child: const Text("Áp dụng")),
                 ),
               ),
               const SizedBox(height: 20),

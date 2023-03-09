@@ -85,7 +85,7 @@ class _IndFvalueState extends State<IndFvalue> {
                                       tile.group,
                                       overflow: TextOverflow.ellipsis,
                                       textAlign: TextAlign.center,
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                           fontSize: 14,
                                           color: AppColors.light_bg),
                                     ),
@@ -93,7 +93,7 @@ class _IndFvalueState extends State<IndFvalue> {
                                       NumUtils.formatInteger(tile.weight),
                                       overflow: TextOverflow.ellipsis,
                                       textAlign: TextAlign.center,
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                           fontSize: 12,
                                           fontWeight: FontWeight.w400,
                                           color: AppColors.light_bg),

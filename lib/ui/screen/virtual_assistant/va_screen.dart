@@ -1,4 +1,6 @@
 import 'package:dtnd/config/service/app_services.dart';
+import 'package:dtnd/data/i_user_service.dart';
+import 'package:dtnd/data/implementations/user_service.dart';
 import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/screen/virtual_assistant/va_filter/virtual_assistant_filter_screen.dart';
 import 'package:dtnd/ui/screen/virtual_assistant/va_volatolity_warning/va_volatolity_warning_screen.dart';
@@ -10,7 +12,6 @@ import 'package:flutter/material.dart';
 enum VAFeature {
   stockFilter,
   volatilityWarning,
-  volatilityRegister,
 }
 
 extension VirtualAssistantFeatureX on VAFeature {
@@ -20,8 +21,6 @@ extension VirtualAssistantFeatureX on VAFeature {
         return S.current.filter_stock;
       case VAFeature.volatilityWarning:
         return "Lọc tín hiệu";
-      case VAFeature.volatilityRegister:
-        return "Giao dịch tự động";
     }
   }
 
@@ -30,8 +29,6 @@ extension VirtualAssistantFeatureX on VAFeature {
       case VAFeature.stockFilter:
         return AppImages.chart2_icon;
       case VAFeature.volatilityWarning:
-        return AppImages.directbox_receive_icon;
-      case VAFeature.volatilityRegister:
         return AppImages.directbox_receive_icon;
     }
   }
@@ -46,10 +43,6 @@ extension VirtualAssistantFeatureX on VAFeature {
         return () => Navigator.of(context).push(MaterialPageRoute(
               builder: (context) => const VAVolatilityWarningScreen(),
             ));
-      case VAFeature.volatilityRegister:
-        return () => Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) => const VARegister(),
-            ));
     }
   }
 }
@@ -62,10 +55,20 @@ class VAScreen extends StatefulWidget {
 }
 
 class _VAScreenState extends State<VAScreen> {
+  final IUserService userService = UserService();
+  bool _regVA = false;
+
+  void onChanged(bool? val) {
+    setState(() {
+      _regVA = val ?? false;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final themeMode = AppService.instance.themeMode.value;
     final textTheme = Theme.of(context).textTheme;
+    _regVA = userService.regVA;
 
     return Scaffold(
       appBar: AppBar(
@@ -98,25 +101,28 @@ class _VAScreenState extends State<VAScreen> {
           style: textTheme.labelLarge?.copyWith(fontWeight: FontWeight.w700),
         ),
       ),
-      body: ListView.separated(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
-        itemCount: VAFeature.values.length,
-        // shrinkWrap: true,
-        itemBuilder: (context, index) {
-          return ListTile(
-            onTap: VAFeature.values[index].onPressed(context),
-            leading: SizedBox.square(
-              dimension: 24,
-              child: Image.asset(VAFeature.values[index].iconPath),
-            ),
-            title: Text(VAFeature.values[index].name),
-            trailing: const Icon(Icons.chevron_right_outlined),
-          );
-        },
-        separatorBuilder: (BuildContext context, int index) => const SizedBox(
-          width: 8,
-        ),
-      ),
+      body: _regVA
+          ? ListView.separated(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              itemCount: VAFeature.values.length,
+              // shrinkWrap: true,
+              itemBuilder: (context, index) {
+                return ListTile(
+                  onTap: VAFeature.values[index].onPressed(context),
+                  leading: SizedBox.square(
+                    dimension: 24,
+                    child: Image.asset(VAFeature.values[index].iconPath),
+                  ),
+                  title: Text(VAFeature.values[index].name),
+                  trailing: const Icon(Icons.chevron_right_outlined),
+                );
+              },
+              separatorBuilder: (BuildContext context, int index) =>
+                  const SizedBox(
+                width: 8,
+              ),
+            )
+          : VARegister(onChanged: onChanged),
     );
   }
 }
