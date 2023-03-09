@@ -74,7 +74,7 @@ class _HeapMapKLState extends State<HeapMapKL> {
                 );
               }
               if (snapshot.connectionState == ConnectionState.done) {
-                if (!snapshot.hasData)
+                if (!snapshot.hasData) {
                   return Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -88,6 +88,7 @@ class _HeapMapKLState extends State<HeapMapKL> {
                       const SizedBox(height: 100),
                     ],
                   );
+                }
 
                 var data = snapshot.data!;
                 data.removeWhere((element) => element.tOTALKLGD == 0);
@@ -168,18 +169,19 @@ class _HeapMapKLState extends State<HeapMapKL> {
                                         },
                                         labelBuilder: (BuildContext context,
                                             TreemapTile tile) {
-                                          final _gr =
+                                          final gr =
                                               (tile.group ?? '').split('/');
-                                          if (_gr.length < 2)
+                                          if (gr.length < 2) {
                                             return Center(
                                               child: Text(
                                                 tile.group,
                                                 overflow: TextOverflow.ellipsis,
                                                 textAlign: TextAlign.center,
-                                                style: TextStyle(
+                                                style: const TextStyle(
                                                     color: AppColors.light_bg),
                                               ),
                                             );
+                                          }
 
                                           return Center(
                                             child: SingleChildScrollView(
@@ -195,7 +197,7 @@ class _HeapMapKLState extends State<HeapMapKL> {
                                                     overflow:
                                                         TextOverflow.ellipsis,
                                                     textAlign: TextAlign.center,
-                                                    style: TextStyle(
+                                                    style: const TextStyle(
                                                         fontSize: 14,
                                                         color: AppColors
                                                             .light_bg)),
@@ -205,7 +207,7 @@ class _HeapMapKLState extends State<HeapMapKL> {
                                                     overflow:
                                                         TextOverflow.ellipsis,
                                                     textAlign: TextAlign.center,
-                                                    style: TextStyle(
+                                                    style: const TextStyle(
                                                         fontSize: 12,
                                                         fontWeight:
                                                             FontWeight.w400,

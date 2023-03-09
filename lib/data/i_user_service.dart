@@ -21,6 +21,10 @@ abstract class IUserService {
 
   void changeRegSmartOTP(bool value);
 
+  bool get regVA;
+
+  void changeRegVA(bool value);
+
   Future<void> init();
 
   Future<void> deleteToken();
