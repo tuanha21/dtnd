@@ -18,7 +18,7 @@ class BoundPrice extends StatelessWidget {
   Widget build(BuildContext context) {
     final themeMode = AppService.instance.themeMode.value;
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 6,horizontal: 16),
+      padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 16),
       child: Row(
         children: [
           Expanded(

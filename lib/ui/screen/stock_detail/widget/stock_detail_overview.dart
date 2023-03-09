@@ -12,7 +12,6 @@ class StockDetailOverview extends StatelessWidget {
 
   final StockModel stockModel;
 
-
   @override
   Widget build(BuildContext context) {
     List<_StockDetailPriceElementData> listPrices = [
@@ -24,7 +23,7 @@ class StockDetailOverview extends StatelessWidget {
       ),
       _StockDetailPriceElementData(
         title: S.of(context).ref,
-        value: stockModel.stockData.r.toString() ,
+        value: stockModel.stockData.r.toString(),
         valueColor: AppColors.semantic_02,
         bgColor: AppColors.accent_light_02,
       ),
@@ -47,9 +46,11 @@ class StockDetailOverview extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                    Text((stockModel.stockData.lastPrice.value == 0
-                        ? stockModel.stockData.r.value
-                        : stockModel.stockData.lastPrice.value).toString(),
+                    Text(
+                        (stockModel.stockData.lastPrice.value == 0
+                                ? stockModel.stockData.r.value
+                                : stockModel.stockData.lastPrice.value)
+                            .toString(),
                         style: Theme.of(context)
                             .textTheme
                             .headlineLarge
@@ -125,15 +126,20 @@ class _StockDetailPriceElement extends StatelessWidget {
         children: [
           Text(
             data.title,
-            style: Theme.of(context).textTheme.labelMedium?.copyWith(color: AppColors.neutral_03),
+            style: Theme.of(context)
+                .textTheme
+                .labelMedium
+                ?.copyWith(color: AppColors.neutral_03),
           ),
           const SizedBox(
             height: 6,
           ),
           Text(
             data.value ?? "-",
-            style: Theme.of(context).textTheme.labelMedium!.copyWith(
-                fontWeight: FontWeight.w600, color: data.valueColor),
+            style: Theme.of(context)
+                .textTheme
+                .labelMedium!
+                .copyWith(fontWeight: FontWeight.w600, color: data.valueColor),
           ),
         ],
       ),

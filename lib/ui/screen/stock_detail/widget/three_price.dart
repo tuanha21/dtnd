@@ -7,9 +7,7 @@ import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/logic/stock_status.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_textstyle.dart';
-import 'package:dtnd/utilities/extension.dart';
 import 'package:dtnd/utilities/num_utils.dart';
-import 'package:dtnd/utilities/typedef.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -258,7 +256,8 @@ class _ThreePriceElementState extends State<ThreePriceElement>
                     ratio: widget.ratio * ctx.maxWidth,
                     color: AppColors.semantic_01.withOpacity(0.4)),
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 4,horizontal: 4),
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 4, horizontal: 4),
                   child: Align(
                     alignment: Alignment.centerRight,
                     child: Text(
@@ -284,7 +283,8 @@ class _ThreePriceElementState extends State<ThreePriceElement>
                     ratio: widget.ratio * ctx.maxWidth,
                     color: AppColors.semantic_03.withOpacity(0.4)),
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 4,horizontal: 4),
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 4, horizontal: 4),
                   child: Align(
                     alignment: Alignment.centerLeft,
                     child: Text(

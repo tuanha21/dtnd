@@ -118,7 +118,7 @@ class _IndexWidgetState extends State<IndexWidget> {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const SizedBox();
                 }
-                if(!snapshot.hasData){
+                if (!snapshot.hasData) {
                   return const SizedBox();
                 }
                 if (snapshot.connectionState == ConnectionState.done) {

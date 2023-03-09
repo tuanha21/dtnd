@@ -16,7 +16,6 @@ class TopIndexWidgetChart extends StatefulWidget {
 }
 
 class _TopIndexWidgetChartState extends State<TopIndexWidgetChart> {
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -40,7 +39,7 @@ class _TopIndexWidgetChartState extends State<TopIndexWidgetChart> {
                 );
               }
               if (snapshot.connectionState == ConnectionState.done) {
-                if(snapshot.data == null) return const SizedBox();
+                if (snapshot.data == null) return const SizedBox();
                 var list = snapshot.data!.listMapValue;
                 list.sort((a, b) {
                   num numA = a['contribPoint'];
@@ -70,18 +69,13 @@ class _TopIndexWidgetChartState extends State<TopIndexWidgetChart> {
                         )
                       ],
                       animate: true,
-                      domainAxis:  const charts.OrdinalAxisSpec(
+                      domainAxis: const charts.OrdinalAxisSpec(
                         renderSpec: charts.SmallTickRendererSpec(
-                          labelRotation: 45,
-                          minimumPaddingBetweenLabelsPx: 0,
-                            labelStyle: charts.TextStyleSpec(
-                                fontSize: 7),
-                            lineStyle: charts.LineStyleSpec(
-                            )
-                        ),
-
+                            labelRotation: 45,
+                            minimumPaddingBetweenLabelsPx: 0,
+                            labelStyle: charts.TextStyleSpec(fontSize: 7),
+                            lineStyle: charts.LineStyleSpec()),
                       ),
-
                     ),
                   ),
                 );

@@ -119,12 +119,16 @@ class _MarketAnalysisTabState extends State<MarketAnalysisTab>
                                   var piValue = snapshot.data![0]; //piValue
                                   var fiValue = snapshot.data![1]; //fiValue
 
-                                  var totalBuy =
-                                      double.parse((piValue.totalBuy ?? '0').replaceAll(RegExp(r','), '')) +
-                                          double.parse((fiValue.totalBuy ?? '0').replaceAll(RegExp(r','), ''));
-                                  var totalSell =
-                                      double.parse((piValue.totalSell ?? '0').replaceAll(RegExp(r','), '')) +
-                                          double.parse((fiValue.totalSell ?? '0').replaceAll(RegExp(r','), ''));
+                                  var totalBuy = double.parse(
+                                          (piValue.totalBuy ?? '0')
+                                              .replaceAll(RegExp(r','), '')) +
+                                      double.parse((fiValue.totalBuy ?? '0')
+                                          .replaceAll(RegExp(r','), ''));
+                                  var totalSell = double.parse(
+                                          (piValue.totalSell ?? '0')
+                                              .replaceAll(RegExp(r','), '')) +
+                                      double.parse((fiValue.totalSell ?? '0')
+                                          .replaceAll(RegExp(r','), ''));
                                   return Text(
                                     '${NumUtils.formatDouble((totalSell - totalBuy))} Tỷ',
                                     style: Theme.of(context)
@@ -181,8 +185,10 @@ class _MarketAnalysisTabState extends State<MarketAnalysisTab>
                                   var piValue = snapshot.data!; //fiValue
 
                                   var piTotal = double.parse(
-                                          (piValue.totalBuy ?? '0').replaceAll(RegExp(r','), '')) -
-                                      double.parse((piValue.totalSell ?? '0').replaceAll(RegExp(r','), ''));
+                                          (piValue.totalBuy ?? '0')
+                                              .replaceAll(RegExp(r','), '')) -
+                                      double.parse((piValue.totalSell ?? '0')
+                                          .replaceAll(RegExp(r','), ''));
                                   return Text(
                                     '${NumUtils.formatDouble(piTotal)} Tỷ',
                                     style: Theme.of(context)
@@ -218,7 +224,7 @@ class _MarketAnalysisTabState extends State<MarketAnalysisTab>
                                       color: AppColors.primary_02),
                                   child: Center(
                                     child: Text(
-                                      "Tự doanh",
+                                      "Nước ngoài",
                                       style: Theme.of(context)
                                           .textTheme
                                           .bodySmall
@@ -240,8 +246,10 @@ class _MarketAnalysisTabState extends State<MarketAnalysisTab>
                                   print(piValue.totalBuy);
                                   print(piValue.totalSell);
                                   var piTotal = double.parse(
-                                          (piValue.totalBuy ?? '0').replaceAll(RegExp(r','), '')) -
-                                      double.parse((piValue.totalSell ?? '0').replaceAll(RegExp(r','), ''));
+                                          (piValue.totalBuy ?? '0')
+                                              .replaceAll(RegExp(r','), '')) -
+                                      double.parse((piValue.totalSell ?? '0')
+                                          .replaceAll(RegExp(r','), ''));
                                   return Text(
                                     '${NumUtils.formatDouble(piTotal)} Tỷ',
                                     style: Theme.of(context)

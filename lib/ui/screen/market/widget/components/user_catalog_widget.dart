@@ -3,7 +3,6 @@ import 'package:dtnd/=models=/local/local_catalog.dart';
 import 'package:dtnd/=models=/local/saved_catalog.dart';
 import 'package:dtnd/=models=/response/stock_model.dart';
 import 'package:dtnd/=models=/ui_model/user_cmd.dart';
-import 'package:dtnd/data/i_data_center_service.dart';
 import 'package:dtnd/data/i_local_storage_service.dart';
 import 'package:dtnd/data/i_user_service.dart';
 import 'package:dtnd/data/implementations/data_center_service.dart';
@@ -109,7 +108,7 @@ class _UserCatalogWidgetState extends State<UserCatalogWidget> {
                   child: Row(
                     children: [
                       SvgPicture.asset(
-                        AppImages.edit1,
+                        AppImages.edit2,
                         color: AppColors.primary_01,
                         height: 20,
                         width: 20,

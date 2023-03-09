@@ -3,7 +3,6 @@ import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:dtnd/ui/widget/svg_icon_button.dart';
-import 'package:dtnd/utilities/extension.dart';
 import 'package:flutter/material.dart';
 
 enum TechnicalTrading {
@@ -107,7 +106,6 @@ class TechnicalTradingsElement extends StatelessWidget {
           ),
           child: Row(children: [
             SvgIconButton(technicalTrading.icon),
-            
             Flexible(child: Text(technicalTrading.describe(context)))
           ]),
         ),
