@@ -76,7 +76,8 @@ class _IndustryDetailPageState extends State<IndustryDetailPage> {
                   itemBuilder: (context, index) {
                     var stock = widget.listStock[index];
                     return Container(
-                      padding: const EdgeInsets.symmetric(vertical: 16,horizontal: 16),
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 16, horizontal: 16),
                       child: Row(
                         children: [
                           Expanded(
@@ -91,10 +92,8 @@ class _IndustryDetailPageState extends State<IndustryDetailPage> {
                           ),
                           Expanded(
                             flex: 10,
-
                             child: Align(
                               alignment: Alignment.centerRight,
-
                               child: Text(
                                 '${stock.lastPrice}',
                                 style: Theme.of(context)
@@ -107,7 +106,7 @@ class _IndustryDetailPageState extends State<IndustryDetailPage> {
                           Expanded(
                             flex: 20,
                             child: Align(
-                             alignment: Alignment.centerRight,
+                              alignment: Alignment.centerRight,
                               child: Text(
                                 '${stock.changePc}',
                                 style: Theme.of(context)
