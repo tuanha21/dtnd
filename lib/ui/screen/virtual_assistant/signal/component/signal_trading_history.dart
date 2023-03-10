@@ -1,12 +1,14 @@
+import 'package:dtnd/=models=/response/top_signal_history_model.dart';
 import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
-import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:dtnd/ui/theme/app_textstyle.dart';
+import 'package:dtnd/ui/widget/empty_list_widget.dart';
 import 'package:flutter/material.dart';
 
 class SignalTradingHistory extends StatelessWidget {
-  const SignalTradingHistory({super.key});
+  const SignalTradingHistory({super.key, this.listHis});
 
+  final List<TopSignalHistoryModel>? listHis;
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
@@ -20,10 +22,29 @@ class SignalTradingHistory extends StatelessWidget {
             )
           ],
         ),
-        for (int i = 0; i < 3; i++)
-          const Padding(
-            padding: EdgeInsets.symmetric(vertical: 4),
-            child: SignalTradingHistoryElement(),
+        if (listHis?.isEmpty ?? true)
+          const EmptyListWidget(
+            title: "BOT chưa có lịch sử giao dịch",
+          )
+        else
+          ListView.builder(
+            shrinkWrap: true,
+            itemCount: listHis!.length,
+            itemBuilder: (context, index) {
+              final his = listHis!.elementAt(index);
+              return Padding(
+                padding: const EdgeInsets.symmetric(vertical: 4),
+                child: SignalTradingHistoryElement(
+                  pc: his.pc,
+                  buy: his.buyPrice,
+                  sell: his.sellPrice,
+                  buyTime: his.buyDateString,
+                  sellTime: his.sellDateString,
+                  icon: his.prefixIcon(),
+                  color: his.color,
+                ),
+              );
+            },
           )
       ],
     );
@@ -33,17 +54,21 @@ class SignalTradingHistory extends StatelessWidget {
 class SignalTradingHistoryElement extends StatelessWidget {
   const SignalTradingHistoryElement({
     super.key,
-    this.pc = 25,
-    this.buy = 15.5,
-    this.sell = 20.6,
-    this.buyTime = "13:54:30 24/12/22",
-    this.sellTime = "13:54:30 24/12/22",
+    required this.icon,
+    required this.color,
+    required this.pc,
+    required this.buy,
+    required this.sell,
+    required this.buyTime,
+    required this.sellTime,
   });
-  final num pc;
-  final num buy;
-  final num sell;
-  final String buyTime;
-  final String sellTime;
+  final num? pc;
+  final num? buy;
+  final num? sell;
+  final String? buyTime;
+  final String? sellTime;
+  final Widget icon;
+  final Color color;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -66,20 +91,14 @@ class SignalTradingHistoryElement extends StatelessWidget {
                       color: AppColors.neutral_04, fontWeight: FontWeight.w500),
                 ),
                 const SizedBox(width: 5),
-                Image.asset(
-                  pc >= 0
-                      ? AppImages.prefix_up_icon
-                      : AppImages.prefix_down_icon,
-                  width: 14,
-                  height: 14,
+                SizedBox.square(
+                  dimension: 14,
+                  child: icon,
                 ),
                 const SizedBox(width: 5),
                 Text(
                   "$pc%",
-                  style: AppTextStyle.titleSmall_14.copyWith(
-                      color: pc >= 0
-                          ? AppColors.semantic_01
-                          : AppColors.semantic_03),
+                  style: AppTextStyle.titleSmall_14.copyWith(color: color),
                 ),
               ],
             ),
@@ -95,7 +114,7 @@ class SignalTradingHistoryElement extends StatelessWidget {
                   ),
                   const SizedBox(width: 5),
                   Text(
-                    "$buy",
+                    "${buy ?? "-"}",
                     style: AppTextStyle.titleSmall_14
                         .copyWith(color: AppColors.semantic_01),
                   ),
@@ -104,7 +123,7 @@ class SignalTradingHistoryElement extends StatelessWidget {
                     thickness: 2,
                   ),
                   Text(
-                    "$sell",
+                    "${sell ?? "-"}",
                     style: AppTextStyle.titleSmall_14
                         .copyWith(color: AppColors.semantic_03),
                   ),
@@ -125,7 +144,7 @@ class SignalTradingHistoryElement extends StatelessWidget {
                       color: AppColors.neutral_04, fontWeight: FontWeight.w500),
                 ),
                 Text(
-                  buyTime,
+                  buyTime ?? "-",
                   style: AppTextStyle.labelSmall_10,
                 ),
               ],
@@ -139,7 +158,7 @@ class SignalTradingHistoryElement extends StatelessWidget {
                       color: AppColors.neutral_04, fontWeight: FontWeight.w500),
                 ),
                 Text(
-                  sellTime,
+                  sellTime ?? "-",
                   style: AppTextStyle.labelSmall_10,
                 ),
               ],

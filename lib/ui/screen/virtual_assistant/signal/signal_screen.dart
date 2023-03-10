@@ -1,5 +1,6 @@
 import 'package:dtnd/=models=/response/stock_model.dart';
 import 'package:dtnd/=models=/response/top_signal_detail_model.dart';
+import 'package:dtnd/=models=/response/top_signal_history_model.dart';
 import 'package:dtnd/=models=/response/top_signal_stock_model.dart';
 import 'package:dtnd/data/i_data_center_service.dart';
 import 'package:dtnd/data/implementations/data_center_service.dart';
@@ -22,6 +23,7 @@ class _SignalScreenState extends State<SignalScreen> {
   final IDataCenterService dataCenterService = DataCenterService();
 
   TopSignalDetailModel? data;
+  List<TopSignalHistoryModel>? listHis;
   @override
   void initState() {
     // TODO: implement initState
@@ -31,6 +33,8 @@ class _SignalScreenState extends State<SignalScreen> {
 
   Future<void> getData() async {
     data = await dataCenterService.getTopSignalDetail(
+        widget.data.cSHARECODE, widget.data.cTYPE!);
+    listHis = await dataCenterService.getTopSignalHistory(
         widget.data.cSHARECODE, widget.data.cTYPE!);
     setState(() {});
   }
@@ -46,6 +50,7 @@ class _SignalScreenState extends State<SignalScreen> {
         children: [
           SignalOverview(
             data: widget.data,
+            detail: data,
           ),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
@@ -59,9 +64,11 @@ class _SignalScreenState extends State<SignalScreen> {
               stockModel: widget.data.stockModel,
             ),
           ),
-          const Padding(
-            padding: EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-            child: SignalTradingHistory(),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+            child: SignalTradingHistory(
+              listHis: listHis,
+            ),
           ),
         ],
       ),

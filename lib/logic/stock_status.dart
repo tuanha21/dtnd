@@ -87,19 +87,52 @@ abstract class StockStatus {
     );
   }
 
-  Widget prefixIconData({double? size, Color? color}){
+  Widget prefixIconData({double? size, Color? color}) {
+    // switch (sstatus) {
+    //   case SStatus.ref:
+    //     return Icon(Icons.arrow_right,
+    //         color: AppColors.semantic_02, size: size);
+    //   case SStatus.up:
+    //     return Icon(Icons.arrow_drop_up,
+    //         color: AppColors.semantic_01, size: size);
+    //   case SStatus.down:
+    //     return Icon(Icons.arrow_drop_down,
+    //         color: AppColors.semantic_03, size: size);
+    //   case SStatus.ceil:
+    //     return Icon(Icons.arrow_drop_up,
+    //         color: AppColors.semantic_05, size: size);
+    //   case SStatus.floor:
+    //     return Icon(Icons.arrow_drop_down,
+    //         color: AppColors.semantic_04, size: size);
+    // }
+
+    String path;
+    Color? _color;
     switch (sstatus) {
       case SStatus.ref:
-        return  Icon(Icons.arrow_right,color: AppColors.semantic_02,size: size);
+        path = AppImages.prefix_ref_icon;
+        break;
       case SStatus.up:
-        return  Icon(Icons.arrow_drop_up,color: AppColors.semantic_01,size: size);
+        path = AppImages.prefix_up_icon2;
+        break;
       case SStatus.down:
-        return  Icon(Icons.arrow_drop_down,color: AppColors.semantic_03,size: size);
+        path = AppImages.prefix_down_icon2;
+        break;
       case SStatus.ceil:
-        return  Icon(Icons.arrow_drop_up,color: AppColors.semantic_05,size: size);
+        path = AppImages.prefix_up_icon2;
+        _color = AppColors.semantic_05;
+        break;
       case SStatus.floor:
-        return  Icon(Icons.arrow_drop_down,color: AppColors.semantic_04,size: size);
+        path = AppImages.prefix_down_icon2;
+        _color = AppColors.semantic_04;
+        break;
     }
+    return Image.asset(
+      path,
+      color: color ?? _color,
+      width: size,
+      height: size,
+    );
   }
 
   Color get color {

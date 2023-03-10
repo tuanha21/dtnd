@@ -60,55 +60,82 @@ class _SignalEffectiveState extends State<SignalEffective> {
           ),
           const SizedBox(height: 12),
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               for (int i = 0; i < _label.length; i++)
-                Column(
-                  children: [
-                    Text(
-                      _label[i],
-                      style: AppTextStyle.labelMedium_12
-                          .copyWith(color: AppColors.neutral_04),
-                    ),
-                    const SizedBox(height: 4),
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 4, horizontal: 10),
-                      decoration: BoxDecoration(
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(8)),
-                        color: _value[i] >= 0
-                            ? AppColors.accent_light_01
-                            : AppColors.accent_light_03,
-                      ),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Icon(
-                              _value[i] >= 0
-                                  ? Icons.arrow_drop_up
-                                  : Icons.arrow_drop_down,
-                              color: _value[i] >= 0
-                                  ? AppColors.semantic_01
-                                  : AppColors.semantic_03,
-                              size: 20),
-                          Text(
-                            "${_value[i].toString()}%",
-                            style: AppTextStyle.labelMedium_12.copyWith(
-                                fontWeight: FontWeight.w600,
-                                color: _value[i] >= 0
-                                    ? AppColors.semantic_01
-                                    : AppColors.semantic_03),
-                          ),
-                        ],
-                      ),
-                    )
-                  ],
+                Expanded(
+                  child: _Figure(
+                    title: _label[i],
+                    value: _value[i],
+                  ),
                 )
             ],
           )
         ],
       ),
+    );
+  }
+}
+
+class _Figure extends StatelessWidget {
+  const _Figure({this.value = 0, this.title});
+  final String? title;
+  final num value;
+  @override
+  Widget build(BuildContext context) {
+    final String path;
+    final Color color;
+    final Color bgColor;
+    switch (value.compareTo(0)) {
+      case 1:
+        path = AppImages.prefix_up_icon2;
+        color = AppColors.semantic_01;
+        bgColor = AppColors.accent_light_01;
+        break;
+      case -1:
+        path = AppImages.prefix_down_icon2;
+        color = AppColors.semantic_03;
+        bgColor = AppColors.accent_light_03;
+        break;
+      default:
+        path = AppImages.prefix_ref_icon;
+        color = AppColors.semantic_02;
+        bgColor = AppColors.accent_light_02;
+        break;
+    }
+    final Widget icon = Image.asset(
+      path,
+    );
+    return Column(
+      children: [
+        Text(
+          title ?? "-",
+          style:
+              AppTextStyle.labelMedium_12.copyWith(color: AppColors.neutral_04),
+        ),
+        const SizedBox(height: 4),
+        Container(
+          padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 10),
+          decoration: BoxDecoration(
+            borderRadius: const BorderRadius.all(Radius.circular(8)),
+            color: bgColor,
+          ),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              SizedBox.square(
+                dimension: 10,
+                child: icon,
+              ),
+              const SizedBox(width: 3),
+              Text(
+                "${value.toString()}%",
+                style: AppTextStyle.labelMedium_12
+                    .copyWith(fontWeight: FontWeight.w600, color: color),
+              ),
+            ],
+          ),
+        )
+      ],
     );
   }
 }

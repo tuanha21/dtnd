@@ -62,8 +62,10 @@ class AppImages {
       "assets/svg/qa_virtual_assistant.svg";
 
   static const String prefix_up_icon = "assets/images/prefix_up_icon.png";
+  static const String prefix_up_icon2 = "assets/images/prefix_up_icon2.png";
   static const String prefix_ref_icon = "assets/images/prefix_ref_icon.png";
   static const String prefix_down_icon = "assets/images/prefix_down_icon.png";
+  static const String prefix_down_icon2 = "assets/images/prefix_down_icon2.png";
   static const String wallet_icon = "assets/svg/wallet.svg";
   static const String wallet_search = "assets/svg/wallet_search.svg";
 

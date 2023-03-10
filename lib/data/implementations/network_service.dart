@@ -14,6 +14,7 @@ import 'package:dtnd/=models=/response/index_detail.dart';
 import 'package:dtnd/=models=/response/index_chart_data.dart';
 import 'package:dtnd/=models=/index.dart';
 import 'package:dtnd/=models=/response/top_signal_detail_model.dart';
+import 'package:dtnd/=models=/response/top_signal_history_model.dart';
 import 'package:dtnd/=models=/response/top_signal_stock_model.dart';
 import 'package:dtnd/=models=/response/introduct_company.dart';
 import 'package:dtnd/=models=/response/liquidity_model.dart';
@@ -654,6 +655,30 @@ class NetworkService implements INetworkService {
       final List<dynamic> responseBody = decode(response.bodyBytes)["data"];
       TopSignalDetailModel data =
           TopSignalDetailModel.fromJson(responseBody.first);
+      return data;
+    } catch (e) {
+      logger.e(e);
+      rethrow;
+    }
+  }
+
+  @override
+  Future<List<TopSignalHistoryModel>?> getTopSignalHistory(
+      Map<String, String> body) async {
+    try {
+      final http.Response response =
+          await client.get(url_info_sbsi("proxy", body));
+      logger.v(response.body);
+      final List<dynamic> responseBody = decode(response.bodyBytes)["data"];
+      List<TopSignalHistoryModel> data = [];
+      for (var element in responseBody) {
+        try {
+          data.add(TopSignalHistoryModel.fromJson(element));
+        } catch (e) {
+          logger.e(e);
+          continue;
+        }
+      }
       return data;
     } catch (e) {
       logger.e(e);

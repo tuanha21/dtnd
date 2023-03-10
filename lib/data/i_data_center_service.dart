@@ -6,6 +6,7 @@ import 'package:dtnd/=models=/response/deep_model.dart';
 import 'package:dtnd/=models=/response/inday_matched_order.dart';
 import 'package:dtnd/=models=/response/index_model.dart';
 import 'package:dtnd/=models=/response/top_signal_detail_model.dart';
+import 'package:dtnd/=models=/response/top_signal_history_model.dart';
 import 'package:dtnd/=models=/response/top_signal_stock_model.dart';
 import 'package:dtnd/=models=/response/liquidity_model.dart';
 import 'package:dtnd/=models=/response/news_detail.dart';
@@ -71,6 +72,10 @@ abstract class IDataCenterService {
 
   Future<TopSignalDetailModel?> getTopSignalDetail(
       String stockCode, String type);
+
+  Future<List<TopSignalHistoryModel>?> getTopSignalHistory(
+      String stockCode, String type,
+      {int day});
 
   List<Stock> searchStocksBySym(String sym, {int? maxSuggestions});
 

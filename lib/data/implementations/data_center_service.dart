@@ -6,6 +6,7 @@ import 'package:dtnd/=models=/response/inday_matched_order.dart';
 import 'package:dtnd/=models=/response/index_detail.dart';
 import 'package:dtnd/=models=/response/index_model.dart';
 import 'package:dtnd/=models=/response/top_signal_detail_model.dart';
+import 'package:dtnd/=models=/response/top_signal_history_model.dart';
 import 'package:dtnd/=models=/response/top_signal_stock_model.dart';
 import 'package:dtnd/=models=/response/introduct_company.dart';
 import 'package:dtnd/=models=/response/liquidity_model.dart';
@@ -492,6 +493,17 @@ class DataCenterService
       "params": "$stockCode,$type",
     };
     return networkService.getTopSignalDetail(body);
+  }
+
+  @override
+  Future<List<TopSignalHistoryModel>?> getTopSignalHistory(
+      String stockCode, String type,
+      {int day = 60}) async {
+    final Map<String, String> body = {
+      "cmd": "signal_his",
+      "params": "$stockCode,$type,$day",
+    };
+    return networkService.getTopSignalHistory(body);
   }
 
   @override

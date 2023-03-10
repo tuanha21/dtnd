@@ -1,7 +1,6 @@
 import 'dart:ui';
 
 import 'package:dtnd/=models=/response/top_signal_stock_model.dart';
-import 'package:dtnd/=models=/response/stock_model.dart';
 import 'package:dtnd/config/service/app_services.dart';
 import 'package:dtnd/data/implementations/data_center_service.dart';
 import 'package:dtnd/generated/l10n.dart';
@@ -10,7 +9,6 @@ import 'package:dtnd/ui/screen/virtual_assistant/signal/signal_screen.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:dtnd/ui/theme/app_textstyle.dart';
-import 'package:dtnd/utilities/num_utils.dart';
 import 'package:dtnd/utilities/time_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -126,6 +124,28 @@ class HomeTopSignalItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final stockData = data.stockModel.stockData;
     final themeMode = AppService.instance.themeMode.value;
+    final Color color;
+    final Color bgColor;
+    final String path;
+    switch ((data.cPC ?? 0).compareTo(0)) {
+      case 1:
+        color = AppColors.semantic_01;
+        bgColor = AppColors.accent_light_01;
+        path = AppImages.prefix_up_icon;
+        break;
+      case -1:
+        color = AppColors.semantic_03;
+        bgColor = AppColors.accent_light_03;
+        path = AppImages.prefix_down_icon;
+        break;
+      default:
+        color = AppColors.semantic_02;
+        bgColor = AppColors.accent_light_02;
+        path = AppImages.prefix_ref_icon;
+        break;
+    }
+    final Widget icon = Image.asset(path);
+
     return GestureDetector(
       onTap: () => Navigator.of(context).push(MaterialPageRoute(
         builder: (context) => SignalScreen(data: data),
@@ -135,9 +155,9 @@ class HomeTopSignalItem extends StatelessWidget {
         child: Container(
           alignment: Alignment.center,
           padding: const EdgeInsets.all(12.0),
-          decoration: const BoxDecoration(
-            borderRadius: BorderRadius.all(Radius.circular(12)),
-            color: AppColors.accent_light_01,
+          decoration: BoxDecoration(
+            borderRadius: const BorderRadius.all(Radius.circular(12)),
+            color: bgColor,
           ),
           child: Column(
             children: [
@@ -147,7 +167,7 @@ class HomeTopSignalItem extends StatelessWidget {
                   Text(
                     "${index + 1}",
                     style: AppTextStyle.headlineSmall_24.copyWith(
-                      color: AppColors.semantic_01,
+                      color: color,
                     ),
                   ),
                   const SizedBox(width: 8),
@@ -170,19 +190,18 @@ class HomeTopSignalItem extends StatelessWidget {
                               return Text.rich(
                                 TextSpan(children: [
                                   WidgetSpan(
-                                      child: Image.asset(
-                                    AppImages.prefix_up_icon,
-                                    color: AppColors.semantic_01,
-                                    width: 16,
-                                    height: 16,
-                                  )),
+                                    child: SizedBox.square(
+                                      dimension: 16,
+                                      child: icon,
+                                    ),
+                                  ),
                                   TextSpan(
                                     text: "  ${lastPrice.value}",
                                   )
                                 ]),
                                 style: AppTextStyle.labelMedium_12.copyWith(
                                   fontWeight: FontWeight.w600,
-                                  color: AppColors.semantic_01,
+                                  color: color,
                                 ),
                               );
                             },
@@ -221,7 +240,7 @@ class HomeTopSignalItem extends StatelessWidget {
                       minWidth: MediaQuery.of(context).size.width / 5,
                       maxWidth: MediaQuery.of(context).size.width / 4),
                   child: HomeSimpleLineChart(
-                    kColor: AppColors.semantic_01,
+                    kColor: color,
                     data: data.stockModel,
                     getData: () => data.stockModel.getTradingHistory(
                         DataCenterService(),

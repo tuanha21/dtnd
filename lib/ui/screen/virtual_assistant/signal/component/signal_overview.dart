@@ -1,4 +1,5 @@
 import 'package:dtnd/=models=/response/stock_model.dart';
+import 'package:dtnd/=models=/response/top_signal_detail_model.dart';
 import 'package:dtnd/=models=/response/top_signal_stock_model.dart';
 import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
@@ -9,8 +10,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class SignalOverview extends StatefulWidget {
-  const SignalOverview({super.key, required this.data});
+  const SignalOverview({super.key, required this.data, this.detail});
   final TopSignalStockModel data;
+  final TopSignalDetailModel? detail;
   @override
   State<SignalOverview> createState() => _SignalOverviewState();
 }
@@ -94,8 +96,8 @@ class _SignalOverviewState extends State<SignalOverview> {
                   width: 1,
                 ),
                 _Column(
-                  "Tỷ lệ GN",
-                  "50%",
+                  "Rủi ro",
+                  "${widget.detail?.rUIRO ?? "-"}%",
                   textStyle: textTheme.titleSmall,
                 ),
               ],
