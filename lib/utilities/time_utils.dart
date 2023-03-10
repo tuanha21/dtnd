@@ -101,6 +101,11 @@ class TimeUtilities {
       return 1;
     }
   }
+
+  static String parseDateToString(DateTime dateTime) {
+    String date = commonTimeFormat.format(dateTime);
+    return date;
+  }
 }
 
 // abstract class Time {

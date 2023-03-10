@@ -1,4 +1,7 @@
+import 'package:dtnd/ui/theme/app_image.dart';
+import 'package:dtnd/utilities/time_utils.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:syncfusion_flutter_treemap/treemap.dart';
 
 import '../../../../../=models=/response/indContrib.dart';
@@ -24,12 +27,43 @@ class _FiChartValueState extends State<FiChartValue> {
         const SizedBox(height: 24),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: Text(
-            'Top mã nước ngoài mua ròng',
-            style: Theme.of(context)
-                .textTheme
-                .labelMedium
-                ?.copyWith(fontWeight: FontWeight.w700, fontSize: 14),
+          child: Row(
+            children: [
+              Text(
+                'Top mã nước ngoài mua ròng',
+                style: Theme.of(context)
+                    .textTheme
+                    .labelMedium
+                    ?.copyWith(fontWeight: FontWeight.w700, fontSize: 14),
+              ),
+              const SizedBox(
+                width: 4,
+              ),
+              GestureDetector(
+                onTap: () => showDialog<String>(
+                  context: context,
+                  builder: (BuildContext context) => Dialog(
+                    child: Container(
+                      padding: const EdgeInsets.all(16),
+                      decoration: BoxDecoration(
+                          color: AppColors.light_bg,
+                          borderRadius: BorderRadius.circular(8)),
+                      width: MediaQuery.of(context).size.width,
+                      child: Text(
+                          'Màu xanh trên biểu đồ thể hiện khối ngoại mua ròng. Màu đỏ thể hiện khối ngoại bán ròng. Dữ liệu bao gồm cả Cổ phiếu và ETF. Dữ liệu ngày ${TimeUtilities.parseDateToString(DateTime.now())}',
+                          style: Theme.of(context)
+                              .textTheme
+                              .labelMedium
+                              ?.copyWith(
+                                  fontWeight: FontWeight.w400, fontSize: 14)),
+                    ),
+                  ),
+                ),
+                child: SvgPicture.asset(
+                  AppImages.infoCircle,
+                ),
+              )
+            ],
           ),
         ),
         const SizedBox(height: 20),

@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:dtnd/=models=/response/deep_model.dart';
 import 'package:dtnd/=models=/response/stock_model.dart';
@@ -9,16 +7,11 @@ import 'package:dtnd/data/i_user_service.dart';
 import 'package:dtnd/data/implementations/data_center_service.dart';
 import 'package:dtnd/data/implementations/local_storage_service.dart';
 import 'package:dtnd/data/implementations/user_service.dart';
-import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/screen/market/market_controller.dart';
-import 'package:dtnd/ui/screen/market/widget/components/deep_market_chart.dart';
 import 'package:dtnd/ui/screen/market/widget/components/index_chart.dart';
-import 'package:dtnd/ui/screen/market/widget/components/user_catalog_widget.dart';
 import 'package:dtnd/ui/screen/market/widget/components/derivative_widget.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
-import 'package:dtnd/ui/widget/section/section_with_title.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 import '../components/heap_map_kl.dart';
 

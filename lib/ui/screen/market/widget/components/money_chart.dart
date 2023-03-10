@@ -1,6 +1,8 @@
 import 'package:dtnd/=models=/response/index_board.dart';
 import 'package:dtnd/utilities/num_utils.dart';
+import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 import '../../../../../generated/l10n.dart';
@@ -25,11 +27,44 @@ class _MoneyChartState extends State<MoneyChart> {
         const SizedBox(height: 24),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: Text('Dòng tiền',
-              style: Theme.of(context)
-                  .textTheme
-                  .titleMedium
-                  ?.copyWith(fontWeight: FontWeight.w700)),
+          child: Row(
+            children: [
+              Text(
+                'Dòng tiền',
+                style: Theme.of(context)
+                    .textTheme
+                    .labelMedium
+                    ?.copyWith(fontWeight: FontWeight.w700, fontSize: 14),
+              ),
+              const SizedBox(
+                width: 4,
+              ),
+              GestureDetector(
+                onTap: () => showDialog<String>(
+                  context: context,
+                  builder: (BuildContext context) => Dialog(
+                    child: Container(
+                      padding: const EdgeInsets.all(16),
+                      decoration: BoxDecoration(
+                          color: AppColors.light_bg,
+                          borderRadius: BorderRadius.circular(8)),
+                      width: MediaQuery.of(context).size.width,
+                      child: Text(
+                          'Biểu đồ thể hiện giá trị giao dịch mua chủ động ròng trong phiên.',
+                          style: Theme.of(context)
+                              .textTheme
+                              .labelMedium
+                              ?.copyWith(
+                                  fontWeight: FontWeight.w400, fontSize: 14)),
+                    ),
+                  ),
+                ),
+                child: SvgPicture.asset(
+                  AppImages.infoCircle,
+                ),
+              )
+            ],
+          ),
         ),
         SizedBox(
           height: widget.height,
@@ -76,11 +111,44 @@ class _MoneyChartState extends State<MoneyChart> {
         const SizedBox(height: 24),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: Text('Độ rộng thị trường',
-              style: Theme.of(context)
-                  .textTheme
-                  .titleMedium
-                  ?.copyWith(fontWeight: FontWeight.w700)),
+          child: Row(
+            children: [
+              Text(
+                'Độ rộng thị trường',
+                style: Theme.of(context)
+                    .textTheme
+                    .labelMedium
+                    ?.copyWith(fontWeight: FontWeight.w700, fontSize: 14),
+              ),
+              const SizedBox(
+                width: 4,
+              ),
+              GestureDetector(
+                onTap: () => showDialog<String>(
+                  context: context,
+                  builder: (BuildContext context) => Dialog(
+                    child: Container(
+                      padding: const EdgeInsets.all(16),
+                      decoration: BoxDecoration(
+                          color: AppColors.light_bg,
+                          borderRadius: BorderRadius.circular(8)),
+                      width: MediaQuery.of(context).size.width,
+                      child: Text(
+                          'Biểu đồ thể hiện tỷ trọng các mã tăng giá, giảm giá và không đổi theo thời gian trong phiên.',
+                          style: Theme.of(context)
+                              .textTheme
+                              .labelMedium
+                              ?.copyWith(
+                                  fontWeight: FontWeight.w400, fontSize: 14)),
+                    ),
+                  ),
+                ),
+                child: SvgPicture.asset(
+                  AppImages.infoCircle,
+                ),
+              )
+            ],
+          ),
         ),
         const SizedBox(height: 20),
         SizedBox(
