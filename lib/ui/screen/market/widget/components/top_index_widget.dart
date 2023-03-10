@@ -1,4 +1,7 @@
+import 'package:dtnd/ui/theme/app_image.dart';
+import 'package:dtnd/utilities/time_utils.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import '../../../../../=models=/response/indContrib.dart';
 import '../../../../../generated/l10n.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
@@ -24,11 +27,44 @@ class _TopIndexWidgetChartState extends State<TopIndexWidgetChart> {
         const SizedBox(height: 32),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: Text('Top ngành ảnh hưởng đến INDEX',
-              style: Theme.of(context)
-                  .textTheme
-                  .titleMedium
-                  ?.copyWith(fontWeight: FontWeight.w700)),
+          child: Row(
+            children: [
+              Text(
+                'Top ngành ảnh hưởng đến INDEX',
+                style: Theme.of(context)
+                    .textTheme
+                    .labelMedium
+                    ?.copyWith(fontWeight: FontWeight.w700, fontSize: 14),
+              ),
+              const SizedBox(
+                width: 4,
+              ),
+              GestureDetector(
+                onTap: () => showDialog<String>(
+                  context: context,
+                  builder: (BuildContext context) => Dialog(
+                    child: Container(
+                      padding: const EdgeInsets.all(16),
+                      decoration: BoxDecoration(
+                          color: AppColors.light_bg,
+                          borderRadius: BorderRadius.circular(8)),
+                      width: MediaQuery.of(context).size.width,
+                      child: Text(
+                          'Biểu đồ thể hiện đóng góp của ngành và INDEX. Dữ liệu ngày ${TimeUtilities.parseDateToString(DateTime.now())}',
+                          style: Theme.of(context)
+                              .textTheme
+                              .labelMedium
+                              ?.copyWith(
+                                  fontWeight: FontWeight.w400, fontSize: 14)),
+                    ),
+                  ),
+                ),
+                child: SvgPicture.asset(
+                  AppImages.infoCircle,
+                ),
+              )
+            ],
+          ),
         ),
         FutureBuilder<IndContrib>(
             future: widget.topIndex,

@@ -172,5 +172,5 @@ class AppImages {
   static const String arrowUp1 = "assets/svg/arrow-up_1.svg";
   static const String arrowDown = "assets/svg/arrow-down.svg";
 
-
+  static const String infoCircle = "assets/svg/info-circle.svg";
 }

@@ -1,5 +1,6 @@
 import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:dtnd/utilities/num_utils.dart';
+import 'package:dtnd/utilities/time_utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -257,12 +258,44 @@ class _MarketAnalysisTabState extends State<MarketAnalysisTab>
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child:
               Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-            Text(
-              'Top mã tự doanh mua ròng',
-              style: Theme.of(context)
-                  .textTheme
-                  .labelMedium
-                  ?.copyWith(fontWeight: FontWeight.w700, fontSize: 14),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  'Top mã tự doanh mua ròng',
+                  style: Theme.of(context)
+                      .textTheme
+                      .labelMedium
+                      ?.copyWith(fontWeight: FontWeight.w700, fontSize: 14),
+                ),
+                const SizedBox(
+                  width: 4,
+                ),
+                GestureDetector(
+                  onTap: () => showDialog<String>(
+                    context: context,
+                    builder: (BuildContext context) => Dialog(
+                      child: Container(
+                        padding: const EdgeInsets.all(16),
+                        decoration: BoxDecoration(
+                            color: AppColors.light_bg,
+                            borderRadius: BorderRadius.circular(8)),
+                        width: MediaQuery.of(context).size.width,
+                        child: Text(
+                            'Màu xanh trên biểu đồ thể hiện khối tự doanh mua ròng. Màu đỏ thể hiện khối tự doanh bán ròng. Dữ liệu ngày ${TimeUtilities.parseDateToString(DateTime.now())}',
+                            style: Theme.of(context)
+                                .textTheme
+                                .labelMedium
+                                ?.copyWith(
+                                    fontWeight: FontWeight.w400, fontSize: 14)),
+                      ),
+                    ),
+                  ),
+                  child: SvgPicture.asset(
+                    AppImages.infoCircle,
+                  ),
+                )
+              ],
             ),
             GestureDetector(
               onTap: () async {
@@ -378,7 +411,7 @@ class _BottomSheetState extends State<BottomSheet> {
                       ?.copyWith(fontWeight: FontWeight.w700, fontSize: 14),
                 ),
               ),
-              const SizedBox(height: 16),
+              const SizedBox(height: 10),
               Column(
                 children: Index.values
                     .map((index) => CheckBoxMarket(

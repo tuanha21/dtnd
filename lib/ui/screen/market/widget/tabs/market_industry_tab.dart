@@ -1,8 +1,5 @@
-import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/screen/market/widget/components/heap_map_widget.dart';
 import 'package:dtnd/ui/screen/market/widget/components/industry_info_widget.dart';
-import 'package:dtnd/ui/theme/app_image.dart';
-import 'package:dtnd/ui/widget/icon/active_button.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../../=models=/index.dart';
@@ -15,7 +12,6 @@ import '../../../../../data/implementations/data_center_service.dart';
 import '../components/liquidity_chart.dart';
 import '../components/money_chart.dart';
 import '../components/top_index_widget.dart';
-import '../components/top_influence_chart.dart';
 
 class MarketIndustryTab extends StatefulWidget {
   const MarketIndustryTab({super.key});
