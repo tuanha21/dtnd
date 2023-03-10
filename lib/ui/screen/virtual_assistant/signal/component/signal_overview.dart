@@ -62,7 +62,21 @@ class _SignalOverviewState extends State<SignalOverview> {
                     color: AppColors.neutral_03, fontWeight: FontWeight.w500),
               ),
               const SizedBox(width: 4),
-              Text(TimeUtilities.commonTimeFormat.format(DateTime.now()),
+              Text(TimeUtilities.commonTimeFormat.format(widget.data.cBUYDATE),
+                  style: AppTextStyle.labelSmall_10),
+            ],
+          ),
+          const SizedBox(height: 6),
+          Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                S.of(context).buy_price,
+                style: AppTextStyle.labelSmall_10.copyWith(
+                    color: AppColors.neutral_03, fontWeight: FontWeight.w500),
+              ),
+              const SizedBox(width: 4),
+              Text(widget.data.cBUYPRICE.toString(),
                   style: AppTextStyle.labelSmall_10),
             ],
           ),

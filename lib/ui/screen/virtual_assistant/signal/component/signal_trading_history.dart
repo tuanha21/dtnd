@@ -22,12 +22,17 @@ class SignalTradingHistory extends StatelessWidget {
             )
           ],
         ),
+        const SizedBox(height: 12),
         if (listHis?.isEmpty ?? true)
-          const EmptyListWidget(
-            title: "BOT chưa có lịch sử giao dịch",
+          const Padding(
+            padding: EdgeInsets.symmetric(vertical: 16),
+            child: EmptyListWidget(
+              title: "BOT chưa có lịch sử giao dịch",
+            ),
           )
         else
           ListView.builder(
+            physics: const NeverScrollableScrollPhysics(),
             shrinkWrap: true,
             itemCount: listHis!.length,
             itemBuilder: (context, index) {

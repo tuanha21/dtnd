@@ -7,14 +7,16 @@ import 'package:flutter/material.dart';
 const List<String> _label = ["1W", "2W", "1M", "3M"];
 
 class SignalEffective extends StatefulWidget {
-  const SignalEffective({super.key, this.data});
+  const SignalEffective({super.key, this.data, required this.onChanged});
   final TopSignalDetailModel? data;
+  final ValueChanged<String?>? onChanged;
   @override
   State<SignalEffective> createState() => _SignalEffectiveState();
 }
 
 class _SignalEffectiveState extends State<SignalEffective> {
   late List<num> _value;
+  String? title;
   @override
   void initState() {
     super.initState();
@@ -26,6 +28,16 @@ class _SignalEffectiveState extends State<SignalEffective> {
       _value = List.generate(4, (index) => 0);
     } else {
       _value = widget.data!.list;
+    }
+    title = _label.last;
+  }
+
+  void onChanged(String? period) {
+    if (period != title) {
+      setState(() {
+        title = period;
+      });
+      widget.onChanged?.call(title);
     }
   }
 
@@ -64,8 +76,10 @@ class _SignalEffectiveState extends State<SignalEffective> {
               for (int i = 0; i < _label.length; i++)
                 Expanded(
                   child: _Figure(
+                    selected: title == _label[i],
                     title: _label[i],
                     value: _value[i],
+                    onChanged: onChanged,
                   ),
                 )
             ],
@@ -77,9 +91,12 @@ class _SignalEffectiveState extends State<SignalEffective> {
 }
 
 class _Figure extends StatelessWidget {
-  const _Figure({this.value = 0, this.title});
+  const _Figure(
+      {this.value = 0, this.title, this.onChanged, required this.selected});
+  final bool selected;
   final String? title;
   final num value;
+  final ValueChanged<String?>? onChanged;
   @override
   Widget build(BuildContext context) {
     final String path;
@@ -113,26 +130,39 @@ class _Figure extends StatelessWidget {
               AppTextStyle.labelMedium_12.copyWith(color: AppColors.neutral_04),
         ),
         const SizedBox(height: 4),
-        Container(
-          padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 10),
-          decoration: BoxDecoration(
+        Material(
+          borderRadius: const BorderRadius.all(Radius.circular(8)),
+          child: InkWell(
+            onTap: () => onChanged?.call(title),
             borderRadius: const BorderRadius.all(Radius.circular(8)),
-            color: bgColor,
-          ),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              SizedBox.square(
-                dimension: 10,
-                child: icon,
+            child: Ink(
+              padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 10),
+              decoration: BoxDecoration(
+                borderRadius: const BorderRadius.all(Radius.circular(8)),
+                color: bgColor,
+                border:
+                    selected ? Border.all(color: AppColors.neutral_04) : null,
               ),
-              const SizedBox(width: 3),
-              Text(
-                "${value.toString()}%",
-                style: AppTextStyle.labelMedium_12
-                    .copyWith(fontWeight: FontWeight.w600, color: color),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  SizedBox.square(
+                    dimension: 10,
+                    child: icon,
+                  ),
+                  const SizedBox(width: 3),
+                  Flexible(
+                    child: Text(
+                      "${value.toString()}%",
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: AppTextStyle.labelMedium_12
+                          .copyWith(fontWeight: FontWeight.w600, color: color),
+                    ),
+                  ),
+                ],
               ),
-            ],
+            ),
           ),
         )
       ],

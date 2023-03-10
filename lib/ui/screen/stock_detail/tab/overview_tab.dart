@@ -160,14 +160,14 @@ class _BasicIndexState extends State<BasicIndex> {
   Widget indexPrice() {
     var data = widget.history;
     var max =
-        data.h?.reduce(math.max) ?? widget.stockModel.stockData.c.value! ?? 1;
+        data.h?.reduce(math.max) ?? widget.stockModel.stockData.c.value ?? 1;
     var min =
-        data.l?.reduce(math.min) ?? widget.stockModel.stockData.f.value! ?? 0;
+        data.l?.reduce(math.min) ?? widget.stockModel.stockData.f.value ?? 0;
 
-    print('max: ' + max.toString());
-    print('min: ' + min.toString());
-    print(
-        'lastPrice: ' + widget.stockModel.stockData.lastPrice.value.toString());
+    // print('max: ' + max.toString());
+    // print('min: ' + min.toString());
+    // print(
+    //     'lastPrice: ' + widget.stockModel.stockData.lastPrice.value.toString());
 
     return Column(
       children: [
@@ -191,8 +191,8 @@ class _BasicIndexState extends State<BasicIndex> {
         ),
         const SizedBox(height: 5),
         PercentPrice(
-          min: min!,
-          max: max!,
+          min: min,
+          max: max,
           lastPrice: widget.stockModel.stockData.lastPrice.value!,
         )
       ],

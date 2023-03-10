@@ -16,7 +16,6 @@ class DerivativeComponent extends StatefulWidget {
 class _DerivativeComponentState extends State<DerivativeComponent> {
   @override
   Widget build(BuildContext context) {
-    print(widget.model.sym ?? "");
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
       child: Row(
@@ -35,11 +34,10 @@ class _DerivativeComponentState extends State<DerivativeComponent> {
                 alignment: Alignment.centerRight,
                 child: Text(
                   ((widget.model.lastPrice == 0
-                                  ? widget.model.r
-                                  : widget.model.lastPrice) ??
-                              0)
-                          .toString() ??
-                      "",
+                              ? widget.model.r
+                              : widget.model.lastPrice) ??
+                          0)
+                      .toString(),
                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
                       fontWeight: FontWeight.w600,
                       color: widget.model

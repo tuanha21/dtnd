@@ -171,65 +171,77 @@ class HomeTopSignalItem extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(width: 8),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            data.stockModel.stock.stockCode,
-                            style: Theme.of(context)
-                                .textTheme
-                                .titleSmall!
-                                .copyWith(fontWeight: FontWeight.w600),
-                          ),
-                          const SizedBox(width: 4),
-                          ObxValue<Rx<num?>>(
-                            (lastPrice) {
-                              return Text.rich(
-                                TextSpan(children: [
-                                  WidgetSpan(
-                                    child: SizedBox.square(
-                                      dimension: 16,
-                                      child: icon,
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            Text(
+                              data.stockModel.stock.stockCode,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleSmall!
+                                  .copyWith(fontWeight: FontWeight.w600),
+                            ),
+                            const SizedBox(width: 4),
+                            ObxValue<Rx<num?>>(
+                              (lastPrice) {
+                                return Text.rich(
+                                  TextSpan(children: [
+                                    WidgetSpan(
+                                      child: SizedBox.square(
+                                        dimension: 16,
+                                        child: icon,
+                                      ),
                                     ),
+                                    TextSpan(
+                                      text: "  ${lastPrice.value}",
+                                    )
+                                  ]),
+                                  style: AppTextStyle.labelMedium_12.copyWith(
+                                    fontWeight: FontWeight.w600,
+                                    color: color,
                                   ),
-                                  TextSpan(
-                                    text: "  ${lastPrice.value}",
-                                  )
-                                ]),
-                                style: AppTextStyle.labelMedium_12.copyWith(
-                                  fontWeight: FontWeight.w600,
-                                  color: color,
-                                ),
-                              );
-                            },
-                            stockData.lastPrice,
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 3),
-                      // ObxValue<Rx<num?>>(
-                      //   (lot) {
-                      //     return Text(
-                      //       NumUtils.formatInteger10(lot.value, "-"),
-                      //       style: AppTextStyle.labelMedium_12.copyWith(
-                      //         fontWeight: FontWeight.w500,
-                      //         color: AppColors.neutral_03,
-                      //       ),
-                      //     );
-                      //   },
-                      //   stockData.lot,
-                      // ),
-                      Text(
-                        "T+${data.t}",
-                        style: AppTextStyle.labelMedium_12.copyWith(
-                          fontWeight: FontWeight.w500,
-                          color: AppColors.neutral_03,
+                                );
+                              },
+                              stockData.lastPrice,
+                            ),
+                          ],
                         ),
-                      ),
-                    ],
+                        const SizedBox(height: 3),
+                        // ObxValue<Rx<num?>>(
+                        //   (lot) {
+                        //     return Text(
+                        //       NumUtils.formatInteger10(lot.value, "-"),
+                        //       style: AppTextStyle.labelMedium_12.copyWith(
+                        //         fontWeight: FontWeight.w500,
+                        //         color: AppColors.neutral_03,
+                        //       ),
+                        //     );
+                        //   },
+                        //   stockData.lot,
+                        // ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              "T+${data.t}",
+                              style: AppTextStyle.labelMedium_12.copyWith(
+                                fontWeight: FontWeight.w500,
+                                color: AppColors.neutral_03,
+                              ),
+                            ),
+                            Text(
+                              "${data.cPC}%",
+                              style: AppTextStyle.labelMedium_12.copyWith(
+                                color: color,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),

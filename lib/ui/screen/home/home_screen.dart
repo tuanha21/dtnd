@@ -20,7 +20,9 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomeScreenState extends State<HomeScreen>
+// with AutomaticKeepAliveClientMixin
+{
   final IUserService userService = UserService();
   final HomeController homeController = HomeController();
 
@@ -32,6 +34,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // super.build(context);
     return CustomScrollView(
       slivers: [
         SliverPersistentHeader(
@@ -107,4 +110,8 @@ class _HomeScreenState extends State<HomeScreen> {
       ],
     );
   }
+
+  // @override
+  // // TODO: implement wantKeepAlive
+  // bool get wantKeepAlive => true;
 }
