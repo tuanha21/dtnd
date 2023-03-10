@@ -9,6 +9,7 @@ import 'package:dtnd/ui/screen/virtual_assistant/signal/signal_screen.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:dtnd/ui/theme/app_textstyle.dart';
+import 'package:dtnd/ui/widget/empty_list_widget.dart';
 import 'package:dtnd/utilities/time_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -41,11 +42,16 @@ class _HomeTopSignalStocksState extends State<HomeTopSignalStocks> {
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: Row(
               children: [
-                SizedBox.square(
-                    dimension: 36,
-                    child: Image.asset(
-                      AppImages.home_icon_light,
-                    )),
+                GestureDetector(
+                  onTap: () {
+                    homeController.getTopSignal();
+                  },
+                  child: SizedBox.square(
+                      dimension: 36,
+                      child: Image.asset(
+                        AppImages.home_icon_light,
+                      )),
+                ),
                 const SizedBox(width: 16),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -86,19 +92,27 @@ class _HomeTopSignalStocksState extends State<HomeTopSignalStocks> {
                 },
               ),
               child: ObxValue<Rx<bool>>((initialized) {
-                if (!initialized.value) {
+                if (homeController.loadingTopSignalStocks.value) {
                   return Center(
                     child: Text(S.of(context).loading),
+                  );
+                }
+                if (homeController.topSignalStocks.value?.isEmpty ?? true) {
+                  return const Center(
+                    child: FittedBox(
+                      fit: BoxFit.fitHeight,
+                      child: EmptyListWidget(),
+                    ),
                   );
                 }
                 return ListView.separated(
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   scrollDirection: Axis.horizontal,
                   physics: const AlwaysScrollableScrollPhysics(),
-                  itemCount: homeController.topSignalStocks.length,
+                  itemCount: homeController.topSignalStocks.value!.length,
                   itemBuilder: (context, index) => HomeTopSignalItem(
                     index: index,
-                    data: homeController.topSignalStocks[index],
+                    data: homeController.topSignalStocks.value![index],
                   ),
                   separatorBuilder: (BuildContext context, int index) =>
                       const SizedBox(

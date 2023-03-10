@@ -11,9 +11,7 @@ import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:dtnd/ui/theme/app_textstyle.dart';
 import 'package:dtnd/ui/widget/icon/stock_icon.dart';
-import 'package:dtnd/ui/widget/input/search_stock.dart';
 import 'package:dtnd/ui/widget/my_appbar.dart';
-import 'package:dtnd/utilities/logger.dart';
 import 'package:dtnd/utilities/num_utils.dart';
 import 'package:flutter/material.dart';
 

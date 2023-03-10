@@ -271,6 +271,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "matched_vol": MessageLookupByLibrary.simpleMessage("Matched vol"),
         "matching": MessageLookupByLibrary.simpleMessage("Matching"),
         "maximum": MessageLookupByLibrary.simpleMessage("Maximum"),
+        "million": MessageLookupByLibrary.simpleMessage("Million"),
+        "million_lower": MessageLookupByLibrary.simpleMessage("million"),
         "million_short": MessageLookupByLibrary.simpleMessage("M"),
         "minimum": MessageLookupByLibrary.simpleMessage("Minimum"),
         "minimum_ee":

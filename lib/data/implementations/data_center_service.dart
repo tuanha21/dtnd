@@ -522,6 +522,13 @@ class DataCenterService
         }
       }
     }
+    for (var i = 0; i < searchedStocks.length; i++) {
+      if (searchedStocks[i].stockCode == _sym ||
+          searchedStocks[i].stockCode.length == 3) {
+        final main = searchedStocks.removeAt(searchedStocks.length - 1);
+        searchedStocks.insert(0, main);
+      }
+    }
     return searchedStocks;
   }
 

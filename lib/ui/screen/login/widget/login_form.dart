@@ -55,6 +55,8 @@ class _LoginFormState extends State<LoginForm> {
   Timer? onUsernameStoppedTyping;
   Timer? onPasswordStoppedTyping;
   bool hasChanged = false;
+  bool showPass = false;
+
   bool typingUsername = false;
   bool typingPassword = false;
   String? userNameInitialValue;
@@ -192,7 +194,7 @@ class _LoginFormState extends State<LoginForm> {
             key: passwordFormKey,
             validator: passwordValidator,
             builder: (passwordState) => TextField(
-              obscureText: true,
+              obscureText: !showPass,
               autocorrect: false,
               focusNode: passwordFocusNode,
               controller: _passController,
@@ -204,6 +206,16 @@ class _LoginFormState extends State<LoginForm> {
                 errorText: passwordHasError
                     ? passwordFormKey.currentState?.errorText
                     : null,
+                suffixIcon: GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      showPass = !showPass;
+                    });
+                  },
+                  child: Icon(showPass
+                      ? Icons.visibility_outlined
+                      : Icons.visibility_off_outlined),
+                ),
               ),
             ),
           ),

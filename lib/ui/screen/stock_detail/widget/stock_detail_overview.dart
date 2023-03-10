@@ -61,7 +61,7 @@ class StockDetailOverview extends StatelessWidget {
                       children: [
                         Row(
                           children: [
-                            stockModel.stockData.prefixIconData(size: 24),
+                            stockModel.stockData.prefixIconData(size: 8),
                             Text(
                               "${stockModel.stockData.ot} (${stockModel.stockData.changePc}%)",
                               style: AppTextStyle.bodySmall_8.copyWith(

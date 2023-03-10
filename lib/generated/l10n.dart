@@ -1310,6 +1310,26 @@ class S {
     );
   }
 
+  /// `Million`
+  String get million {
+    return Intl.message(
+      'Million',
+      name: 'million',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `million`
+  String get million_lower {
+    return Intl.message(
+      'million',
+      name: 'million_lower',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `K`
   String get thousand_short {
     return Intl.message(

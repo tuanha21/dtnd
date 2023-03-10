@@ -49,7 +49,7 @@ class _FiChartValueState extends State<FiChartValue> {
 
                 var _take = data.length > 30 ? 30 : data.length;
                 var _data = data.reversed.take(_take).toList();
-                
+
                 return Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: Container(
@@ -72,7 +72,7 @@ class _FiChartValueState extends State<FiChartValue> {
                                 decoration:
                                     const BoxDecoration(color: Colors.white),
                                 child: Text(
-                                  '${tile.group} : ${NumUtils.formatInteger(tile.weight)} (triệu)',
+                                  '${tile.group} : ${NumUtils.formatInteger(tile.weight)} ${S.of(context).million_lower}',
                                   overflow: TextOverflow.ellipsis,
                                   textAlign: TextAlign.center,
                                 ),

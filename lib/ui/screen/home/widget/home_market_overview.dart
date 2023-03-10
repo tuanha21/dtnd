@@ -144,7 +144,8 @@ class _HomeMarketOverviewState extends State<HomeMarketOverview>
                   // setState(() {});
                 },
                 tabs: <Widget>[
-                  const Text("🔥HOT"),
+                  // const Text("🔥HOT"),
+                  const Text("Phổ biến"),
                   Row(
                     children: [
                       const Text("Top biến động"),

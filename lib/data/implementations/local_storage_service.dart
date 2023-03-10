@@ -137,6 +137,7 @@ class LocalStorageService implements ILocalStorageService {
 
   @override
   Future<void> putSavedCatalog(SavedCatalog savedCatalog) {
+    print("put");
     return _box.put("saved_catalog_${savedCatalog.user}", savedCatalog);
   }
 

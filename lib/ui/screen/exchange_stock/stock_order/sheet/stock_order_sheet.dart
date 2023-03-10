@@ -53,7 +53,7 @@ class _StockOrderSheetState extends State<StockOrderSheet>
 
   final GlobalKey<FormState> orderKey = GlobalKey<FormState>();
 
-  late final Set<OrderType> listOrderTypes;
+  late Set<OrderType> listOrderTypes;
   final TextEditingController priceController = TextEditingController();
   final TextEditingController volumnController =
       TextEditingController(text: "100");
@@ -197,6 +197,8 @@ class _StockOrderSheetState extends State<StockOrderSheet>
     setState(() {
       stockModel = model;
     });
+    listOrderTypes = stockModel!.stock.postTo?.listOrderType ?? {};
+    selectedOrderType = widget.orderData?.orderType ?? listOrderTypes.first;
     select(selectedOrderType);
     getStockInfoCore();
     getStockCashBalance();

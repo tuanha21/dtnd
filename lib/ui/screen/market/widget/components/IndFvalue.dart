@@ -67,7 +67,7 @@ class _IndFvalueState extends State<IndFvalue> {
                                 decoration:
                                     const BoxDecoration(color: Colors.white),
                                 child: Text(
-                                  '${tile.group} : ${NumUtils.formatInteger(tile.weight)}',
+                                  '${tile.group} : ${NumUtils.formatInteger(tile.weight)} ${S.of(context).million_lower}',
                                   overflow: TextOverflow.ellipsis,
                                   textAlign: TextAlign.center,
                                 ),

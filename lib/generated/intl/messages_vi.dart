@@ -270,6 +270,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "matched_vol": MessageLookupByLibrary.simpleMessage("KL khớp"),
         "matching": MessageLookupByLibrary.simpleMessage("Đang khớp"),
         "maximum": MessageLookupByLibrary.simpleMessage("Tối đa"),
+        "million": MessageLookupByLibrary.simpleMessage("Triệu"),
+        "million_lower": MessageLookupByLibrary.simpleMessage("triệu"),
         "million_short": MessageLookupByLibrary.simpleMessage("Tr"),
         "minimum": MessageLookupByLibrary.simpleMessage("Tối thiểu"),
         "minimum_ee": MessageLookupByLibrary.simpleMessage("Sức mua tối thiểu"),

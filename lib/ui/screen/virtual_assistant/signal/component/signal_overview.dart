@@ -43,41 +43,49 @@ class _SignalOverviewState extends State<SignalOverview> {
                   style: AppTextStyle.headlineSmall_24
                       .copyWith(color: stockData.color),
                 ),
-                const SizedBox(width: 10),
-                Text(
-                  "${NumUtils.formatInteger10(stockData.lot.value)} CP",
-                  style: AppTextStyle.labelMedium_12
-                      .copyWith(color: AppColors.neutral_03),
-                ),
+                // const SizedBox(width: 10),
+                // Text(
+                //   "${NumUtils.formatInteger10(stockData.lot.value)} CP",
+                //   style: AppTextStyle.labelMedium_12
+                //       .copyWith(color: AppColors.neutral_03),
+                // ),
               ],
             );
           }),
           const SizedBox(height: 14),
           Row(
-            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                S.of(context).buy_date,
-                style: AppTextStyle.labelSmall_10.copyWith(
-                    color: AppColors.neutral_03, fontWeight: FontWeight.w500),
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    S.of(context).buy_date,
+                    style: AppTextStyle.labelSmall_10.copyWith(
+                        color: AppColors.neutral_03,
+                        fontWeight: FontWeight.w500),
+                  ),
+                  const SizedBox(width: 4),
+                  Text(
+                      TimeUtilities.commonTimeFormat
+                          .format(widget.data.cBUYDATE),
+                      style: AppTextStyle.labelSmall_10),
+                ],
               ),
-              const SizedBox(width: 4),
-              Text(TimeUtilities.commonTimeFormat.format(widget.data.cBUYDATE),
-                  style: AppTextStyle.labelSmall_10),
-            ],
-          ),
-          const SizedBox(height: 6),
-          Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(
-                S.of(context).buy_price,
-                style: AppTextStyle.labelSmall_10.copyWith(
-                    color: AppColors.neutral_03, fontWeight: FontWeight.w500),
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    "Loại bot",
+                    style: AppTextStyle.labelSmall_10.copyWith(
+                        color: AppColors.neutral_03,
+                        fontWeight: FontWeight.w500),
+                  ),
+                  const SizedBox(width: 4),
+                  Text(widget.data.cTYPE ?? "-",
+                      style: AppTextStyle.labelSmall_10),
+                ],
               ),
-              const SizedBox(width: 4),
-              Text(widget.data.cBUYPRICE.toString(),
-                  style: AppTextStyle.labelSmall_10),
             ],
           ),
           const SizedBox(height: 16),
@@ -92,8 +100,8 @@ class _SignalOverviewState extends State<SignalOverview> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 _Column(
-                  "Loại bot",
-                  widget.data.cTYPE ?? "",
+                  "Giá mua",
+                  widget.data.cBUYPRICE.toString(),
                   textStyle: textTheme.titleSmall,
                 ),
                 const VerticalDivider(

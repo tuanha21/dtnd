@@ -32,7 +32,7 @@ class HomeWorldIndexItem extends StatelessWidget {
     final themeMode = AppService.instance.themeMode.value;
     BoxBorder? border;
     if (selectedSymbol != null && data.iDSYMBOL == selectedSymbol) {
-      border = Border.all(color: AppColors.neutral_05);
+      border = Border.all(color: AppColors.neutral_04);
     }
     VoidCallback? onTap;
     if (onSelected != null) {

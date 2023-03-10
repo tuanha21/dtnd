@@ -134,6 +134,8 @@
     "matching": "Matching",
 
     "million_short": "M",
+    "million": "Million",
+    "million_lower": "million",
     "thousand_short": "K",
     "billion_short": "B",
     "billion_lowercase": "b",

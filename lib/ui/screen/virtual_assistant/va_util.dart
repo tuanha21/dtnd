@@ -11,16 +11,28 @@ class VAUtil {
   static final IUserService userService = UserService();
   static void toVirtualAssistantScreen(BuildContext context) async {
     if (!userService.isLogin) {
-      await showDialog<bool>(
+      showDialog<bool>(
         context: context,
         builder: (context) {
           return const LoginFirstDialog();
         },
-      ).then((toLogin) => Navigator.of(context)
-          .push(MaterialPageRoute(
+      ).then((toLogin) {
+        if (toLogin ?? false) {
+          Navigator.of(context)
+              .push(MaterialPageRoute(
             builder: (context) => const LoginScreen(),
           ))
-          .then((value) => toVirtualAssistantScreen(context)));
+              .then((result) {
+            if (result ?? false) {
+              return _afterLogin(context);
+            } else {
+              return;
+            }
+          });
+        } else {
+          return;
+        }
+      });
     } else {
       return _afterLogin(context);
     }

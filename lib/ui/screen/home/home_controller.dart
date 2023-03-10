@@ -43,7 +43,8 @@ class HomeController {
       StreamController<double>.broadcast();
   Stream<double> get initProcess => _initProcess.stream;
 
-  late final List<TopSignalStockModel> topSignalStocks;
+  final Rx<List<TopSignalStockModel>?> topSignalStocks = Rxn();
+  final Rx<bool> loadingTopSignalStocks = Rx(false);
   final Rx<List<TrashModel>?> hotToday = Rxn();
   final Rx<List<TrashModel>?> priceIncreaseToday = Rxn();
   final Rx<List<TrashModel>?> priceDecreaseToday = Rxn();
@@ -103,6 +104,13 @@ class HomeController {
   //   topForeignToday = stockModels;
   // }
 
+  Future<void> getTopSignal() async {
+    loadingTopSignalStocks.value = true;
+    topSignalStocks.value = null;
+    topSignalStocks.value = await dataCenterService.getTopSignalStocks();
+    loadingTopSignalStocks.value = false;
+  }
+
   Future<void> getTopVolumn() async {
     final topStockChange = await dataCenterService.getTopStockTrade(8);
     topVolumnToday.value = topStockChange;
@@ -145,7 +153,7 @@ class HomeController {
     //   _initProcess.sink.add(((2 + (i / hotToday.length)) / _initStep));
     // }
     topInitialized.value = true;
-    topSignalStocks = await dataCenterService.getTopSignalStocks();
+    await getTopSignal();
     _initProcess.sink.add(4 / _initStep);
     suggestInitialized.value = true;
     getWorldIndex();

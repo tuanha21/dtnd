@@ -133,6 +133,8 @@
     "matching": "Đang khớp",
 
     "million_short": "Tr",
+    "million": "Triệu",
+    "million_lower": "triệu",
     "thousand_short": "K",
     "billion_short": "Tỷ",
     "billion_lowercase": "tỷ",

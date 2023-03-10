@@ -54,6 +54,7 @@ class _NotFirstLoginFormState extends State<NotFirstLoginForm> {
 
   Timer? onUsernameStoppedTyping;
   Timer? onPasswordStoppedTyping;
+  bool showPass = false;
   bool hasChanged = false;
   bool typingUsername = false;
   bool typingPassword = false;
@@ -140,7 +141,7 @@ class _NotFirstLoginFormState extends State<NotFirstLoginForm> {
             key: passwordFormKey,
             validator: passwordValidator,
             builder: (passwordState) => TextField(
-              obscureText: true,
+              obscureText: !showPass,
               autocorrect: false,
               focusNode: passwordFocusNode,
               controller: _passController,
@@ -152,6 +153,16 @@ class _NotFirstLoginFormState extends State<NotFirstLoginForm> {
                 errorText: passwordHasError
                     ? passwordFormKey.currentState?.errorText
                     : null,
+                suffixIcon: GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      showPass = !showPass;
+                    });
+                  },
+                  child: Icon(showPass
+                      ? Icons.visibility_outlined
+                      : Icons.visibility_off_outlined),
+                ),
               ),
             ),
           ),
