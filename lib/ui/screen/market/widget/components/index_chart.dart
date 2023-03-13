@@ -11,6 +11,7 @@ import 'package:dtnd/ui/screen/market/widget/components/index_item.dart';
 import 'package:dtnd/ui/screen/stock_detail/widget/k_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:k_chart/chart_translations.dart';
 
 import '../../../../../=models=/response/index_detail.dart';
 import '../../../../../data/implementations/data_center_service.dart';
@@ -63,11 +64,27 @@ class _IndexChartState extends State<IndexChart> {
                   child: Text(S.of(context).loading),
                 );
               }
+              final locale = Localizations.localeOf(context);
+              final languageTag =
+                  '${locale.languageCode}_${locale.countryCode}';
+              final Map<String, ChartTranslations> kChartTranslations = {
+                languageTag: ChartTranslations(
+                  date: S.of(context).date_translations,
+                  open: S.of(context).open_translations,
+                  high: S.of(context).high_translations,
+                  low: S.of(context).low_translations,
+                  close: S.of(context).close_translations,
+                  changeAmount: S.of(context).changeAmount_translations,
+                  change: S.of(context).change_translations,
+                  volumn: S.of(context).volumn_translations,
+                ),
+              };
               return KChart(
                 indexModel:
                     selectedIndex ?? marketController.currentIndexModel.value!,
                 isLine: true,
                 showNowPrice: true,
+                translations: kChartTranslations,
               );
             }),
           ),

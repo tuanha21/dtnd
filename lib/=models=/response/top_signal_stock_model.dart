@@ -1,7 +1,7 @@
 import 'package:dtnd/=models=/response/stock_model.dart';
-import 'package:dtnd/utilities/logger.dart';
+import 'package:dtnd/logic/stock_status.dart';
 
-class TopSignalStockModel {
+class TopSignalStockModel extends StockStatus {
   late final String cSHARECODE;
   late final StockModel stockModel;
   late final DateTime cBUYDATE;
@@ -42,5 +42,17 @@ class TopSignalStockModel {
     data['C_PC'] = cPC;
     data['T'] = t;
     return data;
+  }
+
+  @override
+  SStatus get sstatus {
+    switch ((cPC ?? 0).compareTo(0)) {
+      case 1:
+        return SStatus.up;
+      case 2:
+        return SStatus.down;
+      default:
+        return SStatus.ref;
+    }
   }
 }

@@ -42,22 +42,22 @@ class _HomeSimpleLineChartState extends State<HomeSimpleLineChart> {
   Future<void> getChartData() async {
     // print("calling history api");
     final response = await widget.getData?.call();
-    if (response == null || response.o == null) {
+    if (response == null) {
       return;
-    } else if (response.o!.length == 1) {
+    } else if (response.o.length == 1) {
       chartData =
-          StockTradingHistory.oneChartData(defaultValue: response.o!.first);
-      annotation = response.o!.first;
+          StockTradingHistory.oneChartData(defaultValue: response.o.first);
+      annotation = response.o.first;
       max = annotation + 1;
       min = annotation - 1;
       length = 2;
     } else {
       setState(() {
         chartData = response;
-        annotation = widget.data?.stockData.r.value ?? (response.o!.first);
-        max = math.max<num>(response.o!.reduce(math.max), annotation);
-        min = math.min<num>(response.o!.reduce(math.min), annotation);
-        length = response.o!.length;
+        annotation = widget.data?.stockData.r.value ?? (response.o.first);
+        max = math.max<num>(response.o.reduce(math.max), annotation);
+        min = math.min<num>(response.o.reduce(math.min), annotation);
+        length = response.o.length;
       });
     }
   }
@@ -67,7 +67,7 @@ class _HomeSimpleLineChartState extends State<HomeSimpleLineChart> {
           id: "SimpleChart",
           domainFn: (_, index) => index ?? 0,
           measureFn: (datum, index) => datum,
-          data: chartData.o!,
+          data: chartData.o,
           seriesColor: charts.ColorUtil.fromDartColor(widget.kColor ??
               widget.data?.stockData.color ??
               AppColors.semantic_02),

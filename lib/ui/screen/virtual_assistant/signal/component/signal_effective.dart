@@ -9,14 +9,14 @@ const List<String> _label = ["1W", "2W", "1M", "3M"];
 class SignalEffective extends StatefulWidget {
   const SignalEffective({super.key, this.data, required this.onChanged});
   final TopSignalDetailModel? data;
-  final ValueChanged<String?>? onChanged;
+  final ValueChanged<ValuePerPeriod?>? onChanged;
   @override
   State<SignalEffective> createState() => _SignalEffectiveState();
 }
 
 class _SignalEffectiveState extends State<SignalEffective> {
-  late List<num> _value;
-  String? title;
+  late List<ValuePerPeriod> periods;
+  ValuePerPeriod? selectedPeriod;
   @override
   void initState() {
     super.initState();
@@ -25,19 +25,19 @@ class _SignalEffectiveState extends State<SignalEffective> {
 
   void generateData() {
     if (widget.data == null) {
-      _value = List.generate(4, (index) => 0);
+      periods = List.generate(4, (index) => ValuePerPeriod.defaultVal());
     } else {
-      _value = widget.data!.list;
+      periods = widget.data!.clist;
     }
-    title = _label.last;
+    selectedPeriod = periods.first;
   }
 
-  void onChanged(String? period) {
-    if (period != title) {
+  void onChanged(ValuePerPeriod? period) {
+    if (period != selectedPeriod) {
       setState(() {
-        title = period;
+        selectedPeriod = period;
       });
-      widget.onChanged?.call(title);
+      widget.onChanged?.call(selectedPeriod);
     }
   }
 
@@ -76,9 +76,8 @@ class _SignalEffectiveState extends State<SignalEffective> {
               for (int i = 0; i < _label.length; i++)
                 Expanded(
                   child: _Figure(
-                    selected: title == _label[i],
-                    title: _label[i],
-                    value: _value[i],
+                    selected: selectedPeriod == periods.elementAt(i),
+                    data: periods.elementAt(i),
                     onChanged: onChanged,
                   ),
                 )
@@ -91,18 +90,16 @@ class _SignalEffectiveState extends State<SignalEffective> {
 }
 
 class _Figure extends StatelessWidget {
-  const _Figure(
-      {this.value = 0, this.title, this.onChanged, required this.selected});
+  const _Figure({required this.data, this.onChanged, required this.selected});
+  final ValuePerPeriod data;
   final bool selected;
-  final String? title;
-  final num value;
-  final ValueChanged<String?>? onChanged;
+  final ValueChanged<ValuePerPeriod?>? onChanged;
   @override
   Widget build(BuildContext context) {
     final String path;
     final Color color;
     final Color bgColor;
-    switch (value.compareTo(0)) {
+    switch (data.per.compareTo(0)) {
       case 1:
         path = AppImages.prefix_up_icon2;
         color = AppColors.semantic_01;
@@ -125,7 +122,7 @@ class _Figure extends StatelessWidget {
     return Column(
       children: [
         Text(
-          title ?? "-",
+          data.label,
           style:
               AppTextStyle.labelMedium_12.copyWith(color: AppColors.neutral_04),
         ),
@@ -133,7 +130,7 @@ class _Figure extends StatelessWidget {
         Material(
           borderRadius: const BorderRadius.all(Radius.circular(8)),
           child: InkWell(
-            onTap: () => onChanged?.call(title),
+            onTap: () => onChanged?.call(data),
             borderRadius: const BorderRadius.all(Radius.circular(8)),
             child: Ink(
               padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 10),
@@ -153,7 +150,7 @@ class _Figure extends StatelessWidget {
                   const SizedBox(width: 3),
                   Flexible(
                     child: Text(
-                      "${value.toString()}%",
+                      "${data.per}%",
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: AppTextStyle.labelMedium_12

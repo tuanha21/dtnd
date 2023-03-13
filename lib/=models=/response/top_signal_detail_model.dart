@@ -1,3 +1,10 @@
+import 'dart:convert';
+
+import 'package:dtnd/utilities/logger.dart';
+
+const String _defaultList =
+    "[[\"1M\",\"30\",\"0\"],[\"2M\",\"60\",\"0\"],[\"3M\",\"90\",\"0\"],[\"6M\",\"180\",\"0\"]]";
+
 class TopSignalDetailModel {
   late final String cSHARECODE;
   late final DateTime cBUYDATE;
@@ -8,13 +15,8 @@ class TopSignalDetailModel {
   num? cSELLPRICE;
   num? cPC;
   num? t;
-  num? c1W;
-  num? c2W;
-  num? c1M;
-  num? c3M;
+  late List<ValuePerPeriod> clist;
   String? rUIRO;
-
-  List<num> get list => [c1W ?? 0, c2W ?? 0, c1M ?? 0, c3M ?? 0];
 
   TopSignalDetailModel.fromJson(Map<String, dynamic> json) {
     cSHARECODE = json['C_SHARE_CODE'];
@@ -26,10 +28,19 @@ class TopSignalDetailModel {
     cSELLPRICE = json['C_SELL_PRICE'];
     cPC = json['C_PC'];
     t = json['T'];
-    c1W = (json['C_1W']);
-    c2W = (json['C_2W']);
-    c1M = (json['C_1M']);
-    c3M = (json['C_3M']);
+    try {
+      if (json['C_LIST'] is String) {
+        final List<dynamic> listEffect = jsonDecode(json['C_LIST']);
+        clist = listEffect.map((e) => ValuePerPeriod.fromJson(e)).toList();
+      } else {
+        final List<List<String>> listEffect = jsonDecode(_defaultList);
+        clist = listEffect.map((e) => ValuePerPeriod.fromJson(e)).toList();
+      }
+    } catch (e) {
+      final List<List<String>> listEffect = jsonDecode(_defaultList);
+      clist = listEffect.map((e) => ValuePerPeriod.fromJson(e)).toList();
+    }
+
     rUIRO = json['RUI_RO'];
   }
 
@@ -44,11 +55,25 @@ class TopSignalDetailModel {
     data['C_SELL_PRICE'] = cSELLPRICE;
     data['C_PC'] = cPC;
     data['T'] = t;
-    data['C_1W'] = c1W;
-    data['C_2W'] = c2W;
-    data['C_1M'] = c1M;
-    data['C_3M'] = c3M;
     data['RUI_RO'] = rUIRO;
     return data;
+  }
+}
+
+class ValuePerPeriod {
+  late final String label;
+  late final num day;
+  late final num per;
+
+  ValuePerPeriod.fromJson(dynamic json) {
+    label = json[0];
+    day = num.parse(json[1]);
+    per = num.parse(json[2]);
+  }
+
+  ValuePerPeriod.defaultVal() {
+    label = "1M";
+    day = 30;
+    per = 0;
   }
 }

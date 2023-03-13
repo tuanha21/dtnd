@@ -159,10 +159,8 @@ class BasicIndex extends StatefulWidget {
 class _BasicIndexState extends State<BasicIndex> {
   Widget indexPrice() {
     var data = widget.history;
-    var max =
-        data.h?.reduce(math.max) ?? widget.stockModel.stockData.c.value ?? 1;
-    var min =
-        data.l?.reduce(math.min) ?? widget.stockModel.stockData.f.value ?? 0;
+    var max = data.h.reduce(math.max);
+    var min = data.l.reduce(math.min);
 
     // print('max: ' + max.toString());
     // print('min: ' + min.toString());

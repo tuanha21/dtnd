@@ -57,7 +57,7 @@ class _StockDetailChartState extends State<StockDetailChart>
           DateTime.now());
       // print("timeSeries: " + timeSeries.type);
 
-      stockTrading.sink.add(stockTradingHistory!.c!);
+      stockTrading.sink.add(stockTradingHistory!.c);
     } catch (e) {
       if (kDebugMode) {
         print(e.toString());
@@ -67,7 +67,7 @@ class _StockDetailChartState extends State<StockDetailChart>
 
   List<num> get listTime {
     if (stockTradingHistory == null) return [];
-    return stockTradingHistory!.t!;
+    return stockTradingHistory!.t;
   }
 
   num max = 2;

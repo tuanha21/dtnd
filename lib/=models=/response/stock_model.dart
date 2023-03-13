@@ -91,7 +91,7 @@ class StockModel {
         resolution ?? "5",
         from ?? TimeUtilities.beginningOfDay,
         to ?? DateTime.now());
-    if (today?.o?.isEmpty ?? true) {
+    if (today?.o.isEmpty ?? true) {
       today = await dataCenterService.getStockTradingHistory(
           stock.stockCode,
           resolution ?? "5",

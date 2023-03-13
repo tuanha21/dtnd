@@ -1,15 +1,22 @@
 class StockTradingHistory {
-  List<num>? t;
-  List<num>? c;
-  List<num>? o;
-  List<num>? h;
-  List<num>? l;
-  List<num>? v;
+  List<num> t = [];
+  List<num> c = [];
+  List<num> o = [];
+  List<num> h = [];
+  List<num> l = [];
+  List<num> v = [];
   String? s;
   DateTime? lastUpdatedTime;
 
-  StockTradingHistory({this.t, this.c, this.o, this.h, this.l, this.v, this.s});
-
+  StockTradingHistory(
+      {required this.t,
+      required this.c,
+      required this.o,
+      required this.h,
+      required this.l,
+      required this.v,
+      this.s})
+;
   StockTradingHistory.nullChartData({num? defaultValue}) {
     lastUpdatedTime = DateTime.now();
     t = [lastUpdatedTime!.millisecondsSinceEpoch / 1000];

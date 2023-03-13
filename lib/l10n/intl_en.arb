@@ -67,7 +67,7 @@
     "sell_short": "S",
     "sell_price": "Sell price",
     "accumulation": "Accumulation",
-    "volumn": "Volumn",
+    "volumn": "Volume",
     "dividend": "Dividend",
     "total_wvalue": "Total {value}",
     "gain_wvalue": "Gain {value}",
@@ -343,7 +343,7 @@
     "close_translations": "Close",
     "changeAmount_translations": "Change",
     "change_translations": "Change%",
-    "volumn_translations": "Volumn",
+    "volumn_translations": "Volume",
     "amount_translations": "Amount",
 
     "vietnam": "Vietnam",

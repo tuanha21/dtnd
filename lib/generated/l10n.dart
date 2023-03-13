@@ -660,10 +660,10 @@ class S {
     );
   }
 
-  /// `Volumn`
+  /// `Volume`
   String get volumn {
     return Intl.message(
-      'Volumn',
+      'Volume',
       name: 'volumn',
       desc: '',
       args: [],
@@ -3062,10 +3062,10 @@ class S {
     );
   }
 
-  /// `Volumn`
+  /// `Volume`
   String get volumn_translations {
     return Intl.message(
-      'Volumn',
+      'Volume',
       name: 'volumn_translations',
       desc: '',
       args: [],

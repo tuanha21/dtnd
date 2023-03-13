@@ -26,7 +26,6 @@ class _SignalScreenState extends State<SignalScreen> {
   List<TopSignalHistoryModel>? listHis;
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     getData();
   }
@@ -36,30 +35,15 @@ class _SignalScreenState extends State<SignalScreen> {
         widget.data.cSHARECODE, widget.data.cTYPE!);
     listHis = await dataCenterService.getTopSignalHistory(
         widget.data.cSHARECODE, widget.data.cTYPE!,
-        day: 93);
+        day: 30);
     setState(() {});
   }
 
-  Future<void> changePeriod(String? period) async {
-    print("called");
+  Future<void> changePeriod(ValuePerPeriod? period) async {
     if (period != null) {
-      final int day;
-      switch (period) {
-        case "2W":
-          day = 14;
-          break;
-        case "1M":
-          day = 31;
-          break;
-        case "3M":
-          day = 93;
-          break;
-        default:
-          day = 7;
-      }
       listHis = await dataCenterService.getTopSignalHistory(
           widget.data.cSHARECODE, widget.data.cTYPE!,
-          day: day);
+          day: period.day.toInt());
       setState(() {});
     }
   }
@@ -80,6 +64,7 @@ class _SignalScreenState extends State<SignalScreen> {
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
             child: SignalChart(
+              data: widget.data,
               stockModel: widget.data.stockModel,
             ),
           ),

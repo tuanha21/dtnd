@@ -50,7 +50,7 @@ class _TopIndexWidgetChartState extends State<TopIndexWidgetChart> {
                           borderRadius: BorderRadius.circular(8)),
                       width: MediaQuery.of(context).size.width,
                       child: Text(
-                          'Biểu đồ thể hiện đóng góp của ngành và INDEX. Dữ liệu ngày ${TimeUtilities.parseDateToString(DateTime.now())}',
+                          'Biểu đồ thể hiện đóng góp của ngành vào INDEX. Dữ liệu ngày ${TimeUtilities.parseDateToString(DateTime.now())}',
                           style: Theme.of(context)
                               .textTheme
                               .labelMedium

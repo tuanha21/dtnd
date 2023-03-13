@@ -627,7 +627,6 @@ class NetworkService implements INetworkService {
     try {
       final http.Response response =
           await client.get(url_info_sbsi("proxy", body));
-      logger.v(response.body);
       final List<dynamic> responseBody = decode(response.bodyBytes)["data"];
       List<TopSignalStockModel> data = [];
       for (var element in responseBody) {
@@ -651,7 +650,6 @@ class NetworkService implements INetworkService {
     try {
       final http.Response response =
           await client.get(url_info_sbsi("proxy", body));
-      logger.v(response.body);
       final List<dynamic> responseBody = decode(response.bodyBytes)["data"];
       TopSignalDetailModel data =
           TopSignalDetailModel.fromJson(responseBody.first);

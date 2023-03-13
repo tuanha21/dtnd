@@ -445,8 +445,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "Set up fluctuations alerts for your account and interest catalogs"),
         "volatility_warning":
             MessageLookupByLibrary.simpleMessage("Volatility warning"),
-        "volumn": MessageLookupByLibrary.simpleMessage("Volumn"),
-        "volumn_translations": MessageLookupByLibrary.simpleMessage("Volumn"),
+        "volumn": MessageLookupByLibrary.simpleMessage("Volume"),
+        "volumn_translations": MessageLookupByLibrary.simpleMessage("Volume"),
         "waiting_match": MessageLookupByLibrary.simpleMessage("Waiting match"),
         "withdraw_money":
             MessageLookupByLibrary.simpleMessage("Withdraw money"),

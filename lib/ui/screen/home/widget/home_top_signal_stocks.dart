@@ -190,6 +190,7 @@ class HomeTopSignalItem extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
                               data.stockModel.stock.stockCode,
@@ -210,7 +211,7 @@ class HomeTopSignalItem extends StatelessWidget {
                                       ),
                                     ),
                                     TextSpan(
-                                      text: "  ${lastPrice.value}",
+                                      text: " ${lastPrice.value}",
                                     )
                                   ]),
                                   style: AppTextStyle.labelMedium_12.copyWith(

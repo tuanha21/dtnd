@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:dtnd/=models=/response/liquidity_model.dart';
 import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
@@ -6,6 +8,11 @@ import 'package:dtnd/utilities/time_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
+
+//custom chart
+import 'dart:math' show Rectangle, Point, min, sqrt;
+import 'package:charts_flutter/src/text_element.dart' as chartText;
+import 'package:charts_flutter/src/text_style.dart' as chartStyle;
 
 class LiquidityChart extends StatefulWidget {
   final Future<LiquidityModel> liquidityModel;
@@ -48,7 +55,7 @@ class _LiquidityChartState extends State<LiquidityChart> {
                           borderRadius: BorderRadius.circular(8)),
                       width: MediaQuery.of(context).size.width,
                       child: Text(
-                          'Biểu đồ so sánh dòng tiền tại dùng thời điểm với phiên trước, trung bình 1 tuần. Dữ liệu ngày ${TimeUtilities.parseDateToString(DateTime.now())}',
+                          'Biểu đồ so sánh dòng tiền tại cùng thời điểm với phiên trước, trung bình 1 tuần. Dữ liệu ngày ${TimeUtilities.parseDateToString(DateTime.now())}',
                           style: Theme.of(context)
                               .textTheme
                               .labelMedium
@@ -160,7 +167,19 @@ class _LiquidityChartState extends State<LiquidityChart> {
                         //     color: charts.Color(r: 127, g: 63, b: 191),
                         //     fontFamily: 'Georgia',
                         //     fontSize: 11),
-                      )
+                      ),
+                      // charts.SeriesLegend(
+                      //   position: charts.BehaviorPosition.bottom,
+                      //   horizontalFirst: false,
+                      //   desiredMaxRows: 2,
+                      //   cellPadding:
+                      //       const EdgeInsets.only(right: 4.0, bottom: 4.0),
+                      // ),
+                      charts.SelectNearest(
+                          eventTrigger: charts.SelectionTrigger.tapAndDrag),
+                      // charts.LinePointHighlighter(
+                      //   symbolRenderer: CustomTooltipRenderer(size: size),
+                      // ),
                     ],
                     // secondaryMeasureAxis: charts.NumericAxisSpec(
                     //     tickProviderSpec:
@@ -172,6 +191,7 @@ class _LiquidityChartState extends State<LiquidityChart> {
                         minimumPaddingBetweenLabelsPx: 20,
                       ),
                     ),
+
                     primaryMeasureAxis: const charts.NumericAxisSpec(
                       tickProviderSpec: charts.StaticNumericTickProviderSpec(
                         // Create the ticks to be used the domain axis.
@@ -195,3 +215,56 @@ class _LiquidityChartState extends State<LiquidityChart> {
     );
   }
 }
+
+// class CustomTooltipRenderer extends charts.CircleSymbolRenderer {
+//   final size;
+
+//   CustomTooltipRenderer({this.size});
+
+//   @override
+//   void paint(charts.ChartCanvas canvas, Rectangle bounds,
+//       {List<int>? dashPattern,
+//       Color? fillColor,
+//       charts.FillPatternType? fillPattern,
+//       Color? strokeColor,
+//       double? strokeWidthPx}) {
+//     super.paint(canvas, bounds,
+//         dashPattern: dashPattern,
+//         fillColor: fillColor,
+//         strokeColor: strokeColor,
+//         strokeWidthPx: strokeWidthPx);
+
+//     List tooltips = _LineChartWidgetState.selectedDatum;
+//     String unit = _LineChartWidgetState.unit;
+//     if (tooltips != null && tooltips.length > 0) {
+//       num tipTextLen = (tooltips[0]['text'] + unit).length;
+//       num rectWidth = bounds.width + tipTextLen * 8.3;
+//       num rectHeight = bounds.height + 20 + (tooltips.length - 1) * 18;
+//       num left = bounds.left > (size?.width ?? 300) / 2
+//           ? (bounds.left > size?.width / 4
+//               ? bounds.left - rectWidth
+//               : bounds.left - rectWidth / 2)
+//           : bounds.left - 40;
+
+//       canvas.drawRect(Rectangle(left, 0, rectWidth, rectHeight),
+//           fill: charts.Color.fromHex(code: '#666666'));
+
+//       for (int i = 0; i < tooltips.length; i++) {
+//         canvas.drawPoint(
+//           point: Point(left.round() + 8, (i + 1) * 15),
+//           radius: 3,
+//           fill: tooltips[i]['color'],
+//           stroke: charts.Color.white,
+//           strokeWidthPx: 1,
+//         );
+//         chartStyle.TextStyle textStyle = chartStyle.TextStyle();
+//         textStyle.color = charts.Color.white;
+//         textStyle.fontSize = 13;
+//         canvas.drawText(
+//             chartText.TextElement(tooltips[i]['text'] + unit, style: textStyle),
+//             left.round() + 15,
+//             i * 15 + 8);
+//       }
+//     }
+//   }
+// }

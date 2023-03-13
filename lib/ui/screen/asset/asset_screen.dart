@@ -271,12 +271,13 @@ class _AssetScreenState extends State<AssetScreen>
       );
       if (toLogin ?? false) {
         if (!mounted) return;
-        final result = await Navigator.of(context)
+        await Navigator.of(context)
             .push<bool>(MaterialPageRoute(
           builder: (context) => const LoginScreen(),
         ))
             .then((result) async {
           if ((result ?? false)) {
+            setState(() {});
             if (!localStorageService.biometricsRegistered) {
               final reg = await showDialog<bool>(
                 context: context,

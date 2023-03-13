@@ -36,10 +36,10 @@ class _SignalOverviewState extends State<SignalOverview> {
             return Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                widget.data.stockModel.stockData.prefixIcon(size: 28),
+                widget.data.prefixIcon(size: 28),
                 const SizedBox(width: 10),
                 Text(
-                  stockData.lastPrice.value.toString(),
+                  widget.data.cSELLPRICE.toString(),
                   style: AppTextStyle.headlineSmall_24
                       .copyWith(color: stockData.color),
                 ),
@@ -76,7 +76,7 @@ class _SignalOverviewState extends State<SignalOverview> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
-                    "Loại bot",
+                    "Loại tín hiệu",
                     style: AppTextStyle.labelSmall_10.copyWith(
                         color: AppColors.neutral_03,
                         fontWeight: FontWeight.w500),
