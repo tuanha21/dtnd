@@ -194,4 +194,17 @@ class _LiquidityChartState extends State<LiquidityChart> {
       ],
     );
   }
+
+  final axis = charts.NumericAxisSpec(
+    tickProviderSpec:
+        const charts.BasicNumericTickProviderSpec(dataIsInWholeNumbers: false),
+    showAxisLine: false,
+    renderSpec: charts.GridlineRendererSpec(
+        labelStyle: const charts.TextStyleSpec(
+            color: charts.MaterialPalette.white, fontSize: 12),
+        lineStyle: charts.LineStyleSpec(
+          color: charts.ColorUtil.fromDartColor(AppColors.primary_01),
+          thickness: 0,
+        )),
+  );
 }

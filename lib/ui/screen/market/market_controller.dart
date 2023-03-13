@@ -60,7 +60,7 @@ class MarketController {
       }
       listIndexs = await dataCenterService.getListIndex();
       currentIndexModel.value = listIndexs.first;
-      getDeepMarket();
+      // getDeepMarket();
       initialized.value = true;
     } catch (e) {
       logger.v(e);
