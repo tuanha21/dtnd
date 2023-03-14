@@ -12,10 +12,10 @@ import 'package:dtnd/ui/screen/stock_detail/widget/k_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../../../=models=/response/index_detail.dart';
-import '../../../../../data/implementations/data_center_service.dart';
-import '../../../../../data/implementations/local_storage_service.dart';
-import '../../../../../data/implementations/user_service.dart';
+import 'package:dtnd/=models=/response/index_detail.dart';
+import 'package:dtnd/data/implementations/data_center_service.dart';
+import 'package:dtnd/data/implementations/local_storage_service.dart';
+import 'package:dtnd/data/implementations/user_service.dart';
 
 class IndexChart extends StatefulWidget {
   const IndexChart({super.key});

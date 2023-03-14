@@ -1241,7 +1241,7 @@ class NetworkService implements INetworkService {
 
   @override
   Future<List<DerivativeResModel>> getListDerivative() async {
-    var response = await client.get(url_board_sbsi("pslistdata"));
+    var response = await client.get(url_board("pslistdata"));
     var data = jsonDecode(response.body);
     var list = data as List;
     List<String> listString = [];
@@ -1250,17 +1250,21 @@ class NetworkService implements INetworkService {
     }
 
     try {
-      final http.Response _res = await client
-          .get(url_board_sbsi("getpsalldatalsnapshot/" + listString.join(',')));
-          
-    final List<dynamic> responseBody = decode(_res.bodyBytes);
-    if (responseBody.isEmpty) throw Exception();
+      // "VN30F2303","VN30F2304","VN30F2306","VN30F2309"
+      final http.Response _res = await client.get(url_board(
+          "getpsalldatalsnapshot/" +
+              (listString.length > 0
+                  ? listString.join(',')
+                  : "VN30F2303,VN30F2304,VN30F2306,VN30F2309")));
 
-    List<DerivativeResModel>? dataS = [];
-    for (var element in responseBody) {
-      dataS.add(DerivativeResModel.fromJson(element));
-    }
-    return dataS;
+      final List<dynamic> responseBody = decode(_res.bodyBytes);
+      if (responseBody.isEmpty) throw Exception();
+
+      List<DerivativeResModel>? dataS = [];
+      for (var element in responseBody) {
+        dataS.add(DerivativeResModel.fromJson(element));
+      }
+      return dataS;
     } catch (e) {
       logger.e(e.toString());
       rethrow;
