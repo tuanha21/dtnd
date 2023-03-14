@@ -1,5 +1,4 @@
 import 'package:dtnd/data/i_user_service.dart';
-import 'package:dtnd/data/implementations/user_service.dart';
 import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/screen/account/component/account_total_asset_widget.dart';
 import 'package:dtnd/ui/screen/account/component/extensions_widget.dart';
@@ -12,7 +11,9 @@ import 'package:go_router/go_router.dart';
 
 class AccountScreenView extends StatelessWidget {
   const AccountScreenView({super.key, required this.userService});
+
   final IUserService userService;
+
   @override
   Widget build(BuildContext context) {
     final info = userService.userInfo.value;
