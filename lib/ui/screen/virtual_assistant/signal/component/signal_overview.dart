@@ -32,26 +32,24 @@ class _SignalOverviewState extends State<SignalOverview> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Obx(() {
-            return Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                widget.data.prefixIcon(size: 28),
-                const SizedBox(width: 10),
-                Text(
-                  widget.data.cSELLPRICE.toString(),
-                  style: AppTextStyle.headlineSmall_24
-                      .copyWith(color: stockData.color),
-                ),
-                // const SizedBox(width: 10),
-                // Text(
-                //   "${NumUtils.formatInteger10(stockData.lot.value)} CP",
-                //   style: AppTextStyle.labelMedium_12
-                //       .copyWith(color: AppColors.neutral_03),
-                // ),
-              ],
-            );
-          }),
+          Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              widget.data.prefixIcon(size: 28),
+              const SizedBox(width: 10),
+              Text(
+                widget.data.cSELLPRICE.toString(),
+                style: AppTextStyle.headlineSmall_24
+                    .copyWith(color: widget.data.color),
+              ),
+              // const SizedBox(width: 10),
+              // Text(
+              //   "${NumUtils.formatInteger10(stockData.lot.value)} CP",
+              //   style: AppTextStyle.labelMedium_12
+              //       .copyWith(color: AppColors.neutral_03),
+              // ),
+            ],
+          ),
           const SizedBox(height: 14),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,

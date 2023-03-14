@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:dtnd/=models=/response/account/base_margin_account_model.dart';
+import 'package:dtnd/=models=/response/stock_model.dart';
 import 'package:dtnd/=models=/ui_model/user_cmd.dart';
 import 'package:dtnd/data/i_data_center_service.dart';
 import 'package:dtnd/data/i_local_storage_service.dart';
@@ -328,11 +329,20 @@ class _AssetScreenState extends State<AssetScreen>
         });
       }
     } else {
+      final list =
+          await dataCenterService.getStockModelsFromStockCodes(["AAA"]);
+      final StockModel? aaa;
+      if (list?.isNotEmpty ?? false) {
+        aaa = list!.first;
+      } else {
+        aaa = null;
+      }
+      if (mounted) {}
       // return StockOrderISheet(widget.stockModel).showSheet(context, );
       StockOrderISheet(null).show(
           context,
-          const StockOrderSheet(
-            stockModel: null,
+          StockOrderSheet(
+            stockModel: aaa,
             orderData: null,
           ));
     }

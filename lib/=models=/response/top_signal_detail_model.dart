@@ -28,6 +28,7 @@ class TopSignalDetailModel {
     cSELLPRICE = json['C_SELL_PRICE'];
     cPC = json['C_PC'];
     t = json['T'];
+    // logger.v(json['C_LIST']);
     try {
       if (json['C_LIST'] is String) {
         final List<dynamic> listEffect = jsonDecode(json['C_LIST']);

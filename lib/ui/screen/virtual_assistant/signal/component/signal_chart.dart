@@ -22,7 +22,7 @@ class SignalChart extends StatefulWidget {
 
 class _SignalChartState extends State<SignalChart> {
   final IDataCenterService dataCenterService = DataCenterService();
-  String currentPeriod = _label.first;
+  String currentPeriod = _label[1];
   StockTradingHistory? datas;
   late num annotationX;
   late DateTime annotationY;
@@ -36,8 +36,8 @@ class _SignalChartState extends State<SignalChart> {
 
   @override
   void initState() {
-    print(widget.data.cBUYPRICE);
-    print(widget.data.cBUYDATE);
+    // print(widget.data.cBUYPRICE);
+    // print(widget.data.cBUYDATE);
     annotationX = widget.data.cBUYPRICE;
     annotationY = widget.data.cBUYDATE;
     super.initState();

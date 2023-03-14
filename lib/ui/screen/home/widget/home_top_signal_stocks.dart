@@ -200,28 +200,23 @@ class HomeTopSignalItem extends StatelessWidget {
                                   .copyWith(fontWeight: FontWeight.w600),
                             ),
                             const SizedBox(width: 4),
-                            ObxValue<Rx<num?>>(
-                              (lastPrice) {
-                                return Text.rich(
-                                  TextSpan(children: [
-                                    WidgetSpan(
-                                      child: SizedBox.square(
-                                        dimension: 16,
-                                        child: icon,
-                                      ),
-                                    ),
-                                    TextSpan(
-                                      text: " ${lastPrice.value}",
-                                    )
-                                  ]),
-                                  style: AppTextStyle.labelMedium_12.copyWith(
-                                    fontWeight: FontWeight.w600,
-                                    color: color,
+                            Text.rich(
+                              TextSpan(children: [
+                                WidgetSpan(
+                                  child: SizedBox.square(
+                                    dimension: 16,
+                                    child: icon,
                                   ),
-                                );
-                              },
-                              stockData.lastPrice,
-                            ),
+                                ),
+                                TextSpan(
+                                  text: " ${data.cSELLPRICE}",
+                                )
+                              ]),
+                              style: AppTextStyle.labelMedium_12.copyWith(
+                                fontWeight: FontWeight.w600,
+                                color: color,
+                              ),
+                            )
                           ],
                         ),
                         const SizedBox(height: 3),

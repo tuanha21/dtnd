@@ -4,15 +4,16 @@ import 'package:dtnd/=models=/response/liquidity_model.dart';
 import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
+import 'package:dtnd/utilities/logger.dart';
+import 'package:dtnd/utilities/num_utils.dart';
 import 'package:dtnd/utilities/time_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 
 //custom chart
-import 'dart:math' show Rectangle, Point, min, sqrt;
-import 'package:charts_flutter/src/text_element.dart' as chartText;
-import 'package:charts_flutter/src/text_style.dart' as chartStyle;
+import 'package:charts_flutter/src/text_element.dart' as chart_text;
+import 'package:charts_flutter/src/text_style.dart' as chart_style;
 
 class LiquidityChart extends StatefulWidget {
   final Future<LiquidityModel> liquidityModel;
@@ -80,6 +81,7 @@ class _LiquidityChartState extends State<LiquidityChart> {
                 );
               }
               if (snapshot.connectionState == ConnectionState.done) {
+                final size = MediaQuery.of(context).size;
                 var liquidityModel = snapshot.data!;
                 return SizedBox(
                   height: 300,
@@ -168,27 +170,41 @@ class _LiquidityChartState extends State<LiquidityChart> {
                         //     fontFamily: 'Georgia',
                         //     fontSize: 11),
                       ),
-                      // charts.SeriesLegend(
-                      //   position: charts.BehaviorPosition.bottom,
-                      //   horizontalFirst: false,
-                      //   desiredMaxRows: 2,
-                      //   cellPadding:
-                      //       const EdgeInsets.only(right: 4.0, bottom: 4.0),
-                      // ),
                       charts.SelectNearest(
                           eventTrigger: charts.SelectionTrigger.tapAndDrag),
-                      // charts.LinePointHighlighter(
-                      //   symbolRenderer: CustomTooltipRenderer(size: size),
-                      // ),
+                      charts.LinePointHighlighter(
+                          showHorizontalFollowLine:
+                              charts.LinePointHighlighterFollowLineType.none,
+                          showVerticalFollowLine: charts
+                              .LinePointHighlighterFollowLineType.nearest),
+                      charts.LinePointHighlighter(
+                        symbolRenderer: _CustomTooltipRenderer(size: size),
+                      ),
+                    ],
+                    selectionModels: [
+                      charts.SelectionModelConfig(
+                        updatedListener: (charts.SelectionModel model) {
+                          if (model.hasDatumSelection) {
+                            final selectedDatum = model.selectedDatum;
+                            _TooltipData.setData(
+                                liquidityModel.time
+                                    .elementAt(selectedDatum.first.index ?? 0),
+                                NumUtils.formatDouble(
+                                    selectedDatum.first.datum),
+                                NumUtils.formatDouble(
+                                    selectedDatum.elementAt(1).datum),
+                                NumUtils.formatDouble(
+                                    selectedDatum.elementAt(2).datum));
+                          }
+                        },
+                      ),
                     ],
                     // secondaryMeasureAxis: charts.NumericAxisSpec(
                     //     tickProviderSpec:
                     //         charts.BasicNumericTickProviderSpec(desiredTickCount: 10)),
                     domainAxis: const charts.OrdinalAxisSpec(
                       renderSpec: charts.SmallTickRendererSpec(
-                        labelRotation: 270,
-                        labelOffsetFromAxisPx: 38,
-                        minimumPaddingBetweenLabelsPx: 20,
+                        labelRotation: 45,
                       ),
                     ),
 
@@ -216,55 +232,95 @@ class _LiquidityChartState extends State<LiquidityChart> {
   }
 }
 
-// class CustomTooltipRenderer extends charts.CircleSymbolRenderer {
-//   final size;
+class _CustomTooltipRenderer extends charts.CircleSymbolRenderer {
+  final Size size;
 
-//   CustomTooltipRenderer({this.size});
+  _CustomTooltipRenderer({required this.size});
 
-//   @override
-//   void paint(charts.ChartCanvas canvas, Rectangle bounds,
-//       {List<int>? dashPattern,
-//       Color? fillColor,
-//       charts.FillPatternType? fillPattern,
-//       Color? strokeColor,
-//       double? strokeWidthPx}) {
-//     super.paint(canvas, bounds,
-//         dashPattern: dashPattern,
-//         fillColor: fillColor,
-//         strokeColor: strokeColor,
-//         strokeWidthPx: strokeWidthPx);
+  @override
+  void paint(charts.ChartCanvas canvas, Rectangle<num> bounds,
+      {List<int>? dashPattern,
+      charts.Color? fillColor,
+      charts.FillPatternType? fillPattern,
+      charts.Color? strokeColor,
+      double? strokeWidthPx}) {
+    super.paint(canvas, bounds,
+        dashPattern: dashPattern,
+        fillColor: fillColor,
+        strokeColor: strokeColor,
+        strokeWidthPx: strokeWidthPx);
 
-//     List tooltips = _LineChartWidgetState.selectedDatum;
-//     String unit = _LineChartWidgetState.unit;
-//     if (tooltips != null && tooltips.length > 0) {
-//       num tipTextLen = (tooltips[0]['text'] + unit).length;
-//       num rectWidth = bounds.width + tipTextLen * 8.3;
-//       num rectHeight = bounds.height + 20 + (tooltips.length - 1) * 18;
-//       num left = bounds.left > (size?.width ?? 300) / 2
-//           ? (bounds.left > size?.width / 4
-//               ? bounds.left - rectWidth
-//               : bounds.left - rectWidth / 2)
-//           : bounds.left - 40;
+    final List<String> listElement = [
+      'Hiện tại : ${_TooltipData.instance.currentLiquidity} tỷ VNĐ',
+      'Phiên trước : ${_TooltipData.instance.lastdayLiquidity} tỷ VNĐ',
+      'Tuần trước : ${_TooltipData.instance.lastweekLiquidity} tỷ VNĐ',
+    ];
 
-//       canvas.drawRect(Rectangle(left, 0, rectWidth, rectHeight),
-//           fill: charts.Color.fromHex(code: '#666666'));
+    int maxLenght = 0;
+    for (String element in listElement) {
+      if (element.length > maxLenght) {
+        maxLenght = element.length;
+      }
+    }
 
-//       for (int i = 0; i < tooltips.length; i++) {
-//         canvas.drawPoint(
-//           point: Point(left.round() + 8, (i + 1) * 15),
-//           radius: 3,
-//           fill: tooltips[i]['color'],
-//           stroke: charts.Color.white,
-//           strokeWidthPx: 1,
-//         );
-//         chartStyle.TextStyle textStyle = chartStyle.TextStyle();
-//         textStyle.color = charts.Color.white;
-//         textStyle.fontSize = 13;
-//         canvas.drawText(
-//             chartText.TextElement(tooltips[i]['text'] + unit, style: textStyle),
-//             left.round() + 15,
-//             i * 15 + 8);
-//       }
-//     }
-//   }
-// }
+    canvas.drawRect(
+      Rectangle(bounds.left - bounds.width - 30, bounds.height - 10,
+          bounds.width + (maxLenght * 4), bounds.height + (13 * 4)),
+      fill: charts.Color.fromOther(
+          color: const charts.Color(a: 100, b: 0, g: 0, r: 0).darker),
+    );
+
+    chart_style.TextStyle textStyle = chart_style.TextStyle();
+
+    textStyle.color = charts.Color.white;
+    textStyle.fontSize = 8;
+    for (var i = 0; i < 3; i++) {
+      canvas.drawText(
+        chart_text.TextElement(listElement.elementAt(i), style: textStyle),
+        (bounds.left - bounds.width - 25).round(),
+        getHeight(i + 1).round(),
+      );
+    }
+
+    canvas.drawText(
+      chart_text.TextElement('${_TooltipData.instance.time}', style: textStyle),
+      (bounds.left - bounds.width - 25).round(),
+      getHeight(0).round(),
+    );
+  }
+
+  int getHeight(int index) {
+    return index * 8 + (index + 1) * 5;
+  }
+}
+
+class _TooltipData {
+  _TooltipData._internal();
+  static final _TooltipData _instance = _TooltipData._internal();
+  static _TooltipData get instance => _instance;
+  String? time;
+  String? currentLiquidity;
+  String? lastdayLiquidity;
+  String? lastweekLiquidity;
+  factory _TooltipData({
+    String? time,
+    String? currentLiquidity,
+    String? lastdayLiquidity,
+    String? lastweekLiquidity,
+  }) {
+    setData(time, currentLiquidity, lastdayLiquidity, lastweekLiquidity);
+    return _instance;
+  }
+
+  static void setData(
+    String? time,
+    String? currentLiquidity,
+    String? lastdayLiquidity,
+    String? lastweekLiquidity,
+  ) {
+    _instance.time = time;
+    _instance.currentLiquidity = currentLiquidity;
+    _instance.lastdayLiquidity = lastdayLiquidity;
+    _instance.lastweekLiquidity = lastweekLiquidity;
+  }
+}
