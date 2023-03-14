@@ -2,12 +2,12 @@ import 'package:dtnd/=models=/response/stock_model.dart';
 import 'package:dtnd/data/i_network_service.dart';
 import 'package:dtnd/data/implementations/network_service.dart';
 import 'package:dtnd/utilities/num_utils.dart';
+import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 import '../../../../=models=/response/sec_trading.dart';
 import '../../../../=models=/response/stock_board.dart';
 import '../../../../generated/l10n.dart';
-import '../../../theme/app_color.dart';
 
 class ForeignWidget extends StatefulWidget {
   final StockModel stockModel;
@@ -89,7 +89,7 @@ class _ForeignWidgetState extends State<ForeignWidget> {
                       ),
                       const Divider(
                         thickness: 0.5,
-                        height: 10,
+                        height: 16,
                         color: AppColors.neutral_04,
                       ),
                       Row(
@@ -172,7 +172,7 @@ class _ForeignWidgetState extends State<ForeignWidget> {
                               child: Align(
                                 alignment: Alignment.centerRight,
                                 child: Text(
-                                  NumUtils.formatInteger(stockBoard.fGNetValue),
+                                  NumUtils.formatDouble(stockBoard.fGNetValue),
                                   style: title?.copyWith(
                                       fontWeight: FontWeight.w600),
                                 ),
