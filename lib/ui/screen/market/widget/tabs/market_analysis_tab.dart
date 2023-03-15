@@ -5,11 +5,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
-import '../../../../../=models=/index.dart';
-import '../../../../../=models=/response/indContrib.dart';
-import '../../../../../data/i_data_center_service.dart';
-import '../../../../../data/implementations/data_center_service.dart';
-import '../../../../../generated/l10n.dart';
+import 'package:dtnd/=models=/algo/match_type.dart';
+import 'package:dtnd/=models=/algo/org_filter.dart';
+import 'package:dtnd/=models=/index.dart';
+import 'package:dtnd/=models=/response/indContrib.dart';
+import 'package:dtnd/data/i_data_center_service.dart';
+import 'package:dtnd/data/implementations/data_center_service.dart';
+import 'package:dtnd/generated/l10n.dart';
 import '../../../../theme/app_color.dart';
 import '../components/Fi_chart.dart';
 import '../components/IndFvalue.dart';
@@ -31,9 +33,11 @@ class _MarketAnalysisTabState extends State<MarketAnalysisTab>
   late Future<IndContrib> indFvalue;
 
   void initData() {
-    piValue = dataCenterService.getPIvalue(indexSelect.market);
-    fiValue = dataCenterService.getFIvalue(indexSelect.market);
-    indFvalue = dataCenterService.getIndFvalue(indexSelect.market);
+    print(orgFilter.filterOrg.code);
+    print(orgFilter.filterInd.market);
+    piValue = dataCenterService.getPIvalue(orgFilter.filterInd.market);
+    fiValue = dataCenterService.getFIvalue(orgFilter.filterInd.market);
+    indFvalue = dataCenterService.getIndFvalue(orgFilter.filterInd.market);
   }
 
   @override
@@ -42,14 +46,8 @@ class _MarketAnalysisTabState extends State<MarketAnalysisTab>
     super.initState();
   }
 
-  Index indexSelect = Index.VNI;
-  // bool _isPT = false;
-
-  // void onChangedPT(bool? val) {
-  //   setState(() {
-  //     _isPT = val ?? false;
-  //   });
-  // }
+  OrgFilter orgFilter =
+      OrgFilter(filterInd: Index.VNI, filterOrg: MatchType.Match);
 
   @override
   Widget build(BuildContext context) {
@@ -108,15 +106,33 @@ class _MarketAnalysisTabState extends State<MarketAnalysisTab>
                                   var piValue = snapshot.data![0]; //piValue
                                   var fiValue = snapshot.data![1]; //fiValue
 
+                                  final totalPiBuy =
+                                      orgFilter.filterOrg == MatchType.Match
+                                          ? piValue.totalBuy
+                                          : piValue.totalPTBuy;
+                                  final totalFiBuy =
+                                      orgFilter.filterOrg == MatchType.Match
+                                          ? fiValue.totalBuy
+                                          : fiValue.totalPTBuy;
+
+                                  final totalPiSell =
+                                      orgFilter.filterOrg == MatchType.Match
+                                          ? piValue.totalSell
+                                          : piValue.totalPTSell;
+                                  final totalFiSell =
+                                      orgFilter.filterOrg == MatchType.Match
+                                          ? fiValue.totalSell
+                                          : fiValue.totalPTSell;
+
                                   var totalBuy = double.parse(
-                                          (piValue.totalBuy ?? '0')
+                                          (totalPiBuy ?? '0')
                                               .replaceAll(RegExp(r','), '')) +
-                                      double.parse((fiValue.totalBuy ?? '0')
+                                      double.parse((totalFiBuy ?? '0')
                                           .replaceAll(RegExp(r','), ''));
                                   var totalSell = double.parse(
-                                          (piValue.totalSell ?? '0')
+                                          (totalPiSell ?? '0')
                                               .replaceAll(RegExp(r','), '')) +
-                                      double.parse((fiValue.totalSell ?? '0')
+                                      double.parse((totalFiSell ?? '0')
                                           .replaceAll(RegExp(r','), ''));
                                   return Text(
                                     '${NumUtils.formatDouble((totalSell - totalBuy))} Tỷ',
@@ -172,11 +188,19 @@ class _MarketAnalysisTabState extends State<MarketAnalysisTab>
                                   }
 
                                   var piValue = snapshot.data!; //fiValue
+                                  final totalPiBuy =
+                                      orgFilter.filterOrg == MatchType.Match
+                                          ? piValue.totalBuy
+                                          : piValue.totalPTBuy;
 
-                                  var piTotal = double.parse(
-                                          (piValue.totalBuy ?? '0')
-                                              .replaceAll(RegExp(r','), '')) -
-                                      double.parse((piValue.totalSell ?? '0')
+                                  final totalPiSell =
+                                      orgFilter.filterOrg == MatchType.Match
+                                          ? piValue.totalSell
+                                          : piValue.totalPTSell;
+
+                                  var piTotal = double.parse((totalPiBuy ?? '0')
+                                          .replaceAll(RegExp(r','), '')) -
+                                      double.parse((totalPiSell ?? '0')
                                           .replaceAll(RegExp(r','), ''));
                                   return Text(
                                     '${NumUtils.formatDouble(piTotal)} Tỷ',
@@ -232,10 +256,18 @@ class _MarketAnalysisTabState extends State<MarketAnalysisTab>
                                   }
 
                                   var piValue = snapshot.data!; //fiValue
-                                  var piTotal = double.parse(
-                                          (piValue.totalBuy ?? '0')
-                                              .replaceAll(RegExp(r','), '')) -
-                                      double.parse((piValue.totalSell ?? '0')
+                                  final totalPiBuy =
+                                      orgFilter.filterOrg == MatchType.Match
+                                          ? piValue.totalBuy
+                                          : piValue.totalPTBuy;
+
+                                  final totalPiSell =
+                                      orgFilter.filterOrg == MatchType.Match
+                                          ? piValue.totalSell
+                                          : piValue.totalPTSell;
+                                  var piTotal = double.parse((totalPiBuy ?? '0')
+                                          .replaceAll(RegExp(r','), '')) -
+                                      double.parse((totalPiSell ?? '0')
                                           .replaceAll(RegExp(r','), ''));
                                   return Text(
                                     '${NumUtils.formatDouble(piTotal)} Tỷ',
@@ -299,13 +331,13 @@ class _MarketAnalysisTabState extends State<MarketAnalysisTab>
             ),
             GestureDetector(
               onTap: () async {
-                var index = await showCupertinoModalPopup<Index>(
+                var index = await showCupertinoModalPopup<OrgFilter>(
                     context: context,
                     builder: (context) {
-                      return BottomSheet(index: indexSelect);
+                      return BottomSheet(orgFilter: orgFilter);
                     });
                 if (index != null) {
-                  indexSelect = index;
+                  orgFilter = index;
                   setState(() {
                     initData();
                   });
@@ -344,20 +376,20 @@ class _MarketAnalysisTabState extends State<MarketAnalysisTab>
 }
 
 class BottomSheet extends StatefulWidget {
-  final Index? index;
+  final OrgFilter? orgFilter;
 
-  const BottomSheet({Key? key, this.index}) : super(key: key);
+  const BottomSheet({Key? key, this.orgFilter}) : super(key: key);
 
   @override
   State<BottomSheet> createState() => _BottomSheetState();
 }
 
 class _BottomSheetState extends State<BottomSheet> {
-  Index? indexSelected;
+  OrgFilter? orgFiltered;
 
   @override
   void initState() {
-    indexSelected = widget.index;
+    orgFiltered = widget.orgFilter;
     super.initState();
   }
 
@@ -417,10 +449,36 @@ class _BottomSheetState extends State<BottomSheet> {
                     .map((index) => CheckBoxMarket(
                           key: UniqueKey(),
                           index: index,
-                          indexInit: indexSelected,
+                          indexInit: orgFiltered?.filterInd,
                           onChanged: (Index index) {
                             setState(() {
-                              indexSelected = index;
+                              orgFiltered?.filterInd = index;
+                            });
+                          },
+                        ))
+                    .toList(),
+              ),
+              const SizedBox(height: 16),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Text(
+                  "Loại",
+                  style: Theme.of(context)
+                      .textTheme
+                      .labelLarge
+                      ?.copyWith(fontWeight: FontWeight.w700, fontSize: 14),
+                ),
+              ),
+              const SizedBox(height: 10),
+              Column(
+                children: MatchType.values
+                    .map((index) => CheckBoxMatchType(
+                          key: UniqueKey(),
+                          matchType: index,
+                          typeInit: orgFiltered?.filterOrg,
+                          onChanged: (MatchType index) {
+                            setState(() {
+                              orgFiltered?.filterOrg = index;
                             });
                           },
                         ))
@@ -433,7 +491,7 @@ class _BottomSheetState extends State<BottomSheet> {
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: ElevatedButton(
                       onPressed: () {
-                        Navigator.pop(context, indexSelected);
+                        Navigator.pop(context, orgFiltered);
                       },
                       child: const Text("Áp dụng")),
                 ),
@@ -502,6 +560,73 @@ class _CheckBoxMarketState extends State<CheckBoxMarket> {
         ),
         title: Text(
           widget.index.market,
+          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+              color:
+                  _isSelect ? AppColors.color_secondary : AppColors.neutral_03),
+        ),
+      ),
+    );
+  }
+}
+
+class CheckBoxMatchType extends StatefulWidget {
+  final MatchType matchType;
+  final MatchType? typeInit;
+
+  final ValueChanged<MatchType> onChanged;
+
+  const CheckBoxMatchType(
+      {Key? key,
+      required this.matchType,
+      required this.onChanged,
+      this.typeInit})
+      : super(key: key);
+
+  @override
+  State<CheckBoxMatchType> createState() => _CheckBoxMatchTypeState();
+}
+
+class _CheckBoxMatchTypeState extends State<CheckBoxMatchType> {
+  late bool _isSelect;
+
+  @override
+  void initState() {
+    _isSelect = widget.matchType == widget.typeInit;
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      child: ListTile(
+        onTap: () {
+          setState(() {
+            _isSelect = !_isSelect;
+            widget.onChanged.call(widget.matchType);
+          });
+        },
+        minLeadingWidth: 20,
+        leading: Container(
+          height: 20,
+          width: 20,
+          alignment: Alignment.center,
+          padding: const EdgeInsets.all(4),
+          decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              border: Border.all(
+                  color: _isSelect
+                      ? AppColors.color_secondary
+                      : AppColors.neutral_03)),
+          child: Visibility(
+            visible: _isSelect,
+            child: Container(
+              decoration: const BoxDecoration(
+                  shape: BoxShape.circle, color: AppColors.color_secondary),
+            ),
+          ),
+        ),
+        title: Text(
+          widget.matchType.typeName,
           style: Theme.of(context).textTheme.bodyMedium?.copyWith(
               color:
                   _isSelect ? AppColors.color_secondary : AppColors.neutral_03),

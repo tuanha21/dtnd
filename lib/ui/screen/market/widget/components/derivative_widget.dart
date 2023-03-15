@@ -101,22 +101,28 @@ class _DerivativeWidgetState extends State<DerivativeWidget> {
         FutureBuilder<List<DerivativeResModel>?>(
             future: listStocks,
             builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                var list = snapshot.data;
+              print(snapshot.stackTrace);
+              print(snapshot.connectionState);
+              if (snapshot.connectionState == ConnectionState.done) {
+                if (snapshot.hasData) {
+                  var list = snapshot.data;
 
-                return ListView.separated(
-                    shrinkWrap: true,
-                    itemCount: list!.length,
-                    itemBuilder: (context, index) {
-                      return DerivativeComponent(model: list[index]);
-                    },
-                    separatorBuilder: (context, index) {
-                      return const Divider(
-                        thickness: 2,
-                        height: 0,
-                        color: Color.fromRGBO(245, 248, 255, 1),
-                      );
-                    });
+                  return ListView.separated(
+                      shrinkWrap: true,
+                      itemCount: list!.length,
+                      itemBuilder: (context, index) {
+                        return DerivativeComponent(model: list[index]);
+                      },
+                      separatorBuilder: (context, index) {
+                        return const Divider(
+                          thickness: 2,
+                          height: 0,
+                          color: Color.fromRGBO(245, 248, 255, 1),
+                        );
+                      });
+                } else {
+                  return const SizedBox();
+                }
               } else {
                 return const Center(
                   child: CircularProgressIndicator(),
