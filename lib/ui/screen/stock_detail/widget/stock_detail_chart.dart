@@ -121,10 +121,10 @@ class _StockDetailChartState extends State<StockDetailChart>
                               )..setAttribute(charts.measureAxisIdKey,
                                   "secondaryMeasureAxisId")),
                       layoutConfig: charts.LayoutConfig(
-                          bottomMarginSpec: charts.MarginSpec.defaultSpec,
+                          bottomMarginSpec: charts.MarginSpec.fromPercent(minPercent: 5),
                           leftMarginSpec: charts.MarginSpec.defaultSpec,
                           rightMarginSpec: charts.MarginSpec.defaultSpec,
-                          topMarginSpec: charts.MarginSpec.defaultSpec),
+                          topMarginSpec: charts.MarginSpec.fromPercent(minPercent: 10)),
                       defaultRenderer:
                           charts.LineRendererConfig(smoothLine: true),
                       domainAxis: domainSpec(minX, maxX),
