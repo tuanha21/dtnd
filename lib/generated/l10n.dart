@@ -880,6 +880,16 @@ class S {
     );
   }
 
+  /// `MK price`
+  String get mk_price {
+    return Intl.message(
+      'MK price',
+      name: 'mk_price',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Available balanc`
   String get available_balanc {
     return Intl.message(

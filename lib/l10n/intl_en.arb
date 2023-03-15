@@ -89,6 +89,7 @@
     "capital_value": "Capital value",
     "stock_value": "Stock value",
     "mk_value": "MK value",
+    "mk_price": "MK price",
     "available_balanc": "Available balanc",
     "total_vol": "Total vol",
     "normal_vol": "Normal vol",

@@ -279,6 +279,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Minimum purchasing power"),
         "minutes": MessageLookupByLibrary.simpleMessage(" minutes"),
         "minutes_ago": m6,
+        "mk_price": MessageLookupByLibrary.simpleMessage("MK price"),
         "mk_value": MessageLookupByLibrary.simpleMessage("MK value"),
         "money_trading": MessageLookupByLibrary.simpleMessage("Money trading"),
         "net_assets": MessageLookupByLibrary.simpleMessage("Net assets"),

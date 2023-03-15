@@ -277,6 +277,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "minimum_ee": MessageLookupByLibrary.simpleMessage("Sức mua tối thiểu"),
         "minutes": MessageLookupByLibrary.simpleMessage(" phút"),
         "minutes_ago": m6,
+        "mk_price": MessageLookupByLibrary.simpleMessage("Giá TT"),
         "mk_value": MessageLookupByLibrary.simpleMessage("Giá trị TT"),
         "money_trading": MessageLookupByLibrary.simpleMessage("Giao dịch tiền"),
         "net_assets": MessageLookupByLibrary.simpleMessage("Tài sản ròng"),

@@ -231,7 +231,7 @@ class _InvestmentCatalogWidgetState extends State<InvestmentCatalogWidget> {
                                                   .prefixIcon(size: 12),
                                             ),
                                           Text(
-                                            NumUtils.formatInteger(
+                                            NumUtils.formatDouble(
                                                 widget.data?.avgPrice),
                                             style: AppTextStyle.labelMedium_12
                                                 .copyWith(
@@ -246,7 +246,7 @@ class _InvestmentCatalogWidgetState extends State<InvestmentCatalogWidget> {
                                         MainAxisAlignment.spaceBetween,
                                     children: [
                                       Text(
-                                        S.of(context).mk_value,
+                                        S.of(context).mk_price,
                                         style: AppTextStyle.labelSmall_10,
                                       ),
                                       const SizedBox(height: 4),
@@ -260,7 +260,7 @@ class _InvestmentCatalogWidgetState extends State<InvestmentCatalogWidget> {
                                                   .prefixIcon(size: 12),
                                             ),
                                           Text(
-                                            NumUtils.formatInteger(
+                                            NumUtils.formatDouble(
                                                 widget.data?.marketPrice),
                                             style: AppTextStyle.labelMedium_12
                                                 .copyWith(

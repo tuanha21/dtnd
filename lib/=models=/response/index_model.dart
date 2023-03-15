@@ -20,9 +20,9 @@ class IndexModel {
     this.stockIndayTradingHistory.value = stockIndayTradingHistory;
     this.stockDayTradingHistory.value = stockDayTradingHistory;
     if (this.stockDayTradingHistory.value != null &&
-        (this.stockDayTradingHistory.value?.o?.isNotEmpty ?? false) &&
+        (this.stockDayTradingHistory.value?.o.isNotEmpty ?? false) &&
         indexDetailResponse.oIndex != null) {
-      this.stockDayTradingHistory.value!.o!.last = indexDetailResponse.oIndex!;
+      this.stockDayTradingHistory.value!.o.last = indexDetailResponse.oIndex!;
     }
   }
 
@@ -44,8 +44,8 @@ class IndexModel {
       ..ot.value = data["data"]["ot"].split('|')
       ..value.value = data['data']['value'];
     if (stockDayTradingHistory.value != null &&
-        (stockDayTradingHistory.value!.c?.isNotEmpty ?? false)) {
-      stockDayTradingHistory.value!.c!.last = data["data"]["cIndex"];
+        (stockDayTradingHistory.value!.c.isNotEmpty)) {
+      stockDayTradingHistory.value!.c.last = data["data"]["cIndex"];
       stockDayTradingHistory.refresh();
     }
   }

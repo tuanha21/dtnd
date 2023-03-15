@@ -88,6 +88,7 @@
     "capital_value": "Giá trị vốn",
     "stock_value": "Giá trị chứng khoán",
     "mk_value": "Giá trị TT",
+    "mk_price": "Giá TT",
     "available_balanc": "SD khả dụng",
     "total_vol": "Tổng KL",
     "normal_vol": "KL thường",
