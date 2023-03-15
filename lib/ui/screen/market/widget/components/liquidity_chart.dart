@@ -1,10 +1,7 @@
 import 'package:dtnd/=models=/response/liquidity_model.dart';
 import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
-import 'package:dtnd/ui/theme/app_image.dart';
-import 'package:dtnd/utilities/time_utils.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 
 class LiquidityChart extends StatefulWidget {
@@ -22,48 +19,47 @@ class _LiquidityChartState extends State<LiquidityChart> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const SizedBox(height: 24),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: Row(
-            children: [
-              Text(
-                'Thanh khoản',
-                style: Theme.of(context)
-                    .textTheme
-                    .labelMedium
-                    ?.copyWith(fontWeight: FontWeight.w700, fontSize: 14),
-              ),
-              const SizedBox(
-                width: 4,
-              ),
-              GestureDetector(
-                onTap: () => showDialog<String>(
-                  context: context,
-                  builder: (BuildContext context) => Dialog(
-                    child: Container(
-                      padding: const EdgeInsets.all(16),
-                      decoration: BoxDecoration(
-                          color: AppColors.light_bg,
-                          borderRadius: BorderRadius.circular(8)),
-                      width: MediaQuery.of(context).size.width,
-                      child: Text(
-                          'Biểu đồ so sánh dòng tiền tại dùng thời điểm với phiên trước, trung bình 1 tuần. Dữ liệu ngày ${TimeUtilities.parseDateToString(DateTime.now())}',
-                          style: Theme.of(context)
-                              .textTheme
-                              .labelMedium
-                              ?.copyWith(
-                                  fontWeight: FontWeight.w400, fontSize: 14)),
-                    ),
-                  ),
-                ),
-                child: SvgPicture.asset(
-                  AppImages.infoCircle,
-                ),
-              )
-            ],
-          ),
-        ),
+        // Padding(
+        //   padding: const EdgeInsets.symmetric(horizontal: 16),
+        //   child: Row(
+        //     children: [
+        //       Text(
+        //         'Thanh khoản',
+        //         style: Theme.of(context)
+        //             .textTheme
+        //             .labelMedium
+        //             ?.copyWith(fontWeight: FontWeight.w700, fontSize: 14),
+        //       ),
+        //       const SizedBox(
+        //         width: 4,
+        //       ),
+        //       GestureDetector(
+        //         onTap: () => showDialog<String>(
+        //           context: context,
+        //           builder: (BuildContext context) => Dialog(
+        //             child: Container(
+        //               padding: const EdgeInsets.all(16),
+        //               decoration: BoxDecoration(
+        //                   color: AppColors.light_bg,
+        //                   borderRadius: BorderRadius.circular(8)),
+        //               width: MediaQuery.of(context).size.width,
+        //               child: Text(
+        //                   'Biểu đồ so sánh dòng tiền tại dùng thời điểm với phiên trước, trung bình 1 tuần. Dữ liệu ngày ${TimeUtilities.parseDateToString(DateTime.now())}',
+        //                   style: Theme.of(context)
+        //                       .textTheme
+        //                       .labelMedium
+        //                       ?.copyWith(
+        //                           fontWeight: FontWeight.w400, fontSize: 14)),
+        //             ),
+        //           ),
+        //         ),
+        //         child: SvgPicture.asset(
+        //           AppImages.infoCircle,
+        //         ),
+        //       )
+        //     ],
+        //   ),
+        // ),
         FutureBuilder<LiquidityModel>(
             future: widget.liquidityModel,
             builder: (context, snapshot) {

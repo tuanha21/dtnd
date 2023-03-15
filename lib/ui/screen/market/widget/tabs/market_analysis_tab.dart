@@ -33,8 +33,8 @@ class _MarketAnalysisTabState extends State<MarketAnalysisTab>
   late Future<IndContrib> indFvalue;
 
   void initData() {
-    print(orgFilter.filterOrg.code);
-    print(orgFilter.filterInd.market);
+    // print(orgFilter.filterOrg.code);
+    // print(orgFilter.filterInd.market);
     piValue = dataCenterService.getPIvalue(orgFilter.filterInd.market);
     fiValue = dataCenterService.getFIvalue(orgFilter.filterInd.market);
     indFvalue = dataCenterService.getIndFvalue(orgFilter.filterInd.market);
