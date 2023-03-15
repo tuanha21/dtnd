@@ -149,32 +149,78 @@ class _ForeignWidgetState extends State<ForeignWidget> {
                               flex: 4,
                               child: Align(
                                 alignment: Alignment.centerRight,
-                                child: Text(
-                                  "${stockBoard.fGBuyValue?.toStringAsFixed(2)}T",
-                                  style: title?.copyWith(
-                                      fontWeight: FontWeight.w600,
-                                      color: AppColors.primary_01),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    Text(
+                                      "${stockBoard.fGBuyValue?.toStringAsFixed(2)}",
+                                      style: title?.copyWith(
+                                          fontWeight: FontWeight.w600,
+                                          color: AppColors.semantic_01),
+                                    ),
+                                    const SizedBox(
+                                      width: 4,
+                                    ),
+                                    Text(
+                                      "tỷ",
+                                      style: title?.copyWith(
+                                          fontWeight: FontWeight.w400,
+                                          color: AppColors.neutral_02),
+                                    ),
+                                  ],
                                 ),
                               )),
                           Expanded(
                               flex: 4,
                               child: Align(
                                 alignment: Alignment.centerRight,
-                                child: Text(
-                                  "${stockBoard.fGSellValue?.toStringAsFixed(2)}T",
-                                  style: title?.copyWith(
-                                      fontWeight: FontWeight.w600,
-                                      color: AppColors.primary_01),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    Text(
+                                      "${stockBoard.fGSellValue?.toStringAsFixed(2)}",
+                                      style: title?.copyWith(
+                                          fontWeight: FontWeight.w600,
+                                          color: AppColors.semantic_03),
+                                    ),
+                                    const SizedBox(
+                                      width: 4,
+                                    ),
+                                    Text(
+                                      "tỷ",
+                                      style: title?.copyWith(
+                                          fontWeight: FontWeight.w400,
+                                          color: AppColors.neutral_02),
+                                    ),
+                                  ],
                                 ),
                               )),
                           Expanded(
                               flex: 6,
                               child: Align(
                                 alignment: Alignment.centerRight,
-                                child: Text(
-                                  NumUtils.formatDouble(stockBoard.fGNetValue),
-                                  style: title?.copyWith(
-                                      fontWeight: FontWeight.w600),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    Text(
+                                      NumUtils.formatDouble(
+                                          stockBoard.fGNetValue),
+                                      style: title?.copyWith(
+                                          fontWeight: FontWeight.w600,
+                                          color: stockBoard.fGNetValue! > 0
+                                              ? AppColors.semantic_01
+                                              : AppColors.semantic_03),
+                                    ),
+                                    const SizedBox(
+                                      width: 4,
+                                    ),
+                                    Text(
+                                      "tỷ",
+                                      style: title?.copyWith(
+                                          fontWeight: FontWeight.w400,
+                                          color: AppColors.neutral_02),
+                                    ),
+                                  ],
                                 ),
                               ))
                         ],

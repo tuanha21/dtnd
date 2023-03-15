@@ -9,12 +9,12 @@ import 'package:dtnd/utilities/logger.dart';
 import 'package:dtnd/utilities/num_utils.dart';
 import 'package:dtnd/utilities/time_utils.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 
 //custom chart
 import 'package:charts_flutter/src/text_element.dart' as chart_text;
 import 'package:charts_flutter/src/text_style.dart' as chart_style;
+import 'package:flutter_svg/flutter_svg.dart';
 
 class LiquidityChart extends StatefulWidget {
   final Future<LiquidityModel> liquidityModel;
