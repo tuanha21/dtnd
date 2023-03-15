@@ -4,6 +4,7 @@ import 'package:dtnd/=models=/response/liquidity_model.dart';
 import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
+import 'package:dtnd/utilities/charts_util.dart';
 import 'package:dtnd/utilities/logger.dart';
 import 'package:dtnd/utilities/num_utils.dart';
 import 'package:dtnd/utilities/time_utils.dart';
@@ -178,7 +179,9 @@ class _LiquidityChartState extends State<LiquidityChart> {
                           showVerticalFollowLine: charts
                               .LinePointHighlighterFollowLineType.nearest),
                       charts.LinePointHighlighter(
-                        symbolRenderer: _CustomTooltipRenderer(size: size),
+                        symbolRenderer: CustomTooltipRenderer(
+                            _TooltipData.instance,
+                            size: size),
                       ),
                     ],
                     selectionModels: [
@@ -186,15 +189,14 @@ class _LiquidityChartState extends State<LiquidityChart> {
                         updatedListener: (charts.SelectionModel model) {
                           if (model.hasDatumSelection) {
                             final selectedDatum = model.selectedDatum;
-                            _TooltipData.setData(
-                                liquidityModel.time
-                                    .elementAt(selectedDatum.first.index ?? 0),
-                                NumUtils.formatDouble(
-                                    selectedDatum.first.datum),
-                                NumUtils.formatDouble(
-                                    selectedDatum.elementAt(1).datum),
-                                NumUtils.formatDouble(
-                                    selectedDatum.elementAt(2).datum));
+                            final datas = [
+                              liquidityModel.time
+                                  .elementAt(selectedDatum.first.index ?? 0),
+                              "Hiện tại : ${NumUtils.formatDouble(selectedDatum.first.datum)} tỷ",
+                              "Phiên trước : ${NumUtils.formatDouble(selectedDatum.elementAt(1).datum)} tỷ",
+                              "Tuần trước : ${NumUtils.formatDouble(selectedDatum.elementAt(2).datum)} tỷ",
+                            ];
+                            _TooltipData.instance.setData(datas);
                           }
                         },
                       ),
@@ -245,95 +247,7 @@ class _LiquidityChartState extends State<LiquidityChart> {
   );
 }
 
-class _CustomTooltipRenderer extends charts.CircleSymbolRenderer {
-  final Size size;
-
-  _CustomTooltipRenderer({required this.size});
-
-  @override
-  void paint(charts.ChartCanvas canvas, Rectangle<num> bounds,
-      {List<int>? dashPattern,
-      charts.Color? fillColor,
-      charts.FillPatternType? fillPattern,
-      charts.Color? strokeColor,
-      double? strokeWidthPx}) {
-    super.paint(canvas, bounds,
-        dashPattern: dashPattern,
-        fillColor: fillColor,
-        strokeColor: strokeColor,
-        strokeWidthPx: strokeWidthPx);
-
-    final List<String> listElement = [
-      'Hiện tại : ${_TooltipData.instance.currentLiquidity} tỷ VNĐ',
-      'Phiên trước : ${_TooltipData.instance.lastdayLiquidity} tỷ VNĐ',
-      'Tuần trước : ${_TooltipData.instance.lastweekLiquidity} tỷ VNĐ',
-    ];
-
-    int maxLenght = 0;
-    for (String element in listElement) {
-      if (element.length > maxLenght) {
-        maxLenght = element.length;
-      }
-    }
-
-    canvas.drawRect(
-      Rectangle(bounds.left - bounds.width - 30, bounds.height - 10,
-          bounds.width + (maxLenght * 4), bounds.height + (13 * 4)),
-      fill: charts.Color.fromOther(
-          color: const charts.Color(a: 100, b: 0, g: 0, r: 0).darker),
-    );
-
-    chart_style.TextStyle textStyle = chart_style.TextStyle();
-
-    textStyle.color = charts.Color.white;
-    textStyle.fontSize = 8;
-    for (var i = 0; i < 3; i++) {
-      canvas.drawText(
-        chart_text.TextElement(listElement.elementAt(i), style: textStyle),
-        (bounds.left - bounds.width - 25).round(),
-        getHeight(i + 1).round(),
-      );
-    }
-
-    canvas.drawText(
-      chart_text.TextElement('${_TooltipData.instance.time}', style: textStyle),
-      (bounds.left - bounds.width - 25).round(),
-      getHeight(0).round(),
-    );
-  }
-
-  int getHeight(int index) {
-    return index * 8 + (index + 1) * 5;
-  }
-}
-
-class _TooltipData {
+class _TooltipData extends TooltipData {
   _TooltipData._internal();
-  static final _TooltipData _instance = _TooltipData._internal();
-  static _TooltipData get instance => _instance;
-  String? time;
-  String? currentLiquidity;
-  String? lastdayLiquidity;
-  String? lastweekLiquidity;
-  factory _TooltipData({
-    String? time,
-    String? currentLiquidity,
-    String? lastdayLiquidity,
-    String? lastweekLiquidity,
-  }) {
-    setData(time, currentLiquidity, lastdayLiquidity, lastweekLiquidity);
-    return _instance;
-  }
-
-  static void setData(
-    String? time,
-    String? currentLiquidity,
-    String? lastdayLiquidity,
-    String? lastweekLiquidity,
-  ) {
-    _instance.time = time;
-    _instance.currentLiquidity = currentLiquidity;
-    _instance.lastdayLiquidity = lastdayLiquidity;
-    _instance.lastweekLiquidity = lastweekLiquidity;
-  }
+  static final _TooltipData instance = _TooltipData._internal();
 }

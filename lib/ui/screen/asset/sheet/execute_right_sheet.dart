@@ -41,8 +41,7 @@ class _ExecuteRightSheetState extends State<ExecuteRightSheet> {
   @override
   void initState() {
     volumnController = TextEditingController(
-        text:
-            (widget.unexecutedRightModel.cSHARERIGHT?.toInt() ?? 0).toString());
+        text: (widget.unexecutedRightModel.cSHARERIGHT.toInt()).toString());
     super.initState();
   }
 
@@ -217,7 +216,7 @@ class _ExecuteRightSheetState extends State<ExecuteRightSheet> {
                     interval: (p0) {
                       return 1;
                     },
-                    defaultValue: widget.unexecutedRightModel.cSHARERIGHT ?? 0,
+                    defaultValue: widget.unexecutedRightModel.cSHARERIGHT,
                     // onChanged: onChangedPrice,
                   ),
                 ),

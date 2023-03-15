@@ -1,6 +1,7 @@
 import 'package:dtnd/=models=/response/top_influence_model.dart';
 import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
+import 'package:dtnd/utilities/charts_util.dart';
 import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 
@@ -78,4 +79,9 @@ class _TopInfluenceChartState extends State<TopInfluenceChart> {
       ],
     );
   }
+}
+
+class _TooltipData extends TooltipData {
+  _TooltipData._internal();
+  static final _TooltipData instance = _TooltipData._internal();
 }

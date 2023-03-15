@@ -9,6 +9,7 @@ import 'package:dtnd/data/implementations/network_service.dart';
 import 'package:dtnd/generated/l10n.dart' as s;
 import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/screen/home/home_controller.dart';
+import 'package:dtnd/ui/screen/home/widget/commodity_item.dart';
 import 'package:dtnd/ui/screen/home/widget/world_index.dart';
 import 'package:dtnd/ui/screen/stock_detail/widget/k_chart.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
@@ -36,7 +37,7 @@ class _HomeMarketTodayState extends State<HomeMarketToday>
 
   @override
   void initState() {
-    _tabController = TabController(length: 2, vsync: this);
+    _tabController = TabController(length: 3, vsync: this);
     super.initState();
   }
 
@@ -66,6 +67,7 @@ class _HomeMarketTodayState extends State<HomeMarketToday>
                 tabs: <Widget>[
                   Text(S.of(context).vietnam),
                   Text(S.of(context).world),
+                  Text(S.of(context).commodities),
                 ],
               ),
             ),
@@ -101,9 +103,36 @@ class _HomeMarketTodayState extends State<HomeMarketToday>
                 }),
               ),
             )
+          else if (_tabController.index == 2)
+            SizedBox.fromSize(
+              size: Size(MediaQuery.of(context).size.width, 76),
+              child: ScrollConfiguration(
+                behavior: ScrollConfiguration.of(context).copyWith(
+                  dragDevices: {
+                    PointerDeviceKind.touch,
+                    PointerDeviceKind.mouse,
+                  },
+                ),
+                child: Obx(() {
+                  return ListView.separated(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    scrollDirection: Axis.horizontal,
+                    physics: const AlwaysScrollableScrollPhysics(),
+                    itemCount: homeController.worldIndex.length,
+                    itemBuilder: (context, index) => CommodityItem(
+                      data: homeController.commodities.elementAt(index),
+                    ),
+                    separatorBuilder: (BuildContext context, int index) =>
+                        const SizedBox(
+                      width: 8,
+                    ),
+                  );
+                }),
+              ),
+            )
           else
             SizedBox.fromSize(
-              size: Size(MediaQuery.of(context).size.width, 72),
+              size: Size(MediaQuery.of(context).size.width, 76),
               child: ScrollConfiguration(
                 behavior: ScrollConfiguration.of(context).copyWith(
                   dragDevices: {
@@ -173,6 +202,8 @@ class _HomeMarketTodayState extends State<HomeMarketToday>
                 );
               },
             )
+          else if (_tabController.index == 2)
+            Container()
           else
             Obx(() {
               final cwIndex = homeController.currentWorldIndexModel.value;
@@ -281,7 +312,7 @@ class HomeIndexItem extends StatelessWidget {
     final themeMode = AppService.instance.themeMode.value;
     BoxBorder? border;
     if (selectedIndex != null && data.index == selectedIndex) {
-      border = Border.all(color: AppColors.neutral_05);
+      border = Border.all(color: AppColors.neutral_04);
     }
     VoidCallback? onTap;
     if (onSelected != null) {

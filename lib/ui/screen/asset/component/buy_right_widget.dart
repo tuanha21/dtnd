@@ -13,6 +13,7 @@ import 'package:dtnd/ui/theme/app_textstyle.dart';
 import 'package:dtnd/ui/widget/button/single_color_text_button.dart';
 import 'package:dtnd/ui/widget/expanded_widget.dart';
 import 'package:dtnd/ui/widget/icon/stock_icon.dart';
+import 'package:dtnd/utilities/logger.dart';
 import 'package:dtnd/utilities/num_utils.dart';
 import 'package:flutter/material.dart';
 
@@ -186,7 +187,7 @@ class _BuyRightWidgetState extends State<BuyRightWidget> {
                         ),
                         const SizedBox(height: 4),
                         Text(
-                          "${NumUtils.formatInteger(widget.data?.cSHARERIGHT)}/${NumUtils.formatDouble(widget.data?.cCASHBUYALL)}",
+                          "${NumUtils.formatInteger(widget.data?.shareAvailBuy)}/${NumUtils.formatDouble(widget.data?.cashAvailRight)}",
                           style: AppTextStyle.labelMedium_12
                               .copyWith(color: AppColors.neutral_03),
                         ),

@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:dtnd/=models=/commodity_model.dart';
 import 'package:dtnd/=models=/index.dart';
 import 'package:dtnd/=models=/response/index_model.dart';
 import 'package:dtnd/=models=/response/top_signal_stock_model.dart';
@@ -51,6 +52,7 @@ class HomeController {
   final Rx<List<TrashModel>?> topVolumnToday = Rxn();
   List<NewsModel> news = [];
   List<WorldIndexModel> worldIndex = [];
+  List<CommodityModel> commodities = [];
   late final Set<IndexModel> listIndexs;
   final Rx<IndexModel?> currentIndexModel = Rxn();
   final Rx<WorldIndexModel?> currentWorldIndexModel = Rxn();
@@ -131,6 +133,11 @@ class HomeController {
     return worldIndex;
   }
 
+  Future<List<CommodityModel>> getCommodities() async {
+    commodities = await networkService.getCommodity();
+    return commodities;
+  }
+
   Future<void> refresh() async {
     _initProcess.sink.add(0 / _initStep);
     indexInitialized.value = false;
@@ -157,6 +164,7 @@ class HomeController {
     _initProcess.sink.add(4 / _initStep);
     suggestInitialized.value = true;
     getWorldIndex();
+    getCommodities();
     // getPriceIncrease();
     // getPriceDecrease();
     // // getTopForeign();

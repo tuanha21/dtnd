@@ -82,154 +82,188 @@ class _InvestmentCatalogWidgetState extends State<InvestmentCatalogWidget> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Container(
-          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-          decoration: BoxDecoration(
+        Material(
+          borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
+          child: InkWell(
+            onTap: () {
+              if (widget.data != null) {
+                Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => AssetStockDetailScreen(
+                    stockCode: widget.data!.symbol,
+                    porfolioStock: widget.data!,
+                  ),
+                ));
+              }
+            },
             borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
-            color: themeMode.isDark ? AppColors.bg_2 : AppColors.neutral_06,
-          ),
-          child: Column(
-            children: [
-              SizedBox(
-                height: 40,
-                child: Row(
-                  children: [
-                    StockIcon(
-                      color: Colors.white,
-                      stockCode: widget.data?.symbol,
-                      onTap: () {
-                        if (widget.data != null) {
-                          Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => AssetStockDetailScreen(
-                              stockCode: widget.data!.symbol,
-                              porfolioStock: widget.data!,
-                            ),
-                          ));
-                        }
-                      },
-                    ),
-
-                    const SizedBox(width: 8),
-                    // Expanded(
-                    //   child: Obx(() {
-                    //     if (data.stockTradingHistory.value?.c?.isEmpty ?? true) {
-                    //       return Container();
-                    //     } else {
-                    //       return Container(
-                    //         constraints: BoxConstraints(
-                    //             minWidth: MediaQuery.of(context).size.width / 5,
-                    //             maxWidth: MediaQuery.of(context).size.width / 4),
-                    //         child: HomeMarketOverviewItemChart(data: data),
-                    //       );
-                    //     }
-                    //   }),
-                    // ),
-                    Expanded(
-                      child: Stack(
-                        children: [
-                          AnimatedOpacity(
-                            opacity: expand ? 1 : 0,
-                            duration: const Duration(milliseconds: 200),
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 2),
-                              child: Row(
-                                children: [
-                                  Expanded(
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Row(
+            child: Ink(
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+              decoration: BoxDecoration(
+                borderRadius:
+                    const BorderRadius.vertical(top: Radius.circular(12)),
+                color: themeMode.isDark ? AppColors.bg_2 : AppColors.neutral_06,
+              ),
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: 40,
+                    child: Row(
+                      children: [
+                        StockIcon(
+                          color: Colors.white,
+                          stockCode: widget.data?.symbol,
+                        ),
+                        // const SizedBox(width: 2),
+                        // SizedBox(
+                        //   width: 40,
+                        //   child: Text(
+                        //     widget.data?.symbol ?? "-",
+                        //     style: Theme.of(context)
+                        //         .textTheme
+                        //         .titleSmall!
+                        //         .copyWith(fontWeight: FontWeight.w600),
+                        //   ),
+                        // ),
+                        const SizedBox(width: 8),
+                        // Expanded(
+                        //   child: Obx(() {
+                        //     if (data.stockTradingHistory.value?.c?.isEmpty ?? true) {
+                        //       return Container();
+                        //     } else {
+                        //       return Container(
+                        //         constraints: BoxConstraints(
+                        //             minWidth: MediaQuery.of(context).size.width / 5,
+                        //             maxWidth: MediaQuery.of(context).size.width / 4),
+                        //         child: HomeMarketOverviewItemChart(data: data),
+                        //       );
+                        //     }
+                        //   }),
+                        // ),
+                        Expanded(
+                          child: Stack(
+                            children: [
+                              AnimatedOpacity(
+                                opacity: expand ? 1 : 0,
+                                duration: const Duration(milliseconds: 200),
+                                child: Padding(
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 2),
+                                  child: Row(
+                                    children: [
+                                      Expanded(
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
                                           children: [
-                                            Text(
-                                              widget.data?.symbol ?? "-",
-                                              style: textTheme.titleSmall,
+                                            Row(
+                                              children: [
+                                                Text(
+                                                  widget.data?.symbol ?? "-",
+                                                  style: textTheme.titleSmall,
+                                                ),
+                                                const SizedBox(width: 8),
+                                                Text.rich(
+                                                  TextSpan(children: [
+                                                    WidgetSpan(
+                                                        child: widget.data
+                                                                ?.prefixIcon(
+                                                                    size: 12) ??
+                                                            const SizedBox()),
+                                                    TextSpan(
+                                                      text:
+                                                          " ${NumUtils.formatDouble(widget.data?.marketPrice)}",
+                                                    )
+                                                  ]),
+                                                  maxLines: 1,
+                                                  style: AppTextStyle
+                                                      .labelMedium_12
+                                                      .copyWith(
+                                                    fontWeight: FontWeight.w600,
+                                                    color: widget.data?.color,
+                                                  ),
+                                                ),
+                                              ],
                                             ),
-                                            const SizedBox(width: 8),
-                                            Text.rich(
-                                              TextSpan(children: [
-                                                WidgetSpan(
-                                                    child: widget.data
-                                                            ?.prefixIcon(
-                                                                size: 12) ??
-                                                        const SizedBox()),
-                                                TextSpan(
-                                                  text:
-                                                      " ${NumUtils.formatDouble(widget.data?.marketPrice)}",
-                                                )
-                                              ]),
-                                              maxLines: 1,
-                                              style: AppTextStyle.labelMedium_12
-                                                  .copyWith(
-                                                fontWeight: FontWeight.w600,
-                                                color: widget.data?.color,
-                                              ),
+                                            Row(
+                                              children: [
+                                                Flexible(
+                                                  child: Text(
+                                                    stock?.nameShort ?? "",
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                    style: AppTextStyle
+                                                        .labelSmall_10
+                                                        .copyWith(
+                                                            color: AppColors
+                                                                .neutral_03),
+                                                  ),
+                                                ),
+                                              ],
                                             ),
+                                            // Text(
+                                            //   "${(widget.volPc ?? 0).toStringAsFixed(2)}%",
+                                            //   style: textTheme.bodySmall!
+                                            //       .copyWith(color: AppColors.neutral_04),
+                                            // ),
                                           ],
                                         ),
-                                        Row(
-                                          children: [
-                                            Flexible(
-                                              child: Text(
-                                                stock?.nameShort ?? "",
-                                                overflow: TextOverflow.ellipsis,
-                                                style: AppTextStyle
-                                                    .labelSmall_10
-                                                    .copyWith(
-                                                        color: AppColors
-                                                            .neutral_03),
-                                              ),
-                                            ),
-                                          ],
+                                      ),
+                                      SizedBox.square(
+                                        dimension: 32,
+                                        child: AssetCatalogRatioChart(
+                                          ratio: widget.volPc ?? 0,
                                         ),
-                                        // Text(
-                                        //   "${(widget.volPc ?? 0).toStringAsFixed(2)}%",
-                                        //   style: textTheme.bodySmall!
-                                        //       .copyWith(color: AppColors.neutral_04),
-                                        // ),
-                                      ],
-                                    ),
+                                      ),
+                                    ],
                                   ),
-                                  SizedBox.square(
-                                    dimension: 32,
-                                    child: AssetCatalogRatioChart(
-                                      ratio: widget.volPc ?? 0,
-                                    ),
-                                  ),
-                                ],
+                                ),
                               ),
-                            ),
-                          ),
-                          AnimatedOpacity(
-                            opacity: expand ? 0 : 1,
-                            duration: const Duration(milliseconds: 200),
-                            child: Padding(
-                              padding: const EdgeInsets.only(
-                                  left: 8, top: 2, bottom: 2),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Column(
+                              AnimatedOpacity(
+                                opacity: expand ? 0 : 1,
+                                duration: const Duration(milliseconds: 200),
+                                child: Padding(
+                                  padding: const EdgeInsets.only(
+                                      left: 8, top: 2, bottom: 2),
+                                  child: Row(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
                                     children: [
-                                      Text(
-                                        "Giá TB",
-                                        style: AppTextStyle.labelSmall_10,
-                                      ),
-                                      const SizedBox(height: 4),
-                                      Row(
+                                      Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
                                         children: [
-                                          if (widget.data != null)
-                                            Padding(
-                                              padding: const EdgeInsets.only(
-                                                  right: 3),
-                                              child: widget.data!
-                                                  .prefixIcon(size: 12),
-                                            ),
+                                          Text(
+                                            "Mã CK",
+                                            style: AppTextStyle.labelSmall_10
+                                                .copyWith(
+                                                    color:
+                                                        AppColors.neutral_01),
+                                          ),
+                                          const SizedBox(height: 4),
+                                          Text(
+                                            widget.data?.symbol ?? "-",
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .titleSmall!
+                                                .copyWith(
+                                                    fontWeight:
+                                                        FontWeight.w600),
+                                          ),
+                                        ],
+                                      ),
+                                      Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.end,
+                                        children: [
+                                          Text(
+                                            "Giá TB",
+                                            style: AppTextStyle.labelSmall_10,
+                                          ),
+                                          const SizedBox(height: 4),
                                           Text(
                                             NumUtils.formatDouble(
                                                 widget.data?.avgPrice),
@@ -239,26 +273,17 @@ class _InvestmentCatalogWidgetState extends State<InvestmentCatalogWidget> {
                                           ),
                                         ],
                                       ),
-                                    ],
-                                  ),
-                                  Column(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(
-                                        S.of(context).mk_price,
-                                        style: AppTextStyle.labelSmall_10,
-                                      ),
-                                      const SizedBox(height: 4),
-                                      Row(
+                                      Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.end,
                                         children: [
-                                          if (widget.data != null)
-                                            Padding(
-                                              padding: const EdgeInsets.only(
-                                                  right: 3),
-                                              child: widget.data!
-                                                  .prefixIcon(size: 12),
-                                            ),
+                                          Text(
+                                            S.of(context).mk_price,
+                                            style: AppTextStyle.labelSmall_10,
+                                          ),
+                                          const SizedBox(height: 4),
                                           Text(
                                             NumUtils.formatDouble(
                                                 widget.data?.marketPrice),
@@ -268,106 +293,124 @@ class _InvestmentCatalogWidgetState extends State<InvestmentCatalogWidget> {
                                           ),
                                         ],
                                       ),
-                                    ],
-                                  ),
-                                  Column(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    crossAxisAlignment: CrossAxisAlignment.end,
-                                    children: [
-                                      Row(
+                                      Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.end,
                                         children: [
                                           Text(
-                                            S.of(context).profit_and_loss,
+                                            "${S.of(context).profit_and_loss} (%)",
                                             style: AppTextStyle.labelSmall_10,
                                           ),
-                                          Text(
-                                            " (%)",
-                                            style: AppTextStyle.labelSmall_10,
-                                          ),
-                                        ],
-                                      ),
-                                      const SizedBox(height: 4),
-                                      Row(
-                                        children: [
-                                          Text(
-                                            widget.data?.gainLossPer ?? "-",
-                                            style: AppTextStyle.labelMedium_12
-                                                .copyWith(
-                                                    color:
-                                                        AppColors.neutral_03),
+                                          const SizedBox(height: 4),
+                                          Row(
+                                            children: [
+                                              Text(
+                                                widget.data?.gainLossPer ?? "-",
+                                                style: AppTextStyle
+                                                    .labelMedium_12
+                                                    .copyWith(
+                                                        color: AppColors
+                                                            .neutral_03),
+                                              ),
+                                            ],
                                           ),
                                         ],
                                       ),
                                     ],
                                   ),
-                                ],
+                                ),
                               ),
-                            ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  ExpandedSection(
+                    expand: expand,
+                    child: Container(
+                      height: 40,
+                      margin: const EdgeInsets.symmetric(vertical: 8),
+                      decoration: const BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(12)),
+                        color: AppColors.neutral_06,
+                      ),
+                      child: Column(
+                        children: [
+                          Row(
+                            children: [
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      S.of(context).owned,
+                                      style: AppTextStyle.labelSmall_10
+                                          .copyWith(
+                                              color: AppColors.neutral_01),
+                                    ),
+                                    const SizedBox(height: 4),
+                                    Text(
+                                      NumUtils.formatInteger(
+                                          widget.data?.actualVol),
+                                      style: AppTextStyle.labelMedium_12
+                                          .copyWith(
+                                              color: AppColors.neutral_03),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Expanded(
+                                child: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  // crossAxisAlignment: CrossAxisAlignment.end,
+                                  children: [
+                                    Text(
+                                      S.of(context).mk_value,
+                                      style: AppTextStyle.labelSmall_10,
+                                    ),
+                                    const SizedBox(height: 4),
+                                    Text(
+                                      NumUtils.formatInteger(
+                                          widget.data?.marketValue),
+                                      style: AppTextStyle.labelMedium_12
+                                          .copyWith(color: widget.data?.color),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  children: [
+                                    Text(
+                                      S.of(context).profit_and_loss,
+                                      style: AppTextStyle.labelSmall_10
+                                          .copyWith(
+                                              color: AppColors.neutral_01),
+                                    ),
+                                    const SizedBox(height: 4),
+                                    Text(
+                                      NumUtils.formatDouble(
+                                          widget.data?.gainLossValue),
+                                      style: AppTextStyle.labelMedium_12
+                                          .copyWith(color: widget.data?.color),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
                           ),
                         ],
                       ),
                     ),
-                  ],
-                ),
-              ),
-              ExpandedSection(
-                expand: expand,
-                child: Container(
-                  height: 40,
-                  margin: const EdgeInsets.symmetric(vertical: 8),
-                  decoration: const BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(12)),
-                    color: AppColors.neutral_06,
                   ),
-                  child: Column(
-                    children: [
-                      Row(
-                        children: [
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  S.of(context).owned,
-                                  style: AppTextStyle.labelSmall_10
-                                      .copyWith(color: AppColors.neutral_01),
-                                ),
-                                const SizedBox(height: 4),
-                                Text(
-                                  NumUtils.formatInteger(
-                                      widget.data?.actualVol),
-                                  style: AppTextStyle.labelMedium_12
-                                      .copyWith(color: AppColors.neutral_03),
-                                ),
-                              ],
-                            ),
-                          ),
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              children: [
-                                Text(
-                                  "${S.of(context).profit_and_loss} (%)",
-                                  style: AppTextStyle.labelSmall_10
-                                      .copyWith(color: AppColors.neutral_01),
-                                ),
-                                const SizedBox(height: 4),
-                                Text(
-                                  "${NumUtils.formatDouble(widget.data?.gainLossValue)}đ (${widget.data?.gainLossPer?.trim()})",
-                                  style: AppTextStyle.labelMedium_12
-                                      .copyWith(color: widget.data?.color),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
+                ],
               ),
-            ],
+            ),
           ),
         ),
         Material(

@@ -127,6 +127,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "choose_stocks_you_interested": MessageLookupByLibrary.simpleMessage(
             "Select the stocks you are interested in. You can update later"),
         "close_translations": MessageLookupByLibrary.simpleMessage("Close"),
+        "commodities": MessageLookupByLibrary.simpleMessage("Commodities"),
         "community": MessageLookupByLibrary.simpleMessage("Community"),
         "condition_ordnote":
             MessageLookupByLibrary.simpleMessage("Condition ordernote"),

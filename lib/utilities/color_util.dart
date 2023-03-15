@@ -50,3 +50,79 @@ class ColorUtil {
     }
   }
 }
+
+Map<int, Color> greenColorSwatch = {
+  50: AppColors.semantic_01.withOpacity(0.1),
+  100: AppColors.semantic_01.withOpacity(0.2),
+  200: AppColors.semantic_01.withOpacity(0.3),
+  300: AppColors.semantic_01.withOpacity(0.4),
+  400: AppColors.semantic_01.withOpacity(0.5),
+  500: AppColors.semantic_01.withOpacity(0.6),
+  600: AppColors.semantic_01.withOpacity(0.7),
+  700: AppColors.semantic_01.withOpacity(0.8),
+  800: AppColors.semantic_01.withOpacity(0.9),
+  900: AppColors.semantic_01.withOpacity(1.0),
+};
+
+Map<int, Color> yellowColorSwatch = {
+  50: AppColors.semantic_02.withOpacity(0.1),
+  100: AppColors.semantic_02.withOpacity(0.2),
+  200: AppColors.semantic_02.withOpacity(0.3),
+  300: AppColors.semantic_02.withOpacity(0.4),
+  400: AppColors.semantic_02.withOpacity(0.5),
+  500: AppColors.semantic_02.withOpacity(0.6),
+  600: AppColors.semantic_02.withOpacity(0.7),
+  700: AppColors.semantic_02.withOpacity(0.8),
+  800: AppColors.semantic_02.withOpacity(0.9),
+  900: AppColors.semantic_02.withOpacity(1.0),
+};
+
+Map<int, Color> redColorSwatch = {
+  50: AppColors.semantic_03.withOpacity(0.1),
+  100: AppColors.semantic_03.withOpacity(0.2),
+  200: AppColors.semantic_03.withOpacity(0.3),
+  300: AppColors.semantic_03.withOpacity(0.4),
+  400: AppColors.semantic_03.withOpacity(0.5),
+  500: AppColors.semantic_03.withOpacity(0.6),
+  600: AppColors.semantic_03.withOpacity(0.7),
+  700: AppColors.semantic_03.withOpacity(0.8),
+  800: AppColors.semantic_03.withOpacity(0.9),
+  900: AppColors.semantic_03.withOpacity(1.0),
+};
+
+Map<int, Color> purpilColorSwatch = {
+  50: AppColors.semantic_05.withOpacity(0.1),
+  100: AppColors.semantic_05.withOpacity(0.2),
+  200: AppColors.semantic_05.withOpacity(0.3),
+  300: AppColors.semantic_05.withOpacity(0.4),
+  400: AppColors.semantic_05.withOpacity(0.5),
+  500: AppColors.semantic_05.withOpacity(0.6),
+  600: AppColors.semantic_05.withOpacity(0.7),
+  700: AppColors.semantic_05.withOpacity(0.8),
+  800: AppColors.semantic_05.withOpacity(0.9),
+  900: AppColors.semantic_05.withOpacity(1.0),
+};
+
+Map<int, Color> blueColorSwatch = {
+  50: AppColors.semantic_04.withOpacity(0.1),
+  100: AppColors.semantic_04.withOpacity(0.2),
+  200: AppColors.semantic_04.withOpacity(0.3),
+  300: AppColors.semantic_04.withOpacity(0.4),
+  400: AppColors.semantic_04.withOpacity(0.5),
+  500: AppColors.semantic_04.withOpacity(0.6),
+  600: AppColors.semantic_04.withOpacity(0.7),
+  700: AppColors.semantic_04.withOpacity(0.8),
+  800: AppColors.semantic_04.withOpacity(0.9),
+  900: AppColors.semantic_04.withOpacity(1.0),
+};
+
+MaterialColor greenColor =
+    MaterialColor(AppColors.semantic_01.value, greenColorSwatch);
+MaterialColor yellowColor =
+    MaterialColor(AppColors.semantic_02.value, yellowColorSwatch);
+MaterialColor redColor =
+    MaterialColor(AppColors.semantic_03.value, redColorSwatch);
+MaterialColor purpilColor =
+    MaterialColor(AppColors.semantic_05.value, purpilColorSwatch);
+MaterialColor blueColor =
+    MaterialColor(AppColors.semantic_04.value, blueColorSwatch);

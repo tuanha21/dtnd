@@ -30,7 +30,7 @@ class MarketIndexItem extends StatelessWidget {
     final themeMode = AppService.instance.themeMode.value;
     BoxBorder? border;
     if (selectedIndex != null && data.index == selectedIndex) {
-      border = Border.all(color: AppColors.neutral_05);
+      border = Border.all(color: AppColors.neutral_04);
     }
     VoidCallback? onTap;
     if (onSelected != null) {

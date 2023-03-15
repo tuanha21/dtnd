@@ -3122,6 +3122,16 @@ class S {
     );
   }
 
+  /// `Commodities`
+  String get commodities {
+    return Intl.message(
+      'Commodities',
+      name: 'commodities',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Copytrade`
   String get copytrade {
     return Intl.message(

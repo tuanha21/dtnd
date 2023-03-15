@@ -89,6 +89,19 @@ class BaseMarginAccountModel implements IAccountModel {
 
   List<UnexecutedRightModel>? listUnexecutedRight;
 
+  List<UnexecutedRightModel> get listUnexecutedBuyRight {
+    if (listUnexecutedRight?.isEmpty ?? true) {
+      return [];
+    }
+    final List<UnexecutedRightModel> result = [];
+    for (var right in listUnexecutedRight!) {
+      if (right.cRIGHTBUYFLAG != 0) {
+        result.add(right);
+      }
+    }
+    return result;
+  }
+
   BaseMarginAccountModel(
       {this.assets,
       this.imKH,

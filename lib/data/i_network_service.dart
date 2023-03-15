@@ -1,5 +1,6 @@
 // ignore_for_file: library_prefixes
 
+import 'package:dtnd/=models=/commodity_model.dart';
 import 'package:dtnd/=models=/core_response_model.dart';
 import 'package:dtnd/=models=/index.dart';
 import 'package:dtnd/=models=/response/business_profile_model.dart';
@@ -121,6 +122,8 @@ abstract class INetworkService {
   Future<NewsDetail?> getNewsDetail(int id);
 
   Future<List<WorldIndexModel>> getWorldIndex();
+
+  Future<List<CommodityModel>> getCommodity();
 
   Future<List<WorldIndexData>> getWorldIndexData(Map<String, String> body);
 

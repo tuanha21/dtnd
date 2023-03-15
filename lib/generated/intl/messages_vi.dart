@@ -126,6 +126,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Chọn các mã CK mà bạn đang quan tâm. Bạn có thể cập nhật thêm các mã CK sau"),
         "close_translations":
             MessageLookupByLibrary.simpleMessage("Giá đóng cửa"),
+        "commodities": MessageLookupByLibrary.simpleMessage("Hàng hoá"),
         "community": MessageLookupByLibrary.simpleMessage("Cộng đồng"),
         "condition_ordnote":
             MessageLookupByLibrary.simpleMessage("SL điều kiện"),

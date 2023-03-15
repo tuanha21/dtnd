@@ -7,6 +7,7 @@ import 'package:dtnd/ui/screen/stock_detail/stock_detail_screen.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:dtnd/ui/theme/app_textstyle.dart';
+import 'package:dtnd/ui/widget/chart/simple_line_area_chart.dart';
 import 'package:dtnd/ui/widget/chart/simple_line_chart.dart';
 import 'package:dtnd/ui/widget/icon/stock_icon.dart';
 import 'package:dtnd/utilities/num_utils.dart';
@@ -102,7 +103,7 @@ class _TrashComponentState extends State<TrashComponent> {
           color: AppColors.neutral_03,
         ),
       );
-      chartWidget = SimpleLineChart(
+      chartWidget = SimpleLineAreaChart(
         data: snapshotData.cHART,
         annotation: snapshotData.cHART?.first,
         color: snapshotData.color,
@@ -197,7 +198,7 @@ class _TrashComponentState extends State<TrashComponent> {
         } else {
           color = snapshotData.color;
         }
-        return SimpleLineChart(
+        return SimpleLineAreaChart(
           data: snapshotData.cHART,
           annotation: annotation,
           color: color,

@@ -47,7 +47,7 @@ class HomeWorldIndexItem extends StatelessWidget {
         borderRadius: const BorderRadius.all(Radius.circular(8)),
         child: Ink(
           width: 148,
-          height: 56,
+          height: 60,
           padding: const EdgeInsets.all(12.0),
           decoration: BoxDecoration(
             border: border,
@@ -95,6 +95,18 @@ class HomeWorldIndexItem extends StatelessWidget {
                   ),
                 ],
               ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Text(
+                    data.cHANGE ?? "0",
+                    style: AppTextStyle.labelMedium_12.copyWith(
+                      fontWeight: FontWeight.w600,
+                      color: data.cOLOR,
+                    ),
+                  ),
+                ],
+              )
             ],
           ),
         ),

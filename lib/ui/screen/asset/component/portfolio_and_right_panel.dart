@@ -180,22 +180,23 @@ class _PortfolioAndRightPanelState extends State<PortfolioAndRightPanel>
                 ],
               );
             } else {
-              if (data?.listUnexecutedRight?.isEmpty ?? true) {
+              if (data?.listUnexecutedBuyRight.isEmpty ?? true) {
                 return const Padding(
                   padding: EdgeInsets.symmetric(vertical: 16),
                   child: EmptyListWidget(),
                 );
               }
+
               return Column(
                 children: [
                   for (int i = 0;
-                      i < (data?.listUnexecutedRight?.length ?? 0);
+                      i < (data?.listUnexecutedBuyRight.length ?? 0);
                       i++)
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 4),
                       child: BuyRightWidget(
                         accountModel: data!,
-                        data: data.listUnexecutedRight!.elementAt(i),
+                        data: data.listUnexecutedBuyRight.elementAt(i),
                       ),
                     )
                 ],

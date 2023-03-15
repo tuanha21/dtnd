@@ -2,14 +2,16 @@ import 'dart:math';
 
 import 'package:dtnd/=models=/response/account/asset_chart_element.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
+import 'package:dtnd/utilities/charts_util.dart';
+import 'package:dtnd/utilities/logger.dart';
 import 'package:dtnd/utilities/num_utils.dart';
+import 'package:dtnd/utilities/time_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
-import 'package:charts_flutter/src/text_element.dart' as chartText;
-import 'package:charts_flutter/src/text_style.dart' as chartStyle;
+import 'package:charts_flutter/src/text_element.dart' as chart_text;
+import 'package:charts_flutter/src/text_style.dart' as chart_style;
 import 'package:intl/intl.dart';
 
-var label, value, date;
 final simpleCurrencyFormatter =
     charts.BasicNumericTickFormatterSpec.fromNumberFormat(
         NumberFormat.compact());
@@ -28,6 +30,8 @@ class _AssetChartState extends State<AssetChart> {
 
   late List<AssetChartElementModel> datas;
   late List<charts.Series<AssetChartElementModel, DateTime>> assetSeriesList;
+  DateTime start = DateTime.now().subtract(const Duration(days: 1));
+  DateTime end = DateTime.now();
   @override
   void initState() {
     super.initState();
@@ -45,6 +49,10 @@ class _AssetChartState extends State<AssetChart> {
     if (mounted) {
       setState(() {
         datas = widget.datas ?? [];
+        if (datas.isNotEmpty) {
+          start = datas.first.cTRADINGDATE;
+          end = datas.last.cTRADINGDATE;
+        }
         assetSeriesList = [
           charts.Series(
             id: "Tài sản",
@@ -156,41 +164,49 @@ class _AssetChartState extends State<AssetChart> {
             // defaultHiddenSeries: const ["Nợ", "Tài sản"],
           ),
           charts.LinePointHighlighter(
-              symbolRenderer:
-                  CustomCircleSymbolRenderer() // add this line in behaviours
+              symbolRenderer: CustomTooltipRenderer(_ToolTipMgr.instance,
+                  size: MediaQuery.of(context).size,
+                  fontSize: 10) // add this line in behaviours
               ),
         ],
         selectionModels: [
           charts.SelectionModelConfig(
             updatedListener: (charts.SelectionModel model) {
               if (model.hasDatumSelection) {
-                label = model.selectedSeries.first.id;
-                switch (label) {
-                  case "Tiền":
-                    value = NumUtils.formatDouble(
-                        model.selectedDatum.first.datum.cCASHBALANCE);
-                    break;
-                  case "Nợ":
-                    value = NumUtils.formatDouble(
-                        model.selectedDatum.first.datum.cLOANBALANCE);
-                    break;
-                  case "Giá trị CK":
-                    value = NumUtils.formatDouble(
-                        model.selectedDatum.first.datum.cSHARECLOSEVALUE);
-                    break;
-                  default:
-                    value = NumUtils.formatDouble(
-                        model.selectedDatum.first.datum.cNETVALUE);
+                final String time =
+                    "Ngày : ${TimeUtilities.commonTimeFormat.format(model.selectedDatum.first.datum.cTRADINGDATE)}";
+                final List<String> datas = [
+                  time,
+                ];
+                for (var element in model.selectedDatum) {
+                  final String label = element.series.id;
+                  final String value;
+                  switch (label) {
+                    case "Tiền":
+                      value = NumUtils.formatDouble(element.datum.cCASHBALANCE);
+                      break;
+                    case "Nợ":
+                      value = NumUtils.formatDouble(element.datum.cLOANBALANCE);
+                      break;
+                    case "Giá trị CK":
+                      value =
+                          NumUtils.formatDouble(element.datum.cSHARECLOSEVALUE);
+                      break;
+                    default:
+                      value = NumUtils.formatDouble(element.datum.cNETVALUE);
+                  }
+                  final String data = "$label : $value";
+                  datas.add(data);
                 }
-                date = model.selectedDatum.first.datum.cTRADINGDATE;
-                ToolTipMgr.setTitle(
-                    {'title': '$label: $value', 'subTitle': '$date'});
+
+                _ToolTipMgr.instance.setData(datas);
               }
             },
           ),
         ],
         dateTimeFactory: const charts.LocalDateTimeFactory(),
         domainAxis: charts.DateTimeAxisSpec(
+          viewport: charts.DateTimeExtents(start: start, end: end),
           // tickProviderSpec:
           //     charts.DayTickProviderSpec(increments: [datas.length ~/ 3]),
           tickFormatterSpec:
@@ -259,133 +275,7 @@ class PercentageTickFormatter extends charts.SimpleTickFormatterBase<num> {
   int get hashCode => 31;
 }
 
-class CustomCircleSymbolRenderer extends charts.CircleSymbolRenderer {
-  static String? value;
-  @override
-  void paint(charts.ChartCanvas canvas, Rectangle<num> bounds,
-      {List<int>? dashPattern,
-      charts.Color? fillColor,
-      charts.FillPatternType? fillPattern,
-      charts.Color? strokeColor,
-      double? strokeWidthPx}) {
-    super.paint(canvas, bounds,
-        dashPattern: dashPattern,
-        fillColor: fillColor,
-        strokeColor: strokeColor,
-        strokeWidthPx: strokeWidthPx);
-    canvas.drawRect(
-      Rectangle(bounds.left - bounds.width - 30, bounds.height - 10,
-          bounds.width + 75, bounds.height + 20),
-      fill: charts.Color.fromOther(
-          color: const charts.Color(a: 100, b: 0, g: 0, r: 0).darker),
-    );
-
-    chartStyle.TextStyle textStyle = chartStyle.TextStyle();
-
-    textStyle.color = charts.Color.white;
-    textStyle.fontSize = 8;
-
-    canvas.drawText(
-      chartText.TextElement('Ngày: ${ToolTipMgr.subTitle}', style: textStyle),
-      (bounds.left - bounds.width - 25).round(),
-      (bounds.height + 7).round(),
-    );
-    canvas.drawText(
-      chartText.TextElement(ToolTipMgr.title, style: textStyle),
-      (bounds.left - bounds.width - 25).round(),
-      (bounds.height - 5).round(),
-    );
-  }
+class _ToolTipMgr extends TooltipData {
+  _ToolTipMgr._intern();
+  static final _ToolTipMgr instance = _ToolTipMgr._intern();
 }
-
-String? _title;
-String? _subTitle;
-
-class ToolTipMgr {
-  static String get title => _title ?? "";
-
-  static String? get subTitle => _subTitle;
-
-  static setTitle(Map<String, dynamic> data) {
-    if (data['title'] != null) {
-      _title = data['title'];
-    }
-
-    if (data['subTitle'] != null) {
-      _subTitle = data['subTitle'];
-    }
-  }
-}
-
-// class CustomLegendBuilder extends charts.LegendContentBuilder {
-//   /// Convert the charts common TextStlyeSpec into a standard TextStyle.
-//   TextStyle _convertTextStyle(
-//       bool isHidden, BuildContext context, charts.TextStyleSpec? textStyle) {
-//     return const TextStyle(
-//       inherit: true,
-//       fontSize: 8,
-//       color: AppColors.neutral_02,
-//     );
-//   }
-
-//   Widget createLabel(BuildContext context, common.LegendState legendEntry,
-//       common.SeriesLegend legend, bool isHidden) {
-//     TextStyle style =
-//         _convertTextStyle(isHidden, context, legendEntry.textStyle);
-//     Color color = AppColors.neutral_02;
-
-//     return GestureDetector(
-//         onTapUp: makeTapUpCallback(context, legendEntry, legend),
-//         child: Container(
-//             height: 30,
-//             width: 90,
-//             decoration: BoxDecoration(
-//               borderRadius: BorderRadius.circular(20),
-//               color: isHidden ? (color).withOpacity(0.26) : color,
-//             ),
-//             child: Center(child: Text(legendEntry.label, style: style))));
-//   }
-
-//   GestureTapUpCallback makeTapUpCallback(BuildContext context,
-//       common.LegendEntry legendEntry, common.SeriesLegend legend) {
-//     return (TapUpDetails d) {
-//       switch (legend.legendTapHandling) {
-//         case common.LegendTapHandling.hide:
-//           final seriesId = legendEntry.series.id;
-//           if (legend.isSeriesHidden(seriesId)) {
-//             // This will not be recomended since it suposed to be accessible only from inside the legend class, but it worked fine on my code.
-//             legend.showSeries(seriesId);
-//           } else {
-//             legend.hideSeries(seriesId);
-//           }
-//           legend.chart.redraw(skipLayout: true, skipAnimation: false);
-//           break;
-//         case common.LegendTapHandling.none:
-//         default:
-//           break;
-//       }
-//     };
-//   }
-
-//   @override
-//   Widget build(BuildContext context, common.LegendState legendState,
-//       common.Legend legend,
-//       {bool? showMeasures}) {
-//     final entryWidgets = legendState.legendEntries.map((legendEntry) {
-//       var isHidden = false;
-//       if (legend is common.SeriesLegend) {
-//         isHidden = legend.isSeriesHidden(legendEntry.series.id);
-//       }
-//       return createLabel(
-//           context, legendEntry, legend as common.SeriesLegend, isHidden);
-//     }).toList();
-
-//     return Padding(
-//       padding: const EdgeInsets.only(right: 40.0, top: 10),
-//       child: Row(
-//           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//           crossAxisAlignment: CrossAxisAlignment.center,
-//           children: entryWidgets),
-//     );
-//   }
-// }

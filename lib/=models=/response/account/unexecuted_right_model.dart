@@ -1,4 +1,5 @@
 import 'package:dtnd/=models=/core_response_model.dart';
+import 'package:dtnd/utilities/logger.dart';
 
 class UnexecutedRightModel implements CoreResponseModel {
   late final String pKRIGHTSTOCKINFO;
@@ -25,8 +26,8 @@ class UnexecutedRightModel implements CoreResponseModel {
   String? cSTATUSNAMEEN;
   String? cACCOUNTCODE;
   num? cBUYPRICE;
-  num? cSHAREBUY;
-  num? cCASHBUY;
+  late num cSHAREBUY;
+  late num cCASHBUY;
   num? cSHAREDIVIDENT;
   num? cSHAREODDLOT;
   num? cCASHODDLOT;
@@ -37,55 +38,18 @@ class UnexecutedRightModel implements CoreResponseModel {
   num? cRIGHTRECEIVER;
   num? cRIGHTTRANSFER;
   num? cRIGHTVOLUME;
-  num? cSHARERIGHT;
-  num? cCASHBUYALL;
+  late num cSHARERIGHT;
+  late num cCASHBUYALL;
+
+  num get shareAvailBuy => cSHARERIGHT - cSHAREBUY;
+  num get cashAvailRight => cCASHBUYALL - cCASHBUY;
 
   bool get canRegistered {
-    if (cFLAG == 1 && (cSHAREBUY ?? double.maxFinite) < (cSHARERIGHT ?? -1)) {
+    if (cFLAG == 1 && cSHAREBUY < cSHARERIGHT) {
       return true;
     }
     return false;
   }
-
-  UnexecutedRightModel(
-      {required this.pKRIGHTSTOCKINFO,
-      this.cRIGHTTYPENAME,
-      this.cRIGHTTYPENAMEEN,
-      this.cRIGHTBUYFLAG,
-      this.cRIGHTRATE,
-      this.cCASHRECEIVERATE,
-      this.cSHARECODE,
-      this.cSHARENAME,
-      this.cRECEIVESHARECODE,
-      this.cXDATE,
-      this.cCLOSEDATE,
-      this.cEXECUTEDATE,
-      this.cDUEDATE,
-      this.cTRANSFERFROMDATE,
-      this.cTRANSFERTODATE,
-      this.cREGISTERFROMDATE,
-      this.cREGISTERTODATE,
-      this.cTRANSFERTYPE,
-      this.cFLAG,
-      this.cTRANSFERNAME,
-      this.cSTATUSNAME,
-      this.cSTATUSNAMEEN,
-      this.cACCOUNTCODE,
-      this.cBUYPRICE,
-      this.cSHAREBUY,
-      this.cCASHBUY,
-      this.cSHAREDIVIDENT,
-      this.cSHAREODDLOT,
-      this.cCASHODDLOT,
-      this.cCASHVOLUME,
-      this.cTAXVOLUME,
-      this.cNOTE,
-      this.cSHAREVOLUME,
-      this.cRIGHTRECEIVER,
-      this.cRIGHTTRANSFER,
-      this.cRIGHTVOLUME,
-      this.cSHARERIGHT,
-      this.cCASHBUYALL});
 
   UnexecutedRightModel.fromJson(Map<String, dynamic> json) {
     pKRIGHTSTOCKINFO = json['PK_RIGHT_STOCK_INFO'];
@@ -112,8 +76,8 @@ class UnexecutedRightModel implements CoreResponseModel {
     cSTATUSNAMEEN = json['C_STATUS_NAME_EN'];
     cACCOUNTCODE = json['C_ACCOUNT_CODE'];
     cBUYPRICE = json['C_BUY_PRICE'];
-    cSHAREBUY = json['C_SHARE_BUY'];
-    cCASHBUY = json['C_CASH_BUY'];
+    cSHAREBUY = json['C_SHARE_BUY'] ?? 0;
+    cCASHBUY = json['C_CASH_BUY'] ?? 0;
     cSHAREDIVIDENT = json['C_SHARE_DIVIDENT'];
     cSHAREODDLOT = json['C_SHARE_ODD_LOT'];
     cCASHODDLOT = json['C_CASH_ODD_LOT'];
@@ -124,8 +88,8 @@ class UnexecutedRightModel implements CoreResponseModel {
     cRIGHTRECEIVER = json['C_RIGHT_RECEIVER'];
     cRIGHTTRANSFER = json['C_RIGHT_TRANSFER'];
     cRIGHTVOLUME = json['C_RIGHT_VOLUME'];
-    cSHARERIGHT = json['C_SHARE_RIGHT'];
-    cCASHBUYALL = json['C_CASH_BUY_ALL'];
+    cSHARERIGHT = json['C_SHARE_RIGHT'] ?? 0;
+    cCASHBUYALL = json['C_CASH_BUY_ALL'] ?? 0;
   }
 
   Map<String, dynamic> toJson() {

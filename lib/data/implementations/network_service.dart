@@ -4,6 +4,7 @@ import 'dart:convert';
 
 import 'package:dtnd/=models=/algo/filter.dart';
 import 'package:dtnd/=models=/algo/stock_filter.dart';
+import 'package:dtnd/=models=/commodity_model.dart';
 import 'package:dtnd/=models=/core_response_model.dart';
 import 'package:dtnd/=models=/response/business_profile_model.dart';
 import 'package:dtnd/=models=/response/company_info.dart';
@@ -443,6 +444,22 @@ class NetworkService implements INetworkService {
     for (var element in responseBody) {
       try {
         data.add(WorldIndexModel.fromJson(element));
+      } catch (e) {
+        continue;
+      }
+    }
+    return data;
+  }
+
+  @override
+  Future<List<CommodityModel>> getCommodity() async {
+    final http.Response response =
+        await client.get(url_info_sbsi("commodities"));
+    final List<dynamic> responseBody = decode(response.bodyBytes)["data"];
+    List<CommodityModel> data = [];
+    for (var element in responseBody) {
+      try {
+        data.add(CommodityModel.fromJson(element));
       } catch (e) {
         continue;
       }
