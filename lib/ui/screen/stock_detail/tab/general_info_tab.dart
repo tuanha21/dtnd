@@ -46,8 +46,8 @@ class _GeneralInfoTabState extends State<GeneralInfoTab> {
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
     final int leaderLength =
-        !isFull && widget.stockModel.businnessLeaders!.length > 4
-            ? 4
+        !isFull && widget.stockModel.businnessLeaders!.length > 3
+            ? 3
             : widget.stockModel.businnessLeaders!.length;
     return FutureBuilder<CompanyInfo>(
         future: companyInfo,
@@ -282,7 +282,7 @@ class _GeneralInfoTabState extends State<GeneralInfoTab> {
                         return const SizedBox(height: 8);
                       },
                       itemCount: leaderLength),
-                  widget.stockModel.businnessLeaders!.length > 4
+                  widget.stockModel.businnessLeaders!.length > 3
                       ? GestureDetector(
                           onTap: () {
                             setState(() {
