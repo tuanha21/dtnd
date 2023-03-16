@@ -10,7 +10,6 @@ import 'package:dtnd/=models=/index.dart';
 import 'package:dtnd/=models=/response/indContrib.dart';
 import 'package:dtnd/=models=/response/index_board.dart';
 import 'package:dtnd/=models=/response/liquidity_model.dart';
-import 'package:dtnd/=models=/response/top_influence_model.dart';
 import 'package:dtnd/data/i_data_center_service.dart';
 import 'package:dtnd/data/implementations/data_center_service.dart';
 import '../components/liquidity_chart.dart';

@@ -135,8 +135,8 @@ class _TabMatchedDetailState extends State<TabMatchedDetail> {
               return const Center(child: CircularProgressIndicator());
             }
             if (snapshot.hasData) {
-              var list = snapshot.data!;
-              widget.stockModel.updateListMatchedOrder(list.reversed.toList());
+              var list = snapshot.data!.reversed.toList();
+              widget.stockModel.updateListMatchedOrder(list);
               maxVolumn = widget.stockModel.maxVolumnMatchedOrder;
               return ListView.builder(
                 shrinkWrap: true,
@@ -167,6 +167,14 @@ class _TabMatchedDetailState extends State<TabMatchedDetail> {
             }
             if (snapshot.hasData) {
               var list = snapshot.data!;
+
+              num max = 0;
+              for (final StockMatch element in list) {
+                if (element.totalVol > max) {
+                  max = element.totalVol;
+                }
+              }
+
               return ListView.builder(
                 shrinkWrap: true,
                 itemCount: list.length,
@@ -174,6 +182,7 @@ class _TabMatchedDetailState extends State<TabMatchedDetail> {
                   var element = list[index];
                   return _TabMatchStock(
                     stockMatch: element,
+                    maxVolumn: max,
                     colorFunct: widget.stockModel.stockData.getPriceColor,
                   );
                 },
@@ -222,8 +231,11 @@ class _TabMatchedDetailRow extends StatelessWidget {
             )),
             Expanded(
                 child: Text(
-              "${NumUtils.formatDouble(data.priceChange)}%",
-              style: TextStyle(color: colorFunct.call(data.matchPrice)),
+              data.orderType == 'B' ? 'M' : 'B',
+              style: TextStyle(
+                  color: data.orderType == 'B'
+                      ? AppColors.semantic_01
+                      : AppColors.semantic_03),
               textAlign: TextAlign.right,
             )),
           ],
@@ -255,9 +267,9 @@ class _TabMatchedDetailHeader extends StatelessWidget {
               S.of(context).matched_price,
               textAlign: TextAlign.right,
             )),
-            Expanded(
+            const Expanded(
                 child: Text(
-              S.of(context).vol_analysis,
+              "M/B",
               textAlign: TextAlign.right,
             )),
           ],
@@ -270,13 +282,19 @@ class _TabMatchedDetailHeader extends StatelessWidget {
 class _TabMatchStock extends StatelessWidget {
   final StockMatch stockMatch;
   final Function colorFunct;
+  final num maxVolumn;
 
   const _TabMatchStock(
-      {Key? key, required this.stockMatch, required this.colorFunct})
+      {Key? key,
+      required this.stockMatch,
+      required this.maxVolumn,
+      required this.colorFunct})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    double percentage = stockMatch.totalVol / maxVolumn;
+
     return Container(
         height: 40,
         padding: const EdgeInsets.symmetric(vertical: 12),
@@ -291,7 +309,11 @@ class _TabMatchStock extends StatelessWidget {
           ),
           const SizedBox(width: 10),
           Expanded(
-              flex: 8,
+            flex: 8,
+            child: FractionallySizedBox(
+              alignment: Alignment.topLeft,
+              widthFactor: percentage,
+              heightFactor: 1,
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(6),
                 child: Row(children: [
@@ -312,7 +334,9 @@ class _TabMatchStock extends StatelessWidget {
                               const BoxDecoration(color: AppColors.neutral_03),
                           height: 16))
                 ]),
-              )),
+              ),
+            ),
+          ),
           const SizedBox(width: 10),
           Expanded(
             flex: 2,
@@ -322,7 +346,7 @@ class _TabMatchStock extends StatelessWidget {
                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
                       fontSize: 10,
                       fontWeight: FontWeight.w600,
-                      color: AppColors.neutral_03)),
+                      color: AppColors.neutral_02)),
             ),
           ),
           const SizedBox(width: 16),

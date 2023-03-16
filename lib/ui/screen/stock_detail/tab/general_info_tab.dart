@@ -36,15 +36,19 @@ class _GeneralInfoTabState extends State<GeneralInfoTab> {
         iNetworkService.getCompanyInfo(widget.stockModel.stockData.sym);
     listShareHolder = iNetworkService
         .getShareHolderCompany(widget.stockModel.stock.stockCode);
+
     super.initState();
   }
+
+  bool isFull = false;
 
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
-    final int leaderLength = widget.stockModel.businnessLeaders!.length > 4
-        ? 4
-        : widget.stockModel.businnessLeaders!.length;
+    final int leaderLength =
+        !isFull && widget.stockModel.businnessLeaders!.length > 3
+            ? 3
+            : widget.stockModel.businnessLeaders!.length;
     return FutureBuilder<CompanyInfo>(
         future: companyInfo,
         builder: (context, snapshot) {
@@ -278,6 +282,24 @@ class _GeneralInfoTabState extends State<GeneralInfoTab> {
                         return const SizedBox(height: 8);
                       },
                       itemCount: leaderLength),
+                  widget.stockModel.businnessLeaders!.length > 3
+                      ? GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              isFull = !isFull;
+                            });
+                          },
+                          child: Padding(
+                              padding: const EdgeInsets.only(top: 10),
+                              child: Text(
+                                !isFull ? 'Xem thêm' : 'Thu gọn',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodySmall
+                                    ?.copyWith(color: AppColors.primary_01),
+                              )),
+                        )
+                      : SizedBox(),
                   const SizedBox(height: 24),
                   Align(
                     alignment: Alignment.centerLeft,

@@ -91,7 +91,7 @@ class StockDetailAppbar extends StatelessWidget implements PreferredSizeWidget {
             addCatalog(context);
           },
           iconSize: 20,
-          color: Theme.of(context).colorScheme.onPrimary,
+          color: AppColors.neutral_03,
         ),
         GestureDetector(
           onTap: onTap,
@@ -100,7 +100,7 @@ class StockDetailAppbar extends StatelessWidget implements PreferredSizeWidget {
             height: 24,
             width: 24,
             color: isChart
-                ? Theme.of(context).colorScheme.onPrimary
+                ? AppColors.semantic_02
                 : AppColors.neutral_03,
           ),
         ),

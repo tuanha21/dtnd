@@ -113,7 +113,8 @@ class ThreePriceHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     var bodySmall = Theme.of(context).textTheme.bodySmall?.copyWith(
         fontSize: 12,
-        color: const Color.fromRGBO(136, 148, 170, 1),
+        // color: const Color.fromRGBO(136, 148, 170, 1),
+        color: AppColors.neutral_02,
         fontWeight: FontWeight.w600);
     const Radius radius = Radius.circular(4);
     List<Widget> rowChildren;
@@ -235,7 +236,7 @@ class _ThreePriceElementState extends State<ThreePriceElement>
         Text(
           NumUtils.formatInteger10(widget.vol),
           style:
-              AppTextStyle.labelSmall_10.copyWith(color: AppColors.neutral_04),
+              AppTextStyle.labelMedium_12.copyWith(color: AppColors.neutral_02),
         ),
         Expanded(
           child: LayoutBuilder(builder: (context, ctx) {
@@ -253,7 +254,7 @@ class _ThreePriceElementState extends State<ThreePriceElement>
                     alignment: Alignment.centerRight,
                     child: Text(
                       widget.price.toString(),
-                      style: AppTextStyle.labelSmall_10.copyWith(color: color),
+                      style: AppTextStyle.labelMedium_12.copyWith(color: color),
                     ),
                   ),
                 ),
@@ -280,7 +281,7 @@ class _ThreePriceElementState extends State<ThreePriceElement>
                     alignment: Alignment.centerLeft,
                     child: Text(
                       widget.price.toString(),
-                      style: AppTextStyle.labelSmall_10.copyWith(color: color),
+                      style: AppTextStyle.labelMedium_12.copyWith(color: color),
                     ),
                   ),
                 ),
@@ -291,7 +292,7 @@ class _ThreePriceElementState extends State<ThreePriceElement>
         Text(
           NumUtils.formatInteger10(widget.vol),
           style:
-              AppTextStyle.labelSmall_10.copyWith(color: AppColors.neutral_04),
+              AppTextStyle.labelMedium_12.copyWith(color: AppColors.neutral_02),
         )
       ];
     }
