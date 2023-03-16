@@ -509,7 +509,7 @@ class _BottomAddStockState extends State<BottomAddStock> {
                 padding: const EdgeInsets.only(right: 20),
                 child: SvgPicture.asset(AppImages.search_appbar_icon),
               ),
-              hintText: 'Tìm theo mã cổ phiếu, tên công ty',
+              hintText: 'Tìm theo mã cổ phiếu',
             ),
             Expanded(
               child: StreamBuilder<List<Stock>>(

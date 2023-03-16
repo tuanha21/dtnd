@@ -66,18 +66,20 @@ class StockDetailOverview extends StatelessWidget {
                               "${stockModel.stockData.ot} (${stockModel.stockData.changePc}%)",
                               style: AppTextStyle.bodySmall_8.copyWith(
                                   fontWeight: FontWeight.w500,
-                                  color: stockModel.stockData.color),
+                                  color: stockModel.stockData.color,
+                                  fontSize: 10),
                             ),
                           ],
                         ),
+                        const SizedBox(height: 2),
                         ObxValue<Rx<num?>>(
                           (lot) {
                             return Padding(
-                              padding: const EdgeInsets.only(left: 2),
+                              padding: const EdgeInsets.only(left: 6),
                               child: Text(
                                 "${NumUtils.formatInteger10(lot.value, "-")} CP",
-                                style: AppTextStyle.bodySmall_8
-                                    .copyWith(color: AppColors.neutral_04),
+                                style: AppTextStyle.bodySmall_8.copyWith(
+                                    color: AppColors.neutral_02, fontSize: 10),
                               ),
                             );
                           },

@@ -57,13 +57,14 @@ class _TabTradingBoardState extends State<TabTradingBoard> {
                       style: Theme.of(context)
                           .textTheme
                           .bodySmall
-                          ?.copyWith(fontSize: 10, color: AppColors.neutral_03),
+                          ?.copyWith(fontSize: 10, color: AppColors.neutral_02),
                     ),
                     Text(
                       widget.stockModel.stockData.lowPrice.value?.toString() ??
                           "",
                       style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                          color: AppColors.semantic_03,
+                          color: widget.stockModel.stockData.getPriceColor(
+                              widget.stockModel.stockData.lowPrice.value ?? 0),
                           fontWeight: FontWeight.w600),
                     )
                   ],
@@ -76,14 +77,16 @@ class _TabTradingBoardState extends State<TabTradingBoard> {
                       Text(
                         'Trung bình',
                         style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                            fontSize: 10, color: AppColors.neutral_03),
+                            fontSize: 10, color: AppColors.neutral_02),
                       ),
                       Text(
                         widget.stockModel.stockData.avePrice.value
                                 ?.toString() ??
                             "",
                         style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                            color: AppColors.semantic_02,
+                            color: widget.stockModel.stockData.getPriceColor(
+                                widget.stockModel.stockData.avePrice.value ??
+                                    0),
                             fontWeight: FontWeight.w600),
                       )
                     ],
@@ -98,14 +101,16 @@ class _TabTradingBoardState extends State<TabTradingBoard> {
                       Text(
                         'Cao',
                         style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                            fontSize: 10, color: AppColors.neutral_03),
+                            fontSize: 10, color: AppColors.neutral_02),
                       ),
                       Text(
                         widget.stockModel.stockData.highPrice.value
                                 ?.toString() ??
                             "",
                         style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                            color: AppColors.semantic_01,
+                            color: widget.stockModel.stockData.getPriceColor(
+                                widget.stockModel.stockData.highPrice.value ??
+                                    0),
                             fontWeight: FontWeight.w600),
                       )
                     ],

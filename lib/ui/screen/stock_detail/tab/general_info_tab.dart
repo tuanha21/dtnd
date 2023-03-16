@@ -36,15 +36,19 @@ class _GeneralInfoTabState extends State<GeneralInfoTab> {
         iNetworkService.getCompanyInfo(widget.stockModel.stockData.sym);
     listShareHolder = iNetworkService
         .getShareHolderCompany(widget.stockModel.stock.stockCode);
+
     super.initState();
   }
+
+  bool isFull = false;
 
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
-    final int leaderLength = widget.stockModel.businnessLeaders!.length > 4
-        ? 4
-        : widget.stockModel.businnessLeaders!.length;
+    final int leaderLength =
+        !isFull && widget.stockModel.businnessLeaders!.length > 4
+            ? 4
+            : widget.stockModel.businnessLeaders!.length;
     return FutureBuilder<CompanyInfo>(
         future: companyInfo,
         builder: (context, snapshot) {
@@ -163,7 +167,8 @@ class _GeneralInfoTabState extends State<GeneralInfoTab> {
                               const SizedBox(width: 9),
                               Text(
                                 info.phone ?? "",
-                                style: textTheme.titleSmall?.copyWith(color: AppColors.primary_01),
+                                style: textTheme.titleSmall
+                                    ?.copyWith(color: AppColors.primary_01),
                               ),
                             ],
                           ),
@@ -186,7 +191,8 @@ class _GeneralInfoTabState extends State<GeneralInfoTab> {
                               const SizedBox(width: 9),
                               Text(
                                 info.uRL ?? "",
-                                style: textTheme.titleSmall?.copyWith(color: AppColors.primary_01),
+                                style: textTheme.titleSmall
+                                    ?.copyWith(color: AppColors.primary_01),
                               ),
                             ],
                           ),
@@ -198,7 +204,7 @@ class _GeneralInfoTabState extends State<GeneralInfoTab> {
                   Row(
                     children: [
                       Text(
-                        "Thành viên Hội đồng quản trị",
+                        "Ban lãnh đạo",
                         style: textTheme.titleMedium!
                             .copyWith(fontWeight: FontWeight.w700),
                       ),
@@ -226,16 +232,16 @@ class _GeneralInfoTabState extends State<GeneralInfoTab> {
                                       widget.stockModel.businnessLeaders?[i]
                                               .fullName ??
                                           "-",
-                                      style: textTheme.labelMedium!
-                                          .copyWith(fontWeight: FontWeight.w600),
+                                      style: textTheme.labelMedium!.copyWith(
+                                          fontWeight: FontWeight.w600),
                                     ),
                                     const SizedBox(height: 4),
                                     Text(
                                       widget.stockModel.businnessLeaders?[i]
                                               .position ??
                                           "-",
-                                      style: AppTextStyle.bodySmall_8
-                                          .copyWith(color: AppColors.neutral_04),
+                                      style: AppTextStyle.bodySmall_8.copyWith(
+                                          color: AppColors.neutral_04),
                                     )
                                   ],
                                 ),
@@ -276,6 +282,24 @@ class _GeneralInfoTabState extends State<GeneralInfoTab> {
                         return const SizedBox(height: 8);
                       },
                       itemCount: leaderLength),
+                  widget.stockModel.businnessLeaders!.length > 4
+                      ? GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              isFull = !isFull;
+                            });
+                          },
+                          child: Padding(
+                              padding: const EdgeInsets.only(top: 10),
+                              child: Text(
+                                !isFull ? 'Xem thêm' : 'Thu gọn',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodySmall
+                                    ?.copyWith(color: AppColors.primary_01),
+                              )),
+                        )
+                      : SizedBox(),
                   const SizedBox(height: 24),
                   Align(
                     alignment: Alignment.centerLeft,
@@ -376,9 +400,10 @@ class _GeneralInfoTabState extends State<GeneralInfoTab> {
                                       Expanded(
                                         child: Text(
                                           list[i].name ?? "-",
-                                          style: textTheme.labelMedium!.copyWith(
-                                            height: 24/15,
-                                              fontWeight: FontWeight.w600),
+                                          style: textTheme.labelMedium!
+                                              .copyWith(
+                                                  height: 24 / 15,
+                                                  fontWeight: FontWeight.w600),
                                         ),
                                       ),
                                       Expanded(child: LayoutBuilder(
