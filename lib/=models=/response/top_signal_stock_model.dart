@@ -1,5 +1,5 @@
 import 'package:dtnd/=models=/response/stock_model.dart';
-import 'package:dtnd/logic/stock_status.dart';
+import 'package:dtnd/=models=/stock_status.dart';
 
 class TopSignalStockModel extends StockStatus {
   late final String cSHARECODE;

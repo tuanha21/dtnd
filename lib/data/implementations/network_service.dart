@@ -4,7 +4,7 @@ import 'dart:convert';
 
 import 'package:dtnd/=models=/algo/filter.dart';
 import 'package:dtnd/=models=/algo/stock_filter.dart';
-import 'package:dtnd/=models=/commodity_model.dart';
+import 'package:dtnd/=models=/response/commodity_model.dart';
 import 'package:dtnd/=models=/core_response_model.dart';
 import 'package:dtnd/=models=/response/business_profile_model.dart';
 import 'package:dtnd/=models=/response/company_info.dart';
@@ -100,6 +100,7 @@ class NetworkService implements INetworkService {
     String unencodedPath, [
     Map<String, dynamic>? queryParameters,
   ]) {
+    print(Uri.http(core_url1, unencodedPath, queryParameters).toString());
     return Uri.http(core_url1, unencodedPath, queryParameters);
   }
 
@@ -521,7 +522,7 @@ class NetworkService implements INetworkService {
         await client.post(url_core1("searchMarket/history"), body: body);
     response = decode(response.bodyBytes);
     final List<String> list = [];
-    if (response["rc"] == 200) {
+    if (response["rc"] == 1) {
       for (var element in response["data"]) {
         list.add(element);
       }
@@ -536,12 +537,12 @@ class NetworkService implements INetworkService {
   }
 
   @override
-  Future<List<String>> getTopSearch() async {
+  Future<List<String>> getTopSearch(String body) async {
     dynamic response =
-        await client.post(url_core1("searchMarket/top"), body: {});
+        await client.post(url_core1("searchMarket/top"), body: body);
     response = decode(response.bodyBytes);
     final List<String> list = [];
-    if (response["rc"] == 200) {
+    if (response["rc"] == 1) {
       for (var element in response["data"]) {
         list.add(element);
       }

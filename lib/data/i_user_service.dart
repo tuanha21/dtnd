@@ -1,6 +1,7 @@
 import 'package:dtnd/=models=/response/account/i_account.dart';
 import 'package:dtnd/=models=/response/account_info_model.dart';
 import 'package:dtnd/=models=/response/order_model/base_order_model.dart';
+import 'package:dtnd/=models=/response/stock.dart';
 import 'package:dtnd/=models=/response/total_asset_model.dart';
 import 'package:dtnd/=models=/response/user_token.dart';
 import 'package:dtnd/=models=/side.dart';
@@ -42,6 +43,8 @@ abstract class IUserService {
       Side? side});
 
   Future<List<String>> getSearchHistory();
+
+  Future<List<String>> getTopSearch();
 
   Future<void> refreshAssets();
 

@@ -61,10 +61,10 @@ class StockDetailOverview extends StatelessWidget {
                       children: [
                         Row(
                           children: [
-                            stockModel.stockData.prefixIconData(size: 8),
+                            stockModel.stockData.prefixIconData(size: 10),
                             Text(
                               "${stockModel.stockData.ot} (${stockModel.stockData.changePc}%)",
-                              style: AppTextStyle.bodySmall_8.copyWith(
+                              style: AppTextStyle.labelSmall_10.copyWith(
                                   fontWeight: FontWeight.w500,
                                   color: stockModel.stockData.color),
                             ),
@@ -76,7 +76,7 @@ class StockDetailOverview extends StatelessWidget {
                               padding: const EdgeInsets.only(left: 2),
                               child: Text(
                                 "${NumUtils.formatInteger10(lot.value, "-")} CP",
-                                style: AppTextStyle.bodySmall_8
+                                style: AppTextStyle.labelSmall_10
                                     .copyWith(color: AppColors.neutral_04),
                               ),
                             );

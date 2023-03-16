@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:charts_flutter/flutter.dart' as charts;
+import 'package:dtnd/=models=/response/sec_event.dart';
 import 'package:dtnd/=models=/response/stock_model.dart';
 import 'package:dtnd/data/i_network_service.dart';
 import 'package:dtnd/data/implementations/network_service.dart';
@@ -20,10 +21,11 @@ class StockDetailChart extends StatefulWidget {
   const StockDetailChart({
     super.key,
     required this.stockModel,
+    this.listEvent,
   });
 
   final StockModel stockModel;
-
+  final List<SecEvent>? listEvent;
   @override
   State<StockDetailChart> createState() => _StockDetailChartState();
 }
@@ -104,27 +106,52 @@ class _StockDetailChartState extends State<StockDetailChart>
                     minX = listTime.reduce(math.min);
 
                     return charts.NumericComboChart(
-                      List<charts.Series<num, num>>.generate(
-                          list.length,
-                          (index) => charts.Series<num, num>(
-                                id: 'chart1',
-                                colorFn: (_, __) =>
-                                    charts.ColorUtil.fromDartColor(
-                                        widget.stockModel.stockData.color),
-                                domainFn: (num indexBoard, int? index) {
-                                  return listTime[index!].toInt();
-                                },
-                                measureFn: (num sales, _) {
-                                  return sales;
-                                },
-                                data: list,
-                              )..setAttribute(charts.measureAxisIdKey,
-                                  "secondaryMeasureAxisId")),
+                      [
+                        ...List<charts.Series<num, num>>.generate(
+                            list.length,
+                            (index) => charts.Series<num, num>(
+                                  id: 'chart1',
+                                  colorFn: (_, __) =>
+                                      charts.ColorUtil.fromDartColor(
+                                          widget.stockModel.stockData.color),
+                                  domainFn: (num indexBoard, int? index) {
+                                    return listTime[index!].toInt();
+                                  },
+                                  measureFn: (num sales, _) {
+                                    return sales;
+                                  },
+                                  data: list,
+                                )..setAttribute(charts.measureAxisIdKey,
+                                    "secondaryMeasureAxisId")),
+                        // if (widget.listEvent?.isNotEmpty ?? false)
+                        //   ...charts.Series<TimeSeriesSales, DateTime>(
+                        //     id: 'Annotation Series 2',
+                        //     colorFn: (_, __) =>
+                        //         charts.MaterialPalette.red.shadeDefault,
+                        //     domainFn: (TimeSeriesSales sales, _) =>
+                        //         sales.timeCurrent,
+                        //     domainLowerBoundFn: (TimeSeriesSales row, _) =>
+                        //         row.timePrevious,
+                        //     domainUpperBoundFn: (TimeSeriesSales row, _) =>
+                        //         row.timeTarget,
+                        //     // No measure values are needed for symbol annotations.
+                        //     measureFn: (_, __) => null,
+                        //     data: myAnnotationData2,
+                        //   )
+                        //     // Configure our custom symbol annotation renderer for this series.
+                        //     ..setAttribute(
+                        //         charts.rendererIdKey, 'customSymbolAnnotation')
+                        //     // Optional radius for the annotation shape. If not specified, this will
+                        //     // default to the same radius as the points.
+                        //     ..setAttribute(charts.boundsLineRadiusPxKey, 3.5),
+                      ],
                       layoutConfig: charts.LayoutConfig(
-                          bottomMarginSpec: charts.MarginSpec.fromPercent(minPercent: 5),
+                          bottomMarginSpec:
+                              charts.MarginSpec.fromPercent(minPercent: 5),
                           leftMarginSpec: charts.MarginSpec.defaultSpec,
                           rightMarginSpec: charts.MarginSpec.defaultSpec,
-                          topMarginSpec: charts.MarginSpec.fromPercent(minPercent: 10)),
+                          topMarginSpec:
+                              charts.MarginSpec.fromPercent(minPercent: 10)),
                       defaultRenderer:
                           charts.LineRendererConfig(smoothLine: true),
                       domainAxis: domainSpec(minX, maxX),
@@ -233,15 +260,15 @@ class _StockDetailChartState extends State<StockDetailChart>
   }
 
   charts.NumericAxisSpec axisSpec() {
-    return charts.NumericAxisSpec(
+    return const charts.NumericAxisSpec(
       showAxisLine: true,
-      tickProviderSpec: const charts.BasicNumericTickProviderSpec(
+      tickProviderSpec: charts.BasicNumericTickProviderSpec(
         zeroBound: false,
         // desiredTickCount: 5,
         dataIsInWholeNumbers: false,
       ),
-      viewport: charts.NumericExtents(min, max),
-      renderSpec: const charts.GridlineRendererSpec(
+      // viewport: charts.NumericExtents(min.floor(), max.round()),
+      renderSpec: charts.GridlineRendererSpec(
           axisLineStyle: charts.LineStyleSpec(
             dashPattern: [4],
             thickness: 0,

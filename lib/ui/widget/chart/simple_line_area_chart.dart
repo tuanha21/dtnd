@@ -80,7 +80,7 @@ class _SimpleLineAreaChartState extends State<SimpleLineAreaChart> {
   @override
   void didUpdateWidget(covariant SimpleLineAreaChart oldWidget) {
     // print(widget.data.stockData.sstatus.name);
-    if (oldWidget.data != widget.data) {
+    if (oldWidget.data != widget.data || oldWidget.color != widget.color) {
       if (mounted) {
         // print("rebuilt");
         getChartData();

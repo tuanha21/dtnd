@@ -1,6 +1,6 @@
 // ignore_for_file: library_prefixes
 
-import 'package:dtnd/=models=/commodity_model.dart';
+import 'package:dtnd/=models=/response/commodity_model.dart';
 import 'package:dtnd/=models=/core_response_model.dart';
 import 'package:dtnd/=models=/index.dart';
 import 'package:dtnd/=models=/response/business_profile_model.dart';
@@ -81,7 +81,7 @@ abstract class INetworkService {
 
   Future<List<String>> getList30Stocks(String code);
 
-  Future<List<String>> getTopSearch();
+  Future<List<String>> getTopSearch(String body);
 
   Future<List<TrashModel>> getTopInterested(Map<String, dynamic> body);
 

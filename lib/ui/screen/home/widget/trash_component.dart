@@ -8,10 +8,8 @@ import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:dtnd/ui/theme/app_textstyle.dart';
 import 'package:dtnd/ui/widget/chart/simple_line_area_chart.dart';
-import 'package:dtnd/ui/widget/chart/simple_line_chart.dart';
 import 'package:dtnd/ui/widget/icon/stock_icon.dart';
 import 'package:dtnd/utilities/num_utils.dart';
-import 'package:dtnd/utilities/responsive.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -68,6 +66,7 @@ class _TrashComponentState extends State<TrashComponent> {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     final themeMode = AppService.instance.themeMode.value;
     final Widget changePcWidget;
     final Widget lastPriceWidget;
@@ -190,7 +189,7 @@ class _TrashComponentState extends State<TrashComponent> {
         }
       }, stockModel!.hasSocketData);
       chartWidget = Obx(() {
-        stockModel?.stockData.lastPrice.value;
+        stockModel!.stockData.lastPrice.value;
         final num? annotation = snapshotData.cHART?.first;
         final Color color;
         if (stockModel != null) {
@@ -231,56 +230,53 @@ class _TrashComponentState extends State<TrashComponent> {
             color: themeMode.isDark ? AppColors.bg_2 : AppColors.neutral_07,
           ),
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               StockIcon(
                 stockCode: widget.snapshotData.sTOCKCODE,
               ),
               const SizedBox(width: 8),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    widget.snapshotData.sTOCKCODE,
-                    style: Theme.of(context)
-                        .textTheme
-                        .titleSmall!
-                        .copyWith(fontWeight: FontWeight.w600),
-                  ),
-                  changePcWidget,
-                ],
-              ),
-              const SizedBox(width: 24),
-              Expanded(
-                child: Container(
-                  constraints: BoxConstraints(
-                      minWidth: MediaQuery.of(context).size.width / 5,
-                      maxWidth: MediaQuery.of(context).size.width / 4),
-                  child: chartWidget,
+              SizedBox(
+                width: 50,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      widget.snapshotData.sTOCKCODE,
+                      style: Theme.of(context)
+                          .textTheme
+                          .titleSmall!
+                          .copyWith(fontWeight: FontWeight.w600),
+                    ),
+                    changePcWidget,
+                  ],
                 ),
               ),
-              const SizedBox(width: 24),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  // ObxValue<Rx<num?>>(
-                  //   (lastPrice) {
-                  //     return Text(
-                  //       "${lastPrice.value}",
-                  //       style: AppTextStyle.labelMedium_12.copyWith(
-                  //         fontWeight: FontWeight.w600,
-                  //         color: data.stockData.color,
-                  //       ),
-                  //     );
-                  //   },
-                  //   data.stockData.lastPrice,
-                  // ),
-                  lastPriceWidget,
-
-                  volWidget,
-                ],
+              SizedBox(
+                width: 120,
+                child: chartWidget,
+              ),
+              const SizedBox(
+                width: 24,
+              ),
+              Expanded(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        lastPriceWidget,
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        volWidget,
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ],
           ),

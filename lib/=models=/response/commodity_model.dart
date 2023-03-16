@@ -1,4 +1,4 @@
-import 'package:dtnd/logic/stock_status.dart';
+import 'package:dtnd/=models=/stock_status.dart';
 
 class CommodityModel extends StockStatus {
   String? nAME;

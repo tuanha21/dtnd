@@ -1,5 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:dtnd/=models=/response/sec_event.dart';
 import 'package:dtnd/=models=/response/stock_model.dart';
+import 'package:dtnd/data/i_data_center_service.dart';
+import 'package:dtnd/data/implementations/data_center_service.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:dtnd/ui/widget/expanded_widget.dart';
 import 'package:flutter/material.dart';
@@ -38,6 +41,21 @@ class OverviewTab extends StatefulWidget {
 
 class _OverviewTabState extends State<OverviewTab>
     with AutomaticKeepAliveClientMixin {
+  final IDataCenterService dataCenterService = DataCenterService();
+
+  List<SecEvent>? listEvent;
+  @override
+  void initState() {
+    super.initState();
+    getEvent();
+  }
+
+  void getEvent() async {
+    listEvent =
+        await dataCenterService.getListEvent(widget.stockModel.stockData.sym);
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     super.build(context);
@@ -131,7 +149,7 @@ class _OverviewTabState extends State<OverviewTab>
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: StockEvent(
-              stockModel: widget.stockModel,
+              listEvent: listEvent,
             ),
           ),
         ),
@@ -141,7 +159,6 @@ class _OverviewTabState extends State<OverviewTab>
   }
 
   @override
-  // TODO: implement wantKeepAlive
   bool get wantKeepAlive => true;
 }
 

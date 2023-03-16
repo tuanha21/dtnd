@@ -163,7 +163,8 @@ class _GeneralInfoTabState extends State<GeneralInfoTab> {
                               const SizedBox(width: 9),
                               Text(
                                 info.phone ?? "",
-                                style: textTheme.titleSmall?.copyWith(color: AppColors.primary_01),
+                                style: textTheme.titleSmall
+                                    ?.copyWith(color: AppColors.primary_01),
                               ),
                             ],
                           ),
@@ -186,7 +187,8 @@ class _GeneralInfoTabState extends State<GeneralInfoTab> {
                               const SizedBox(width: 9),
                               Text(
                                 info.uRL ?? "",
-                                style: textTheme.titleSmall?.copyWith(color: AppColors.primary_01),
+                                style: textTheme.titleSmall
+                                    ?.copyWith(color: AppColors.primary_01),
                               ),
                             ],
                           ),
@@ -198,7 +200,7 @@ class _GeneralInfoTabState extends State<GeneralInfoTab> {
                   Row(
                     children: [
                       Text(
-                        "Thành viên Hội đồng quản trị",
+                        "Ban lãnh đạo",
                         style: textTheme.titleMedium!
                             .copyWith(fontWeight: FontWeight.w700),
                       ),
@@ -226,16 +228,16 @@ class _GeneralInfoTabState extends State<GeneralInfoTab> {
                                       widget.stockModel.businnessLeaders?[i]
                                               .fullName ??
                                           "-",
-                                      style: textTheme.labelMedium!
-                                          .copyWith(fontWeight: FontWeight.w600),
+                                      style: textTheme.labelMedium!.copyWith(
+                                          fontWeight: FontWeight.w600),
                                     ),
                                     const SizedBox(height: 4),
                                     Text(
                                       widget.stockModel.businnessLeaders?[i]
                                               .position ??
                                           "-",
-                                      style: AppTextStyle.bodySmall_8
-                                          .copyWith(color: AppColors.neutral_04),
+                                      style: AppTextStyle.bodySmall_8.copyWith(
+                                          color: AppColors.neutral_04),
                                     )
                                   ],
                                 ),
@@ -376,9 +378,10 @@ class _GeneralInfoTabState extends State<GeneralInfoTab> {
                                       Expanded(
                                         child: Text(
                                           list[i].name ?? "-",
-                                          style: textTheme.labelMedium!.copyWith(
-                                            height: 24/15,
-                                              fontWeight: FontWeight.w600),
+                                          style: textTheme.labelMedium!
+                                              .copyWith(
+                                                  height: 24 / 15,
+                                                  fontWeight: FontWeight.w600),
                                         ),
                                       ),
                                       Expanded(child: LayoutBuilder(

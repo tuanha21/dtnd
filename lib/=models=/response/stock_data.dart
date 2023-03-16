@@ -1,5 +1,5 @@
 import 'package:dtnd/=models=/side.dart';
-import 'package:dtnd/logic/stock_status.dart';
+import 'package:dtnd/=models=/stock_status.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/utilities/logger.dart';
 import 'package:flutter/material.dart';

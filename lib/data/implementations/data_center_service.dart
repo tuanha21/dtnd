@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:dtnd/=models=/index.dart';
 import 'package:dtnd/=models=/response/business_profile_model.dart';
 import 'package:dtnd/=models=/response/deep_model.dart';
@@ -382,17 +384,6 @@ class DataCenterService
         continue;
       }
     }
-    return results;
-  }
-
-  @override
-  Future<List<Stock>> getTopSearch() async {
-    final listStrings = await networkService.getTopSearch();
-    if (listStrings.isEmpty) {
-      return [];
-    }
-    final List<Stock> results = getStockFromStockCodes(listStrings);
-
     return results;
   }
 

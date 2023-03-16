@@ -11,9 +11,8 @@ import '../../../theme/app_color.dart';
 import '../../../theme/app_textstyle.dart';
 
 class StockEvent extends StatefulWidget {
-  final StockModel stockModel;
-
-  const StockEvent({Key? key, required this.stockModel}) : super(key: key);
+  final List<SecEvent>? listEvent;
+  const StockEvent({Key? key, required this.listEvent}) : super(key: key);
 
   @override
   State<StockEvent> createState() => _StockEventState();
@@ -35,7 +34,6 @@ class _StockEventState extends State<StockEvent> {
 
   @override
   void initState() {
-    listEvent = dataCenterService.getListEvent(widget.stockModel.stockData.sym);
     super.initState();
   }
 
@@ -44,12 +42,9 @@ class _StockEventState extends State<StockEvent> {
     return FutureBuilder<List<SecEvent>>(
       future: listEvent,
       builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
+        if (widget.listEvent?.isEmpty ?? true) {
           return const SizedBox();
-        }
-        if (snapshot.connectionState == ConnectionState.done) {
-          var list = snapshot.data;
-          if (list == null) return const SizedBox();
+        } else {
           return Container(
             decoration: const BoxDecoration(
               borderRadius: BorderRadius.all(Radius.circular(12)),
@@ -61,7 +56,7 @@ class _StockEventState extends State<StockEvent> {
                 itemBuilder: (context, index) {
                   return Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: EventCard(event: list[index]),
+                    child: EventCard(event: widget.listEvent![index]),
                   );
                 },
                 separatorBuilder: (context, index) {
@@ -71,10 +66,9 @@ class _StockEventState extends State<StockEvent> {
                     height: 16,
                   );
                 },
-                itemCount: list.length),
+                itemCount: widget.listEvent!.length),
           );
         }
-        return const SizedBox();
       },
     );
   }

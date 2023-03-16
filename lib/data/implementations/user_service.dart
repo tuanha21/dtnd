@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:dtnd/=models=/request/request_model.dart';
 import 'package:dtnd/=models=/response/account/asset_chart_element.dart';
 import 'package:dtnd/=models=/response/account/base_margin_account_model.dart';
@@ -6,6 +8,7 @@ import 'package:dtnd/=models=/response/account/portfolio_status_model.dart';
 import 'package:dtnd/=models=/response/account/unexecuted_right_model.dart';
 import 'package:dtnd/=models=/response/account_info_model.dart';
 import 'package:dtnd/=models=/response/order_model/base_order_model.dart';
+import 'package:dtnd/=models=/response/stock.dart';
 import 'package:dtnd/=models=/response/total_asset_model.dart';
 import 'package:dtnd/=models=/response/user_token.dart';
 import 'package:dtnd/=models=/side.dart';
@@ -246,17 +249,35 @@ class UserService implements IUserService {
     final body = '{"account":"${token.value!.user}"}';
 
     searchHistory = await networkService.getSearchHistory(body);
-    logger.v(searchHistory);
     return searchHistory;
   }
 
   @override
+  Future<List<String>> getTopSearch() async {
+    if (!isLogin) {
+      return [];
+    }
+    final Map<String, String> body = {
+      "account": token.value!.user,
+      "sid": token.value!.sid
+    };
+    logger.v(jsonEncode(body));
+    final listStrings = await networkService.getTopSearch(jsonEncode(body));
+
+    return listStrings;
+  }
+
+  @override
   void putSearchHistory(String searchString) {
-    final Map<String, dynamic> body = {
+    if (!isLogin) {
+      return;
+    }
+    final Map<String, String> body = {
       "account": token.value!.user,
       "textSearch": searchString,
     };
-    networkService.putSearchHistory(body.toString());
+    print(jsonEncode(body));
+    networkService.putSearchHistory(jsonEncode(body));
     return;
   }
 }

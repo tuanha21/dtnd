@@ -1,6 +1,6 @@
 import 'dart:ui';
 
-import 'package:dtnd/logic/stock_status.dart';
+import 'package:dtnd/=models=/stock_status.dart';
 
 class TrashModel extends StockStatus {
   late final String sTOCKCODE;

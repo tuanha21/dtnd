@@ -62,10 +62,9 @@ class _SearchScreenState extends State<SearchScreen>
   }
 
   void getListTopSearch() async {
-    final list = await dataCenterService.getTopSearch();
-    setState(() {
-      listTopSearch = list;
-    });
+    final list = await userService.getTopSearch();
+    listTopSearch = dataCenterService.getStockFromStockCodes(list);
+    setState(() {});
   }
 
   void getVN30() async {
@@ -350,7 +349,11 @@ class _SearchScreenState extends State<SearchScreen>
                         borderRadius:
                             const BorderRadius.all(Radius.circular(8)),
                         child: InkWell(
-                          onTap: () => Navigator.of(context).pop(e),
+                          onTap: () {
+                            print(e.stockCode);
+                            userService.putSearchHistory(e.stockCode);
+                            return Navigator.of(context).pop(e);
+                          },
                           borderRadius:
                               const BorderRadius.all(Radius.circular(8)),
                           child: Ink(

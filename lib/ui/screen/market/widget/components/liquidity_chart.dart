@@ -32,47 +32,47 @@ class _LiquidityChartState extends State<LiquidityChart> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const SizedBox(height: 24),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: Row(
-            children: [
-              Text(
-                'Thanh khoản',
-                style: Theme.of(context)
-                    .textTheme
-                    .labelMedium
-                    ?.copyWith(fontWeight: FontWeight.w700, fontSize: 14),
-              ),
-              const SizedBox(
-                width: 4,
-              ),
-              GestureDetector(
-                onTap: () => showDialog<String>(
-                  context: context,
-                  builder: (BuildContext context) => Dialog(
-                    child: Container(
-                      padding: const EdgeInsets.all(16),
-                      decoration: BoxDecoration(
-                          color: AppColors.light_bg,
-                          borderRadius: BorderRadius.circular(8)),
-                      width: MediaQuery.of(context).size.width,
-                      child: Text(
-                          'Biểu đồ so sánh dòng tiền tại cùng thời điểm với phiên trước, trung bình 1 tuần. Dữ liệu ngày ${TimeUtilities.parseDateToString(DateTime.now())}',
-                          style: Theme.of(context)
-                              .textTheme
-                              .labelMedium
-                              ?.copyWith(
-                                  fontWeight: FontWeight.w400, fontSize: 14)),
-                    ),
-                  ),
-                ),
-                child: SvgPicture.asset(
-                  AppImages.infoCircle,
-                ),
-              )
-            ],
-          ),
-        ),
+        // Padding(
+        //   padding: const EdgeInsets.symmetric(horizontal: 16),
+        //   child: Row(
+        //     children: [
+        //       Text(
+        //         'Thanh khoản',
+        //         style: Theme.of(context)
+        //             .textTheme
+        //             .labelMedium
+        //             ?.copyWith(fontWeight: FontWeight.w700, fontSize: 14),
+        //       ),
+        //       const SizedBox(
+        //         width: 4,
+        //       ),
+        //       GestureDetector(
+        //         onTap: () => showDialog<String>(
+        //           context: context,
+        //           builder: (BuildContext context) => Dialog(
+        //             child: Container(
+        //               padding: const EdgeInsets.all(16),
+        //               decoration: BoxDecoration(
+        //                   color: AppColors.light_bg,
+        //                   borderRadius: BorderRadius.circular(8)),
+        //               width: MediaQuery.of(context).size.width,
+        //               child: Text(
+        //                   'Biểu đồ so sánh dòng tiền tại cùng thời điểm với phiên trước, trung bình 1 tuần. Dữ liệu ngày ${TimeUtilities.parseDateToString(DateTime.now())}',
+        //                   style: Theme.of(context)
+        //                       .textTheme
+        //                       .labelMedium
+        //                       ?.copyWith(
+        //                           fontWeight: FontWeight.w400, fontSize: 14)),
+        //             ),
+        //           ),
+        //         ),
+        //         child: SvgPicture.asset(
+        //           AppImages.infoCircle,
+        //         ),
+        //       )
+        //     ],
+        //   ),
+        // ),
         FutureBuilder<LiquidityModel>(
             future: widget.liquidityModel,
             builder: (context, snapshot) {

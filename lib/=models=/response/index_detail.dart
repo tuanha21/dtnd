@@ -1,6 +1,6 @@
 import 'dart:ui';
 
-import 'package:dtnd/logic/stock_status.dart';
+import 'package:dtnd/=models=/stock_status.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/utilities/num_utils.dart';
 import 'package:get/get.dart';

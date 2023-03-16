@@ -1,16 +1,14 @@
 import 'dart:async';
 
-import 'package:dtnd/=models=/commodity_model.dart';
+import 'package:dtnd/=models=/response/commodity_model.dart';
 import 'package:dtnd/=models=/index.dart';
 import 'package:dtnd/=models=/response/index_model.dart';
 import 'package:dtnd/=models=/response/top_signal_stock_model.dart';
 import 'package:dtnd/=models=/response/news_model.dart';
 import 'package:dtnd/=models=/response/stock_model.dart';
-import 'package:dtnd/=models=/response/top_interested_model.dart';
 import 'package:dtnd/=models=/response/trash_model.dart';
 import 'package:dtnd/=models=/response/world_index_model.dart';
 import 'package:dtnd/config/service/app_services.dart';
-import 'package:dtnd/config/service/environment.dart';
 import 'package:dtnd/data/i_data_center_service.dart';
 import 'package:dtnd/data/i_local_storage_service.dart';
 import 'package:dtnd/data/i_network_service.dart';

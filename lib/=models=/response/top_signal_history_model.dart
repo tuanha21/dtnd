@@ -1,4 +1,4 @@
-import 'package:dtnd/logic/stock_status.dart';
+import 'package:dtnd/=models=/stock_status.dart';
 import 'package:intl/intl.dart';
 
 final DateFormat _dateFormat = DateFormat("HH:mm:ss dd/MM/yyyy");

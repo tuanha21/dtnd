@@ -58,8 +58,6 @@ abstract class IDataCenterService {
 
   Future<List<Stock>> getList30Stock(String code);
 
-  Future<List<Stock>> getTopSearch();
-
   Future<List<TrashModel>> getTopInterested([int count]);
 
   Future<List<TrashModel>> getTopStockTrade([int count, String type]);
