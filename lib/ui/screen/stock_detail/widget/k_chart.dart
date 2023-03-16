@@ -1,4 +1,4 @@
-import 'package:dtnd/=models=/response/index_model.dart';
+import 'package:dtnd/=models=/response/stock_trading_history.dart';
 import 'package:dtnd/config/service/app_services.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:flutter/material.dart';
@@ -8,7 +8,7 @@ import 'package:k_chart/flutter_k_chart.dart';
 class KChart extends StatefulWidget {
   const KChart({
     super.key,
-    required this.indexModel,
+    required this.stockTradingHistory,
     this.isLine = false,
     this.showNowPrice = false,
     this.dateTimeFormat,
@@ -16,9 +16,14 @@ class KChart extends StatefulWidget {
     this.mainState,
     this.secondaryState,
     this.showMA = false,
+    required this.code,
+    required this.vol,
+    this.color,
   });
-
-  final IndexModel indexModel;
+  final String code;
+  final StockTradingHistory stockTradingHistory;
+  final double? vol;
+  final Color? color;
   final bool isLine;
   final bool showMA;
   final bool showNowPrice;
@@ -45,18 +50,15 @@ class _KChartState extends State<KChart> {
       initializing = true;
     });
     final List<num> list = [];
-    for (int i = 0;
-        i < widget.indexModel.stockDayTradingHistory.value!.t.length;
-        i++) {
-      list.add(widget.indexModel.stockDayTradingHistory.value!.o[i].toDouble());
+    for (int i = 0; i < widget.stockTradingHistory.t.length; i++) {
+      list.add(widget.stockTradingHistory.o[i].toDouble());
       datas.add(KLineEntity.fromCustom(
-        open: widget.indexModel.stockDayTradingHistory.value!.o[i].toDouble(),
-        close: widget.indexModel.stockDayTradingHistory.value!.c[i].toDouble(),
-        time:
-            widget.indexModel.stockDayTradingHistory.value!.t[i].toInt() * 1000,
-        high: widget.indexModel.stockDayTradingHistory.value!.h[i].toDouble(),
-        low: widget.indexModel.stockDayTradingHistory.value!.l[i].toDouble(),
-        vol: widget.indexModel.stockDayTradingHistory.value!.v[i].toDouble(),
+        open: widget.stockTradingHistory.o[i].toDouble(),
+        close: widget.stockTradingHistory.c[i].toDouble(),
+        time: widget.stockTradingHistory.t[i].toInt() * 1000,
+        high: widget.stockTradingHistory.h[i].toDouble(),
+        low: widget.stockTradingHistory.l[i].toDouble(),
+        vol: widget.stockTradingHistory.v[i].toDouble(),
         // amount:
         //     widget.indexModel.stockDayTradingHistory.value!.v![i].toDouble(),
       ));
@@ -72,23 +74,20 @@ class _KChartState extends State<KChart> {
   @override
   void didUpdateWidget(covariant KChart oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (oldWidget.indexModel.index != widget.indexModel.index) {
+    if (oldWidget.code != widget.code) {
       initData();
     }
-    if (widget.indexModel.stockDayTradingHistory.value?.c.last != null &&
-        datas.last.close !=
-            widget.indexModel.stockDayTradingHistory.value!.c.last) {
-      datas.last.close =
-          widget.indexModel.stockDayTradingHistory.value!.c.last.toDouble();
+    if (widget.stockTradingHistory.c.isNotEmpty &&
+        datas.last.close != widget.stockTradingHistory.c.last) {
+      datas.last.close = widget.stockTradingHistory.c.last.toDouble();
       // DataUtil.calculate(datas);
       if (widget.showMA) {
         DataUtil.calculate(datas, const [5, 20]);
       }
     }
-    if (widget.indexModel.stockDayTradingHistory.value?.v.last != null &&
-        datas.last.vol != widget.indexModel.indexDetail.vol.value) {
-      datas.last.vol =
-          widget.indexModel.indexDetail.vol.value?.toDouble() ?? datas.last.vol;
+    if (widget.stockTradingHistory.v.isNotEmpty &&
+        datas.last.vol != widget.vol) {
+      datas.last.vol = widget.vol ?? datas.last.vol;
       // DataUtil.calculate(datas);
       if (widget.showMA) {
         DataUtil.calculate(datas, const [5, 20]);
@@ -108,7 +107,7 @@ class _KChartState extends State<KChart> {
       ChartStyle(),
       ChartColors(
         bgColor: bgColor,
-        kLineColor: widget.indexModel.indexDetail.color,
+        kLineColor: widget.color ?? AppColors.semantic_02,
         lineFillColor: Colors.black,
         volColor: AppColors.neutral_06,
         upColor: AppColors.semantic_01,
@@ -127,7 +126,7 @@ class _KChartState extends State<KChart> {
         minColor: Colors.black,
         maxColor: Colors.black,
       ),
-      stockCode: widget.indexModel.index.name,
+      stockCode: widget.code,
       showNowPrice: widget.showNowPrice,
       fixedLength: 2,
       showInfoDialog: true,

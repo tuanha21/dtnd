@@ -61,7 +61,10 @@ class _OverviewTabState extends State<OverviewTab>
     super.build(context);
     return ListView(
       children: [
-        StockDetailChart(stockModel: widget.stockModel),
+        StockDetailChart(
+          stockModel: widget.stockModel,
+          listEvent: listEvent,
+        ),
         const SizedBox(height: 20),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),

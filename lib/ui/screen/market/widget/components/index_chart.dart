@@ -79,13 +79,18 @@ class _IndexChartState extends State<IndexChart> {
                   volumn: S.of(context).volumn_translations,
                 ),
               };
-              return KChart(
-                indexModel:
-                    selectedIndex ?? marketController.currentIndexModel.value!,
-                isLine: true,
-                showNowPrice: true,
-                translations: kChartTranslations,
-              );
+              return Obx(() {
+                return KChart(
+                  isLine: true,
+                  showNowPrice: true,
+                  translations: kChartTranslations,
+                  code: selectedIndex?.index.name ??
+                      marketController.currentIndexModel.value!.index.name,
+                  stockTradingHistory: marketController
+                      .currentIndexModel.value!.stockDayTradingHistory.value!,
+                  vol: selectedIndex?.indexDetail.vol.value?.toDouble() ?? 0,
+                );
+              });
             }),
           ),
         ),

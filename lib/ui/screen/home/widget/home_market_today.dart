@@ -191,12 +191,18 @@ class _HomeMarketTodayState extends State<HomeMarketToday>
                     size: Size(MediaQuery.of(context).size.width, 250),
                     child: KChart(
                       showNowPrice: true,
-                      indexModel: homeController.currentIndexModel.value!,
                       isLine: true,
                       showMA: true,
                       mainState: MainState.MA,
                       dateTimeFormat: const [kcharts.dd, "/", kcharts.mm],
                       translations: kChartTranslations,
+                      code: homeController.currentIndexModel.value!.index.name,
+                      stockTradingHistory: homeController.currentIndexModel
+                          .value!.stockDayTradingHistory.value!,
+                      vol: homeController
+                              .currentIndexModel.value!.indexDetail.vol.value
+                              ?.toDouble() ??
+                          0,
                     ),
                   ),
                 );

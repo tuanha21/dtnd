@@ -105,17 +105,23 @@ class _StockDetailChartState extends State<StockDetailChart>
                     maxX = listTime.reduce(math.max);
                     minX = listTime.reduce(math.min);
 
-                    return charts.NumericComboChart(
+                    return charts.TimeSeriesChart(
                       [
-                        ...List<charts.Series<num, num>>.generate(
+                        ...List<charts.Series<num, DateTime>>.generate(
                             list.length,
-                            (index) => charts.Series<num, num>(
+                            (index) => charts.Series<num, DateTime>(
                                   id: 'chart1',
                                   colorFn: (_, __) =>
                                       charts.ColorUtil.fromDartColor(
                                           widget.stockModel.stockData.color),
                                   domainFn: (num indexBoard, int? index) {
-                                    return listTime[index!].toInt();
+                                    if (index != null) {
+                                      int epoc = listTime[index].toInt() * 1000;
+                                      return DateTime
+                                          .fromMillisecondsSinceEpoch(epoc);
+                                    } else {
+                                      throw Exception("Chart index null");
+                                    }
                                   },
                                   measureFn: (num sales, _) {
                                     return sales;
@@ -123,27 +129,27 @@ class _StockDetailChartState extends State<StockDetailChart>
                                   data: list,
                                 )..setAttribute(charts.measureAxisIdKey,
                                     "secondaryMeasureAxisId")),
-                        // if (widget.listEvent?.isNotEmpty ?? false)
-                        //   ...charts.Series<TimeSeriesSales, DateTime>(
-                        //     id: 'Annotation Series 2',
-                        //     colorFn: (_, __) =>
-                        //         charts.MaterialPalette.red.shadeDefault,
-                        //     domainFn: (TimeSeriesSales sales, _) =>
-                        //         sales.timeCurrent,
-                        //     domainLowerBoundFn: (TimeSeriesSales row, _) =>
-                        //         row.timePrevious,
-                        //     domainUpperBoundFn: (TimeSeriesSales row, _) =>
-                        //         row.timeTarget,
-                        //     // No measure values are needed for symbol annotations.
-                        //     measureFn: (_, __) => null,
-                        //     data: myAnnotationData2,
-                        //   )
-                        //     // Configure our custom symbol annotation renderer for this series.
-                        //     ..setAttribute(
-                        //         charts.rendererIdKey, 'customSymbolAnnotation')
-                        //     // Optional radius for the annotation shape. If not specified, this will
-                        //     // default to the same radius as the points.
-                        //     ..setAttribute(charts.boundsLineRadiusPxKey, 3.5),
+                        if (widget.listEvent?.isNotEmpty ?? false)
+                          charts.Series<SecEvent, DateTime>(
+                            id: 'Annotation Series 2',
+                            colorFn: (_, __) =>
+                                charts.MaterialPalette.red.shadeDefault,
+                            domainFn: (SecEvent event, _) =>
+                                event.dateTime ?? DateTime.now(),
+                            domainLowerBoundFn: (SecEvent event, _) =>
+                                event.dateTime,
+                            domainUpperBoundFn: (SecEvent event, _) =>
+                                event.dateTime,
+                            // No measure values are needed for symbol annotations.
+                            measureFn: (_, __) => null,
+                            data: widget.listEvent!,
+                          )
+                            // Configure our custom symbol annotation renderer for this series.
+                            ..setAttribute(
+                                charts.rendererIdKey, 'customSymbolAnnotation')
+                            // Optional radius for the annotation shape. If not specified, this will
+                            // default to the same radius as the points.
+                            ..setAttribute(charts.boundsLineRadiusPxKey, 3.5),
                       ],
                       layoutConfig: charts.LayoutConfig(
                           bottomMarginSpec:
@@ -154,8 +160,35 @@ class _StockDetailChartState extends State<StockDetailChart>
                               charts.MarginSpec.fromPercent(minPercent: 10)),
                       defaultRenderer:
                           charts.LineRendererConfig(smoothLine: true),
-                      domainAxis: domainSpec(minX, maxX),
+                      domainAxis: charts.DateTimeAxisSpec(
+                          tickFormatterSpec:
+                              charts.BasicDateTimeTickFormatterSpec((time) {
+                            String formattedDate =
+                                TimeUtilities.dateMonthTimeFormat.format(time);
+                            return formattedDate;
+                          }),
+                          tickProviderSpec:
+                              const charts.AutoDateTimeTickProviderSpec(),
+                          // viewport: charts.NumericExtents(minX, maxX),
+                          renderSpec: const charts.GridlineRendererSpec(
+                              axisLineStyle: charts.LineStyleSpec(
+                                dashPattern: [4],
+                                thickness: 0,
+                                color: charts.Color(r: 74, g: 85, b: 104),
+                              ),
+                              labelStyle: charts.TextStyleSpec(fontSize: 9),
+                              lineStyle:
+                                  charts.LineStyleSpec(dashPattern: [4]))),
                       secondaryMeasureAxis: axisSpec(),
+                      customSeriesRenderers: [
+                        charts.SymbolAnnotationRendererConfig(
+                            // ID used to link series to this renderer.
+                            customRendererId: 'customSymbolAnnotation')
+                      ],
+                      // Optionally pass in a [DateTimeFactory] used by the chart. The factory
+                      // should create the same type of [DateTime] as the data provided. If none
+                      // specified, the default creates local date time.
+                      dateTimeFactory: const charts.LocalDateTimeFactory(),
                     );
                   }
 
