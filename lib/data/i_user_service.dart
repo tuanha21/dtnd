@@ -49,4 +49,9 @@ abstract class IUserService {
   Future<void> refreshAssets();
 
   void putSearchHistory(String searchString);
+
+  // Register session
+  Future<List<String>> verifyRegisterInfo(String mobile, String mail);
+
+  Future<bool> verifyRegisterOTP(String mobile, String mail, String otp);
 }

@@ -4,6 +4,10 @@ import 'package:dtnd/utilities/string_util.dart';
 import '../generated/l10n.dart';
 
 mixin AppValidator {
+  static final RegExp _emailRegex =
+      RegExp(r'^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$');
+  static final RegExp _phoneNumberRegex =
+      RegExp(r'^(\+)?(\d{1,3})?([-.\s]?\d{2,4}[-.\s]?){2,5}\d{2,4}$');
   static String? pinValidator(String? pin) {
     if (pin?.isEmpty ?? true) {
       return "Không được bỏ trống";
@@ -61,8 +65,15 @@ mixin AppValidator {
     return null;
   }
 
-  String? checkConfirmPass(String rePass, String pass) {
-    if (rePass.isEmpty) {
+  String? passwordValidator(String? value) {
+    if ((value?.length ?? 0) < 8) {
+      return S.current.null_password;
+    }
+    return null;
+  }
+
+  String? checkConfirmPass(String? rePass, String? pass) {
+    if (rePass?.isEmpty ?? true) {
       return S.current.please_input_password;
     } else if (rePass != pass) {
       return S.current.pass_not_match;

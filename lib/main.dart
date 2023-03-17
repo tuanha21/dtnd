@@ -11,8 +11,9 @@ import 'package:dtnd/ui/screen/ekyc/page/camera_preview_card.dart';
 import 'package:dtnd/ui/screen/home_base/home_base.dart';
 import 'package:dtnd/ui/screen/loading/loading_screen.dart';
 import 'package:dtnd/ui/screen/login/login_screen.dart';
-import 'package:dtnd/ui/screen/sign_up/create_new_pass.dart';
-import 'package:dtnd/ui/screen/sign_up/reference_page.dart';
+import 'package:dtnd/ui/screen/sign_up/page/create_new_pass.dart';
+import 'package:dtnd/ui/screen/sign_up/page/reference_page.dart';
+import 'package:dtnd/ui/screen/sign_up/page/success_sign_up_page.dart';
 import 'package:dtnd/ui/screen/sign_up/sign_up_view.dart';
 import 'package:dtnd/ui/theme/app_theme.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -25,7 +26,6 @@ import 'package:go_router/go_router.dart';
 import 'firebase_options.dart';
 import 'ui/screen/ekyc/ekyc_view.dart';
 import 'ui/screen/otp/otp_view.dart';
-import 'ui/screen/sign_up/success_sign_up_page.dart';
 
 class MyHttpOverrides extends HttpOverrides {
   @override
@@ -91,7 +91,7 @@ class _MyAppState extends State<MyApp> {
       GoRoute(
         path: '/SignUp',
         builder: (BuildContext context, GoRouterState state) {
-          return const SignUpPage();
+          return const SignUpView();
         },
       ),
       GoRoute(

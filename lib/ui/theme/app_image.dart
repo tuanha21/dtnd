@@ -177,6 +177,8 @@ class AppImages {
   static const String illust06 = "assets/images/illust06.png";
   static const String illust05 = "assets/images/Illust05.png";
   static const String illust04 = "assets/images/Illust04.png";
+  static const String success_register_scene =
+      "assets/images/success_register_scene.png";
 
   static const String scene = "assets/images/scene.png";
 

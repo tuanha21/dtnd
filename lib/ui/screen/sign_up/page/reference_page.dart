@@ -1,8 +1,7 @@
+import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/widget/input/app_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-
-import '../../theme/app_color.dart';
 
 class ReferencePage extends StatefulWidget {
   const ReferencePage({Key? key}) : super(key: key);
@@ -76,15 +75,17 @@ class _ReferencePageState extends State<ReferencePage> {
                 return SizedBox(
                     width: MediaQuery.of(context).size.width,
                     child: ElevatedButton(
-                        onPressed: value ? () {
-                          context.pushNamed('success');
-                        } : null,
+                        onPressed: value
+                            ? () {
+                                context.pushNamed('success');
+                              }
+                            : null,
                         child: const Text("Lưu")));
               },
             ),
             const SizedBox(height: 36),
             GestureDetector(
-              onTap: (){
+              onTap: () {
                 context.pushNamed('success');
               },
               child: Center(

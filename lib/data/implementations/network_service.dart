@@ -1364,4 +1364,38 @@ class NetworkService implements INetworkService {
       rethrow;
     }
   }
+
+  // Signup
+  @override
+  Future<bool> verifySignupInfo(String body) async {
+    var response = await client.post(url_core1("openAccount/verifyPhoneEmail"),
+        body: body);
+    if (response.statusCode != 200) {
+      throw response;
+    }
+    var res = decode(response.bodyBytes);
+    logger.v(res);
+    if (res["iRs"] != 1) {
+      return false;
+    }
+
+    return true;
+  }
+
+  @override
+  Future<bool> verifySignupOTP(String body) async {
+    var response =
+        await client.post(url_core1("openAccount/verifyOtp"), body: body);
+    if (response.statusCode != 200) {
+      throw response;
+    }
+    var res = decode(response.bodyBytes);
+    logger.v(res);
+
+    if (res["rc"] != 1) {
+      return false;
+    }
+
+    return true;
+  }
 }

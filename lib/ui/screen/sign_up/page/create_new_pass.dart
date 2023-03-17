@@ -1,10 +1,10 @@
 import 'package:dtnd/utilities/validator.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import '../../../utilities/regex.dart';
-import '../../theme/app_color.dart';
-import '../../widget/input/app_text_field.dart';
-import 'widget/state_validator.dart';
+import '../../../../utilities/regex.dart';
+import '../../../theme/app_color.dart';
+import '../../../widget/input/app_text_field.dart';
+import '../widget/state_validator.dart';
 
 class CreateNewPassPage extends StatefulWidget {
   const CreateNewPassPage({Key? key}) : super(key: key);

@@ -280,4 +280,27 @@ class UserService implements IUserService {
     networkService.putSearchHistory(jsonEncode(body));
     return;
   }
+
+  // Register session
+
+  @override
+  Future<List<String>> verifyRegisterInfo(String mobile, String mail) async {
+    Map<String, dynamic> body = {
+      "user": "back",
+      "cmd": "CHECK_OPENACC",
+      "param": {"C_MOBILE": mobile, "C_EMAIL": mail}
+    };
+    final result = await networkService.verifySignupInfo(jsonEncode(body));
+    if (result) {
+      return [mobile, mail];
+    } else {
+      throw "Đã có lỗi xảy ra";
+    }
+  }
+
+  @override
+  Future<bool> verifyRegisterOTP(String mobile, String mail, String otp) {
+    Map<String, String> body = {"email": mail, "phone": mobile, "otp": otp};
+    return networkService.verifySignupOTP(jsonEncode(body));
+  }
 }

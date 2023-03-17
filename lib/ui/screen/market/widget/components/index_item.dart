@@ -13,17 +13,16 @@ import '../../../../../generated/l10n.dart';
 import '../../../../theme/app_image.dart';
 
 class MarketIndexItem extends StatelessWidget {
-  const MarketIndexItem(
-      {super.key,
-      required this.data,
-      this.selectedIndex,
-      this.onSelected,
-      required this.res});
+  const MarketIndexItem({
+    super.key,
+    required this.data,
+    this.selectedIndex,
+    this.onSelected,
+  });
 
   final IndexModel data;
   final Index? selectedIndex;
   final ValueChanged<Index>? onSelected;
-  final IndexDetailResponse res;
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +34,6 @@ class MarketIndexItem extends StatelessWidget {
     VoidCallback? onTap;
     if (onSelected != null) {
       onTap = () {
-        print(data.index);
         onSelected?.call(data.index);
       };
     }

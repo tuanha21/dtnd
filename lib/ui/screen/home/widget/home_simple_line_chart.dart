@@ -79,8 +79,7 @@ class _HomeSimpleLineChartState extends State<HomeSimpleLineChart> {
     // print(widget.data.stockData.sstatus.name);
     if (oldWidget.data?.stock.stockCode != widget.data?.stock.stockCode ||
         oldWidget.data?.stockData.sstatus != widget.data?.stockData.sstatus ||
-        chartData.lastUpdatedTime == null ||
-        DateTime.now().difference(chartData.lastUpdatedTime!).inMinutes > 5) {
+        DateTime.now().difference(chartData.lastUpdatedTime).inMinutes > 5) {
       if (mounted) {
         // print("rebuilt");
         getChartData();

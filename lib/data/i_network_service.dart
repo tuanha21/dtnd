@@ -207,4 +207,9 @@ abstract class INetworkService {
 
   // derivative
   Future<List<DerivativeResModel>> getListDerivative();
+
+  // Signup
+  Future<bool> verifySignupInfo(String body);
+
+  Future<bool> verifySignupOTP(String body);
 }

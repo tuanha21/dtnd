@@ -33,19 +33,19 @@ class _IndexChartState extends State<IndexChart> {
 
   Future<List<IndexDetailResponse>> listIndexRes = Future.value([]);
 
-  IndexModel? selectedIndex;
-
   @override
   void initState() {
     listIndexRes = dataCenterService.getListIndexDetail();
     super.initState();
   }
 
-  void changeIndex(Index index) {
-    marketController.changeSelectedIndex(index);
-    setState(() {
-      selectedIndex = marketController.currentIndexModel.value;
-    });
+  void changeIndex(Index index) async {
+    print(index.chartCode);
+    if (marketController.loadingIndex.value) {
+      return;
+    }
+    await marketController.changeSelectedIndex(index);
+    setState(() {});
   }
 
   @override
@@ -57,9 +57,7 @@ class _IndexChartState extends State<IndexChart> {
           child: SizedBox.fromSize(
             size: Size(MediaQuery.of(context).size.width, 250),
             child: Obx(() {
-              if (marketController
-                      .currentIndexModel.value?.stockDayTradingHistory.value ==
-                  null) {
+              if (marketController.currentChartData.value == null) {
                 return Center(
                   child: Text(S.of(context).loading),
                 );
@@ -79,18 +77,17 @@ class _IndexChartState extends State<IndexChart> {
                   volumn: S.of(context).volumn_translations,
                 ),
               };
-              return Obx(() {
-                return KChart(
-                  isLine: true,
-                  showNowPrice: true,
-                  translations: kChartTranslations,
-                  code: selectedIndex?.index.name ??
-                      marketController.currentIndexModel.value!.index.name,
-                  stockTradingHistory: marketController
-                      .currentIndexModel.value!.stockDayTradingHistory.value!,
-                  vol: selectedIndex?.indexDetail.vol.value?.toDouble() ?? 0,
-                );
-              });
+              return KChart(
+                isLine: true,
+                showNowPrice: true,
+                translations: kChartTranslations,
+                code: marketController.currentIndexModel.value!.index.chartCode,
+                stockTradingHistory: marketController.currentChartData.value!,
+                vol: marketController
+                        .currentIndexModel.value?.indexDetail.vol.value
+                        ?.toDouble() ??
+                    0,
+              );
             }),
           ),
         ),
@@ -100,52 +97,37 @@ class _IndexChartState extends State<IndexChart> {
               child: Text(S.of(context).loading),
             );
           }
-          return FutureBuilder<List<IndexDetailResponse>>(
-              future: listIndexRes,
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Center(
-                    child: Text(S.of(context).loading),
-                  );
-                }
-                if (snapshot.connectionState == ConnectionState.done) {
-                  var listRes = snapshot.data;
-                  return Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: SizedBox.fromSize(
-                      size: Size(MediaQuery.of(context).size.width, 64),
-                      child: ScrollConfiguration(
-                        behavior: ScrollConfiguration.of(context).copyWith(
-                          dragDevices: {
-                            PointerDeviceKind.touch,
-                            PointerDeviceKind.mouse,
-                          },
-                        ),
-                        child: ListView.separated(
-                          scrollDirection: Axis.horizontal,
-                          physics: const AlwaysScrollableScrollPhysics(),
-                          itemCount: marketController.listIndexs.length,
-                          itemBuilder: (context, index) =>
-                              ObxValue<Rx<IndexModel?>>((currentIndexModel) {
-                            return MarketIndexItem(
-                              data:
-                                  marketController.listIndexs.elementAt(index),
-                              selectedIndex: currentIndexModel.value?.index,
-                              onSelected: changeIndex,
-                              res: listRes![index],
-                            );
-                          }, marketController.currentIndexModel),
-                          separatorBuilder: (BuildContext context, int index) =>
-                              const SizedBox(
-                            width: 8,
-                          ),
-                        ),
-                      ),
-                    ),
-                  );
-                }
-                return const SizedBox();
-              });
+          return Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: SizedBox.fromSize(
+              size: Size(MediaQuery.of(context).size.width, 64),
+              child: ScrollConfiguration(
+                behavior: ScrollConfiguration.of(context).copyWith(
+                  dragDevices: {
+                    PointerDeviceKind.touch,
+                    PointerDeviceKind.mouse,
+                  },
+                ),
+                child: ListView.separated(
+                  scrollDirection: Axis.horizontal,
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  itemCount: marketController.listIndexs.length,
+                  itemBuilder: (context, index) =>
+                      ObxValue<Rx<IndexModel?>>((currentIndexModel) {
+                    return MarketIndexItem(
+                      data: marketController.listIndexs.elementAt(index).first,
+                      selectedIndex: currentIndexModel.value?.index,
+                      onSelected: changeIndex,
+                    );
+                  }, marketController.currentIndexModel),
+                  separatorBuilder: (BuildContext context, int index) =>
+                      const SizedBox(
+                    width: 8,
+                  ),
+                ),
+              ),
+            ),
+          );
         }, marketController.initialized),
       ],
     );

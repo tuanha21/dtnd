@@ -1,54 +1,45 @@
 class StockTradingHistory {
-  List<num> t = [];
-  List<num> c = [];
-  List<num> o = [];
-  List<num> h = [];
-  List<num> l = [];
-  List<num> v = [];
-  String? s;
-  DateTime? lastUpdatedTime;
+  final List<num> t = [];
+  final List<num> c = [];
+  final List<num> o = [];
+  final List<num> h = [];
+  final List<num> l = [];
+  final List<num> v = [];
+  late final String s;
+  late final DateTime lastUpdatedTime;
 
-  StockTradingHistory(
-      {required this.t,
-      required this.c,
-      required this.o,
-      required this.h,
-      required this.l,
-      required this.v,
-      this.s})
-;
   StockTradingHistory.nullChartData({num? defaultValue}) {
     lastUpdatedTime = DateTime.now();
-    t = [lastUpdatedTime!.millisecondsSinceEpoch / 1000];
-    c = [1];
-    o = [defaultValue ?? 1];
-    h = [1];
-    l = [1];
-    v = [0];
+    t.add(lastUpdatedTime.millisecondsSinceEpoch / 1000);
+    c.add(1);
+    o.add(defaultValue ?? 1);
+    h.add(1);
+    l.add(1);
+    v.add(0);
   }
 
   StockTradingHistory.oneChartData({num? defaultValue}) {
     lastUpdatedTime = DateTime.now();
-    t = [
-      lastUpdatedTime!.millisecondsSinceEpoch / 1000,
-      lastUpdatedTime!.millisecondsSinceEpoch / 1000
-    ];
-    c = [1];
-    o = [defaultValue ?? 1, defaultValue ?? 1];
-    h = [1];
-    l = [1];
-    v = [0];
+    t.addAll([
+      lastUpdatedTime.millisecondsSinceEpoch / 1000,
+      lastUpdatedTime.millisecondsSinceEpoch / 1000
+    ]);
+    c.add(1);
+    o.addAll([defaultValue ?? 1, defaultValue ?? 1]);
+    h.add(1);
+    l.add(1);
+    v.add(0);
   }
 
   StockTradingHistory.fromJson(Map<String, dynamic> json) {
     lastUpdatedTime = DateTime.now();
-    t = json['t'].cast<num>();
-    c = json['c'].cast<num>();
-    o = json['o'].cast<num>();
-    h = json['h'].cast<num>();
-    l = json['l'].cast<num>();
-    v = json['v'].cast<num>();
-    s = json['s'];
+    t.addAll(json['t'].cast<num>());
+    c.addAll(json['c'].cast<num>());
+    o.addAll(json['o'].cast<num>());
+    h.addAll(json['h'].cast<num>());
+    l.addAll(json['l'].cast<num>());
+    v.addAll(json['v'].cast<num>());
+    s = json['s'] ?? "";
   }
 
   Map<String, dynamic> toJson() {

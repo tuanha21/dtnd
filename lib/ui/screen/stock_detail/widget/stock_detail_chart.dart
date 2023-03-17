@@ -203,35 +203,34 @@ class _StockDetailChartState extends State<StockDetailChart>
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: Row(
             children: List<Widget>.generate(
-                TimeSeries.values.length,
-                (index) => Expanded(
-                        child: GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          timeSeries = TimeSeries.values[index];
-                          getStockTradingHistory();
-                        });
-                      },
-                      child: Container(
-                          height: 22,
-                          margin: EdgeInsets.only(left: index == 0 ? 0 : 7),
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                              color: AppColors.neutral_05,
-                              borderRadius: BorderRadius.circular(4)),
-                          child: Text(
-                            TimeSeries.values[index].title,
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodySmall
-                                ?.copyWith(
-                                    fontWeight: FontWeight.w600,
-                                    color:
-                                        timeSeries == TimeSeries.values[index]
-                                            ? AppColors.primary_01
-                                            : AppColors.text_black),
-                          )),
-                    ))),
+              TimeSeries.values.length,
+              (index) => Expanded(
+                child: GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      timeSeries = TimeSeries.values[index];
+                      getStockTradingHistory();
+                    });
+                  },
+                  child: Container(
+                    height: 22,
+                    margin: EdgeInsets.only(left: index == 0 ? 0 : 7),
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                        color: AppColors.neutral_05,
+                        borderRadius: BorderRadius.circular(4)),
+                    child: Text(
+                      TimeSeries.values[index].title,
+                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                          fontWeight: FontWeight.w600,
+                          color: timeSeries == TimeSeries.values[index]
+                              ? AppColors.primary_01
+                              : AppColors.text_black),
+                    ),
+                  ),
+                ),
+              ),
+            ),
           ),
         ),
         const SizedBox(height: 16),
