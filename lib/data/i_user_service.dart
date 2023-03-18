@@ -5,6 +5,7 @@ import 'package:dtnd/=models=/response/stock.dart';
 import 'package:dtnd/=models=/response/total_asset_model.dart';
 import 'package:dtnd/=models=/response/user_token.dart';
 import 'package:dtnd/=models=/side.dart';
+import 'package:dtnd/=models=/sign_up_success_data_model.dart';
 import 'package:get/get.dart';
 
 abstract class IUserService {
@@ -54,4 +55,7 @@ abstract class IUserService {
   Future<List<String>> verifyRegisterInfo(String mobile, String mail);
 
   Future<bool> verifyRegisterOTP(String mobile, String mail, String otp);
+
+  Future<SignUpSuccessDataModel?> createAccount(
+      String name, String mobile, String mail);
 }

@@ -13,11 +13,17 @@ class _InterestedTabState extends State<InterestedTab> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.symmetric(vertical: 16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text("Danh mục theo dõi",style: Theme.of(context).textTheme.bodyLarge,),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Text(
+              "Danh mục theo dõi",
+              style: Theme.of(context).textTheme.bodyLarge,
+            ),
+          ),
           const SizedBox(height: 8),
           const Expanded(child: UserCatalogWidget()),
           const SizedBox(height: 65),

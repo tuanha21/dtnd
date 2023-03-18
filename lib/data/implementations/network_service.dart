@@ -40,6 +40,7 @@ import 'package:dtnd/=models=/response/total_asset_model.dart';
 import 'package:dtnd/=models=/request/request_model.dart';
 import 'package:dtnd/=models=/response/trash_model.dart';
 import 'package:dtnd/=models=/response/world_index_model.dart';
+import 'package:dtnd/=models=/sign_up_success_data_model.dart';
 import 'package:dtnd/=models=/ui_model/exception.dart';
 import 'package:dtnd/=models=/response/stock_derivative_model.dart';
 import 'package:dtnd/=models=/ui_model/field_tree_element_model.dart';
@@ -1397,5 +1398,22 @@ class NetworkService implements INetworkService {
     }
 
     return true;
+  }
+
+  @override
+  Future<SignUpSuccessDataModel?> createAccount(String body) async {
+    var response =
+        await client.post(url_core1("openAccount/create"), body: body);
+    if (response.statusCode != 200) {
+      throw response;
+    }
+    var res = decode(response.bodyBytes);
+    logger.v(res);
+
+    if (res["iRs"] != 1) {
+      return SignUpSuccessDataModel.fromJson(res["data"]);
+    } else {
+      throw res["sRs"];
+    }
   }
 }

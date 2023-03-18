@@ -1,8 +1,10 @@
+import 'package:dtnd/=models=/sign_up_success_data_model.dart';
 import 'package:dtnd/data/i_user_service.dart';
 import 'package:dtnd/data/implementations/user_service.dart';
 import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_textstyle.dart';
+import 'package:dtnd/ui/widget/app_snack_bar.dart';
 import 'package:dtnd/ui/widget/expanded_widget.dart';
 import 'package:dtnd/utilities/responsive.dart';
 import 'package:flutter/material.dart';
@@ -13,15 +15,16 @@ class FillOTPPage extends StatefulWidget {
     super.key,
     required this.onSuccess,
     required this.verifyOTP,
+    required this.createAccount,
   });
   final VoidCallback onSuccess;
   final Future<bool> Function(String) verifyOTP;
+  final Future<SignUpSuccessDataModel?> Function() createAccount;
   @override
   State<FillOTPPage> createState() => _FillOTPPageState();
 }
 
 class _FillOTPPageState extends State<FillOTPPage> {
-  final IUserService userService = UserService();
   final TextEditingController controller = TextEditingController();
 
   String? errorTxt;
@@ -168,6 +171,15 @@ class _FillOTPPageState extends State<FillOTPPage> {
     });
     final verified = await widget.verifyOTP.call(controller.text);
     if (verified) {
+      try {
+        await widget.createAccount.call();
+      } catch (e) {
+        if (mounted) {
+          return AppSnackBar.showInfo(context, message: e.toString());
+        } else {
+          return;
+        }
+      }
       widget.onSuccess.call();
     } else {
       setState(() {

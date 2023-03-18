@@ -1,3 +1,5 @@
+import 'package:dtnd/ui/theme/app_color.dart';
+import 'package:dtnd/ui/theme/app_textstyle.dart';
 import 'package:dtnd/utilities/num_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -8,8 +10,12 @@ import '../../../stock_detail/stock_detail_screen.dart';
 class StockComponent extends StatefulWidget {
   final StockModel model;
   final bool isPercent;
-
-  const StockComponent({Key? key, required this.model, required this.isPercent})
+  final int index;
+  const StockComponent(
+      {Key? key,
+      required this.model,
+      required this.isPercent,
+      required this.index})
       : super(key: key);
 
   @override
@@ -34,6 +40,7 @@ class _StockComponentState extends State<StockComponent> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
+      behavior: HitTestBehavior.opaque,
       onTap: () {
         Navigator.push(
             context,
@@ -42,16 +49,16 @@ class _StockComponentState extends State<StockComponent> {
                     StockDetailScreen(stockModel: widget.model)));
       },
       child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 10),
+        color: widget.index.isEven ? Colors.white : null,
+        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
         child: Row(
           children: [
             Expanded(
               flex: 2,
               child: Text(
                 widget.model.stock.stockCode,
-                style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                    fontWeight: FontWeight.w700,
-                    color: widget.model.stockData.color),
+                style: AppTextStyle.titleSmall_14
+                    .copyWith(color: widget.model.stockData.color),
               ),
             ),
             Expanded(
@@ -65,8 +72,8 @@ class _StockComponentState extends State<StockComponent> {
                                 : widget.model.stockData.lastPrice.value)
                             ?.toString() ??
                         "",
-                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        fontWeight: FontWeight.w600,
+                    style: AppTextStyle.titleSmall_14.copyWith(
+                        fontWeight: FontWeight.w500,
                         color: widget.model.stockData.color),
                   );
                 }),
@@ -79,8 +86,8 @@ class _StockComponentState extends State<StockComponent> {
                   alignment: Alignment.centerRight,
                   child: Text(
                     increase,
-                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        fontWeight: FontWeight.w600,
+                    style: AppTextStyle.titleSmall_14.copyWith(
+                        fontWeight: FontWeight.w500,
                         color: widget.model.stockData.color),
                   ),
                 );
@@ -93,10 +100,9 @@ class _StockComponentState extends State<StockComponent> {
                   alignment: Alignment.centerRight,
                   child: Text(
                     NumUtils.formatInteger10(widget.model.stockData.lot.value),
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodySmall
-                        ?.copyWith(fontWeight: FontWeight.w600),
+                    style: AppTextStyle.titleSmall_14.copyWith(
+                        fontWeight: FontWeight.w500,
+                        color: const Color(0xFF566276)),
                   ),
                 );
               }),

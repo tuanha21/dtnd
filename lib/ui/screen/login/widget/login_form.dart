@@ -264,10 +264,10 @@ class _LoginFormState extends State<LoginForm> {
               ],
             ),
           ),
-          const SizedBox(height: 16),
-          socialButton(AppImages.google, S.of(context).login_with_google),
-          const SizedBox(height: 16),
-          socialButton(AppImages.facebook, S.of(context).login_with_facebook),
+          // const SizedBox(height: 16),
+          // socialButton(AppImages.google, S.of(context).login_with_google),
+          // const SizedBox(height: 16),
+          // socialButton(AppImages.facebook, S.of(context).login_with_facebook),
           const SizedBox(height: 50),
           RichText(
               text: TextSpan(children: [

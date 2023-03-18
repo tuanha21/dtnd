@@ -129,6 +129,123 @@ class _AccountAssetOverviewWidgetState
                           fontWeight: FontWeight.w600),
                     ),
                   ),
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 8),
+                    child: Container(
+                      padding: const EdgeInsets.only(
+                          left: 24, right: 8, top: 10, bottom: 10),
+                      decoration: const BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(8)),
+                        color: AppColors.neutral_06,
+                      ),
+                      child: Column(
+                        children: [
+                          Row(
+                            // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "Quản trị rủi ro",
+                                style: AppTextStyle.labelSmall_10,
+                              ),
+                              // Text(
+                              //     "${NumUtils.formatInteger(widget.data?.cashBalance ?? 0)}đ",
+                              //     style: textTheme.labelMedium!
+                              //         .copyWith(fontWeight: FontWeight.w600))
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              Container(
+                                height: 80,
+                                width: 2,
+                                color: const Color(0xFFD8EBFD),
+                              ),
+                              const SizedBox(width: 14),
+                              Expanded(
+                                child: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  mainAxisSize: MainAxisSize.max,
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          "Giá trị vay",
+                                          style: AppTextStyle.labelSmall_10
+                                              .copyWith(
+                                                  fontWeight: FontWeight.w500),
+                                        ),
+                                        Text(
+                                            "${NumUtils.formatInteger(widget.data?.lmv ?? 0)}đ",
+                                            style: textTheme.labelMedium!
+                                                .copyWith(
+                                                    fontWeight:
+                                                        FontWeight.w600))
+                                      ],
+                                    ),
+                                    const SizedBox(height: 12),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          "Lãi vay",
+                                          style: AppTextStyle.labelSmall_10
+                                              .copyWith(
+                                                  fontWeight: FontWeight.w500),
+                                        ),
+                                        Text(
+                                            "${NumUtils.formatInteger(widget.data?.depositFee ?? 0)}đ",
+                                            style: textTheme.labelMedium!
+                                                .copyWith(
+                                                    fontWeight:
+                                                        FontWeight.w600))
+                                      ],
+                                    ),
+                                    const SizedBox(height: 12),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          "Tỷ lệ an toàn",
+                                          style: AppTextStyle.labelSmall_10
+                                              .copyWith(
+                                                  fontWeight: FontWeight.w500),
+                                        ),
+                                        Text(
+                                            NumUtils.formatInteger(
+                                                widget.data?.marginRatio ?? 0),
+                                            style: textTheme.labelMedium!
+                                                .copyWith(
+                                                    fontWeight:
+                                                        FontWeight.w600))
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              )
+                            ],
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "Giá trị danh mục",
+                                style: AppTextStyle.labelSmall_10,
+                              ),
+                              Text(
+                                  "${NumUtils.formatInteger(widget.data?.totalMarket ?? 0)}đ",
+                                  style: textTheme.labelMedium!
+                                      .copyWith(fontWeight: FontWeight.w600))
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
                 ),
               ),
               Padding(

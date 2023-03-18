@@ -10,6 +10,7 @@ import 'package:dtnd/data/implementations/local_storage_service.dart';
 import 'package:dtnd/data/implementations/user_service.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
+import 'package:dtnd/ui/theme/app_textstyle.dart';
 import 'package:dtnd/ui/widget/input/app_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -85,11 +86,14 @@ class _UserCatalogWidgetState extends State<UserCatalogWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Align(alignment: Alignment.centerLeft, child: rowCatalog()),
-        const SizedBox(height: 10),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: Align(alignment: Alignment.centerLeft, child: rowCatalog()),
+        ),
         Visibility(
           visible: savedCatalog.catalogs.isNotEmpty &&
               currentCatalog.name != defaultCatalog.name,
@@ -156,16 +160,16 @@ class _UserCatalogWidgetState extends State<UserCatalogWidget> {
             ),
           ),
         ),
-        const SizedBox(height: 16),
+        const SizedBox(height: 8),
         Container(
-          padding: const EdgeInsets.symmetric(vertical: 10),
+          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
           child: Row(
             children: [
               Expanded(
                 flex: 2,
                 child: Text(
                   "Mã CK",
-                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                  style: AppTextStyle.titleSmall_14.copyWith(
                       fontWeight: FontWeight.w700, color: AppColors.neutral_04),
                 ),
               ),
@@ -175,7 +179,7 @@ class _UserCatalogWidgetState extends State<UserCatalogWidget> {
                   alignment: Alignment.centerRight,
                   child: Text(
                     S.of(context).price,
-                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                    style: textTheme.bodySmall?.copyWith(
                         fontWeight: FontWeight.w600,
                         color: AppColors.neutral_04),
                   ),
@@ -193,7 +197,7 @@ class _UserCatalogWidgetState extends State<UserCatalogWidget> {
                     alignment: Alignment.centerRight,
                     child: Text(
                       isPercent ? "<%>" : "<+/->",
-                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                      style: textTheme.bodySmall?.copyWith(
                           fontWeight: FontWeight.w600,
                           color: AppColors.neutral_04),
                     ),
@@ -206,7 +210,7 @@ class _UserCatalogWidgetState extends State<UserCatalogWidget> {
                   alignment: Alignment.centerRight,
                   child: Text(
                     S.of(context).volumn,
-                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                    style: textTheme.bodySmall?.copyWith(
                         fontWeight: FontWeight.w600,
                         color: AppColors.neutral_04),
                   ),
@@ -262,6 +266,7 @@ class _UserCatalogWidgetState extends State<UserCatalogWidget> {
                               ],
                             ),
                             child: StockComponent(
+                              index: index,
                               model: stock,
                               isPercent: isPercent,
                             ));
@@ -300,7 +305,7 @@ class _UserCatalogWidgetState extends State<UserCatalogWidget> {
     //           const SizedBox(width: 8),
     //           Text(
     //             'Tạo danh mục theo dõi',
-    //             style: Theme.of(context).textTheme.labelMedium?.copyWith(
+    //             style: textTheme.labelMedium?.copyWith(
     //                 color: AppColors.primary_01, fontWeight: FontWeight.w700),
     //           )
     //         ],
@@ -346,10 +351,8 @@ class _UserCatalogWidgetState extends State<UserCatalogWidget> {
                     padding: const EdgeInsets.symmetric(horizontal: 10),
                     alignment: Alignment.center,
                     child: Text(defaultCatalog.name,
-                        style: Theme.of(context)
-                            .textTheme
-                            .bodySmall
-                            ?.copyWith(color: AppColors.light_bg)),
+                        style: AppTextStyle.bodyMedium_14
+                            .copyWith(color: AppColors.light_bg)),
                   ),
                 );
               }
@@ -370,10 +373,8 @@ class _UserCatalogWidgetState extends State<UserCatalogWidget> {
                   padding: const EdgeInsets.symmetric(horizontal: 10),
                   alignment: Alignment.center,
                   child: Text(catalog.name,
-                      style: Theme.of(context)
-                          .textTheme
-                          .bodySmall
-                          ?.copyWith(color: AppColors.light_bg)),
+                      style: AppTextStyle.bodyMedium_14
+                          .copyWith(color: AppColors.light_bg)),
                 ),
               );
             }),

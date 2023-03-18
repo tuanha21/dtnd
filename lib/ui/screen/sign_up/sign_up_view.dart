@@ -1,3 +1,4 @@
+import 'package:dtnd/=models=/sign_up_success_data_model.dart';
 import 'package:dtnd/data/i_user_service.dart';
 import 'package:dtnd/data/implementations/user_service.dart';
 import 'package:dtnd/ui/screen/sign_up/business/signup_info.dart';
@@ -33,9 +34,9 @@ class _SignUpViewState extends State<SignUpView> with AppValidator {
         duration: const Duration(milliseconds: 500), curve: Curves.easeInCubic);
   }
 
-  // Future<bool> verifyOTP() async {
-  //   return
-  // }
+  Future<SignUpSuccessDataModel?> createAccount() {
+    return userService.createAccount(info!.name!, info!.phone!, info!.email!);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -60,6 +61,7 @@ class _SignUpViewState extends State<SignUpView> with AppValidator {
             onSuccess: onSuccess,
             verifyOTP: (otp) =>
                 userService.verifyRegisterOTP(info!.phone!, info!.email!, otp),
+            createAccount: createAccount,
           ),
           const SuccessSignUpPage(),
         ],

@@ -12,6 +12,7 @@ import 'package:dtnd/=models=/response/stock.dart';
 import 'package:dtnd/=models=/response/total_asset_model.dart';
 import 'package:dtnd/=models=/response/user_token.dart';
 import 'package:dtnd/=models=/side.dart';
+import 'package:dtnd/=models=/sign_up_success_data_model.dart';
 import 'package:dtnd/data/i_local_storage_service.dart';
 import 'package:dtnd/data/i_network_service.dart';
 import 'package:dtnd/data/i_user_service.dart';
@@ -302,5 +303,21 @@ class UserService implements IUserService {
   Future<bool> verifyRegisterOTP(String mobile, String mail, String otp) {
     Map<String, String> body = {"email": mail, "phone": mobile, "otp": otp};
     return networkService.verifySignupOTP(jsonEncode(body));
+  }
+
+  @override
+  Future<SignUpSuccessDataModel?> createAccount(
+      String name, String mobile, String mail) {
+    Map<String, dynamic> body = {
+      "user": "back",
+      "cmd": "OPEN_VIRTUAL_ACCOUNT",
+      "sid": "",
+      "param": {
+        "CUSTOMER_NAME": name,
+        "CUSTOMER_MOBILE": mobile,
+        "CUSTOMER_EMAIL": mail,
+      }
+    };
+    return networkService.createAccount(jsonEncode(body));
   }
 }

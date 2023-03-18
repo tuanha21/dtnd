@@ -44,6 +44,7 @@ class _SignUpInfoFormState extends State<SignUpInfoForm> with AppValidator {
           AppTextField(
             labelText: S.of(context).full_name,
             controller: state.fullName,
+            hintText: "Họ và tên",
             validator: (name) {
               return checkFullName(name);
             },
@@ -85,6 +86,7 @@ class _SignUpInfoFormState extends State<SignUpInfoForm> with AppValidator {
           AppTextField(
             labelText: S.of(context).phone_number,
             controller: state.phoneNumber,
+            hintText: "Số điện thoại",
             validator: (name) {
               return checkFullName(name);
             },

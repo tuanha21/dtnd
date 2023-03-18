@@ -252,14 +252,13 @@ class _TrashComponentState extends State<TrashComponent> {
                   ],
                 ),
               ),
-              SizedBox(
-                width: 120,
-                child: chartWidget,
-              ),
-              const SizedBox(
-                width: 24,
-              ),
               Expanded(
+                child: Center(
+                  child: SizedBox(width: 120, child: chartWidget),
+                ),
+              ),
+              SizedBox(
+                width: 88,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [

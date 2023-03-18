@@ -1,6 +1,7 @@
 import 'package:dtnd/=models=/response/account/i_account.dart';
 import 'package:dtnd/=models=/response/account/unexecuted_right_model.dart';
 import 'package:dtnd/=models=/response/order_model/base_order_model.dart';
+import 'package:dtnd/utilities/logger.dart';
 
 import 'asset_chart_element.dart';
 import 'portfolio_status_model.dart';
@@ -102,72 +103,6 @@ class BaseMarginAccountModel implements IAccountModel {
     return result;
   }
 
-  BaseMarginAccountModel(
-      {this.assets,
-      this.imKH,
-      this.h,
-      this.equity,
-      this.cashBalance,
-      this.collateral,
-      this.lmv,
-      this.lmv0,
-      this.debt,
-      this.ee,
-      this.ee50,
-      this.ee60,
-      this.ee70,
-      this.mr,
-      this.mrEe,
-      this.sumAp,
-      this.withdraw,
-      this.debtExpire,
-      this.withdrawalCash,
-      this.withdrawalFull,
-      this.overDraft,
-      this.withdrawal,
-      this.cashAvai,
-      this.withdrawalEe,
-      this.imKh,
-      this.tempEe,
-      this.marginRatio,
-      this.marginRatioUb,
-      this.assetsUb,
-      this.buyUnmatch,
-      this.buyMr,
-      this.sellUnmatch,
-      this.service,
-      this.action,
-      this.callLmv,
-      this.sellLmv,
-      this.apT0,
-      this.apT1,
-      this.apT2,
-      this.arT0,
-      this.arT1,
-      this.arT2,
-      this.loanFee,
-      this.a1,
-      this.a3,
-      this.a2,
-      this.a4,
-      this.a5,
-      this.a6,
-      this.a7,
-      this.eeIncApp,
-      this.temp2,
-      this.cashBlock,
-      this.cashTempDayOut,
-      this.depositFee,
-      this.tdck,
-      this.totalAsset,
-      this.totalEquity,
-      this.cashAdvanceAvai,
-      this.maxRate,
-      this.group,
-      this.payment,
-      this.totalMarket,
-      this.totalCost});
-
   BaseMarginAccountModel.fromJson(Map<String, dynamic> json) {
     accCode = json['accCode'];
     accName = json['accName'];
@@ -179,6 +114,7 @@ class BaseMarginAccountModel implements IAccountModel {
 
   @override
   void updateDataFromJson(IAccountResponse data) {
+    logger.v(data.json);
     assets = parse(data.json['assets']);
     imKH = parse(data.json['imKH']);
     h = parse(data.json['h']);

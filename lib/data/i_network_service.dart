@@ -29,6 +29,7 @@ import 'package:dtnd/=models=/response/top_interested_model.dart';
 import 'package:dtnd/=models=/response/total_asset_model.dart';
 import 'package:dtnd/=models=/response/trash_model.dart';
 import 'package:dtnd/=models=/response/world_index_model.dart';
+import 'package:dtnd/=models=/sign_up_success_data_model.dart';
 import 'package:dtnd/=models=/ui_model/field_tree_element_model.dart';
 import 'package:dtnd/config/service/environment.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
@@ -212,4 +213,6 @@ abstract class INetworkService {
   Future<bool> verifySignupInfo(String body);
 
   Future<bool> verifySignupOTP(String body);
+
+  Future<SignUpSuccessDataModel?> createAccount(String body);
 }

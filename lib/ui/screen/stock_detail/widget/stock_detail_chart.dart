@@ -87,7 +87,7 @@ class _StockDetailChartState extends State<StockDetailChart>
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: SizedBox(
-            height: 150,
+            height: 200,
             child: StreamBuilder<List<num>>(
                 stream: stockTrading.stream,
                 initialData: const [],

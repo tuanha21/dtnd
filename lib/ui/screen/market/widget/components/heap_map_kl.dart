@@ -1,8 +1,12 @@
+import 'package:dtnd/=models=/response/stock_model.dart';
 import 'package:dtnd/data/i_data_center_service.dart';
 import 'package:dtnd/data/implementations/data_center_service.dart';
+import 'package:dtnd/ui/screen/stock_detail/stock_detail_screen.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
+import 'package:dtnd/utilities/collections.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:get/get.dart';
 import 'package:syncfusion_flutter_treemap/treemap.dart';
 
 import '../../../../../=models=/ui_model/field_tree_element_model.dart';
@@ -22,6 +26,8 @@ class _HeapMapKLState extends State<HeapMapKL> {
 
   late Future<List<FieldTreeModel>> listField;
 
+  final List<Pair<String, StockModel>> listStock = [];
+
   @override
   initState() {
     listField = dataCenterService.getListIndustryHeatMap(top: 10, type: "KL");
@@ -29,6 +35,58 @@ class _HeapMapKLState extends State<HeapMapKL> {
   }
 
   bool isVol = true;
+
+  void toStockDetail(String stockCode) async {
+    if (listStock.isNotEmpty) {
+      final contain =
+          listStock.firstWhereOrNull((element) => element.first == stockCode);
+      if (contain != null) {
+        Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => StockDetailScreen(stockModel: contain.second),
+        ));
+        return;
+      } else {
+        final model =
+            await dataCenterService.getStockModelsFromStockCodes([stockCode]);
+        final StockModel stock;
+        if (model?.isNotEmpty ?? false) {
+          stock = model!.first;
+        } else {
+          return;
+        }
+        listStock.add(Pair(stockCode, stock));
+        if (mounted) {
+          Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => StockDetailScreen(stockModel: stock),
+          ));
+        }
+        return;
+      }
+    } else {
+      final model =
+          await dataCenterService.getStockModelsFromStockCodes([stockCode]);
+      final StockModel stock;
+      if (model?.isNotEmpty ?? false) {
+        stock = model!.first;
+      } else {
+        return;
+      }
+      listStock.add(Pair(stockCode, stock));
+      if (mounted) {
+        Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => StockDetailScreen(stockModel: stock),
+        ));
+      }
+      return;
+    }
+  }
+
+  @override
+  void dispose() {
+    dataCenterService.removeStockModelsFromStockCodes(
+        listStock.map((e) => e.first).toList());
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -136,19 +194,22 @@ class _HeapMapKLState extends State<HeapMapKL> {
                                               ?.toDouble() ??
                                           0;
                                     },
+                                    onSelectionChanged: (value) =>
+                                        toStockDetail(value.group),
                                     levels: [
                                       TreemapLevel(
                                         groupMapper: (int index) {
                                           // print('index: ' + index.toString());
                                           // if (index > 4)
                                           //   return listStock[index].sTOCKCODE;
-                                          return (listStock[index].sTOCKCODE ??
-                                                  '') +
-                                              "/" +
-                                              listStock[index]
-                                                  .pERCENTCHANGE
-                                                  .toString() +
-                                              '%';
+                                          return listStock[index].sTOCKCODE;
+                                          // return (listStock[index].sTOCKCODE ??
+                                          //         '') +
+                                          //     "/" +
+                                          //     listStock[index]
+                                          //         .pERCENTCHANGE
+                                          //         .toString() +
+                                          //     '%';
                                         },
                                         colorValueMapper: (tile) {
                                           return listStock[tile.indices[0]]
