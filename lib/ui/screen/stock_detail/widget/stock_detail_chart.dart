@@ -6,6 +6,8 @@ import 'package:dtnd/=models=/response/stock_model.dart';
 import 'package:dtnd/data/i_network_service.dart';
 import 'package:dtnd/data/implementations/network_service.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
+import 'package:dtnd/utilities/charts_util.dart';
+import 'package:dtnd/utilities/logger.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -32,8 +34,6 @@ class StockDetailChart extends StatefulWidget {
 
 class _StockDetailChartState extends State<StockDetailChart>
     with AutomaticKeepAliveClientMixin {
-  late StreamController<List<num>> stockTrading = StreamController.broadcast();
-
   final INetworkService iNetworkService = NetworkService();
 
   final IDataCenterService iDataCenterService = DataCenterService();
@@ -44,9 +44,12 @@ class _StockDetailChartState extends State<StockDetailChart>
 
   StockTradingHistory? stockTradingHistory;
 
+  final List<SecEvent> listEvent = [];
+
   @override
   void initState() {
     getStockTradingHistory();
+    getListEvent();
     super.initState();
   }
 
@@ -58,8 +61,12 @@ class _StockDetailChartState extends State<StockDetailChart>
           timeSeries.dateTime,
           DateTime.now());
       // print("timeSeries: " + timeSeries.type);
-
-      stockTrading.sink.add(stockTradingHistory!.c);
+      if (stockTradingHistory != null) {
+        setState(() {
+          max = stockTradingHistory!.c.reduce(math.max);
+          min = stockTradingHistory!.c.reduce(math.min);
+        });
+      }
     } catch (e) {
       if (kDebugMode) {
         print(e.toString());
@@ -67,9 +74,25 @@ class _StockDetailChartState extends State<StockDetailChart>
     }
   }
 
-  List<num> get listTime {
-    if (stockTradingHistory == null) return [];
-    return stockTradingHistory!.t;
+  void getListEvent() {
+    listEvent.clear();
+    for (SecEvent event in widget.listEvent ?? <SecEvent>[]) {
+      if (event.dateTime == null ||
+          event.dateTime!.isBefore(timeSeries.dateTime)) {
+        continue;
+      } else {
+        listEvent.add(event);
+      }
+    }
+    setState(() {});
+  }
+
+  @override
+  void didUpdateWidget(StockDetailChart oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.listEvent?.length != oldWidget.listEvent?.length) {
+      getListEvent();
+    }
   }
 
   num max = 2;
@@ -81,6 +104,181 @@ class _StockDetailChartState extends State<StockDetailChart>
   @override
   Widget build(BuildContext context) {
     super.build(context);
+    final Widget chart;
+    final Widget row;
+    if (stockTradingHistory != null) {
+      row = BasicIndex(
+          stockModel: widget.stockModel, history: stockTradingHistory!);
+      chart = charts.TimeSeriesChart(
+        [
+          ...List<charts.Series<num, DateTime>>.generate(
+              stockTradingHistory!.c.length,
+              (index) => charts.Series<num, DateTime>(
+                    id: 'chart1',
+                    colorFn: (_, __) => charts.ColorUtil.fromDartColor(
+                        widget.stockModel.stockData.color),
+                    domainFn: (num indexBoard, int? index) {
+                      if (index != null) {
+                        if (timeSeries == TimeSeries.day) {
+                          return stockTradingHistory!.time[index];
+                        }
+                        return stockTradingHistory!.time[index].beginningOfDay;
+                      } else {
+                        throw Exception("Chart index null");
+                      }
+                    },
+                    measureFn: (num price, _) {
+                      return price;
+                    },
+                    data: stockTradingHistory!.c,
+                  )..setAttribute(
+                      charts.measureAxisIdKey, "secondaryMeasureAxisId")),
+          if (listEvent.isNotEmpty)
+            charts.Series<SecEvent, DateTime>(
+              id: 'Annotation Series 2',
+              colorFn: (_, __) => charts.MaterialPalette.red.shadeDefault,
+              domainFn: (SecEvent event, _) => event.dateTime ?? DateTime.now(),
+              domainLowerBoundFn: (SecEvent event, _) => event.dateTime,
+              domainUpperBoundFn: (SecEvent event, _) => event.dateTime,
+              // No measure values are needed for symbol annotations.
+              measureFn: (_, __) => null,
+              data: listEvent,
+            )
+              // Configure our custom symbol annotation renderer for this series.
+              ..setAttribute(charts.rendererIdKey, 'customSymbolAnnotation')
+              // Optional radius for the annotation shape. If not specified, this will
+              // default to the same radius as the points.
+              ..setAttribute(charts.boundsLineRadiusPxKey, 3.5),
+        ],
+        layoutConfig: charts.LayoutConfig(
+            bottomMarginSpec: charts.MarginSpec.fromPercent(minPercent: 5),
+            leftMarginSpec: charts.MarginSpec.defaultSpec,
+            rightMarginSpec: charts.MarginSpec.defaultSpec,
+            topMarginSpec: charts.MarginSpec.fromPercent(minPercent: 10)),
+        defaultRenderer: charts.LineRendererConfig(smoothLine: true),
+        domainAxis: charts.DateTimeAxisSpec(
+            tickFormatterSpec: charts.BasicDateTimeTickFormatterSpec((time) {
+              String formattedDate =
+                  TimeUtilities.dateMonthTimeFormat.format(time);
+              return formattedDate;
+            }),
+            tickProviderSpec: const charts.AutoDateTimeTickProviderSpec(),
+            // viewport: charts.NumericExtents(minX, maxX),
+            renderSpec: const charts.GridlineRendererSpec(
+                axisLineStyle: charts.LineStyleSpec(
+                  dashPattern: [4],
+                  thickness: 0,
+                  color: charts.Color(r: 74, g: 85, b: 104),
+                ),
+                labelStyle: charts.TextStyleSpec(fontSize: 9),
+                lineStyle: charts.LineStyleSpec(dashPattern: [4]))),
+        secondaryMeasureAxis: axisSpec(),
+        customSeriesRenderers: [
+          charts.SymbolAnnotationRendererConfig(
+              // ID used to link series to this renderer.
+              customRendererId: 'customSymbolAnnotation')
+        ],
+        // Optionally pass in a [DateTimeFactory] used by the chart. The factory
+        // should create the same type of [DateTime] as the data provided. If none
+        // specified, the default creates local date time.
+        dateTimeFactory: const charts.LocalDateTimeFactory(),
+        behaviors: [
+          charts.LinePointHighlighter(
+              symbolRenderer: CustomTooltipRenderer(_ToolTipMgr.instance,
+                  size: MediaQuery.of(context).size,
+                  fontSize: 10) // add this line in behaviours
+              ),
+        ],
+        selectionModels: [
+          charts.SelectionModelConfig(
+            updatedListener: (charts.SelectionModel model) {
+              if (model.hasDatumSelection) {
+                // for (var i = 0; i < model.selectedDatum.length; i++) {
+                //   print(model.selectedDatum.elementAt(i).datum.toString());
+                // }
+                final List<String> datas = [];
+                if (model.selectedDatum.length > 1) {
+                  final SecEvent event = model.selectedDatum.first.datum;
+                  datas.add(
+                      "Ngày ${TimeUtilities.commonTimeFormat.format(event.dateTime!)}");
+                  datas.add("Giá    ${model.selectedDatum.elementAt(1).datum}");
+                  datas.add(event.title ?? "");
+                  // final split = ((event.title?.length ?? 0) / 20).round();
+                  // for (var i = 0; i < split; i++) {
+                  //   if (i != split - 1) {
+                  //     datas.add(event.title
+                  //             ?.substring(i * 20, event.title?.length ?? 0) ??
+                  //         "");
+                  //   } else {
+                  //     datas.add(
+                  //         event.title?.substring(i * 20, event.title!.length) ??
+                  //             "");
+                  //   }
+                  // }
+                } else {
+                  final index = model.selectedDatum.first.index ?? 0;
+                  datas.add(
+                      "Ngày ${TimeUtilities.commonTimeFormat.format(stockTradingHistory!.time.elementAt(index))}");
+                  datas.add("Giá    ${model.selectedDatum.first.datum}");
+                }
+                // if (model.selectedDatum.first.datum is SecEvent) {
+                //   print(model.selectedDatum.first.datum.dateTime.toString());
+                // } else {
+                //   print(stockTradingHistory!.time
+                //       .elementAt(model.selectedDatum.first.index!)
+                //       .toString());
+                // }
+                // logger.v(model.selectedDatum.first.datum);
+                // logger.v(model.selectedDatum.first.series);
+                // logger.v(model.selectedSeries);
+                _ToolTipMgr.instance.setData(datas);
+              } else {
+                _ToolTipMgr.instance.setData([]);
+              }
+              // if (model.hasDatumSelection) {
+              //   final String time =
+              //       "Ngày : ${TimeUtilities.commonTimeFormat.format(model.selectedDatum.first.datum.cTRADINGDATE)}";
+              //   final List<String> datas = [
+              //     time,
+              //   ];
+              //   for (var element in model.selectedDatum) {
+              //     final String label = element.series.id;
+              //     final String value;
+              //     switch (label) {
+              //       case "Tiền":
+              //         value = NumUtils.formatDouble(
+              //             element.datum.cCASHBALANCE);
+              //         break;
+              //       case "Nợ":
+              //         value = NumUtils.formatDouble(
+              //             element.datum.cLOANBALANCE);
+              //         break;
+              //       case "Giá trị CK":
+              //         value = NumUtils.formatDouble(
+              //             element.datum.cSHARECLOSEVALUE);
+              //         break;
+              //       default:
+              //         value = NumUtils.formatDouble(
+              //             element.datum.cNETVALUE);
+              //     }
+              //     final String data = "$label : $value";
+              //     datas.add(data);
+              //   }
+
+              //   _ToolTipMgr.instance.setData(datas);
+              // }
+            },
+          ),
+        ],
+      );
+    } else {
+      chart = const SizedBox(
+        height: 20,
+      );
+      row = const SizedBox(
+        height: 20,
+      );
+    }
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -88,114 +286,7 @@ class _StockDetailChartState extends State<StockDetailChart>
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: SizedBox(
             height: 200,
-            child: StreamBuilder<List<num>>(
-                stream: stockTrading.stream,
-                initialData: const [],
-                builder: (context, snapshot) {
-                  if (snapshot.hasData) {
-                    var list = snapshot.data;
-                    if (list == null || list.isEmpty) {
-                      return const SizedBox(
-                        height: 20,
-                      );
-                    }
-
-                    max = list.reduce(math.max);
-                    min = list.reduce(math.min);
-                    maxX = listTime.reduce(math.max);
-                    minX = listTime.reduce(math.min);
-
-                    return charts.TimeSeriesChart(
-                      [
-                        ...List<charts.Series<num, DateTime>>.generate(
-                            list.length,
-                            (index) => charts.Series<num, DateTime>(
-                                  id: 'chart1',
-                                  colorFn: (_, __) =>
-                                      charts.ColorUtil.fromDartColor(
-                                          widget.stockModel.stockData.color),
-                                  domainFn: (num indexBoard, int? index) {
-                                    if (index != null) {
-                                      int epoc = listTime[index].toInt() * 1000;
-                                      return DateTime
-                                          .fromMillisecondsSinceEpoch(epoc);
-                                    } else {
-                                      throw Exception("Chart index null");
-                                    }
-                                  },
-                                  measureFn: (num sales, _) {
-                                    return sales;
-                                  },
-                                  data: list,
-                                )..setAttribute(charts.measureAxisIdKey,
-                                    "secondaryMeasureAxisId")),
-                        if (widget.listEvent?.isNotEmpty ?? false)
-                          charts.Series<SecEvent, DateTime>(
-                            id: 'Annotation Series 2',
-                            colorFn: (_, __) =>
-                                charts.MaterialPalette.red.shadeDefault,
-                            domainFn: (SecEvent event, _) =>
-                                event.dateTime ?? DateTime.now(),
-                            domainLowerBoundFn: (SecEvent event, _) =>
-                                event.dateTime,
-                            domainUpperBoundFn: (SecEvent event, _) =>
-                                event.dateTime,
-                            // No measure values are needed for symbol annotations.
-                            measureFn: (_, __) => null,
-                            data: widget.listEvent!,
-                          )
-                            // Configure our custom symbol annotation renderer for this series.
-                            ..setAttribute(
-                                charts.rendererIdKey, 'customSymbolAnnotation')
-                            // Optional radius for the annotation shape. If not specified, this will
-                            // default to the same radius as the points.
-                            ..setAttribute(charts.boundsLineRadiusPxKey, 3.5),
-                      ],
-                      layoutConfig: charts.LayoutConfig(
-                          bottomMarginSpec:
-                              charts.MarginSpec.fromPercent(minPercent: 5),
-                          leftMarginSpec: charts.MarginSpec.defaultSpec,
-                          rightMarginSpec: charts.MarginSpec.defaultSpec,
-                          topMarginSpec:
-                              charts.MarginSpec.fromPercent(minPercent: 10)),
-                      defaultRenderer:
-                          charts.LineRendererConfig(smoothLine: true),
-                      domainAxis: charts.DateTimeAxisSpec(
-                          tickFormatterSpec:
-                              charts.BasicDateTimeTickFormatterSpec((time) {
-                            String formattedDate =
-                                TimeUtilities.dateMonthTimeFormat.format(time);
-                            return formattedDate;
-                          }),
-                          tickProviderSpec:
-                              const charts.AutoDateTimeTickProviderSpec(),
-                          // viewport: charts.NumericExtents(minX, maxX),
-                          renderSpec: const charts.GridlineRendererSpec(
-                              axisLineStyle: charts.LineStyleSpec(
-                                dashPattern: [4],
-                                thickness: 0,
-                                color: charts.Color(r: 74, g: 85, b: 104),
-                              ),
-                              labelStyle: charts.TextStyleSpec(fontSize: 9),
-                              lineStyle:
-                                  charts.LineStyleSpec(dashPattern: [4]))),
-                      secondaryMeasureAxis: axisSpec(),
-                      customSeriesRenderers: [
-                        charts.SymbolAnnotationRendererConfig(
-                            // ID used to link series to this renderer.
-                            customRendererId: 'customSymbolAnnotation')
-                      ],
-                      // Optionally pass in a [DateTimeFactory] used by the chart. The factory
-                      // should create the same type of [DateTime] as the data provided. If none
-                      // specified, the default creates local date time.
-                      dateTimeFactory: const charts.LocalDateTimeFactory(),
-                    );
-                  }
-
-                  return const SizedBox(
-                    height: 15,
-                  );
-                }),
+            child: chart,
           ),
         ),
         const SizedBox(height: 10),
@@ -209,8 +300,9 @@ class _StockDetailChartState extends State<StockDetailChart>
                   onTap: () {
                     setState(() {
                       timeSeries = TimeSeries.values[index];
-                      getStockTradingHistory();
                     });
+                    getStockTradingHistory();
+                    getListEvent();
                   },
                   child: Container(
                     height: 22,
@@ -234,61 +326,9 @@ class _StockDetailChartState extends State<StockDetailChart>
           ),
         ),
         const SizedBox(height: 16),
-        StreamBuilder<List<num>>(
-            stream: stockTrading.stream,
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                var list = snapshot.data;
-                if (list == null || list.isEmpty) {
-                  return const SizedBox(
-                    height: 20,
-                  );
-                }
-                return BasicIndex(
-                    stockModel: widget.stockModel,
-                    history: stockTradingHistory!);
-              }
-              return const SizedBox(
-                height: 15,
-              );
-            }),
+        row,
       ],
     );
-  }
-
-  charts.NumericAxisSpec domainSpec(num minX, num maxX) {
-    var now = DateTime.now();
-    num min =
-        DateTime(now.year, now.month, now.day, 9, 0).millisecondsSinceEpoch;
-    num max =
-        DateTime(now.year, now.month, now.day, 14, 30).millisecondsSinceEpoch;
-    return charts.NumericAxisSpec(
-        tickFormatterSpec: charts.BasicNumericTickFormatterSpec((time) {
-          if (timeSeries == TimeSeries.day) {
-            String formattedDate = DateFormat('HH:mm').format(
-                DateTime.fromMillisecondsSinceEpoch(time!.toInt() * 1000));
-            return formattedDate;
-          }
-          String formattedDate = DateFormat('dd/MM').format(
-              DateTime.fromMillisecondsSinceEpoch(time!.toInt() * 1000));
-          return formattedDate;
-        }),
-        tickProviderSpec: const charts.BasicNumericTickProviderSpec(
-          dataIsInWholeNumbers: true,
-          //desiredMaxTickCount: 5,
-          zeroBound: false,
-        ),
-        viewport: timeSeries == TimeSeries.day
-            ? charts.NumericExtents(min / 1000, maxX)
-            : charts.NumericExtents(minX, maxX),
-        renderSpec: const charts.GridlineRendererSpec(
-            axisLineStyle: charts.LineStyleSpec(
-              dashPattern: [4],
-              thickness: 0,
-              color: charts.Color(r: 74, g: 85, b: 104),
-            ),
-            labelStyle: charts.TextStyleSpec(fontSize: 9),
-            lineStyle: charts.LineStyleSpec(dashPattern: [4])));
   }
 
   charts.NumericAxisSpec axisSpec() {
@@ -312,7 +352,6 @@ class _StockDetailChartState extends State<StockDetailChart>
   }
 
   @override
-  // TODO: implement wantKeepAlive
   bool get wantKeepAlive => true;
 }
 
@@ -366,4 +405,9 @@ extension TimeSeriesExt on TimeSeries {
         }
     }
   }
+}
+
+class _ToolTipMgr extends TooltipData {
+  _ToolTipMgr._intern();
+  static final _ToolTipMgr instance = _ToolTipMgr._intern();
 }

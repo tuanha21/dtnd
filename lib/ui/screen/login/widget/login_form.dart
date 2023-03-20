@@ -60,7 +60,7 @@ class _LoginFormState extends State<LoginForm> {
   bool typingUsername = false;
   bool typingPassword = false;
   String? userNameInitialValue;
-  FutureVoidCallback? login;
+  Future<void> Function()? login;
 
   bool canCheckLogin = false;
 

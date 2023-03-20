@@ -60,6 +60,8 @@ class _AppTextFieldState extends State<AppTextField> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+        enableSuggestions: false,
+        autocorrect: false,
         onTap: widget.onTap,
         readOnly: widget.readOnly,
         obscureText: _obscureText,

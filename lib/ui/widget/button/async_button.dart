@@ -13,7 +13,7 @@ class AsyncButton extends StatefulWidget {
   final BorderRadius? borderRadius;
   final EdgeInsetsGeometry? padding;
   final Widget child;
-  final FutureVoidCallback? onPressed;
+  final Future<void> Function()? onPressed;
   final ButtonStyle? style;
   @override
   State<AsyncButton> createState() => _AsyncButtonState();

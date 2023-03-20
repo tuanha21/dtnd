@@ -59,7 +59,7 @@ class _NotFirstLoginFormState extends State<NotFirstLoginForm> {
   bool typingUsername = false;
   bool typingPassword = false;
   String? userNameInitialValue;
-  FutureVoidCallback? login;
+  Future<void> Function()? login;
 
   bool canCheckLogin = false;
 

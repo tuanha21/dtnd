@@ -4,7 +4,10 @@ import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/screen/sign_up/business/signup_info.dart';
 import 'package:dtnd/ui/screen/sign_up/sign_up_logic.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
+import 'package:dtnd/ui/theme/app_textstyle.dart';
 import 'package:dtnd/ui/widget/app_snack_bar.dart';
+import 'package:dtnd/ui/widget/button/async_button.dart';
+import 'package:dtnd/ui/widget/expanded_widget.dart';
 import 'package:dtnd/ui/widget/icon/check_box.dart';
 import 'package:dtnd/ui/widget/input/app_text_field.dart';
 import 'package:dtnd/utilities/validator.dart';
@@ -32,6 +35,8 @@ class _SignUpInfoFormState extends State<SignUpInfoForm> with AppValidator {
   bool showPass = false;
 
   bool showRepass = false;
+
+  bool registering = false;
 
   @override
   Widget build(BuildContext context) {
@@ -142,6 +147,7 @@ class _SignUpInfoFormState extends State<SignUpInfoForm> with AppValidator {
             key: passwordFormKey,
             validator: passwordValidator,
             builder: (passwordState) => TextField(
+              enableSuggestions: false,
               obscureText: !showPass,
               autocorrect: false,
               // focusNode: passwordFocusNode,
@@ -180,6 +186,7 @@ class _SignUpInfoFormState extends State<SignUpInfoForm> with AppValidator {
               // controller: _passController,
               onChanged: (value) {
                 repasswordState.didChange(value);
+                print(repasswordState.value);
                 // _onPasswordChangeHandler(passwordState, value);
               },
               decoration: InputDecoration(
@@ -190,7 +197,7 @@ class _SignUpInfoFormState extends State<SignUpInfoForm> with AppValidator {
                 suffixIcon: GestureDetector(
                   onTap: () {
                     setState(() {
-                      showPass = !showPass;
+                      showRepass = !showRepass;
                     });
                   },
                   child: Icon(showPass
@@ -205,63 +212,130 @@ class _SignUpInfoFormState extends State<SignUpInfoForm> with AppValidator {
               initialValue: false,
               validator: (value) {
                 if (!(value ?? false)) {
-                  AppSnackBar.showInfo(context,
-                      message: "Bạn chưa đồng ý điều khoản");
+                  // AppSnackBar.showInfo(context,
+                  //     message: "Bạn chưa đồng ý điều khoản");
                   return "Bạn chưa đồng ý điều khoản";
                 }
                 return null;
               },
               builder: (licensceState) {
-                return Row(
+                return Column(
                   children: [
-                    AppCheckBox(
-                      onChanged: (value) {
-                        licensceState.didChange(value);
-                      },
+                    Row(
+                      children: [
+                        AppCheckBox(
+                          onChanged: (value) {
+                            licensceState.didChange(value);
+                          },
+                        ),
+                        const SizedBox(width: 10),
+                        Flexible(
+                          child: RichText(
+                            text: TextSpan(children: [
+                              TextSpan(
+                                  text: 'Tôi đồng ý và chấp nhận toàn bộ',
+                                  style: titleSmall?.copyWith(
+                                      fontWeight: FontWeight.w500,
+                                      color: AppColors.neutral_04)),
+                              TextSpan(
+                                  text:
+                                      ' Các điều khoản và Điều kiện giao dịch chứng khoán',
+                                  style: titleSmall?.copyWith(
+                                      fontWeight: FontWeight.w500,
+                                      color: AppColors.primary_01)),
+                            ]),
+                          ),
+                        ),
+                      ],
                     ),
-                    const SizedBox(width: 10),
-                    Flexible(
-                      child: RichText(
-                        text: TextSpan(children: [
-                          TextSpan(
-                              text: 'Tôi đồng ý và chấp nhận toàn bộ',
-                              style: titleSmall?.copyWith(
-                                  fontWeight: FontWeight.w500,
-                                  color: AppColors.neutral_04)),
-                          TextSpan(
-                              text:
-                                  ' Các điều khoản và Điều kiện giao dịch chứng khoán',
-                              style: titleSmall?.copyWith(
-                                  fontWeight: FontWeight.w500,
-                                  color: AppColors.primary_01)),
-                        ]),
-                      ),
-                    ),
+                    ExpandedSection(
+                        expand: licensceState.errorText != null,
+                        child: Row(
+                          children: [
+                            Text(
+                              licensceState.errorText ?? "",
+                              style: AppTextStyle.bodyMedium_14
+                                  .copyWith(color: Colors.red),
+                            )
+                          ],
+                        ))
                   ],
                 );
               }),
           const SizedBox(height: 36),
           SizedBox(
-              width: MediaQuery.of(context).size.width,
-              child: ElevatedButton(
-                  onPressed: () async {
-                    FocusManager.instance.primaryFocus?.unfocus();
-
-                    if (signUpFormKey.currentState?.validate() ?? false) {
-                      try {
-                        await userService.verifyRegisterInfo(
-                            state.phoneNumber.text, state.email.text);
-                      } catch (e) {
-                        return AppSnackBar.showInfo(context,
-                            message: e.toString());
-                      }
-                      return widget.onSuccess.call(
-                          info: SignUpInfo(state.fullName.text,
-                              state.phoneNumber.text, state.email.text, ""));
-                    }
+            width: MediaQuery.of(context).size.width,
+            child: AsyncButton(
+                onPressed: () async {
+                  print("registering $registering");
+                  FocusManager.instance.primaryFocus?.unfocus();
+                  if (registering) {
                     return;
-                  },
-                  child: Text(S.of(context).sign_up))),
+                  }
+                  setState(() {
+                    registering = true;
+                  });
+                  if (signUpFormKey.currentState?.validate() ?? false) {
+                    try {
+                      await userService.verifyRegisterInfo(
+                          state.phoneNumber.text, state.email.text);
+                    } catch (e) {
+                      setState(() {
+                        registering = false;
+                      });
+                      return AppSnackBar.showInfo(context,
+                          message: e.toString());
+                    }
+
+                    setState(() {
+                      registering = false;
+                    });
+                    return widget.onSuccess.call(
+                      info: SignUpInfo(state.fullName.text,
+                          state.phoneNumber.text, state.email.text, ""),
+                    );
+                  }
+                  return;
+                },
+                child: Text(S.of(context).sign_up)),
+            // child: ElevatedButton(
+            //   onPressed: () async {
+            //     FocusManager.instance.primaryFocus?.unfocus();
+            //     if (registering) {
+            //       return;
+            //     }
+            //     setState(() {
+            //       registering = true;
+            //     });
+            //     if (signUpFormKey.currentState?.validate() ?? false) {
+            //       try {
+            //         await userService.verifyRegisterInfo(
+            //             state.phoneNumber.text, state.email.text);
+            //       } catch (e) {
+            //         setState(() {
+            //           registering = false;
+            //         });
+            //         return AppSnackBar.showInfo(context, message: e.toString());
+            //       }
+
+            //       setState(() {
+            //         registering = false;
+            //       });
+            //       return widget.onSuccess.call(
+            //         info: SignUpInfo(state.fullName.text,
+            //             state.phoneNumber.text, state.email.text, ""),
+            //       );
+            //     }
+            //     return;
+            //   },
+            //   child: registering
+            //       ? const SizedBox.square(
+            //           dimension: 40,
+            //           child: CircularProgressIndicator(),
+            //         )
+            //       : Text(S.of(context).sign_up),
+            // ),
+          ),
         ],
       ),
     );

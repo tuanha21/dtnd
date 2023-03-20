@@ -13,6 +13,7 @@ class TopSignalStockModel extends StockStatus {
   num? cSELLPRICE;
   num? cPC;
   num? t;
+  late final String cColor;
 
   TopSignalStockModel.fromJson(Map<String, dynamic> json) {
     cSHARECODE = json['C_SHARE_CODE'];
@@ -27,6 +28,7 @@ class TopSignalStockModel extends StockStatus {
     cSELLPRICE = json['C_SELL_PRICE'];
     cPC = json['C_PC'];
     t = json['T'];
+    cColor = json['C_COLOR'];
   }
 
   Map<String, dynamic> toJson() {
@@ -41,15 +43,16 @@ class TopSignalStockModel extends StockStatus {
     data['C_SELL_PRICE'] = cSELLPRICE;
     data['C_PC'] = cPC;
     data['T'] = t;
+    data['C_COLOR'] = cColor;
     return data;
   }
 
   @override
   SStatus get sstatus {
-    switch ((cPC ?? 0).compareTo(0)) {
-      case 1:
+    switch (cColor) {
+      case "i":
         return SStatus.up;
-      case 2:
+      case "d":
         return SStatus.down;
       default:
         return SStatus.ref;

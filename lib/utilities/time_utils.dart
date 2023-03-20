@@ -1,7 +1,7 @@
 import 'package:intl/intl.dart';
 
 extension DateTimeX on DateTime {
-  DateTime get beginningOfDay {
+  DateTime get beginningOfTradingDay {
     int cday = day;
     if (weekday > 5) {
       final diff = weekday - 5;
@@ -9,6 +9,10 @@ extension DateTimeX on DateTime {
     }
     final lastMidnight = DateTime(year, month, cday);
     return lastMidnight;
+  }
+
+  DateTime get beginningOfDay {
+    return DateTime(year, month, day, 0, 0, 0, 0, 0);
   }
 }
 

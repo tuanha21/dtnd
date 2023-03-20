@@ -1,5 +1,6 @@
 class StockTradingHistory {
   final List<num> t = [];
+  final List<DateTime> time = [];
   final List<num> c = [];
   final List<num> o = [];
   final List<num> h = [];
@@ -34,6 +35,15 @@ class StockTradingHistory {
   StockTradingHistory.fromJson(Map<String, dynamic> json) {
     lastUpdatedTime = DateTime.now();
     t.addAll(json['t'].cast<num>());
+    if (t.isNotEmpty) {
+      final List<DateTime> list = [];
+      for (num militime in t) {
+        final int epoc = militime.toInt() * 1000;
+        final datetime = DateTime.fromMillisecondsSinceEpoch(epoc);
+        time.add(datetime);
+      }
+    }
+
     c.addAll(json['c'].cast<num>());
     o.addAll(json['o'].cast<num>());
     h.addAll(json['h'].cast<num>());

@@ -43,11 +43,16 @@ class _SignUpViewState extends State<SignUpView> with AppValidator {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios_new_rounded),
+          icon: const Icon(Icons.arrow_back_ios_new_rounded),
           onPressed: () {
-            controller.previousPage(
-                duration: const Duration(milliseconds: 500),
-                curve: Curves.easeInCubic);
+            if (controller.page == 0.0 || controller.page == 2.0) {
+              return Navigator.of(context).pop();
+            } else {
+              controller.previousPage(
+                  duration: const Duration(milliseconds: 500),
+                  curve: Curves.easeInCubic);
+            }
+            return;
           },
         ),
       ),

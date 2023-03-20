@@ -1410,7 +1410,7 @@ class NetworkService implements INetworkService {
     var res = decode(response.bodyBytes);
     logger.v(res);
 
-    if (res["iRs"] != 1) {
+    if (res["iRs"] == 1) {
       return SignUpSuccessDataModel.fromJson(res["data"]);
     } else {
       throw res["sRs"];
