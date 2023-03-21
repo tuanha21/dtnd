@@ -1,6 +1,6 @@
 import 'package:dtnd/utilities/logger.dart';
 
-const int _interval = 5;
+const int _interval = 6;
 
 class LiquidityModel {
   final List<num> currVal = [];
@@ -49,6 +49,11 @@ class LiquidityModel {
     _fold(week1PTVal);
     _fold(week2PTVal);
     _fold(monthPTVal);
+    // print(currVal.length);
+    // print(week1Val.length);
+    // if (currVal.length < week1Val.length) {
+    //   currVal.addAll(List.filled(week1Val.length + 1 - currVal.length, 0));
+    // }
   }
 
   List<num> _fold(List<num> list) {
@@ -56,7 +61,11 @@ class LiquidityModel {
     final List<List<num>> sublist = [];
     final List<num> result = [];
     for (var i = 0; i < length; i++) {
-      sublist.add(list.sublist(_interval * i, _interval * i + 5));
+      if (i == 0) {
+        sublist.add(list.sublist(0, 7));
+      } else {
+        sublist.add(list.sublist(_interval * i + 1, _interval * i + _interval));
+      }
     }
     for (var element in sublist) {
       result.add(element.reduce((a, b) => a + b));

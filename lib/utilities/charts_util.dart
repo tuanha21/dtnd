@@ -15,7 +15,7 @@ class CustomTooltipRenderer<T extends TooltipData>
   CustomTooltipRenderer(
     this.data, {
     required this.size,
-    this.fontSize = 8,
+    this.fontSize = 10,
   });
 
   @override

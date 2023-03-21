@@ -169,8 +169,8 @@ class _UserCatalogWidgetState extends State<UserCatalogWidget> {
                 flex: 2,
                 child: Text(
                   "Mã CK",
-                  style: AppTextStyle.titleSmall_14.copyWith(
-                      fontWeight: FontWeight.w700, color: AppColors.neutral_04),
+                  style: textTheme.bodySmall?.copyWith(
+                      fontWeight: FontWeight.w600, color: AppColors.neutral_04),
                 ),
               ),
               Expanded(

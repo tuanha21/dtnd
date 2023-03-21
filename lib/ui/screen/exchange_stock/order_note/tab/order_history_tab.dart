@@ -38,7 +38,7 @@ class _OrderHistoryTabState extends State<OrderHistoryTab> {
   void initState() {
     fromdayController = TextEditingController(
         text: TimeUtilities.commonTimeFormat
-            .format(DateTime.now().subtract(const Duration(days: 1))));
+            .format(DateTime.now().subtract(TimeUtilities.month(1))));
     todayController = TextEditingController(
         text: TimeUtilities.commonTimeFormat.format(DateTime.now()));
     super.initState();

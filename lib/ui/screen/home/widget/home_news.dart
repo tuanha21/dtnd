@@ -50,12 +50,18 @@ class _HomeNewsState extends State<HomeNews> {
                         const Divider(),
                         HomeNewsCard(
                           stockNews: controller.news.elementAt(i),
+                          onDetail: () => setState(() {
+                            controller.news.elementAt(i).viewCount++;
+                          }),
                         )
                       ],
                     )
                   else
                     HomeNewsCard(
                       stockNews: controller.news.elementAt(i),
+                      onDetail: () => setState(() {
+                        controller.news.elementAt(i).viewCount++;
+                      }),
                     )
               ],
             ),
@@ -70,8 +76,10 @@ class HomeNewsCard extends StatelessWidget {
   const HomeNewsCard({
     super.key,
     required this.stockNews,
+    this.onDetail,
   });
   final NewsModel stockNews;
+  final VoidCallback? onDetail;
   @override
   Widget build(BuildContext context) {
     return Material(
@@ -81,6 +89,7 @@ class HomeNewsCard extends StatelessWidget {
           Navigator.of(context).push(MaterialPageRoute(
             builder: (context) => NewsDetailScreen(newsModel: stockNews),
           ));
+          onDetail?.call();
         },
         borderRadius: const BorderRadius.all(Radius.circular(8)),
         child: Ink(

@@ -294,6 +294,10 @@ class _SignUpInfoFormState extends State<SignUpInfoForm> with AppValidator {
                       info: SignUpInfo(state.fullName.text,
                           state.phoneNumber.text, state.email.text, ""),
                     );
+                  } else {
+                    setState(() {
+                      registering = false;
+                    });
                   }
                   return;
                 },

@@ -220,6 +220,47 @@ class _MoneyChartState extends State<MoneyChart> {
                             desiredTickCount: 5),
                       ),
                       domainAxis: domainSpec(list),
+                      behaviors: [
+                        charts.SelectNearest(
+                            eventTrigger: charts.SelectionTrigger.tapAndDrag,
+                            selectionMode:
+                                charts.SelectionMode.selectOverlapping),
+                        charts.LinePointHighlighter(
+                          // drawFollowLinesAcrossChart: false,
+                          showHorizontalFollowLine:
+                              charts.LinePointHighlighterFollowLineType.none,
+                          showVerticalFollowLine:
+                              charts.LinePointHighlighterFollowLineType.all,
+                        ),
+                        charts.LinePointHighlighter(
+                          symbolRenderer: CustomTooltipRenderer(
+                              _TooltipData.instance,
+                              size: size),
+                        ),
+                      ],
+                      selectionModels: [
+                        charts.SelectionModelConfig(
+                          type: charts.SelectionModelType.info,
+                          updatedListener: (charts.SelectionModel model) {
+                            if (model.hasDatumSelection) {
+                              final selectedDatum = model.selectedDatum;
+                              // if (liquidityModel.time.elementAt(
+                              //         selectedDatum.elementAt(1).index ?? 0) !=
+                              //     liquidityModel.time.elementAt(
+                              //         selectedDatum.first.index ?? 0)) {}
+                              // print(selectedDatum.first.index);
+                              // print(selectedDatum.elementAt(1).index);
+                              final List<String> datas = [
+                                selectedDatum.first.datum.time,
+                                "Tăng : ${NumUtils.formatDouble(selectedDatum.first.datum.advancesPer)} %",
+                                "Không thay đổi : ${NumUtils.formatDouble(selectedDatum.first.datum.noChangesPer)} %",
+                                "Giảm : ${NumUtils.formatDouble(selectedDatum.first.datum.declinesPer)} %",
+                              ];
+                              _TooltipData.instance.setData(datas);
+                            }
+                          },
+                        ),
+                      ],
                     ),
                   );
                 }
@@ -325,4 +366,9 @@ class _MoneyFlowTooltipData extends TooltipData {
   _MoneyFlowTooltipData._internal();
   static final _MoneyFlowTooltipData instance =
       _MoneyFlowTooltipData._internal();
+}
+
+class _TooltipData extends TooltipData {
+  _TooltipData._internal();
+  static final _TooltipData instance = _TooltipData._internal();
 }

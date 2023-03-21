@@ -3,7 +3,7 @@ class NewsModel {
   String? title;
   String? publishTime;
   String? headImg;
-  int? viewCount;
+  late int viewCount;
   int? commentCount;
 
   NewsModel(
@@ -11,7 +11,7 @@ class NewsModel {
       this.title,
       this.publishTime,
       this.headImg,
-      this.viewCount,
+      this.viewCount = 0,
       this.commentCount});
 
   NewsModel.fromJson(Map<String, dynamic> json) {
@@ -19,7 +19,7 @@ class NewsModel {
     title = json['title'];
     publishTime = json['publishTime'];
     headImg = json['headImg'];
-    viewCount = json['viewCount'] == 0 ? 1 : json['viewCount'];
+    viewCount = json['viewCount'] ?? 0;
     commentCount = json['commentCount'];
   }
 

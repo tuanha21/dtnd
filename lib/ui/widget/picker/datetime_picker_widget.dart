@@ -23,27 +23,29 @@ class DateTimePickerWidget extends StatefulWidget {
 
 class _DateTimePickerWidgetState extends State<DateTimePickerWidget> {
   late final TextEditingController _controller;
-  late final DateTime initialDate;
   late final DateTime firstDate;
   late final DateTime lastDate;
   @override
   void initState() {
     _controller = widget.controller ?? TextEditingController();
-    if (_controller.text.isEmpty) {
-      initialDate = DateTime.now();
-    } else {
-      try {
-        initialDate =
-            TimeUtilities.commonTimeFormat.parse(widget.controller!.text);
-      } catch (e) {
-        initialDate = DateTime.now();
-      }
-    }
+
     _controller.text = TimeUtilities.commonTimeFormat.format(initialDate);
     firstDate =
         widget.firstDate ?? initialDate.subtract(TimeUtilities.month(1));
     lastDate = widget.lastDate ?? initialDate.add(TimeUtilities.month(1));
     super.initState();
+  }
+
+  DateTime get initialDate {
+    if (_controller.text.isEmpty) {
+      return DateTime.now();
+    } else {
+      try {
+        return TimeUtilities.commonTimeFormat.parse(widget.controller!.text);
+      } catch (e) {
+        return DateTime.now();
+      }
+    }
   }
 
   @override

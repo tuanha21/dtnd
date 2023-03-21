@@ -9,6 +9,6 @@ class AccountExtensionButton {
   });
   String icon;
   String label;
-  Widget? route;
+  dynamic route;
   bool sameType(Object? o) => o.runtimeType == runtimeType;
 }

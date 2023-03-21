@@ -186,7 +186,8 @@ class _StockDetailChartState extends State<StockDetailChart>
           charts.LinePointHighlighter(
               symbolRenderer: CustomTooltipRenderer(_ToolTipMgr.instance,
                   size: MediaQuery.of(context).size,
-                  fontSize: 10) // add this line in behaviours
+                  fontSize: 10) // add this line in behaviours,
+
               ),
         ],
         selectionModels: [
@@ -202,7 +203,14 @@ class _StockDetailChartState extends State<StockDetailChart>
                   datas.add(
                       "Ngày ${TimeUtilities.commonTimeFormat.format(event.dateTime!)}");
                   datas.add("Giá    ${model.selectedDatum.elementAt(1).datum}");
-                  datas.add(event.title ?? "");
+                  final String title;
+                  print(event.title?.length);
+                  if ((event.title?.length ?? 0) > 30) {
+                    title = "${event.title?.substring(0, 30) ?? ""}...";
+                  } else {
+                    title = event.title ?? "";
+                  }
+                  datas.add(title);
                   // final split = ((event.title?.length ?? 0) / 20).round();
                   // for (var i = 0; i < split; i++) {
                   //   if (i != split - 1) {

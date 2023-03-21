@@ -1,20 +1,13 @@
-import 'dart:math';
-
 import 'package:dtnd/=models=/response/liquidity_model.dart';
 import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
-import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:dtnd/utilities/charts_util.dart';
 import 'package:dtnd/utilities/logger.dart';
 import 'package:dtnd/utilities/num_utils.dart';
-import 'package:dtnd/utilities/time_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 
 //custom chart
-import 'package:charts_flutter/src/text_element.dart' as chart_text;
-import 'package:charts_flutter/src/text_style.dart' as chart_style;
-import 'package:flutter_svg/flutter_svg.dart';
 
 class LiquidityChart extends StatefulWidget {
   final Future<LiquidityModel> liquidityModel;
@@ -84,23 +77,29 @@ class _LiquidityChartState extends State<LiquidityChart> {
               if (snapshot.connectionState == ConnectionState.done) {
                 final size = MediaQuery.of(context).size;
                 var liquidityModel = snapshot.data!;
+                print(liquidityModel.currVal.length);
+                logger.v(liquidityModel.currVal);
                 return SizedBox(
                   height: 300,
                   child: charts.OrdinalComboChart(
                     [
                       charts.Series<num, String>(
                         id: 'Hiện tại',
-                        colorFn: (_, __) =>
-                            charts.ColorUtil.fromDartColor(AppColors.graph_2),
+                        colorFn: (_, __) => charts.ColorUtil.fromDartColor(
+                            AppColors.semantic_01),
                         domainFn: (num val, index) =>
                             liquidityModel.time.elementAt(index ?? 0),
-                        measureFn: (num val, _) => val,
+                        measureFn: (num val, index) {
+                          // print(liquidityModel.time.elementAt(index ?? 0));
+                          // print(val);
+                          return val;
+                        },
                         data: liquidityModel.currVal,
                       ),
                       charts.Series<num, String>(
                         id: 'Phiên trước',
-                        colorFn: (_, __) =>
-                            charts.ColorUtil.fromDartColor(AppColors.graph_1),
+                        colorFn: (_, __) => charts.ColorUtil.fromDartColor(
+                            AppColors.semantic_04),
                         domainFn: (num val, index) =>
                             liquidityModel.time.elementAt(index ?? 0),
                         measureFn: (num val, _) => val,
@@ -108,8 +107,8 @@ class _LiquidityChartState extends State<LiquidityChart> {
                       )..setAttribute(charts.rendererIdKey, 'customLine'),
                       charts.Series<num, String>(
                         id: '1 tuần',
-                        colorFn: (_, __) =>
-                            charts.ColorUtil.fromDartColor(AppColors.graph_5),
+                        colorFn: (_, __) => charts.ColorUtil.fromDartColor(
+                            AppColors.semantic_05),
                         domainFn: (num val, index) =>
                             liquidityModel.time.elementAt(index ?? 0),
                         measureFn: (num val, _) => val,
@@ -132,7 +131,8 @@ class _LiquidityChartState extends State<LiquidityChart> {
                     ],
                     animate: true,
                     defaultRenderer: charts.BarRendererConfig(
-                      groupingType: charts.BarGroupingType.grouped,
+                      // groupingType: charts.BarGroupingType.grouped,
+
                       // By default, bar renderer will draw rounded bars with a constant
                       // radius of 100.
                       // To not have any rounded corners, use [NoCornerStrategy]
@@ -172,12 +172,16 @@ class _LiquidityChartState extends State<LiquidityChart> {
                         //     fontSize: 11),
                       ),
                       charts.SelectNearest(
-                          eventTrigger: charts.SelectionTrigger.tapAndDrag),
+                          eventTrigger: charts.SelectionTrigger.tapAndDrag,
+                          selectionMode:
+                              charts.SelectionMode.selectOverlapping),
                       charts.LinePointHighlighter(
-                          showHorizontalFollowLine:
-                              charts.LinePointHighlighterFollowLineType.none,
-                          showVerticalFollowLine: charts
-                              .LinePointHighlighterFollowLineType.nearest),
+                        // drawFollowLinesAcrossChart: false,
+                        showHorizontalFollowLine:
+                            charts.LinePointHighlighterFollowLineType.none,
+                        showVerticalFollowLine:
+                            charts.LinePointHighlighterFollowLineType.all,
+                      ),
                       charts.LinePointHighlighter(
                         symbolRenderer: CustomTooltipRenderer(
                             _TooltipData.instance,
@@ -186,13 +190,21 @@ class _LiquidityChartState extends State<LiquidityChart> {
                     ],
                     selectionModels: [
                       charts.SelectionModelConfig(
+                        type: charts.SelectionModelType.info,
                         updatedListener: (charts.SelectionModel model) {
                           if (model.hasDatumSelection) {
                             final selectedDatum = model.selectedDatum;
+                            // if (liquidityModel.time.elementAt(
+                            //         selectedDatum.elementAt(1).index ?? 0) !=
+                            //     liquidityModel.time.elementAt(
+                            //         selectedDatum.first.index ?? 0)) {}
+                            // print(selectedDatum.first.index);
+                            // print(selectedDatum.elementAt(1).index);
                             final datas = [
-                              liquidityModel.time
-                                  .elementAt(selectedDatum.first.index ?? 0),
-                              "Hiện tại : ${NumUtils.formatDouble(selectedDatum.first.datum)} tỷ",
+                              liquidityModel.time.elementAt(
+                                  selectedDatum.elementAt(1).index ?? 0),
+                              if (selectedDatum.first.datum != 0)
+                                "Hiện tại : ${NumUtils.formatDouble(selectedDatum.first.datum)} tỷ",
                               "Phiên trước : ${NumUtils.formatDouble(selectedDatum.elementAt(1).datum)} tỷ",
                               "Tuần trước : ${NumUtils.formatDouble(selectedDatum.elementAt(2).datum)} tỷ",
                             ];
@@ -211,17 +223,9 @@ class _LiquidityChartState extends State<LiquidityChart> {
                     ),
 
                     primaryMeasureAxis: const charts.NumericAxisSpec(
-                      tickProviderSpec: charts.StaticNumericTickProviderSpec(
-                        // Create the ticks to be used the domain axis.
-                        <charts.TickSpec<num>>[
-                          charts.TickSpec(-2, label: ''),
-                          charts.TickSpec(-1, label: ''),
-                          charts.TickSpec(0, label: ''),
-                          charts.TickSpec(1, label: ''),
-                          charts.TickSpec(2, label: ''),
-                        ],
+                      tickProviderSpec: charts.BasicNumericTickProviderSpec(
+                        zeroBound: true,
                       ),
-
                       // showAxisLine: false,
                     ),
                   ),
@@ -233,18 +237,18 @@ class _LiquidityChartState extends State<LiquidityChart> {
     );
   }
 
-  final axis = charts.NumericAxisSpec(
-    tickProviderSpec:
-        const charts.BasicNumericTickProviderSpec(dataIsInWholeNumbers: false),
-    showAxisLine: false,
-    renderSpec: charts.GridlineRendererSpec(
-        labelStyle: const charts.TextStyleSpec(
-            color: charts.MaterialPalette.white, fontSize: 12),
-        lineStyle: charts.LineStyleSpec(
-          color: charts.ColorUtil.fromDartColor(AppColors.primary_01),
-          thickness: 0,
-        )),
-  );
+  // final axis = charts.NumericAxisSpec(
+  //   tickProviderSpec:
+  //       const charts.BasicNumericTickProviderSpec(dataIsInWholeNumbers: false),
+  //   showAxisLine: false,
+  //   renderSpec: charts.GridlineRendererSpec(
+  //       labelStyle: const charts.TextStyleSpec(
+  //           color: charts.MaterialPalette.white, fontSize: 12),
+  //       lineStyle: charts.LineStyleSpec(
+  //         color: charts.ColorUtil.fromDartColor(AppColors.primary_01),
+  //         thickness: 0,
+  //       )),
+  // );
 }
 
 class _TooltipData extends TooltipData {

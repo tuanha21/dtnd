@@ -77,7 +77,7 @@ class _IndayOrderTabState extends State<IndayOrderTab> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                S.of(context).order_type,
+                "Trạng thái lệnh",
                 style: textTheme.titleSmall,
               ),
               Material(
