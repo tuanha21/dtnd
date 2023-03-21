@@ -301,71 +301,71 @@ class _GeneralInfoTabState extends State<GeneralInfoTab> {
                         )
                       : SizedBox(),
                   const SizedBox(height: 24),
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      "Cơ cấu cổ đông",
-                      style: textTheme.titleMedium!
-                          .copyWith(fontWeight: FontWeight.w700),
-                    ),
-                  ),
-                  Visibility(
-                    visible: widget.stockModel.businnessLeaders != null,
-                    child: Container(
-                      padding: const EdgeInsets.all(10),
-                      decoration: const BoxDecoration(color: Colors.white),
-                      child: AspectRatio(
-                        aspectRatio: 1.3,
-                        child: SfCircularChart(
-                            palette: AppColors.graphColors,
-                            legend: Legend(
-                              isVisible: true,
-                              overflowMode: LegendItemOverflowMode.wrap,
-                              position: LegendPosition.bottom,
-                            ),
-                            annotations: <CircularChartAnnotation>[
-                              CircularChartAnnotation(
-                                height: "80%",
-                                width: "80%",
-                                widget: PhysicalModel(
-                                  shape: BoxShape.circle,
-                                  elevation: 10,
-                                  shadowColor: Colors.black,
-                                  color: Colors.white,
-                                  child: Center(
-                                      child: Text(
-                                    "",
-                                    style: textTheme.bodyMedium!.copyWith(
-                                        color: AppColors.color_secondary,
-                                        fontWeight: FontWeight.w700),
-                                  )),
-                                ),
-                              ),
-                            ],
-                            series: <
-                                DoughnutSeries<BusinnessLeaderModel, String>>[
-                              DoughnutSeries<BusinnessLeaderModel, String>(
-                                dataSource: widget.stockModel.businnessLeaders,
-                                innerRadius: "75%%",
-                                radius: "80%",
-                                xValueMapper: (BusinnessLeaderModel data, _) =>
-                                    data.fullName,
-                                yValueMapper: (BusinnessLeaderModel data, _) =>
-                                    data.personalHeldPct,
-                                dataLabelMapper:
-                                    (BusinnessLeaderModel data, _) =>
-                                        "${data.personalHeldPct}%",
-                                dataLabelSettings: const DataLabelSettings(
-                                  isVisible: true,
-                                  // Positioning the data label
-                                  margin: EdgeInsets.all(0),
-                                  labelPosition: ChartDataLabelPosition.outside,
-                                ),
-                              )
-                            ]),
-                      ),
-                    ),
-                  ),
+                  // Align(
+                  //   alignment: Alignment.centerLeft,
+                  //   child: Text(
+                  //     "Cơ cấu cổ đông",
+                  //     style: textTheme.titleMedium!
+                  //         .copyWith(fontWeight: FontWeight.w700),
+                  //   ),
+                  // ),
+                  // Visibility(
+                  //   visible: widget.stockModel.businnessLeaders != null,
+                  //   child: Container(
+                  //     padding: const EdgeInsets.all(10),
+                  //     decoration: const BoxDecoration(color: Colors.white),
+                  //     child: AspectRatio(
+                  //       aspectRatio: 1.3,
+                  //       child: SfCircularChart(
+                  //           palette: AppColors.graphColors,
+                  //           legend: Legend(
+                  //             isVisible: true,
+                  //             overflowMode: LegendItemOverflowMode.wrap,
+                  //             position: LegendPosition.bottom,
+                  //           ),
+                  //           annotations: <CircularChartAnnotation>[
+                  //             CircularChartAnnotation(
+                  //               height: "80%",
+                  //               width: "80%",
+                  //               widget: PhysicalModel(
+                  //                 shape: BoxShape.circle,
+                  //                 elevation: 10,
+                  //                 shadowColor: Colors.black,
+                  //                 color: Colors.white,
+                  //                 child: Center(
+                  //                     child: Text(
+                  //                   "",
+                  //                   style: textTheme.bodyMedium!.copyWith(
+                  //                       color: AppColors.color_secondary,
+                  //                       fontWeight: FontWeight.w700),
+                  //                 )),
+                  //               ),
+                  //             ),
+                  //           ],
+                  //           series: <
+                  //               DoughnutSeries<BusinnessLeaderModel, String>>[
+                  //             DoughnutSeries<BusinnessLeaderModel, String>(
+                  //               dataSource: widget.stockModel.businnessLeaders,
+                  //               innerRadius: "75%%",
+                  //               radius: "80%",
+                  //               xValueMapper: (BusinnessLeaderModel data, _) =>
+                  //                   data.fullName,
+                  //               yValueMapper: (BusinnessLeaderModel data, _) =>
+                  //                   data.personalHeldPct,
+                  //               dataLabelMapper:
+                  //                   (BusinnessLeaderModel data, _) =>
+                  //                       "${data.personalHeldPct}%",
+                  //               dataLabelSettings: const DataLabelSettings(
+                  //                 isVisible: true,
+                  //                 // Positioning the data label
+                  //                 margin: EdgeInsets.all(0),
+                  //                 labelPosition: ChartDataLabelPosition.outside,
+                  //               ),
+                  //             )
+                  //           ]),
+                  //     ),
+                  //   ),
+                  // ),
                   Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
@@ -383,66 +383,166 @@ class _GeneralInfoTabState extends State<GeneralInfoTab> {
                           if (snapshot.data == null) return const SizedBox();
                           var list = snapshot.data!;
 
-                          return ListView.separated(
-                              shrinkWrap: true,
-                              physics: const NeverScrollableScrollPhysics(),
-                              itemBuilder: (context, i) {
-                                return Container(
-                                  padding: const EdgeInsets.symmetric(
-                                      vertical: 8, horizontal: 16),
-                                  decoration: const BoxDecoration(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(12)),
-                                    color: AppColors.neutral_06,
-                                  ),
-                                  child: Row(
-                                    children: [
-                                      Expanded(
-                                        child: Text(
-                                          list[i].name ?? "-",
-                                          style: textTheme.labelMedium!
-                                              .copyWith(
-                                                  height: 24 / 15,
-                                                  fontWeight: FontWeight.w600),
+                          if (list.length == 0) {
+                            return Container(
+                                padding: const EdgeInsets.all(10),
+                                decoration:
+                                    const BoxDecoration(color: Colors.white),
+                                child: Text(
+                                  "Không có dữ liệu",
+                                  style: textTheme.bodyMedium!
+                                      .copyWith(color: AppColors.neutral_03),
+                                ));
+                          }
+
+                          num sum = 0;
+                          list.forEach(
+                              (element) => {sum = (sum + element.heldPct!)});
+
+                          if (sum < 100) {
+                            list.add(ShareHolders(
+                              heldPct: 100 - sum,
+                              name: "Khác",
+                            ));
+                          }
+
+                          return Container(
+                              padding: const EdgeInsets.all(10),
+                              decoration:
+                                  const BoxDecoration(color: Colors.white),
+                              child: Column(
+                                children: [
+                                  AspectRatio(
+                                    aspectRatio: 1.3,
+                                    child: SfCircularChart(
+                                        palette: AppColors.graphColors,
+                                        legend: Legend(
+                                          isVisible: true,
+                                          overflowMode:
+                                              LegendItemOverflowMode.wrap,
+                                          position: LegendPosition.bottom,
                                         ),
-                                      ),
-                                      Expanded(child: LayoutBuilder(
-                                        builder: (context, ctx) {
-                                          return Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.end,
-                                            children: [
-                                              Container(
-                                                width: (list[i].heldPct ?? 0) *
-                                                    ctx.maxWidth /
-                                                    300,
-                                                height: 10,
-                                                decoration: const BoxDecoration(
-                                                    borderRadius:
-                                                        BorderRadius.all(
-                                                            Radius.circular(4)),
-                                                    color: AppColors.graph_2),
-                                              ),
-                                              const SizedBox(width: 8),
-                                              Text(
-                                                "${list[i].heldPct?.toString() ?? "-"}%",
-                                                style: textTheme.labelMedium!
+                                        annotations: <CircularChartAnnotation>[
+                                          CircularChartAnnotation(
+                                            height: "70%",
+                                            width: "70%",
+                                            widget: PhysicalModel(
+                                              shape: BoxShape.circle,
+                                              elevation: 10,
+                                              shadowColor: Colors.white,
+                                              color: Colors.white,
+                                              child: Center(
+                                                  child: Text(
+                                                "",
+                                                style: textTheme.bodyMedium!
                                                     .copyWith(
+                                                        color: AppColors
+                                                            .color_secondary,
                                                         fontWeight:
-                                                            FontWeight.w600),
-                                              ),
-                                            ],
-                                          );
-                                        },
-                                      ))
-                                    ],
+                                                            FontWeight.w700),
+                                              )),
+                                            ),
+                                          ),
+                                        ],
+                                        series: <
+                                            DoughnutSeries<ShareHolders,
+                                                String>>[
+                                          DoughnutSeries<ShareHolders, String>(
+                                            dataSource: list,
+                                            innerRadius: "75%%",
+                                            radius: "80%",
+                                            xValueMapper:
+                                                (ShareHolders data, _) =>
+                                                    data.name,
+                                            yValueMapper:
+                                                (ShareHolders data, _) =>
+                                                    data.heldPct,
+                                            dataLabelMapper:
+                                                (ShareHolders data, _) =>
+                                                    "${data.heldPct}%",
+                                            dataLabelSettings:
+                                                const DataLabelSettings(
+                                              isVisible: true,
+                                              // Positioning the data label
+                                              margin: EdgeInsets.all(0),
+                                              labelPosition:
+                                                  ChartDataLabelPosition
+                                                      .outside,
+                                            ),
+                                          )
+                                        ]),
                                   ),
-                                );
-                              },
-                              separatorBuilder: (context, index) {
-                                return const SizedBox(height: 8);
-                              },
-                              itemCount: list.length);
+                                  ListView.separated(
+                                      shrinkWrap: true,
+                                      physics:
+                                          const NeverScrollableScrollPhysics(),
+                                      itemBuilder: (context, i) {
+                                        return Container(
+                                          padding: const EdgeInsets.symmetric(
+                                              vertical: 8, horizontal: 16),
+                                          decoration: const BoxDecoration(
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(12)),
+                                            color: AppColors.neutral_06,
+                                          ),
+                                          child: Row(
+                                            children: [
+                                              Expanded(
+                                                child: Text(
+                                                  list[i].name ?? "-",
+                                                  style: textTheme.labelMedium!
+                                                      .copyWith(
+                                                          height: 24 / 15,
+                                                          fontWeight:
+                                                              FontWeight.w600),
+                                                ),
+                                              ),
+                                              Expanded(child: LayoutBuilder(
+                                                builder: (context, ctx) {
+                                                  return Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment.end,
+                                                    children: [
+                                                      Container(
+                                                        width:
+                                                            (list[i].heldPct ??
+                                                                    0) *
+                                                                ctx.maxWidth /
+                                                                300,
+                                                        height: 10,
+                                                        decoration: const BoxDecoration(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .all(Radius
+                                                                        .circular(
+                                                                            4)),
+                                                            color: AppColors
+                                                                .graph_2),
+                                                      ),
+                                                      const SizedBox(width: 8),
+                                                      Text(
+                                                        "${list[i].heldPct?.toString() ?? "-"}%",
+                                                        style: textTheme
+                                                            .labelMedium!
+                                                            .copyWith(
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w600),
+                                                      ),
+                                                    ],
+                                                  );
+                                                },
+                                              ))
+                                            ],
+                                          ),
+                                        );
+                                      },
+                                      separatorBuilder: (context, index) {
+                                        return const SizedBox(height: 8);
+                                      },
+                                      itemCount: list.length),
+                                ],
+                              ));
                         }
                         return const SizedBox();
                       }),

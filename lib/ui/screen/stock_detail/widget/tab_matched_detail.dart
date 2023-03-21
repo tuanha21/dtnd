@@ -138,7 +138,9 @@ class _TabMatchedDetailState extends State<TabMatchedDetail> {
               var list = snapshot.data!.reversed.toList();
               widget.stockModel.updateListMatchedOrder(list);
               maxVolumn = widget.stockModel.maxVolumnMatchedOrder;
-              return ListView.builder(
+
+              return  ListView.builder(
+                padding: EdgeInsets.only(bottom: 60),
                 shrinkWrap: true,
                 itemCount: list.length,
                 itemBuilder: (BuildContext context, int index) {
@@ -176,6 +178,7 @@ class _TabMatchedDetailState extends State<TabMatchedDetail> {
               }
 
               return ListView.builder(
+                padding: EdgeInsets.only(bottom: 60),
                 shrinkWrap: true,
                 itemCount: list.length,
                 itemBuilder: (BuildContext context, int index) {
