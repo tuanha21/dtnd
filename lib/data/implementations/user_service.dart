@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:math';
 
 import 'package:dtnd/=models=/request/request_model.dart';
 import 'package:dtnd/=models=/response/account/asset_chart_element.dart';
@@ -8,7 +9,6 @@ import 'package:dtnd/=models=/response/account/portfolio_status_model.dart';
 import 'package:dtnd/=models=/response/account/unexecuted_right_model.dart';
 import 'package:dtnd/=models=/response/account_info_model.dart';
 import 'package:dtnd/=models=/response/order_model/base_order_model.dart';
-import 'package:dtnd/=models=/response/stock.dart';
 import 'package:dtnd/=models=/response/total_asset_model.dart';
 import 'package:dtnd/=models=/response/user_token.dart';
 import 'package:dtnd/=models=/side.dart';
@@ -33,6 +33,9 @@ class UserService implements IUserService {
 
   @override
   final Rx<UserToken?> token = Rxn();
+
+  @override
+  final Rx<bool> isRegisterVa = Rx<bool>(false);
 
   final Rx<String?> _currentPassword = Rxn();
   @override
@@ -74,6 +77,7 @@ class UserService implements IUserService {
     userInfo.value = null;
     totalAsset.value = null;
     searchHistory = [];
+    isRegisterVa.value = false;
     return;
   }
 
@@ -87,6 +91,7 @@ class UserService implements IUserService {
       getListAccount();
       getTotalAsset();
       getSearchHistory();
+      saveValueRegisterVa();
       return true;
     } catch (e) {
       return false;
@@ -319,5 +324,13 @@ class UserService implements IUserService {
       }
     };
     return networkService.createAccount(jsonEncode(body));
+  }
+
+  Future<void> saveValueRegisterVa() async {
+    final Map<String, String> body = {
+      "account": token.value?.user ?? '',
+      "sid": token.value?.sid ?? '',
+    };
+    isRegisterVa.value = await networkService.checkInfoVa(jsonEncode(body));
   }
 }

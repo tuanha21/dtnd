@@ -215,4 +215,10 @@ abstract class INetworkService {
   Future<bool> verifySignupOTP(String body);
 
   Future<SignUpSuccessDataModel?> createAccount(String body);
+
+  Future<bool> checkInfoVa(String body);
+
+  Future<bool> registerVirtualBroker(String body);
+
+  Future<bool> checkRegisterOtp(String body);
 }

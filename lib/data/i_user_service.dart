@@ -13,6 +13,8 @@ abstract class IUserService {
 
   Rx<UserToken?> get token;
 
+  Rx<bool?> get isRegisterVa;
+
   Rx<UserInfo?> get userInfo;
 
   Rx<TotalAsset?> get totalAsset;

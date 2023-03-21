@@ -93,22 +93,22 @@ class _AssistantStockFilterScreenState
       body: ListView(
         padding: const EdgeInsets.all(16.0),
         children: [
-          Text(
-            S.of(context).stocks_you_interested,
-            style:
-                textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.w700),
-          ),
+          // Text(
+          //   S.of(context).stocks_you_interested,
+          //   style:
+          //       textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.w700),
+          // ),
           const SizedBox(height: 16),
           Text(
-            S.of(context).choose_stocks_you_interested,
-            style: Theme.of(context)
-                .textTheme
-                .bodyMedium
-                ?.copyWith(color: AppColors.neutral_03, height: 18 / 14),
+            'Dễ dàng tìm kiếm ý tưởng đầu tư bằng bộ lọc cổ phiếu',
+            // S.of(context).choose_stocks_you_interested,
+            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                color: AppColors.neutral_03, height: 18 / 14, fontSize: 16),
           ),
           const SizedBox(height: 36),
           Text(
-            S.of(context).following_catalog,
+            'Bộ lọc của tôi',
+            // S.of(context).following_catalog,
             style: Theme.of(context)
                 .textTheme
                 .titleMedium
@@ -149,87 +149,88 @@ class _AssistantStockFilterScreenState
           ),
           const SizedBox(height: 16),
           StreamBuilder<List<Filter>>(
-              stream: filterStream.stream,
-              initialData: const [],
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.active) {
-                  if (snapshot.hasError) {
-                    return Text(snapshot.error.toString());
-                  }
-                  var list = snapshot.data!;
-                  return ListView.separated(
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemBuilder: (context, index) {
-                        var filter = list[index];
-                        return Slidable(
-                          endActionPane: ActionPane(
-                            extentRatio: 0.25,
-                            motion: const ScrollMotion(),
-                            children: [
-                              SlidableAction(
-                                // An action can be bigger than the others.
-                                onPressed: (BuildContext context) async {
-                                  try {
-                                    await iNetworkService
-                                        .deleteFilter(filter.filterId!);
-                                    getFilterApi();
-                                  } catch (_) {}
-                                },
-                                backgroundColor: AppColors.semantic_03,
-                                foregroundColor: Colors.white,
-                                icon: Icons.delete_outline,
-                                spacing: 0,
-                              ),
-                            ],
-                          ),
-                          child: ListTile(
-                            onTap: () {
-                              Navigator.of(context)
-                                  .push(MaterialPageRoute(
-                                      builder: (context) =>
-                                          ListStockFilter(filter: filter)))
-                                  .then((value) {
-                                getFilterApi();
-                              });
-                            },
-                            tileColor: AppColors.neutral_06,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(12)),
-                            title: Text(
-                              filter.name ?? "",
-                              style: Theme.of(context).textTheme.bodyLarge,
-                            ),
-                            subtitle: ListView.separated(
-                                shrinkWrap: true,
-                                physics: const NeverScrollableScrollPhysics(),
-                                itemBuilder: (context, index1) {
-                                  var data = filter.list[index1];
-                                  return Text(
-                                    '${listFilterMap[data.code]}: ${NumUtils.formatInteger10(data.low)} - ${NumUtils.formatInteger10(data.high)}',
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodySmall
-                                        ?.copyWith(
-                                            color: AppColors.neutral_03,
-                                            fontWeight: FontWeight.w500),
-                                  );
-                                },
-                                separatorBuilder: (context, index1) {
-                                  return const SizedBox(height: 5);
-                                },
-                                itemCount: filter.list.length),
-                            trailing: const Icon(Icons.chevron_right_outlined),
-                          ),
-                        );
-                      },
-                      separatorBuilder: (context, index) {
-                        return const SizedBox(height: 10);
-                      },
-                      itemCount: list.length);
+            stream: filterStream.stream,
+            initialData: const [],
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.active) {
+                if (snapshot.hasError) {
+                  return Text(snapshot.error.toString());
                 }
-                return const SizedBox();
-              })
+                var list = snapshot.data!;
+                return ListView.separated(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemBuilder: (context, index) {
+                      var filter = list[index];
+                      return Slidable(
+                        endActionPane: ActionPane(
+                          extentRatio: 0.25,
+                          motion: const ScrollMotion(),
+                          children: [
+                            SlidableAction(
+                              // An action can be bigger than the others.
+                              onPressed: (BuildContext context) async {
+                                try {
+                                  await iNetworkService
+                                      .deleteFilter(filter.filterId!);
+                                  getFilterApi();
+                                } catch (_) {}
+                              },
+                              backgroundColor: AppColors.semantic_03,
+                              foregroundColor: Colors.white,
+                              icon: Icons.delete_outline,
+                              spacing: 0,
+                            ),
+                          ],
+                        ),
+                        child: ListTile(
+                          onTap: () {
+                            Navigator.of(context)
+                                .push(MaterialPageRoute(
+                                    builder: (context) =>
+                                        ListStockFilter(filter: filter)))
+                                .then((value) {
+                              getFilterApi();
+                            });
+                          },
+                          tileColor: AppColors.neutral_06,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12)),
+                          title: Text(
+                            filter.name ?? "",
+                            style: Theme.of(context).textTheme.bodyLarge,
+                          ),
+                          subtitle: ListView.separated(
+                              shrinkWrap: true,
+                              physics: const NeverScrollableScrollPhysics(),
+                              itemBuilder: (context, index1) {
+                                var data = filter.list[index1];
+                                return Text(
+                                  '${listFilterMap[data.code]}: ${NumUtils.formatInteger10(data.low)} - ${NumUtils.formatInteger10(data.high)}',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodySmall
+                                      ?.copyWith(
+                                          color: AppColors.neutral_03,
+                                          fontWeight: FontWeight.w500),
+                                );
+                              },
+                              separatorBuilder: (context, index1) {
+                                return const SizedBox(height: 5);
+                              },
+                              itemCount: filter.list.length),
+                          trailing: const Icon(Icons.chevron_right_outlined),
+                        ),
+                      );
+                    },
+                    separatorBuilder: (context, index) {
+                      return const SizedBox(height: 10);
+                    },
+                    itemCount: list.length);
+              }
+              return const SizedBox();
+            },
+          )
         ],
       ),
     );

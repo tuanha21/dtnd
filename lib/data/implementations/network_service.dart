@@ -106,8 +106,8 @@ class NetworkService implements INetworkService {
   }
 
   Uri get url_core_endpoint {
-    print(Uri.https(core_url, core_endpoint).toString());
-    return Uri.https(core_url, core_endpoint);
+    print(Uri.http(core_url1, core_endpoint).toString());
+    return Uri.http(core_url1, core_endpoint);
   }
 
   Uri url_board(String path) => Uri.https(board_url, path);
@@ -1414,6 +1414,51 @@ class NetworkService implements INetworkService {
       return SignUpSuccessDataModel.fromJson(res["data"]);
     } else {
       throw res["sRs"];
+    }
+  }
+
+  @override
+  Future<bool> checkInfoVa(String body) async {
+    var response =
+        await client.post(url_core1('vtBroker/infoRegister'), body: body);
+    if (response.statusCode != 200) {
+      throw response;
+    }
+    var res = decode(response.bodyBytes);
+    if (res["rc"] == 1) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  @override
+  Future<bool> registerVirtualBroker(String body) async {
+    var response =
+        await client.post(url_core1('vtBroker/register'), body: body);
+    if (response.statusCode != 200) {
+      throw response;
+    }
+    var res = decode(response.bodyBytes);
+    if (res["rc"] == 1) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  @override
+  Future<bool> checkRegisterOtp(String body) async {
+    var response =
+        await client.post(url_core1('vtBroker/verifyOtp'), body: body);
+    if (response.statusCode != 200) {
+      throw response;
+    }
+    var res = decode(response.bodyBytes);
+    if (res["rc"] == 1) {
+      return true;
+    } else {
+      return false;
     }
   }
 }

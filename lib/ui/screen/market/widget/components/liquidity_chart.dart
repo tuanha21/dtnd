@@ -173,8 +173,9 @@ class _LiquidityChartState extends State<LiquidityChart> {
                       ),
                       charts.SelectNearest(
                           eventTrigger: charts.SelectionTrigger.tapAndDrag,
-                          selectionMode:
-                              charts.SelectionMode.selectOverlapping),
+                          // selectionMode:
+                          //     charts.SelectionMode.selectOverlapping,
+                      ),
                       charts.LinePointHighlighter(
                         // drawFollowLinesAcrossChart: false,
                         showHorizontalFollowLine:
