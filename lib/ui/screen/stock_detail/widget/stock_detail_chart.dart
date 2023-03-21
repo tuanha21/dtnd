@@ -124,7 +124,7 @@ class _StockDetailChartState extends State<StockDetailChart>
                           bottomMarginSpec: charts.MarginSpec.fromPercent(minPercent: 5),
                           leftMarginSpec: charts.MarginSpec.defaultSpec,
                           rightMarginSpec: charts.MarginSpec.defaultSpec,
-                          topMarginSpec: charts.MarginSpec.fromPercent(minPercent: 10)),
+                          topMarginSpec: charts.MarginSpec.fromPercent(minPercent: 5)),
                       defaultRenderer:
                           charts.LineRendererConfig(smoothLine: true),
                       domainAxis: domainSpec(minX, maxX),
