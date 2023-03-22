@@ -1,4 +1,5 @@
 import 'package:dtnd/=models=/response/stock_model.dart';
+import 'package:dtnd/=models=/response/stock_va.dart';
 import 'package:dtnd/=models=/response/trash_model.dart';
 import 'package:dtnd/config/service/app_services.dart';
 import 'package:dtnd/data/i_data_center_service.dart';
@@ -16,46 +17,33 @@ import 'package:get/get.dart';
 class TrashComponentAv extends StatefulWidget {
   const TrashComponentAv(
       {super.key, required this.snapshotData, this.onTap, this.onHold});
-  final TrashModel snapshotData;
+
+  final VAPortfolioModel snapshotData;
   final VoidCallback? onTap;
   final VoidCallback? onHold;
+
   @override
   State<TrashComponentAv> createState() => _TrashComponentAvState();
 }
 
 class _TrashComponentAvState extends State<TrashComponentAv> {
   final IDataCenterService dataCenterService = DataCenterService();
-  late TrashModel snapshotData;
-  StockModel? stockModel;
+  late VAPortfolioModel snapshotData;
+
   @override
   void initState() {
     snapshotData = widget.snapshotData;
     super.initState();
-    getStockModel();
-  }
-
-  Future<void> getStockModel() async {
-    final response = await dataCenterService
-        .getStockModelsFromStockCodes([widget.snapshotData.sTOCKCODE]);
-    if (response?.isNotEmpty ?? false) {
-      stockModel = response!.first;
-      if (mounted) {
-        setState(() {});
-      }
-    }
   }
 
   @override
   void didUpdateWidget(covariant TrashComponentAv oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (oldWidget.snapshotData.sTOCKCODE != widget.snapshotData.sTOCKCODE) {
-      if (mounted) {
-        setState(() {
-          stockModel = null;
-          snapshotData = widget.snapshotData;
-        });
-        getStockModel();
-      }
+
+    if (mounted) {
+      setState(() {
+        snapshotData = widget.snapshotData;
+      });
     }
   }
 
@@ -72,9 +60,10 @@ class _TrashComponentAvState extends State<TrashComponentAv> {
     final Widget lastPriceWidget;
     final Widget volWidget;
     final Widget chartWidget;
+
     if (stockModel == null) {
       changePcWidget = Text(
-        "${snapshotData.pERCENTCHANGE ?? "-"}%",
+        "${snapshotData. ?? "-"}%",
         style: AppTextStyle.labelMedium_12.copyWith(
           fontWeight: FontWeight.w600,
           color: snapshotData.color,
@@ -204,6 +193,9 @@ class _TrashComponentAvState extends State<TrashComponentAv> {
         );
       });
     }
+
+
+
     return Material(
       borderRadius: const BorderRadius.all(Radius.circular(8)),
       child: InkWell(
