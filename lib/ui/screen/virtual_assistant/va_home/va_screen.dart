@@ -1,19 +1,33 @@
+import 'dart:convert';
+
+import 'package:dtnd/=models=/response/trash_model.dart';
 import 'package:dtnd/config/service/app_services.dart';
+import 'package:dtnd/data/i_network_service.dart';
+import 'package:dtnd/data/implementations/network_service.dart';
 import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/screen/virtual_assistant/va_access_element.dart';
 import 'package:dtnd/ui/screen/virtual_assistant/va_filter/virtual_assistant_filter_screen.dart';
-import 'package:dtnd/ui/screen/virtual_assistant/va_home/trash_component.dart';
-import 'package:dtnd/ui/screen/virtual_assistant/va_home/va_controller.dart';
+import 'package:dtnd/ui/screen/virtual_assistant/va_home/va_ortfolio_omponent.dart';
 import 'package:dtnd/ui/screen/virtual_assistant/va_volatolity_warning/va_volatolity_warning_screen.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:get/get.dart';
 
+import '../../../../=models=/response/stock_va.dart';
+import '../../../../data/i_user_service.dart';
+import '../../../../data/implementations/user_service.dart';
 import '../../../../utilities/responsive.dart';
+import '../../../../utilities/validator.dart';
 import '../../../theme/app_textstyle.dart';
+import '../../../widget/icon/sheet_header.dart';
+import '../../../widget/input/interval_input.dart';
+import '../../../widget/input/thousand_separator_input_formatter.dart';
 import '../../../widget/my_appbar.dart';
+import '../../home/home_controller.dart';
+import '../../stock_detail/sheet/info_sheet.dart';
+import '../../stock_detail/sheet/list_bot_sheet.dart';
+import '../interval_input_custom2.dart';
 
 enum VAFeature {
   stockFilter,
@@ -30,14 +44,14 @@ extension VirtualAssistantFeatureX on VAFeature {
     }
   }
 
-  String get iconPath {
-    switch (this) {
-      case VAFeature.stockFilter:
-        return AppImages.chart2_icon;
-      case VAFeature.volatilityWarning:
-        return AppImages.directbox_receive_icon;
-    }
-  }
+  // String get iconPath {
+  //   switch (this) {
+  //     case VAFeature.stockFilter:
+  //       return AppImages.chart2_icon;
+  //     case VAFeature.volatilityWarning:
+  //       return AppImages.directbox_receive_icon;
+  //   }
+  // }
 
   VoidCallback onPressed(BuildContext context) {
     switch (this) {
@@ -53,14 +67,41 @@ extension VirtualAssistantFeatureX on VAFeature {
   }
 }
 
-class VaScreen extends GetView<VAController> {
-  final VAController avController = Get.put(VAController());
+class VaScreen extends StatefulWidget {
+  const VaScreen({super.key});
 
-  VaScreen({Key? key}) : super(key: key);
+  @override
+  State<VaScreen> createState() => _VaScreenState();
+}
+
+class _VaScreenState extends State<VaScreen> {
+  final IUserService userService = UserService();
+  final INetworkService networkService = NetworkService();
+  final HomeController homeController = HomeController();
+  final TextEditingController priceController = TextEditingController();
+  final TextEditingController volumeController = TextEditingController();
+  StockVa stockVa = StockVa();
+  List<VAPortfolioModel>? data;
+
+  @override
+  void initState() {
+    super.initState();
+    loadData();
+  }
+
+  Future<void> loadData() async {
+    final Map<String, String> body = {
+      "account": userService.token.value?.user ?? '',
+      "session": userService.token.value?.sid ?? '',
+    };
+    stockVa = await networkService.checkListInfoBot(jsonEncode(body));
+    data = stockVa.data?.stocks;
+  }
 
   @override
   Widget build(BuildContext context) {
     final themeMode = AppService.instance.themeMode.value;
+    final textTheme = Theme.of(context).textTheme;
 
     return Scaffold(
       appBar: MyAppBar(
@@ -126,253 +167,253 @@ class VaScreen extends GetView<VAController> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  // Text(
-                  //   "Danh mục theo dõi (5/15)",
-                  //   style: AppTextStyle.titleMedium_16
-                  //       .copyWith(color: AppColors.neu_01),
-                  // ),
-                  // const SizedBox(width: 12),
-                  // InkWell(
-                  //   child: SizedBox.square(
-                  //     dimension: 25,
-                  //     child: SvgPicture.asset(AppImages.icon_setting),
-                  //   ),
-                  //   onTap: () {
-                  //     const InfoISheet().show(
-                  //       context,
-                  //       SafeArea(
-                  //         child: Padding(
-                  //           padding: const EdgeInsets.symmetric(
-                  //               horizontal: 16, vertical: 20),
-                  //           child: Column(
-                  //             crossAxisAlignment: CrossAxisAlignment.start,
-                  //             children: [
-                  //               const SheetHeader(
-                  //                 title: 'Cài đặt thiết lập danh mục',
-                  //                 implementBackButton: false,
-                  //               ),
-                  //               const SizedBox(
-                  //                 height: 16,
-                  //               ),
-                  //               const Text('Danh mục của bạn'),
-                  //               const SizedBox(
-                  //                 height: 16,
-                  //               ),
-                  //               const Text('Rủi ro tối đa'),
-                  //               const SizedBox(
-                  //                 height: 16,
-                  //               ),
-                  //               IntervalInputCustom2(
-                  //                 controller: avController.priceController,
-                  //                 labelText: 'Rủi ro tối đa',
-                  //                 defaultValue: 0,
-                  //               ),
-                  //               const SizedBox(
-                  //                 height: 10,
-                  //               ),
-                  //               Row(
-                  //                 mainAxisAlignment:
-                  //                     MainAxisAlignment.spaceBetween,
-                  //                 children: [
-                  //                   Text(
-                  //                     'Tỷ lệ chốt cắt lỗ',
-                  //                     style: AppTextStyle.labelMedium_12,
-                  //                   ),
-                  //                   InkWell(
-                  //                     child: SvgPicture.asset(
-                  //                         AppImages.icon_setting_va),
-                  //                     onTap: () {
-                  //                       const ListBotSheet().show(
-                  //                         context,
-                  //                         SafeArea(
-                  //                           child: Padding(
-                  //                             padding:
-                  //                                 const EdgeInsets.symmetric(
-                  //                                     horizontal: 16,
-                  //                                     vertical: 20),
-                  //                             child: Column(
-                  //                               crossAxisAlignment:
-                  //                                   CrossAxisAlignment.start,
-                  //                               children: const [
-                  //                                 SheetHeader(
-                  //                                   title: 'Danh sách bot',
-                  //                                   implementBackButton: true,
-                  //                                 ),
-                  //                                 SizedBox(
-                  //                                   height: 16,
-                  //                                 ),
-                  //                               ],
-                  //                             ),
-                  //                           ),
-                  //                         ),
-                  //                       );
-                  //                     },
-                  //                   )
-                  //                 ],
-                  //               ),
-                  //               const SizedBox(height: 16),
-                  //               Row(
-                  //                 children: [
-                  //                   Expanded(
-                  //                     child: IntervalInput(
-                  //                       controller:avController.priceController,
-                  //                       labelText: S.of(context).price,
-                  //                       interval: (value) => 0.1,
-                  //                       defaultValue: 0,
-                  //                       // onChanged: onChangedPrice,
-                  //                       // onTextChanged: _onPriceChangeHandler,
-                  //                     ),
-                  //                   ),
-                  //                   const SizedBox(width: 16),
-                  //                   Expanded(
-                  //                     child: Material(
-                  //                       child: TextFormField(
-                  //                         controller: avController.priceController,
-                  //                         validator: (value) => '',
-                  //                         // onChanged: ()=>{},
-                  //                         keyboardType: const TextInputType
-                  //                             .numberWithOptions(decimal: true),
-                  //                         inputFormatters: [
-                  //                           ThousandsSeparatorInputFormatter()
-                  //                         ],
-                  //                         decoration: InputDecoration(
-                  //                           labelText: 'Bán khi giá',
-                  //                           contentPadding:
-                  //                               const EdgeInsets.only(left: 50),
-                  //                           floatingLabelBehavior:
-                  //                               FloatingLabelBehavior.always,
-                  //                           floatingLabelAlignment:
-                  //                               FloatingLabelAlignment.start,
-                  //                           prefixIcon: Padding(
-                  //                             padding: const EdgeInsets.all(18),
-                  //                             child: SvgPicture.asset(AppImages
-                  //                                 .icon_greater_than_or_equal_to),
-                  //                             // SvgPicture.asset(
-                  //                             //     AppImages.icon_downt),
-                  //                             // SvgPicture.asset(
-                  //                             //     AppImages.icon_line),
-                  //                           ),
-                  //                           suffixIcon: Padding(
-                  //                             padding:
-                  //                                 const EdgeInsets.all(8.0),
-                  //                             child: SvgPicture.asset(
-                  //                                 AppImages.icon_percent),
-                  //                           ),
-                  //                         ),
-                  //                       ),
-                  //                     ),
-                  //                   ),
-                  //                 ],
-                  //               ),
-                  //               const SizedBox(height: 16),
-                  //               Text('Khối lượng'),
-                  //               const SizedBox(height: 16),
-                  //               Row(
-                  //                 children: [
-                  //                   Expanded(
-                  //                     child: TextFormField(
-                  //                       controller: avController.priceController,
-                  //                       keyboardType: const TextInputType
-                  //                           .numberWithOptions(decimal: true),
-                  //                       inputFormatters: [
-                  //                         ThousandsSeparatorInputFormatter()
-                  //                       ],
-                  //                       decoration: const InputDecoration(
-                  //                         contentPadding: EdgeInsets.only(
-                  //                             left: 15, right: 15),
-                  //                         labelText: 'Khối lượng cố định',
-                  //                         floatingLabelBehavior:
-                  //                             FloatingLabelBehavior.always,
-                  //                         floatingLabelAlignment:
-                  //                             FloatingLabelAlignment.start,
-                  //                       ),
-                  //                     ),
-                  //                   ),
-                  //                   const SizedBox(width: 16),
-                  //                   Expanded(
-                  //                     child: IntervalInputCustom2(
-                  //                       controller: avController.volumeController,
-                  //                       labelText: 'Khối lượng theo tỷ lệ',
-                  //                       validator: AppValidator.volumnValidator,
-                  //                       // onChanged: onChangeVol,
-                  //                     ),
-                  //                   ),
-                  //                 ],
-                  //               ),
-                  //               const SizedBox(height: 16),
-                  //               InkWell(
-                  //                 child: Container(
-                  //                   height: 48,
-                  //                   decoration: BoxDecoration(
-                  //                     borderRadius: BorderRadius.circular(6),
-                  //                     color: AppColors.color_secondary,
-                  //                   ),
-                  //                   alignment: Alignment.center,
-                  //                   child: Text(
-                  //                     'Lưu',
-                  //                     style: AppTextStyle.textButtonTextStyle
-                  //                         .copyWith(
-                  //                             color: AppColors.neutral_05),
-                  //                   ),
-                  //                 ),
-                  //                 onTap: () {
-                  //                   // Click để lưu
-                  //                 },
-                  //               )
-                  //             ],
-                  //           ),
-                  //         ),
-                  //       ),
-                  //     );
-                  //   },
-                  // ),
-                  // đoạn này để thể hiện biểu đồ nhé
-
-                  // TrashComponentAv(snapshotData:  )
-                  Column(
-                    children: [
-                      for (int i = 0; i < (avController.data?.length ?? 0); i++)
-                        Padding(
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 8, horizontal: 16),
-                          child: SizedBox(
-                            height: 72,
-                            child: TrashComponentAv(
-                              snapshotData: avController.data![i],
-                            ),
-                          ),
-                        )
-                    ],
-                  )
-                ],
-              ),
-            ),
-            const SizedBox(height: 180),
-            SizedBox(
-              height: Responsive.getMaxWidth(context) / 3,
-              child: Column(
-                children: [
-                  const Text(
-                    'Danh mục chưa có dữ liệu',
-                    style: TextStyle(fontSize: 15),
+                  Text(
+                    "Danh mục theo dõi (5/15)",
+                    style: AppTextStyle.titleMedium_16
+                        .copyWith(color: AppColors.neu_01),
                   ),
+                  const SizedBox(width: 12),
                   InkWell(
-                    child: const Text(
-                      'Lọc cổ phiếu',
-                      style:
-                          TextStyle(color: AppColors.semantic_01, fontSize: 15),
+                    child: SizedBox.square(
+                      dimension: 25,
+                      child: SvgPicture.asset(AppImages.icon_setting),
                     ),
                     onTap: () {
-                      Navigator.of(context).push<void>(
-                        MaterialPageRoute(
-                            builder: (context) =>
-                                const AssistantStockFilterScreen()),
+                      const InfoISheet().show(
+                        context,
+                        SafeArea(
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 16, vertical: 20),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const SheetHeader(
+                                  title: 'Cài đặt thiết lập danh mục',
+                                  implementBackButton: false,
+                                ),
+                                const SizedBox(
+                                  height: 16,
+                                ),
+                                const Text('Danh mục của bạn'),
+                                const SizedBox(
+                                  height: 16,
+                                ),
+                                const Text('Rủi ro tối đa'),
+                                const SizedBox(
+                                  height: 16,
+                                ),
+                                IntervalInputCustom2(
+                                  controller: priceController,
+                                  labelText: 'Rủi ro tối đa',
+                                  defaultValue: 0,
+                                ),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      'Tỷ lệ chốt cắt lỗ',
+                                      style: AppTextStyle.labelMedium_12,
+                                    ),
+                                    InkWell(
+                                      child: SvgPicture.asset(
+                                          AppImages.icon_setting_va),
+                                      onTap: () {
+                                        const ListBotSheet().show(
+                                          context,
+                                          SafeArea(
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 16,
+                                                      vertical: 20),
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: const [
+                                                  SheetHeader(
+                                                    title: 'Danh sách bot',
+                                                    implementBackButton: true,
+                                                  ),
+                                                  SizedBox(
+                                                    height: 16,
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                    )
+                                  ],
+                                ),
+                                const SizedBox(height: 16),
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      child: IntervalInput(
+                                        controller: priceController,
+                                        labelText: S.of(context).price,
+                                        interval: (value) => 0.1,
+                                        defaultValue: 0,
+                                        // onChanged: onChangedPrice,
+                                        // onTextChanged: _onPriceChangeHandler,
+                                      ),
+                                    ),
+                                    const SizedBox(width: 16),
+                                    Expanded(
+                                      child: Material(
+                                        child: TextFormField(
+                                          controller: priceController,
+                                          validator: (value) => '',
+                                          // onChanged: ()=>{},
+                                          keyboardType: const TextInputType
+                                              .numberWithOptions(decimal: true),
+                                          inputFormatters: [
+                                            ThousandsSeparatorInputFormatter()
+                                          ],
+                                          decoration: InputDecoration(
+                                            labelText: 'Bán khi giá',
+                                            contentPadding:
+                                                const EdgeInsets.only(left: 50),
+                                            floatingLabelBehavior:
+                                                FloatingLabelBehavior.always,
+                                            floatingLabelAlignment:
+                                                FloatingLabelAlignment.start,
+                                            prefixIcon: Padding(
+                                              padding: const EdgeInsets.all(18),
+                                              child: SvgPicture.asset(AppImages
+                                                  .icon_greater_than_or_equal_to),
+                                              // SvgPicture.asset(
+                                              //     AppImages.icon_downt),
+                                              // SvgPicture.asset(
+                                              //     AppImages.icon_line),
+                                            ),
+                                            suffixIcon: Padding(
+                                              padding:
+                                                  const EdgeInsets.all(8.0),
+                                              child: SvgPicture.asset(
+                                                  AppImages.icon_percent),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(height: 16),
+                                Text('Khối lượng'),
+                                const SizedBox(height: 16),
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      child: TextFormField(
+                                        controller: priceController,
+                                        keyboardType: const TextInputType
+                                            .numberWithOptions(decimal: true),
+                                        inputFormatters: [
+                                          ThousandsSeparatorInputFormatter()
+                                        ],
+                                        decoration: const InputDecoration(
+                                          contentPadding: EdgeInsets.only(
+                                              left: 15, right: 15),
+                                          labelText: 'Khối lượng cố định',
+                                          floatingLabelBehavior:
+                                              FloatingLabelBehavior.always,
+                                          floatingLabelAlignment:
+                                              FloatingLabelAlignment.start,
+                                        ),
+                                      ),
+                                    ),
+                                    const SizedBox(width: 16),
+                                    Expanded(
+                                      child: IntervalInputCustom2(
+                                        controller: volumeController,
+                                        labelText: 'Khối lượng theo tỷ lệ',
+                                        validator: AppValidator.volumnValidator,
+                                        // onChanged: onChangeVol,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(height: 16),
+                                InkWell(
+                                  child: Container(
+                                    height: 48,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(6),
+                                      color: AppColors.color_secondary,
+                                    ),
+                                    alignment: Alignment.center,
+                                    child: Text(
+                                      'Lưu',
+                                      style: AppTextStyle.textButtonTextStyle
+                                          .copyWith(
+                                              color: AppColors.neutral_05),
+                                    ),
+                                  ),
+                                  onTap: () {
+                                    // Click để lưu
+                                  },
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
                       );
                     },
                   ),
                 ],
               ),
+            ),
+
+            Column(
+              children: [
+                for (int i = 0; i < (data?.length ?? 0); i++)
+                  Padding(
+                    padding:
+                        const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                    child: SizedBox(
+                      height: 72,
+                      // child: TrashComponentAv(
+                      //   snapshotData: data![i],
+                      // ),
+                    ),
+                  )
+              ],
             )
+
+            // const SizedBox(height: 180),
+            // SizedBox(
+            //   height: Responsive.getMaxWidth(context) / 3,
+            //   child: Column(
+            //     children: [
+            //       const Text(
+            //         'Danh mục chưa có dữ liệu',
+            //         style: TextStyle(fontSize: 15),
+            //       ),
+            //       InkWell(
+            //         child: const Text(
+            //           'Lọc cổ phiếu',
+            //           style:
+            //               TextStyle(color: AppColors.semantic_01, fontSize: 15),
+            //         ),
+            //         onTap: () {
+            //           Navigator.of(context).push<void>(
+            //             MaterialPageRoute(
+            //                 builder: (context) =>
+            //                     const AssistantStockFilterScreen()),
+            //           );
+            //         },
+            //       ),
+            //     ],
+            //   ),
+            // ),
+            // TrashComponentAv(snapshotData: ,)
           ],
         ),
       ),

@@ -60,6 +60,7 @@ import '../../=models=/response/indContrib.dart';
 import '../../=models=/response/sec_event.dart';
 import '../../=models=/response/sec_trading.dart';
 import '../../=models=/response/stock_industry.dart';
+import '../../=models=/response/stock_va.dart';
 
 const List<String> sessionExpiredMsg = [
   "FOException.InvalidSessionException",
@@ -1463,17 +1464,17 @@ class NetworkService implements INetworkService {
   }
 
   @override
-  Future<void> checkListInfoBot(String body) async {
+  Future<StockVa> checkListInfoBot(String body) async {
     var response =
         await client.post(url_core1('autoTrade/showInfoBot'), body: body);
     if (response.statusCode != 200) {
       throw response;
     }
     var res = decode(response.bodyBytes);
-    if (res["rc"] == 1) {
-      return res;
-    } else {
-      return res["rc"];
+    if(res['rc'] == 1){
+      return StockVa.fromJson(res);
+    }else{
+      throw res['rs'];
     }
   }
 

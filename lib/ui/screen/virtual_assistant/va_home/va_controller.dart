@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:dtnd/=models=/response/stock_va.dart';
 import 'package:dtnd/data/implementations/network_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -10,22 +11,13 @@ import '../../../../data/i_user_service.dart';
 import '../../../../data/implementations/user_service.dart';
 import '../../home/home_controller.dart';
 
-class VAController extends GetxController {
+class VAController {
   final IUserService userService = UserService();
   final HomeController homeController = HomeController();
   final NetworkService networkService = NetworkService();
   final TextEditingController priceController = TextEditingController();
   final TextEditingController volumeController = TextEditingController();
-  List<TrashModel>? data;
-
-  @override
-  void onInit() {
-    super.onInit();
-    data = homeController.topVolumnToday.value;
-    print("tiennh"+data.toString());
-    print("tiennh");
-    // checkListInfoBot();
-  }
+  StockVa? data;
 
   Future<void> checkListInfoBot() async {
     EasyLoading.show();
@@ -33,7 +25,7 @@ class VAController extends GetxController {
       "account": userService.token.value?.user ?? '',
       "session": userService.token.value?.sid ?? '',
     };
-    final response = await networkService.checkListInfoBot(jsonEncode(body));
+    data = await networkService.checkListInfoBot(jsonEncode(body));
 
   }
 
@@ -55,9 +47,5 @@ class VAController extends GetxController {
     };
     final response = await networkService.deleteBot(jsonEncode(body));
   }
-  @override
-  void onReady() {
-    super.onReady();
-    print("tiennh");
-  }
+
 }

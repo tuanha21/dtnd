@@ -43,7 +43,7 @@ class VAUtil {
   static void _afterLogin(BuildContext context) {
     if (userService.isRegisterVa.value == true) {
       Navigator.of(context).push<void>(
-        MaterialPageRoute(builder: (context) => VaScreen()),
+        MaterialPageRoute(builder: (context) => const VaScreen()),
       );
     } else {
       Navigator.of(context).push<void>(
