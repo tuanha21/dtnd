@@ -1,23 +1,25 @@
 import 'dart:convert';
 
-import 'package:dtnd/=models=/response/trash_model.dart';
+import 'package:dtnd/=models=/response/stock_model.dart';
 import 'package:dtnd/config/service/app_services.dart';
+import 'package:dtnd/data/i_data_center_service.dart';
 import 'package:dtnd/data/i_network_service.dart';
+import 'package:dtnd/data/implementations/data_center_service.dart';
 import 'package:dtnd/data/implementations/network_service.dart';
 import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/screen/virtual_assistant/va_access_element.dart';
 import 'package:dtnd/ui/screen/virtual_assistant/va_filter/virtual_assistant_filter_screen.dart';
-import 'package:dtnd/ui/screen/virtual_assistant/va_home/va_ortfolio_omponent.dart';
+import 'package:dtnd/ui/screen/virtual_assistant/va_home/va_portfolio_component.dart';
 import 'package:dtnd/ui/screen/virtual_assistant/va_volatolity_warning/va_volatolity_warning_screen.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
+import 'package:dtnd/utilities/responsive.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import '../../../../=models=/response/stock_va.dart';
+import '../../../../=models=/response/va_portfolio_model.dart';
 import '../../../../data/i_user_service.dart';
 import '../../../../data/implementations/user_service.dart';
-import '../../../../utilities/responsive.dart';
 import '../../../../utilities/validator.dart';
 import '../../../theme/app_textstyle.dart';
 import '../../../widget/icon/sheet_header.dart';
@@ -74,35 +76,50 @@ class VaScreen extends StatefulWidget {
   State<VaScreen> createState() => _VaScreenState();
 }
 
-class _VaScreenState extends State<VaScreen> {
+class _VaScreenState extends State<VaScreen> with AppValidator {
   final IUserService userService = UserService();
   final INetworkService networkService = NetworkService();
+  final IDataCenterService dataCenterService = DataCenterService();
   final HomeController homeController = HomeController();
   final TextEditingController priceController = TextEditingController();
   final TextEditingController volumeController = TextEditingController();
-  StockVa stockVa = StockVa();
-  List<VAPortfolioModel>? data;
+
+  VAPortfolio? vaPortfolio;
+  final List<StockModel> listStockModels = [];
 
   @override
   void initState() {
     super.initState();
-    loadData();
+    getData();
   }
 
-  Future<void> loadData() async {
-    final Map<String, String> body = {
-      "account": userService.token.value?.user ?? '',
-      "session": userService.token.value?.sid ?? '',
-    };
-    stockVa = await networkService.checkListInfoBot(jsonEncode(body));
-    data = stockVa.data?.stocks;
+  void getData() async {
+    vaPortfolio = await userService.getVAPortfolio();
+    getStockModels();
+    setState(() {});
+  }
+
+  void getStockModels() async {
+    if (vaPortfolio?.listStockCodes.isEmpty ?? true) {
+      return;
+    }
+    final stockModels = await dataCenterService
+        .getStockModelsFromStockCodes(vaPortfolio!.listStockCodes);
+    print(stockModels?.length);
+    if ((stockModels?.isEmpty ?? true) ||
+        stockModels!.length != vaPortfolio?.listStockCodes.length) {
+      throw Exception();
+    } else {
+      listStockModels.clear();
+      listStockModels.addAll(stockModels);
+    }
+    setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
     final themeMode = AppService.instance.themeMode.value;
     final textTheme = Theme.of(context).textTheme;
-
     return Scaffold(
       appBar: MyAppBar(
         leading: Align(
@@ -334,7 +351,7 @@ class _VaScreenState extends State<VaScreen> {
                                       child: IntervalInputCustom2(
                                         controller: volumeController,
                                         labelText: 'Khối lượng theo tỷ lệ',
-                                        validator: AppValidator.volumnValidator,
+                                        validator: volumnValidator,
                                         // onChanged: onChangeVol,
                                       ),
                                     ),
@@ -370,50 +387,64 @@ class _VaScreenState extends State<VaScreen> {
                 ],
               ),
             ),
-
-            Column(
-              children: [
-                for (int i = 0; i < (data?.length ?? 0); i++)
-                  Padding(
-                    padding:
-                        const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-                    child: SizedBox(
-                      height: 72,
-                      // child: TrashComponentAv(
-                      //   snapshotData: data![i],
-                      // ),
+            if (vaPortfolio == null || vaPortfolio!.listStocks.isEmpty)
+              Column(
+                children: [
+                  const SizedBox(height: 180),
+                  SizedBox(
+                    height: Responsive.getMaxWidth(context) / 3,
+                    child: Column(
+                      children: [
+                        const Text(
+                          'Danh mục chưa có dữ liệu',
+                          style: TextStyle(fontSize: 15),
+                        ),
+                        InkWell(
+                          child: const Text(
+                            'Lọc cổ phiếu',
+                            style: TextStyle(
+                                color: AppColors.semantic_01, fontSize: 15),
+                          ),
+                          onTap: () {
+                            Navigator.of(context).push<void>(
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      const AssistantStockFilterScreen()),
+                            );
+                          },
+                        ),
+                      ],
                     ),
-                  )
-              ],
-            )
-
-            // const SizedBox(height: 180),
-            // SizedBox(
-            //   height: Responsive.getMaxWidth(context) / 3,
-            //   child: Column(
-            //     children: [
-            //       const Text(
-            //         'Danh mục chưa có dữ liệu',
-            //         style: TextStyle(fontSize: 15),
-            //       ),
-            //       InkWell(
-            //         child: const Text(
-            //           'Lọc cổ phiếu',
-            //           style:
-            //               TextStyle(color: AppColors.semantic_01, fontSize: 15),
-            //         ),
-            //         onTap: () {
-            //           Navigator.of(context).push<void>(
-            //             MaterialPageRoute(
-            //                 builder: (context) =>
-            //                     const AssistantStockFilterScreen()),
-            //           );
-            //         },
-            //       ),
-            //     ],
-            //   ),
-            // ),
-            // TrashComponentAv(snapshotData: ,)
+                  ),
+                ],
+              )
+            else
+              SingleChildScrollView(
+                child: Column(
+                  children: [
+                    for (int i = 0; i < (vaPortfolio!.listStocks.length); i++)
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 8, horizontal: 16),
+                        child: SizedBox(
+                          height: 72,
+                          child: Builder(builder: (context) {
+                            final StockModel? stockModel;
+                            if (i > listStockModels.length - 1) {
+                              stockModel = null;
+                            } else {
+                              stockModel = listStockModels.elementAt(i);
+                            }
+                            return VAPortfolioComponent(
+                              stockModel: stockModel,
+                              item: vaPortfolio!.listStocks.elementAt(i),
+                            );
+                          }),
+                        ),
+                      )
+                  ],
+                ),
+              ),
           ],
         ),
       ),

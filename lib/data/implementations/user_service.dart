@@ -11,6 +11,7 @@ import 'package:dtnd/=models=/response/account_info_model.dart';
 import 'package:dtnd/=models=/response/order_model/base_order_model.dart';
 import 'package:dtnd/=models=/response/total_asset_model.dart';
 import 'package:dtnd/=models=/response/user_token.dart';
+import 'package:dtnd/=models=/response/va_portfolio_model.dart';
 import 'package:dtnd/=models=/side.dart';
 import 'package:dtnd/=models=/sign_up_success_data_model.dart';
 import 'package:dtnd/data/i_local_storage_service.dart';
@@ -47,8 +48,13 @@ class UserService implements IUserService {
   @override
   Rx<List<IAccountModel>?> listAccountModel = Rxn();
 
+  final Rx<VAPortfolio?> _vaPortfolio = Rxn();
+
   @override
   List<String> searchHistory = [];
+
+  @override
+  VAPortfolio? get vaPortfolio => _vaPortfolio.value;
 
   @override
   bool regSmartOTP = false;
@@ -325,6 +331,20 @@ class UserService implements IUserService {
       }
     };
     return networkService.createAccount(jsonEncode(body));
+  }
+
+  // VA
+  @override
+  Future<VAPortfolio?> getVAPortfolio() async {
+    if (!isLogin) {
+      return null;
+    }
+    final Map<String, String> body = {
+      "account": token.value!.user,
+      "session": token.value!.sid,
+    };
+    _vaPortfolio.value = await networkService.getVAPortfolio(jsonEncode(body));
+    return vaPortfolio;
   }
 
   @override

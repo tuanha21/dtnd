@@ -1,9 +1,9 @@
 import 'package:dtnd/=models=/response/account/i_account.dart';
 import 'package:dtnd/=models=/response/account_info_model.dart';
 import 'package:dtnd/=models=/response/order_model/base_order_model.dart';
-import 'package:dtnd/=models=/response/stock.dart';
 import 'package:dtnd/=models=/response/total_asset_model.dart';
 import 'package:dtnd/=models=/response/user_token.dart';
+import 'package:dtnd/=models=/response/va_portfolio_model.dart';
 import 'package:dtnd/=models=/side.dart';
 import 'package:dtnd/=models=/sign_up_success_data_model.dart';
 import 'package:get/get.dart';
@@ -22,6 +22,8 @@ abstract class IUserService {
   Rx<List<IAccountModel>?> get listAccountModel;
 
   List<String> get searchHistory;
+
+  VAPortfolio? get vaPortfolio;
 
   bool get regSmartOTP;
 
@@ -60,6 +62,10 @@ abstract class IUserService {
 
   Future<SignUpSuccessDataModel?> createAccount(
       String name, String mobile, String mail, String pass);
+
+  // VA
+  // Future<>
+  Future<VAPortfolio?> getVAPortfolio();
 
   Future<void> saveValueRegisterVa();
 }

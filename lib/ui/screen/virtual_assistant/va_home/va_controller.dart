@@ -1,6 +1,7 @@
 import 'dart:convert';
 
-import 'package:dtnd/=models=/response/stock_va.dart';
+import 'package:dtnd/=models=/response/va_portfolio_model.dart';
+import 'package:dtnd/data/i_network_service.dart';
 import 'package:dtnd/data/implementations/network_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -14,20 +15,13 @@ import '../../home/home_controller.dart';
 class VAController {
   final IUserService userService = UserService();
   final HomeController homeController = HomeController();
-  final NetworkService networkService = NetworkService();
+  final INetworkService networkService = NetworkService();
   final TextEditingController priceController = TextEditingController();
   final TextEditingController volumeController = TextEditingController();
-  StockVa? data;
 
-  Future<void> checkListInfoBot() async {
-    EasyLoading.show();
-    final Map<String, String> body = {
-      "account": userService.token.value?.user ?? '',
-      "session": userService.token.value?.sid ?? '',
-    };
-    data = await networkService.checkListInfoBot(jsonEncode(body));
+  final Rx<VAPortfolio?> vaPortfolio = Rxn();
 
-  }
+  void initController() {}
 
   Future<void> createBot() async {
     EasyLoading.show();
@@ -47,5 +41,4 @@ class VAController {
     };
     final response = await networkService.deleteBot(jsonEncode(body));
   }
-
 }
