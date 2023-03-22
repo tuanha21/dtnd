@@ -87,6 +87,8 @@ abstract class IDataCenterService {
   Future<Set<IndexModel>> getListIndex(
       {DateTime? fromTime, DateTime? toTime, String? resolution});
 
+  Future<IndexDetailResponse> getIndexDetail(Index index);
+
   Future<List<StockNews>> getStockNews(String stockCode);
 
   Future<List<NewsModel>> getNews([int? page, int? records]);

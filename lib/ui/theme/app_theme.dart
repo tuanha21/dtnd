@@ -62,6 +62,8 @@ final InputDecorationTheme lightInputDecorationTheme = InputDecorationTheme(
   contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
   floatingLabelAlignment: FloatingLabelAlignment.start,
   floatingLabelBehavior: FloatingLabelBehavior.always,
+  floatingLabelStyle:
+      AppTextStyle.labelMedium_12.copyWith(color: AppColors.neutral_01),
   hintStyle: AppTextStyle.bodyMedium_14.copyWith(color: AppColors.neutral_04),
   border: _defaulBorder,
   enabledBorder: _defaulBorder,
@@ -89,6 +91,8 @@ final InputDecorationTheme darkInputDecorationTheme = InputDecorationTheme(
   contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
   floatingLabelAlignment: FloatingLabelAlignment.start,
   floatingLabelBehavior: FloatingLabelBehavior.always,
+  floatingLabelStyle:
+      AppTextStyle.labelMedium_12.copyWith(color: AppColors.neutral_05),
   hintStyle: AppTextStyle.titleSmall_14.copyWith(
     color: AppColors.neutral_02,
   ),

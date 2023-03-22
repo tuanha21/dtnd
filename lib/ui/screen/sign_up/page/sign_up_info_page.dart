@@ -2,7 +2,6 @@ import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/screen/sign_up/widget/sign_up_info_form.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 
 class SignUpInfoPage extends StatefulWidget {
   const SignUpInfoPage({super.key, required this.onSuccess});
@@ -16,6 +15,7 @@ class _SignUpInfoPageState extends State<SignUpInfoPage>
     with AutomaticKeepAliveClientMixin {
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     var headlineSmall = Theme.of(context).textTheme.headlineSmall;
     var titleSmall = Theme.of(context).textTheme.titleSmall;
     return Padding(

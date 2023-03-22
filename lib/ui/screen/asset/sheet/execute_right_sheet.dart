@@ -1,4 +1,3 @@
-import 'package:dtnd/=models=/exchange.dart';
 import 'package:dtnd/=models=/response/account/i_account.dart';
 import 'package:dtnd/=models=/response/account/unexecuted_right_model.dart';
 import 'package:dtnd/=models=/response/stock.dart';
@@ -14,7 +13,6 @@ import 'package:dtnd/ui/widget/input/interval_input.dart';
 import 'package:dtnd/ui/widget/overlay/dialog_utilities.dart';
 import 'package:dtnd/utilities/logger.dart';
 import 'package:dtnd/utilities/num_utils.dart';
-import 'package:dtnd/utilities/string_util.dart';
 import 'package:dtnd/utilities/validator.dart';
 import 'package:flutter/material.dart';
 
@@ -32,7 +30,8 @@ class ExecuteRightSheet extends StatefulWidget {
   State<ExecuteRightSheet> createState() => _ExecuteRightSheetState();
 }
 
-class _ExecuteRightSheetState extends State<ExecuteRightSheet> {
+class _ExecuteRightSheetState extends State<ExecuteRightSheet>
+    with AppValidator {
   final IExchangeService exchangeService = ExchangeService();
   final TextEditingController pinController = TextEditingController();
   late final TextEditingController volumnController;
@@ -228,7 +227,7 @@ class _ExecuteRightSheetState extends State<ExecuteRightSheet> {
                     child: TextFormField(
                       controller: pinController,
                       // onChanged: (value) => pinFormKey.currentState?.didChange(value),
-                      validator: AppValidator.pinValidator,
+                      validator: pinValidator,
                       autovalidateMode: AutovalidateMode.disabled,
                       decoration: InputDecoration(
                         labelText: S.of(context).pin_code,

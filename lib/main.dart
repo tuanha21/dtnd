@@ -14,7 +14,7 @@ import 'package:dtnd/ui/screen/login/login_screen.dart';
 import 'package:dtnd/ui/screen/sign_up/page/create_new_pass.dart';
 import 'package:dtnd/ui/screen/sign_up/page/reference_page.dart';
 import 'package:dtnd/ui/screen/sign_up/page/success_sign_up_page.dart';
-import 'package:dtnd/ui/screen/sign_up/sign_up_view.dart';
+import 'package:dtnd/ui/screen/sign_up/sign_up_screen.dart';
 import 'package:dtnd/ui/theme/app_theme.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';

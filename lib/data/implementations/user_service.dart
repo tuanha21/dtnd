@@ -307,7 +307,7 @@ class UserService implements IUserService {
 
   @override
   Future<SignUpSuccessDataModel?> createAccount(
-      String name, String mobile, String mail) {
+      String name, String mobile, String mail, String pass) {
     Map<String, dynamic> body = {
       "user": "back",
       "cmd": "OPEN_VIRTUAL_ACCOUNT",
@@ -316,6 +316,7 @@ class UserService implements IUserService {
         "CUSTOMER_NAME": name,
         "CUSTOMER_MOBILE": mobile,
         "CUSTOMER_EMAIL": mail,
+        "CUSTOMER_PASS": pass,
       }
     };
     return networkService.createAccount(jsonEncode(body));

@@ -2,15 +2,22 @@ import 'package:dtnd/=models=/ui_model/user_cmd.dart';
 import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:dtnd/ui/widget/icon/sheet_header.dart';
-import 'package:dtnd/utilities/new_order_message.dart';
+import 'package:dtnd/utilities/error_definition.dart';
 import 'package:flutter/material.dart';
 
-class StockOrderFailSheet extends StatelessWidget {
+class StockOrderFailSheet extends StatefulWidget {
   const StockOrderFailSheet({
     super.key,
     required this.rc,
   });
   final int rc;
+
+  @override
+  State<StockOrderFailSheet> createState() => _StockOrderFailSheetState();
+}
+
+class _StockOrderFailSheetState extends State<StockOrderFailSheet>
+    with OrderMessage {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
@@ -51,7 +58,7 @@ class StockOrderFailSheet extends StatelessWidget {
                 SizedBox(
                   width: MediaQuery.of(context).size.width / 2,
                   child: Text(
-                    NewOrderMessage.getErrorMessage(context, rc),
+                    getErrorMessage(context, widget.rc),
                     textAlign: TextAlign.center,
                     // style: textTheme.labelLarge,
                   ),

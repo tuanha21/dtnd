@@ -112,6 +112,9 @@ class DataCenterService
         for (StockModel element in listStockReg) {
           element.getStockData(this);
         }
+        for (IndexModel index in _listIndex) {
+          index.getIndexData(this);
+        }
         socket.connect();
       }
     }
@@ -581,7 +584,7 @@ class DataCenterService
     }
     initingListIndex = true;
     for (final Index index in Index.values) {
-      final response = await networkService.getIndexDetail(index);
+      final response = await getIndexDetail(index);
       final chartResponse = await getStockTradingHistory(
           index.chartCode,
           resolution ?? "5",
@@ -595,6 +598,11 @@ class DataCenterService
     }
     initingListIndex = false;
     return _listIndex;
+  }
+
+  @override
+  Future<IndexDetailResponse> getIndexDetail(Index index) {
+    return networkService.getIndexDetail(index);
   }
 
   @override

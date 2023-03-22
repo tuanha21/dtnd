@@ -57,5 +57,5 @@ abstract class IUserService {
   Future<bool> verifyRegisterOTP(String mobile, String mail, String otp);
 
   Future<SignUpSuccessDataModel?> createAccount(
-      String name, String mobile, String mail);
+      String name, String mobile, String mail, String pass);
 }

@@ -1,6 +1,5 @@
 import 'package:dtnd/=models=/exchange.dart';
 import 'package:dtnd/=models=/response/order_model/base_order_model.dart';
-import 'package:dtnd/=models=/response/stock_model.dart';
 import 'package:dtnd/=models=/side.dart';
 import 'package:dtnd/data/i_exchange_service.dart';
 import 'package:dtnd/data/i_user_service.dart';
@@ -29,7 +28,8 @@ class StockOrderConfirmSheet extends StatefulWidget {
   State<StockOrderConfirmSheet> createState() => _StockOrderConfirmSheetState();
 }
 
-class _StockOrderConfirmSheetState extends State<StockOrderConfirmSheet> {
+class _StockOrderConfirmSheetState extends State<StockOrderConfirmSheet>
+    with AppValidator {
   final IExchangeService exchangeService = ExchangeService();
   final GlobalKey<FormState> pinKey = GlobalKey<FormState>();
   final GlobalKey<FormFieldState<String?>> pinFormKey =
@@ -158,7 +158,7 @@ class _StockOrderConfirmSheetState extends State<StockOrderConfirmSheet> {
               child: TextFormField(
                 controller: pinController,
                 // onChanged: (value) => pinFormKey.currentState?.didChange(value),
-                validator: AppValidator.pinValidator,
+                validator: pinValidator,
                 autovalidateMode: AutovalidateMode.disabled,
                 decoration: InputDecoration(
                   labelText: S.of(context).pin_code,

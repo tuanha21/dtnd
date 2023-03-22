@@ -51,9 +51,9 @@ class LiquidityModel {
     _fold(monthPTVal);
     // print(currVal.length);
     // print(week1Val.length);
-    // if (currVal.length < week1Val.length) {
-    //   currVal.addAll(List.filled(week1Val.length + 1 - currVal.length, 0));
-    // }
+    if (currVal.length < week1Val.length) {
+      currVal.addAll(List.filled(week1Val.length + 1 - currVal.length, 0));
+    }
   }
 
   List<num> _fold(List<num> list) {

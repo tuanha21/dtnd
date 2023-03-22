@@ -24,7 +24,7 @@ import 'package:dtnd/ui/widget/expanded_widget.dart';
 import 'package:dtnd/ui/widget/icon/sheet_header.dart';
 import 'package:dtnd/ui/widget/input/interval_input.dart';
 import 'package:dtnd/utilities/logger.dart';
-import 'package:dtnd/utilities/new_order_message.dart';
+import 'package:dtnd/utilities/error_definition.dart';
 import 'package:dtnd/utilities/validator.dart';
 import 'package:flutter/material.dart';
 
@@ -38,7 +38,8 @@ class ChangeStockOrderSheet extends StatefulWidget {
   State<ChangeStockOrderSheet> createState() => _ChangeStockOrderSheetState();
 }
 
-class _ChangeStockOrderSheetState extends State<ChangeStockOrderSheet> {
+class _ChangeStockOrderSheetState extends State<ChangeStockOrderSheet>
+    with AppValidator, OrderMessage {
   final INetworkService networkService = NetworkService();
   final IUserService userService = UserService();
   final IExchangeService exchangeService = ExchangeService();
@@ -104,7 +105,7 @@ class _ChangeStockOrderSheetState extends State<ChangeStockOrderSheet> {
         logger.e(error);
         if (error is int) {
           setState(() {
-            errorText = NewOrderMessage.getErrorMessage(context, error);
+            errorText = getErrorMessage(context, error);
           });
         }
         return;
@@ -181,7 +182,7 @@ class _ChangeStockOrderSheetState extends State<ChangeStockOrderSheet> {
                           controller: volumnController,
                           labelText: S.of(context).volumn,
                           interval: (value) => 100,
-                          validator: AppValidator.volumnValidator,
+                          validator: volumnValidator,
                           // onChanged: onChangeVol,
                         ),
                       ),
@@ -191,7 +192,7 @@ class _ChangeStockOrderSheetState extends State<ChangeStockOrderSheet> {
                   TextFormField(
                     controller: pinController,
                     // onChanged: (value) => pinFormKey.currentState?.didChange(value),
-                    validator: AppValidator.pinValidator,
+                    validator: pinValidator,
                     autovalidateMode: AutovalidateMode.disabled,
                     decoration: InputDecoration(
                       labelText: S.of(context).pin_code,

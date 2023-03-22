@@ -8,7 +8,7 @@ mixin AppValidator {
       RegExp(r'^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$');
   static final RegExp _phoneNumberRegex =
       RegExp(r'^(\+)?(\d{1,3})?([-.\s]?\d{2,4}[-.\s]?){2,5}\d{2,4}$');
-  static String? pinValidator(String? pin) {
+  String? pinValidator(String? pin) {
     if (pin?.isEmpty ?? true) {
       return "Không được bỏ trống";
     }
@@ -18,7 +18,18 @@ mixin AppValidator {
     return null;
   }
 
-  static String? catalogNameValidator(String? name) {
+  String? phoneNumberValidator(String? phone) {
+    print(phone);
+    if (phone?.isEmpty ?? true) {
+      return "Không được bỏ trống";
+    }
+    if (!_phoneNumberRegex.hasMatch(phone!)) {
+      return "Số điện thoại sai định dạng";
+    }
+    return null;
+  }
+
+  String? catalogNameValidator(String? name) {
     if (name?.isEmpty ?? true) {
       return "Không được bỏ trống";
     }
@@ -26,7 +37,7 @@ mixin AppValidator {
   }
 
   String? checkAccountShort(String? account) {
-    if (account?.isEmpty == true) {
+    if (account?.isEmpty ?? true) {
       return "Không được bỏ trống";
     }
     if (account!.length < 6) {
@@ -46,7 +57,7 @@ mixin AppValidator {
   }
 
   String? checkFullName(String? name) {
-    if (name?.isEmpty == true) {
+    if (name?.isEmpty ?? true) {
       return "Không được bỏ trống";
     }
     if (name!.length < 4) {
@@ -82,7 +93,7 @@ mixin AppValidator {
     }
   }
 
-  static String? volumnValidator(String? vol) {
+  String? volumnValidator(String? vol) {
     if (vol?.isEmpty ?? true) {
       return "Khối lượng không được bỏ trống";
     } else if (!vol!.isNum) {

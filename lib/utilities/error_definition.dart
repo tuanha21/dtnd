@@ -1,12 +1,11 @@
-import 'package:dtnd/=models=/response/order_model/i_order_model.dart';
 import 'package:dtnd/generated/l10n.dart';
 import 'package:flutter/material.dart';
 
-class NewOrderMessage {
-  static String getErrorMessage(BuildContext context, int rc) =>
+mixin OrderMessage {
+  String getErrorMessage(BuildContext context, int rc) =>
       _mapMessage[rc] ?? S.of(context).unknown_exception;
 
-  static final Map<int, String> _mapMessage = {
+  final Map<int, String> _mapMessage = {
     -6004: 'Lệnh đã được xử lý, không được gửi lại.',
     -6007: 'Hủy lệnh không thành công.',
     -6012: 'Tài khoản không đủ sức mua.',
@@ -68,5 +67,59 @@ class NewOrderMessage {
     -9999: 'Không đủ điều kiện sửa.',
     -9001: 'Không được giao dịch mã chứng quyền trên TK margin',
     -8: 'Hệ thống chưa sẵn sàng nhận lệnh'
+  };
+}
+
+mixin AccountErrorDefinition {
+  String getErrorMessage(int rc) =>
+      _mapMessage[rc] ?? S.current.unknown_exception;
+  final Map<int, String> _mapMessage = {
+    2000: "Mã khách hàng không tồn tại",
+    2001: "Mã khách hàng đã tồn tại",
+    2002: "Khách hàng đã mở TK ",
+    2003: "Tài khoản đã tồn tại",
+    2004: "Tài khoản không hợp lệ",
+    2005: "Ngay mo khong duoc lon hon ngay hien tai ",
+    2006: "Số ĐKSH đã tồn tại",
+    2007: "Tài khoản không tồn tại/trạng thái tài khoản không hợp lệ",
+    2008: "Ngày hiệu lực không hợp lệ",
+    2009: "Không được cài 2 khoảng tong tương lai",
+    2010: "Gói phí đã hết hiệu lực",
+    2011: "Không được xóa các bút toán đã có hiệu lực",
+    2012: "Người ủy quyền không hợp lệ",
+    2013: "Chủ tk đã ủy quyền cho người khác và khong được quyền thực hiện",
+    2014:
+        "CMT nguoi yeu cau khong ton tai hoac khong duoc Uy quyen hoac Uy quyen da het han!",
+    2015: "Tai khoan ATS, ban khong the thuc hien.",
+    2016: "Ngay het han phai lon hon ngay hien tai",
+    2017: "Ngày cấp phải nhỏ hơn ngày hiện tại",
+    2018: "Số điện thoại không hợp lệ",
+    2019: "Email không hợp lệ",
+    2020: "Nơi cấp không hợp lệ",
+    2021: "Mã số thuế không hợp lệ",
+    2022: "Địa chỉ liên hệ không hợp lệ",
+    2023: "Người đại diện không hợp lệ",
+    2024: "Ngày cấp người ủy quyền phải nhỏ hơn ngày hiện tại",
+    2025: "Chức vụ không được để trống",
+    2026: "Điện thoại cố định không được để trống",
+    2027: "Điện thoại di động không được để trống",
+    2028: "Đia chỉ thường trú không hợp lệ",
+    2029: "Khách hàng chưa đủ tuổi",
+    2030: "Tên người giám hộ không hợp lệ",
+    2031: "Quan hệ với chủ tài khoản không hợp lệ",
+    2032: "Số giấy tờ người giám hộ không hợp lệ",
+    2033: "Ngày cấp người giám hộ không hợp lệ",
+    2034: "Nơi cấp người giám hộ không hợp lệ",
+    2035: "địa chỉ người giám hộ không hợp lệ",
+    2036: "Số điện thoại người giám hộ không hợp lệ",
+    2037: "Email người giám hộ không hợp lệ",
+    2038: "Không được mở tài khoản",
+    2039: "Đã có khách hàng đăng ký số điện thoại này này",
+    2040: "Đã có khách hàng đăng ký email này",
+    2041: "Số điện thoại và email này đã đăng ký trên hệ thống",
+    2042: "Gói phí này đã gắn cho khách hàng",
+    2043: "Thông tin không hợp lệ",
+    2044: "Tài khoản đã phát sinh giao dịch tiền",
+    2045: "Tài khoản đã phát sinh giao dịch CK",
   };
 }

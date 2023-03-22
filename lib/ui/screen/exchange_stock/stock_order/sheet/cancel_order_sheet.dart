@@ -1,11 +1,6 @@
 import 'dart:async';
 
-import 'package:dtnd/=models=/exchange.dart';
 import 'package:dtnd/=models=/response/order_model/base_order_model.dart';
-import 'package:dtnd/=models=/response/stock_cash_balance_model.dart';
-import 'package:dtnd/=models=/response/stock_info_core.dart';
-import 'package:dtnd/=models=/response/stock_model.dart';
-import 'package:dtnd/=models=/side.dart';
 import 'package:dtnd/=models=/ui_model/user_cmd.dart';
 import 'package:dtnd/data/i_data_center_service.dart';
 import 'package:dtnd/data/i_exchange_service.dart';
@@ -22,9 +17,7 @@ import 'package:dtnd/ui/theme/app_textstyle.dart';
 import 'package:dtnd/ui/widget/button/single_color_text_button.dart';
 import 'package:dtnd/ui/widget/expanded_widget.dart';
 import 'package:dtnd/ui/widget/icon/sheet_header.dart';
-import 'package:dtnd/ui/widget/input/interval_input.dart';
 import 'package:dtnd/utilities/logger.dart';
-import 'package:dtnd/utilities/new_order_message.dart';
 import 'package:dtnd/utilities/validator.dart';
 import 'package:flutter/material.dart';
 
@@ -38,7 +31,8 @@ class CancelStockOrderSheet extends StatefulWidget {
   State<CancelStockOrderSheet> createState() => _CancelStockOrderSheetState();
 }
 
-class _CancelStockOrderSheetState extends State<CancelStockOrderSheet> {
+class _CancelStockOrderSheetState extends State<CancelStockOrderSheet>
+    with AppValidator {
   final INetworkService networkService = NetworkService();
   final IUserService userService = UserService();
   final IExchangeService exchangeService = ExchangeService();
@@ -59,7 +53,7 @@ class _CancelStockOrderSheetState extends State<CancelStockOrderSheet> {
             widget.data,
             pinController.text,
           )
-          .then((value) => Navigator.of(context).pop(OrderSuccessCmd()))
+          .then((value) => Navigator.of(context).pop(const OrderSuccessCmd()))
           .onError((error, stackTrace) {
         logger.e(error);
         if (error is String) {
@@ -99,7 +93,7 @@ class _CancelStockOrderSheetState extends State<CancelStockOrderSheet> {
               child: TextFormField(
                 controller: pinController,
                 // onChanged: (value) => pinFormKey.currentState?.didChange(value),
-                validator: AppValidator.pinValidator,
+                validator: pinValidator,
                 autovalidateMode: AutovalidateMode.disabled,
                 decoration: InputDecoration(
                   labelText: S.of(context).pin_code,

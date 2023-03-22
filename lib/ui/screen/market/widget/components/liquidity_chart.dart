@@ -77,8 +77,6 @@ class _LiquidityChartState extends State<LiquidityChart> {
               if (snapshot.connectionState == ConnectionState.done) {
                 final size = MediaQuery.of(context).size;
                 var liquidityModel = snapshot.data!;
-                print(liquidityModel.currVal.length);
-                logger.v(liquidityModel.currVal);
                 return SizedBox(
                   height: 300,
                   child: charts.OrdinalComboChart(
@@ -95,7 +93,8 @@ class _LiquidityChartState extends State<LiquidityChart> {
                           return val;
                         },
                         data: liquidityModel.currVal,
-                      ),
+                      )..setAttribute(
+                          charts.measureAxisIdKey, "secondaryMeasureAxisId"),
                       charts.Series<num, String>(
                         id: 'Phiên trước',
                         colorFn: (_, __) => charts.ColorUtil.fromDartColor(
@@ -221,11 +220,18 @@ class _LiquidityChartState extends State<LiquidityChart> {
                         labelRotation: 45,
                       ),
                     ),
-
-                    primaryMeasureAxis: const charts.NumericAxisSpec(
+                    secondaryMeasureAxis: const charts.NumericAxisSpec(
                       tickProviderSpec: charts.BasicNumericTickProviderSpec(
                         zeroBound: true,
                       ),
+                      // showAxisLine: false,
+                    ),
+                    primaryMeasureAxis: const charts.NumericAxisSpec(
+                      renderSpec: charts.NoneRenderSpec(),
+                      tickProviderSpec: charts.BasicNumericTickProviderSpec(
+                        zeroBound: true,
+                      ),
+                      showAxisLine: false,
                       // showAxisLine: false,
                     ),
                   ),

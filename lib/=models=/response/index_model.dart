@@ -1,6 +1,7 @@
 import 'package:dtnd/=models=/index.dart';
 import 'package:dtnd/=models=/response/index_detail.dart';
 import 'package:dtnd/=models=/response/stock_trading_history.dart';
+import 'package:dtnd/data/i_data_center_service.dart';
 import 'package:get/get.dart';
 
 class IndexModel {
@@ -24,6 +25,11 @@ class IndexModel {
         indexDetailResponse.oIndex != null) {
       this.stockDayTradingHistory.value!.o.last = indexDetailResponse.oIndex!;
     }
+  }
+
+  Future<void> getIndexData(IDataCenterService dataCenterService) async {
+    final response = await dataCenterService.getIndexDetail(index);
+    return updateIndexDetail(response);
   }
 
   void updateIndexDetail(IndexDetailResponse data) {

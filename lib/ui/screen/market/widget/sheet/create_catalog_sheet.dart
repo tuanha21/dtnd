@@ -21,7 +21,8 @@ class CreateCatalogSheet extends StatefulWidget {
   State<CreateCatalogSheet> createState() => _CreateCatalogSheetState();
 }
 
-class _CreateCatalogSheetState extends State<CreateCatalogSheet> {
+class _CreateCatalogSheetState extends State<CreateCatalogSheet>
+    with AppValidator {
   final TextEditingController controller = TextEditingController();
   final GlobalKey<FormState> key = GlobalKey<FormState>();
   final FocusNode node = FocusNode();
@@ -47,7 +48,7 @@ class _CreateCatalogSheetState extends State<CreateCatalogSheet> {
             Form(
               key: key,
               child: TextFormField(
-                validator: AppValidator.catalogNameValidator,
+                validator: catalogNameValidator,
                 inputFormatters: [LengthLimitingTextInputFormatter(20)],
                 decoration: InputDecoration(
                   labelText: S.of(context).catalog_name,
