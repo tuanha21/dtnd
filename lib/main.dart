@@ -19,6 +19,7 @@ import 'package:dtnd/ui/theme/app_theme.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
@@ -168,6 +169,7 @@ class _MyAppState extends State<MyApp> {
           // routeInformationProvider: _router.routeInformationProvider,
           // routerDelegate: _router.routerDelegate,
           routerConfig: _router,
+          builder:  EasyLoading.init(),
         ),
       );
     });

@@ -8,6 +8,7 @@ import 'package:dtnd/=models=/response/deep_model.dart';
 import 'package:dtnd/=models=/response/inday_matched_order.dart';
 import 'package:dtnd/=models=/response/index_chart_data.dart';
 import 'package:dtnd/=models=/response/index_detail.dart';
+import 'package:dtnd/=models=/response/stock_va.dart';
 import 'package:dtnd/=models=/response/top_signal_detail_model.dart';
 import 'package:dtnd/=models=/response/top_signal_history_model.dart';
 import 'package:dtnd/=models=/response/top_signal_stock_model.dart';
@@ -215,4 +216,16 @@ abstract class INetworkService {
   Future<bool> verifySignupOTP(String body);
 
   Future<SignUpSuccessDataModel?> createAccount(String body);
+
+  Future<bool> checkInfoVa(String body);
+
+  Future<bool> registerVirtualBroker(String body);
+
+  Future<bool> checkRegisterOtp(String body);
+
+  Future<StockVa> checkListInfoBot(String body);
+
+  Future<void> createBot(String body);
+
+  Future<void> deleteBot(String body);
 }

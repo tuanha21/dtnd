@@ -49,6 +49,18 @@ class AppImages {
   static const String edit2 = "assets/svg/edit-2.svg";
   static const String edit1 = "assets/svg/edit1.svg";
   static const String filter = "assets/svg/filter.svg";
+  static const String icon_setting = "assets/svg/setting.svg";
+  static const String icon_dot = "assets/svg/dot.svg";
+  static const String icon_auto_trading = "assets/svg/auto_trading.svg";
+  static const String icon_my_directory = "assets/svg/my_directory.svg";
+  static const String icon_volatility_alert = "assets/svg/volatility_alert.svg";
+  static const String icon_percent = "assets/svg/icon_percent.svg";
+  static const String icon_line = "assets/svg/icon_line.svg";
+  static const String icon_equal = "assets/svg/icon_equal.svg";
+  static const String icon_greater_than_or_equal_to = "assets/svg/icon_greater_than_or_equal_to.svg";
+  static const String icon_less_than_or_equal = "assets/svg/icon_less_than_or_equal.svg";
+  static const String icon_setting_va = "assets/svg/icon_setting_va.svg";
+  static const String icon_downt= "assets/svg/icon_downt.svg";
   static const String filter_icon = "assets/images/filter.png";
   static const String signal_icon = "assets/images/signal_icon.png";
 

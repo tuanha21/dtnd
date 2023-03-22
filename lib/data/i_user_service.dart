@@ -13,6 +13,8 @@ abstract class IUserService {
 
   Rx<UserToken?> get token;
 
+  Rx<bool?> get isRegisterVa;
+
   Rx<UserInfo?> get userInfo;
 
   Rx<TotalAsset?> get totalAsset;
@@ -58,4 +60,6 @@ abstract class IUserService {
 
   Future<SignUpSuccessDataModel?> createAccount(
       String name, String mobile, String mail, String pass);
+
+  Future<void> saveValueRegisterVa();
 }
