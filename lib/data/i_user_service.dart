@@ -60,4 +60,6 @@ abstract class IUserService {
 
   Future<SignUpSuccessDataModel?> createAccount(
       String name, String mobile, String mail);
+
+  Future<void> saveValueRegisterVa();
 }

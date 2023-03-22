@@ -64,3 +64,4 @@ class RegisterIntro extends GetView<RegisterInfoController> {
     );
   }
 }
+

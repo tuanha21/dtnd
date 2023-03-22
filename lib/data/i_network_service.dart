@@ -221,4 +221,10 @@ abstract class INetworkService {
   Future<bool> registerVirtualBroker(String body);
 
   Future<bool> checkRegisterOtp(String body);
+
+  Future<void> checkListInfoBot(String body);
+
+  Future<void> createBot(String body);
+
+  Future<void> deleteBot(String body);
 }

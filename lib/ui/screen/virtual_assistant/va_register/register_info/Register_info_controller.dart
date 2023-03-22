@@ -13,17 +13,19 @@ import '../../../../../data/implementations/network_service.dart';
 class RegisterInfoController extends GetxController {
   final IUserService userService = UserService();
   final INetworkService networkService = NetworkService();
+  RxBool canNext = true.obs;
 
   Future<void> onClickRegisterFillOTP(BuildContext context) async {
+    canNext.value = false;
     EasyLoading.show();
     final Map<String, String> body = {
       "account": userService.token.value?.user ?? '',
       "sid": userService.token.value?.sid ?? '',
     };
-
     final response =
         await networkService.registerVirtualBroker(jsonEncode(body));
     if (response) {
+      canNext.value = true;
       EasyLoading.dismiss();
       Navigator.push(
         context,
@@ -31,7 +33,7 @@ class RegisterInfoController extends GetxController {
           builder: (context) => RegisterFillOTP(),
         ),
       );
-    }else{
+    } else {
       EasyLoading.dismiss();
     }
   }

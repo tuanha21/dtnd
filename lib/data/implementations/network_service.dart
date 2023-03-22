@@ -4,19 +4,17 @@ import 'dart:convert';
 
 import 'package:dtnd/=models=/algo/filter.dart';
 import 'package:dtnd/=models=/algo/stock_filter.dart';
-import 'package:dtnd/=models=/response/commodity_model.dart';
 import 'package:dtnd/=models=/core_response_model.dart';
+import 'package:dtnd/=models=/index.dart';
+import 'package:dtnd/=models=/request/request_model.dart';
 import 'package:dtnd/=models=/response/business_profile_model.dart';
+import 'package:dtnd/=models=/response/commodity_model.dart';
 import 'package:dtnd/=models=/response/company_info.dart';
 import 'package:dtnd/=models=/response/deep_model.dart';
 import 'package:dtnd/=models=/response/inday_matched_order.dart';
 import 'package:dtnd/=models=/response/index_board.dart';
-import 'package:dtnd/=models=/response/index_detail.dart';
 import 'package:dtnd/=models=/response/index_chart_data.dart';
-import 'package:dtnd/=models=/index.dart';
-import 'package:dtnd/=models=/response/top_signal_detail_model.dart';
-import 'package:dtnd/=models=/response/top_signal_history_model.dart';
-import 'package:dtnd/=models=/response/top_signal_stock_model.dart';
+import 'package:dtnd/=models=/response/index_detail.dart';
 import 'package:dtnd/=models=/response/introduct_company.dart';
 import 'package:dtnd/=models=/response/liquidity_model.dart';
 import 'package:dtnd/=models=/response/news_detail.dart';
@@ -26,6 +24,7 @@ import 'package:dtnd/=models=/response/share_holder.dart';
 import 'package:dtnd/=models=/response/stock.dart';
 import 'package:dtnd/=models=/response/stock_board.dart';
 import 'package:dtnd/=models=/response/stock_data.dart';
+import 'package:dtnd/=models=/response/stock_derivative_model.dart';
 import 'package:dtnd/=models=/response/stock_financial_index_model.dart';
 import 'package:dtnd/=models=/response/stock_his.dart';
 import 'package:dtnd/=models=/response/stock_news.dart';
@@ -36,13 +35,14 @@ import 'package:dtnd/=models=/response/stock_trading_history.dart';
 import 'package:dtnd/=models=/response/stock_vol.dart';
 import 'package:dtnd/=models=/response/subsidiaries_model.dart';
 import 'package:dtnd/=models=/response/top_influence_model.dart';
+import 'package:dtnd/=models=/response/top_signal_detail_model.dart';
+import 'package:dtnd/=models=/response/top_signal_history_model.dart';
+import 'package:dtnd/=models=/response/top_signal_stock_model.dart';
 import 'package:dtnd/=models=/response/total_asset_model.dart';
-import 'package:dtnd/=models=/request/request_model.dart';
 import 'package:dtnd/=models=/response/trash_model.dart';
 import 'package:dtnd/=models=/response/world_index_model.dart';
 import 'package:dtnd/=models=/sign_up_success_data_model.dart';
 import 'package:dtnd/=models=/ui_model/exception.dart';
-import 'package:dtnd/=models=/response/stock_derivative_model.dart';
 import 'package:dtnd/=models=/ui_model/field_tree_element_model.dart';
 import 'package:dtnd/config/service/environment.dart';
 import 'package:dtnd/data/i_network_service.dart';
@@ -1459,6 +1459,51 @@ class NetworkService implements INetworkService {
       return true;
     } else {
       return false;
+    }
+  }
+
+  @override
+  Future<void> checkListInfoBot(String body) async {
+    var response =
+        await client.post(url_core1('autoTrade/showInfoBot'), body: body);
+    if (response.statusCode != 200) {
+      throw response;
+    }
+    var res = decode(response.bodyBytes);
+    if (res["rc"] == 1) {
+      return res;
+    } else {
+      return res["rc"];
+    }
+  }
+
+  @override
+  Future<void> createBot(String body) async {
+    var response =
+        await client.post(url_core1('autoTrade/createBot'), body: body);
+    if (response.statusCode != 200) {
+      throw response;
+    }
+    var res = decode(response.bodyBytes);
+    if (res["rc"] == 1) {
+      return res;
+    } else {
+      throw res["rs"];
+    }
+  }
+
+  @override
+  Future<void> deleteBot(String body) async {
+    var response =
+        await client.post(url_core1('autoTrade/destroyBot'), body: body);
+    if (response.statusCode != 200) {
+      throw response;
+    }
+    var res = decode(response.bodyBytes);
+    if (res["rc"] == 1) {
+      return res;
+    } else {
+      throw res["rs"];
     }
   }
 }

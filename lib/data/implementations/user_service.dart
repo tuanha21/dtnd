@@ -326,6 +326,7 @@ class UserService implements IUserService {
     return networkService.createAccount(jsonEncode(body));
   }
 
+  @override
   Future<void> saveValueRegisterVa() async {
     final Map<String, String> body = {
       "account": token.value?.user ?? '',

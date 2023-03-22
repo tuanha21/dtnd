@@ -1,10 +1,12 @@
 import 'package:dtnd/generated/l10n.dart';
-import 'package:dtnd/ui/screen/virtual_assistant/va_screen.dart';
+import 'package:dtnd/ui/screen/virtual_assistant/va_home/va_screen.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:dtnd/ui/widget/my_appbar.dart';
 import 'package:dtnd/utilities/responsive.dart';
 import 'package:flutter/material.dart';
+
+import '../../../../../config/service/app_services.dart';
 
 class RegisterRegistered extends StatelessWidget {
   const RegisterRegistered({
@@ -13,9 +15,34 @@ class RegisterRegistered extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final themeMode = AppService.instance.themeMode.value;
     final textTheme = Theme.of(context).textTheme;
     return Scaffold(
-      appBar: const MyAppBar(
+      appBar: MyAppBar(
+        leading: Align(
+          alignment: Alignment.centerRight,
+          child: SizedBox.square(
+            dimension: 32,
+            child: InkWell(
+              onTap: () => Navigator.of(context).popUntil((route) => route.isFirst),
+              borderRadius: const BorderRadius.all(Radius.circular(6)),
+              child: Ink(
+                padding: const EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  borderRadius: const BorderRadius.all(Radius.circular(6)),
+                  color: themeMode.isLight
+                      ? AppColors.neutral_05
+                      : AppColors.neutral_01,
+                ),
+                child: const Icon(
+                  Icons.arrow_back_ios_new,
+                  color: AppColors.primary_01,
+                  size: 10,
+                ),
+              ),
+            ),
+          ),
+        ),
         title: 'Trợ lý ảo',
       ),
       body: Center(
@@ -50,7 +77,7 @@ class RegisterRegistered extends StatelessWidget {
               child: TextButton(
                 onPressed: () { Navigator.of(context).push<void>(
                   MaterialPageRoute(
-                      builder: (context) => VAScreen()),
+                      builder: (context) => VaScreen()),
                 );},
                 style: const ButtonStyle(
                     padding: MaterialStatePropertyAll(EdgeInsets.all(14))),
