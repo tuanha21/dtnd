@@ -374,6 +374,10 @@ class UserService implements IUserService {
   }
 
   @override
+  Future<void> createBot() async {
+    if (!isLogin) {
+      return;
+    }
     final Map<String, dynamic> body = {
       "account": token.value!.user,
       "session": token.value!.sid,
