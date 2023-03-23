@@ -2,7 +2,6 @@ import 'package:dtnd/=models=/response/liquidity_model.dart';
 import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/utilities/charts_util.dart';
-import 'package:dtnd/utilities/logger.dart';
 import 'package:dtnd/utilities/num_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
@@ -95,6 +94,7 @@ class _LiquidityChartState extends State<LiquidityChart> {
                         data: liquidityModel.currVal,
                       )..setAttribute(
                           charts.measureAxisIdKey, "secondaryMeasureAxisId"),
+
                       charts.Series<num, String>(
                         id: 'Phiên trước',
                         colorFn: (_, __) => charts.ColorUtil.fromDartColor(
@@ -104,6 +104,7 @@ class _LiquidityChartState extends State<LiquidityChart> {
                         measureFn: (num val, _) => val,
                         data: liquidityModel.prevVal,
                       )..setAttribute(charts.rendererIdKey, 'customLine'),
+
                       charts.Series<num, String>(
                         id: '1 tuần',
                         colorFn: (_, __) => charts.ColorUtil.fromDartColor(
@@ -113,6 +114,7 @@ class _LiquidityChartState extends State<LiquidityChart> {
                         measureFn: (num val, _) => val,
                         data: liquidityModel.week1Val,
                       )..setAttribute(charts.rendererIdKey, 'customLine'),
+
                       // charts.Series<num, String>(
                       //   id: '2 tuần',
                       //   colorFn: (_, __) => charts.ColorUtil.fromDartColor(AppColors.graph_4),
@@ -171,9 +173,9 @@ class _LiquidityChartState extends State<LiquidityChart> {
                         //     fontSize: 11),
                       ),
                       charts.SelectNearest(
-                          eventTrigger: charts.SelectionTrigger.tapAndDrag,
-                          // selectionMode:
-                          //     charts.SelectionMode.selectOverlapping,
+                        eventTrigger: charts.SelectionTrigger.tapAndDrag,
+                        // selectionMode:
+                        //     charts.SelectionMode.selectOverlapping,
                       ),
                       charts.LinePointHighlighter(
                         // drawFollowLinesAcrossChart: false,
