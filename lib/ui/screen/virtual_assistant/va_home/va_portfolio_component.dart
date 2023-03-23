@@ -18,7 +18,6 @@ import '../../../widget/icon/sheet_header.dart';
 import '../../../widget/input/interval_input.dart';
 import '../../../widget/input/thousand_separator_input_formatter.dart';
 import '../../stock_detail/sheet/info_sheet.dart';
-import '../../stock_detail/sheet/list_bot_sheet.dart';
 import '../interval_input_custom2.dart';
 
 class VAPortfolioComponent extends StatefulWidget {
@@ -38,10 +37,16 @@ class VAPortfolioComponent extends StatefulWidget {
   State<VAPortfolioComponent> createState() => _VAPortfolioComponentState();
 }
 
-class _VAPortfolioComponentState extends State<VAPortfolioComponent> with AppValidator {
+class _VAPortfolioComponentState extends State<VAPortfolioComponent>
+    with AppValidator {
   final IDataCenterService dataCenterService = DataCenterService();
-  final TextEditingController priceController = TextEditingController();
-  final TextEditingController volumeController = TextEditingController();
+
+  final TextEditingController maximumRiskController = TextEditingController();
+  final TextEditingController fixedWeightController = TextEditingController();
+  final TextEditingController proportionalWeightController =
+      TextEditingController();
+  final TextEditingController priceSellController = TextEditingController();
+  final TextEditingController priceBuyController = TextEditingController();
 
   @override
   void initState() {
@@ -109,11 +114,17 @@ class _VAPortfolioComponentState extends State<VAPortfolioComponent> with AppVal
             AppTextStyle.labelMedium_12.copyWith(color: AppColors.neutral_03),
         overflow: TextOverflow.ellipsis,
       );
-      changePcWidget = Obx(() => Text(
-            "${widget.stockModel!.stockData.changePc.value ?? "-"}%",
-            style: AppTextStyle.labelMedium_12.copyWith(
-              fontWeight: FontWeight.w600,
-              color: widget.stockModel!.stockData.color,
+      changePcWidget = Obx(() => Container(
+            padding: const EdgeInsets.symmetric(vertical: 2, horizontal: 4),
+            decoration: BoxDecoration(
+                color: widget.stockModel!.stockData.bgColor(themeMode),
+                borderRadius: const BorderRadius.all(Radius.circular(4))),
+            child: Text(
+              "${widget.stockModel!.stockData.changePc.value ?? "-"}%",
+              style: AppTextStyle.labelMedium_12.copyWith(
+                fontWeight: FontWeight.w600,
+                color: widget.stockModel!.stockData.color,
+              ),
             ),
           ));
       lastPriceWidget = Obx(() {
@@ -159,7 +170,33 @@ class _VAPortfolioComponentState extends State<VAPortfolioComponent> with AppVal
                         const SizedBox(
                           height: 16,
                         ),
-                        const Text('Danh mục của bạn'),
+                        Row(
+                          children: [
+                            StockIcon(
+                              stockCode: widget.item.stockCode,
+                            ),
+                            const SizedBox(width: 8),
+                            SizedBox(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [Text(widget.item.stockCode)],
+                                  ),
+                                  Row(
+                                    children: [
+                                      lastPriceWidget,
+                                      const SizedBox(width: 4),
+                                      changePcWidget,
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
                         const SizedBox(
                           height: 16,
                         ),
@@ -168,7 +205,7 @@ class _VAPortfolioComponentState extends State<VAPortfolioComponent> with AppVal
                           height: 16,
                         ),
                         IntervalInputCustom2(
-                          controller: priceController,
+                          controller: maximumRiskController,
                           labelText: 'Rủi ro tối đa',
                           defaultValue: 0,
                         ),
@@ -176,43 +213,12 @@ class _VAPortfolioComponentState extends State<VAPortfolioComponent> with AppVal
                           height: 10,
                         ),
                         Row(
-                          mainAxisAlignment:
-                          MainAxisAlignment.spaceBetween,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
                               'Tỷ lệ chốt cắt lỗ',
                               style: AppTextStyle.labelMedium_12,
                             ),
-                            InkWell(
-                              child: SvgPicture.asset(
-                                  AppImages.icon_setting_va),
-                              onTap: () {
-                                const ListBotSheet().show(
-                                  context,
-                                  SafeArea(
-                                    child: Padding(
-                                      padding:
-                                      const EdgeInsets.symmetric(
-                                          horizontal: 16,
-                                          vertical: 20),
-                                      child: Column(
-                                        crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                        children: const [
-                                          SheetHeader(
-                                            title: 'Danh sách bot',
-                                            implementBackButton: true,
-                                          ),
-                                          SizedBox(
-                                            height: 16,
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                );
-                              },
-                            )
                           ],
                         ),
                         const SizedBox(height: 16),
@@ -220,7 +226,7 @@ class _VAPortfolioComponentState extends State<VAPortfolioComponent> with AppVal
                           children: [
                             Expanded(
                               child: IntervalInput(
-                                controller: priceController,
+                                controller: priceBuyController,
                                 labelText: S.of(context).price,
                                 interval: (value) => 0.1,
                                 defaultValue: 0,
@@ -232,34 +238,29 @@ class _VAPortfolioComponentState extends State<VAPortfolioComponent> with AppVal
                             Expanded(
                               child: Material(
                                 child: TextFormField(
-                                  controller: priceController,
-                                  validator: (value) => '',
-                                  // onChanged: ()=>{},
-                                  keyboardType: const TextInputType
-                                      .numberWithOptions(decimal: true),
+                                  controller: priceSellController,
+                                  keyboardType:
+                                      const TextInputType.numberWithOptions(
+                                          decimal: true),
                                   inputFormatters: [
                                     ThousandsSeparatorInputFormatter()
                                   ],
                                   decoration: InputDecoration(
                                     labelText: 'Bán khi giá',
-                                    contentPadding:
-                                    const EdgeInsets.only(left: 50),
                                     floatingLabelBehavior:
-                                    FloatingLabelBehavior.always,
+                                        FloatingLabelBehavior.always,
                                     floatingLabelAlignment:
-                                    FloatingLabelAlignment.start,
-                                    prefixIcon: Padding(
-                                      padding: const EdgeInsets.all(18),
-                                      child: SvgPicture.asset(AppImages
-                                          .icon_greater_than_or_equal_to),
-                                      // SvgPicture.asset(
-                                      //     AppImages.icon_downt),
-                                      // SvgPicture.asset(
-                                      //     AppImages.icon_line),
-                                    ),
+                                        FloatingLabelAlignment.start,
+                                    // prefixIcon: Text(
+                                    //
+                                    //   "≥",
+                                    //   style: AppTextStyle.bodySmall_8
+                                    //       .copyWith(
+                                    //           color: AppColors.semantic_01)
+                                    //       .copyWith(fontSize: 20),
+                                    // ),
                                     suffixIcon: Padding(
-                                      padding:
-                                      const EdgeInsets.all(8.0),
+                                      padding: const EdgeInsets.all(8.0),
                                       child: SvgPicture.asset(
                                           AppImages.icon_percent),
                                     ),
@@ -276,28 +277,29 @@ class _VAPortfolioComponentState extends State<VAPortfolioComponent> with AppVal
                           children: [
                             Expanded(
                               child: TextFormField(
-                                controller: priceController,
-                                keyboardType: const TextInputType
-                                    .numberWithOptions(decimal: true),
+                                controller: fixedWeightController,
+                                keyboardType:
+                                    const TextInputType.numberWithOptions(
+                                        decimal: true),
                                 inputFormatters: [
                                   ThousandsSeparatorInputFormatter()
                                 ],
                                 decoration: const InputDecoration(
-                                  contentPadding: EdgeInsets.only(
-                                      left: 15, right: 15),
+                                  contentPadding:
+                                      EdgeInsets.only(left: 15, right: 15),
                                   labelText: 'Khối lượng cố định',
                                   floatingLabelBehavior:
-                                  FloatingLabelBehavior.always,
+                                      FloatingLabelBehavior.always,
                                   floatingLabelAlignment:
-                                  FloatingLabelAlignment.start,
+                                      FloatingLabelAlignment.start,
                                 ),
                               ),
                             ),
                             const SizedBox(width: 16),
                             Expanded(
                               child: IntervalInputCustom2(
-                                controller: volumeController,
-                                labelText: 'Khối lượng theo tỷ lệ',
+                                controller: proportionalWeightController,
+                                labelText: 'Khối lượng  theo tỷ lệ',
                                 validator: volumnValidator,
                                 // onChanged: onChangeVol,
                               ),
@@ -316,8 +318,7 @@ class _VAPortfolioComponentState extends State<VAPortfolioComponent> with AppVal
                             child: Text(
                               'Lưu',
                               style: AppTextStyle.textButtonTextStyle
-                                  .copyWith(
-                                  color: AppColors.neutral_05),
+                                  .copyWith(color: AppColors.neutral_05),
                             ),
                           ),
                           onTap: () {
@@ -329,11 +330,6 @@ class _VAPortfolioComponentState extends State<VAPortfolioComponent> with AppVal
                   ),
                 ),
               );
-
-              // Navigator.of(context).push(MaterialPageRoute(
-              //   builder: (context) =>
-              //       StockDetailScreen(stockModel: widget.stockModel!),
-              // ));
               return;
             }
           }
@@ -404,6 +400,7 @@ class _VAPortfolioComponentState extends State<VAPortfolioComponent> with AppVal
                         lastPriceWidget,
                       ],
                     ),
+                    const SizedBox(height: 4),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
