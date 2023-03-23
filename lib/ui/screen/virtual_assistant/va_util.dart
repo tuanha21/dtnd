@@ -1,7 +1,6 @@
 import 'package:dtnd/data/i_user_service.dart';
 import 'package:dtnd/data/implementations/user_service.dart';
 import 'package:dtnd/ui/screen/login/login_screen.dart';
-import 'package:dtnd/ui/screen/virtual_assistant/va_home/va_controller.dart';
 import 'package:dtnd/ui/screen/virtual_assistant/va_register/register_info/register_intro_screen.dart';
 import 'package:dtnd/ui/screen/virtual_assistant/va_home/va_screen.dart';
 import 'package:dtnd/ui/widget/overlay/login_first_dialog.dart';
