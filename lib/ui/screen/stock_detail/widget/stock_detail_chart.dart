@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math' as math;
 
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:dtnd/=models=/response/sec_event.dart';
@@ -7,16 +8,13 @@ import 'package:dtnd/data/i_network_service.dart';
 import 'package:dtnd/data/implementations/network_service.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/utilities/charts_util.dart';
-import 'package:dtnd/utilities/logger.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+
 import '../../../../=models=/response/stock_trading_history.dart';
 import '../../../../data/i_data_center_service.dart';
 import '../../../../data/implementations/data_center_service.dart';
 import '../../../../utilities/time_utils.dart';
-import 'dart:math' as math;
-
 import '../tab/overview_tab.dart';
 
 class StockDetailChart extends StatefulWidget {
@@ -28,6 +26,7 @@ class StockDetailChart extends StatefulWidget {
 
   final StockModel stockModel;
   final List<SecEvent>? listEvent;
+
   @override
   State<StockDetailChart> createState() => _StockDetailChartState();
 }
@@ -417,5 +416,6 @@ extension TimeSeriesExt on TimeSeries {
 
 class _ToolTipMgr extends TooltipData {
   _ToolTipMgr._intern();
+
   static final _ToolTipMgr instance = _ToolTipMgr._intern();
 }

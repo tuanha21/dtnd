@@ -5,17 +5,15 @@ import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/screen/login/login_controller.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/widget/button/async_button.dart';
-import 'package:dtnd/ui/widget/overlay/error_dialog.dart';
 import 'package:dtnd/utilities/logger.dart';
 import 'package:dtnd/utilities/time_utils.dart';
-import 'package:dtnd/utilities/typedef.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../theme/app_image.dart';
+import '../../../widget/overlay/custom_dialog.dart';
 
 class LoginForm extends StatefulWidget {
   const LoginForm({
@@ -32,6 +30,7 @@ class LoginForm extends StatefulWidget {
   final Rx<bool> otpRequired;
   final TextEditingController? userController;
   final TextEditingController? passController;
+
   @override
   State<LoginForm> createState() => _LoginFormState();
 }
@@ -331,9 +330,12 @@ class _LoginFormState extends State<LoginForm> {
           return await showDialog(
             context: context,
             builder: (context) {
-              return ErrorDialog(
+              return CustomDialog(
                 title: S.of(context).login_falied,
                 content: e.toString(),
+                action: () {},
+                textButtonAction: 'Quên mật khẩu',
+                textButtonExit: 'Thử lại',
               );
             },
           );

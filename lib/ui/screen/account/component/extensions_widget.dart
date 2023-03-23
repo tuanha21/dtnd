@@ -14,10 +14,10 @@ import 'package:dtnd/ui/screen/exchange_stock/order_note/screen/order_note_scree
 import 'package:dtnd/ui/screen/exchange_stock/stock_order/business/stock_order_flow.dart';
 import 'package:dtnd/ui/screen/exchange_stock/stock_order/sheet/stock_order_sheet.dart';
 import 'package:dtnd/ui/screen/login/login_screen.dart';
-import 'package:dtnd/ui/theme/app_color.dart';
-import 'package:dtnd/ui/widget/overlay/app_dialog.dart';
 import 'package:dtnd/ui/widget/overlay/login_first_dialog.dart';
 import 'package:flutter/material.dart';
+
+import '../../../widget/overlay/custom_dialog.dart';
 
 class AccountExtensionsWidget extends StatefulWidget {
   const AccountExtensionsWidget({super.key});
@@ -97,35 +97,13 @@ class _AccountExtensionsWidgetState extends State<AccountExtensionsWidget> {
                 final reg = await showDialog<bool>(
                   context: context,
                   builder: (context) {
-                    return AppDialog(
-                      icon: const Icon(Icons.warning_amber_rounded),
-                      title: const Text("Đăng nhập bằng sinh trắc học"),
-                      content: const Text(
-                          "Bạn chưa đăng ký đăng nhập bằng sinh trắc học\nBạn có muốn đăng ký ngay bây giờ không?"),
-                      actions: [
-                        Flexible(
-                          child: InkWell(
-                              onTap: () => Navigator.of(context).pop(false),
-                              child: Container(
-                                alignment: Alignment.center,
-                                child: Text(S.of(context).cancel),
-                              )),
-                        ),
-                        Flexible(
-                          child: InkWell(
-                              onTap: () => Navigator.of(context).pop(true),
-                              child: Container(
-                                alignment: Alignment.center,
-                                decoration: const BoxDecoration(
-                                  border: Border(
-                                    left:
-                                        BorderSide(color: AppColors.neutral_05),
-                                  ),
-                                ),
-                                child: const Text("OK"),
-                              )),
-                        )
-                      ],
+                    return CustomDialog(
+                      textButtonAction: 'Đồng ý',
+                      textButtonExit: 'Để sau',
+                      title: 'Đăng nhập bằng sinh trắc học',
+                      content:
+                          'Bạn chưa đăng ký đăng nhập bằng sinh trắc học\nBạn có muốn đăng ký ngay bây giờ không?',
+                      action: () => Navigator.of(context).pop(true),
                     );
                   },
                 );

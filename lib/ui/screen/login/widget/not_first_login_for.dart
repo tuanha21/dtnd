@@ -6,17 +6,14 @@ import 'package:dtnd/ui/screen/login/login_controller.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/widget/button/async_button.dart';
 import 'package:dtnd/ui/widget/expanded_widget.dart';
-import 'package:dtnd/ui/widget/overlay/app_dialog.dart';
-import 'package:dtnd/ui/widget/overlay/error_dialog.dart';
 import 'package:dtnd/utilities/logger.dart';
 import 'package:dtnd/utilities/time_utils.dart';
-import 'package:dtnd/utilities/typedef.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:go_router/go_router.dart';
 
 import '../../../theme/app_image.dart';
+import '../../../widget/overlay/custom_dialog.dart';
 
 class NotFirstLoginForm extends StatefulWidget {
   const NotFirstLoginForm({
@@ -35,6 +32,7 @@ class NotFirstLoginForm extends StatefulWidget {
   final TextEditingController? userController;
   final TextEditingController? passController;
   final VoidCallback? onBack;
+
   @override
   State<NotFirstLoginForm> createState() => _NotFirstLoginFormState();
 }
@@ -205,35 +203,43 @@ class _NotFirstLoginFormState extends State<NotFirstLoginForm> {
               final change = await showDialog<bool>(
                 context: context,
                 builder: (context) {
-                  return AppDialog(
-                    icon: const Icon(Icons.warning_amber_rounded),
-                    title: const Text("Xác nhận"),
-                    content: const Text(
-                        "Bạn có chắc chắn muốn dùng tài khoản khác?"),
-                    actions: [
-                      Flexible(
-                        child: InkWell(
-                            onTap: () => Navigator.of(context).pop(false),
-                            child: Container(
-                              alignment: Alignment.center,
-                              child: Text(S.of(context).cancel),
-                            )),
-                      ),
-                      Flexible(
-                        child: InkWell(
-                            onTap: () => Navigator.of(context).pop(true),
-                            child: Container(
-                              alignment: Alignment.center,
-                              decoration: const BoxDecoration(
-                                border: Border(
-                                  left: BorderSide(color: AppColors.neutral_05),
-                                ),
-                              ),
-                              child: const Text("OK"),
-                            )),
-                      )
-                    ],
+                  return CustomDialog(
+                    textButtonAction: 'Đồng ý',
+                    textButtonExit: 'Để sau',
+                    title: 'Xác nhận',
+                    content: 'Bạn có chắc chắn muốn dùng tài khoản khác?',
+                    action: () => Navigator.of(context).pop(true),
                   );
+
+                  //   AppDialog(
+                  //   icon: const Icon(Icons.warning_amber_rounded),
+                  //   title: const Text("Xác nhận"),
+                  //   content: const Text(
+                  //       "Bạn có chắc chắn muốn dùng tài khoản khác?"),
+                  //   actions: [
+                  //     Flexible(
+                  //       child: InkWell(
+                  //           onTap: () => Navigator.of(context).pop(false),
+                  //           child: Container(
+                  //             alignment: Alignment.center,
+                  //             child: Text(S.of(context).cancel),
+                  //           )),
+                  //     ),
+                  //     Flexible(
+                  //       child: InkWell(
+                  //           onTap: () => Navigator.of(context).pop(true),
+                  //           child: Container(
+                  //             alignment: Alignment.center,
+                  //             decoration: const BoxDecoration(
+                  //               border: Border(
+                  //                 left: BorderSide(color: AppColors.neutral_05),
+                  //               ),
+                  //             ),
+                  //             child: const Text("OK"),
+                  //           )),
+                  //     )
+                  //   ],
+                  // );
                 },
               );
               if (change ?? false) {
