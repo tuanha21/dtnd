@@ -1,11 +1,11 @@
-import 'package:dtnd/=models=/local/local_catalog.dart';
+import 'package:dtnd/=models=/local/i_local_catalog.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 part 'user_catalog.g.dart';
 
 @HiveType(typeId: 4)
 class UserCatalog extends LocalCatalog {
-  UserCatalog(this._name,this._stocks);
+  UserCatalog(this._name, this._stocks);
 
   @HiveField(0)
   String _name;
@@ -17,7 +17,7 @@ class UserCatalog extends LocalCatalog {
   String get name => _name;
 
   @override
-  List<String> get listStock => _stocks;
+  List<String> get listData => _stocks;
 
   @override
   void rename(String name) {

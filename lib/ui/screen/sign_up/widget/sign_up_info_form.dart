@@ -146,49 +146,41 @@ class _SignUpInfoFormState extends State<SignUpInfoForm> with AppValidator {
           SizedBox(
             width: MediaQuery.of(context).size.width,
             child: AsyncButton(
-                onPressed: () async {
-                  FocusManager.instance.primaryFocus?.unfocus();
-                  if (registering) {
-                    return;
-                  }
-                  setState(() {
-                    registering = true;
-                  });
-                  if (signUpFormKey.currentState?.validate() ?? false) {
-                    try {
-                      await userService.verifyRegisterInfo(
-                          phoneNumber.text, email.text);
-                    } catch (e) {
-                      setState(() {
-                        registering = false;
-                      });
-                      return AppSnackBar.showInfo(context,
-                          message: e.toString());
-                    }
-
-                    setState(() {
-                      registering = false;
-                    });
-                    final List<int> bytes =
-                        utf8.encode(passwordFormKey.currentState?.value ?? "");
-
-                    // Generate the MD5 hash
-                    final Digest digest = md5.convert(bytes);
-
-                    // Convert the hash to a hex string
-                    final encodedPass = digest.toString();
-                    return widget.onSuccess.call(
-                      info: SignUpInfo(fullName.text, phoneNumber.text,
-                          email.text, encodedPass),
-                    );
-                  } else {
-                    setState(() {
-                      registering = false;
-                    });
-                  }
+              onPressed: () async {
+                FocusManager.instance.primaryFocus?.unfocus();
+                if (registering) {
                   return;
-                },
-                child: Text(S.of(context).sign_up)),
+                }
+                registering = true;
+                if (signUpFormKey.currentState?.validate() ?? false) {
+                  try {
+                    await userService.verifyRegisterInfo(
+                        phoneNumber.text, email.text);
+                  } catch (e) {
+                    registering = false;
+                    return AppSnackBar.showInfo(context, message: e.toString());
+                  }
+
+                  registering = false;
+                  final List<int> bytes =
+                      utf8.encode(passwordFormKey.currentState?.value ?? "");
+
+                  // Generate the MD5 hash
+                  final Digest digest = md5.convert(bytes);
+
+                  // Convert the hash to a hex string
+                  final encodedPass = digest.toString();
+                  return widget.onSuccess.call(
+                    info: SignUpInfo(fullName.text, phoneNumber.text,
+                        email.text, encodedPass),
+                  );
+                } else {
+                  registering = false;
+                }
+                return;
+              },
+              child: Text(S.of(context).sign_up),
+            ),
           ),
         ],
       ),

@@ -11,9 +11,10 @@ import 'package:dtnd/=models=/response/account_info_model.dart';
 import 'package:dtnd/=models=/response/order_model/base_order_model.dart';
 import 'package:dtnd/=models=/response/total_asset_model.dart';
 import 'package:dtnd/=models=/response/user_token.dart';
-import 'package:dtnd/=models=/response/va_portfolio_model.dart';
+import 'package:dtnd/=models=/local/va_portfolio_model.dart';
 import 'package:dtnd/=models=/side.dart';
 import 'package:dtnd/=models=/sign_up_success_data_model.dart';
+import 'package:dtnd/=models=/ui_model/exception.dart';
 import 'package:dtnd/data/i_local_storage_service.dart';
 import 'package:dtnd/data/i_network_service.dart';
 import 'package:dtnd/data/i_user_service.dart';
@@ -84,6 +85,7 @@ class UserService implements IUserService {
     totalAsset.value = null;
     searchHistory = [];
     isRegisterVa.value = false;
+    _vaPortfolio.value = null;
     return;
   }
 
@@ -97,7 +99,6 @@ class UserService implements IUserService {
       getListAccount();
       getTotalAsset();
       getSearchHistory();
-      saveValueRegisterVa();
       return true;
     } catch (e) {
       return false;
@@ -296,17 +297,20 @@ class UserService implements IUserService {
   // Register session
 
   @override
-  Future<List<String>> verifyRegisterInfo(String mobile, String mail) async {
+  Future<bool> verifyRegisterInfo(String mobile, String mail) async {
     Map<String, dynamic> body = {
       "user": "back",
       "cmd": "CHECK_OPENACC",
       "param": {"C_MOBILE": mobile, "C_EMAIL": mail}
     };
-    final result = await networkService.verifySignupInfo(jsonEncode(body));
-    if (result) {
-      return [mobile, mail];
-    } else {
-      throw "Đã có lỗi xảy ra";
+    try {
+      final result = await networkService.verifySignupInfo(jsonEncode(body));
+      return result;
+    } on Map<String, dynamic> catch (res) {
+      throw res['sRs'];
+    } catch (e) {
+      logger.e(e);
+      throw e.runtimeType.toString();
     }
   }
 
@@ -335,16 +339,62 @@ class UserService implements IUserService {
 
   // VA
   @override
-  Future<VAPortfolio?> getVAPortfolio() async {
+  Future<VAPortfolio> getVAPortfolio() async {
     if (!isLogin) {
-      return null;
+      throw const BotNotExistedException();
     }
     final Map<String, String> body = {
       "account": token.value!.user,
       "session": token.value!.sid,
     };
-    _vaPortfolio.value = await networkService.getVAPortfolio(jsonEncode(body));
-    return vaPortfolio;
+    try {
+      _vaPortfolio.value =
+          await networkService.getVAPortfolio(jsonEncode(body));
+    } catch (e) {
+      _vaPortfolio.value = await getLocalVAPortfolio();
+    }
+    logger.v(vaPortfolio.toString());
+    return vaPortfolio!;
+  }
+
+  Future<VAPortfolio> getLocalVAPortfolio() async {
+    final VAPortfolio portfolio;
+    try {
+      portfolio = localStorageService.getSavedVAPortfolio(token.value!.user);
+    } on BoxNotOpenedException catch (_) {
+      await localStorageService.openSavedVAPortfolioBox();
+      return getLocalVAPortfolio();
+    } on BotNotExistedException catch (_) {
+      final VAPortfolio newPortfolio =
+          VAPortfolio(VAPortfolioSetting.defaultSetting());
+      await localStorageService.putVAPortfolio(token.value!.user, newPortfolio);
+      return getLocalVAPortfolio();
+    }
+    return portfolio;
+  }
+
+  @override
+    final Map<String, dynamic> body = {
+      "account": token.value!.user,
+      "session": token.value!.sid,
+      "stocks": [
+        for (VAPortfolioItem item in vaPortfolio!.listStocks) item.toJson()
+      ]
+    };
+    return networkService.createBot(jsonEncode(body));
+  }
+
+  @override
+  Future<void> destroyBot() async {
+    if (!isLogin) {
+      return;
+    }
+    final Map<String, dynamic> body = {
+      "account": token.value!.user,
+      "session": token.value!.sid,
+    };
+
+    return networkService.deleteBot(jsonEncode(body));
   }
 
   @override
@@ -354,5 +404,6 @@ class UserService implements IUserService {
       "sid": token.value?.sid ?? '',
     };
     isRegisterVa.value = await networkService.checkInfoVa(jsonEncode(body));
+    return;
   }
 }

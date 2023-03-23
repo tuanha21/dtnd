@@ -2,7 +2,9 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dtnd/=models=/response/news_model.dart';
 import 'package:dtnd/config/service/app_services.dart';
 import 'package:dtnd/data/i_data_center_service.dart';
+import 'package:dtnd/data/i_network_service.dart';
 import 'package:dtnd/data/implementations/data_center_service.dart';
+import 'package:dtnd/data/implementations/network_service.dart';
 import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/screen/home/widget/home_news.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
@@ -20,6 +22,7 @@ class ListNewsSheet extends StatefulWidget {
 
 class _ListNewsSheetState extends State<ListNewsSheet> {
   final IDataCenterService dataCenterService = DataCenterService();
+  final INetworkService networkService = NetworkService();
 
   List<NewsModel>? listNews;
 
@@ -50,6 +53,7 @@ class _ListNewsSheetState extends State<ListNewsSheet> {
                 onTap: () {
                   Navigator.of(context).push(MaterialPageRoute(
                     builder: (context) => NewsDetailScreen(
+                        dataFunct: networkService.getNewsDetail,
                         newsModel: NewsModel(
                             title: listNews!.elementAt(index).title,
                             articleID: listNews!.elementAt(index).articleID,
@@ -97,17 +101,24 @@ class _ListNewsSheetState extends State<ListNewsSheet> {
             }
             return GestureDetector(
                 onTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => NewsDetailScreen(
-                        newsModel: NewsModel(
-                            title: listNews!.elementAt(index).title,
-                            articleID: listNews!.elementAt(index).articleID,
-                            headImg: listNews!.elementAt(index).headImg,
-                            publishTime:
-                                listNews!.elementAt(index).publishTime)),
-                  ));
+                  Navigator.of(context)
+                      .push(MaterialPageRoute(
+                        builder: (context) => NewsDetailScreen(
+                          newsModel: NewsModel(
+                              title: listNews!.elementAt(index).title,
+                              articleID: listNews!.elementAt(index).articleID,
+                              headImg: listNews!.elementAt(index).headImg,
+                              publishTime:
+                                  listNews!.elementAt(index).publishTime),
+                          dataFunct: networkService.getNewsDetail,
+                        ),
+                      ))
+                      .then((value) => dataCenterService.getNews(1, 15));
                 },
-                child: HomeNewsCard(stockNews: listNews!.elementAt(index)));
+                child: HomeNewsCard(
+                  stockNews: listNews!.elementAt(index),
+                  dataFunct: networkService.getNewsDetail,
+                ));
           },
           separatorBuilder: (context, index) {
             return const SizedBox(height: 10);

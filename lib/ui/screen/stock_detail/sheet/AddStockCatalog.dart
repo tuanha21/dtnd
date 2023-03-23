@@ -118,9 +118,9 @@ class _AddCatalogSheetState extends State<AddCatalogSheet> {
                     return _RowButton(
                       tittle: catalog.name,
                       onTap: () {
-                        if (!savedCatalog.catalogs[index].listStock
+                        if (!savedCatalog.catalogs[index].listData
                             .contains(widget.stock!)) {
-                          catalog.listStock.add(widget.stock!);
+                          catalog.listData.add(widget.stock!);
                           savedCatalog.catalogs[index] = catalog;
                           localStorageService.putSavedCatalog(savedCatalog);
                           Navigator.pop(context);

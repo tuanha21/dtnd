@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'package:dtnd/=models=/local/local_catalog.dart';
+import 'package:dtnd/=models=/local/i_local_catalog.dart';
 import 'package:dtnd/=models=/local/saved_catalog.dart';
 import 'package:dtnd/=models=/response/stock_model.dart';
 import 'package:dtnd/=models=/ui_model/user_cmd.dart';
@@ -73,8 +73,8 @@ class _UserCatalogWidgetState extends State<UserCatalogWidget> {
     }
     savedCatalog = localStorageService.getSavedCatalog(user);
     currentCatalog = defaultCatalog;
-    listStocks = dataCenterService
-        .getStockModelsFromStockCodes(currentCatalog.listStock);
+    listStocks =
+        dataCenterService.getStockModelsFromStockCodes(currentCatalog.listData);
     // if (savedCatalog.catalogs.isNotEmpty) {
     //   currentCatalog = savedCatalog.catalogs.first;
     //   if (currentCatalog.listStock.isNotEmpty) {
@@ -140,10 +140,10 @@ class _UserCatalogWidgetState extends State<UserCatalogWidget> {
                       savedCatalog.catalogs[currentCatalogIndex] =
                           currentCatalog;
                       localStorageService.putSavedCatalog(savedCatalog);
-                      if (currentCatalog.listStock.isNotEmpty) {
+                      if (currentCatalog.listData.isNotEmpty) {
                         listStocks =
                             dataCenterService.getStockModelsFromStockCodes(
-                                currentCatalog.listStock);
+                                currentCatalog.listData);
                       } else {
                         listStocks = Future.value([]);
                       }
@@ -242,17 +242,17 @@ class _UserCatalogWidgetState extends State<UserCatalogWidget> {
                                   // An action can be bigger than the others.
                                   onPressed: (BuildContext context) {
                                     setState(() {
-                                      currentCatalog.listStock
+                                      currentCatalog.listData
                                           .remove(list![index].stock.stockCode);
                                       savedCatalog
                                               .catalogs[currentCatalogIndex] =
                                           currentCatalog;
                                       localStorageService
                                           .putSavedCatalog(savedCatalog);
-                                      if (currentCatalog.listStock.isNotEmpty) {
+                                      if (currentCatalog.listData.isNotEmpty) {
                                         listStocks = dataCenterService
                                             .getStockModelsFromStockCodes(
-                                                currentCatalog.listStock);
+                                                currentCatalog.listData);
                                       } else {
                                         listStocks = Future.value([]);
                                       }
@@ -393,7 +393,7 @@ class _UserCatalogWidgetState extends State<UserCatalogWidget> {
           if (savedCatalog.catalogs.isNotEmpty) {
             currentCatalog = savedCatalog.catalogs.last;
             listStocks = dataCenterService
-                .getStockModelsFromStockCodes(currentCatalog.listStock);
+                .getStockModelsFromStockCodes(currentCatalog.listData);
           } else {
             listStocks = Future.value([]);
           }
@@ -405,11 +405,11 @@ class _UserCatalogWidgetState extends State<UserCatalogWidget> {
   void onTapChangeCatalog(LocalCatalog catalog) {
     setState(() {
       currentCatalog = catalog;
-      if (currentCatalog.listStock.isEmpty) {
+      if (currentCatalog.listData.isEmpty) {
         listStocks = Future.value([]);
       } else {
         listStocks = dataCenterService
-            .getStockModelsFromStockCodes(currentCatalog.listStock);
+            .getStockModelsFromStockCodes(currentCatalog.listData);
       }
     });
   }
@@ -523,18 +523,18 @@ class _BottomAddStockState extends State<BottomAddStock> {
                               stockModel: list[index],
                               onChanged: (value) {
                                 if (value &&
-                                    !widget.localCatalog.listStock
+                                    !widget.localCatalog.listData
                                         .contains(list[index].stockCode)) {
-                                  widget.localCatalog.listStock
+                                  widget.localCatalog.listData
                                       .add(list[index].stockCode);
                                 } else if (!value &&
-                                    widget.localCatalog.listStock
+                                    widget.localCatalog.listData
                                         .contains(list[index].stockCode)) {
-                                  widget.localCatalog.listStock
+                                  widget.localCatalog.listData
                                       .remove(list[index].stockCode);
                                 }
                               },
-                              initSelect: widget.localCatalog.listStock
+                              initSelect: widget.localCatalog.listData
                                   .contains(list[index].stockCode),
                             );
                           },

@@ -1,5 +1,4 @@
 import 'package:dtnd/=models=/local/saved_catalog.dart';
-import 'package:dtnd/=models=/local/volatility_warning_stock.dart';
 import 'package:dtnd/data/i_local_storage_service.dart';
 import 'package:dtnd/data/i_user_service.dart';
 import 'package:dtnd/data/implementations/local_storage_service.dart';

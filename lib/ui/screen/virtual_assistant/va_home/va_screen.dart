@@ -2,6 +2,7 @@ import 'package:dtnd/config/service/app_services.dart';
 import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/screen/virtual_assistant/va_access_element.dart';
 import 'package:dtnd/ui/screen/virtual_assistant/va_filter/virtual_assistant_filter_screen.dart';
+import 'package:dtnd/ui/screen/virtual_assistant/va_home/va_controller.dart';
 import 'package:dtnd/ui/screen/virtual_assistant/va_volatolity_warning/va_volatolity_warning_screen.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
@@ -10,7 +11,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../widget/my_appbar.dart';
 import 'auto_trade/auto_trade.dart';
-import 'my_directory/my_directory.dart';
+import 'tab/va_portfolio_tab.dart';
 
 enum VAFeature {
   stockFilter,
@@ -52,12 +53,15 @@ class VaScreen extends StatefulWidget {
 
 class _VaScreenState extends State<VaScreen>
     with SingleTickerProviderStateMixin {
+  final VAController controller = VAController();
   late final TabController _tabController;
 
   @override
   void initState() {
     _tabController = TabController(length: 3, vsync: this);
     super.initState();
+    controller.init();
+    print("init");
   }
 
   @override
@@ -126,7 +130,11 @@ class _VaScreenState extends State<VaScreen>
           Expanded(
             child: TabBarView(
               controller: _tabController,
-              children: const [MyDirectoryTab(), AutoTradeTab(),AutoTradeTab()],
+              children: const [
+                VAPortfolioTab(),
+                AutoTradeTab(),
+                AutoTradeTab()
+              ],
             ),
           ),
         ],

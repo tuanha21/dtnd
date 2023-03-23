@@ -6,9 +6,9 @@ class SignUpSuccessDataModel {
   String? cPASSWORD;
   String? cTRADINGPASS;
   String? cPHONENUMBER;
-  int? cISLOCK;
-  int? cISADMIN;
-  int? cRESETFLAG;
+  num? cISLOCK;
+  num? cISADMIN;
+  num? cRESETFLAG;
 
   SignUpSuccessDataModel(
       {this.cACCOUNTCODE,

@@ -3,7 +3,7 @@ import 'package:dtnd/=models=/response/account_info_model.dart';
 import 'package:dtnd/=models=/response/order_model/base_order_model.dart';
 import 'package:dtnd/=models=/response/total_asset_model.dart';
 import 'package:dtnd/=models=/response/user_token.dart';
-import 'package:dtnd/=models=/response/va_portfolio_model.dart';
+import 'package:dtnd/=models=/local/va_portfolio_model.dart';
 import 'package:dtnd/=models=/side.dart';
 import 'package:dtnd/=models=/sign_up_success_data_model.dart';
 import 'package:get/get.dart';
@@ -56,7 +56,7 @@ abstract class IUserService {
   void putSearchHistory(String searchString);
 
   // Register session
-  Future<List<String>> verifyRegisterInfo(String mobile, String mail);
+  Future<bool> verifyRegisterInfo(String mobile, String mail);
 
   Future<bool> verifyRegisterOTP(String mobile, String mail, String otp);
 
@@ -65,7 +65,11 @@ abstract class IUserService {
 
   // VA
   // Future<>
-  Future<VAPortfolio?> getVAPortfolio();
+  Future<VAPortfolio> getVAPortfolio();
+
+  Future<void> createBot();
+
+  Future<void> destroyBot();
 
   Future<void> saveValueRegisterVa();
 }

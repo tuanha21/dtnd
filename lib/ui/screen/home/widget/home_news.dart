@@ -1,4 +1,6 @@
 import 'package:dtnd/=models=/response/news_model.dart';
+import 'package:dtnd/data/i_network_service.dart';
+import 'package:dtnd/data/implementations/network_service.dart';
 import 'package:dtnd/ui/screen/home/home_controller.dart';
 import 'package:dtnd/ui/screen/news_detail/new_detail_screen.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
@@ -20,6 +22,7 @@ class HomeNews extends StatefulWidget {
 }
 
 class _HomeNewsState extends State<HomeNews> {
+  final INetworkService networkService = NetworkService();
   final HomeController controller = HomeController();
   @override
   void initState() {
@@ -49,19 +52,17 @@ class _HomeNewsState extends State<HomeNews> {
                       children: [
                         const Divider(),
                         HomeNewsCard(
+                          dataFunct: networkService.getNewsDetail,
                           stockNews: controller.news.elementAt(i),
-                          onDetail: () => setState(() {
-                            controller.news.elementAt(i).viewCount++;
-                          }),
+                          onDetail: controller.getNews,
                         )
                       ],
                     )
                   else
                     HomeNewsCard(
+                      dataFunct: networkService.getNewsDetail,
                       stockNews: controller.news.elementAt(i),
-                      onDetail: () => setState(() {
-                        controller.news.elementAt(i).viewCount++;
-                      }),
+                      onDetail: controller.getNews,
                     )
               ],
             ),
@@ -77,8 +78,10 @@ class HomeNewsCard extends StatelessWidget {
     super.key,
     required this.stockNews,
     this.onDetail,
+    required this.dataFunct,
   });
   final NewsModel stockNews;
+  final Future<String> Function(int id) dataFunct;
   final VoidCallback? onDetail;
   @override
   Widget build(BuildContext context) {
@@ -86,10 +89,13 @@ class HomeNewsCard extends StatelessWidget {
       color: Colors.transparent,
       child: InkWell(
         onTap: () {
-          Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => NewsDetailScreen(newsModel: stockNews),
-          ));
-          onDetail?.call();
+          Navigator.of(context)
+              .push(MaterialPageRoute(
+                builder: (context) => NewsDetailScreen(
+                    dataFunct: dataFunct, newsModel: stockNews),
+              ))
+              .then((value) => onDetail?.call());
+          ;
         },
         borderRadius: const BorderRadius.all(Radius.circular(8)),
         child: Ink(

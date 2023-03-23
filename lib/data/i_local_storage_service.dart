@@ -1,4 +1,5 @@
 import 'package:dtnd/=models=/local/saved_catalog.dart';
+import 'package:dtnd/=models=/local/va_portfolio_model.dart';
 import 'package:dtnd/=models=/response/stock.dart';
 import 'package:dtnd/=models=/response/user_token.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -22,8 +23,6 @@ abstract class ILocalStorageService {
 
   Future<void> init();
 
-  Future<void> flush();
-
   List<Stock>? getSavedListAllStock();
 
   Stock? geStock(String code);
@@ -37,6 +36,14 @@ abstract class ILocalStorageService {
   SavedCatalog getSavedCatalog(String user);
 
   Future<void> putSavedCatalog(SavedCatalog savedCatalog);
+
+  Future<void> openSavedVAPortfolioBox();
+
+  Future<void> closeSavedVAPortfolioBox();
+
+  VAPortfolio getSavedVAPortfolio(String user);
+
+  Future<void> putVAPortfolio(String user, VAPortfolio portfolio);
 
   Future<bool> biometricsValidate();
 

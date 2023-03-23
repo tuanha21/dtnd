@@ -5,6 +5,7 @@ import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_textstyle.dart';
 import 'package:dtnd/ui/widget/app_snack_bar.dart';
+import 'package:dtnd/ui/widget/button/async_button.dart';
 import 'package:dtnd/ui/widget/expanded_widget.dart';
 import 'package:dtnd/utilities/responsive.dart';
 import 'package:flutter/material.dart';
@@ -136,36 +137,42 @@ class _FillOTPPageState extends State<FillOTPPage> {
             children: [Expanded(child: Text('Gửi lại mã?'))],
           ),
           const SizedBox(height: 36),
-          Builder(builder: (context) {
-            late final VoidCallback? next;
-            if (canNext) {
-              next = onVerify;
-            } else {
-              next = null;
-            }
+          AsyncButton(
+            onPressed: onVerify,
+            child: Text(
+              S.of(context).confirm,
+              style: AppTextStyle.bodyMedium_14.copyWith(
+                  fontWeight: FontWeight.w700, color: AppColors.neutral_07),
+            ),
+          ),
+          // Builder(builder: (context) {
+          //   late final VoidCallback? next;
+          //   if (canNext) {
+          //     next = onVerify;
+          //   } else {
+          //     next = null;
+          //   }
 
-            return SizedBox(
-              width: Responsive.getMaxWidth(context) - 32,
-              child: TextButton(
-                onPressed: next,
-                style: const ButtonStyle(
-                    padding: MaterialStatePropertyAll(EdgeInsets.all(14))),
-                child: Text(
-                  S.of(context).confirm,
-                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w700,
-                      color: AppColors.neutral_07),
-                ),
-              ),
-            );
-          }),
+          //   return SizedBox(
+          //     width: Responsive.getMaxWidth(context) - 32,
+          //     child: TextButton(
+          //       onPressed: next,
+          //       style: const ButtonStyle(
+          //           padding: MaterialStatePropertyAll(EdgeInsets.all(14))),
+          //       child: Text(
+          //         S.of(context).confirm,
+          //         style: AppTextStyle.bodyMedium_14.copyWith(
+          //             fontWeight: FontWeight.w700, color: AppColors.neutral_07),
+          //       ),
+          //     ),
+          //   );
+          // }),
         ],
       ),
     );
   }
 
-  void onVerify() async {
+  Future<void> onVerify() async {
     setState(() {
       errorTxt = null;
     });

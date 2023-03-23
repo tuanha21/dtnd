@@ -68,6 +68,7 @@ class _StockDetailNewsState extends State<StockDetailNews> {
                 onTap: () {
                   Navigator.of(context).push(MaterialPageRoute(
                     builder: (context) => NewsDetailScreen(
+                        dataFunct: networkService.getNewsContent,
                         newsModel: NewsModel(
                             title: shortStockNews[index].title,
                             articleID: shortStockNews[index].articleID,

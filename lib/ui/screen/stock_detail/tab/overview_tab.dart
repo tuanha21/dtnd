@@ -610,6 +610,7 @@ class _ListNewsISheetState extends State<ListNewsISheet> {
                               onTap: () {
                                 Navigator.of(context).push(MaterialPageRoute(
                                   builder: (context) => NewsDetailScreen(
+                                      dataFunct: networkService.getNewsContent,
                                       newsModel: NewsModel(
                                           title: listNews[index].title,
                                           articleID: listNews[index].articleID,
@@ -675,6 +676,7 @@ class _ListNewsISheetState extends State<ListNewsISheet> {
                               onTap: () {
                                 Navigator.of(context).push(MaterialPageRoute(
                                   builder: (context) => NewsDetailScreen(
+                                      dataFunct: networkService.getNewsContent,
                                       newsModel: NewsModel(
                                           title: listNews[index].title,
                                           articleID: listNews[index].articleID,

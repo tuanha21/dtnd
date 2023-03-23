@@ -2,17 +2,15 @@ import 'package:dtnd/=models=/response/news_model.dart';
 import 'package:dtnd/data/i_network_service.dart';
 import 'package:dtnd/data/implementations/network_service.dart';
 import 'package:dtnd/ui/theme/app_textstyle.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 
-import '../../../utilities/logger.dart';
-
 class NewsDetailScreen extends StatefulWidget {
-  const NewsDetailScreen({super.key, required this.newsModel});
+  const NewsDetailScreen(
+      {super.key, required this.newsModel, required this.dataFunct});
 
   final NewsModel newsModel;
-
+  final Future<String> Function(int id) dataFunct;
   @override
   State<NewsDetailScreen> createState() => _NewsDetailScreenState();
 }
@@ -29,7 +27,7 @@ class _NewsDetailScreenState extends State<NewsDetailScreen> {
   }
 
   void getDetail() {
-    newsDetail = networkService.getNewsContent(widget.newsModel.articleID!);
+    newsDetail = widget.dataFunct.call(widget.newsModel.articleID!);
   }
 
   @override

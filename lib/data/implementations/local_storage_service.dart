@@ -1,9 +1,10 @@
 import 'package:dtnd/=models=/exchange.dart';
 import 'package:dtnd/=models=/local/saved_catalog.dart';
 import 'package:dtnd/=models=/local/user_catalog.dart';
-import 'package:dtnd/=models=/local/volatility_warning_stock.dart';
+import 'package:dtnd/=models=/local/va_portfolio_model.dart';
 import 'package:dtnd/=models=/response/stock.dart';
 import 'package:dtnd/=models=/response/user_token.dart';
+import 'package:dtnd/=models=/ui_model/exception.dart';
 import 'package:dtnd/utilities/logger.dart';
 import 'package:flutter/services.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -14,6 +15,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../i_local_storage_service.dart';
 
 const String _boxName = "dtnd_hive_box";
+const String _vaBox = "va_box";
 const String appAccessTimeKey = "appAccessTimeKey";
 const String savedUserTokenBoxKey = "savedUserTokenBoxKey";
 const String savedAllListStockBoxKey = "savedAllListStock";
@@ -43,6 +45,8 @@ class LocalStorageService implements ILocalStorageService {
 
   @override
   Box get box => _box;
+
+  Box<VAPortfolio>? vaBox;
 
   @override
   LocalAuthentication get localAuthentication => _localAuthentication;
@@ -83,9 +87,9 @@ class LocalStorageService implements ILocalStorageService {
     Hive.registerAdapter(StockAdapter());
     Hive.registerAdapter(SavedCatalogAdapter());
     Hive.registerAdapter(UserCatalogAdapter());
-    Hive.registerAdapter(VolatilityWarningFigureTypeAdapter());
-    Hive.registerAdapter(VolatilityWarningFigureAdapter());
-    Hive.registerAdapter(VolatilityWarningCatalogStockAdapter());
+    Hive.registerAdapter(VAPortfolioAdapter());
+    Hive.registerAdapter(VAPortfolioItemAdapter());
+    Hive.registerAdapter(VAPortfolioSettingAdapter());
 
     _box = await Hive.openBox(_boxName);
 
@@ -142,8 +146,43 @@ class LocalStorageService implements ILocalStorageService {
   }
 
   @override
-  Future<void> flush() {
-    return _box.flush();
+  Future<void> openSavedVAPortfolioBox() async {
+    if (vaBox != null) {
+      return;
+    }
+    vaBox = await Hive.openBox<VAPortfolio>(_vaBox);
+    return;
+  }
+
+  @override
+  Future<void> closeSavedVAPortfolioBox() async {
+    if (vaBox == null) {
+      return;
+    }
+    await vaBox!.close();
+    vaBox = null;
+  }
+
+  @override
+  VAPortfolio getSavedVAPortfolio(String user) {
+    if (vaBox == null) {
+      throw const BoxNotOpenedException();
+    }
+    try {
+      return vaBox!.get("va_box_$user")!;
+    } catch (e) {
+      throw const BotNotExistedException();
+    }
+  }
+
+  @override
+  Future<void> putVAPortfolio(String user, VAPortfolio portfolio) async {
+    if (vaBox == null) {
+      await openSavedVAPortfolioBox();
+      return putVAPortfolio(user, portfolio);
+    }
+    await vaBox!.put("va_box_$user", portfolio);
+    return;
   }
 
   @override

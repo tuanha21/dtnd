@@ -1,4 +1,4 @@
-import 'package:dtnd/=models=/local/local_catalog.dart';
+import 'package:dtnd/=models=/local/i_local_catalog.dart';
 import 'package:dtnd/=models=/local/saved_catalog.dart';
 import 'package:dtnd/=models=/local/user_catalog.dart';
 import 'package:dtnd/=models=/ui_model/user_cmd.dart';

@@ -171,9 +171,9 @@ class _LiquidityChartState extends State<LiquidityChart> {
                         //     fontSize: 11),
                       ),
                       charts.SelectNearest(
-                          eventTrigger: charts.SelectionTrigger.tapAndDrag,
-                          // selectionMode:
-                          //     charts.SelectionMode.selectOverlapping,
+                        eventTrigger: charts.SelectionTrigger.tapAndDrag,
+                        // selectionMode:
+                        //     charts.SelectionMode.selectOverlapping,
                       ),
                       charts.LinePointHighlighter(
                         // drawFollowLinesAcrossChart: false,
@@ -222,16 +222,18 @@ class _LiquidityChartState extends State<LiquidityChart> {
                       ),
                     ),
                     secondaryMeasureAxis: const charts.NumericAxisSpec(
+                      renderSpec: charts.NoneRenderSpec(),
                       tickProviderSpec: charts.BasicNumericTickProviderSpec(
-                        zeroBound: true,
-                      ),
+                          // zeroBound: true,
+                          ),
+                      showAxisLine: false,
                       // showAxisLine: false,
                     ),
                     primaryMeasureAxis: const charts.NumericAxisSpec(
                       renderSpec: charts.NoneRenderSpec(),
                       tickProviderSpec: charts.BasicNumericTickProviderSpec(
-                        zeroBound: true,
-                      ),
+                          // zeroBound: true,
+                          ),
                       showAxisLine: false,
                       // showAxisLine: false,
                     ),

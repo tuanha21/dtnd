@@ -60,7 +60,7 @@ import '../../=models=/response/indContrib.dart';
 import '../../=models=/response/sec_event.dart';
 import '../../=models=/response/sec_trading.dart';
 import '../../=models=/response/stock_industry.dart';
-import '../../=models=/response/va_portfolio_model.dart';
+import '../../=models=/local/va_portfolio_model.dart';
 
 const List<String> sessionExpiredMsg = [
   "FOException.InvalidSessionException",
@@ -410,9 +410,24 @@ class NetworkService implements INetworkService {
   }
 
   @override
+  Future<String> getNewsDetail(int id) async {
+    final http.Response response = await client.get(url_core(
+      "pickContents/$id",
+    ));
+    var responseBody = decode(response.bodyBytes);
+    logger.d(responseBody);
+    if (responseBody['rc'] == -1) {
+      return Future.error(responseBody['rs']);
+    }
+    final data = responseBody["rs"];
+    return data;
+  }
+
+  @override
   Future<String> getNewsContent(int id) async {
     final http.Response response =
         await client.get(url_info_sbsi("newsDetail.pt", {"id": id.toString()}));
+
     var responseBody = decode(response.bodyBytes);
     logger.d(responseBody);
     if (responseBody['rc'] == -1) {
@@ -420,22 +435,6 @@ class NetworkService implements INetworkService {
     }
     final data = responseBody["Content"];
     return data;
-  }
-
-  @override
-  Future<NewsDetail?> getNewsDetail(int id) async {
-    final Map<String, dynamic> queryParameters = {
-      "id": id,
-    };
-    final http.Response response =
-        await client.get(url_info_sbsi("stockNews.pt", queryParameters));
-    final responseBody = decode(response.bodyBytes);
-    try {
-      return NewsDetail.fromJson(responseBody);
-    } catch (e) {
-      logger.e(e);
-      return null;
-    }
   }
 
   @override
@@ -1378,7 +1377,7 @@ class NetworkService implements INetworkService {
     var res = decode(response.bodyBytes);
     logger.v(res);
     if (res["iRs"] != 1) {
-      throw res["sRs"];
+      throw res;
     }
 
     return true;
@@ -1412,7 +1411,14 @@ class NetworkService implements INetworkService {
     logger.v(res);
 
     if (res["iRs"] == 1) {
-      return SignUpSuccessDataModel.fromJson(res["data"]);
+      final data = res["data"];
+      if (data is List && data.length == 1) {
+        return SignUpSuccessDataModel.fromJson(data.first);
+      } else if (data is Map<String, dynamic>) {
+        return SignUpSuccessDataModel.fromJson(data);
+      } else {
+        throw "Lỗi hệ thống. Vui lòng thử lại sau!";
+      }
     } else {
       throw res["sRs"];
     }
@@ -1465,17 +1471,16 @@ class NetworkService implements INetworkService {
 
   @override
   Future<VAPortfolio> getVAPortfolio(String body) async {
-    var response =
+    final response =
         await client.post(url_core1('autoTrade/showInfoBot'), body: body);
     if (response.statusCode != 200) {
       throw response;
     }
-    var res = decode(response.bodyBytes);
-    print(res.toString()+"tiennh");
+    final res = decode(response.bodyBytes);
     if (res['rc'] == 1) {
       return VAPortfolio.fromJson(res['data']);
     } else {
-      throw res['rs'];
+      throw res;
     }
   }
 

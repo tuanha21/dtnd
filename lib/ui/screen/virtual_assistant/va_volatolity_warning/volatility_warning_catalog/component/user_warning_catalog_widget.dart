@@ -1,4 +1,4 @@
-import 'package:dtnd/=models=/local/local_catalog.dart';
+import 'package:dtnd/=models=/local/i_local_catalog.dart';
 import 'package:dtnd/=models=/local/saved_catalog.dart';
 import 'package:dtnd/=models=/response/stock.dart';
 import 'package:dtnd/=models=/response/stock_model.dart';
@@ -50,11 +50,11 @@ class _UserWarningCatalogWidgetState extends State<UserWarningCatalogWidget> {
   }
 
   void initCatalog() async {
-    if (currentCatalog?.listStock.isEmpty ?? true) {
+    if (currentCatalog?.listData.isEmpty ?? true) {
       return;
     }
     listStocks = await dataCenterService
-        .getStockModelsFromStockCodes(currentCatalog!.listStock);
+        .getStockModelsFromStockCodes(currentCatalog!.listData);
     setState(() {
       initialized = true;
     });
@@ -173,7 +173,7 @@ class _UserWarningCatalogWidgetState extends State<UserWarningCatalogWidget> {
                       .getStockModelsFromStockCodes([suggestion.stockCode]))
                   ?.first;
               final String stock = model?.stock.stockCode ?? "";
-              currentCatalog!.listStock.add(stock);
+              currentCatalog!.listData.add(stock);
               setState(() {});
             },
           );
@@ -215,8 +215,8 @@ class _UserWarningCatalogWidgetState extends State<UserWarningCatalogWidget> {
           listStocksWidget,
           Builder(builder: (context) {
             double height = 0;
-            if (currentCatalog!.listStock.length < 5) {
-              height = 100.0 * currentCatalog!.listStock.length;
+            if (currentCatalog!.listData.length < 5) {
+              height = 100.0 * currentCatalog!.listData.length;
             } else {
               height = 85 * 5;
             }
@@ -237,7 +237,7 @@ class _UserWarningCatalogWidgetState extends State<UserWarningCatalogWidget> {
                 separatorBuilder: (context, index) => const Divider(
                   thickness: 2,
                 ),
-                itemCount: currentCatalog!.listStock.length,
+                itemCount: currentCatalog!.listData.length,
               ),
             );
           }),

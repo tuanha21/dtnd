@@ -12,7 +12,6 @@ import 'package:dtnd/ui/screen/home_base/home_base.dart';
 import 'package:dtnd/ui/screen/loading/loading_screen.dart';
 import 'package:dtnd/ui/screen/login/login_screen.dart';
 import 'package:dtnd/ui/screen/sign_up/page/create_new_pass.dart';
-import 'package:dtnd/ui/screen/sign_up/page/reference_page.dart';
 import 'package:dtnd/ui/screen/sign_up/page/success_sign_up_page.dart';
 import 'package:dtnd/ui/screen/sign_up/sign_up_screen.dart';
 import 'package:dtnd/ui/theme/app_theme.dart';
@@ -103,13 +102,6 @@ class _MyAppState extends State<MyApp> {
         },
       ),
       GoRoute(
-        path: '/Reference',
-        name: 'reference',
-        builder: (BuildContext context, GoRouterState state) {
-          return const ReferencePage();
-        },
-      ),
-      GoRoute(
         path: '/SuccessPage',
         name: 'success',
         builder: (BuildContext context, GoRouterState state) {
@@ -169,7 +161,7 @@ class _MyAppState extends State<MyApp> {
           // routeInformationProvider: _router.routeInformationProvider,
           // routerDelegate: _router.routerDelegate,
           routerConfig: _router,
-          builder:  EasyLoading.init(),
+          builder: EasyLoading.init(),
         ),
       );
     });

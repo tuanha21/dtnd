@@ -36,7 +36,11 @@ class _SignUpViewState extends State<SignUpView> with AppValidator {
 
   Future<SignUpSuccessDataModel?> createAccount() {
     return userService.createAccount(
-        info!.name!, info!.phone!, info!.email!, info!.password!);
+        info!.name, info!.phone, info!.email, info!.password);
+  }
+
+  Future<bool> verifyOTP(SignUpInfo info) {
+    return userService.verifyRegisterInfo(info.name, info.email);
   }
 
   @override
@@ -59,6 +63,7 @@ class _SignUpViewState extends State<SignUpView> with AppValidator {
       ),
       body: PageView(
         controller: controller,
+        physics: const NeverScrollableScrollPhysics(),
         children: <Widget>[
           SignUpInfoPage(
             onSuccess: onSuccess,
@@ -66,7 +71,7 @@ class _SignUpViewState extends State<SignUpView> with AppValidator {
           FillOTPPage(
             onSuccess: onSuccess,
             verifyOTP: (otp) =>
-                userService.verifyRegisterOTP(info!.phone!, info!.email!, otp),
+                userService.verifyRegisterOTP(info!.phone, info!.email, otp),
             createAccount: createAccount,
           ),
           const SuccessSignUpPage(),

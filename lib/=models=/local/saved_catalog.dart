@@ -1,12 +1,12 @@
 import 'package:dtnd/=models=/local/catalog_exception.dart';
-import 'package:dtnd/=models=/local/local_catalog.dart';
+import 'package:dtnd/=models=/local/i_local_catalog.dart';
 import 'package:dtnd/utilities/logger.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 part 'saved_catalog.g.dart';
 
 @HiveType(typeId: 3)
-class SavedCatalog{
+class SavedCatalog {
   SavedCatalog(this._user, {this.catalogs = const <LocalCatalog>[]});
 
   @HiveField(0)

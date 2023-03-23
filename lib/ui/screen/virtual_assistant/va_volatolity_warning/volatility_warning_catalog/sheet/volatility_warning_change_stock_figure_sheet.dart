@@ -1,4 +1,3 @@
-import 'package:dtnd/=models=/local/volatility_warning_stock.dart';
 import 'package:dtnd/data/i_local_storage_service.dart';
 import 'package:dtnd/data/implementations/local_storage_service.dart';
 import 'package:dtnd/ui/widget/icon/sheet_header.dart';
@@ -7,10 +6,10 @@ import 'package:flutter/material.dart';
 class VolatilityWarningChangeStockFigureSheet extends StatefulWidget {
   const VolatilityWarningChangeStockFigureSheet({
     super.key,
-    required this.stock,
+    // required this.stock,
   });
 
-  final VolatilityWarningCatalogStock stock;
+  // final VolatilityWarningCatalogStock stock;
 
   @override
   State<VolatilityWarningChangeStockFigureSheet> createState() =>
@@ -35,7 +34,7 @@ class _VolatilityWarningChangeStockFigureSheetState
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SheetHeader(
-              title: widget.stock.stock,
+              title: "widget.stock.stock",
             ),
             const SizedBox(height: 20),
           ],

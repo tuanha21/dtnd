@@ -29,9 +29,10 @@ class AddCatalogISheet extends ISheet {
         savedCatalog: savedCatalog,
       );
     }
-    return VolatilityWarningChangeStockFigureSheet(
-      stock: cmd!.data,
-    );
+    return null;
+    // return VolatilityWarningChangeStockFigureSheet(
+    //   stock: cmd!.data,
+    // );
   }
 
   @override
@@ -55,9 +56,10 @@ class ChangeCatalogFigureISheet extends ISheet {
       VolatilityWarningCatalogSheet(savedCatalog: savedCatalog);
 
   @override
-  Widget? nextWidget([cmd]) => VolatilityWarningChangeStockFigureSheet(
-        stock: cmd!.data,
-      );
+  Widget? nextWidget([cmd]) => null;
+  // VolatilityWarningChangeStockFigureSheet(
+  //       stock: cmd!.data,
+  //     );
 
   @override
   Future<void>? onResultBack([dynamic cmd]) => null;
