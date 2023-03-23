@@ -1471,6 +1471,7 @@ class NetworkService implements INetworkService {
       throw response;
     }
     var res = decode(response.bodyBytes);
+    print(res.toString()+"tiennh");
     if (res['rc'] == 1) {
       return VAPortfolio.fromJson(res['data']);
     } else {

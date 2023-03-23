@@ -43,6 +43,12 @@ class _MyDirectoryTabState extends State<MyDirectoryTab> with AppValidator {
 
   final List<StockModel> listStockModels = [];
 
+  @override
+  void initState() {
+     super.initState();
+     getData();
+  }
+
   void getData() async {
     vaPortfolio = await userService.getVAPortfolio();
     getStockModels();

@@ -126,7 +126,7 @@ class _VaScreenState extends State<VaScreen>
           Expanded(
             child: TabBarView(
               controller: _tabController,
-              children: const [MyDirectoryTab(), AutoTradeTab()],
+              children: const [MyDirectoryTab(), AutoTradeTab(),AutoTradeTab()],
             ),
           ),
         ],

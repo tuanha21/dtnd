@@ -270,7 +270,7 @@ class _VAPortfolioComponentState extends State<VAPortfolioComponent> with AppVal
                           ],
                         ),
                         const SizedBox(height: 16),
-                        Text('Khối lượng'),
+                        const Text('Khối lượng'),
                         const SizedBox(height: 16),
                         Row(
                           children: [
