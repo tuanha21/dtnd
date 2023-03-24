@@ -84,43 +84,46 @@ class HomeQuickAccess extends StatefulWidget {
 
 class _HomeQuickAccessState extends State<HomeQuickAccess> {
   final AppService appService = AppService();
+
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(builder: (context, constrains) {
-      final int elementPerRow = constrains.maxWidth ~/ 80;
-      return Container(
-        padding: const EdgeInsets.all(16),
-        decoration: const BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(12)),
-          color: Colors.white,
-        ),
-        child: Column(
-          children: [
-            for (int i = 0; i < QuickAccess.values.length; i += elementPerRow)
-              Row(
-                children: [
-                  for (int j = 0; j < elementPerRow; j++)
-                    if (i + j < QuickAccess.values.length)
-                      Expanded(
-                        child: Padding(
-                          padding: EdgeInsets.only(left: j == 0 ? 0 : 16),
-                          child: HomeQuickAccessElement(
-                              value: QuickAccess.values.elementAt(i + j)),
-                        ),
-                      )
-                    else
-                      Expanded(child: Container())
-                ],
+    return LayoutBuilder(
+      builder: (context, constrains) {
+        final int elementPerRow = constrains.maxWidth ~/ 80;
+        return Container(
+          padding: const EdgeInsets.all(16),
+          decoration: const BoxDecoration(
+            borderRadius: BorderRadius.all(Radius.circular(12)),
+            color: Colors.white,
+          ),
+          child: Column(
+            children: [
+              for (int i = 0; i < QuickAccess.values.length; i += elementPerRow)
+                Row(
+                  children: [
+                    for (int j = 0; j < elementPerRow; j++)
+                      if (i + j < QuickAccess.values.length)
+                        Expanded(
+                          child: Padding(
+                            padding: EdgeInsets.only(left: j == 0 ? 0 : 16),
+                            child: HomeQuickAccessElement(
+                                value: QuickAccess.values.elementAt(i + j)),
+                          ),
+                        )
+                      else
+                        Expanded(child: Container())
+                  ],
+                ),
+              const Separator(
+                padding: EdgeInsets.symmetric(vertical: 16),
+                color: AppColors.neutral_05,
               ),
-            const Separator(
-              padding: EdgeInsets.symmetric(vertical: 16),
-              color: AppColors.neutral_05,
-            ),
-            const _AssetRow()
-          ],
-        ),
-      );
-    });
+              const _AssetRow()
+            ],
+          ),
+        );
+      },
+    );
   }
 }
 
@@ -134,6 +137,7 @@ class _AssetRow extends StatefulWidget {
 class __AssetRowState extends State<_AssetRow> {
   final IUserService userService = UserService();
   bool show = false;
+
   @override
   Widget build(BuildContext context) {
     return Row(
