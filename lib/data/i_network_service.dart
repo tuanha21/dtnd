@@ -1,19 +1,15 @@
 // ignore_for_file: library_prefixes
 
-import 'package:dtnd/=models=/response/commodity_model.dart';
 import 'package:dtnd/=models=/core_response_model.dart';
 import 'package:dtnd/=models=/index.dart';
+import 'package:dtnd/=models=/local/va_portfolio_model.dart';
 import 'package:dtnd/=models=/response/business_profile_model.dart';
+import 'package:dtnd/=models=/response/commodity_model.dart';
 import 'package:dtnd/=models=/response/deep_model.dart';
 import 'package:dtnd/=models=/response/inday_matched_order.dart';
 import 'package:dtnd/=models=/response/index_chart_data.dart';
 import 'package:dtnd/=models=/response/index_detail.dart';
-import 'package:dtnd/=models=/local/va_portfolio_model.dart';
-import 'package:dtnd/=models=/response/top_signal_detail_model.dart';
-import 'package:dtnd/=models=/response/top_signal_history_model.dart';
-import 'package:dtnd/=models=/response/top_signal_stock_model.dart';
 import 'package:dtnd/=models=/response/liquidity_model.dart';
-import 'package:dtnd/=models=/response/news_detail.dart';
 import 'package:dtnd/=models=/response/news_model.dart';
 import 'package:dtnd/=models=/response/security_basic_info_model.dart';
 import 'package:dtnd/=models=/response/stock.dart';
@@ -26,7 +22,9 @@ import 'package:dtnd/=models=/response/stock_trade.dart';
 import 'package:dtnd/=models=/response/stock_trading_history.dart';
 import 'package:dtnd/=models=/response/subsidiaries_model.dart';
 import 'package:dtnd/=models=/response/top_influence_model.dart';
-import 'package:dtnd/=models=/response/top_interested_model.dart';
+import 'package:dtnd/=models=/response/top_signal_detail_model.dart';
+import 'package:dtnd/=models=/response/top_signal_history_model.dart';
+import 'package:dtnd/=models=/response/top_signal_stock_model.dart';
 import 'package:dtnd/=models=/response/total_asset_model.dart';
 import 'package:dtnd/=models=/response/trash_model.dart';
 import 'package:dtnd/=models=/response/world_index_model.dart';
@@ -47,10 +45,10 @@ import '../=models=/response/sec_event.dart';
 import '../=models=/response/sec_trading.dart';
 import '../=models=/response/share_holder.dart';
 import '../=models=/response/stock_board.dart';
+import '../=models=/response/stock_derivative_model.dart';
 import '../=models=/response/stock_his.dart';
 import '../=models=/response/stock_industry.dart';
 import '../=models=/response/stock_vol.dart';
-import '../=models=/response/stock_derivative_model.dart';
 
 abstract class INetworkService {
   late final IO.Socket socket;
@@ -228,4 +226,10 @@ abstract class INetworkService {
   Future<void> createBot(String body);
 
   Future<void> deleteBot(String body);
+
+  Future<List<T>?> getDataProfitLoss<T extends CoreResponseModel>(
+    RequestModel requestModel, {
+    List<T>? Function(Map<String, dynamic>)? onError,
+    bool Function(Map<String, dynamic>)? hasError,
+  });
 }

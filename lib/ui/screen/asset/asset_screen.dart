@@ -11,6 +11,7 @@ import 'package:dtnd/data/implementations/user_service.dart';
 import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/screen/asset/component/account_asset_overview_widget.dart';
 import 'package:dtnd/ui/screen/asset/component/asset_distribution_chart.dart';
+import 'package:dtnd/ui/screen/asset/screen/RealizedProditLoss/realized_profit_loss.dart';
 import 'package:dtnd/ui/screen/asset/sheet/extensions_sheet.dart';
 import 'package:dtnd/ui/screen/exchange_stock/order_note/screen/order_note_screen.dart';
 import 'package:dtnd/ui/screen/exchange_stock/stock_order/business/stock_order_flow.dart';
@@ -179,6 +180,12 @@ class _AssetScreenState extends State<AssetScreen>
                                         const OrderNoteScreen(defaultab: 2),
                                   ));
                                   break;
+                                case ToProfitAndLossCmd:
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) =>
+                                         const RealizedProfitLoss(),
+                                  ));
+                                  break;
                                 default:
                                   break;
                               }
@@ -282,47 +289,16 @@ class _AssetScreenState extends State<AssetScreen>
               final reg = await showDialog<bool>(
                 context: context,
                 builder: (context) {
-                  return
-                    CustomDialog(
-                      textButtonAction: 'Đồng ý',
-                      textButtonExit: 'Để sau',
-                      title: 'Đăng nhập bằng sinh trắc học',
-                      content:
-                      'Bạn chưa đăng ký đăng nhập bằng sinh trắc học\nBạn có muốn đăng ký ngay bây giờ không?',
-                      action: () {
-                        Navigator.of(context).pop();
-                      },
-                    );
-
-                  //   AppDialog(
-                  //   icon: const Icon(Icons.warning_amber_rounded),
-                  //   title: const Text("Đăng nhập bằng sinh trắc học"),
-                  //   content: const Text(
-                  //       "Bạn chưa đăng ký đăng nhập bằng sinh trắc học\nBạn có muốn đăng ký ngay bây giờ không?"),
-                  //   actions: [
-                  //     Flexible(
-                  //       child: InkWell(
-                  //           onTap: () => Navigator.of(context).pop(false),
-                  //           child: Container(
-                  //             alignment: Alignment.center,
-                  //             child: Text(S.of(context).cancel),
-                  //           )),
-                  //     ),
-                  //     Flexible(
-                  //       child: InkWell(
-                  //           onTap: () => Navigator.of(context).pop(true),
-                  //           child: Container(
-                  //             alignment: Alignment.center,
-                  //             decoration: const BoxDecoration(
-                  //               border: Border(
-                  //                 left: BorderSide(color: AppColors.neutral_05),
-                  //               ),
-                  //             ),
-                  //             child: const Text("OK"),
-                  //           )),
-                  //     )
-                  //   ],
-                  // );
+                  return CustomDialog(
+                    textButtonAction: 'Đồng ý',
+                    textButtonExit: 'Để sau',
+                    title: 'Đăng nhập bằng sinh trắc học',
+                    content:
+                        'Bạn chưa đăng ký đăng nhập bằng sinh trắc học\nBạn có muốn đăng ký ngay bây giờ không?',
+                    action: () {
+                      Navigator.of(context).pop();
+                    },
+                  );
                 },
               );
               if (reg ?? false) {
