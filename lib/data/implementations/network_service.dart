@@ -17,7 +17,6 @@ import 'package:dtnd/=models=/response/index_chart_data.dart';
 import 'package:dtnd/=models=/response/index_detail.dart';
 import 'package:dtnd/=models=/response/introduct_company.dart';
 import 'package:dtnd/=models=/response/liquidity_model.dart';
-import 'package:dtnd/=models=/response/news_detail.dart';
 import 'package:dtnd/=models=/response/news_model.dart';
 import 'package:dtnd/=models=/response/security_basic_info_model.dart';
 import 'package:dtnd/=models=/response/share_holder.dart';
@@ -55,12 +54,12 @@ import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:socket_io_client/socket_io_client.dart';
 
+import '../../=models=/local/va_portfolio_model.dart';
 import '../../=models=/response/basic_company.dart';
 import '../../=models=/response/indContrib.dart';
 import '../../=models=/response/sec_event.dart';
 import '../../=models=/response/sec_trading.dart';
 import '../../=models=/response/stock_industry.dart';
-import '../../=models=/local/va_portfolio_model.dart';
 
 const List<String> sessionExpiredMsg = [
   "FOException.InvalidSessionException",
@@ -1522,5 +1521,25 @@ class NetworkService implements INetworkService {
     } else {
       throw res["rs"];
     }
+  }
+
+  @override
+  Future<List<T>?> getDataProfitLoss<T extends CoreResponseModel>(
+      RequestModel requestModel,
+      {List<T>? Function(Map<String, dynamic> p1)? onError,
+      bool Function(Map<String, dynamic> p1)? hasError}) async {
+    dynamic response =
+        await client.post(url_core_endpoint, body: requestModel.toString());
+    response = decode(response.bodyBytes);
+    bool checkResponse = hasError?.call(response) ?? (response["rc"] != 1);
+    if (checkResponse) {
+      return onError?.call(response);
+    }
+    response = response["data"];
+    final List<T> result = [];
+    for (var element in response) {
+      result.add(CoreResponseModel.fromJson<T>(element)!);
+    }
+    return result;
   }
 }
