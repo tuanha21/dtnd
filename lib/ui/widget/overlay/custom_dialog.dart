@@ -64,7 +64,9 @@ class CustomDialog extends StatelessWidget {
                                       children: [
                                         Text(
                                           title ?? 'Tiêu đề',
-                                          style: AppTextStyle.labelLarge_18.copyWith(color: AppColors.neutral_01),
+                                          style: AppTextStyle.labelLarge_18
+                                              .copyWith(
+                                                  color: AppColors.neutral_01),
                                         )
                                       ],
                                     ),
@@ -90,8 +92,7 @@ class CustomDialog extends StatelessWidget {
                                             child: InkWell(
                                               child: Container(
                                                 height: 40,
-                                                decoration:
-                                                    const BoxDecoration(
+                                                decoration: const BoxDecoration(
                                                   borderRadius:
                                                       BorderRadius.all(
                                                           Radius.circular(8)),
@@ -99,8 +100,7 @@ class CustomDialog extends StatelessWidget {
                                                 ),
                                                 alignment: Alignment.center,
                                                 child: Text(
-                                                    textButtonExit ??
-                                                        "Bỏ qua",
+                                                    textButtonExit ?? "Để sau",
                                                     style: AppTextStyle
                                                         .bodyMedium_14
                                                         .copyWith(
@@ -108,7 +108,8 @@ class CustomDialog extends StatelessWidget {
                                                                 .primary_01)),
                                               ),
                                               onTap: () {
-                                                Navigator.of(context).pop(false);
+                                                Navigator.of(context)
+                                                    .pop(false);
                                               },
                                             ),
                                           ),
@@ -118,8 +119,7 @@ class CustomDialog extends StatelessWidget {
                                               onTap: action,
                                               child: Container(
                                                 height: 40,
-                                                decoration:
-                                                    const BoxDecoration(
+                                                decoration: const BoxDecoration(
                                                   borderRadius:
                                                       BorderRadius.all(
                                                           Radius.circular(8)),

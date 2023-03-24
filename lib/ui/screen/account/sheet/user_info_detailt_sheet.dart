@@ -1,3 +1,4 @@
+import 'package:dtnd/=models=/gender.dart';
 import 'package:dtnd/=models=/response/account_info_model.dart';
 import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
@@ -9,36 +10,74 @@ class UserInfoDetailSheet extends StatefulWidget {
     Key? key,
     required this.userInfo,
   }) : super(key: key);
-  final UserInfo userInfo;
+  final UserInfo? userInfo;
   @override
   State<UserInfoDetailSheet> createState() => _UserInfoDetailSheetState();
 }
 
 class _UserInfoDetailSheetState extends State<UserInfoDetailSheet> {
+  late final Map<String, Map<String, String?>> data;
   @override
-  Widget build(BuildContext context) {
-    final Map<String, Map<String, String>> data = {
+  void initState() {
+    super.initState();
+    final userInfo = widget.userInfo;
+    data = {
       "Thông tin cá nhân": {
-        "Số tài khoản": "005C193380",
-        "Họ và tên": "Nguyễn Trung Kiên",
-        "CMND/ĐKKD": "031200003055",
-        "Ngày cấp": "07/09/2015",
-        "Nơi cấp": "CỤC TRƯỞNG CỤC CẢNH SÁT ",
-        "Ngày sinh": "23/07/2000",
-        "Giới tính": "Nam",
+        "Số tài khoản": userInfo?.customerCode,
+        "Họ và tên": userInfo?.custFullName,
+        "CMND/ĐKKD": userInfo?.cardId,
+        "Ngày cấp": userInfo?.idIssueDate,
+        "Nơi cấp": userInfo?.idIssuePlace,
+        "Ngày sinh": userInfo?.custBirthday,
+        "Giới tính": userInfo?.custGender?.call,
       },
       "Thông tin liên lạc": {
-        "Địa chỉ": "Chùa Hàng, Dư Hàng, Lê Chân, Hải Phòng",
-        "Điện thoại": "0989999999",
-        "Email": "dat9d3@gmail.com",
-        "Người liên hệ": "",
-        "Điện thoại (Người liên hệ)": "",
+        "Địa chỉ": userInfo?.contactAddress,
+        "Điện thoại": userInfo?.custMobile,
+        "Email": userInfo?.custEmail,
+        "Người liên hệ": null,
+        "Điện thoại (Người liên hệ)": null,
       },
       "Nhân viên chăm sóc": {
         "Tên nhân viên": "DTNT",
         "Chi nhánh": "KINH DOANH SỐ",
       },
     };
+  }
+
+  @override
+  void didUpdateWidget(covariant UserInfoDetailSheet oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.userInfo != oldWidget.userInfo) {
+      final userInfo = widget.userInfo;
+      data = {
+        "Thông tin cá nhân": {
+          "Số tài khoản": userInfo?.customerCode,
+          "Họ và tên": userInfo?.custFullName,
+          "CMND/ĐKKD": userInfo?.cardId,
+          "Ngày cấp": userInfo?.idIssueDate,
+          "Nơi cấp": userInfo?.idIssuePlace,
+          "Ngày sinh": userInfo?.custBirthday,
+          "Giới tính": userInfo?.custGender?.call,
+        },
+        "Thông tin liên lạc": {
+          "Địa chỉ": userInfo?.contactAddress,
+          "Điện thoại": userInfo?.custMobile,
+          "Email": userInfo?.custEmail,
+          "Người liên hệ": null,
+          "Điện thoại (Người liên hệ)": null,
+        },
+        "Nhân viên chăm sóc": {
+          "Tên nhân viên": "DTNT",
+          "Chi nhánh": "KINH DOANH SỐ",
+        },
+      };
+      setState(() {});
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return SafeArea(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 20),
@@ -49,8 +88,7 @@ class _UserInfoDetailSheetState extends State<UserInfoDetailSheet> {
               implementBackButton: false,
               title: S.of(context).account_infomation,
             ),
-            SizedBox(
-              height: MediaQuery.of(context).size.height - 150,
+            Expanded(
               child: ListView(
                 shrinkWrap: true,
                 children: [
@@ -76,7 +114,7 @@ class _Panel extends StatelessWidget {
     required this.data,
   }) : super(key: key);
   final String label;
-  final Map<String, String> data;
+  final Map<String, String?> data;
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
@@ -109,7 +147,7 @@ class _Panel extends StatelessWidget {
                           color: AppColors.neutral_03),
                     ),
                     Text(
-                      data.values.toList().elementAt(i),
+                      data.values.toList().elementAt(i) ?? "-",
                       style: textTheme.bodySmall!.copyWith(
                         fontWeight: FontWeight.w600,
                       ),

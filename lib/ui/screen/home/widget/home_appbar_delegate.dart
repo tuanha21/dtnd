@@ -28,14 +28,14 @@ class HomeAppbarDelegate extends SliverPersistentHeaderDelegate {
       String textTitle;
       Widget avatar;
       if (userService.userInfo.value != null) {
-        textTitle = userService.userInfo.value!.cCUSTFULLNAME;
-        if (userService.userInfo.value!.cFACEIMG != null) {
+        textTitle = userService.userInfo.value!.custFullName ?? "";
+        if (userService.userInfo.value!.faceImg != null) {
           avatar = Container(
             width: 40,
             height: 40,
             decoration: const BoxDecoration(shape: BoxShape.circle),
             child: CachedNetworkImage(
-              imageUrl: "${userService.userInfo.value!.cFACEIMG}",
+              imageUrl: "${userService.userInfo.value!.faceImg}",
               fit: BoxFit.fill,
             ),
           );

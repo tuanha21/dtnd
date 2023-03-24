@@ -14,6 +14,14 @@ extension DateTimeX on DateTime {
   DateTime get beginningOfDay {
     return DateTime(year, month, day, 0, 0, 0, 0, 0);
   }
+
+  DateTime get lastDayOfMonth {
+    return DateTime(year, month + 1, 0);
+  }
+
+  DateTime get firstDayOfMonth {
+    return DateTime(year, month, 1);
+  }
 }
 
 class TimeUtilities {

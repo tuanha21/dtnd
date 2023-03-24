@@ -1,5 +1,4 @@
 import 'package:dtnd/data/i_user_service.dart';
-import 'package:dtnd/data/implementations/user_service.dart';
 import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/screen/account/component/account_total_asset_widget.dart';
 import 'package:dtnd/ui/screen/account/component/extensions_widget.dart';
@@ -8,9 +7,6 @@ import 'package:dtnd/ui/screen/account/sheet/sheet_config.dart';
 import 'package:dtnd/ui/screen/account/sheet/user_info_detailt_sheet.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-
-import '../../login/login_screen.dart';
 
 class AccountScreenView extends StatelessWidget {
   const AccountScreenView(
@@ -33,13 +29,13 @@ class AccountScreenView extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    info?.cCUSTFULLNAME ?? "",
+                    info?.custFullName ?? "",
                     style: textTheme.titleSmall!.copyWith(
                         color: AppColors.primary_01,
                         fontWeight: FontWeight.w700),
                   ),
                   Text(
-                    info?.cCUSTOMERCODE ?? "",
+                    info?.customerCode ?? "",
                     style: textTheme.bodySmall!
                         .copyWith(color: AppColors.neutral_03),
                   ),
@@ -49,8 +45,9 @@ class AccountScreenView extends StatelessWidget {
                 borderRadius: const BorderRadius.all(Radius.circular(8)),
                 child: InkWell(
                   onTap: () {
-                    const UserInfoDetailISheet()
-                        .show(context, UserInfoDetailSheet(userInfo: info!));
+                    const UserInfoDetailISheet().show(
+                        context, UserInfoDetailSheet(userInfo: info),
+                        wrap: false);
                   },
                   borderRadius: const BorderRadius.all(Radius.circular(8)),
                   child: Ink(

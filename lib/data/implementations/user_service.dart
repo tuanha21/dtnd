@@ -247,6 +247,7 @@ class UserService implements IUserService {
     final RequestModel requestModel = RequestModel(this,
         group: "SU",
         data: RequestDataModel(
+          type: null,
           cmd: "TotalAsset",
         ));
     totalAsset.value = await networkService.getTotalAsset(requestModel);

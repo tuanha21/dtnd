@@ -57,10 +57,12 @@ class AppImages {
   static const String icon_percent = "assets/svg/icon_percent.svg";
   static const String icon_line = "assets/svg/icon_line.svg";
   static const String icon_equal = "assets/svg/icon_equal.svg";
-  static const String icon_greater_than_or_equal_to = "assets/svg/icon_greater_than_or_equal_to.svg";
-  static const String icon_less_than_or_equal = "assets/svg/icon_less_than_or_equal.svg";
+  static const String icon_greater_than_or_equal_to =
+      "assets/svg/icon_greater_than_or_equal_to.svg";
+  static const String icon_less_than_or_equal =
+      "assets/svg/icon_less_than_or_equal.svg";
   static const String icon_setting_va = "assets/svg/icon_setting_va.svg";
-  static const String icon_downt= "assets/svg/icon_downt.svg";
+  static const String icon_downt = "assets/svg/icon_downt.svg";
   static const String filter_icon = "assets/images/filter.png";
   static const String signal_icon = "assets/images/signal_icon.png";
   static const String icon_alert = "assets/svg/icon_alert.svg";
@@ -112,6 +114,8 @@ class AppImages {
   static const String money_recive = "assets/images/money_recive.png";
   static const String money_send = "assets/images/money_send.png";
   static const String chart_star_icon = "assets/images/chart_star_icon.png";
+  static const String blue_chart_star_icon =
+      "assets/images/blue_chart_star_icon.png";
   static const String simple_line_chart_icon =
       "assets/images/simple_line_chart_icon.png";
 

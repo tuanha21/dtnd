@@ -71,12 +71,14 @@ abstract class INetworkService {
     RequestModel requestModel, {
     T? Function(Map<String, dynamic>)? onError,
     bool Function(Map<String, dynamic>)? hasError,
+    List<dynamic> Function(Map<String, dynamic>)? selectionData,
   });
 
   Future<List<T>?> requestTraditionalApiResList<T extends CoreResponseModel>(
     RequestModel requestModel, {
     List<T>? Function(Map<String, dynamic>)? onError,
     bool Function(Map<String, dynamic>)? hasError,
+    List<dynamic> Function(Map<String, dynamic>)? selectionData,
   });
 
   Future<List<Stock>> getListAllStock();

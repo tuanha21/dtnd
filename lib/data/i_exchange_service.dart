@@ -1,5 +1,6 @@
 import 'package:dtnd/=models=/response/account/i_account.dart';
 import 'package:dtnd/=models=/response/account/unexecuted_right_model.dart';
+import 'package:dtnd/=models=/response/cash_transaction_model.dart';
 import 'package:dtnd/=models=/response/order_history_model.dart';
 import 'package:dtnd/=models=/response/order_model/base_order_model.dart';
 import 'package:dtnd/=models=/response/order_model/change_order_model.dart';
@@ -33,4 +34,11 @@ abstract class IExchangeService {
       required UnexecutedRightModel right,
       required String volumn,
       required String pin});
+  Future<CashTransactionModel> getCashTransactions({
+    String? user,
+    DateTime? fromDay,
+    DateTime? toDay,
+    int? page,
+    int? recordPerPage,
+  });
 }

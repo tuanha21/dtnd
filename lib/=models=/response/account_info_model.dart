@@ -1,117 +1,120 @@
 import 'package:dtnd/=models=/core_response_model.dart';
+import 'package:dtnd/=models=/gender.dart';
 
 class UserInfo implements CoreResponseModel {
-  late final String cCUSTOMERCODE;
-  late final String cCUSTFULLNAME;
-  late final String cIDISSUEDATE;
-  late final String cIDEXPIREDATE;
-  late final String cIDISSUEPLACE;
-  late final String cCUSTEMAIL;
-  late final String cCUSTTEL;
-  late final String cAUTHENSIGN;
-  late final String authenType;
-  late final String cCONTACTADDRESS;
-  late final String cCUSTMOBILE;
-  late final String cCARDID;
-  late final String cCUSTRESEDENCEADDRESS;
-  late final String cMARKETINGID;
-  late final String cMKTNAME;
-  late final String cSIGNIMG;
-  late final String? cFACEIMG;
-  late final String cFRONTCARD;
-  late final double cBONUSINFO;
+  late final String? pkCustCustomer;
+  late final String? branchCode;
+  late final String? subBranchCode;
+  late final String? marketingId;
+  late final String? mktName;
+  late final String? customerCode;
+  late final String? cardIdType;
+  late final String? cardId;
+  late final String? idIssueDate;
+  late final String? idExpireDate;
+  late final String? idIssuePlace;
+  late final String? customerType;
+  late final String? taxCode;
+  late final String? nationalCode;
+  late final String? custFullName;
+  late final Gender? custGender;
+  late final String? custBirthday;
+  late final String? custBirthPlace;
+  late final num? custLiveInVietnam;
+  late final String? custEmail;
+  late final String? custMobile;
+  late final String? custTel;
+  late final String? contactAddress;
+  late final String? custResedenceAddress;
+  late final String? province;
+  late final String? authenSign;
+  late final String? frontCard;
+  late final String? backCard;
+  late final String? signImg;
+  late final String? faceImg;
+  late final num? internetFlag;
+  late final num? phoneFlag;
+  late final num? marginFlag;
 
-  UserInfo({
-    required this.cCUSTOMERCODE,
-    required this.cCUSTFULLNAME,
-    required this.cIDISSUEDATE,
-    required this.cIDEXPIREDATE,
-    required this.cIDISSUEPLACE,
-    required this.cCUSTEMAIL,
-    required this.cCUSTTEL,
-    required this.cAUTHENSIGN,
-    required this.authenType,
-    required this.cCONTACTADDRESS,
-    required this.cCUSTMOBILE,
-    required this.cCARDID,
-    required this.cCUSTRESEDENCEADDRESS,
-    required this.cMARKETINGID,
-    required this.cMKTNAME,
-    required this.cSIGNIMG,
-    required this.cFACEIMG,
-    required this.cFRONTCARD,
-    required this.cBONUSINFO,
-  });
-
-  UserInfo.fromJson(Map<String, dynamic> json) {
-    cCUSTOMERCODE = json['C_CUSTOMER_CODE'] ?? "";
-    cCUSTFULLNAME = json['C_CUST_FULL_NAME'] ?? "";
-    cIDISSUEDATE = json['C_ID_ISSUE_DATE'] ?? "";
-    cIDEXPIREDATE = json['C_ID_EXPIRE_DATE'] ?? "";
-    cIDISSUEPLACE = json['C_ID_ISSUE_PLACE'] ?? "";
-    cCUSTEMAIL = json['C_CUST_EMAIL'] ?? "";
-    cCUSTTEL = json['C_CUST_TEL'] ?? "";
-    cAUTHENSIGN = json['C_AUTHEN_SIGN'] ?? "";
-    authenType = json['C_AUTHEN_SIGN'] ?? "";
-    cCONTACTADDRESS = json['C_CONTACT_ADDRESS'] ?? "";
-    // if (cCONTACTADDRESS == "null") {
-    //   cCONTACTADDRESS = "";
-    // }
-    cCUSTMOBILE = json['C_CUST_MOBILE'] ?? "";
-    cCARDID = json['C_CARD_ID'] ?? "";
-    cCUSTRESEDENCEADDRESS = json['C_CUST_RESEDENCE_ADDRESS'] ?? "";
-    cMARKETINGID = json['C_MARKETING_ID'] ?? "";
-    cMKTNAME = json['C_MKT_NAME'] ?? "";
-    cSIGNIMG = json['C_SIGN_IMG'] ?? "";
-    cFACEIMG = json['C_FACE_IMG'] == "null" ? null : json['C_FACE_IMG'];
-    cFRONTCARD = json['C_FRONT_CARD'] ?? "";
-    cBONUSINFO = json['C_BONUS_INFO'] ?? 0;
+  dynamic parse(dynamic data) {
+    if (data is String && (data.toLowerCase() == "null" || data == "")) {
+      return null;
+    } else {
+      return data;
+    }
   }
 
-  // UserInfo.constant() {
-  //   cCUSTOMERCODE = "005C666666";
-  //   cCUSTFULLNAME = "Nguyễn Trung Kiên";
-  //   cIDISSUEDATE = "07/09/2015";
-  //   cIDEXPIREDATE = "hfjkahsjkhjkad";
-  //   cIDISSUEPLACE = "CỤC TRƯỞNG CỤC CẢNH SÁT";
-  //   cCUSTEMAIL = "dat9d3@gmail.com";
-  //   cCUSTTEL = "hfjkahsjkhjkad";
-  //   cAUTHENSIGN = "hfjkahsjkhjkad";
-  //   authenType = "hfjkahsjkhjkad";
-  //   cCONTACTADDRESS = "Chùa Hàng, Dư Hàng, Lê Chân, Hải Phòng";
-  //   if (cCONTACTADDRESS == "null") {
-  //     cCONTACTADDRESS = "hfjkahsjkhjkad";
-  //   }
-  //   cCUSTMOBILE = "0989999999";
-  //   cCARDID = "031200003055";
-  //   cCUSTRESEDENCEADDRESS = "hfjkahsjkhjkad";
-  //   cMARKETINGID = "hfjkahsjkhjkad";
-  //   cMKTNAME = "hfjkahsjkhjkad";
-  //   cSIGNIMG = "hfjkahsjkhjkad";
-  //   cFACEIMG = "hfjkahsjkhjkad";
-  //   cFRONTCARD = "hfjkahsjkhjkad";
-  //   cBONUSINFO = 0;
-  // }
+  UserInfo.fromJson(Map<String, dynamic> json) {
+    pkCustCustomer = parse(json['PK_CUST_CUSTOMER']);
+    branchCode = parse(json['C_BRANCH_CODE']);
+    subBranchCode = parse(json['C_SUB_BRANCH_CODE']);
+    marketingId = parse(json['C_MARKETING_ID']);
+    mktName = parse(json['C_MKT_NAME']);
+    customerCode = parse(json['C_CUSTOMER_CODE']);
+    cardIdType = parse(json['C_CARD_ID_TYPE']);
+    cardId = parse(json['C_CARD_ID']);
+    idIssueDate = parse(json['C_ID_ISSUE_DATE']);
+    idExpireDate = parse(json['C_ID_EXPIRE_DATE']);
+    idIssuePlace = parse(json['C_ID_ISSUE_PLACE']);
+    customerType = parse(json['C_CUSTOMER_TYPE']);
+    taxCode = parse(json['C_TAX_CODE']);
+    nationalCode = parse(json['C_NATIONAL_CODE']);
+    custFullName = parse(json['C_CUST_FULL_NAME']);
+    custGender = GenderHelper.fromCode(json['C_CUST_GENDER']);
+    custBirthday = parse(json['C_CUST_BIRTH_DAY']);
+    custBirthPlace = parse(json['C_CUST_BIRTH_PLACE']);
+    custLiveInVietnam = parse(json['C_CUST_LIVE_IN_VIETNAM']);
+    custEmail = parse(json['C_CUST_EMAIL']);
+    custMobile = parse(json['C_CUST_MOBILE']);
+    custTel = parse(json['C_CUST_TEL']);
+    contactAddress = parse(json['C_CONTACT_ADDRESS']);
+    custResedenceAddress = parse(json['C_CUST_RESEDENCE_ADDRESS']);
+    province = parse(json['C_PROVINCE']);
+    authenSign = parse(json['C_AUTHEN_SIGN']);
+    frontCard = parse(json['C_FRONT_CARD']);
+    backCard = parse(json['C_BACK_CARD']);
+    signImg = parse(json['C_SIGN_IMG']);
+    faceImg = parse(json['C_FACE_IMG']);
+    internetFlag = parse(json['C_INTERNET_FLAG']);
+    phoneFlag = parse(json['C_PHONE_FLAG']);
+    marginFlag = parse(json['C_MARGIN_FLAG']);
+  }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['C_CUSTOMER_CODE'] = cCUSTOMERCODE;
-    data['C_CUST_FULL_NAME'] = cCUSTFULLNAME;
-    data['C_ID_ISSUE_DATE'] = cIDISSUEDATE;
-    data['C_ID_EXPIRE_DATE'] = cIDEXPIREDATE;
-    data['C_ID_ISSUE_PLACE'] = cIDISSUEPLACE;
-    data['C_CUST_EMAIL'] = cCUSTEMAIL;
-    data['C_CUST_TEL'] = cCUSTTEL;
-    data['C_AUTHEN_SIGN'] = cAUTHENSIGN;
-    data['C_CONTACT_ADDRESS'] = cCONTACTADDRESS;
-    data['C_CUST_MOBILE'] = cCUSTMOBILE;
-    data['C_CARD_ID'] = cCARDID;
-    data['C_CUST_RESEDENCE_ADDRESS'] = cCUSTRESEDENCEADDRESS;
-    data['C_MARKETING_ID'] = cMARKETINGID;
-    data['C_MKT_NAME'] = cMKTNAME;
-    data['C_SIGN_IMG'] = cSIGNIMG;
-    data['C_FACE_IMG'] = cFACEIMG;
-    data['C_FRONT_CARD'] = cFRONTCARD;
+    data['PK_CUST_CUSTOMER'] = pkCustCustomer;
+    data['C_BRANCH_CODE'] = branchCode;
+    data['C_SUB_BRANCH_CODE'] = subBranchCode;
+    data['C_MARKETING_ID'] = marketingId;
+    data['C_MKT_NAME'] = mktName;
+    data['C_CUSTOMER_CODE'] = customerCode;
+    data['C_CARD_ID_TYPE'] = cardIdType;
+    data['C_CARD_ID'] = cardId;
+    data['C_ID_ISSUE_DATE'] = idIssueDate;
+    data['C_ID_EXPIRE_DATE'] = idExpireDate;
+    data['C_ID_ISSUE_PLACE'] = idIssuePlace;
+    data['C_CUSTOMER_TYPE'] = customerType;
+    data['C_TAX_CODE'] = taxCode;
+    data['C_NATIONAL_CODE'] = nationalCode;
+    data['C_CUST_FULL_NAME'] = custFullName;
+    data['C_CUST_GENDER'] = custGender;
+    data['C_CUST_BIRTH_DAY'] = custBirthday;
+    data['C_CUST_BIRTH_PLACE'] = custBirthPlace;
+    data['C_CUST_LIVE_IN_VIETNAM'] = custLiveInVietnam;
+    data['C_CUST_EMAIL'] = custEmail;
+    data['C_CUST_MOBILE'] = custMobile;
+    data['C_CUST_TEL'] = custTel;
+    data['C_CONTACT_ADDRESS'] = contactAddress;
+    data['C_CUST_RESEDENCE_ADDRESS'] = custResedenceAddress;
+    data['C_PROVINCE'] = province;
+    data['C_AUTHEN_SIGN'] = authenSign;
+    data['C_FRONT_CARD'] = frontCard;
+    data['C_BACK_CARD'] = backCard;
+    data['C_SIGN_IMG'] = signImg;
+    data['C_FACE_IMG'] = faceImg;
+    data['C_INTERNET_FLAG'] = internetFlag;
+    data['C_PHONE_FLAG'] = phoneFlag;
+    data['C_MARGIN_FLAG'] = marginFlag;
     return data;
   }
 }

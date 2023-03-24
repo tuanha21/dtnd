@@ -5,6 +5,7 @@ import 'package:dtnd/=models=/response/account/list_account_model.dart';
 import 'response/account/portfolio_status_model.dart';
 import 'response/account/unexecuted_right_model.dart';
 import 'response/account_info_model.dart';
+import 'response/cash_transaction_model.dart';
 import 'response/order_history_model.dart';
 import 'response/order_model/base_order_model.dart';
 import 'response/order_model/change_order_model.dart';
@@ -44,6 +45,8 @@ abstract class CoreResponseModel {
         return OrderHistoryModel.fromJson(json) as T;
       case ChangeOrderModel:
         return ChangeOrderModel.fromJson(json) as T;
+      case CashTransactionHistoryModel:
+        return CashTransactionHistoryModel.fromJson(json) as T;
       default:
         return null;
     }

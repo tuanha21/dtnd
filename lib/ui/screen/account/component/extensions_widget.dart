@@ -8,8 +8,10 @@ import 'package:dtnd/data/implementations/user_service.dart';
 import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/screen/account/icon/account_icon.dart';
 import 'package:dtnd/ui/screen/account/logic/account_extension_button.dart';
+import 'package:dtnd/ui/screen/account/logic/asset_sheet.dart';
 import 'package:dtnd/ui/screen/account/screen/full_extensions_screen.dart';
 import 'package:dtnd/ui/screen/account/screen/smartotp_screen/smartotp_screen.dart';
+import 'package:dtnd/ui/screen/account/sheet/money_statement_sheet.dart';
 import 'package:dtnd/ui/screen/exchange_stock/order_note/screen/order_note_screen.dart';
 import 'package:dtnd/ui/screen/exchange_stock/stock_order/business/stock_order_flow.dart';
 import 'package:dtnd/ui/screen/exchange_stock/stock_order/sheet/stock_order_sheet.dart';
@@ -60,7 +62,7 @@ class _AccountExtensionsWidgetState extends State<AccountExtensionsWidget> {
     ),
     AccountExtensionButton(
       icon: AccountIcon.bank,
-      label: S.current.bank,
+      label: "Sao kê tiền",
     ),
     AccountExtensionButton(
         icon: AccountIcon.scan,
@@ -74,72 +76,27 @@ class _AccountExtensionsWidgetState extends State<AccountExtensionsWidget> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     list.first.route = () async {
-      if (!userService.isLogin) {
-        final toLogin = await showDialog<bool>(
-          context: context,
-          builder: (context) {
-            return const LoginFirstDialog();
-          },
-        );
-        if (toLogin ?? false) {
-          if (!mounted) return;
-          await Navigator.of(context)
-              .push<bool>(MaterialPageRoute(
-            builder: (context) => const LoginScreen(),
-          ))
-              .then((result) async {
-            if ((result ?? false)) {
-              setState(() {});
-              if (!localStorageService.biometricsRegistered) {
-                final reg = await showDialog<bool>(
-                  context: context,
-                  builder: (context) {
-                    return CustomDialog(
-                      textButtonAction: 'Đồng ý',
-                      textButtonExit: 'Để sau',
-                      title: 'Đăng nhập bằng sinh trắc học',
-                      content:
-                          'Bạn chưa đăng ký đăng nhập bằng sinh trắc học\nBạn có muốn đăng ký ngay bây giờ không?',
-                      action: () => Navigator.of(context).pop(true),
-                    );
-                  },
-                );
-                if (reg ?? false) {
-                  if (!mounted) return;
-                  final auth = await localStorageService
-                      .biometricsValidate()
-                      .onError((error, stackTrace) => false);
-                  if (auth) {
-                    await localStorageService.registerBiometrics();
-                  }
-                }
-              }
-              return list.first.route.call();
-            }
-          });
-        }
+      final list =
+          await dataCenterService.getStockModelsFromStockCodes(["AAA"]);
+      final StockModel? aaa;
+      if (list?.isNotEmpty ?? false) {
+        aaa = list!.first;
       } else {
-        final list =
-            await dataCenterService.getStockModelsFromStockCodes(["AAA"]);
-        final StockModel? aaa;
-        if (list?.isNotEmpty ?? false) {
-          aaa = list!.first;
-        } else {
-          aaa = null;
-        }
-        if (mounted) {}
-        // return StockOrderISheet(widget.stockModel).showSheet(context, );
-        StockOrderISheet(null).show(
-            context,
-            StockOrderSheet(
-              stockModel: aaa,
-              orderData: null,
-            ));
+        aaa = null;
       }
+      if (mounted) {}
+      // return StockOrderISheet(widget.stockModel).showSheet(context, );
+      StockOrderISheet(null).show(
+          context,
+          StockOrderSheet(
+            stockModel: aaa,
+            orderData: null,
+          ));
     };
+    list[6].route = () => MoneyStatementISheet()
+        .show(context, const MoneyStatementSheet(), wrap: false);
   }
 
   @override

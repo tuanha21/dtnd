@@ -174,6 +174,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Lãi/lỗ đã thực hiện"),
         "extension": MessageLookupByLibrary.simpleMessage("Mở rộng"),
         "fbuy": MessageLookupByLibrary.simpleMessage("NN mua"),
+        "female": MessageLookupByLibrary.simpleMessage("Nữ"),
         "fill_OTP": MessageLookupByLibrary.simpleMessage("Nhập mã OTP"),
         "fill_account": MessageLookupByLibrary.simpleMessage("Nhập tài khoản"),
         "fill_password": MessageLookupByLibrary.simpleMessage("Nhập mật khẩu"),
@@ -247,6 +248,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "loss_wvalue": m5,
         "low": MessageLookupByLibrary.simpleMessage("Thấp"),
         "low_translations": MessageLookupByLibrary.simpleMessage("Thấp"),
+        "male": MessageLookupByLibrary.simpleMessage("Nam"),
         "margin": MessageLookupByLibrary.simpleMessage("Ký quỹ"),
         "margin_debt": MessageLookupByLibrary.simpleMessage("Công nợ margin"),
         "market": MessageLookupByLibrary.simpleMessage("Thị trường"),
@@ -310,6 +312,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "order_will_appear_in_ur_order_note":
             MessageLookupByLibrary.simpleMessage(
                 "Lệnh đặt sẽ xuất hiện trong sổ lệnh của bạn"),
+        "other": MessageLookupByLibrary.simpleMessage("Khác"),
         "other_functions":
             MessageLookupByLibrary.simpleMessage("Các chức năng khác"),
         "other_vol": MessageLookupByLibrary.simpleMessage("KL khác"),

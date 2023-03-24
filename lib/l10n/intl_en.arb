@@ -9,7 +9,6 @@
     "sign_up": "Sign up",
     "hi_you": "Hi you",
 
-
     "home": "Home",
     "market": "Market",
     "order": "Order",
@@ -261,6 +260,9 @@
     "issue_place": "Issue place",
     "birthday": "Birthday",
     "sex": "Sex",
+    "male": "Male",
+    "female": "Female",
+    "other": "Other",
     "contact_infomation": "Contact information",
     "address": "Adrress",
     "business_information": "Business information",

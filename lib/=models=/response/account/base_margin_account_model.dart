@@ -114,7 +114,6 @@ class BaseMarginAccountModel implements IAccountModel {
 
   @override
   void updateDataFromJson(IAccountResponse data) {
-    logger.v(data.json);
     assets = parse(data.json['assets']);
     imKH = parse(data.json['imKH']);
     h = parse(data.json['h']);

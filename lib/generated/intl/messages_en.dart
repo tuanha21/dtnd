@@ -180,6 +180,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Executed profit/Loss"),
         "extension": MessageLookupByLibrary.simpleMessage("Extension"),
         "fbuy": MessageLookupByLibrary.simpleMessage("FR buy"),
+        "female": MessageLookupByLibrary.simpleMessage("Female"),
         "fill_OTP": MessageLookupByLibrary.simpleMessage("Fill OTP"),
         "fill_account": MessageLookupByLibrary.simpleMessage("Fill account"),
         "fill_password": MessageLookupByLibrary.simpleMessage("Fill password"),
@@ -250,6 +251,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "loss_wvalue": m5,
         "low": MessageLookupByLibrary.simpleMessage("Low"),
         "low_translations": MessageLookupByLibrary.simpleMessage("Low"),
+        "male": MessageLookupByLibrary.simpleMessage("Male"),
         "margin": MessageLookupByLibrary.simpleMessage("Margin"),
         "margin_debt": MessageLookupByLibrary.simpleMessage("Margin debt"),
         "market": MessageLookupByLibrary.simpleMessage("Market"),
@@ -312,6 +314,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "order_will_appear_in_ur_order_note":
             MessageLookupByLibrary.simpleMessage(
                 "Order will appear in your order note"),
+        "other": MessageLookupByLibrary.simpleMessage("Other"),
         "other_functions":
             MessageLookupByLibrary.simpleMessage("Other functions"),
         "other_vol": MessageLookupByLibrary.simpleMessage("Other vol"),

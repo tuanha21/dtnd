@@ -1,6 +1,7 @@
 import 'package:dtnd/=models=/request/request_model.dart';
 import 'package:dtnd/=models=/response/account/unexecuted_right_model.dart';
 import 'package:dtnd/=models=/response/account/i_account.dart';
+import 'package:dtnd/=models=/response/cash_transaction_model.dart';
 import 'package:dtnd/=models=/response/order_history_model.dart';
 import 'package:dtnd/=models=/response/order_model/base_order_model.dart';
 import 'package:dtnd/=models=/response/order_model/change_order_model.dart';
@@ -239,5 +240,51 @@ class ExchangeService implements IExchangeService {
 
     return networkService.requestTraditionalApi(requestModel,
         hasError: hasError, onError: onError);
+  }
+
+  @override
+  Future<CashTransactionModel> getCashTransactions(
+      {String? user,
+      DateTime? fromDay,
+      DateTime? toDay,
+      int? page,
+      int? recordPerPage}) async {
+    final RequestDataModel requestDataModel = RequestDataModel(
+      cmd: "CashTransactionNew",
+      p1: "0",
+      p2: "${userService.token.value!.user}6",
+      p3: TimeUtilities.commonTimeFormat.format(
+          fromDay ?? TimeUtilities.getPreviousDateTime(TimeUtilities.month(1))),
+      p4: TimeUtilities.commonTimeFormat.format(toDay ?? DateTime.now()),
+      p5: page?.toString() ?? "1",
+      p6: recordPerPage?.toString() ?? "10",
+    );
+
+    final RequestModel requestModel =
+        RequestModel(userService, group: "B", data: requestDataModel);
+    logger.v(requestModel.toJson());
+    try {
+      late TotalCashTransactionModel total;
+      List<dynamic> selectionData(Map<String, dynamic> json) {
+        total = TotalCashTransactionModel.fromJson(
+            json["data"].first["data1"].first);
+        return json["data"].first["data2"];
+      }
+
+      dynamic response = await networkService
+          .requestTraditionalApiResList<CashTransactionHistoryModel>(
+        requestModel,
+        selectionData: selectionData,
+      );
+      response = CashTransactionModel(total, response);
+      if (response == null) {
+        throw Exception();
+      }
+      logger.v(response);
+      return response;
+    } catch (e) {
+      logger.e(e);
+      rethrow;
+    }
   }
 }

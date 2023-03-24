@@ -194,7 +194,6 @@ class PorfolioStock extends StockStatus implements CoreResponseModel {
       this.plg});
 
   PorfolioStock.fromJson(Map<String, dynamic> json) {
-    logger.v(json);
     symbol = json['symbol'];
     actualVol = parse(json['actual_vol']);
     avaiableVol = parse(json['avaiable_vol']);

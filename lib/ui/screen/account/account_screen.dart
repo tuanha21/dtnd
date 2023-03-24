@@ -7,7 +7,7 @@ import 'package:dtnd/ui/screen/account/component/account_screen_view.dart';
 import 'package:dtnd/ui/screen/account/icon/account_icon.dart';
 import 'package:dtnd/ui/screen/login/login_screen.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
- import 'package:dtnd/ui/widget/overlay/custom_dialog.dart';
+import 'package:dtnd/ui/widget/overlay/custom_dialog.dart';
 import 'package:flutter/material.dart';
 
 class AccountScreen extends StatefulWidget {
@@ -130,43 +130,11 @@ class _AccountScreenState extends State<AccountScreen> {
                 context: context,
                 builder: (context) {
                   return CustomDialog(
-                    textButtonAction: 'Đồng ý',
-                    textButtonExit: 'Để sau',
                     title: 'Đăng nhập bằng sinh trắc học',
                     content:
                         'Bạn chưa đăng ký đăng nhập bằng sinh trắc học\nBạn có muốn đăng ký ngay bây giờ không?',
                     action: () => Navigator.of(context).pop(true),
                   );
-
-                  //   AppDialog(
-                  //   icon: const Icon(Icons.warning_amber_rounded),
-                  //   title: const Text("Đăng nhập bằng sinh trắc học"),
-                  //   content: const Text(
-                  //       "Bạn chưa đăng ký đăng nhập bằng sinh trắc học\nBạn có muốn đăng ký ngay bây giờ không?"),
-                  //   actions: [
-                  //     Flexible(
-                  //       child: InkWell(
-                  //           onTap: () => Navigator.of(context).pop(false),
-                  //           child: Container(
-                  //             alignment: Alignment.center,
-                  //             child: Text(S.of(context).cancel),
-                  //           )),
-                  //     ),
-                  //     Flexible(
-                  //       child: InkWell(
-                  //           onTap: () => Navigator.of(context).pop(true),
-                  //           child: Container(
-                  //             alignment: Alignment.center,
-                  //             decoration: const BoxDecoration(
-                  //               border: Border(
-                  //                 left: BorderSide(color: AppColors.neutral_05),
-                  //               ),
-                  //             ),
-                  //             child: const Text("OK"),
-                  //           )),
-                  //     )
-                  //   ],
-                  // );
                 },
               );
               if (reg ?? false) {

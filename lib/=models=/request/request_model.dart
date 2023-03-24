@@ -149,9 +149,7 @@ class RequestDataModel {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    if (type != null) {
-      data['type'] = type?.name ?? "string";
-    }
+    data['type'] = type?.name ?? "";
     data['cmd'] = cmd;
     if (p1 != null) {
       data['p1'] = p1;
