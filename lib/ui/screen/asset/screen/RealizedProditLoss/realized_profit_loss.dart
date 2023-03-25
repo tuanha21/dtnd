@@ -1,19 +1,22 @@
 import 'package:dtnd/ui/screen/asset/screen/RealizedProditLoss/realized_profit_loss_controller.dart';
+import 'package:dtnd/ui/theme/app_textstyle.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
 import '../../../../../=models=/response/share_earned_model.dart';
 import '../../../../../config/service/app_services.dart';
 import '../../../../../generated/l10n.dart';
+import '../../../../../utilities/num_utils.dart';
 import '../../../../../utilities/time_utils.dart';
 import '../../../../theme/app_color.dart';
 import '../../../../theme/app_image.dart';
+import '../../../../widget/calendar/day_input.dart';
 import '../../../../widget/expanded_widget.dart';
 import '../../../../widget/my_appbar.dart';
 import '../../../../widget/overlay/custom_dialog.dart';
 import '../../../../widget/overlay/login_first_dialog.dart';
-import '../../../../widget/picker/datetime_picker_widget.dart';
 import '../../../login/login_screen.dart';
 import 'item_realized_widget.dart';
 
@@ -27,17 +30,19 @@ class RealizedProfitLoss extends StatefulWidget {
 class _RealizedProfitLossState extends State<RealizedProfitLoss> {
   final RealizedProfitLossController controller =
       RealizedProfitLossController();
-  late final TextEditingController fromdayController;
-  late final TextEditingController todayController;
+
+  late DateTime fromDay;
+  late DateTime toDay;
+  late DateTime firstDay;
+  late DateTime lastDay;
 
   void onChanged(String code) {
     if (code.isNotEmpty) {
-      setState(() {
+      setState(() async {
         controller.searching = true;
         try {
-          controller.listSearch =
-              controller.dataCenterService.searchStocksBySym(code);
-          // ignore: empty_catches
+          controller.shareEarnedModel.value?.listDetail.clear();
+          await controller.getAllShareEarned(fromDay, toDay, code);
         } catch (e) {}
       });
     } else {
@@ -102,24 +107,29 @@ class _RealizedProfitLossState extends State<RealizedProfitLoss> {
 
   @override
   void initState() {
-    fromdayController = TextEditingController(
-        text: TimeUtilities.commonTimeFormat
-            .format(DateTime.now().subtract(const Duration(days: 7))));
-    todayController = TextEditingController(
-        text: TimeUtilities.commonTimeFormat.format(DateTime.now()));
+    fromDay = TimeUtilities.getPreviousDateTime(TimeUtilities.month(1));
+    toDay = DateTime.now();
+    firstDay = TimeUtilities.getPreviousDateTime(TimeUtilities.month(3));
+    lastDay = toDay;
     super.initState();
-    controller.init();
+    EasyLoading.show();
+    controller
+        .getAllShareEarned(fromDay, toDay, '')
+        .whenComplete(() => EasyLoading.dismiss());
+  }
 
-    controller.getAllShareEarned("01/01/2023", "01/03/2023");
+  Future<void> getData() async {
+    controller.shareEarnedModel.value?.listDetail.clear();
+    EasyLoading.show();
+    await controller
+        .getAllShareEarned(fromDay, toDay, '')
+        .whenComplete(() => EasyLoading.dismiss());
+    setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
     final themeMode = AppService.instance.themeMode.value;
-    // final textTheme = Theme.of(context).textTheme;
-    // final data = userService.listAccountModel.value?.firstWhereOrNull(
-    //         (element) => element.runtimeType == BaseMarginAccountModel)
-    // as BaseMarginAccountModel?;
 
     return Scaffold(
       appBar: MyAppBar(
@@ -153,14 +163,19 @@ class _RealizedProfitLossState extends State<RealizedProfitLoss> {
         padding: const EdgeInsets.all(16),
         child: Column(
           children: [
+            const SizedBox(
+              height: 18,
+            ),
             Column(
               children: [
-                SizedBox(
+                Container(
+                  color: AppColors.light_bg,
                   height: kToolbarHeight,
                   child: TextField(
                     onChanged: onChanged,
                     enableSuggestions: false,
                     decoration: InputDecoration(
+                        border: InputBorder.none,
                         hintText: S.of(context).search_stock,
                         suffixIcon: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -175,35 +190,83 @@ class _RealizedProfitLossState extends State<RealizedProfitLoss> {
                 ),
               ],
             ),
+            const SizedBox(height: 16),
             Row(
               children: [
                 Expanded(
-                    child: DateTimePickerWidget(
-                  controller: fromdayController,
-                  onChanged: null,
-                )),
-                const SizedBox(width: 16),
+                  child: DayInput(
+                    background: AppColors.light_bg,
+                    initialDay: fromDay,
+                    firstDay: firstDay,
+                    lastDay: lastDay,
+                    onChanged: (value) {
+                      setState(() {
+                        fromDay = value;
+                      });
+                      getData();
+                    },
+                  ),
+                ),
+                const SizedBox(width: 8),
+                Text('-'),
+                const SizedBox(width: 8),
                 Expanded(
-                    child: DateTimePickerWidget(
-                  controller: todayController,
-                  onChanged: null,
-                ))
+                  child: DayInput(
+                    background: AppColors.light_bg,
+                    initialDay: toDay,
+                    firstDay: firstDay,
+                    lastDay: lastDay,
+                    onChanged: (value) {
+                      setState(() {
+                        toDay = value;
+                      });
+                      getData();
+                    },
+                  ),
+                )
               ],
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: const [Text("Tổng cộng"), Text("5.900.000")],
+            const SizedBox(
+              height: 24,
+            ),
+            Container(
+              decoration: const BoxDecoration(
+                color: AppColors.light_bg,
+                borderRadius: BorderRadius.all(Radius.circular(8)),
+              ),
+              alignment: Alignment.center,
+              padding: const EdgeInsets.all(16),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text("Tổng cộng", style: AppTextStyle.labelMedium_12),
+                  Text(
+                      NumUtils.formatDouble(controller
+                          .shareEarnedModel.value?.listDetail.last.rOWNUM ?? 0),
+                      style: AppTextStyle.labelMedium_12
+                          .copyWith(color: AppColors.semantic_01))
+                ],
+              ),
+            ),
+            const SizedBox(
+              height: 16,
             ),
             Obx(
-              () => Column(
-                children: [
-                  for (ShareEarnedDetailModel detail
-                      in controller.shareEarnedModel.value?.listDetail ?? [])
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 4),
-                      child: ItemRealizedWidget(detail: detail),
-                    )
-                ],
+              () => Container(
+                padding: const EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                    color: AppColors.light_bg,
+                    borderRadius: BorderRadius.circular(12)),
+                child: Column(
+                  children: [
+                    for (ShareEarnedDetailModel detail
+                        in controller.shareEarnedModel.value?.listDetail ?? [])
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 4),
+                        child: ItemRealizedWidget(detail: detail),
+                      )
+                  ],
+                ),
               ),
             )
           ],

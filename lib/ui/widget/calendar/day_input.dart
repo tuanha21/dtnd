@@ -11,18 +11,23 @@ class DayInput extends StatefulWidget {
     required this.initialDay,
     required this.firstDay,
     required this.lastDay,
+    this.background,
     this.onChanged,
   });
+
   final DateTime initialDay;
   final DateTime firstDay;
   final DateTime lastDay;
+  final Color? background;
   final ValueChanged<DateTime>? onChanged;
+
   @override
   State<DayInput> createState() => _DayInputState();
 }
 
 class _DayInputState extends State<DayInput> {
   late DateTime currentDateTime;
+
   @override
   void initState() {
     super.initState();
@@ -52,9 +57,9 @@ class _DayInputState extends State<DayInput> {
         borderRadius: const BorderRadius.all(Radius.circular(8)),
         child: Ink(
           padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 16),
-          decoration: const BoxDecoration(
-            color: AppColors.neutral_06,
-            borderRadius: BorderRadius.all(Radius.circular(8)),
+          decoration: BoxDecoration(
+            color: widget.background ?? AppColors.neutral_06,
+            borderRadius: const BorderRadius.all(Radius.circular(8)),
           ),
           child: Row(
             children: [
