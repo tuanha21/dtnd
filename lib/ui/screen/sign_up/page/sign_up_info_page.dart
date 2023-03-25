@@ -4,9 +4,10 @@ import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:flutter/material.dart';
 
 class SignUpInfoPage extends StatefulWidget {
-  const SignUpInfoPage({super.key, required this.onSuccess});
+  const SignUpInfoPage(
+      {super.key, required this.onSuccess, required this.verifyRegisterInfo});
   final VoidCallback onSuccess;
-
+  final Future<bool> Function(String, String) verifyRegisterInfo;
   @override
   State<SignUpInfoPage> createState() => _SignUpInfoPageState();
 }
@@ -50,6 +51,7 @@ class _SignUpInfoPageState extends State<SignUpInfoPage>
           const SizedBox(height: 36),
           SignUpInfoForm(
             onSuccess: widget.onSuccess,
+            verifyRegisterInfo: widget.verifyRegisterInfo,
           ),
         ],
       ),

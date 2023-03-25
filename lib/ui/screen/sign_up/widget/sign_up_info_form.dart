@@ -16,8 +16,10 @@ import 'package:dtnd/utilities/validator.dart';
 import 'package:flutter/material.dart';
 
 class SignUpInfoForm extends StatefulWidget {
-  const SignUpInfoForm({super.key, required this.onSuccess});
+  const SignUpInfoForm(
+      {super.key, required this.onSuccess, required this.verifyRegisterInfo});
   final Function onSuccess;
+  final Future<bool> Function(String, String) verifyRegisterInfo;
   @override
   State<SignUpInfoForm> createState() => _SignUpInfoFormState();
 }
@@ -154,8 +156,8 @@ class _SignUpInfoFormState extends State<SignUpInfoForm> with AppValidator {
                 registering = true;
                 if (signUpFormKey.currentState?.validate() ?? false) {
                   try {
-                    await userService.verifyRegisterInfo(
-                        phoneNumber.text, email.text);
+                    await widget.verifyRegisterInfo
+                        .call(phoneNumber.text, email.text);
                   } catch (e) {
                     registering = false;
                     return AppSnackBar.showInfo(context, message: e.toString());
