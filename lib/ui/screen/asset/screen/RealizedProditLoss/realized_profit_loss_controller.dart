@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:get/get_rx/src/rx_types/rx_types.dart';
 
 import '../../../../../=models=/request/request_model.dart';
@@ -26,14 +25,11 @@ class RealizedProfitLossController {
 
   factory RealizedProfitLossController() => _instance;
 
-
   final ILocalStorageService localStorageService = LocalStorageService();
   List<Stock> listSearch = [];
   bool searching = false;
 
-  void init() {
-
-  }
+  void init() {}
 
   // State
   final IUserService userService = UserService();
@@ -47,7 +43,7 @@ class RealizedProfitLossController {
   final INetworkService networkService = NetworkService();
 
   Future<ShareEarnedModel?> getAllShareEarned(
-      String fromDay, String toDay) async {
+  DateTime? fromDay, DateTime? toDay,String? maCP) async {
     if (!userService.isLogin) {
       return null;
     }
@@ -57,9 +53,10 @@ class RealizedProfitLossController {
       data: RequestDataModel.cursorType(
           cmd: "GetAllShareEarned",
           p1: "${userService.token.value!.user}6",
-          p2: '',
-          p3: fromDay,
-          p4: toDay,
+          p2: maCP ?? '',
+          p3: TimeUtilities.commonTimeFormat.format(
+              fromDay ?? TimeUtilities.getPreviousDateTime(TimeUtilities.month(1))) ,
+          p4: TimeUtilities.commonTimeFormat.format(toDay ?? DateTime.now()),
           p5: "1",
           p6: "20"),
     );

@@ -83,6 +83,7 @@ class _DateTimePickerWidgetState extends State<DateTimePickerWidget> {
         enableSuggestions: false,
         enabled: false,
         decoration: InputDecoration(
+          border: InputBorder.none,
           isDense: true,
           labelText: widget.labelText ?? "Label",
           floatingLabelBehavior: FloatingLabelBehavior.always,
