@@ -31,7 +31,6 @@ class _CustomTableCalendarState extends State<CustomTableCalendar> {
     _firstDay = widget.firstDay ?? _now.firstDayOfMonth;
     _lastDay = widget.lastDay ?? _now.lastDayOfMonth;
     super.initState();
-    print(_now.toString());
   }
 
   @override

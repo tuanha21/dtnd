@@ -96,7 +96,7 @@ class _MoneyStatementSheetState extends State<MoneyStatementSheet> {
               if (list.isEmpty || total == null) {
                 return Column(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
+                  children: const [
                     EmptyListWidget(),
                   ],
                 );

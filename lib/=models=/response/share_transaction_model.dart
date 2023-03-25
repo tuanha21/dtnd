@@ -1,6 +1,7 @@
 import 'package:dtnd/=models=/core_response_model.dart';
+import 'package:dtnd/=models=/stock_status.dart';
 
-class ShareTransactionModel extends CoreResponseModel {
+class ShareTransactionModel extends StockStatus implements CoreResponseModel {
   String? cTRANSACTIONNO;
   String? cTRANSACTIONDATE;
   String? cDUEDATE;
@@ -11,6 +12,22 @@ class ShareTransactionModel extends CoreResponseModel {
   num? cSHAREIN;
   num? cSHAREOUT;
   String? cCONTENT;
+
+  num get change {
+    return (cSHAREIN ?? 0) - (cSHAREOUT ?? 0);
+  }
+
+  @override
+  SStatus get sstatus {
+    switch (change.compareTo(0)) {
+      case 1:
+        return SStatus.up;
+      case -1:
+        return SStatus.down;
+      default:
+        return SStatus.ref;
+    }
+  }
 
   ShareTransactionModel.fromJson(Map<String, dynamic> json) {
     cTRANSACTIONNO = json['C_TRANSACTION_NO'];

@@ -4,6 +4,7 @@ import 'package:dtnd/=models=/response/cash_transaction_model.dart';
 import 'package:dtnd/=models=/response/order_history_model.dart';
 import 'package:dtnd/=models=/response/order_model/base_order_model.dart';
 import 'package:dtnd/=models=/response/order_model/change_order_model.dart';
+import 'package:dtnd/=models=/response/share_transaction_model.dart';
 import 'package:dtnd/=models=/response/stock_cash_balance_model.dart';
 import 'package:dtnd/=models=/side.dart';
 import 'package:dtnd/ui/screen/exchange_stock/stock_order/data/order_data.dart';
@@ -35,6 +36,13 @@ abstract class IExchangeService {
       required String volumn,
       required String pin});
   Future<CashTransactionModel> getCashTransactions({
+    String? user,
+    DateTime? fromDay,
+    DateTime? toDay,
+    int? page,
+    int? recordPerPage,
+  });
+  Future<List<ShareTransactionModel>> getShareTransactions({
     String? user,
     DateTime? fromDay,
     DateTime? toDay,

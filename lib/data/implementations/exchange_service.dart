@@ -5,6 +5,7 @@ import 'package:dtnd/=models=/response/cash_transaction_model.dart';
 import 'package:dtnd/=models=/response/order_history_model.dart';
 import 'package:dtnd/=models=/response/order_model/base_order_model.dart';
 import 'package:dtnd/=models=/response/order_model/change_order_model.dart';
+import 'package:dtnd/=models=/response/share_transaction_model.dart';
 import 'package:dtnd/=models=/response/stock_cash_balance_model.dart';
 import 'package:dtnd/=models=/side.dart';
 import 'package:dtnd/data/i_exchange_service.dart';
@@ -277,6 +278,47 @@ class ExchangeService implements IExchangeService {
         selectionData: selectionData,
       );
       response = CashTransactionModel(total, response);
+      if (response == null) {
+        throw Exception();
+      }
+      return response;
+    } catch (e) {
+      logger.e(e);
+      rethrow;
+    }
+  }
+
+  @override
+  Future<List<ShareTransactionModel>> getShareTransactions(
+      {String? user,
+      DateTime? fromDay,
+      DateTime? toDay,
+      int? page,
+      int? recordPerPage}) async {
+    final RequestDataModel requestDataModel = RequestDataModel(
+      cmd: "ShareTransaction",
+      p1: user ?? "${userService.token.value!.user}6",
+      p3: TimeUtilities.commonTimeFormat.format(
+          fromDay ?? TimeUtilities.getPreviousDateTime(TimeUtilities.month(1))),
+      p4: TimeUtilities.commonTimeFormat.format(toDay ?? DateTime.now()),
+      p5: "0",
+      p6: page?.toString() ?? "1",
+      p7: recordPerPage?.toString() ?? "10",
+    );
+
+    final RequestModel requestModel =
+        RequestModel(userService, group: "B", data: requestDataModel);
+    logger.v(requestModel.toJson());
+    try {
+      List<dynamic> selectionData(Map<String, dynamic> json) {
+        return json["data"].first["data2"];
+      }
+
+      final response = await networkService
+          .requestTraditionalApiResList<ShareTransactionModel>(
+        requestModel,
+        selectionData: selectionData,
+      );
       if (response == null) {
         throw Exception();
       }

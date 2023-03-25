@@ -285,7 +285,7 @@ class _StockOrderSheetState extends State<StockOrderSheet>
                       OrderOwnedStockPanel(
                         onSell: (stockCodes) async {
                           final model = await dataCenterService
-                              .getStockModelsFromStockCodes([stockCodes]);
+                              .getStocksModelsFromStockCodes([stockCodes]);
                           if (model?.isNotEmpty ?? false) {
                             changeStock(model!.first);
                             tabController.animateTo(0);

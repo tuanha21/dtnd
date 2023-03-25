@@ -43,10 +43,6 @@ class CashTransactionHistoryModel extends StockStatus
   String? cCONTENT;
   num? cORDER;
 
-  num get change {
-    return (cCASHIN ?? 0) - (cCASHOUT ?? 0);
-  }
-
   CashTransactionHistoryModel.fromJson(Map<String, dynamic> json) {
     cACCOUNTCODE = json['C_ACCOUNT_CODE'];
     cTRANSACTIONDATE = json['C_TRANSACTION_DATE'];
@@ -67,6 +63,10 @@ class CashTransactionHistoryModel extends StockStatus
     data['C_CONTENT'] = cCONTENT;
     data['C_ORDER'] = cORDER;
     return data;
+  }
+
+  num get change {
+    return (cCASHIN ?? 0) - (cCASHOUT ?? 0);
   }
 
   @override

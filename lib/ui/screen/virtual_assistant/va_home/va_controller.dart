@@ -42,7 +42,7 @@ class VAController {
       return;
     }
     final stockModels = await dataCenterService
-        .getStockModelsFromStockCodes(vaPortfolio.value.listStockCodes);
+        .getStocksModelsFromStockCodes(vaPortfolio.value.listStockCodes);
     if ((stockModels?.isEmpty ?? true) ||
         stockModels!.length != vaPortfolio.value.listStockCodes.length) {
       throw Exception();
@@ -54,8 +54,8 @@ class VAController {
   }
 
   Future<void> getStockModel(Stock stock) async {
-    final stockModels =
-        await dataCenterService.getStockModelsFromStockCodes([stock.stockCode]);
+    final stockModels = await dataCenterService
+        .getStocksModelsFromStockCodes([stock.stockCode]);
     if ((stockModels?.isEmpty ?? true)) {
       throw Exception();
     } else {

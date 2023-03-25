@@ -12,6 +12,7 @@ import 'package:dtnd/ui/screen/account/logic/account_sheet.dart';
 import 'package:dtnd/ui/screen/account/screen/full_extensions_screen.dart';
 import 'package:dtnd/ui/screen/account/screen/smartotp_screen/smartotp_screen.dart';
 import 'package:dtnd/ui/screen/account/sheet/money_statement_sheet.dart';
+import 'package:dtnd/ui/screen/account/sheet/share_statement_sheet.dart';
 import 'package:dtnd/ui/screen/exchange_stock/order_note/screen/order_note_screen.dart';
 import 'package:dtnd/ui/screen/exchange_stock/stock_order/business/stock_order_flow.dart';
 import 'package:dtnd/ui/screen/exchange_stock/stock_order/sheet/stock_order_sheet.dart';
@@ -65,6 +66,10 @@ class _AccountExtensionsWidgetState extends State<AccountExtensionsWidget> {
         label: "SmartOTP",
         route: const SmartotpScreen()),
     AccountExtensionButton(
+      icon: AccountIcon.receipt_search,
+      label: "Sao kê CK",
+    ),
+    AccountExtensionButton(
         icon: AccountIcon.more,
         label: S.current.see_more,
         route: const FullExtensionsScreen()),
@@ -75,7 +80,7 @@ class _AccountExtensionsWidgetState extends State<AccountExtensionsWidget> {
     super.initState();
     list.first.route = () async {
       final list =
-          await dataCenterService.getStockModelsFromStockCodes(["AAA"]);
+          await dataCenterService.getStocksModelsFromStockCodes(["AAA"]);
       final StockModel? aaa;
       if (list?.isNotEmpty ?? false) {
         aaa = list!.first;
@@ -94,6 +99,11 @@ class _AccountExtensionsWidgetState extends State<AccountExtensionsWidget> {
     list[6].route = () {
       const MoneyStatementISheet()
           .show(widget.ctx, const MoneyStatementSheet(), wrap: false);
+    };
+
+    list[8].route = () {
+      const ShareStatementISheet()
+          .show(widget.ctx, const ShareStatementSheet(), wrap: false);
     };
   }
 

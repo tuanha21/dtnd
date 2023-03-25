@@ -183,7 +183,7 @@ class _AssetScreenState extends State<AssetScreen>
                                 case ToProfitAndLossCmd:
                                   Navigator.of(context).push(MaterialPageRoute(
                                     builder: (context) =>
-                                         const RealizedProfitLoss(),
+                                        const RealizedProfitLoss(),
                                   ));
                                   break;
                                 default:
@@ -317,7 +317,7 @@ class _AssetScreenState extends State<AssetScreen>
       }
     } else {
       final list =
-          await dataCenterService.getStockModelsFromStockCodes(["AAA"]);
+          await dataCenterService.getStocksModelsFromStockCodes(["AAA"]);
       final StockModel? aaa;
       if (list?.isNotEmpty ?? false) {
         aaa = list!.first;

@@ -36,7 +36,7 @@ class _TrashComponentState extends State<TrashComponent> {
 
   Future<void> getStockModel() async {
     final response = await dataCenterService
-        .getStockModelsFromStockCodes([widget.snapshotData.sTOCKCODE]);
+        .getStocksModelsFromStockCodes([widget.snapshotData.sTOCKCODE]);
     if (response?.isNotEmpty ?? false) {
       stockModel = response!.first;
       if (mounted) {

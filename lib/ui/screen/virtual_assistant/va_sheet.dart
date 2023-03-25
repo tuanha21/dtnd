@@ -44,8 +44,7 @@ class VaSheet extends StatefulWidget {
   State<VaSheet> createState() => _VaSheetState();
 }
 
-class _VaSheetState extends State<VaSheet>
-    with SingleTickerProviderStateMixin {
+class _VaSheetState extends State<VaSheet> with SingleTickerProviderStateMixin {
   final INetworkService networkService = NetworkService();
   final IUserService userService = UserService();
   final IExchangeService exchangeService = ExchangeService();
@@ -255,7 +254,7 @@ class _VaSheetState extends State<VaSheet>
                       OrderOwnedStockPanel(
                         onSell: (stockCodes) async {
                           final model = await dataCenterService
-                              .getStockModelsFromStockCodes([stockCodes]);
+                              .getStocksModelsFromStockCodes([stockCodes]);
                           if (model?.isNotEmpty ?? false) {
                             changeStock(model!.first);
                             tabController.animateTo(0);

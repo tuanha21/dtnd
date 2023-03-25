@@ -64,7 +64,7 @@ class _AssetStockDetailScreenState extends State<AssetStockDetailScreen>
 
   Future<void> getData(String stockCode) async {
     final data =
-        await dataCenterService.getStockModelsFromStockCodes([stockCode]);
+        await dataCenterService.getStocksModelsFromStockCodes([stockCode]);
     if (data?.isNotEmpty ?? false) {
       setState(() {
         stockModel = data!.first;
@@ -109,7 +109,7 @@ class _AssetStockDetailScreenState extends State<AssetStockDetailScreen>
                               }
                             } else {
                               final model = await dataCenterService
-                                  .getStockModelsFromStockCodes(
+                                  .getStocksModelsFromStockCodes(
                                       [widget.stockCode]);
                               if ((model?.isNotEmpty ?? false) && mounted) {
                                 StockOrderISheet(model!.first).show(
