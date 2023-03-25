@@ -10,6 +10,8 @@ import 'package:dtnd/ui/widget/expanded_widget.dart';
 import 'package:dtnd/utilities/num_utils.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../../=models=/response/stock.dart';
+import '../../../../../=models=/response/stock_model.dart';
 import '../../../../widget/icon/stock_icon.dart';
 import '../../component/asset_grid_element.dart';
 
@@ -32,9 +34,13 @@ class ItemRealizedWidget extends StatefulWidget {
 class _ItemRealizedState extends State<ItemRealizedWidget> {
   final IDataCenterService dataCenterService = DataCenterService();
   bool expand = false;
+  bool isShow = true;
+  Stock? stock;
+  StockModel? stockModel;
 
   void onTap() {
     setState(() {
+      isShow = !isShow;
       expand = !expand;
     });
     if (expand) {}
@@ -43,6 +49,31 @@ class _ItemRealizedState extends State<ItemRealizedWidget> {
   @override
   void initState() {
     super.initState();
+    getStock(widget.detail?.cSHARECODE);
+    getStockModel();
+  }
+
+  void getStock(String? stockCode) async {
+    if (stockCode == null) {
+      return;
+    }
+    final stocks = dataCenterService.getStockFromStockCodes([stockCode]);
+    if (stocks.isNotEmpty) {
+      setState(() {
+        stock = stocks.first;
+      });
+    }
+  }
+
+  Future<void> getStockModel() async {
+    final response = await dataCenterService.getStockModelsFromStockCodes(
+        [widget.detail?.cSHARECODE.toString() ?? '']);
+    if (response?.isNotEmpty ?? false) {
+      stockModel = response!.first;
+      if (mounted) {
+        setState(() {});
+      }
+    }
   }
 
   @override
@@ -80,21 +111,17 @@ class _ItemRealizedState extends State<ItemRealizedWidget> {
                               .titleSmall!
                               .copyWith(fontWeight: FontWeight.w600),
                         ),
-                        SizedBox(
-                          width: 80,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                widget.detail?.cSHARECODE ?? '',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .titleSmall!
-                                    .copyWith(fontWeight: FontWeight.w600),
+                        Row(
+                          children: [
+                            Flexible(
+                              child: Text(
+                                stock?.nameShort ?? "",
+                                overflow: TextOverflow.ellipsis,
+                                style: AppTextStyle.labelSmall_10
+                                    .copyWith(color: AppColors.neutral_03),
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
                       ],
                     ),
@@ -111,15 +138,39 @@ class _ItemRealizedState extends State<ItemRealizedWidget> {
                         Text(
                           'Ngày',
                           style: AppTextStyle.labelSmall_10
-                              .copyWith(color: AppColors.neutral_01),
+                              .copyWith(color: AppColors.neutral_04),
                         ),
                         const SizedBox(height: 4),
                         Text(
                           widget.detail?.cTRADINGDATE ?? '',
                           style: AppTextStyle.labelMedium_12
-                              .copyWith(color: AppColors.neutral_03),
+                              .copyWith(color: AppColors.neutral_01),
                         ),
                       ],
+                    ),
+                  ),
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  Visibility(
+                    visible: isShow,
+                    child: Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'KL bán',
+                            style: AppTextStyle.labelSmall_10
+                                .copyWith(color: AppColors.neutral_04),
+                          ),
+                          const SizedBox(height: 4),
+                          Text(
+                            NumUtils.formatDouble(widget.detail?.cSHAREVOLUME),
+                            style: AppTextStyle.labelMedium_12
+                                .copyWith(color: AppColors.neutral_01),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                   Expanded(
@@ -129,13 +180,13 @@ class _ItemRealizedState extends State<ItemRealizedWidget> {
                         Text(
                           "Lãi/lỗ",
                           style: AppTextStyle.labelSmall_10
-                              .copyWith(color: AppColors.neutral_01),
+                              .copyWith(color: AppColors.neutral_04),
                         ),
                         const SizedBox(height: 4),
                         Text(
                           NumUtils.formatDouble(widget.detail?.cEARNEDVALUE),
                           style: AppTextStyle.labelMedium_12
-                              .copyWith(color: AppColors.neutral_03),
+                              .copyWith(color: stockModel?.stockData.color),
                         ),
                       ],
                     ),
@@ -147,12 +198,13 @@ class _ItemRealizedState extends State<ItemRealizedWidget> {
                         Text(
                           "% lãi/lỗ",
                           style: AppTextStyle.labelSmall_10
-                              .copyWith(color: AppColors.neutral_01),
+                              .copyWith(color: AppColors.neutral_04),
                         ),
                         const SizedBox(height: 4),
                         Text(
-                          widget.detail?.cEARNEDRATE.toString() ?? '',
-                          style: AppTextStyle.labelMedium_12,
+                          NumUtils.formatDouble(widget.detail?.cEARNEDRATE),
+                          style: AppTextStyle.labelMedium_12
+                              .copyWith(color: stockModel?.stockData.color),
                         ),
                       ],
                     ),

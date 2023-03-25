@@ -6,7 +6,10 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
 import '../../../../../=models=/response/share_earned_model.dart';
+import '../../../../../=models=/response/stock_model.dart';
 import '../../../../../config/service/app_services.dart';
+import '../../../../../data/i_data_center_service.dart';
+import '../../../../../data/implementations/data_center_service.dart';
 import '../../../../../generated/l10n.dart';
 import '../../../../../utilities/num_utils.dart';
 import '../../../../../utilities/time_utils.dart';
@@ -17,6 +20,8 @@ import '../../../../widget/expanded_widget.dart';
 import '../../../../widget/my_appbar.dart';
 import '../../../../widget/overlay/custom_dialog.dart';
 import '../../../../widget/overlay/login_first_dialog.dart';
+import '../../../exchange_stock/stock_order/business/stock_order_flow.dart';
+import '../../../exchange_stock/stock_order/sheet/stock_order_sheet.dart';
 import '../../../login/login_screen.dart';
 import 'item_realized_widget.dart';
 
@@ -36,13 +41,14 @@ class _RealizedProfitLossState extends State<RealizedProfitLoss> {
   late DateTime firstDay;
   late DateTime lastDay;
 
+  final IDataCenterService dataCenterService = DataCenterService();
+
   void onChanged(String code) {
     if (code.isNotEmpty) {
-      setState(() async {
+      setState(() {
         controller.searching = true;
         try {
-          controller.shareEarnedModel.value?.listDetail.clear();
-          await controller.getAllShareEarned(fromDay, toDay, code);
+          controller.Search(fromDay, toDay, code.toString());
         } catch (e) {}
       });
     } else {
@@ -169,23 +175,30 @@ class _RealizedProfitLossState extends State<RealizedProfitLoss> {
             Column(
               children: [
                 Container(
-                  color: AppColors.light_bg,
+                  decoration: const BoxDecoration(
+                    color: AppColors.light_bg,
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(12),
+                    ),
+                  ),
                   height: kToolbarHeight,
                   child: TextField(
                     onChanged: onChanged,
                     enableSuggestions: false,
                     decoration: InputDecoration(
-                        border: InputBorder.none,
-                        hintText: S.of(context).search_stock,
-                        suffixIcon: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 16),
-                          child: Image.asset(
-                            AppImages.search_icon,
-                          ),
+                      enabled: false,
+                      border: InputBorder.none,
+                      hintText: S.of(context).search_stock,
+                      suffixIcon: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        child: Image.asset(
+                          AppImages.search_icon,
                         ),
-                        fillColor: AppColors.neutral_07,
-                        suffixIconConstraints:
-                            const BoxConstraints(maxWidth: 52, maxHeight: 20)),
+                      ),
+                      fillColor: AppColors.neutral_07,
+                      suffixIconConstraints:
+                          const BoxConstraints(maxWidth: 52, maxHeight: 20),
+                    ),
                   ),
                 ),
               ],
@@ -208,7 +221,7 @@ class _RealizedProfitLossState extends State<RealizedProfitLoss> {
                   ),
                 ),
                 const SizedBox(width: 8),
-                Text('-'),
+                const Text('-'),
                 const SizedBox(width: 8),
                 Expanded(
                   child: DayInput(
@@ -241,8 +254,13 @@ class _RealizedProfitLossState extends State<RealizedProfitLoss> {
                 children: [
                   Text("Tổng cộng", style: AppTextStyle.labelMedium_12),
                   Text(
-                      NumUtils.formatDouble(controller
-                          .shareEarnedModel.value?.listDetail.last.rOWNUM ?? 0),
+                      controller.shareEarnedModel.value?.listDetail
+                                  .isNotEmpty ==
+                              true
+                          ? NumUtils.formatDouble(controller.shareEarnedModel
+                                  .value?.cEARNEDVALUE ??
+                              0)
+                          : '',
                       style: AppTextStyle.labelMedium_12
                           .copyWith(color: AppColors.semantic_01))
                 ],
@@ -251,24 +269,45 @@ class _RealizedProfitLossState extends State<RealizedProfitLoss> {
             const SizedBox(
               height: 16,
             ),
-            Obx(
-              () => Container(
-                padding: const EdgeInsets.all(16),
-                decoration: BoxDecoration(
-                    color: AppColors.light_bg,
-                    borderRadius: BorderRadius.circular(12)),
-                child: Column(
-                  children: [
-                    for (ShareEarnedDetailModel detail
-                        in controller.shareEarnedModel.value?.listDetail ?? [])
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 4),
-                        child: ItemRealizedWidget(detail: detail),
-                      )
-                  ],
-                ),
-              ),
-            )
+            Obx(() {
+              if (!controller.searching) {
+                return Container(
+                  padding: const EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                      color: AppColors.light_bg,
+                      borderRadius: BorderRadius.circular(12)),
+                  child: Column(
+                    children: [
+                      if (!controller.searching)
+                        for (ShareEarnedDetailModel detail
+                            in controller.shareEarnedModel.value?.listDetail ??
+                                [])
+                          Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 4),
+                            child: ItemRealizedWidget(detail: detail),
+                          )
+                    ],
+                  ),
+                );
+              } else {
+                return Container(
+                  padding: const EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                      color: AppColors.light_bg,
+                      borderRadius: BorderRadius.circular(12)),
+                  child: Column(
+                    children: [
+                      for (ShareEarnedDetailModel detail
+                          in controller.listSearch.value?.listDetail ?? [])
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 4),
+                          child: ItemRealizedWidget(detail: detail),
+                        )
+                    ],
+                  ),
+                );
+              } /////
+            })
           ],
         ),
       ),
@@ -278,7 +317,24 @@ class _RealizedProfitLossState extends State<RealizedProfitLoss> {
           borderRadius: const BorderRadius.all(Radius.circular(6)),
           child: InkWell(
             borderRadius: const BorderRadius.all(Radius.circular(6)),
-            onTap: () {},
+            onTap: () async {
+              final list =
+                  await dataCenterService.getStockModelsFromStockCodes(["AAA"]);
+              final StockModel? aaa;
+              if (list?.isNotEmpty ?? false) {
+                aaa = list!.first;
+              } else {
+                aaa = null;
+              }
+              if (mounted) {}
+              // return StockOrderISheet(widget.stockModel).showSheet(context, );
+              StockOrderISheet(null).show(
+                  context,
+                  StockOrderSheet(
+                    stockModel: aaa,
+                    orderData: null,
+                  ));
+            },
             child: Ink(
               padding: const EdgeInsets.all(8),
               decoration: const BoxDecoration(

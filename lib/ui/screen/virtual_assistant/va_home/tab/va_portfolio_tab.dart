@@ -212,6 +212,7 @@ class _VAPortfolioTabState extends State<VAPortfolioTab> with AppValidator {
                               vertical: 8, horizontal: 16),
                           child: SizedBox(
                             height: 72,
+
                             child: Obx(() {
                               final StockModel? stockModel;
                               if (i >
@@ -227,6 +228,7 @@ class _VAPortfolioTabState extends State<VAPortfolioTab> with AppValidator {
                                     .elementAt(i),
                               );
                             }),
+
                           ),
                         ),
                     ],
