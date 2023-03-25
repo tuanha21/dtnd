@@ -2,7 +2,6 @@ import 'package:get/get_rx/src/rx_types/rx_types.dart';
 
 import '../../../../../=models=/request/request_model.dart';
 import '../../../../../=models=/response/share_earned_model.dart';
-import '../../../../../=models=/response/stock.dart';
 import '../../../../../=models=/response/stock_model.dart';
 import '../../../../../data/i_data_center_service.dart';
 import '../../../../../data/i_local_storage_service.dart';
@@ -26,7 +25,6 @@ class RealizedProfitLossController {
   factory RealizedProfitLossController() => _instance;
 
   final ILocalStorageService localStorageService = LocalStorageService();
-  List<Stock> listSearch = [];
   bool searching = false;
 
   void init() {}
@@ -40,10 +38,11 @@ class RealizedProfitLossController {
 
   final Rx<String?> stockCode = Rxn();
   final Rx<ShareEarnedModel?> shareEarnedModel = Rxn();
+  final Rx<ShareEarnedModel?> listSearch = Rxn();
   final INetworkService networkService = NetworkService();
 
   Future<ShareEarnedModel?> getAllShareEarned(
-  DateTime? fromDay, DateTime? toDay,String? maCP) async {
+      DateTime? fromDay, DateTime? toDay, String? maCP) async {
     if (!userService.isLogin) {
       return null;
     }
@@ -54,8 +53,8 @@ class RealizedProfitLossController {
           cmd: "GetAllShareEarned",
           p1: "${userService.token.value!.user}6",
           p2: maCP ?? '',
-          p3: TimeUtilities.commonTimeFormat.format(
-              fromDay ?? TimeUtilities.getPreviousDateTime(TimeUtilities.month(1))) ,
+          p3: TimeUtilities.commonTimeFormat.format(fromDay ??
+              TimeUtilities.getPreviousDateTime(TimeUtilities.month(1))),
           p4: TimeUtilities.commonTimeFormat.format(toDay ?? DateTime.now()),
           p5: "1",
           p6: "20"),
@@ -69,5 +68,34 @@ class RealizedProfitLossController {
     }
     shareEarnedModel.refresh();
     return shareEarnedModel.value;
+  }
+
+  Future<ShareEarnedModel?> Search(
+      DateTime? fromDay, DateTime? toDay, String? maCP) async {
+    if (!userService.isLogin) {
+      return null;
+    }
+    final requestModel = RequestModel(
+      group: "B",
+      userService,
+      data: RequestDataModel.cursorType(
+          cmd: "GetAllShareEarned",
+          p1: "${userService.token.value!.user}6",
+          p2: maCP ?? '',
+          p3: TimeUtilities.commonTimeFormat.format(fromDay ??
+              TimeUtilities.getPreviousDateTime(TimeUtilities.month(1))),
+          p4: TimeUtilities.commonTimeFormat.format(toDay ?? DateTime.now()),
+          p5: "1",
+          p6: "20"),
+    );
+    logger.v(requestModel.toJson());
+    final listDetail = await networkService
+        .getDataProfitLoss<ShareEarnedDetailModel>(requestModel);
+    logger.v(listDetail?.length.toString());
+    if (listDetail?.isNotEmpty ?? false) {
+      listSearch.value = ShareEarnedModel.fromListDetail(listDetail);
+    }
+    listSearch.refresh();
+    return listSearch.value;
   }
 }
