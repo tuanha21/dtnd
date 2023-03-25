@@ -10,6 +10,7 @@ import 'package:dtnd/ui/widget/expanded_widget.dart';
 import 'package:dtnd/utilities/num_utils.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../../=models=/response/stock.dart';
 import '../../../../widget/icon/stock_icon.dart';
 import '../../component/asset_grid_element.dart';
 
@@ -32,6 +33,7 @@ class ItemRealizedWidget extends StatefulWidget {
 class _ItemRealizedState extends State<ItemRealizedWidget> {
   final IDataCenterService dataCenterService = DataCenterService();
   bool expand = false;
+  Stock? stock;
 
   void onTap() {
     setState(() {
@@ -43,6 +45,19 @@ class _ItemRealizedState extends State<ItemRealizedWidget> {
   @override
   void initState() {
     super.initState();
+    getStock(widget.detail?.cSHARECODE);
+  }
+
+  void getStock(String? stockCode) async {
+    if (stockCode == null) {
+      return;
+    }
+    final stocks = dataCenterService.getStockFromStockCodes([stockCode]);
+    if (stocks.isNotEmpty) {
+      setState(() {
+        stock = stocks.first;
+      });
+    }
   }
 
   @override
@@ -80,21 +95,21 @@ class _ItemRealizedState extends State<ItemRealizedWidget> {
                               .titleSmall!
                               .copyWith(fontWeight: FontWeight.w600),
                         ),
-                        SizedBox(
-                          width: 80,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                widget.detail?.cSHARECODE ?? '',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .titleSmall!
-                                    .copyWith(fontWeight: FontWeight.w600),
+                        Row(
+                          children: [
+                            Flexible(
+                              child: Text(
+                                stock?.nameShort ?? "",
+                                overflow:
+                                TextOverflow.ellipsis,
+                                style: AppTextStyle
+                                    .labelSmall_10
+                                    .copyWith(
+                                    color: AppColors
+                                        .neutral_03),
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
                       ],
                     ),
