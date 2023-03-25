@@ -250,9 +250,9 @@ class _RealizedProfitLossState extends State<RealizedProfitLoss> {
                       controller.shareEarnedModel.value?.listDetail
                                   .isNotEmpty ==
                               true
-                          ? NumUtils.formatDouble(controller.shareEarnedModel
-                                  .value?.cEARNEDVALUE ??
-                              0)
+                          ? NumUtils.formatDouble(
+                              controller.shareEarnedModel.value?.cEARNEDVALUE ??
+                                  0)
                           : '',
                       style: AppTextStyle.labelMedium_12
                           .copyWith(color: AppColors.semantic_01))
@@ -328,14 +328,9 @@ class _RealizedProfitLossState extends State<RealizedProfitLoss> {
           child: InkWell(
             borderRadius: const BorderRadius.all(Radius.circular(6)),
             onTap: () async {
-              final list =
-                  await dataCenterService.getStockModelsFromStockCodes(["AAA"]);
-              final StockModel? aaa;
-              if (list?.isNotEmpty ?? false) {
-                aaa = list!.first;
-              } else {
-                aaa = null;
-              }
+              final StockModel? aaa =
+                  await dataCenterService.getStockModelFromStockCode("AAA");
+
               if (mounted) {}
               // return StockOrderISheet(widget.stockModel).showSheet(context, );
               StockOrderISheet(null).show(

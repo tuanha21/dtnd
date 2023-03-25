@@ -43,7 +43,7 @@ abstract class IDataCenterService {
   Future<List<StockModel>?> getStocksModelsFromStockCodes(
       List<String> stockCodes);
 
-  Future<StockModel?> getStockModelsFromStockCode(String stockCode);
+  Future<StockModel?> getStockModelFromStockCode(String stockCode);
 
   List<Stock> getStocksFromStockCodes(List<String> stockCodes);
 

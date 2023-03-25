@@ -325,7 +325,7 @@ class DataCenterService
   }
 
   @override
-  Future<StockModel?> getStockModelsFromStockCode(String stockCode) async {
+  Future<StockModel?> getStockModelFromStockCode(String stockCode) async {
     final res = await getStocksModelsFromStockCodes([stockCode]);
     if (res?.isEmpty ?? true) {
       return null;

@@ -52,12 +52,9 @@ class _ItemRealizedState extends State<ItemRealizedWidget> {
     if (stockCode == null) {
       return;
     }
-    final stocks = dataCenterService.getStockFromStockCodes([stockCode]);
-    if (stocks.isNotEmpty) {
-      setState(() {
-        stock = stocks.first;
-      });
-    }
+    setState(() {
+      stock = dataCenterService.getStockFromStockCode(stockCode);
+    });
   }
 
   @override
@@ -100,13 +97,9 @@ class _ItemRealizedState extends State<ItemRealizedWidget> {
                             Flexible(
                               child: Text(
                                 stock?.nameShort ?? "",
-                                overflow:
-                                TextOverflow.ellipsis,
-                                style: AppTextStyle
-                                    .labelSmall_10
-                                    .copyWith(
-                                    color: AppColors
-                                        .neutral_03),
+                                overflow: TextOverflow.ellipsis,
+                                style: AppTextStyle.labelSmall_10
+                                    .copyWith(color: AppColors.neutral_03),
                               ),
                             ),
                           ],
