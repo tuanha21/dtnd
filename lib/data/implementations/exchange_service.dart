@@ -280,7 +280,6 @@ class ExchangeService implements IExchangeService {
       if (response == null) {
         throw Exception();
       }
-      logger.v(response);
       return response;
     } catch (e) {
       logger.e(e);

@@ -54,7 +54,7 @@ class _MoneyStatementSheetState extends State<MoneyStatementSheet> {
     final textTheme = Theme.of(context).textTheme;
     return SafeArea(
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -62,36 +62,44 @@ class _MoneyStatementSheetState extends State<MoneyStatementSheet> {
               title: "Sao kê tiền",
               backData: null,
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                DayInput(
-                  initialDay: fromDay,
-                  firstDay: firstDay,
-                  lastDay: lastDay,
-                  onChanged: (value) {
-                    setState(() {
-                      fromDay = value;
-                    });
-                    getData();
-                  },
-                ),
-                DayInput(
-                  initialDay: toDay,
-                  firstDay: firstDay,
-                  lastDay: lastDay,
-                  onChanged: (value) {
-                    setState(() {
-                      toDay = value;
-                    });
-                    getData();
-                  },
-                )
-              ],
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  DayInput(
+                    initialDay: fromDay,
+                    firstDay: firstDay,
+                    lastDay: lastDay,
+                    onChanged: (value) {
+                      setState(() {
+                        fromDay = value;
+                      });
+                      getData();
+                    },
+                  ),
+                  DayInput(
+                    initialDay: toDay,
+                    firstDay: firstDay,
+                    lastDay: lastDay,
+                    onChanged: (value) {
+                      setState(() {
+                        toDay = value;
+                      });
+                      getData();
+                    },
+                  )
+                ],
+              ),
             ),
             Expanded(child: Builder(builder: (context) {
               if (list.isEmpty || total == null) {
-                return const Center(child: EmptyListWidget());
+                return Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    EmptyListWidget(),
+                  ],
+                );
               } else {
                 return Column(
                   children: [
@@ -107,6 +115,7 @@ class _MoneyStatementSheetState extends State<MoneyStatementSheet> {
                                 child:
                                     Image.asset(AppImages.blue_chart_star_icon),
                               ),
+                              const SizedBox(width: 8),
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [

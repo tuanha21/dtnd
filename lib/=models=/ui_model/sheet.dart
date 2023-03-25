@@ -5,8 +5,7 @@ import 'package:flutter/material.dart';
 abstract class ISheet implements IOverlay {
   const ISheet();
   @override
-  Future<UserCmd?> show(BuildContext context, Widget? child,
-      {bool wrap = true}) {
+  Future<UserCmd?> show(BuildContext ctx, Widget? child, {bool wrap = true}) {
     if (child == null) {
       return Future(
         () => null,
@@ -17,11 +16,13 @@ abstract class ISheet implements IOverlay {
             children: [child],
           )
         : SizedBox(
-            height: MediaQuery.of(context).size.height -
-                MediaQuery.of(context).padding.top,
+            height:
+                MediaQuery.of(ctx).size.height - MediaQuery.of(ctx).padding.top,
             child: child);
+    // print(MediaQuery.of(context).size.height);
+    // print(MediaQuery.of(context).padding.top);
     return showModalBottomSheet<UserCmd>(
-      context: context,
+      context: ctx,
       isScrollControlled: true,
       // useSafeArea: true,
       // enableDrag: false,
@@ -35,7 +36,7 @@ abstract class ISheet implements IOverlay {
           child: content,
         );
       },
-    ).then((result) => cmd(context, result));
+    ).then((result) => cmd(ctx, result));
   }
 
   @override

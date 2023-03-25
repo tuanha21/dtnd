@@ -8,22 +8,18 @@ import 'package:dtnd/data/implementations/user_service.dart';
 import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/screen/account/icon/account_icon.dart';
 import 'package:dtnd/ui/screen/account/logic/account_extension_button.dart';
-import 'package:dtnd/ui/screen/account/logic/asset_sheet.dart';
+import 'package:dtnd/ui/screen/account/logic/account_sheet.dart';
 import 'package:dtnd/ui/screen/account/screen/full_extensions_screen.dart';
 import 'package:dtnd/ui/screen/account/screen/smartotp_screen/smartotp_screen.dart';
 import 'package:dtnd/ui/screen/account/sheet/money_statement_sheet.dart';
 import 'package:dtnd/ui/screen/exchange_stock/order_note/screen/order_note_screen.dart';
 import 'package:dtnd/ui/screen/exchange_stock/stock_order/business/stock_order_flow.dart';
 import 'package:dtnd/ui/screen/exchange_stock/stock_order/sheet/stock_order_sheet.dart';
-import 'package:dtnd/ui/screen/login/login_screen.dart';
-import 'package:dtnd/ui/widget/overlay/login_first_dialog.dart';
 import 'package:flutter/material.dart';
 
-import '../../../widget/overlay/custom_dialog.dart';
-
 class AccountExtensionsWidget extends StatefulWidget {
-  const AccountExtensionsWidget({super.key});
-
+  const AccountExtensionsWidget({super.key, required this.ctx});
+  final BuildContext ctx;
   @override
   State<AccountExtensionsWidget> createState() =>
       _AccountExtensionsWidgetState();
@@ -89,14 +85,16 @@ class _AccountExtensionsWidgetState extends State<AccountExtensionsWidget> {
       if (mounted) {}
       // return StockOrderISheet(widget.stockModel).showSheet(context, );
       StockOrderISheet(null).show(
-          context,
+          widget.ctx,
           StockOrderSheet(
             stockModel: aaa,
             orderData: null,
           ));
     };
-    list[6].route = () => MoneyStatementISheet()
-        .show(context, const MoneyStatementSheet(), wrap: false);
+    list[6].route = () {
+      const MoneyStatementISheet()
+          .show(widget.ctx, const MoneyStatementSheet(), wrap: false);
+    };
   }
 
   @override
