@@ -71,7 +71,6 @@ class LoginController {
     }
     logger.v(userToken?.toJson());
     await userService.saveToken(userToken!, password);
-    await userService.saveValueRegisterVa();
     loading.value = false;
     return userToken;
   }

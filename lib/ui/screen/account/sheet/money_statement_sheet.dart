@@ -28,6 +28,7 @@ class _MoneyStatementSheetState extends State<MoneyStatementSheet> {
   late DateTime toDay;
   late DateTime firstDay;
   late DateTime lastDay;
+
   @override
   void initState() {
     fromDay = TimeUtilities.getPreviousDateTime(TimeUtilities.month(1));
@@ -45,7 +46,7 @@ class _MoneyStatementSheetState extends State<MoneyStatementSheet> {
     );
     list.clear();
     total = res.total;
-    list.addAll(res.listHistory);
+    list.addAll(res.listHistory.reversed);
     setState(() {});
   }
 

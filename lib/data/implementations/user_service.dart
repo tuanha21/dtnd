@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:math';
 
 import 'package:dtnd/=models=/request/request_model.dart';
 import 'package:dtnd/=models=/response/account/asset_chart_element.dart';
@@ -98,7 +97,7 @@ class UserService implements IUserService {
       getUserInfo();
       getListAccount();
       getTotalAsset();
-      getSearchHistory();
+      // getSearchHistory();
       return true;
     } catch (e) {
       return false;

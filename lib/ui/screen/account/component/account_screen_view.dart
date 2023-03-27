@@ -4,7 +4,7 @@ import 'package:dtnd/ui/screen/account/component/account_total_asset_widget.dart
 import 'package:dtnd/ui/screen/account/component/extensions_widget.dart';
 import 'package:dtnd/ui/screen/account/icon/account_icon.dart';
 import 'package:dtnd/ui/screen/account/sheet/sheet_config.dart';
-import 'package:dtnd/ui/screen/account/sheet/user_info_detailt_sheet.dart';
+import 'package:dtnd/ui/screen/account/sheet/user_info_detail_sheet.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:flutter/material.dart';
 
