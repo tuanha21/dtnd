@@ -13,7 +13,7 @@ import 'package:get/get.dart';
 
 enum QuickAccess {
   money,
-  base,
+  baseTrading,
   virtualAssistant,
   custom,
   // derivative,
@@ -27,7 +27,7 @@ extension QuickAccessX on QuickAccess {
     switch (this) {
       case QuickAccess.money:
         return AppImages.home_icon_wallet_2;
-      case QuickAccess.base:
+      case QuickAccess.baseTrading:
         return AppImages.home_icon_chart_2;
       case QuickAccess.virtualAssistant:
         return AppImages.home_icon_cpu_charge;
@@ -48,7 +48,7 @@ extension QuickAccessX on QuickAccess {
     switch (this) {
       case QuickAccess.money:
         return S.of(context).accumulate;
-      case QuickAccess.base:
+      case QuickAccess.baseTrading:
         return S.of(context).qa_base;
       case QuickAccess.virtualAssistant:
         return S.of(context).virtual_assistant;

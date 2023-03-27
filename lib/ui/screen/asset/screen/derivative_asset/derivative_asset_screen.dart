@@ -63,7 +63,7 @@ class _DerivativeAssetScreenState extends State<DerivativeAssetScreen>
       gettingCatalog = true;
     });
     final _list =
-        await dataCenterService.getStockModelsFromStockCodes(defaultCatalog);
+        await dataCenterService.getStocksModelsFromStockCodes(defaultCatalog);
     for (var element in (_list ?? [])) {
       list.add(InvestmentCatalog(stockModel: element));
     }

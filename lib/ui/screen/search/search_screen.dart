@@ -50,7 +50,7 @@ class _SearchScreenState extends State<SearchScreen>
   void getSearchHistory() async {
     final list = await userService.getSearchHistory();
     final searchHistory =
-        await dataCenterService.getStockModelsFromStockCodes(list);
+        await dataCenterService.getStocksModelsFromStockCodes(list);
     setState(() {
       listSearchHistory = searchHistory;
       if (searchHistory?.isNotEmpty ?? false) {
@@ -63,7 +63,7 @@ class _SearchScreenState extends State<SearchScreen>
 
   void getListTopSearch() async {
     final list = await userService.getTopSearch();
-    listTopSearch = dataCenterService.getStockFromStockCodes(list);
+    listTopSearch = dataCenterService.getStocksFromStockCodes(list);
     setState(() {});
   }
 

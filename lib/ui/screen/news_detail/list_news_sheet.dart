@@ -126,21 +126,18 @@ class _ListNewsSheetState extends State<ListNewsSheet> {
           itemCount: listNews!.length);
     }
     return SafeArea(
-      child: SizedBox(
-        height: MediaQuery.of(context).size.height,
-        child: Padding(
-          padding: const EdgeInsets.only(left: 8, right: 8, top: 20),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SheetHeader(
-                implementBackButton: false,
-                title: S.of(context).news,
-              ),
-              const SizedBox(height: 20),
-              Expanded(child: list),
-            ],
-          ),
+      child: Padding(
+        padding: const EdgeInsets.only(left: 8, right: 8, top: 20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SheetHeader(
+              implementBackButton: false,
+              title: S.of(context).news,
+            ),
+            const SizedBox(height: 20),
+            Expanded(child: list),
+          ],
         ),
       ),
     );

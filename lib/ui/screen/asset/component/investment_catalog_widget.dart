@@ -57,7 +57,7 @@ class _InvestmentCatalogWidgetState extends State<InvestmentCatalogWidget> {
     if (stockCode == null) {
       return;
     }
-    final stocks = dataCenterService.getStockFromStockCodes([stockCode]);
+    final stocks = dataCenterService.getStocksFromStockCodes([stockCode]);
     if (stocks.isNotEmpty) {
       setState(() {
         stock = stocks.first;

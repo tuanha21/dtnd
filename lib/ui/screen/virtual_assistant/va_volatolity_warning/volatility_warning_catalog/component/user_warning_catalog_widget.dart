@@ -54,7 +54,7 @@ class _UserWarningCatalogWidgetState extends State<UserWarningCatalogWidget> {
       return;
     }
     listStocks = await dataCenterService
-        .getStockModelsFromStockCodes(currentCatalog!.listData);
+        .getStocksModelsFromStockCodes(currentCatalog!.listData);
     setState(() {
       initialized = true;
     });
@@ -170,7 +170,7 @@ class _UserWarningCatalogWidgetState extends State<UserWarningCatalogWidget> {
             },
             onSuggestionSelected: (suggestion) async {
               final model = (await dataCenterService
-                      .getStockModelsFromStockCodes([suggestion.stockCode]))
+                      .getStocksModelsFromStockCodes([suggestion.stockCode]))
                   ?.first;
               final String stock = model?.stock.stockCode ?? "";
               currentCatalog!.listData.add(stock);

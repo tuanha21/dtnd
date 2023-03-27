@@ -34,6 +34,10 @@ class _SignUpViewState extends State<SignUpView> with AppValidator {
         duration: const Duration(milliseconds: 500), curve: Curves.easeInCubic);
   }
 
+  Future<bool> verifyRegisterInfo(String mobile, String mail) {
+    return userService.verifyRegisterInfo(mobile, mail);
+  }
+
   Future<SignUpSuccessDataModel?> createAccount() {
     return userService.createAccount(
         info!.name, info!.phone, info!.email, info!.password);
@@ -67,9 +71,11 @@ class _SignUpViewState extends State<SignUpView> with AppValidator {
         children: <Widget>[
           SignUpInfoPage(
             onSuccess: onSuccess,
+            verifyRegisterInfo: verifyRegisterInfo,
           ),
           FillOTPPage(
             onSuccess: onSuccess,
+            resendOTP: () => verifyRegisterInfo(info!.phone, info!.email),
             verifyOTP: (otp) =>
                 userService.verifyRegisterOTP(info!.phone, info!.email, otp),
             createAccount: createAccount,

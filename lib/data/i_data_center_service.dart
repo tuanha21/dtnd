@@ -21,7 +21,6 @@ import 'package:dtnd/=models=/response/stock_ranking_financial_index_model.dart'
 import 'package:dtnd/=models=/response/stock_trading_history.dart';
 import 'package:dtnd/=models=/response/subsidiaries_model.dart';
 import 'package:dtnd/=models=/response/top_influence_model.dart';
-import 'package:dtnd/=models=/response/top_interested_model.dart';
 import 'package:dtnd/=models=/response/trash_model.dart';
 import 'package:dtnd/=models=/ui_model/field_tree_element_model.dart';
 
@@ -41,10 +40,14 @@ abstract class IDataCenterService {
 
   Future<void> startSocket();
 
-  Future<List<StockModel>?> getStockModelsFromStockCodes(
+  Future<List<StockModel>?> getStocksModelsFromStockCodes(
       List<String> stockCodes);
 
-  List<Stock> getStockFromStockCodes(List<String> stockCodes);
+  Future<StockModel?> getStockModelFromStockCode(String stockCode);
+
+  List<Stock> getStocksFromStockCodes(List<String> stockCodes);
+
+  Stock getStockFromStockCode(String stockCode);
 
   Future<void> removeStockModelsFromStockCodes(List<String> stockCodes);
 

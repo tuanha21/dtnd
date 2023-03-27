@@ -62,7 +62,7 @@ class OrderOrderPanel extends StatelessWidget {
                     ))
                         .then((value) async {
                       if (value is Stock) {
-                        DataCenterService().getStockModelsFromStockCodes(
+                        DataCenterService().getStocksModelsFromStockCodes(
                             [value.stockCode]).then((stockModels) {
                           if (stockModels?.isNotEmpty ?? false) {
                             formState.didChange(stockModels!.first);

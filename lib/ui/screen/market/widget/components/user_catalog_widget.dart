@@ -73,8 +73,8 @@ class _UserCatalogWidgetState extends State<UserCatalogWidget> {
     }
     savedCatalog = localStorageService.getSavedCatalog(user);
     currentCatalog = defaultCatalog;
-    listStocks =
-        dataCenterService.getStockModelsFromStockCodes(currentCatalog.listData);
+    listStocks = dataCenterService
+        .getStocksModelsFromStockCodes(currentCatalog.listData);
     // if (savedCatalog.catalogs.isNotEmpty) {
     //   currentCatalog = savedCatalog.catalogs.first;
     //   if (currentCatalog.listStock.isNotEmpty) {
@@ -142,7 +142,7 @@ class _UserCatalogWidgetState extends State<UserCatalogWidget> {
                       localStorageService.putSavedCatalog(savedCatalog);
                       if (currentCatalog.listData.isNotEmpty) {
                         listStocks =
-                            dataCenterService.getStockModelsFromStockCodes(
+                            dataCenterService.getStocksModelsFromStockCodes(
                                 currentCatalog.listData);
                       } else {
                         listStocks = Future.value([]);
@@ -251,7 +251,7 @@ class _UserCatalogWidgetState extends State<UserCatalogWidget> {
                                           .putSavedCatalog(savedCatalog);
                                       if (currentCatalog.listData.isNotEmpty) {
                                         listStocks = dataCenterService
-                                            .getStockModelsFromStockCodes(
+                                            .getStocksModelsFromStockCodes(
                                                 currentCatalog.listData);
                                       } else {
                                         listStocks = Future.value([]);
@@ -393,7 +393,7 @@ class _UserCatalogWidgetState extends State<UserCatalogWidget> {
           if (savedCatalog.catalogs.isNotEmpty) {
             currentCatalog = savedCatalog.catalogs.last;
             listStocks = dataCenterService
-                .getStockModelsFromStockCodes(currentCatalog.listData);
+                .getStocksModelsFromStockCodes(currentCatalog.listData);
           } else {
             listStocks = Future.value([]);
           }
@@ -409,7 +409,7 @@ class _UserCatalogWidgetState extends State<UserCatalogWidget> {
         listStocks = Future.value([]);
       } else {
         listStocks = dataCenterService
-            .getStockModelsFromStockCodes(currentCatalog.listData);
+            .getStocksModelsFromStockCodes(currentCatalog.listData);
       }
     });
   }

@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:dtnd/=models=/index.dart';
 import 'package:dtnd/=models=/response/business_profile_model.dart';
 import 'package:dtnd/=models=/response/deep_model.dart';
@@ -227,7 +225,7 @@ class DataCenterService
     final String codes = stocks.join(",");
     String joinMsg = "{\"action\":\"join\",\"data\":\"$codes\"}";
     socket.emit("regs", joinMsg);
-    print(joinMsg);
+    // print(joinMsg);
     return;
   }
 
@@ -236,7 +234,7 @@ class DataCenterService
     final String codes = stocks.join(",");
     String leaveMsg = "{\"action\":\"leave\",\"data\":\"$codes\"}";
     socket.emit("regs", leaveMsg);
-    print(leaveMsg);
+    // print(leaveMsg);
     return;
   }
 
@@ -292,13 +290,13 @@ class DataCenterService
   }
 
   @override
-  Future<List<StockModel>?> getStockModelsFromStockCodes(
+  Future<List<StockModel>?> getStocksModelsFromStockCodes(
       List<String> stockCodes) async {
     if (registering) {
       // Wait to recall
       await 1.delay();
       // Recall
-      return getStockModelsFromStockCodes(stockCodes);
+      return getStocksModelsFromStockCodes(stockCodes);
     }
     registering = true;
     final List<StockModel> listReturn = <StockModel>[];
@@ -327,7 +325,17 @@ class DataCenterService
   }
 
   @override
-  List<Stock> getStockFromStockCodes(List<String> stockCodes) {
+  Future<StockModel?> getStockModelFromStockCode(String stockCode) async {
+    final res = await getStocksModelsFromStockCodes([stockCode]);
+    if (res?.isEmpty ?? true) {
+      return null;
+    } else {
+      return res!.first;
+    }
+  }
+
+  @override
+  List<Stock> getStocksFromStockCodes(List<String> stockCodes) {
     final List<Stock> listReturn = <Stock>[];
     for (final String code in stockCodes) {
       try {
@@ -339,6 +347,12 @@ class DataCenterService
       }
     }
     return listReturn;
+  }
+
+  @override
+  Stock getStockFromStockCode(String stockCode) {
+    final res = getStocksFromStockCodes([stockCode]);
+    return res.first;
   }
 
   @override
@@ -460,7 +474,7 @@ class DataCenterService
       return [];
     }
     final List<String> listStrings = listTop!.map((e) => e.cSHARECODE).toList();
-    final stockModels = await getStockModelsFromStockCodes(listStrings);
+    final stockModels = await getStocksModelsFromStockCodes(listStrings);
     if (stockModels?.isEmpty ?? true) {
       return listTop;
     }

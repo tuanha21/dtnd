@@ -36,17 +36,27 @@ class _CustomTableCalendarState extends State<CustomTableCalendar> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
       decoration: const BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(12)),
           color: AppColors.neutral_06),
       child: TableCalendar(
         firstDay: _firstDay,
         lastDay: _lastDay,
-        focusedDay: DateTime.now(),
+        focusedDay: _now,
+        currentDay: _now,
         // selectedDayPredicate: (day) {
         //   return isSameDay(_selectedDay, day);
         // },
+
+        daysOfWeekHeight: 32,
+        headerStyle: const HeaderStyle(
+            titleCentered: true,
+            formatButtonVisible: false,
+            formatButtonShowsNext: false,
+            decoration: BoxDecoration(
+                border: BorderDirectional(
+                    bottom: BorderSide(color: AppColors.neutral_05)))),
         onDaySelected: (selectedDay, focusedDay) {
           return widget.onChanged?.call(selectedDay);
         },
@@ -78,12 +88,65 @@ class _CustomTableCalendarState extends State<CustomTableCalendar> {
               default:
                 throw Exception();
             }
-            return Center(
+            return Align(
+              alignment: Alignment.bottomCenter,
               child: Text(
                 dayOfWeek,
                 style: AppTextStyle.titleSmall_14
                     .copyWith(color: AppColors.primary_01),
               ),
+            );
+          },
+          todayBuilder: (context, day, focusedDay) {
+            return Container(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              decoration: const BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(8)),
+                color: AppColors.primary_01,
+              ),
+              child: Text(
+                focusedDay.day.toString(),
+                style: AppTextStyle.bodyMedium_14.copyWith(color: Colors.white),
+              ),
+            );
+          },
+          defaultBuilder: (context, day, focusedDay) {
+            return Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+              // decoration: const BoxDecoration(
+              //   borderRadius: BorderRadius.all(Radius.circular(8)),
+              //   color: AppColors.primary_01,
+              // ),
+              child: Text(
+                day.day.toString(),
+                style: Theme.of(context).textTheme.bodyMedium,
+              ),
+            );
+          },
+          outsideBuilder: (context, day, focusedDay) {
+            return Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+              // decoration: const BoxDecoration(
+              //   borderRadius: BorderRadius.all(Radius.circular(8)),
+              //   color: AppColors.primary_01,
+              // ),
+              child: Text(
+                day.day.toString(),
+                maxLines: 1,
+                style: AppTextStyle.bodyMedium_14
+                    .copyWith(color: AppColors.neutral_04),
+              ),
+            );
+          },
+          headerTitleBuilder: (context, day) {
+            return Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  "T${day.month} ${day.year}",
+                  style: Theme.of(context).textTheme.bodyLarge,
+                )
+              ],
             );
           },
         ),

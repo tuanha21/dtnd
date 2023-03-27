@@ -1,14 +1,14 @@
+import 'dart:async';
+
 import 'package:dtnd/=models=/sign_up_success_data_model.dart';
-import 'package:dtnd/data/i_user_service.dart';
-import 'package:dtnd/data/implementations/user_service.dart';
 import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_textstyle.dart';
 import 'package:dtnd/ui/widget/app_snack_bar.dart';
 import 'package:dtnd/ui/widget/button/async_button.dart';
 import 'package:dtnd/ui/widget/expanded_widget.dart';
-import 'package:dtnd/utilities/responsive.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:pinput/pinput.dart';
 
 class FillOTPPage extends StatefulWidget {
@@ -17,8 +17,10 @@ class FillOTPPage extends StatefulWidget {
     required this.onSuccess,
     required this.verifyOTP,
     required this.createAccount,
+    required this.resendOTP,
   });
   final VoidCallback onSuccess;
+  final VoidCallback resendOTP;
   final Future<bool> Function(String) verifyOTP;
   final Future<SignUpSuccessDataModel?> Function() createAccount;
   @override
@@ -27,9 +29,43 @@ class FillOTPPage extends StatefulWidget {
 
 class _FillOTPPageState extends State<FillOTPPage> {
   final TextEditingController controller = TextEditingController();
-
+  Timer? timer;
   String? errorTxt;
   bool canNext = false;
+  bool canResend = false;
+  VoidCallback? resendOTP;
+  final Rx<int> timeLeft = 30.obs;
+  @override
+  void initState() {
+    super.initState();
+    setTimer();
+  }
+
+  void setTimer() {
+    timer = Timer.periodic(const Duration(seconds: 1), (tm) {
+      if (timeLeft.value == 1) {
+        timer?.cancel();
+        setState(() {
+          resendOTP = () {
+            setState(() {
+              resendOTP = null;
+            });
+            timeLeft.value = 30;
+            widget.resendOTP.call();
+            return setTimer();
+          };
+        });
+      }
+      timeLeft.value--;
+    });
+  }
+
+  String get _timeLeft => timeLeft.value > 9
+      ? "00:${timeLeft.value.toString()}"
+      : timeLeft.value == 0
+          ? ""
+          : "00:0${timeLeft.value}";
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context).textTheme;
@@ -134,7 +170,28 @@ class _FillOTPPageState extends State<FillOTPPage> {
               )),
           const SizedBox(height: 8),
           Row(
-            children: [Expanded(child: Text('Gửi lại mã?'))],
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              InkWell(
+                onTap: resendOTP,
+                child: Text(
+                  'Gửi lại mã?',
+                  style: AppTextStyle.bodySmall_12.copyWith(
+                    color: resendOTP != null
+                        ? AppColors.primary_01
+                        : AppColors.neutral_03,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ),
+              Obx(() => Text(
+                    _timeLeft,
+                    style: AppTextStyle.bodyMedium_14.copyWith(
+                      color: AppColors.neutral_03,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  )),
+            ],
           ),
           const SizedBox(height: 36),
           AsyncButton(

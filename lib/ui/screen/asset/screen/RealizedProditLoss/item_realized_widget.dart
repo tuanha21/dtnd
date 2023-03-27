@@ -57,12 +57,9 @@ class _ItemRealizedState extends State<ItemRealizedWidget> {
     if (stockCode == null) {
       return;
     }
-    final stocks = dataCenterService.getStockFromStockCodes([stockCode]);
-    if (stocks.isNotEmpty) {
-      setState(() {
-        stock = stocks.first;
-      });
-    }
+    setState(() {
+      stock = dataCenterService.getStockFromStockCode(stockCode);
+    });
   }
 
   Future<void> getStockModel() async {

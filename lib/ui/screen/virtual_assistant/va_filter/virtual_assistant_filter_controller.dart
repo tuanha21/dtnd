@@ -15,8 +15,6 @@ import 'package:dtnd/utilities/logger.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
-
-
 class VirtualAssistantFilterController {
   VirtualAssistantFilterController._internal();
 
@@ -53,7 +51,7 @@ class VirtualAssistantFilterController {
         list.add(stock.stockCode);
       }
       final stockModel =
-          await dataCenterService.getStockModelsFromStockCodes(list);
+          await dataCenterService.getStocksModelsFromStockCodes(list);
       followingCatalog.addAll(stockModel!);
     }
     initialized.value = true;
@@ -70,7 +68,7 @@ class VirtualAssistantFilterController {
     try {
       final top = await dataCenterService.getList30Stock("HSX30");
       listSuggestionStocks.value = await dataCenterService
-          .getStockModelsFromStockCodes(top.map((e) => e.stockCode).toList());
+          .getStocksModelsFromStockCodes(top.map((e) => e.stockCode).toList());
     } catch (e) {
       logger.e(e);
     }
@@ -103,7 +101,7 @@ class VirtualAssistantFilterController {
     followingStocks.add(stock);
     final stockCode = [stock.stockCode];
     final stockModel =
-        await dataCenterService.getStockModelsFromStockCodes(stockCode);
+        await dataCenterService.getStocksModelsFromStockCodes(stockCode);
     if (stockModel?.isEmpty ?? true) {
       throw Exception(S.current.something_went_wrong);
     }

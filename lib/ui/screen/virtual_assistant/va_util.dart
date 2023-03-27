@@ -33,9 +33,10 @@ class VAUtil {
           return;
         }
       });
-    }
-    else {
-      return _afterLogin(context);
+    } else {
+      return userService
+          .saveValueRegisterVa()
+          .then((value) => _afterLogin(context));
     }
   }
 

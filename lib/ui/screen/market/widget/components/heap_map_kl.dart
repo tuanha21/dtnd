@@ -47,7 +47,7 @@ class _HeapMapKLState extends State<HeapMapKL> {
         return;
       } else {
         final model =
-            await dataCenterService.getStockModelsFromStockCodes([stockCode]);
+            await dataCenterService.getStocksModelsFromStockCodes([stockCode]);
         final StockModel stock;
         if (model?.isNotEmpty ?? false) {
           stock = model!.first;
@@ -64,7 +64,7 @@ class _HeapMapKLState extends State<HeapMapKL> {
       }
     } else {
       final model =
-          await dataCenterService.getStockModelsFromStockCodes([stockCode]);
+          await dataCenterService.getStocksModelsFromStockCodes([stockCode]);
       final StockModel stock;
       if (model?.isNotEmpty ?? false) {
         stock = model!.first;

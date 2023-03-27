@@ -2,6 +2,7 @@ import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:dtnd/ui/widget/sheet/i_table_calendar_sheet.dart';
 import 'package:dtnd/ui/widget/sheet/table_calendar_sheet.dart';
+import 'package:dtnd/utilities/logger.dart';
 import 'package:dtnd/utilities/time_utils.dart';
 import 'package:flutter/material.dart';
 
@@ -46,13 +47,17 @@ class _DayInputState extends State<DayInput> {
                 TableCalendarSheet(
                   firstDay: widget.firstDay,
                   lastDay: widget.lastDay,
-                  focusedDay: widget.initialDay,
+                  focusedDay: currentDateTime,
                 ))
             .then((value) {
-          setState(() {
-            currentDateTime = value?.data;
-          });
-          widget.onChanged?.call(value?.data);
+          if (value?.data != null) {
+            setState(() {
+              currentDateTime = value?.data;
+            });
+            widget.onChanged?.call(value?.data);
+          } else {
+            return;
+          }
         }),
         borderRadius: const BorderRadius.all(Radius.circular(8)),
         child: Ink(

@@ -4,18 +4,24 @@ import 'package:dtnd/ui/screen/account/component/account_total_asset_widget.dart
 import 'package:dtnd/ui/screen/account/component/extensions_widget.dart';
 import 'package:dtnd/ui/screen/account/icon/account_icon.dart';
 import 'package:dtnd/ui/screen/account/sheet/sheet_config.dart';
-import 'package:dtnd/ui/screen/account/sheet/user_info_detailt_sheet.dart';
+import 'package:dtnd/ui/screen/account/sheet/user_info_detail_sheet.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:flutter/material.dart';
 
-class AccountScreenView extends StatelessWidget {
+class AccountScreenView extends StatefulWidget {
   const AccountScreenView(
       {super.key, required this.userService, this.onLogOut});
   final IUserService userService;
   final VoidCallback? onLogOut;
+
+  @override
+  State<AccountScreenView> createState() => _AccountScreenViewState();
+}
+
+class _AccountScreenViewState extends State<AccountScreenView> {
   @override
   Widget build(BuildContext context) {
-    final info = userService.userInfo.value;
+    final info = widget.userService.userInfo.value;
     final textTheme = Theme.of(context).textTheme;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -70,7 +76,9 @@ class AccountScreenView extends StatelessWidget {
           const SizedBox(height: 16),
           const AccountTotalAssetWidget(),
           const SizedBox(height: 16),
-          const AccountExtensionsWidget(),
+          AccountExtensionsWidget(
+            ctx: context,
+          ),
           const SizedBox(height: 40),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -83,7 +91,7 @@ class AccountScreenView extends StatelessWidget {
             children: [
               Expanded(
                 child: TextButton(
-                  onPressed: onLogOut,
+                  onPressed: widget.onLogOut,
                   style: const ButtonStyle(
                       padding: MaterialStatePropertyAll(EdgeInsets.all(14))),
                   child: Text(S.of(context).logout),

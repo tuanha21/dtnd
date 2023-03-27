@@ -70,7 +70,7 @@ class _ChangeStockOrderSheetState extends State<ChangeStockOrderSheet>
 
   Future<void> getData() async {
     final stockModels = await DataCenterService()
-        .getStockModelsFromStockCodes([widget.data.symbol]);
+        .getStocksModelsFromStockCodes([widget.data.symbol]);
     if (stockModels?.isNotEmpty ?? false) {
       stockModel = stockModels!.first;
       priceController.text =
