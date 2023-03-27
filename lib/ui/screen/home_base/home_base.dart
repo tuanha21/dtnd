@@ -9,6 +9,7 @@ import 'package:dtnd/ui/screen/home_base/widget/home_base_bottom_nav.dart';
 import 'package:dtnd/ui/screen/home_base/widget/home_base_nav.dart';
 import 'package:dtnd/ui/screen/login/login_screen.dart';
 import 'package:dtnd/ui/screen/market/market_screen.dart';
+import 'package:dtnd/ui/widget/drawer/app_drawer.dart';
 import 'package:dtnd/ui/widget/overlay/dialog_utilities.dart';
 import 'package:dtnd/utilities/logger.dart';
 import 'package:flutter/material.dart';
@@ -88,6 +89,7 @@ class _HomeBaseState extends State<HomeBase> with WidgetsBindingObserver {
   Widget build(BuildContext context) {
     return Scaffold(
       key: homeBaseKey,
+      drawer: const AppDrawer(),
       body: ObxValue<Rx<HomeNav>>(
         (currentHomeNav) {
           return routeBuilders[currentHomeNav.value] ??

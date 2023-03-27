@@ -275,6 +275,7 @@
 
     "login_exception_required_OTP": "Login with OTP code sent to your phone",
     "invalid_account": "This account has not been registered or Internet trading feature is no longer available",
+    "account_not_login_sentence": "Please log in to access more feature of DTND",
     "null_username": "Username requires at least 6 characters",
     "null_password": "Password requires at least 8 characters",
     "wrong_password": "Password is incorrect",

@@ -60,6 +60,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Thông tin tài khoản"),
         "account_managing":
             MessageLookupByLibrary.simpleMessage("Quản lý tài khoản"),
+        "account_not_login_sentence": MessageLookupByLibrary.simpleMessage(
+            "Bạn đăng nhập để thực hiện được nhiều tác vụ hơn với DTND nhé"),
         "account_notice":
             MessageLookupByLibrary.simpleMessage("Thông báo tài khoản"),
         "account_number": MessageLookupByLibrary.simpleMessage("Số tài khoản"),

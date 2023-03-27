@@ -2692,6 +2692,16 @@ class S {
     );
   }
 
+  /// `Please log in to access more feature of DTND`
+  String get account_not_login_sentence {
+    return Intl.message(
+      'Please log in to access more feature of DTND',
+      name: 'account_not_login_sentence',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Username requires at least 6 characters`
   String get null_username {
     return Intl.message(

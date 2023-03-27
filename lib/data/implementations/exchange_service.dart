@@ -267,6 +267,7 @@ class ExchangeService implements IExchangeService {
     try {
       late TotalCashTransactionModel total;
       List<dynamic> selectionData(Map<String, dynamic> json) {
+        logger.v(json);
         total = TotalCashTransactionModel.fromJson(
             json["data"].first["data1"].first);
         return json["data"].first["data2"];

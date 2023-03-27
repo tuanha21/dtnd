@@ -275,6 +275,7 @@
 
     "login_exception_required_OTP": "Hãy đăng nhập bằng mã OTP được gửi về máy của bạn",
     "invalid_account": "Tài khoản chưa đăng ký hoặc đã hết hiệu lực giao dịch Internet",
+    "account_not_login_sentence": "Bạn đăng nhập để thực hiện được nhiều tác vụ hơn với DTND nhé",
     "null_username": "Tên đăng nhập cần tối thiểu 6 ký tự",
     "null_password": "Mật khẩu cần tối thiểu 8 ký tự",
     "wrong_password": "Mật khẩu không chính xác",

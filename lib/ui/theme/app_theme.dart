@@ -9,7 +9,8 @@ const _darkTextColor = Colors.white;
 final TextTheme lightTextTheme = TextTheme(
   displayLarge: AppTextStyle.displayLarge_57.copyWith(color: _lightTextColor),
   displayMedium: AppTextStyle.displayMedium_45.copyWith(color: _lightTextColor),
-  displaySmall: AppTextStyle.displaySmall_36.copyWith(color: _lightTextColor),
+  displaySmall:
+      AppTextStyle.displaySmall_36.copyWith(color: AppColors.neutral_03),
   headlineLarge: AppTextStyle.headlineLarge_32.copyWith(color: _lightTextColor),
   headlineMedium:
       AppTextStyle.headlineMedium_28.copyWith(color: _lightTextColor),
@@ -28,7 +29,8 @@ final TextTheme lightTextTheme = TextTheme(
 final TextTheme darkTextTheme = TextTheme(
   displayLarge: AppTextStyle.displayLarge_57.copyWith(color: _darkTextColor),
   displayMedium: AppTextStyle.displayMedium_45.copyWith(color: _darkTextColor),
-  displaySmall: AppTextStyle.displaySmall_36.copyWith(color: _darkTextColor),
+  displaySmall:
+      AppTextStyle.displaySmall_36.copyWith(color: AppColors.neutral_04),
   headlineLarge: AppTextStyle.headlineLarge_32.copyWith(color: _darkTextColor),
   headlineMedium:
       AppTextStyle.headlineMedium_28.copyWith(color: _darkTextColor),

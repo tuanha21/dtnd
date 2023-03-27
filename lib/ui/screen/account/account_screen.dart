@@ -7,6 +7,8 @@ import 'package:dtnd/ui/screen/account/component/account_screen_view.dart';
 import 'package:dtnd/ui/screen/account/icon/account_icon.dart';
 import 'package:dtnd/ui/screen/login/login_screen.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
+import 'package:dtnd/ui/theme/app_image.dart';
+import 'package:dtnd/ui/widget/button/single_color_text_button.dart';
 import 'package:dtnd/ui/widget/overlay/custom_dialog.dart';
 import 'package:flutter/material.dart';
 
@@ -24,16 +26,34 @@ class _AccountScreenState extends State<AccountScreen> {
   @override
   Widget build(BuildContext context) {
     final isLogin = userService.isLogin;
+    final textTheme = Theme.of(context).textTheme;
     Widget accountView;
     if (!isLogin) {
       accountView = Padding(
         padding: const EdgeInsets.all(16),
         child: Center(
-          child: Row(
+          child: Column(
             children: [
-              Expanded(
-                child: TextButton(
-                  onPressed: () {
+              SizedBox.square(
+                  dimension: 200, child: Image.asset(AppImages.illust09)),
+              Text(
+                S.of(context).you_are_not_logged_in,
+                style:
+                    textTheme.labelLarge?.copyWith(fontWeight: FontWeight.w700),
+              ),
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                child: Text(
+                  S.of(context).account_not_login_sentence,
+                  textAlign: TextAlign.center,
+                  style: textTheme.displaySmall
+                      ?.copyWith(fontWeight: FontWeight.w500, fontSize: 14),
+                ),
+              ),
+              const SizedBox(height: 16),
+              SingleColorTextButton(
+                  onTap: () {
                     Navigator.of(context)
                         .push<bool>(MaterialPageRoute(
                       builder: (context) => const LoginScreen(),
@@ -55,39 +75,6 @@ class _AccountScreenState extends State<AccountScreen> {
                                 Navigator.of(context).pop();
                               },
                             );
-
-                            //   AppDialog(
-                            //   icon: const Icon(Icons.warning_amber_rounded),
-                            //   title: const Text("Đăng nhập bằng sinh trắc học"),
-                            //   content: const Text(
-                            //       "Bạn chưa đăng ký đăng nhập bằng sinh trắc học\nBạn có muốn đăng ký ngay bây giờ không?"),
-                            //   actions: [
-                            //     Flexible(
-                            //       child: InkWell(
-                            //           onTap: () =>
-                            //               Navigator.of(context).pop(false),
-                            //           child: Container(
-                            //             alignment: Alignment.center,
-                            //             child: Text(S.of(context).cancel),
-                            //           )),
-                            //     ),
-                            //     Flexible(
-                            //       child: InkWell(
-                            //           onTap: () =>
-                            //               Navigator.of(context).pop(true),
-                            //           child: Container(
-                            //             alignment: Alignment.center,
-                            //             decoration: const BoxDecoration(
-                            //               border: Border(
-                            //                 left: BorderSide(
-                            //                     color: AppColors.neutral_05),
-                            //               ),
-                            //             ),
-                            //             child: const Text("OK"),
-                            //           )),
-                            //     )
-                            //   ],
-                            // );
                           },
                         );
                         if (reg ?? false) {
@@ -103,11 +90,8 @@ class _AccountScreenState extends State<AccountScreen> {
                     });
                     return;
                   },
-                  style: const ButtonStyle(
-                      padding: MaterialStatePropertyAll(EdgeInsets.all(14))),
-                  child: Text(S.of(context).login),
-                ),
-              ),
+                  text: S.of(context).login,
+                  color: AppColors.primary_01)
             ],
           ),
         ),

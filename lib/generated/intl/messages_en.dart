@@ -60,6 +60,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Account information"),
         "account_managing":
             MessageLookupByLibrary.simpleMessage("Account managing"),
+        "account_not_login_sentence": MessageLookupByLibrary.simpleMessage(
+            "Please log in to access more feature of DTND"),
         "account_notice":
             MessageLookupByLibrary.simpleMessage("Account notice"),
         "account_number":
