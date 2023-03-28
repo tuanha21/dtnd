@@ -132,29 +132,32 @@ class _StockDetailChartState extends State<StockDetailChart>
                     data: stockTradingHistory!.c,
                   )..setAttribute(
                       charts.measureAxisIdKey, "secondaryMeasureAxisId")),
-          if (listEvent.isNotEmpty)
-            charts.Series<SecEvent, DateTime>(
-              id: 'Annotation Series 2',
-              colorFn: (_, __) => charts.MaterialPalette.red.shadeDefault,
-              domainFn: (SecEvent event, _) => event.dateTime ?? DateTime.now(),
-              domainLowerBoundFn: (SecEvent event, _) => event.dateTime,
-              domainUpperBoundFn: (SecEvent event, _) => event.dateTime,
-              // No measure values are needed for symbol annotations.
-              measureFn: (_, __) => null,
-              data: listEvent,
-            )
-              // Configure our custom symbol annotation renderer for this series.
-              ..setAttribute(charts.rendererIdKey, 'customSymbolAnnotation')
-              // Optional radius for the annotation shape. If not specified, this will
-              // default to the same radius as the points.
-              ..setAttribute(charts.boundsLineRadiusPxKey, 3.5),
+          // if (listEvent.isNotEmpty)
+          //   charts.Series<SecEvent, DateTime>(
+          //     id: 'Annotation Series 2',
+          //     colorFn: (_, __) => charts.MaterialPalette.red.shadeDefault,
+          //     domainFn: (SecEvent event, _) => event.dateTime ?? DateTime.now(),
+          //     domainLowerBoundFn: (SecEvent event, _) => event.dateTime,
+          //     domainUpperBoundFn: (SecEvent event, _) => event.dateTime,
+          //     // No measure values are needed for symbol annotations.
+          //     measureFn: (_, __) => null,
+          //     data: listEvent,
+          //   )
+          //     // Configure our custom symbol annotation renderer for this series.
+          //     ..setAttribute(charts.rendererIdKey, 'customSymbolAnnotation')
+          //     // Optional radius for the annotation shape. If not specified, this will
+          //     // default to the same radius as the points.
+          //     ..setAttribute(charts.boundsLineRadiusPxKey, 3.5),
         ],
         layoutConfig: charts.LayoutConfig(
             bottomMarginSpec: charts.MarginSpec.fromPercent(minPercent: 5),
             leftMarginSpec: charts.MarginSpec.defaultSpec,
             rightMarginSpec: charts.MarginSpec.defaultSpec,
             topMarginSpec: charts.MarginSpec.fromPercent(minPercent: 10)),
-        defaultRenderer: charts.LineRendererConfig(smoothLine: true),
+        defaultRenderer: charts.LineRendererConfig(
+          smoothLine: true,
+          includeArea: true,
+        ),
         domainAxis: charts.DateTimeAxisSpec(
             tickFormatterSpec: charts.BasicDateTimeTickFormatterSpec((time) {
               String formattedDate =
@@ -163,6 +166,7 @@ class _StockDetailChartState extends State<StockDetailChart>
             }),
             tickProviderSpec: const charts.AutoDateTimeTickProviderSpec(),
             // viewport: charts.NumericExtents(minX, maxX),
+
             renderSpec: const charts.GridlineRendererSpec(
                 axisLineStyle: charts.LineStyleSpec(
                   dashPattern: [4],
@@ -171,6 +175,16 @@ class _StockDetailChartState extends State<StockDetailChart>
                 ),
                 labelStyle: charts.TextStyleSpec(fontSize: 9),
                 lineStyle: charts.LineStyleSpec(dashPattern: [4]))),
+        primaryMeasureAxis: const charts.NumericAxisSpec(
+          showAxisLine: false,
+          tickProviderSpec: charts.BasicNumericTickProviderSpec(
+            zeroBound: false,
+            // desiredTickCount: 5,
+            dataIsInWholeNumbers: false,
+          ),
+          // viewport: charts.NumericExtents(min.floor(), max.round()),
+          renderSpec: charts.NoneRenderSpec(),
+        ),
         secondaryMeasureAxis: axisSpec(),
         customSeriesRenderers: [
           charts.SymbolAnnotationRendererConfig(
@@ -210,18 +224,6 @@ class _StockDetailChartState extends State<StockDetailChart>
                     title = event.title ?? "";
                   }
                   datas.add(title);
-                  // final split = ((event.title?.length ?? 0) / 20).round();
-                  // for (var i = 0; i < split; i++) {
-                  //   if (i != split - 1) {
-                  //     datas.add(event.title
-                  //             ?.substring(i * 20, event.title?.length ?? 0) ??
-                  //         "");
-                  //   } else {
-                  //     datas.add(
-                  //         event.title?.substring(i * 20, event.title!.length) ??
-                  //             "");
-                  //   }
-                  // }
                 } else {
                   final index = model.selectedDatum.first.index ?? 0;
                   datas.add(
@@ -242,38 +244,6 @@ class _StockDetailChartState extends State<StockDetailChart>
               } else {
                 _ToolTipMgr.instance.setData([]);
               }
-              // if (model.hasDatumSelection) {
-              //   final String time =
-              //       "Ngày : ${TimeUtilities.commonTimeFormat.format(model.selectedDatum.first.datum.cTRADINGDATE)}";
-              //   final List<String> datas = [
-              //     time,
-              //   ];
-              //   for (var element in model.selectedDatum) {
-              //     final String label = element.series.id;
-              //     final String value;
-              //     switch (label) {
-              //       case "Tiền":
-              //         value = NumUtils.formatDouble(
-              //             element.datum.cCASHBALANCE);
-              //         break;
-              //       case "Nợ":
-              //         value = NumUtils.formatDouble(
-              //             element.datum.cLOANBALANCE);
-              //         break;
-              //       case "Giá trị CK":
-              //         value = NumUtils.formatDouble(
-              //             element.datum.cSHARECLOSEVALUE);
-              //         break;
-              //       default:
-              //         value = NumUtils.formatDouble(
-              //             element.datum.cNETVALUE);
-              //     }
-              //     final String data = "$label : $value";
-              //     datas.add(data);
-              //   }
-
-              //   _ToolTipMgr.instance.setData(datas);
-              // }
             },
           ),
         ],

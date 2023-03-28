@@ -1,13 +1,14 @@
 import 'dart:convert';
 
 import 'package:dtnd/=models=/stock_status.dart';
+import 'package:dtnd/utilities/time_utils.dart';
 
 const String _defaultList =
     "[[\"1M\",\"30\",\"0\"],[\"2M\",\"60\",\"0\"],[\"3M\",\"90\",\"0\"],[\"6M\",\"180\",\"0\"]]";
 
 class TopSignalDetailModel extends StockStatus {
   late final String cSHARECODE;
-  late final DateTime cBUYDATE;
+  late final DateTime? cBUYDATE;
   String? cTYPE;
   num? cBUYPRICE;
   num? cSELLMIN;
@@ -21,7 +22,13 @@ class TopSignalDetailModel extends StockStatus {
 
   TopSignalDetailModel.fromJson(Map<String, dynamic> json) {
     cSHARECODE = json['C_SHARE_CODE'];
-    cBUYDATE = DateTime.fromMillisecondsSinceEpoch(json['C_BUY_DATE']);
+    try {
+      cBUYDATE = DateTime.fromMillisecondsSinceEpoch(json['C_BUY_DATE'])
+          .beginningOfDay;
+    } catch (e) {
+      cBUYDATE = null;
+    }
+
     cTYPE = json['C_TYPE'];
     cBUYPRICE = json['C_BUY_PRICE'];
     cSELLMIN = json['C_SELL_MIN'];

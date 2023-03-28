@@ -1,12 +1,13 @@
 import 'package:dtnd/=models=/response/stock_model.dart';
 import 'package:dtnd/=models=/stock_status.dart';
+import 'package:dtnd/utilities/time_utils.dart';
 
 class TopSignalStockModel extends StockStatus {
   late final String cSHARECODE;
   late final StockModel stockModel;
   late final DateTime cBUYDATE;
   DateTime? cSELLDATE;
-  String? cTYPE;
+  late final String cTYPE;
   late final num cBUYPRICE;
   num? cSELLMIN;
   num? cSELLMAX;
@@ -17,7 +18,8 @@ class TopSignalStockModel extends StockStatus {
 
   TopSignalStockModel.fromJson(Map<String, dynamic> json) {
     cSHARECODE = json['C_SHARE_CODE'];
-    cBUYDATE = DateTime.fromMillisecondsSinceEpoch(json['C_BUY_DATE']);
+    cBUYDATE =
+        DateTime.fromMillisecondsSinceEpoch(json['C_BUY_DATE']).beginningOfDay;
     cSELLDATE = json['C_SELL_DATE'] != null
         ? DateTime.fromMillisecondsSinceEpoch(json['C_SELL_DATE'])
         : null;

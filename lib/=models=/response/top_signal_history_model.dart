@@ -12,6 +12,7 @@ class TopSignalHistoryModel extends StockStatus {
   num? sellPrice;
   num? pc;
   num? t;
+  late final num volatility;
 
   DateTime? get buyTime {
     if (buyDateString == null) {
@@ -44,6 +45,7 @@ class TopSignalHistoryModel extends StockStatus {
     sellPrice = json['C_SELL_PRICE'];
     pc = json['C_PC'];
     t = json['T'];
+    volatility = json['C_VOLATILITY'] ?? 0;
   }
 
   Map<String, dynamic> toJson() {

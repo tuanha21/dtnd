@@ -173,7 +173,11 @@ class HomeTopSignalItem extends StatelessWidget {
 
     return GestureDetector(
       onTap: () => Navigator.of(context).push(MaterialPageRoute(
-        builder: (context) => SignalScreen(data: data),
+        builder: (context) => SignalScreen(
+          code: data.cSHARECODE,
+          type: data.cTYPE,
+          stockModel: data.stockModel,
+        ),
       )),
       child: SizedBox.fromSize(
         size: const Size(148, 136),

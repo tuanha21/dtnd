@@ -47,6 +47,7 @@ class SignalTradingHistory extends StatelessWidget {
                   sellTime: his.sellDateString,
                   icon: his.prefixIcon(),
                   color: his.color,
+                  risk: his.volatility,
                 ),
               );
             },
@@ -66,10 +67,12 @@ class SignalTradingHistoryElement extends StatelessWidget {
     required this.sell,
     required this.buyTime,
     required this.sellTime,
+    this.risk,
   });
   final num? pc;
   final num? buy;
   final num? sell;
+  final num? risk;
   final String? buyTime;
   final String? sellTime;
   final Widget icon;
@@ -140,33 +143,52 @@ class SignalTradingHistoryElement extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    S.of(context).buy_date,
+                    style: AppTextStyle.labelSmall_10.copyWith(
+                        color: AppColors.neutral_04,
+                        fontWeight: FontWeight.w500),
+                  ),
+                  Text(
+                    buyTime ?? "-",
+                    style: AppTextStyle.labelSmall_10,
+                  ),
+                ],
+              ),
+            ),
             Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  S.of(context).buy_date,
+                  "Rủi ro",
                   style: AppTextStyle.labelSmall_10.copyWith(
                       color: AppColors.neutral_04, fontWeight: FontWeight.w500),
                 ),
                 Text(
-                  buyTime ?? "-",
+                  "${risk ?? "-"}%",
                   style: AppTextStyle.labelSmall_10,
                 ),
               ],
             ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Text(
-                  S.of(context).sell_date,
-                  style: AppTextStyle.labelSmall_10.copyWith(
-                      color: AppColors.neutral_04, fontWeight: FontWeight.w500),
-                ),
-                Text(
-                  sellTime ?? "-",
-                  style: AppTextStyle.labelSmall_10,
-                ),
-              ],
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Text(
+                    S.of(context).sell_date,
+                    style: AppTextStyle.labelSmall_10.copyWith(
+                        color: AppColors.neutral_04,
+                        fontWeight: FontWeight.w500),
+                  ),
+                  Text(
+                    sellTime ?? "-",
+                    style: AppTextStyle.labelSmall_10,
+                  ),
+                ],
+              ),
             )
           ],
         )

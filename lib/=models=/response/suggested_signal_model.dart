@@ -1,6 +1,8 @@
-class SuggestedSignalModel {
+import 'package:dtnd/=models=/stock_status.dart';
+
+class SuggestedSignalModel extends StockStatus {
   late final String cSHARECODE;
-  String? cTYPE;
+  late final String cTYPE;
   num? cPC;
   num? t;
   late final num cGAIN;
@@ -33,5 +35,17 @@ class SuggestedSignalModel {
     data['C_GAIN'] = cGAIN;
     data['C_LOSS'] = cLOSS;
     return data;
+  }
+
+  @override
+  SStatus get sstatus {
+    switch (cPC?.compareTo(0)) {
+      case 1:
+        return SStatus.up;
+      case -1:
+        return SStatus.down;
+      default:
+        return SStatus.ref;
+    }
   }
 }

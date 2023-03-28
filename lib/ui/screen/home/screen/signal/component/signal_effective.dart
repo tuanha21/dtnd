@@ -3,13 +3,16 @@ import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:dtnd/ui/theme/app_textstyle.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 const List<String> _label = ["1W", "2W", "1M", "3M"];
 
 class SignalEffective extends StatefulWidget {
-  const SignalEffective({super.key, this.data, required this.onChanged});
+  const SignalEffective(
+      {super.key, this.data, required this.onChanged, this.defaulPeriod});
   final TopSignalDetailModel? data;
   final ValueChanged<ValuePerPeriod?>? onChanged;
+  final String? defaulPeriod;
   @override
   State<SignalEffective> createState() => _SignalEffectiveState();
 }
@@ -29,7 +32,15 @@ class _SignalEffectiveState extends State<SignalEffective> {
     } else {
       periods = widget.data!.clist;
     }
-    selectedPeriod = periods.first;
+    if (widget.defaulPeriod != null) {
+      final period = periods
+          .firstWhereOrNull((element) => element.label == widget.defaulPeriod);
+      if (period != null) {
+        selectedPeriod = period;
+      }
+    } else {
+      selectedPeriod = periods[2];
+    }
   }
 
   void onChanged(ValuePerPeriod? period) {

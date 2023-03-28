@@ -1,10 +1,11 @@
 import 'package:dtnd/=models=/response/stock_model.dart';
 import 'package:dtnd/=models=/response/stock_trading_history.dart';
-import 'package:dtnd/=models=/response/top_signal_stock_model.dart';
+import 'package:dtnd/=models=/response/top_signal_detail_model.dart';
 import 'package:dtnd/data/i_data_center_service.dart';
 import 'package:dtnd/data/implementations/data_center_service.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_textstyle.dart';
+import 'package:dtnd/utilities/charts_util.dart';
 import 'package:dtnd/utilities/time_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
@@ -14,8 +15,8 @@ const List<String> _label = ["1M", "3M", "6M", "1Y"];
 
 class SignalChart extends StatefulWidget {
   const SignalChart({super.key, required this.stockModel, required this.data});
-  final StockModel stockModel;
-  final TopSignalStockModel data;
+  final StockModel? stockModel;
+  final TopSignalDetailModel? data;
   @override
   State<SignalChart> createState() => _SignalChartState();
 }
@@ -36,12 +37,24 @@ class _SignalChartState extends State<SignalChart> {
 
   @override
   void initState() {
-    // print(widget.data.cBUYPRICE);
-    // print(widget.data.cBUYDATE);
-    annotationX = widget.data.cBUYPRICE;
-    annotationY = widget.data.cBUYDATE;
+    annotationX = widget.data?.cBUYPRICE ?? 0;
+    annotationY = widget.data?.cBUYDATE ?? DateTime.now();
     super.initState();
-    getDatas();
+    if (widget.data != null) {
+      getDatas();
+    }
+  }
+
+  @override
+  void didUpdateWidget(SignalChart oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.data != oldWidget.data) {
+      annotationX = widget.data?.cBUYPRICE ?? 0;
+      annotationY = widget.data?.cBUYDATE ?? DateTime.now();
+      if (widget.data != null) {
+        getDatas();
+      }
+    }
   }
 
   Future<void> getDatas() async {
@@ -61,7 +74,7 @@ class _SignalChartState extends State<SignalChart> {
         from = TimeUtilities.getPreviousDateTime(TimeUtilities.month(1));
     }
     final history = await dataCenterService.getStockTradingHistory(
-        widget.stockModel.stock.stockCode, "1D", from, now);
+        widget.data!.cSHARECODE, "1D", from, now);
     if (history == null || (history.c.isEmpty)) {
       return;
     } else {
@@ -133,11 +146,11 @@ class _SignalChartState extends State<SignalChart> {
             child: charts.TimeSeriesChart(
               [
                 charts.Series<num, DateTime>(
-                  id: 'signalChart',
+                  id: 'signal2Chart',
                   domainFn: (_, int? index) {
                     if (index != null) {
-                      int epoc = datas!.t[index].toInt() * 1000;
-                      return DateTime.fromMillisecondsSinceEpoch(epoc);
+                      final DateTime date = datas!.time[index].beginningOfDay;
+                      return date;
                     } else {
                       throw Exception("Chart index null");
                     }
@@ -146,17 +159,16 @@ class _SignalChartState extends State<SignalChart> {
                     return o;
                   },
                   seriesColor: charts.ColorUtil.fromDartColor(
-                      widget.stockModel.stockData.color),
+                      widget.stockModel?.stockData.color ??
+                          AppColors.semantic_02),
                   data: datas!.o,
-                ),
-                // ..setAttribute(
-                //     charts.measureAxisIdKey, "secondaryMeasureAxisId"),
+                )..setAttribute(charts.rendererIdKey, 'scatterChart'),
                 charts.Series<num, DateTime>(
                   id: 'signal2Chart',
                   domainFn: (_, int? index) {
                     if (index != null) {
-                      int epoc = datas!.t[index].toInt() * 1000;
-                      return DateTime.fromMillisecondsSinceEpoch(epoc);
+                      final DateTime date = datas!.time[index].beginningOfDay;
+                      return date;
                     } else {
                       throw Exception("Chart index null");
                     }
@@ -165,10 +177,43 @@ class _SignalChartState extends State<SignalChart> {
                     return o;
                   },
                   seriesColor: charts.ColorUtil.fromDartColor(
-                      widget.stockModel.stockData.color),
+                      widget.stockModel?.stockData.color ??
+                          AppColors.semantic_02),
                   data: datas!.o,
-                )..setAttribute(
-                    charts.measureAxisIdKey, "secondaryMeasureAxisId"),
+                )
+                  ..setAttribute(charts.rendererIdKey, 'scatterChart')
+                  ..setAttribute(
+                      charts.measureAxisIdKey, "secondaryMeasureAxisId"),
+                if (widget.data?.cBUYDATE != null)
+                  charts.Series<TopSignalDetailModel, DateTime>(
+                    id: 'Annotation Series 2',
+                    colorFn: (_, __) =>
+                        charts.MaterialPalette.green.shadeDefault,
+                    domainFn: (TopSignalDetailModel event, _) =>
+                        event.cBUYDATE!,
+                    measureFn: (TopSignalDetailModel event, __) {
+                      final int index = datas!.time.indexWhere((element) {
+                        final int compare =
+                            element.beginningOfDay.compareTo(event.cBUYDATE!);
+                        switch (compare) {
+                          case 0:
+                            return true;
+                          default:
+                            return false;
+                        }
+                      });
+                      return index > -1
+                          ? datas!.o.elementAt(index)
+                          : event.cBUYPRICE;
+                    },
+                    radiusPxFn: (_, __) => 5.0,
+                    data: [widget.data!],
+                  )
+                    // Configure our custom symbol annotation renderer for this series.
+                    // ..setAttribute(charts.rendererIdKey, 'scatterChart')
+                    // Optional radius for the annotation shape. If not specified, this will
+                    // default to the same radius as the points.
+                    ..setAttribute(charts.boundsLineRadiusPxKey, 3.5),
               ],
               animate: false,
               layoutConfig: charts.LayoutConfig(
@@ -179,122 +224,139 @@ class _SignalChartState extends State<SignalChart> {
               ),
               domainAxis: charts.DateTimeAxisSpec(
                   tickFormatterSpec:
-                      charts.BasicDateTimeTickFormatterSpec((time) {
-                    String formattedDate =
-                        TimeUtilities.dateMonthTimeFormat.format(time);
-                    return formattedDate;
-                  }),
+                      charts.BasicDateTimeTickFormatterSpec.fromDateFormat(
+                          TimeUtilities.dateMonthTimeFormat),
                   tickProviderSpec: const charts.AutoDateTimeTickProviderSpec(),
+                  showAxisLine: true,
                   // viewport: charts.NumericExtents(minX, maxX),
                   renderSpec: const charts.GridlineRendererSpec(
                       axisLineStyle: charts.LineStyleSpec(
-                        dashPattern: [4],
-                        thickness: 0,
-                        color: charts.Color(r: 74, g: 85, b: 104),
-                      ),
+                          // dashPattern: [4],
+                          // thickness: 0,
+                          // color: charts.Color(r: 74, g: 85, b: 104),
+                          ),
                       labelStyle: charts.TextStyleSpec(fontSize: 9),
                       lineStyle: charts.LineStyleSpec(dashPattern: [4]))),
-              primaryMeasureAxis: charts.NumericAxisSpec(
-                tickProviderSpec: const charts.BasicNumericTickProviderSpec(
+              primaryMeasureAxis: const charts.NumericAxisSpec(
+                showAxisLine: false,
+                tickProviderSpec: charts.BasicNumericTickProviderSpec(
                   zeroBound: false,
-                  dataIsInWholeNumbers: false,
                 ),
-                viewport: charts.NumericExtents(min, max),
-                renderSpec: const charts.NoneRenderSpec(),
+                renderSpec: charts.NoneRenderSpec(),
               ),
-              secondaryMeasureAxis: charts.NumericAxisSpec(
-                tickProviderSpec: const charts.BasicNumericTickProviderSpec(
+              secondaryMeasureAxis: const charts.NumericAxisSpec(
+                showAxisLine: true,
+                tickProviderSpec: charts.BasicNumericTickProviderSpec(
                   zeroBound: false,
-                  dataIsInWholeNumbers: false,
                 ),
-                viewport: charts.NumericExtents(min, max),
-                renderSpec: const charts.GridlineRendererSpec(
-                    axisLineStyle: charts.LineStyleSpec(
-                      dashPattern: [4],
-                      thickness: 0,
-                      color: charts.Color(r: 74, g: 85, b: 104),
-                    ),
-                    labelStyle: charts.TextStyleSpec(fontSize: 9),
-                    lineStyle: charts.LineStyleSpec(dashPattern: [4])),
+                renderSpec: charts.GridlineRendererSpec(
+                  axisLineStyle: charts.LineStyleSpec(
+                      // dashPattern: [4],
+                      // thickness: 0,
+                      // color: charts.Color(r: 74, g: 85, b: 104),
+                      ),
+                  labelStyle: charts.TextStyleSpec(fontSize: 9),
+                  lineStyle: charts.LineStyleSpec(dashPattern: [4]),
+                ),
               ),
-              defaultRenderer: charts.LineRendererConfig(smoothLine: true),
+              defaultRenderer: charts.PointRendererConfig(),
+              customSeriesRenderers: [
+                charts.LineRendererConfig(
+                  smoothLine: true,
+                  includeArea: true,
+                  customRendererId: 'scatterChart',
+                ),
+                // charts.PointRendererConfig(
+                //     customRendererId: 'scatterChart',
+                //     layoutPaintOrder: charts.LayoutViewPaintOrder.point + 1),
+              ],
               behaviors: [
-                charts.RangeAnnotation<DateTime>(
-                  [
-                    charts.LineAnnotationSegment<num>(
-                      annotationX,
-                      charts.RangeAnnotationAxisType.measure,
-                      color: charts.ColorUtil.fromDartColor(
-                        AppColors.neutral_02,
-                      ),
-                      startLabel: annotationX.toString(),
-                      endLabel: "Giá mua",
-                      dashPattern: [5, 5],
-                      strokeWidthPx: 0.3,
+                charts.LinePointHighlighter(
+                    symbolRenderer: CustomTooltipRenderer(_ToolTipMgr.instance,
+                        size: MediaQuery.of(context).size,
+                        fontSize: 10) // add this line in behaviours,
+
                     ),
-                    charts.LineAnnotationSegment<DateTime>(
-                      annotationY,
-                      charts.RangeAnnotationAxisType.domain,
-                      color: charts.ColorUtil.fromDartColor(
-                        AppColors.neutral_02,
-                      ),
-                      startLabel: "Ngày mua",
-                      endLabel:
-                          TimeUtilities.commonTimeFormat.format(annotationY),
-                      dashPattern: [5, 5],
-                      strokeWidthPx: 0.3,
-                    )
-                  ],
-                )
+                // charts.RangeAnnotation<DateTime>(
+                //   [
+                //     charts.LineAnnotationSegment<num>(
+                //       annotationX,
+                //       charts.RangeAnnotationAxisType.measure,
+                //       color: charts.ColorUtil.fromDartColor(
+                //         AppColors.neutral_02,
+                //       ),
+                //       startLabel: annotationX.toString(),
+                //       endLabel: "Giá mua",
+                //       dashPattern: [5, 5],
+                //       strokeWidthPx: 0.3,
+                //     ),
+                //     charts.LineAnnotationSegment<DateTime>(
+                //       annotationY,
+                //       charts.RangeAnnotationAxisType.domain,
+                //       color: charts.ColorUtil.fromDartColor(
+                //         AppColors.neutral_02,
+                //       ),
+                //       startLabel: "Ngày mua",
+                //       endLabel:
+                //           TimeUtilities.commonTimeFormat.format(annotationY),
+                //       dashPattern: [5, 5],
+                //       strokeWidthPx: 0.3,
+                //     )
+                //   ],
+                // )
+              ],
+              selectionModels: [
+                charts.SelectionModelConfig(
+                  type: charts.SelectionModelType.info,
+                  changedListener: (charts.SelectionModel model) {
+                    if (model.hasDatumSelection) {
+                      // logger.v(model.selectedDatum.first.datum);
+                      // logger.v(model.selectedDatum.first.series);
+                      // logger.v(model.selectedSeries);
+                      // for (var i = 0; i < model.selectedDatum.length; i++) {
+                      //   print(model.selectedDatum.elementAt(i).index);
+                      // }
+
+                      // logger.v(model.selectedDatum.first.datum);
+                      // logger.v(model.selectedDatum.first.series);
+                      // logger.v(model.selectedSeries);
+                      final List<String> data = [];
+                      if (model.selectedDatum.length > 1) {
+                        late TopSignalDetailModel topSignalStockModel;
+                        late num price;
+                        for (var element in model.selectedDatum) {
+                          if (element.datum is TopSignalDetailModel) {
+                            topSignalStockModel = element.datum;
+                          } else if (element.datum is num) {
+                            price = element.datum;
+                          }
+                        }
+                        data.add(
+                            "Ngày ${TimeUtilities.commonTimeFormat.format(topSignalStockModel.cBUYDATE!)}");
+                        data.add("Giá mua ${topSignalStockModel.cBUYPRICE}");
+                        data.add("Giá $price");
+                      } else {
+                        final index = model.selectedDatum.first.index ?? 0;
+                        data.add(
+                            "Ngày ${TimeUtilities.commonTimeFormat.format(datas!.time.elementAt(index))}");
+                        data.add("Giá ${model.selectedDatum.first.datum}");
+                      }
+                      _ToolTipMgr.instance.setData(data);
+                    } else {
+                      _ToolTipMgr.instance.setData([]);
+                    }
+                  },
+                ),
               ],
             ),
           ),
       ],
     );
   }
+}
 
-  charts.RangeAnnotation get anotation => charts.RangeAnnotation(
-        [
-          charts.LineAnnotationSegment(
-            annotationX,
-            charts.RangeAnnotationAxisType.measure,
-            color: charts.ColorUtil.fromDartColor(
-              AppColors.neutral_02,
-            ),
-            endLabel: "Giá mua",
-            dashPattern: [5, 5],
-            strokeWidthPx: 0.3,
-          ),
-          charts.LineAnnotationSegment(
-            annotationY,
-            charts.RangeAnnotationAxisType.domain,
-            color: charts.ColorUtil.fromDartColor(
-              AppColors.neutral_02,
-            ),
-            startLabel: "Ngày mua",
-            dashPattern: [5, 5],
-            strokeWidthPx: 0.3,
-          )
-        ],
-      );
+class _ToolTipMgr extends TooltipData {
+  _ToolTipMgr._intern();
 
-  charts.NumericAxisSpec axisSpec() {
-    return charts.NumericAxisSpec(
-      showAxisLine: true,
-      tickProviderSpec: const charts.BasicNumericTickProviderSpec(
-        zeroBound: false,
-        // desiredTickCount: 5,
-        dataIsInWholeNumbers: false,
-      ),
-      viewport: charts.NumericExtents(min, max),
-      renderSpec: const charts.GridlineRendererSpec(
-          axisLineStyle: charts.LineStyleSpec(
-            dashPattern: [4],
-            thickness: 0,
-            color: charts.Color(r: 74, g: 85, b: 104),
-          ),
-          labelStyle: charts.TextStyleSpec(fontSize: 9),
-          lineStyle: charts.LineStyleSpec(dashPattern: [4])),
-    );
-  }
+  static final _ToolTipMgr instance = _ToolTipMgr._intern();
 }

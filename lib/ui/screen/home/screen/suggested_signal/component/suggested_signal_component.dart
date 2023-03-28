@@ -10,8 +10,10 @@ import 'package:dtnd/utilities/num_utils.dart';
 import 'package:flutter/material.dart';
 
 class SuggestedSignalComponent extends StatefulWidget {
-  const SuggestedSignalComponent({super.key, required this.data});
+  const SuggestedSignalComponent(
+      {super.key, required this.data, required this.onTap});
   final SuggestedSignalModel data;
+  final ValueChanged<SuggestedSignalModel> onTap;
   @override
   State<SuggestedSignalComponent> createState() =>
       _SuggestedSignalComponentState();
@@ -29,111 +31,144 @@ class _SuggestedSignalComponentState extends State<SuggestedSignalComponent> {
   }
 
   @override
+  void didUpdateWidget(covariant SuggestedSignalComponent oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.data != widget.data) {
+      if (widget.data.cSHARECODE.length == 3) {
+        setState(() {
+          stock =
+              dataCenterService.getStockFromStockCode(widget.data.cSHARECODE);
+        });
+      }
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
-    return Container(
-      margin: const EdgeInsets.symmetric(vertical: 4),
-      padding: const EdgeInsets.all(16),
-      decoration: const BoxDecoration(
-        borderRadius: BorderRadius.all(
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 4),
+      child: Material(
+        color: Colors.transparent,
+        borderRadius: const BorderRadius.all(
           Radius.circular(12),
         ),
-      ),
-      child: Column(
-        children: [
-          Row(
-            children: [
-              StockIcon(
-                color: Colors.white,
-                stockCode: widget.data.cSHARECODE,
+        child: InkWell(
+          onTap: () => widget.onTap.call(widget.data),
+          borderRadius: const BorderRadius.all(
+            Radius.circular(12),
+          ),
+          child: Ink(
+            padding: const EdgeInsets.all(16),
+            decoration: const BoxDecoration(
+              borderRadius: BorderRadius.all(
+                Radius.circular(12),
               ),
-              const SizedBox(width: 8),
-              Expanded(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.start,
+            ),
+            child: Column(
+              children: [
+                Row(
                   children: [
-                    Text(
-                      widget.data.cSHARECODE,
-                      style: textTheme.titleSmall,
+                    StockIcon(
+                      color: Colors.white,
+                      stockCode: widget.data.cSHARECODE,
                     ),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: Text(
-                            stock?.nameShort ?? "",
-                            overflow: TextOverflow.ellipsis,
-                            style: AppTextStyle.labelSmall_10
-                                .copyWith(color: AppColors.neutral_03),
+                    const SizedBox(width: 8),
+                    Expanded(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            widget.data.cSHARECODE,
+                            style: textTheme.titleSmall,
                           ),
+                          Row(
+                            children: [
+                              Expanded(
+                                child: Text(
+                                  stock?.nameShort ?? "",
+                                  overflow: TextOverflow.ellipsis,
+                                  style: AppTextStyle.labelSmall_10
+                                      .copyWith(color: AppColors.neutral_03),
+                                ),
+                              ),
+                            ],
+                          ),
+                          // Text(
+                          //   "${(widget.volPc ?? 0).toStringAsFixed(2)}%",
+                          //   style: textTheme.bodySmall!
+                          //       .copyWith(color: AppColors.neutral_04),
+                          // ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 12),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          S.of(context).signal_type,
+                          style: AppTextStyle.bodySmall_8.copyWith(
+                            fontSize: 12,
+                            color: AppColors.neutral_04,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                        const SizedBox(height: 4),
+                        Text(
+                          widget.data.cTYPE,
+                          style: textTheme.titleSmall,
                         ),
                       ],
                     ),
-                    // Text(
-                    //   "${(widget.volPc ?? 0).toStringAsFixed(2)}%",
-                    //   style: textTheme.bodySmall!
-                    //       .copyWith(color: AppColors.neutral_04),
-                    // ),
+                    Column(
+                      children: [
+                        Text(
+                          S.of(context).effective,
+                          style: AppTextStyle.bodySmall_8.copyWith(
+                            fontSize: 12,
+                            color: AppColors.neutral_04,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                        const SizedBox(height: 4),
+                        Text(
+                          "${NumUtils.formatDouble(widget.data.cPC)}%",
+                          style: AppTextStyle.titleSmall_14,
+                        ),
+                      ],
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Text(
+                          S.of(context).ratio,
+                          style: AppTextStyle.bodySmall_8.copyWith(
+                            fontSize: 12,
+                            color: AppColors.neutral_04,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                        const SizedBox(height: 4),
+                        Text(
+                          "${NumUtils.formatDouble(widget.data.ratio)}%",
+                          style: AppTextStyle.titleSmall_14
+                              .copyWith(color: widget.data.color),
+                        ),
+                      ],
+                    ),
                   ],
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-          const SizedBox(height: 8),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    S.of(context).signal_type,
-                    style: AppTextStyle.bodySmall_8.copyWith(
-                      color: AppColors.neutral_04,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                  Text(
-                    widget.data.cTYPE ?? "",
-                    style: textTheme.titleSmall,
-                  ),
-                ],
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  Text(
-                    S.of(context).effective,
-                    style: AppTextStyle.bodySmall_8.copyWith(
-                      color: AppColors.neutral_04,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                  Text(
-                    "${NumUtils.formatDouble(widget.data.ratio)}%",
-                    style: AppTextStyle.titleSmall_14,
-                  ),
-                ],
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  Text(
-                    S.of(context).ratio,
-                    style: AppTextStyle.bodySmall_8.copyWith(
-                      color: AppColors.neutral_04,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                  Text(
-                    "${NumUtils.formatDouble(widget.data.cPC)}%",
-                    style: AppTextStyle.titleSmall_14,
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ],
+        ),
       ),
     );
   }

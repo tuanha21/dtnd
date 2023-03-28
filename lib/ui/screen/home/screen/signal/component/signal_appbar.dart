@@ -12,7 +12,7 @@ class SignalAppbar extends StatelessWidget implements PreferredSizeWidget {
   });
 
   final VoidCallback? onTap;
-  final Stock stock;
+  final Stock? stock;
 
   @override
   Widget build(BuildContext context) {
@@ -53,14 +53,14 @@ class SignalAppbar extends StatelessWidget implements PreferredSizeWidget {
             TextSpan(
               children: [
                 TextSpan(
-                    text: stock.stockCode,
+                    text: stock?.stockCode ?? "-",
                     style: Theme.of(context)
                         .textTheme
                         .labelLarge!
                         .copyWith(fontWeight: FontWeight.w700)),
                 const TextSpan(text: " "),
                 TextSpan(
-                  text: "(${stock.postTo?.name})",
+                  text: "(${stock?.postTo?.name})",
                   style: AppTextStyle.labelLarge_18
                       .copyWith(color: AppColors.neutral_03),
                 ),
@@ -68,7 +68,7 @@ class SignalAppbar extends StatelessWidget implements PreferredSizeWidget {
             ),
           ),
           Text(
-            "${stock.nameShort}",
+            stock?.nameShort ?? "-",
             style: AppTextStyle.bottomNavLabel
                 .copyWith(color: AppColors.neutral_03),
           ),

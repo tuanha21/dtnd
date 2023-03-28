@@ -133,7 +133,7 @@ class NetworkService implements INetworkService {
     Map<String, dynamic>? queryParameters,
   ]) {
     final unencodedPath = "algo/pbapi/api/$path";
-    return Uri.http(algo_url_apec, unencodedPath, queryParameters);
+    return Uri.http(algo_url, unencodedPath, queryParameters);
   }
 
   Uri url_algo_apec(
@@ -141,7 +141,7 @@ class NetworkService implements INetworkService {
     Map<String, dynamic>? queryParameters,
   ]) {
     final unencodedPath = "algo/pbapi/api/$path";
-    return Uri.http(algo_url_apec, unencodedPath, queryParameters);
+    return Uri.http(algo_url, unencodedPath, queryParameters);
   }
 
   final Utf8Codec utf8Codec = const Utf8Codec();
@@ -421,7 +421,7 @@ class NetworkService implements INetworkService {
 
   @override
   Future<String> getNewsDetail(int id) async {
-    final http.Response response = await client.get(url_core(
+    final http.Response response = await client.get(url_core1(
       "pickContents/$id",
     ));
     var responseBody = decode(response.bodyBytes);
@@ -1572,7 +1572,6 @@ class NetworkService implements INetworkService {
       RequestModel requestModel,
       {List<T>? Function(Map<String, dynamic> p1)? onError,
       bool Function(Map<String, dynamic> p1)? hasError}) async {
-
     dynamic response =
         await client.post(url_core_endpoint, body: requestModel.toString());
     response = decode(response.bodyBytes);

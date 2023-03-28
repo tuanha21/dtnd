@@ -4,27 +4,18 @@ import 'package:dtnd/=models=/response/top_signal_stock_model.dart';
 import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_textstyle.dart';
-import 'package:dtnd/utilities/num_utils.dart';
 import 'package:dtnd/utilities/time_utils.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
-class SignalOverview extends StatefulWidget {
-  const SignalOverview({super.key, required this.data, this.detail});
-  final TopSignalStockModel data;
+class SignalOverview extends StatelessWidget {
+  const SignalOverview({super.key, this.detail});
   final TopSignalDetailModel? detail;
-  @override
-  State<SignalOverview> createState() => _SignalOverviewState();
-}
-
-class _SignalOverviewState extends State<SignalOverview> {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
-    final stockData = widget.data.stockModel.stockData;
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-      padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 16),
+      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
       decoration: const BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.all(Radius.circular(12)),
@@ -35,12 +26,12 @@ class _SignalOverviewState extends State<SignalOverview> {
           Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              widget.data.prefixIcon(size: 28),
+              detail?.prefixIcon(size: 28) ?? Container(),
               const SizedBox(width: 10),
               Text(
-                widget.data.cSELLPRICE.toString(),
+                detail?.cSELLPRICE?.toString() ?? "-",
                 style: AppTextStyle.headlineSmall_24
-                    .copyWith(color: widget.data.color),
+                    .copyWith(color: detail?.color),
               ),
               // const SizedBox(width: 10),
               // Text(
@@ -50,7 +41,6 @@ class _SignalOverviewState extends State<SignalOverview> {
               // ),
             ],
           ),
-          const SizedBox(height: 14),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -65,8 +55,10 @@ class _SignalOverviewState extends State<SignalOverview> {
                   ),
                   const SizedBox(width: 4),
                   Text(
-                      TimeUtilities.commonTimeFormat
-                          .format(widget.data.cBUYDATE),
+                      detail?.cBUYDATE != null
+                          ? TimeUtilities.commonTimeFormat
+                              .format(detail!.cBUYDATE!)
+                          : "-",
                       style: AppTextStyle.labelSmall_10),
                 ],
               ),
@@ -80,8 +72,7 @@ class _SignalOverviewState extends State<SignalOverview> {
                         fontWeight: FontWeight.w500),
                   ),
                   const SizedBox(width: 4),
-                  Text(widget.data.cTYPE ?? "-",
-                      style: AppTextStyle.labelSmall_10),
+                  Text(detail?.cTYPE ?? "-", style: AppTextStyle.labelSmall_10),
                 ],
               ),
             ],
@@ -99,7 +90,7 @@ class _SignalOverviewState extends State<SignalOverview> {
               children: [
                 _Column(
                   "Giá mua",
-                  widget.data.cBUYPRICE.toString(),
+                  detail?.cBUYPRICE.toString() ?? "-",
                   textStyle: textTheme.titleSmall,
                 ),
                 const VerticalDivider(
@@ -108,7 +99,7 @@ class _SignalOverviewState extends State<SignalOverview> {
                 ),
                 _Column(
                   "Lợi nhuận",
-                  "${widget.data.cPC}%",
+                  "${detail?.cPC ?? "-"}%",
                   textStyle: textTheme.titleSmall,
                 ),
                 const VerticalDivider(
@@ -117,7 +108,7 @@ class _SignalOverviewState extends State<SignalOverview> {
                 ),
                 _Column(
                   "Rủi ro",
-                  "${widget.detail?.rUIRO ?? "-"}%",
+                  "${detail?.rUIRO ?? "-"}%",
                   textStyle: textTheme.titleSmall,
                 ),
               ],
