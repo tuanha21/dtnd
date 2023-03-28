@@ -1,4 +1,5 @@
 import 'package:dtnd/ui/theme/app_color.dart';
+import 'package:dtnd/ui/widget/empty_list_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_svg/svg.dart';
@@ -46,9 +47,17 @@ class _MarginDebtScreenState extends State<MarginDebtScreen> {
     controller.listData.value?.clear();
     EasyLoading.show();
     await controller
-        .getAllShareEarned(fromDay: fromDay,toDay: toDay)
+        .getAllShareEarned(fromDay: fromDay, toDay: toDay)
         .whenComplete(() => EasyLoading.dismiss());
     setState(() {});
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    controller.sumCloan.value = 0;
+    controller.sumCloanOut.value = 0;
+    controller.sumCloanIn.value = 0;
   }
 
   @override
@@ -130,70 +139,77 @@ class _MarginDebtScreenState extends State<MarginDebtScreen> {
                   color: AppColors.light_bg,
                   borderRadius: BorderRadius.circular(12)),
               padding: const EdgeInsets.all(16),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'Tổng nợ',
-                        style: AppTextStyle.labelMedium_12.copyWith(
-                          color: AppColors.neutral_03,
+              child: Obx(
+                () => Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Tổng nợ',
+                          style: AppTextStyle.labelMedium_12.copyWith(
+                            color: AppColors.neutral_03,
+                          ),
                         ),
-                      ),
-                      Text(
-                        controller.sumCloanIn.value.toString(),
-                        style: AppTextStyle.bodyLarge_16.copyWith(
-                          color: AppColors.semantic_03,
+                        Text(
+                          controller.sumCloanIn.value.toString(),
+                          style: AppTextStyle.bodyLarge_16.copyWith(
+                            color: AppColors.semantic_03,
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
-                  const Divider(height: 33),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'Tổng nợ đã trả',
-                        style: AppTextStyle.bottomNavLabel.copyWith(
-                          color: AppColors.neutral_03,
+                      ],
+                    ),
+                    const Divider(height: 33),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Tổng nợ đã trả',
+                          style: AppTextStyle.bottomNavLabel.copyWith(
+                            color: AppColors.neutral_03,
+                          ),
                         ),
-                      ),
-                      Text(
-                        controller.sumCloanOut.value.toString(),
-                        style: AppTextStyle.labelMedium_12.copyWith(
-                          color: AppColors.neutral_01,
+                        Text(
+                          controller.sumCloanOut.value.toString(),
+                          style: AppTextStyle.labelMedium_12.copyWith(
+                            color: AppColors.neutral_01,
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 16,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'Tổng nợ còn lại',
-                        style: AppTextStyle.bottomNavLabel.copyWith(
-                          color: AppColors.neutral_03,
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 16,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Tổng nợ còn lại',
+                          style: AppTextStyle.bottomNavLabel.copyWith(
+                            color: AppColors.neutral_03,
+                          ),
                         ),
-                      ),
-                      Text(
-                        controller.sumCloan.value.toString(),
-                        style: AppTextStyle.labelMedium_12.copyWith(
-                          color: AppColors.neutral_01,
+                        Text(
+                          controller.sumCloan.value.toString(),
+                          style: AppTextStyle.labelMedium_12.copyWith(
+                            color: AppColors.neutral_01,
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
-                ],
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ),
-            const SizedBox(height: 16,),
+            const SizedBox(
+              height: 16,
+            ),
             Obx(
               () {
+                if(controller.listData.value?.isEmpty == true){
+                  return const EmptyListWidget();
+                }
                 return Container(
                   margin: const EdgeInsets.symmetric(horizontal: 16),
                   padding: const EdgeInsets.all(16),
@@ -222,8 +238,8 @@ class _MarginDebtScreenState extends State<MarginDebtScreen> {
           child: InkWell(
             borderRadius: const BorderRadius.all(Radius.circular(6)),
             onTap: () async {
-              final StockModel? aaa =
-              await controller.dataCenterService.getStockModelFromStockCode("AAA");
+              final StockModel? aaa = await controller.dataCenterService
+                  .getStockModelFromStockCode("AAA");
 
               if (mounted) {}
               // return StockOrderISheet(widget.stockModel).showSheet(context, );

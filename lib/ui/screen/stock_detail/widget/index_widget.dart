@@ -122,7 +122,7 @@ class _IndexWidgetState extends State<IndexWidget> {
                   return const SizedBox();
                 }
                 if (snapshot.connectionState == ConnectionState.done) {
-                  var list = snapshot.data!.content!;
+                  var list = snapshot.data?.content ?? [];
                   //var lnRong = list.firstWhere((element) => element.iD == 54);
 
                   var eps = list.firstWhereOrNull((element) => element.iD == 1);

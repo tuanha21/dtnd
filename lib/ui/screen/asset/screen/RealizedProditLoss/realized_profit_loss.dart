@@ -1,6 +1,8 @@
 import 'package:dtnd/ui/screen/asset/screen/RealizedProditLoss/realized_profit_loss_controller.dart';
 import 'package:dtnd/ui/theme/app_textstyle.dart';
+import 'package:dtnd/ui/widget/empty_list_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -171,23 +173,21 @@ class _RealizedProfitLossState extends State<RealizedProfitLoss> {
               height: kToolbarHeight,
               child: TextField(
                 onChanged: onChanged,
+                inputFormatters: [UpperCaseTextFormatter()],
                 decoration: InputDecoration(
-                  hintText: S.of(context).search_stock,
-                  suffixIcon: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
-                    child: Image.asset(
-                      AppImages.search_icon,
+                    hintText: S.of(context).search_stock,
+                    suffixIcon: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      child: Image.asset(
+                        AppImages.search_icon,
+                      ),
                     ),
-                  ),
-                  fillColor: AppColors.neutral_07,
-                  suffixIconConstraints:
-                      const BoxConstraints(maxWidth: 52, maxHeight: 20),
-                  disabledBorder: InputBorder.none
-                ),
+                    fillColor: AppColors.neutral_07,
+                    suffixIconConstraints:
+                        const BoxConstraints(maxWidth: 52, maxHeight: 20),
+                    disabledBorder: InputBorder.none),
               ),
             ),
-
-
             const SizedBox(height: 16),
             Row(
               children: [
@@ -227,8 +227,8 @@ class _RealizedProfitLossState extends State<RealizedProfitLoss> {
             const SizedBox(
               height: 12,
             ),
-            Obx(
-              () => Container(
+            Obx(() {
+              return Container(
                 padding: const EdgeInsets.all(16),
                 decoration: const BoxDecoration(
                   color: AppColors.light_bg,
@@ -247,13 +247,17 @@ class _RealizedProfitLossState extends State<RealizedProfitLoss> {
                     )
                   ],
                 ),
-              ),
-            ),
+              );
+            }),
             Container(
               height: 16,
             ),
             Obx(
               () {
+                if (controller.shareEarnedModel.value?.listDetail.isEmpty ==
+                    true) {
+                  return const EmptyListWidget();
+                }
                 if (!controller.searching) {
                   return Container(
                     padding: const EdgeInsets.all(16),
@@ -406,6 +410,17 @@ class __ExpandableRowState extends State<_ExpandableRow> {
         if (widget.child != null)
           ExpandedSection(expand: expanded, child: widget.child!),
       ],
+    );
+  }
+}
+
+class UpperCaseTextFormatter extends TextInputFormatter {
+  @override
+  TextEditingValue formatEditUpdate(
+      TextEditingValue oldValue, TextEditingValue newValue) {
+    return TextEditingValue(
+      text: newValue.text.toUpperCase(),
+      selection: newValue.selection,
     );
   }
 }
