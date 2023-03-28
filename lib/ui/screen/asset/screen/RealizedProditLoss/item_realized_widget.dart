@@ -34,13 +34,11 @@ class ItemRealizedWidget extends StatefulWidget {
 class _ItemRealizedState extends State<ItemRealizedWidget> {
   final IDataCenterService dataCenterService = DataCenterService();
   bool expand = false;
-  bool isShow = true;
   Stock? stock;
   StockModel? stockModel;
 
   void onTap() {
     setState(() {
-      isShow = !isShow;
       expand = !expand;
     });
     if (expand) {}
@@ -147,27 +145,24 @@ class _ItemRealizedState extends State<ItemRealizedWidget> {
                     ),
                   ),
                   const SizedBox(
-                    width: 10,
+                    width: 30,
                   ),
-                  Visibility(
-                    visible: isShow,
-                    child: Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'KL bán',
-                            style: AppTextStyle.labelSmall_10
-                                .copyWith(color: AppColors.neutral_04),
-                          ),
-                          const SizedBox(height: 4),
-                          Text(
-                            NumUtils.formatDouble(widget.detail?.cSHAREVOLUME),
-                            style: AppTextStyle.labelMedium_12
-                                .copyWith(color: AppColors.neutral_01),
-                          ),
-                        ],
-                      ),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'KL bán',
+                          style: AppTextStyle.labelSmall_10
+                              .copyWith(color: AppColors.neutral_04),
+                        ),
+                        const SizedBox(height: 4),
+                        Text(
+                          NumUtils.formatDouble(widget.detail?.cSHAREVOLUME),
+                          style: AppTextStyle.labelMedium_12
+                              .copyWith(color: AppColors.neutral_01),
+                        ),
+                      ],
                     ),
                   ),
                   Expanded(
@@ -228,6 +223,15 @@ class _ItemRealizedState extends State<ItemRealizedWidget> {
                                 "Giá bán": NumUtils.formatDouble(
                                     widget.detail?.cSHAREPRICE),
                               }),
+                            ),
+                            const SizedBox(width: 2),
+                            Expanded(
+                              child: AssetGridElement(
+                                element: {
+                                  "Phí thuế": NumUtils.formatDouble(
+                                      widget.detail?.cCOMMVALUE)
+                                },
+                              ),
                             ),
                             const SizedBox(width: 2),
                             Expanded(
