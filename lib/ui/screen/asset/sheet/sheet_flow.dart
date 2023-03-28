@@ -55,6 +55,10 @@ class ToProfitAndLossCmd extends ToOptionCmd {
   const ToProfitAndLossCmd([super.data]);
 }
 
+class ToMarginDebt extends ToOptionCmd {
+  const ToMarginDebt([super.data]);
+}
+
 class ToOrderHistoryCmd extends ToOptionCmd {
   const ToOrderHistoryCmd([super.data]);
 }

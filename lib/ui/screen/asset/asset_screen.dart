@@ -11,6 +11,7 @@ import 'package:dtnd/data/implementations/user_service.dart';
 import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/screen/asset/component/account_asset_overview_widget.dart';
 import 'package:dtnd/ui/screen/asset/component/asset_distribution_chart.dart';
+import 'package:dtnd/ui/screen/asset/screen/MarginDebt/margin_debt_screen.dart';
 import 'package:dtnd/ui/screen/asset/screen/RealizedProditLoss/realized_profit_loss.dart';
 import 'package:dtnd/ui/screen/asset/sheet/extensions_sheet.dart';
 import 'package:dtnd/ui/screen/exchange_stock/order_note/screen/order_note_screen.dart';
@@ -184,6 +185,12 @@ class _AssetScreenState extends State<AssetScreen>
                                   Navigator.of(context).push(MaterialPageRoute(
                                     builder: (context) =>
                                         const RealizedProfitLoss(),
+                                  ));
+                                  break;
+                                case ToMarginDebt:
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) =>
+                                        const MarginDebtScreen(),
                                   ));
                                   break;
                                 default:
