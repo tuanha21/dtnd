@@ -1,6 +1,7 @@
 import 'package:dtnd/=models=/response/account/asset_chart_element.dart';
 import 'package:dtnd/=models=/response/account/i_account.dart';
 import 'package:dtnd/=models=/response/account/list_account_model.dart';
+import 'package:dtnd/=models=/response/get_bedt_model.dart';
 
 import 'response/account/portfolio_status_model.dart';
 import 'response/account/unexecuted_right_model.dart';
@@ -50,6 +51,8 @@ abstract class CoreResponseModel {
         return CashTransactionHistoryModel.fromJson(json) as T;
       case ShareTransactionModel:
         return ShareTransactionModel.fromJson(json) as T;
+      case GetBedtModel:
+        return GetBedtModel.fromJson(json) as T;
       default:
         return null;
     }

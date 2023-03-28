@@ -40,6 +40,7 @@ class _RealizedProfitLossState extends State<RealizedProfitLoss> {
   late DateTime toDay;
   late DateTime firstDay;
   late DateTime lastDay;
+  StockModel? stockModel;
 
   final IDataCenterService dataCenterService = DataCenterService();
 
@@ -99,15 +100,6 @@ class _RealizedProfitLossState extends State<RealizedProfitLoss> {
           return onFABTapped();
         }
       }
-    } else {
-      // return StockOrderISheet(widget.stockModel).showSheet(context, );
-
-      // StockOrderISheet(widget.stockModel).show(
-      //     context,
-      //     StockOrderSheet(
-      //       stockModel: widget.stockModel,
-      //       orderData: null,
-      //     ));
     }
   }
 
@@ -172,37 +164,30 @@ class _RealizedProfitLossState extends State<RealizedProfitLoss> {
             const SizedBox(
               height: 18,
             ),
-            Column(
-              children: [
-                Container(
-                  decoration: const BoxDecoration(
-                    color: AppColors.light_bg,
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(12),
+            Container(
+              decoration: const BoxDecoration(
+                color: AppColors.light_bg,
+              ),
+              height: kToolbarHeight,
+              child: TextField(
+                onChanged: onChanged,
+                decoration: InputDecoration(
+                  hintText: S.of(context).search_stock,
+                  suffixIcon: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    child: Image.asset(
+                      AppImages.search_icon,
                     ),
                   ),
-                  height: kToolbarHeight,
-                  child: TextField(
-                    onChanged: onChanged,
-                    enableSuggestions: false,
-                    decoration: InputDecoration(
-                      enabled: false,
-                      border: InputBorder.none,
-                      hintText: S.of(context).search_stock,
-                      suffixIcon: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 16),
-                        child: Image.asset(
-                          AppImages.search_icon,
-                        ),
-                      ),
-                      fillColor: AppColors.neutral_07,
-                      suffixIconConstraints:
-                          const BoxConstraints(maxWidth: 52, maxHeight: 20),
-                    ),
-                  ),
+                  fillColor: AppColors.neutral_07,
+                  suffixIconConstraints:
+                      const BoxConstraints(maxWidth: 52, maxHeight: 20),
+                  disabledBorder: InputBorder.none
                 ),
-              ],
+              ),
             ),
+
+
             const SizedBox(height: 16),
             Row(
               children: [
@@ -240,45 +225,43 @@ class _RealizedProfitLossState extends State<RealizedProfitLoss> {
               ],
             ),
             const SizedBox(
-              height: 24,
+              height: 12,
+            ),
+            Obx(
+              () => Container(
+                padding: const EdgeInsets.all(16),
+                decoration: const BoxDecoration(
+                  color: AppColors.light_bg,
+                  borderRadius: BorderRadius.all(Radius.circular(8)),
+                ),
+                alignment: Alignment.center,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text("Tổng cộng", style: AppTextStyle.labelMedium_12),
+                    Text(
+                      "${NumUtils.formatDouble(controller.shareEarnedModel.value?.cEARNEDVALUE ?? 0)} (${NumUtils.formatDouble(controller.shareEarnedModel.value?.cEARNEDRATE)}%)",
+                      style: AppTextStyle.labelMedium_12.copyWith(
+                        color: controller.shareEarnedModel.value?.color,
+                      ),
+                    )
+                  ],
+                ),
+              ),
             ),
             Container(
-              decoration: const BoxDecoration(
-                color: AppColors.light_bg,
-                borderRadius: BorderRadius.all(Radius.circular(8)),
-              ),
-              alignment: Alignment.center,
-              padding: const EdgeInsets.all(16),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text("Tổng cộng", style: AppTextStyle.labelMedium_12),
-                  Text(
-                      controller.shareEarnedModel.value?.listDetail
-                                  .isNotEmpty ==
-                              true
-                          ? NumUtils.formatDouble(
-                              controller.shareEarnedModel.value?.cEARNEDVALUE ??
-                                  0)
-                          : '',
-                      style: AppTextStyle.labelMedium_12
-                          .copyWith(color: AppColors.semantic_01))
-                ],
-              ),
-            ),
-            const SizedBox(
               height: 16,
             ),
-            Obx(() {
-              if (!controller.searching) {
-                return Container(
-                  padding: const EdgeInsets.all(16),
-                  decoration: BoxDecoration(
-                      color: AppColors.light_bg,
-                      borderRadius: BorderRadius.circular(12)),
-                  child: Column(
-                    children: [
-                      if (!controller.searching)
+            Obx(
+              () {
+                if (!controller.searching) {
+                  return Container(
+                    padding: const EdgeInsets.all(16),
+                    decoration: BoxDecoration(
+                        color: AppColors.light_bg,
+                        borderRadius: BorderRadius.circular(12)),
+                    child: Column(
+                      children: [
                         for (ShareEarnedDetailModel detail
                             in controller.shareEarnedModel.value?.listDetail ??
                                 [])
@@ -286,28 +269,29 @@ class _RealizedProfitLossState extends State<RealizedProfitLoss> {
                             padding: const EdgeInsets.symmetric(vertical: 4),
                             child: ItemRealizedWidget(detail: detail),
                           )
-                    ],
-                  ),
-                );
-              } else {
-                return Container(
-                  padding: const EdgeInsets.all(16),
-                  decoration: BoxDecoration(
-                      color: AppColors.light_bg,
-                      borderRadius: BorderRadius.circular(12)),
-                  child: Column(
-                    children: [
-                      for (ShareEarnedDetailModel detail
-                          in controller.listSearch.value?.listDetail ?? [])
-                        Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 4),
-                          child: ItemRealizedWidget(detail: detail),
-                        )
-                    ],
-                  ),
-                );
-              } /////
-            })
+                      ],
+                    ),
+                  );
+                } else {
+                  return Container(
+                    padding: const EdgeInsets.all(16),
+                    decoration: BoxDecoration(
+                        color: AppColors.light_bg,
+                        borderRadius: BorderRadius.circular(12)),
+                    child: Column(
+                      children: [
+                        for (ShareEarnedDetailModel detail
+                            in controller.listSearch.value?.listDetail ?? [])
+                          Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 4),
+                            child: ItemRealizedWidget(detail: detail),
+                          )
+                      ],
+                    ),
+                  );
+                } /////
+              },
+            )
           ],
         ),
       ),

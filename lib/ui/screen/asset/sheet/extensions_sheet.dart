@@ -75,7 +75,7 @@ class _ExtensionsSheetState extends State<ExtensionsSheet> {
                     icon: AppImages.card_tick,
                     label: S.of(context).margin_debt,
                     onTap: () =>
-                        Navigator.of(context).pop(const ToProfitAndLossCmd()),
+                        Navigator.of(context).pop(const ToMarginDebt()),
                   ),
                 ],
               ),

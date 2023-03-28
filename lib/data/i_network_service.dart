@@ -234,4 +234,10 @@ abstract class INetworkService {
     List<T>? Function(Map<String, dynamic>)? onError,
     bool Function(Map<String, dynamic>)? hasError,
   });
+
+  Future<List<T>?> getDataMarginDebt<T extends CoreResponseModel>(
+    RequestModel requestModel, {
+    List<T>? Function(Map<String, dynamic>)? onError,
+    bool Function(Map<String, dynamic>)? hasError,
+  });
 }

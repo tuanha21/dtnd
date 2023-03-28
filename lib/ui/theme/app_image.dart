@@ -66,6 +66,7 @@ class AppImages {
   static const String filter_icon = "assets/images/filter.png";
   static const String signal_icon = "assets/images/signal_icon.png";
   static const String icon_alert = "assets/svg/icon_alert.svg";
+  static const String margin_debt_icon = "assets/svg/margin_debt_icon.svg";
 
   static const String qa_base = "assets/svg/qa_base.svg";
   static const String qa_bond = "assets/svg/qa_bond.svg";

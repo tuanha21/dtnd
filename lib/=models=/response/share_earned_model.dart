@@ -1,8 +1,8 @@
 import 'package:dtnd/=models=/core_response_model.dart';
+import 'package:dtnd/=models=/stock_status.dart';
 import 'package:dtnd/utilities/logger.dart';
-import 'package:get/get.dart';
 
-class ShareEarnedModel {
+class ShareEarnedModel extends StockStatus {
   num? rOWNUM;
   String? cTRADINGDATE;
   String? cACCOUNTCODE;
@@ -96,6 +96,15 @@ class ShareEarnedModel {
     data['C_EARNED_RATE'] = cEARNEDRATE;
     data['C_TOTAL_RECORD'] = cTOTALRECORD;
     return data;
+  }
+
+  @override
+  SStatus get sstatus {
+    if ((cEARNEDVALUE ?? 0) > 0 && (cEARNEDRATE ?? 0) > 0) {
+      return SStatus.up;
+    } else {
+      return SStatus.down;
+    }
   }
 }
 

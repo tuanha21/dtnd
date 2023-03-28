@@ -1,5 +1,4 @@
 import 'package:dtnd/=models=/response/account/unexecuted_right_model.dart';
-import 'package:dtnd/=models=/response/share_earned_model.dart';
 import 'package:dtnd/config/service/app_services.dart';
 import 'package:dtnd/data/i_data_center_service.dart';
 import 'package:dtnd/data/implementations/data_center_service.dart';
@@ -9,14 +8,15 @@ import 'package:dtnd/ui/theme/app_textstyle.dart';
 import 'package:dtnd/ui/widget/expanded_widget.dart';
 import 'package:dtnd/utilities/num_utils.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
+import '../../../../../=models=/response/get_bedt_model.dart';
 import '../../../../../=models=/response/stock.dart';
 import '../../../../../=models=/response/stock_model.dart';
-import '../../../../widget/icon/stock_icon.dart';
 import '../../component/asset_grid_element.dart';
 
-class ItemRealizedWidget extends StatefulWidget {
-  const ItemRealizedWidget({
+class ItemMarginDebtWidget extends StatefulWidget {
+  const ItemMarginDebtWidget({
     super.key,
     this.onHold,
     this.onExpand,
@@ -25,13 +25,13 @@ class ItemRealizedWidget extends StatefulWidget {
 
   final ValueChanged<UnexecutedRightModel?>? onExpand;
   final VoidCallback? onHold;
-  final ShareEarnedDetailModel? detail;
+  final GetBedtModel? detail;
 
   @override
-  State<ItemRealizedWidget> createState() => _ItemRealizedState();
+  State<ItemMarginDebtWidget> createState() => _ItemRealizedState();
 }
 
-class _ItemRealizedState extends State<ItemRealizedWidget> {
+class _ItemRealizedState extends State<ItemMarginDebtWidget> {
   final IDataCenterService dataCenterService = DataCenterService();
   bool expand = false;
   bool isShow = true;
@@ -49,7 +49,7 @@ class _ItemRealizedState extends State<ItemRealizedWidget> {
   @override
   void initState() {
     super.initState();
-    getStock(widget.detail?.cSHARECODE);
+    getStock(widget.detail?.cBANKCODE);
     getStockModel();
   }
 
@@ -64,7 +64,7 @@ class _ItemRealizedState extends State<ItemRealizedWidget> {
 
   Future<void> getStockModel() async {
     final response = await dataCenterService.getStocksModelsFromStockCodes(
-        [widget.detail?.cSHARECODE.toString() ?? '']);
+        [widget.detail?.cBANKCODE.toString() ?? '']);
     if (response?.isNotEmpty ?? false) {
       stockModel = response!.first;
       if (mounted) {
@@ -76,8 +76,6 @@ class _ItemRealizedState extends State<ItemRealizedWidget> {
   @override
   Widget build(BuildContext context) {
     final themeMode = AppService.instance.themeMode.value;
-    // final textTheme = Theme.of(context).textTheme;
-    // final Widget name;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -92,8 +90,13 @@ class _ItemRealizedState extends State<ItemRealizedWidget> {
             children: [
               Row(
                 children: [
-                  StockIcon(
-                    stockCode: widget.detail?.cSHARECODE,
+                  Container(
+                    padding: const EdgeInsets.all(5),
+                    decoration: const BoxDecoration(
+                      color: AppColors.light_bg,
+                      shape: BoxShape.circle
+                    ),
+                    child: SvgPicture.asset(AppImages.margin_debt_icon),
                   ),
                   const SizedBox(width: 8),
                   Expanded(
@@ -102,20 +105,18 @@ class _ItemRealizedState extends State<ItemRealizedWidget> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          widget.detail?.cSHARECODE ?? '',
-                          style: Theme.of(context)
-                              .textTheme
-                              .titleSmall!
-                              .copyWith(fontWeight: FontWeight.w600),
+                          widget.detail?.cLOANID ?? '',
+                          style: AppTextStyle.titleSmall_14
+                              .copyWith(color: AppColors.neutral_01)
                         ),
                         Row(
                           children: [
                             Flexible(
                               child: Text(
-                                stock?.nameShort ?? "",
+                                'Lãi Suất ${NumUtils.formatDouble(widget.detail?.cINTERESTRATE)}%',
                                 overflow: TextOverflow.ellipsis,
-                                style: AppTextStyle.labelSmall_10
-                                    .copyWith(color: AppColors.neutral_03),
+                                style: AppTextStyle.labelMedium_12
+                                    .copyWith(color: AppColors.semantic_04),
                               ),
                             ),
                           ],
@@ -130,44 +131,20 @@ class _ItemRealizedState extends State<ItemRealizedWidget> {
                 children: [
                   Expanded(
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Text(
-                          'Ngày',
+                          'Ngày hết hạn',
                           style: AppTextStyle.labelSmall_10
                               .copyWith(color: AppColors.neutral_04),
                         ),
                         const SizedBox(height: 4),
                         Text(
-                          widget.detail?.cTRADINGDATE ?? '',
+                          widget.detail?.cEXPIREDATE1 ?? '',
                           style: AppTextStyle.labelMedium_12
                               .copyWith(color: AppColors.neutral_01),
                         ),
                       ],
-                    ),
-                  ),
-                  const SizedBox(
-                    width: 10,
-                  ),
-                  Visibility(
-                    visible: isShow,
-                    child: Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'KL bán',
-                            style: AppTextStyle.labelSmall_10
-                                .copyWith(color: AppColors.neutral_04),
-                          ),
-                          const SizedBox(height: 4),
-                          Text(
-                            NumUtils.formatDouble(widget.detail?.cSHAREVOLUME),
-                            style: AppTextStyle.labelMedium_12
-                                .copyWith(color: AppColors.neutral_01),
-                          ),
-                        ],
-                      ),
                     ),
                   ),
                   Expanded(
@@ -175,31 +152,31 @@ class _ItemRealizedState extends State<ItemRealizedWidget> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Text(
-                          "Lãi/lỗ",
+                          'Dư nợ gốc',
                           style: AppTextStyle.labelSmall_10
                               .copyWith(color: AppColors.neutral_04),
                         ),
                         const SizedBox(height: 4),
                         Text(
-                          NumUtils.formatDouble(widget.detail?.cEARNEDVALUE),
+                          NumUtils.formatDouble(widget.detail?.cLOANIN),
                           style: AppTextStyle.labelMedium_12
-                              .copyWith(color: stockModel?.stockData.color),
+                              .copyWith(color: AppColors.neutral_01),
                         ),
                       ],
                     ),
                   ),
                   Expanded(
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.end,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Text(
-                          "% lãi/lỗ",
+                          "Nợ còn lại",
                           style: AppTextStyle.labelSmall_10
                               .copyWith(color: AppColors.neutral_04),
                         ),
                         const SizedBox(height: 4),
                         Text(
-                          NumUtils.formatDouble(widget.detail?.cEARNEDRATE),
+                          NumUtils.formatDouble(widget.detail?.cLOAN),
                           style: AppTextStyle.labelMedium_12
                               .copyWith(color: stockModel?.stockData.color),
                         ),
@@ -225,27 +202,24 @@ class _ItemRealizedState extends State<ItemRealizedWidget> {
                           children: [
                             Expanded(
                               child: AssetGridElement(element: {
-                                "Giá bán": NumUtils.formatDouble(
-                                    widget.detail?.cSHAREPRICE),
+                                "Ngày vay": widget.detail?.cDELIVERDATE,
                               }),
                             ),
                             const SizedBox(width: 2),
                             Expanded(
                               child: AssetGridElement(
                                 element: {
-                                  "Giá trị bán": NumUtils.formatDouble(
-                                      ((((widget
-                                                      .detail?.cSHAREPRICE!
-                                                      .toDouble() ??
-                                                  0) *
-                                              (widget.detail?.cSHAREVOLUME!
-                                                      .toDouble() ??
-                                                  0)) -
-                                          (widget.detail?.cCOMMVALUE
-                                                  ?.toDouble() ??
-                                              0))))
+                                  "Ngày tính lãi": NumUtils.formatDouble(
+                                      widget.detail?.cINTERESTRATE),
                                 },
                               ),
+                            ),
+                            const SizedBox(width: 2),
+                            Expanded(
+                              child: AssetGridElement(element: {
+                                "Số ngày vay": NumUtils.formatDouble(
+                                    widget.detail?.cCOUNTDAY),
+                              }),
                             ),
                           ],
                         ),
@@ -255,17 +229,19 @@ class _ItemRealizedState extends State<ItemRealizedWidget> {
                         child: Row(
                           children: [
                             Expanded(
-                              child: AssetGridElement(element: {
-                                "Giá vốn": NumUtils.formatDouble(
-                                    widget.detail?.cAVERAGEPRICE),
-                              }),
+                              child: AssetGridElement(
+                                element: {
+                                  "Lãi vay":
+                                      NumUtils.formatDouble(widget.detail?.cFEE)
+                                },
+                              ),
                             ),
                             const SizedBox(width: 2),
                             Expanded(
                               child: AssetGridElement(
                                 element: {
-                                  "Giá trị vốn": NumUtils.formatDouble(
-                                      widget.detail?.cCOSTVALUE)
+                                  "Đã trả": NumUtils.formatDouble(
+                                      widget.detail?.cLOANOUT)
                                 },
                               ),
                             ),
