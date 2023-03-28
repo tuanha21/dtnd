@@ -94,7 +94,6 @@ class _LiquidityChartState extends State<LiquidityChart> {
                         data: liquidityModel.currVal,
                       )..setAttribute(
                           charts.measureAxisIdKey, "secondaryMeasureAxisId"),
-
                       charts.Series<num, String>(
                         id: 'Phiên trước',
                         colorFn: (_, __) => charts.ColorUtil.fromDartColor(
@@ -103,8 +102,10 @@ class _LiquidityChartState extends State<LiquidityChart> {
                             liquidityModel.time.elementAt(index ?? 0),
                         measureFn: (num val, _) => val,
                         data: liquidityModel.prevVal,
-                      )..setAttribute(charts.rendererIdKey, 'customLine'),
-
+                      )
+                        ..setAttribute(charts.rendererIdKey, 'customLine')
+                        ..setAttribute(
+                            charts.measureAxisIdKey, "secondaryMeasureAxisId"),
                       charts.Series<num, String>(
                         id: '1 tuần',
                         colorFn: (_, __) => charts.ColorUtil.fromDartColor(
@@ -113,22 +114,10 @@ class _LiquidityChartState extends State<LiquidityChart> {
                             liquidityModel.time.elementAt(index ?? 0),
                         measureFn: (num val, _) => val,
                         data: liquidityModel.week1Val,
-                      )..setAttribute(charts.rendererIdKey, 'customLine'),
-
-                      // charts.Series<num, String>(
-                      //   id: '2 tuần',
-                      //   colorFn: (_, __) => charts.ColorUtil.fromDartColor(AppColors.graph_4),
-                      //   domainFn: (num val, index) => liquidityModel.time.elementAt(index ?? 0),
-                      //   measureFn: (num val, _) => val,
-                      //   data: liquidityModel.week2Val,
-                      // )..setAttribute(charts.rendererIdKey, 'customLine'),
-                      // charts.Series<num, String>(
-                      //   id: '1 tháng',
-                      //   colorFn: (_, __) => charts.ColorUtil.fromDartColor(AppColors.graph_3),
-                      //   domainFn: (num val, index) => liquidityModel.time.elementAt(index ?? 0),
-                      //   measureFn: (num val, _) => val,
-                      //   data: liquidityModel.monthVal,
-                      // )..setAttribute(charts.rendererIdKey, 'customLine'),
+                      )
+                        ..setAttribute(charts.rendererIdKey, 'customLine')
+                        ..setAttribute(
+                            charts.measureAxisIdKey, "secondaryMeasureAxisId"),
                     ],
                     animate: true,
                     defaultRenderer: charts.BarRendererConfig(
@@ -224,15 +213,6 @@ class _LiquidityChartState extends State<LiquidityChart> {
                       ),
                     ),
                     secondaryMeasureAxis: const charts.NumericAxisSpec(
-                      renderSpec: charts.NoneRenderSpec(),
-                      tickProviderSpec: charts.BasicNumericTickProviderSpec(
-                          // zeroBound: true,
-                          ),
-                      showAxisLine: false,
-                      // showAxisLine: false,
-                    ),
-                    primaryMeasureAxis: const charts.NumericAxisSpec(
-                      renderSpec: charts.NoneRenderSpec(),
                       tickProviderSpec: charts.BasicNumericTickProviderSpec(
                           // zeroBound: true,
                           ),

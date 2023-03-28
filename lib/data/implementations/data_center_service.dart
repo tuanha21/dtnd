@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:dtnd/=models=/index.dart';
 import 'package:dtnd/=models=/response/business_profile_model.dart';
 import 'package:dtnd/=models=/response/deep_model.dart';
@@ -5,6 +7,7 @@ import 'package:dtnd/=models=/response/indContrib.dart';
 import 'package:dtnd/=models=/response/inday_matched_order.dart';
 import 'package:dtnd/=models=/response/index_detail.dart';
 import 'package:dtnd/=models=/response/index_model.dart';
+import 'package:dtnd/=models=/response/suggested_signal_model.dart';
 import 'package:dtnd/=models=/response/top_signal_detail_model.dart';
 import 'package:dtnd/=models=/response/top_signal_history_model.dart';
 import 'package:dtnd/=models=/response/top_signal_stock_model.dart';
@@ -491,6 +494,19 @@ class DataCenterService
       }
     }
     return listTop;
+  }
+
+  @override
+  Future<List<SuggestedSignalModel>> getSuggestedSignal(int day) async {
+    final Map<String, String> body = {
+      "cmd": "signal_sum",
+      "params": "$day",
+    };
+    final listTop = await networkService.getSuggestedSignal(body);
+    if (listTop?.isEmpty ?? true) {
+      return [];
+    }
+    return listTop ?? [];
   }
 
   @override

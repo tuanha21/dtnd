@@ -3192,6 +3192,36 @@ class S {
     );
   }
 
+  /// `Signal type`
+  String get signal_type {
+    return Intl.message(
+      'Signal type',
+      name: 'signal_type',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Effective`
+  String get effective {
+    return Intl.message(
+      'Effective',
+      name: 'effective',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Ratio`
+  String get ratio {
+    return Intl.message(
+      'Ratio',
+      name: 'ratio',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Unknown exception`
   String get unknown_exception {
     return Intl.message(

@@ -21,6 +21,7 @@ import 'package:dtnd/=models=/response/stock_report_res.dart';
 import 'package:dtnd/=models=/response/stock_trade.dart';
 import 'package:dtnd/=models=/response/stock_trading_history.dart';
 import 'package:dtnd/=models=/response/subsidiaries_model.dart';
+import 'package:dtnd/=models=/response/suggested_signal_model.dart';
 import 'package:dtnd/=models=/response/top_influence_model.dart';
 import 'package:dtnd/=models=/response/top_signal_detail_model.dart';
 import 'package:dtnd/=models=/response/top_signal_history_model.dart';
@@ -94,6 +95,9 @@ abstract class INetworkService {
   Future<List<TrashModel>> getTopForeignTrade(Map<String, dynamic> body);
 
   Future<List<TopSignalStockModel>?> getTopSignalStocks(
+      Map<String, String> body);
+
+  Future<List<SuggestedSignalModel>?> getSuggestedSignal(
       Map<String, String> body);
 
   Future<TopSignalDetailModel?> getTopSignalDetail(Map<String, String> body);

@@ -357,6 +357,9 @@
 
     "copytrade": "Copytrade",
     "transaction": "Transaction",
+    "signal_type": "Signal type",
+    "effective": "Effective",
+    "ratio": "Ratio",
 
     "unknown_exception": "Unknown exception",
 

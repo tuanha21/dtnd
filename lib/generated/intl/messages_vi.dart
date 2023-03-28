@@ -166,6 +166,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "edit": MessageLookupByLibrary.simpleMessage("Chỉnh sửa"),
         "edit_catalog_name":
             MessageLookupByLibrary.simpleMessage("Sửa tên danh mục"),
+        "effective": MessageLookupByLibrary.simpleMessage("Hiệu quả"),
         "email": MessageLookupByLibrary.simpleMessage("Email"),
         "empty_catalog": MessageLookupByLibrary.simpleMessage("Danh mục rỗng"),
         "end": MessageLookupByLibrary.simpleMessage("Kết thúc"),
@@ -345,6 +346,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "qa_derivative": MessageLookupByLibrary.simpleMessage("Phái sinh"),
         "qa_money": MessageLookupByLibrary.simpleMessage("Tiền gửi"),
         "qa_pack_enrol": MessageLookupByLibrary.simpleMessage("ĐK gói"),
+        "ratio": MessageLookupByLibrary.simpleMessage("Tỷ lệ"),
         "ref": MessageLookupByLibrary.simpleMessage("TC"),
         "register_right_failed": MessageLookupByLibrary.simpleMessage(
             "Đăng ký quyền không thành công"),
@@ -373,6 +375,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Cài đặt và bảo mật"),
         "sex": MessageLookupByLibrary.simpleMessage("Giới tính"),
         "sign_up": MessageLookupByLibrary.simpleMessage("Đăng ký"),
+        "signal_type": MessageLookupByLibrary.simpleMessage("Loại tín hiệu"),
         "sold_returning": MessageLookupByLibrary.simpleMessage("Bán chờ về"),
         "sold_returning_money":
             MessageLookupByLibrary.simpleMessage("Tiền bán chờ về"),

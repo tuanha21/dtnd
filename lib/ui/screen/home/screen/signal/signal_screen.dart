@@ -1,10 +1,9 @@
-import 'package:dtnd/=models=/response/stock_model.dart';
 import 'package:dtnd/=models=/response/top_signal_detail_model.dart';
 import 'package:dtnd/=models=/response/top_signal_history_model.dart';
 import 'package:dtnd/=models=/response/top_signal_stock_model.dart';
 import 'package:dtnd/data/i_data_center_service.dart';
 import 'package:dtnd/data/implementations/data_center_service.dart';
-import 'package:dtnd/ui/screen/virtual_assistant/signal/component/signal_effective.dart';
+import 'package:dtnd/ui/screen/home/screen/signal/component/signal_effective.dart';
 import 'package:flutter/material.dart';
 
 import 'component/signal_appbar.dart';

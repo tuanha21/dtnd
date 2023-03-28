@@ -33,6 +33,7 @@ import 'package:dtnd/=models=/response/stock_trade.dart';
 import 'package:dtnd/=models=/response/stock_trading_history.dart';
 import 'package:dtnd/=models=/response/stock_vol.dart';
 import 'package:dtnd/=models=/response/subsidiaries_model.dart';
+import 'package:dtnd/=models=/response/suggested_signal_model.dart';
 import 'package:dtnd/=models=/response/top_influence_model.dart';
 import 'package:dtnd/=models=/response/top_signal_detail_model.dart';
 import 'package:dtnd/=models=/response/top_signal_history_model.dart';
@@ -132,7 +133,7 @@ class NetworkService implements INetworkService {
     Map<String, dynamic>? queryParameters,
   ]) {
     final unencodedPath = "algo/pbapi/api/$path";
-    return Uri.http(algo_url, unencodedPath, queryParameters);
+    return Uri.http(algo_url_apec, unencodedPath, queryParameters);
   }
 
   Uri url_algo_apec(
@@ -140,7 +141,7 @@ class NetworkService implements INetworkService {
     Map<String, dynamic>? queryParameters,
   ]) {
     final unencodedPath = "algo/pbapi/api/$path";
-    return Uri.http("opacc-api.apec.com.vn", unencodedPath, queryParameters);
+    return Uri.http(algo_url_apec, unencodedPath, queryParameters);
   }
 
   final Utf8Codec utf8Codec = const Utf8Codec();
@@ -660,6 +661,29 @@ class NetworkService implements INetworkService {
       for (var element in responseBody) {
         try {
           data.add(TopSignalStockModel.fromJson(element));
+        } catch (e) {
+          logger.e(e);
+          continue;
+        }
+      }
+      return data;
+    } catch (e) {
+      logger.e(e);
+      return [];
+    }
+  }
+
+  @override
+  Future<List<SuggestedSignalModel>?> getSuggestedSignal(
+      Map<String, String> body) async {
+    try {
+      final http.Response response =
+          await client.get(url_info_sbsi("proxy", body));
+      final List<dynamic> responseBody = decode(response.bodyBytes)["data"];
+      List<SuggestedSignalModel> data = [];
+      for (var element in responseBody) {
+        try {
+          data.add(SuggestedSignalModel.fromJson(element));
         } catch (e) {
           logger.e(e);
           continue;

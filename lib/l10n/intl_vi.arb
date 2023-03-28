@@ -357,6 +357,9 @@
 
     "copytrade": "Copytrade",
     "transaction": "Giao dịch",
+    "signal_type": "Loại tín hiệu",
+    "effective": "Hiệu quả",
+    "ratio": "Tỷ lệ",
 
     "unknown_exception": "Lỗi không xác định",
 

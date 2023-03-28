@@ -171,6 +171,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "edit": MessageLookupByLibrary.simpleMessage("Edit"),
         "edit_catalog_name":
             MessageLookupByLibrary.simpleMessage("Edit catalog name"),
+        "effective": MessageLookupByLibrary.simpleMessage("Effective"),
         "email": MessageLookupByLibrary.simpleMessage("Email"),
         "empty_catalog":
             MessageLookupByLibrary.simpleMessage("Catalog is empty"),
@@ -351,6 +352,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "qa_money": MessageLookupByLibrary.simpleMessage("Cash deposits"),
         "qa_pack_enrol":
             MessageLookupByLibrary.simpleMessage("Pack enrollment"),
+        "ratio": MessageLookupByLibrary.simpleMessage("Ratio"),
         "ref": MessageLookupByLibrary.simpleMessage("Ref"),
         "register_right_failed":
             MessageLookupByLibrary.simpleMessage("Register right failed"),
@@ -380,6 +382,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Setting and secutiry"),
         "sex": MessageLookupByLibrary.simpleMessage("Sex"),
         "sign_up": MessageLookupByLibrary.simpleMessage("Sign up"),
+        "signal_type": MessageLookupByLibrary.simpleMessage("Signal type"),
         "sold_returning":
             MessageLookupByLibrary.simpleMessage("Sold returning"),
         "sold_returning_money":
