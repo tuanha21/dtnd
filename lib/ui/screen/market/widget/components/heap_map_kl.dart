@@ -202,14 +202,14 @@ class _HeapMapKLState extends State<HeapMapKL> {
                                           // print('index: ' + index.toString());
                                           // if (index > 4)
                                           //   return listStock[index].sTOCKCODE;
-                                          return listStock[index].sTOCKCODE;
-                                          // return (listStock[index].sTOCKCODE ??
-                                          //         '') +
-                                          //     "/" +
-                                          //     listStock[index]
-                                          //         .pERCENTCHANGE
-                                          //         .toString() +
-                                          //     '%';
+                                          // return listStock[index].sTOCKCODE;
+                                          return (listStock[index].sTOCKCODE ??
+                                                  '') +
+                                              "/" +
+                                              listStock[index]
+                                                  .pERCENTCHANGE
+                                                  .toString() +
+                                              '%';
                                         },
                                         colorValueMapper: (tile) {
                                           return listStock[tile.indices[0]]

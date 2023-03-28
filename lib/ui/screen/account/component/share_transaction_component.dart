@@ -11,7 +11,9 @@ import 'package:flutter/material.dart';
 
 class ShareTransactionComponent extends StatefulWidget {
   const ShareTransactionComponent({super.key, required this.data});
+
   final ShareTransactionModel data;
+
   @override
   State<ShareTransactionComponent> createState() =>
       _ShareTransactionComponentState();
@@ -20,6 +22,7 @@ class ShareTransactionComponent extends StatefulWidget {
 class _ShareTransactionComponentState extends State<ShareTransactionComponent> {
   final IDataCenterService dataCenterService = DataCenterService();
   Stock? stock;
+
   @override
   void initState() {
     super.initState();
@@ -54,18 +57,12 @@ class _ShareTransactionComponentState extends State<ShareTransactionComponent> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      widget.data.cSHARECODE ?? "-",
-                      style: textTheme.titleSmall,
-                    ),
                     Row(
                       children: [
                         Expanded(
                           child: Text(
-                            stock?.nameShort ?? "",
-                            overflow: TextOverflow.ellipsis,
-                            style: AppTextStyle.labelSmall_10
-                                .copyWith(color: AppColors.neutral_03),
+                            widget.data.cSHARECODE ?? "-",
+                            style: textTheme.titleSmall,
                           ),
                         ),
                         Text(
@@ -73,6 +70,12 @@ class _ShareTransactionComponentState extends State<ShareTransactionComponent> {
                           style: textTheme.titleSmall,
                         ),
                       ],
+                    ),
+                    Text(
+                      stock?.nameShort ?? "",
+                      overflow: TextOverflow.ellipsis,
+                      style: AppTextStyle.labelSmall_10
+                          .copyWith(color: AppColors.neutral_03),
                     ),
                     // Text(
                     //   "${(widget.volPc ?? 0).toStringAsFixed(2)}%",
@@ -115,7 +118,7 @@ class _ShareTransactionComponentState extends State<ShareTransactionComponent> {
                     ),
                   ),
                   Text(
-                    "${NumUtils.formatInteger(widget.data.change)}đ",
+                    "${NumUtils.formatInteger(widget.data.change)}CP",
                     style: AppTextStyle.titleSmall_14
                         .copyWith(color: widget.data.color),
                   ),
