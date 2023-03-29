@@ -114,6 +114,7 @@ class _HomeMarketTodayState extends State<HomeMarketToday>
                   },
                 ),
                 child: Obx(() {
+                  final cindex = homeController.currentCommodityModel.value;
                   return ListView.separated(
                     padding: const EdgeInsets.symmetric(horizontal: 16),
                     scrollDirection: Axis.horizontal,
@@ -121,6 +122,8 @@ class _HomeMarketTodayState extends State<HomeMarketToday>
                     itemCount: homeController.worldIndex.length,
                     itemBuilder: (context, index) => CommodityItem(
                       data: homeController.commodities.elementAt(index),
+                      selectedSymbol: cindex,
+                      onSelected: homeController.changeCommodity,
                     ),
                     separatorBuilder: (BuildContext context, int index) =>
                         const SizedBox(

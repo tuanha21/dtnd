@@ -2,23 +2,43 @@ import 'package:dtnd/=models=/response/commodity_model.dart';
 import 'package:dtnd/config/service/app_services.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_textstyle.dart';
+import 'package:dtnd/utilities/lang_util.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
 
 class CommodityItem extends StatelessWidget {
-  const CommodityItem({super.key, required this.data});
+  const CommodityItem(
+      {super.key, required this.data, this.selectedSymbol, this.onSelected});
   final CommodityModel data;
+  final CommodityModel? selectedSymbol;
+  final ValueChanged<CommodityModel>? onSelected;
   @override
   Widget build(BuildContext context) {
     final themeMode = AppService.instance.themeMode.value;
+    final img =
+        LanguageUtil.toUnsigned(data.nAME).toLowerCase().removeAllWhitespace;
+    BoxBorder? border;
+    if (selectedSymbol != null && data == selectedSymbol) {
+      border = Border.all(color: AppColors.neutral_04);
+    }
+    VoidCallback? onTap;
+    if (onSelected != null) {
+      onTap = () {
+        onSelected?.call(data);
+      };
+    }
     return Material(
       child: InkWell(
+        onTap: onTap,
         borderRadius: const BorderRadius.all(Radius.circular(8)),
         child: Ink(
           width: 148,
           height: 56,
           padding: const EdgeInsets.all(12.0),
-          decoration: const BoxDecoration(
-            borderRadius: BorderRadius.all(Radius.circular(8)),
+          decoration: BoxDecoration(
+            border: border,
+            borderRadius: const BorderRadius.all(Radius.circular(8)),
             color: AppColors.neutral_07,
           ),
           child: Column(
@@ -27,9 +47,14 @@ class CommodityItem extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
+                  SizedBox.square(
+                      dimension: 15,
+                      child:
+                          SvgPicture.asset("assets/commodities_icon/$img.svg")),
+                  const SizedBox(width: 6),
                   Flexible(
                     child: Text(
-                      data.nAME ?? "",
+                      data.nAME,
                       style: Theme.of(context)
                           .textTheme
                           .titleSmall!

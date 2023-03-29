@@ -5,21 +5,6 @@ import 'package:dtnd/ui/theme/app_textstyle.dart';
 import 'package:dtnd/utilities/num_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:get/get.dart';
-
-class WorldIndexPanel extends StatefulWidget {
-  const WorldIndexPanel({super.key});
-
-  @override
-  State<WorldIndexPanel> createState() => _WorldIndexPanelState();
-}
-
-class _WorldIndexPanelState extends State<WorldIndexPanel> {
-  @override
-  Widget build(BuildContext context) {
-    return Container();
-  }
-}
 
 class HomeWorldIndexItem extends StatelessWidget {
   const HomeWorldIndexItem(

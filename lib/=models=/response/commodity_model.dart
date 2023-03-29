@@ -1,18 +1,11 @@
 import 'package:dtnd/=models=/stock_status.dart';
 
 class CommodityModel extends StockStatus {
-  String? nAME;
+  late final String nAME;
   String? lASTPRICE;
   String? pOINTCHANGE;
   String? pERCENTCHANGE;
   String? cOLOR;
-
-  CommodityModel(
-      {this.nAME,
-      this.lASTPRICE,
-      this.pOINTCHANGE,
-      this.pERCENTCHANGE,
-      this.cOLOR});
 
   CommodityModel.fromJson(Map<String, dynamic> json) {
     nAME = json['NAME'];
@@ -43,4 +36,13 @@ class CommodityModel extends StockStatus {
         return SStatus.ref;
     }
   }
+
+  @override
+  operator ==(Object other) {
+    return identical(this, other) ||
+        other is CommodityModel && other.nAME == nAME;
+  }
+
+  @override
+  int get hashCode => nAME.hashCode;
 }

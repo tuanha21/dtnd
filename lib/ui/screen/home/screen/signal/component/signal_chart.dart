@@ -231,10 +231,10 @@ class _SignalChartState extends State<SignalChart> {
                   // viewport: charts.NumericExtents(minX, maxX),
                   renderSpec: const charts.GridlineRendererSpec(
                       axisLineStyle: charts.LineStyleSpec(
-                          // dashPattern: [4],
-                          // thickness: 0,
-                          // color: charts.Color(r: 74, g: 85, b: 104),
-                          ),
+                        dashPattern: [4],
+                        thickness: 0,
+                        color: charts.Color(r: 74, g: 85, b: 104),
+                      ),
                       labelStyle: charts.TextStyleSpec(fontSize: 9),
                       lineStyle: charts.LineStyleSpec(dashPattern: [4]))),
               primaryMeasureAxis: const charts.NumericAxisSpec(
@@ -251,10 +251,10 @@ class _SignalChartState extends State<SignalChart> {
                 ),
                 renderSpec: charts.GridlineRendererSpec(
                   axisLineStyle: charts.LineStyleSpec(
-                      // dashPattern: [4],
-                      // thickness: 0,
-                      // color: charts.Color(r: 74, g: 85, b: 104),
-                      ),
+                    dashPattern: [4],
+                    thickness: 0,
+                    color: charts.Color(r: 74, g: 85, b: 104),
+                  ),
                   labelStyle: charts.TextStyleSpec(fontSize: 9),
                   lineStyle: charts.LineStyleSpec(dashPattern: [4]),
                 ),

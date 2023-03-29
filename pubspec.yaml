@@ -127,6 +127,7 @@ flutter:
     - assets/images/
     - assets/account_icon/
     - assets/home_icon/
+    - assets/commodities_icon/
     - .env
     - production_domain_config.env
     - test_domain_config.env

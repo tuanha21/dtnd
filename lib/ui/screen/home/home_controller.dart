@@ -54,6 +54,7 @@ class HomeController {
   late final Set<IndexModel> listIndexs;
   final Rx<IndexModel?> currentIndexModel = Rxn();
   final Rx<WorldIndexModel?> currentWorldIndexModel = Rxn();
+  final Rx<CommodityModel?> currentCommodityModel = Rxn();
   final Rx<bool> newsLoading = true.obs;
 
   final Rx<bool> indexInitialized = false.obs;
@@ -133,6 +134,7 @@ class HomeController {
 
   Future<List<CommodityModel>> getCommodities() async {
     commodities = await networkService.getCommodity();
+    currentCommodityModel.value = commodities.first;
     return commodities;
   }
 
@@ -176,6 +178,10 @@ class HomeController {
 
   void changeWorldIndex(WorldIndexModel index) {
     currentWorldIndexModel.value = index;
+  }
+
+  void changeCommodity(CommodityModel index) {
+    currentCommodityModel.value = index;
   }
 
   Future<void> changeList(

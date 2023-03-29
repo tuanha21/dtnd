@@ -25,7 +25,6 @@ class _TransactionTabState extends State<TransactionTab> {
             expandedHeight: 440,
             floating: true,
             flexibleSpace: SingleChildScrollView(
-              physics: const NeverScrollableScrollPhysics(),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [

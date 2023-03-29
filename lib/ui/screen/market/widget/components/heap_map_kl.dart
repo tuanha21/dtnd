@@ -199,17 +199,9 @@ class _HeapMapKLState extends State<HeapMapKL> {
                                     levels: [
                                       TreemapLevel(
                                         groupMapper: (int index) {
-                                          // print('index: ' + index.toString());
-                                          // if (index > 4)
-                                          //   return listStock[index].sTOCKCODE;
-                                          // return listStock[index].sTOCKCODE;
-                                          return (listStock[index].sTOCKCODE ??
-                                                  '') +
-                                              "/" +
-                                              listStock[index]
-                                                  .pERCENTCHANGE
-                                                  .toString() +
-                                              '%';
+                                          return listStock[index].sTOCKCODE ??
+                                              "";
+                                          // return "${listStock[index].sTOCKCODE ?? ""}/${listStock[index].pERCENTCHANGE ?? ""}%";
                                         },
                                         colorValueMapper: (tile) {
                                           return listStock[tile.indices[0]]
@@ -230,18 +222,18 @@ class _HeapMapKLState extends State<HeapMapKL> {
                                         },
                                         labelBuilder: (BuildContext context,
                                             TreemapTile tile) {
-                                          final gr = (tile.group).split('/');
-                                          if (gr.length < 2) {
-                                            return Center(
-                                              child: Text(
-                                                tile.group,
-                                                overflow: TextOverflow.ellipsis,
-                                                textAlign: TextAlign.center,
-                                                style: const TextStyle(
-                                                    color: AppColors.light_bg),
-                                              ),
-                                            );
-                                          }
+                                          // final gr = (tile.group).split('/');
+                                          // if (gr.length < 2) {
+                                          //   return Center(
+                                          //     child: Text(
+                                          //       tile.group,
+                                          //       overflow: TextOverflow.ellipsis,
+                                          //       textAlign: TextAlign.center,
+                                          //       style: const TextStyle(
+                                          //           color: AppColors.light_bg),
+                                          //     ),
+                                          //   );
+                                          // }
 
                                           return Center(
                                             child: SingleChildScrollView(
@@ -251,7 +243,7 @@ class _HeapMapKLState extends State<HeapMapKL> {
                                               crossAxisAlignment:
                                                   CrossAxisAlignment.center,
                                               children: [
-                                                Text((tile.group).split('/')[0],
+                                                Text(tile.group,
                                                     overflow:
                                                         TextOverflow.ellipsis,
                                                     textAlign: TextAlign.center,
@@ -259,7 +251,8 @@ class _HeapMapKLState extends State<HeapMapKL> {
                                                         fontSize: 14,
                                                         color: AppColors
                                                             .light_bg)),
-                                                Text((tile.group).split('/')[1],
+                                                Text(
+                                                    "${listStock[tile.indices[0]].pERCENTCHANGE ?? ""}%",
                                                     overflow:
                                                         TextOverflow.ellipsis,
                                                     textAlign: TextAlign.center,

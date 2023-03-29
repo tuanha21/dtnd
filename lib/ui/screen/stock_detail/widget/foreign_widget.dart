@@ -1,6 +1,7 @@
 import 'package:dtnd/=models=/response/stock_model.dart';
 import 'package:dtnd/data/i_network_service.dart';
 import 'package:dtnd/data/implementations/network_service.dart';
+import 'package:dtnd/utilities/charts_util.dart';
 import 'package:dtnd/utilities/num_utils.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:flutter/material.dart';
@@ -153,7 +154,7 @@ class _ForeignWidgetState extends State<ForeignWidget> {
                                   mainAxisAlignment: MainAxisAlignment.end,
                                   children: [
                                     Text(
-                                      "${stockBoard.fGBuyValue?.toStringAsFixed(2)}",
+                                      parseEmpty(stockBoard.fGBuyValue),
                                       style: title?.copyWith(
                                           fontWeight: FontWeight.w600,
                                           color: AppColors.semantic_01),
@@ -178,7 +179,7 @@ class _ForeignWidgetState extends State<ForeignWidget> {
                                   mainAxisAlignment: MainAxisAlignment.end,
                                   children: [
                                     Text(
-                                      "${stockBoard.fGSellValue?.toStringAsFixed(2)}",
+                                      parseEmpty(stockBoard.fGSellValue),
                                       style: title?.copyWith(
                                           fontWeight: FontWeight.w600,
                                           color: AppColors.semantic_03),
@@ -203,8 +204,7 @@ class _ForeignWidgetState extends State<ForeignWidget> {
                                   mainAxisAlignment: MainAxisAlignment.end,
                                   children: [
                                     Text(
-                                      NumUtils.formatDouble(
-                                          stockBoard.fGNetValue),
+                                      parseEmpty(stockBoard.fGNetValue),
                                       style: title?.copyWith(
                                           fontWeight: FontWeight.w600,
                                           color: stockBoard.fGNetValue! > 0
@@ -235,6 +235,7 @@ class _ForeignWidgetState extends State<ForeignWidget> {
         FutureBuilder<List<SecTrading>>(
             future: secTrading,
             builder: (context, snapshot) {
+              final size = MediaQuery.of(context).size;
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return const SizedBox();
               }
@@ -274,10 +275,9 @@ class _ForeignWidgetState extends State<ForeignWidget> {
                       ),
                       secondaryMeasureAxis: charts.NumericAxisSpec(
                         showAxisLine: true,
-                        tickFormatterSpec:
-                            charts.BasicNumericTickFormatterSpec((measure) {
-                          return NumUtils.formatInteger(measure);
-                        }),
+                        tickFormatterSpec: charts.BasicNumericTickFormatterSpec(
+                            (value) => NumUtils.getMoneyWithPostfix(
+                                (value ?? 0) * 1000000, context)),
                         tickProviderSpec:
                             const charts.BasicNumericTickProviderSpec(
                                 dataIsInWholeNumbers: false,
@@ -292,6 +292,52 @@ class _ForeignWidgetState extends State<ForeignWidget> {
                             labelStyle: charts.TextStyleSpec(fontSize: 9),
                             lineStyle: charts.LineStyleSpec(dashPattern: [4])),
                       ),
+                      behaviors: [
+                        charts.SelectNearest(
+                          eventTrigger: charts.SelectionTrigger.tapAndDrag,
+                          // selectionMode:
+                          //     charts.SelectionMode.selectOverlapping,
+                        ),
+                        charts.LinePointHighlighter(
+                          // drawFollowLinesAcrossChart: false,
+                          showHorizontalFollowLine:
+                              charts.LinePointHighlighterFollowLineType.none,
+                          showVerticalFollowLine:
+                              charts.LinePointHighlighterFollowLineType.all,
+                        ),
+                        charts.LinePointHighlighter(
+                          symbolRenderer: CustomTooltipRenderer(
+                              _TooltipData.instance,
+                              size: size),
+                        ),
+                      ],
+                      selectionModels: [
+                        charts.SelectionModelConfig(
+                          type: charts.SelectionModelType.info,
+                          updatedListener: (charts.SelectionModel model) {
+                            if (model.hasDatumSelection) {
+                              final selectedDatum =
+                                  model.selectedDatum.first.datum;
+                              // if (liquidityModel.time.elementAt(
+                              //         selectedDatum.elementAt(1).index ?? 0) !=
+                              //     liquidityModel.time.elementAt(
+                              //         selectedDatum.first.index ?? 0)) {}
+                              // print(selectedDatum.first.index);
+                              // print(selectedDatum.elementAt(1).index);
+                              final datas = <String>[
+                                selectedDatum.time,
+                                if ((selectedDatum.fNETBUYVOLUME ?? 0) > 0)
+                                  "Mua ròng : ${NumUtils.formatDouble(selectedDatum.fNETBUYVOLUME)} tỷ"
+                                else if ((selectedDatum.fNETBUYVOLUME ?? 0) < 0)
+                                  "Bán ròng : ${NumUtils.formatDouble(selectedDatum.fNETBUYVOLUME.abs())} tỷ"
+                                else
+                                  "Không có giao dịch"
+                              ];
+                              _TooltipData.instance.setData(datas);
+                            }
+                          },
+                        ),
+                      ],
                     ),
                   ),
                 );
@@ -301,4 +347,17 @@ class _ForeignWidgetState extends State<ForeignWidget> {
       ],
     );
   }
+
+  String parseEmpty(num? value) {
+    if (value == null || value == 0) {
+      return "-";
+    } else {
+      return NumUtils.formatDouble(value);
+    }
+  }
+}
+
+class _TooltipData extends TooltipData {
+  _TooltipData._internal();
+  static final _TooltipData instance = _TooltipData._internal();
 }
