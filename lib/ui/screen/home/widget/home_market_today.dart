@@ -189,7 +189,8 @@ class _HomeMarketTodayState extends State<HomeMarketToday>
                   ),
                 };
                 return Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
                   child: SizedBox.fromSize(
                     size: Size(MediaQuery.of(context).size.width, 250),
                     child: KChart(

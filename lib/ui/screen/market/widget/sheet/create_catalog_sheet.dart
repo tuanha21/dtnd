@@ -89,7 +89,6 @@ class _CreateCatalogSheetState extends State<CreateCatalogSheet>
               ],
             ),
             const SizedBox(height: 20),
-            SizedBox(height: MediaQuery.of(context).viewInsets.bottom)
           ],
         ),
       ),

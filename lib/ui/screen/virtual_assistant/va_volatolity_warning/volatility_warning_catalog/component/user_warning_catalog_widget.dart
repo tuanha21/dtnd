@@ -226,7 +226,7 @@ class _UserWarningCatalogWidgetState extends State<UserWarningCatalogWidget> {
               child: ListView.separated(
                 padding: const EdgeInsets.symmetric(vertical: 10),
                 itemBuilder: (context, index) {
-                  return SizedBox(
+                  return const SizedBox(
                     height: 85,
                     // child: HomeMarketOverviewItem(
                     //   data: listStocks!.elementAt(index),

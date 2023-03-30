@@ -100,7 +100,7 @@ class _IndexChartState extends State<IndexChart> {
           return Padding(
             padding: const EdgeInsets.all(16.0),
             child: SizedBox.fromSize(
-              size: Size(MediaQuery.of(context).size.width, 64),
+              size: Size(MediaQuery.of(context).size.width, 80),
               child: ScrollConfiguration(
                 behavior: ScrollConfiguration.of(context).copyWith(
                   dragDevices: {
