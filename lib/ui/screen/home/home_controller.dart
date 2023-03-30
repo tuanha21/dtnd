@@ -45,9 +45,6 @@ class HomeController {
   final Rx<List<TopSignalStockModel>?> topSignalStocks = Rxn();
   final Rx<bool> loadingTopSignalStocks = Rx(false);
   final Rx<List<TrashModel>?> hotToday = Rxn();
-  final Rx<List<TrashModel>?> priceIncreaseToday = Rxn();
-  final Rx<List<TrashModel>?> priceDecreaseToday = Rxn();
-  final Rx<List<TrashModel>?> topVolumnToday = Rxn();
   List<NewsModel> news = [];
   List<WorldIndexModel> worldIndex = [];
   List<CommodityModel> commodities = [];
@@ -56,6 +53,7 @@ class HomeController {
   final Rx<WorldIndexModel?> currentWorldIndexModel = Rxn();
   final Rx<CommodityModel?> currentCommodityModel = Rxn();
   final Rx<bool> newsLoading = true.obs;
+  Timer? loadTime;
 
   final Rx<bool> indexInitialized = false.obs;
   final Rx<bool> topInitialized = false.obs;
@@ -74,24 +72,20 @@ class HomeController {
     }
   }
 
-  Future<void> getHotToday() async {
-    // hotToday.clear();
-    final topInterested = await dataCenterService.getTopInterested(8);
-    hotToday.value = topInterested;
-    hotToday.refresh();
+  Future<List<TrashModel>> getHotToday() async {
+    return dataCenterService.getTopInterested(8);
   }
 
-  Future<void> getPriceIncrease() async {
-    final topStockChange = await dataCenterService.getTopStockChange(8);
-
-    priceIncreaseToday.value = topStockChange;
-    priceIncreaseToday.refresh();
+  Future<List<TrashModel>> getPriceIncrease() async {
+    return dataCenterService.getTopStockChange(8);
   }
 
-  Future<void> getPriceDecrease() async {
-    final topStockChange = await dataCenterService.getTopStockChange(8, "d");
-    priceDecreaseToday.value = topStockChange;
-    priceDecreaseToday.refresh();
+  Future<List<TrashModel>> getPriceDecrease() async {
+    return dataCenterService.getTopStockChange(8, "d");
+  }
+
+  Future<List<TrashModel>> getTopVolumn() async {
+    return dataCenterService.getTopStockTrade(8);
   }
 
   // Future<void> getTopForeign() async {
@@ -110,12 +104,6 @@ class HomeController {
     topSignalStocks.value = null;
     topSignalStocks.value = await dataCenterService.getTopSignalStocks();
     loadingTopSignalStocks.value = false;
-  }
-
-  Future<void> getTopVolumn() async {
-    final topStockChange = await dataCenterService.getTopStockTrade(8);
-    topVolumnToday.value = topStockChange;
-    topVolumnToday.refresh();
   }
 
   Future<List<NewsModel>> getNews() async {
@@ -150,7 +138,7 @@ class HomeController {
     currentIndexModel.value = listIndexs.first;
     indexInitialized.value = true;
 
-    await getHotToday();
+    await changeList(0, true, null);
     _initProcess.sink.add(2 / _initStep);
     // marketToday = await dataCenterService.getStockModelsFromStockCodes(
     //     localStorageService.getListInterestedStock() ?? defaultListStock);
@@ -192,21 +180,19 @@ class HomeController {
     switch (index) {
       case 1:
         if (up) {
-          return getPriceIncrease();
+          hotToday.value = await getPriceIncrease();
         }
-        return getPriceDecrease();
+        hotToday.value = await getPriceDecrease();
+        break;
       case 2:
-        return getTopVolumn();
+        hotToday.value = await getTopVolumn();
+        break;
       default:
-        return getHotToday();
+        hotToday.value = await getHotToday();
     }
-    // await Future.forEach<StockModel>(list, (item) async {
-    //   await getStockIndayTradingHistory(item);
-    // });
-
-    // for (var element in list) {
-    //   await getStockIndayTradingHistory(element);
-    // }
+    loadTime?.cancel();
+    loadTime = Timer(const Duration(minutes: 1),
+        () => changeList(index, up, listStockCodes));
   }
 
   Future<void> getStockIndayTradingHistory(StockModel stockModel) async {

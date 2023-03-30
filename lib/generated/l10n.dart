@@ -2472,6 +2472,16 @@ class S {
     );
   }
 
+  /// `Setting`
+  String get setting {
+    return Intl.message(
+      'Setting',
+      name: 'setting',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Account information`
   String get account_infomation {
     return Intl.message(
@@ -3217,6 +3227,156 @@ class S {
     return Intl.message(
       'Ratio',
       name: 'ratio',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Base trading`
+  String get base_trading {
+    return Intl.message(
+      'Base trading',
+      name: 'base_trading',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Derivative trading`
+  String get derivative_trading {
+    return Intl.message(
+      'Derivative trading',
+      name: 'derivative_trading',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Statement`
+  String get statement {
+    return Intl.message(
+      'Statement',
+      name: 'statement',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Money statement`
+  String get money_statement {
+    return Intl.message(
+      'Money statement',
+      name: 'money_statement',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Stock statement`
+  String get stock_statement {
+    return Intl.message(
+      'Stock statement',
+      name: 'stock_statement',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Lookup`
+  String get lookup {
+    return Intl.message(
+      'Lookup',
+      name: 'lookup',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Gain/loss history`
+  String get gain_loss_history {
+    return Intl.message(
+      'Gain/loss history',
+      name: 'gain_loss_history',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Security`
+  String get security {
+    return Intl.message(
+      'Security',
+      name: 'security',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Change password`
+  String get change_password {
+    return Intl.message(
+      'Change password',
+      name: 'change_password',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Order orders pin`
+  String get order_orders_pin {
+    return Intl.message(
+      'Order orders pin',
+      name: 'order_orders_pin',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Biomestric`
+  String get biomestric {
+    return Intl.message(
+      'Biomestric',
+      name: 'biomestric',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `by`
+  String get by {
+    return Intl.message(
+      'by',
+      name: 'by',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Languges`
+  String get languges {
+    return Intl.message(
+      'Languges',
+      name: 'languges',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Interface`
+  String get interface {
+    return Intl.message(
+      'Interface',
+      name: 'interface',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Stock analysis`
+  String get stock_analysis {
+    return Intl.message(
+      'Stock analysis',
+      name: 'stock_analysis',
       desc: '',
       args: [],
     );

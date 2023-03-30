@@ -27,7 +27,7 @@ abstract class IExchangeService {
       int? page,
       int? recordPerPage});
 
-  Future<StockCashBalanceModel> getSCashBalance(
+  Future<StockCashBalanceModel?> getSCashBalance(
       {required String stockCode, required String price, required Side side});
 
   Future<void> registerRight(

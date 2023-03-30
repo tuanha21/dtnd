@@ -258,31 +258,6 @@ class _NotFirstLoginFormState extends State<NotFirstLoginForm> {
     );
   }
 
-  Widget socialButton(String icon, String title, {VoidCallback? onTap}) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        height: 50,
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-            color: Theme.of(context).colorScheme.onPrimary,
-            borderRadius: BorderRadius.circular(8)),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SvgPicture.asset(icon),
-            const SizedBox(width: 12),
-            Text(
-              title,
-              style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                  fontWeight: FontWeight.w700, color: AppColors.primary_01),
-            )
-          ],
-        ),
-      ),
-    );
-  }
-
   Future<void> checkLogin() async {
     passwordFocusNode.unfocus();
     if (errorMsg != null) {

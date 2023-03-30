@@ -78,14 +78,17 @@ class _SignalChartState extends State<SignalChart> {
     if (history == null || (history.c.isEmpty)) {
       return;
     } else {
-      setState(() {
-        datas = history;
-        max = datas!.c.reduce(math.max);
-        min = datas!.c.reduce(math.min);
-        length = datas!.c.length;
-        maxX = datas!.t.reduce(math.max);
-        minX = datas!.t.reduce(math.min);
-      });
+      if (mounted) {
+        setState(() {
+          datas = history;
+          max = datas!.c.reduce(math.max);
+          min = datas!.c.reduce(math.min);
+          length = datas!.c.length;
+          maxX = datas!.t.reduce(math.max);
+          minX = datas!.t.reduce(math.min);
+        });
+      }
+
       return;
     }
   }
@@ -161,25 +164,7 @@ class _SignalChartState extends State<SignalChart> {
                   seriesColor: charts.ColorUtil.fromDartColor(
                       widget.stockModel?.stockData.color ??
                           AppColors.semantic_02),
-                  data: datas!.o,
-                )..setAttribute(charts.rendererIdKey, 'scatterChart'),
-                charts.Series<num, DateTime>(
-                  id: 'signal2Chart',
-                  domainFn: (_, int? index) {
-                    if (index != null) {
-                      final DateTime date = datas!.time[index].beginningOfDay;
-                      return date;
-                    } else {
-                      throw Exception("Chart index null");
-                    }
-                  },
-                  measureFn: (num o, _) {
-                    return o;
-                  },
-                  seriesColor: charts.ColorUtil.fromDartColor(
-                      widget.stockModel?.stockData.color ??
-                          AppColors.semantic_02),
-                  data: datas!.o,
+                  data: datas!.c,
                 )
                   ..setAttribute(charts.rendererIdKey, 'scatterChart')
                   ..setAttribute(
@@ -209,11 +194,9 @@ class _SignalChartState extends State<SignalChart> {
                     radiusPxFn: (_, __) => 5.0,
                     data: [widget.data!],
                   )
-                    // Configure our custom symbol annotation renderer for this series.
-                    // ..setAttribute(charts.rendererIdKey, 'scatterChart')
-                    // Optional radius for the annotation shape. If not specified, this will
-                    // default to the same radius as the points.
-                    ..setAttribute(charts.boundsLineRadiusPxKey, 3.5),
+                    ..setAttribute(charts.boundsLineRadiusPxKey, 3.5)
+                    ..setAttribute(
+                        charts.measureAxisIdKey, "secondaryMeasureAxisId"),
               ],
               animate: false,
               layoutConfig: charts.LayoutConfig(
@@ -239,9 +222,6 @@ class _SignalChartState extends State<SignalChart> {
                       lineStyle: charts.LineStyleSpec(dashPattern: [4]))),
               primaryMeasureAxis: const charts.NumericAxisSpec(
                 showAxisLine: false,
-                tickProviderSpec: charts.BasicNumericTickProviderSpec(
-                  zeroBound: false,
-                ),
                 renderSpec: charts.NoneRenderSpec(),
               ),
               secondaryMeasureAxis: const charts.NumericAxisSpec(
@@ -264,67 +244,29 @@ class _SignalChartState extends State<SignalChart> {
                 charts.LineRendererConfig(
                   smoothLine: true,
                   includeArea: true,
+                  // includePoints: true,
                   customRendererId: 'scatterChart',
                 ),
-                // charts.PointRendererConfig(
-                //     customRendererId: 'scatterChart',
-                //     layoutPaintOrder: charts.LayoutViewPaintOrder.point + 1),
               ],
               behaviors: [
                 charts.LinePointHighlighter(
                     symbolRenderer: CustomTooltipRenderer(_ToolTipMgr.instance,
                         size: MediaQuery.of(context).size,
                         fontSize: 10) // add this line in behaviours,
-
                     ),
-                // charts.RangeAnnotation<DateTime>(
-                //   [
-                //     charts.LineAnnotationSegment<num>(
-                //       annotationX,
-                //       charts.RangeAnnotationAxisType.measure,
-                //       color: charts.ColorUtil.fromDartColor(
-                //         AppColors.neutral_02,
-                //       ),
-                //       startLabel: annotationX.toString(),
-                //       endLabel: "Giá mua",
-                //       dashPattern: [5, 5],
-                //       strokeWidthPx: 0.3,
-                //     ),
-                //     charts.LineAnnotationSegment<DateTime>(
-                //       annotationY,
-                //       charts.RangeAnnotationAxisType.domain,
-                //       color: charts.ColorUtil.fromDartColor(
-                //         AppColors.neutral_02,
-                //       ),
-                //       startLabel: "Ngày mua",
-                //       endLabel:
-                //           TimeUtilities.commonTimeFormat.format(annotationY),
-                //       dashPattern: [5, 5],
-                //       strokeWidthPx: 0.3,
-                //     )
-                //   ],
-                // )
               ],
               selectionModels: [
                 charts.SelectionModelConfig(
                   type: charts.SelectionModelType.info,
                   changedListener: (charts.SelectionModel model) {
                     if (model.hasDatumSelection) {
-                      // logger.v(model.selectedDatum.first.datum);
-                      // logger.v(model.selectedDatum.first.series);
-                      // logger.v(model.selectedSeries);
-                      // for (var i = 0; i < model.selectedDatum.length; i++) {
-                      //   print(model.selectedDatum.elementAt(i).index);
-                      // }
-
-                      // logger.v(model.selectedDatum.first.datum);
-                      // logger.v(model.selectedDatum.first.series);
-                      // logger.v(model.selectedSeries);
                       final List<String> data = [];
+                      print(model.selectedDatum.length);
                       if (model.selectedDatum.length > 1) {
                         late TopSignalDetailModel topSignalStockModel;
                         late num price;
                         for (var element in model.selectedDatum) {
+                          print(element.datum);
                           if (element.datum is TopSignalDetailModel) {
                             topSignalStockModel = element.datum;
                           } else if (element.datum is num) {

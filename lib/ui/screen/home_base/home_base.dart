@@ -75,7 +75,7 @@ class _HomeBaseState extends State<HomeBase> with WidgetsBindingObserver {
       HomeNav.market: const MarketScreen(),
       HomeNav.asset: const AssetScreen(),
       HomeNav.community: const CommunityScreen(),
-      HomeNav.account: const AccountScreen(),
+      // HomeNav.account: const AccountScreen(),
     };
     super.initState();
     WidgetsBinding.instance
@@ -89,6 +89,7 @@ class _HomeBaseState extends State<HomeBase> with WidgetsBindingObserver {
   Widget build(BuildContext context) {
     return Scaffold(
       key: homeBaseKey,
+
       drawer: const AppDrawer(),
       body: ObxValue<Rx<HomeNav>>(
         (currentHomeNav) {

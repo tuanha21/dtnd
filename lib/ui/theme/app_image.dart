@@ -138,6 +138,8 @@ class AppImages {
   static const String global = "assets/images/global.png";
   static const String chart_2 = "assets/images/chart_2.png";
   static const String chart_3 = "assets/images/chart_3.png";
+  static const String drawer_camera_icon =
+      "assets/images/drawer_camera_icon.png";
 
   ///Loading
   static const String loading_light_bg = "assets/images/loading_light_bg.png";

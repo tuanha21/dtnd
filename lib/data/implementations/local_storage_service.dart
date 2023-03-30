@@ -50,6 +50,8 @@ class LocalStorageService implements ILocalStorageService {
 
   @override
   LocalAuthentication get localAuthentication => _localAuthentication;
+  @override
+  late final bool isDeviceSupport;
 
   @override
   bool get biometricsRegistered =>
@@ -82,6 +84,8 @@ class LocalStorageService implements ILocalStorageService {
     await Hive.initFlutter();
     _sharedPreferences = await SharedPreferences.getInstance();
     _localAuthentication = LocalAuthentication();
+    isDeviceSupport = await _localAuthentication.canCheckBiometrics ||
+        await _localAuthentication.isDeviceSupported();
     Hive.registerAdapter(UserTokenAdapter());
     Hive.registerAdapter(ExchangeAdapter());
     Hive.registerAdapter(StockAdapter());
@@ -192,12 +196,7 @@ class LocalStorageService implements ILocalStorageService {
 
   @override
   Future<bool> biometricsValidate() async {
-    final bool canAuthenticateWithBiometrics =
-        await _localAuthentication.canCheckBiometrics;
-    final bool canAuthenticate = canAuthenticateWithBiometrics ||
-        await _localAuthentication.isDeviceSupported();
-
-    if (canAuthenticate) {
+    if (isDeviceSupport) {
       final List<BiometricType> availableBiometrics =
           await _localAuthentication.getAvailableBiometrics();
 

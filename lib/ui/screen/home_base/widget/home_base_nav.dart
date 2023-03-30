@@ -1,23 +1,23 @@
 import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 enum HomeNav {
   home,
   market,
   asset,
   community,
-  account,
+  // account,
 }
 
-final GlobalKey<NavigatorState> homeBaseKey = GlobalKey();
+final GlobalKey<ScaffoldState> homeBaseKey = GlobalKey();
 
 final Map<HomeNav, GlobalKey<NavigatorState>> homeNavKeys = {
   HomeNav.home: GlobalKey<NavigatorState>(),
   HomeNav.market: GlobalKey<NavigatorState>(),
   HomeNav.asset: GlobalKey<NavigatorState>(),
   HomeNav.community: GlobalKey<NavigatorState>(),
-  HomeNav.account: GlobalKey<NavigatorState>(),
+  // HomeNav.account: GlobalKey<NavigatorState>(),
 };
 
 extension HomeNavX on HomeNav {
@@ -31,8 +31,8 @@ extension HomeNavX on HomeNav {
         return S.of(context).asset;
       case HomeNav.community:
         return S.of(context).community;
-      case HomeNav.account:
-        return S.of(context).account;
+      // case HomeNav.account:
+      //   return S.of(context).account;
     }
   }
 
@@ -46,8 +46,8 @@ extension HomeNavX on HomeNav {
         return 2;
       case HomeNav.community:
         return 3;
-      case HomeNav.account:
-        return 4;
+      // case HomeNav.account:
+      //   return 4;
     }
   }
 
@@ -61,8 +61,8 @@ extension HomeNavX on HomeNav {
         return AppImages.asset_nav_icon;
       case HomeNav.community:
         return AppImages.community_nav_icon;
-      case HomeNav.account:
-        return AppImages.account_nav_icon;
+      // case HomeNav.account:
+      //   return AppImages.account_nav_icon;
     }
   }
 }

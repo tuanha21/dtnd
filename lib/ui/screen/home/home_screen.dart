@@ -42,35 +42,6 @@ class _HomeScreenState extends State<HomeScreen>
           delegate: HomeAppbarDelegate(homeController.appService,
               homeController.dataCenterService, userService),
         ),
-        // SliverAppBar(
-        //   pinned: true,
-        //   expandedHeight: 400.0,
-        //   leading: Text(
-        //     "DTND",
-        //     style: Theme.of(context)
-        //         .textTheme
-        //         .labelLarge
-        //         ?.copyWith(fontWeight: FontWeight.w700),
-        //   ),
-        //   actions: [
-        //     SvgPicture.asset(AppImages.search_appbar_icon),
-        //     const SizedBox(
-        //       width: 20,
-        //     ),
-        //     SvgPicture.asset(AppImages.notification_appbar_icon),
-        //     const SizedBox(
-        //       width: 16,
-        //     ),
-        //   ],
-        //   // stretch: true,
-        //   flexibleSpace: FlexibleSpaceBar(
-        //     background: Image.asset(
-        //       AppImages.home_appbar_bg,
-        //       fit: BoxFit.fitWidth,
-        //     ),
-        //   ),
-        // ),
-
         SliverToBoxAdapter(
           child: HomeSection(
             title: S.of(context).market_today,
@@ -109,6 +80,12 @@ class _HomeScreenState extends State<HomeScreen>
         ),
       ],
     );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    homeController.loadTime?.cancel();
   }
 
   // @override

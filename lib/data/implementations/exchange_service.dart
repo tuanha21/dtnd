@@ -155,7 +155,7 @@ class ExchangeService implements IExchangeService {
   }
 
   @override
-  Future<StockCashBalanceModel> getSCashBalance(
+  Future<StockCashBalanceModel?> getSCashBalance(
       {required String stockCode,
       required String price,
       required Side side}) async {
@@ -169,13 +169,8 @@ class ExchangeService implements IExchangeService {
 
     final RequestModel requestModel =
         RequestModel(userService, group: "Q", data: requestDataModel);
-    final response = await networkService
+    return await networkService
         .requestTraditionalApi<StockCashBalanceModel>(requestModel);
-    if (response == null) {
-      throw Exception();
-    }
-
-    return response;
   }
 
   @override

@@ -5,6 +5,7 @@ import 'package:dtnd/data/i_data_center_service.dart';
 import 'package:dtnd/data/i_user_service.dart';
 import 'package:dtnd/data/implementations/network_service.dart';
 import 'package:dtnd/ui/screen/home/widget/home_quick_access.dart';
+import 'package:dtnd/ui/screen/home_base/widget/home_base_nav.dart';
 import 'package:dtnd/ui/screen/search/search_screen.dart';
 import 'package:dtnd/ui/screen/stock_detail/stock_detail_screen.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
@@ -59,18 +60,21 @@ class HomeAppbarDelegate extends SliverPersistentHeaderDelegate {
         );
       }
       if (userService.userInfo.value != null) {}
-      return Row(
-        children: [
-          avatar,
-          const SizedBox(width: 8),
-          Text(
-            textTitle,
-            style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                  fontWeight: FontWeight.w700,
-                  color: ratio <= 0 ? Colors.black : Colors.white,
-                ),
-          ),
-        ],
+      return GestureDetector(
+        onTap: () => Scaffold.of(context).openDrawer(),
+        child: Row(
+          children: [
+            avatar,
+            const SizedBox(width: 8),
+            Text(
+              textTitle,
+              style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                    fontWeight: FontWeight.w700,
+                    color: ratio <= 0 ? Colors.black : Colors.white,
+                  ),
+            ),
+          ],
+        ),
       );
     });
     return Material(
@@ -97,6 +101,7 @@ class HomeAppbarDelegate extends SliverPersistentHeaderDelegate {
             child: SizedBox(
               height: 80,
               child: AppBar(
+                automaticallyImplyLeading: false,
                 backgroundColor: ratio <= 0 ? Colors.white : Colors.transparent,
                 title: title,
                 actions: [

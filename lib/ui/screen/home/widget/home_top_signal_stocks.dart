@@ -147,29 +147,10 @@ class HomeTopSignalItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final stockData = data.stockModel.stockData;
     final themeMode = AppService.instance.themeMode.value;
-    final Color color;
-    final Color bgColor;
-    final String path;
-    switch ((data.cPC ?? 0).compareTo(0)) {
-      case 1:
-        color = AppColors.semantic_01;
-        bgColor = AppColors.accent_light_01;
-        path = AppImages.prefix_up_icon;
-        break;
-      case -1:
-        color = AppColors.semantic_03;
-        bgColor = AppColors.accent_light_03;
-        path = AppImages.prefix_down_icon;
-        break;
-      default:
-        color = AppColors.semantic_02;
-        bgColor = AppColors.accent_light_02;
-        path = AppImages.prefix_ref_icon;
-        break;
-    }
-    final Widget icon = Image.asset(path);
+    final Color color = data.color;
+    final Color bgColor = data.bgColor(themeMode);
+    final Widget icon = data.prefixIcon();
 
     return GestureDetector(
       onTap: () => Navigator.of(context).push(MaterialPageRoute(

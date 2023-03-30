@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dtnd/data/i_user_service.dart';
 import 'package:dtnd/data/implementations/user_service.dart';
+import 'package:dtnd/ui/screen/home_base/widget/home_base_nav.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -114,18 +115,21 @@ class _MyAppBarState extends State<MyAppBar> {
           );
         }
         if (userService.userInfo.value != null) {}
-        return Row(
-          children: [
-            avatar,
-            const SizedBox(width: 8),
-            Text(
-              textTitle,
-              style: Theme.of(context)
-                  .textTheme
-                  .labelLarge
-                  ?.copyWith(fontWeight: FontWeight.w700),
-            ),
-          ],
+        return GestureDetector(
+          onTap: homeBaseKey.currentState!.openDrawer,
+          child: Row(
+            children: [
+              avatar,
+              const SizedBox(width: 8),
+              Text(
+                textTitle,
+                style: Theme.of(context)
+                    .textTheme
+                    .labelLarge
+                    ?.copyWith(fontWeight: FontWeight.w700),
+              ),
+            ],
+          ),
         );
       });
     }

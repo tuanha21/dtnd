@@ -17,8 +17,8 @@ const String _userKey = "_userKey";
 String _userNameKey(String user) => "_userName${user}Key";
 
 class LoginScreen extends StatefulWidget {
-  const LoginScreen({Key? key}) : super(key: key);
-
+  const LoginScreen({Key? key, this.toSignup}) : super(key: key);
+  final bool? toSignup;
   @override
   State<LoginScreen> createState() => _LoginScreenState();
 }
@@ -47,6 +47,13 @@ class _LoginScreenState extends State<LoginScreen> {
   void initState() {
     init();
     super.initState();
+    if (widget.toSignup ?? false) {
+      WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+        Future.delayed(const Duration(milliseconds: 500), () {
+          GoRouter.of(context).push('/SignUp');
+        });
+      });
+    }
   }
 
   void init() {
@@ -67,7 +74,7 @@ class _LoginScreenState extends State<LoginScreen> {
     Widget hi;
     Widget quote;
     Widget form;
-    if (firstTimeLogin) {
+    if (firstTimeLogin || (widget.toSignup ?? false)) {
       hi = Text(
         S.of(context).hello,
         style:

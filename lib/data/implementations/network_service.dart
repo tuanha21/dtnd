@@ -232,6 +232,10 @@ class NetworkService implements INetworkService {
     dynamic response =
         await client.post(url_core_endpoint, body: requestModel.toString());
     response = decode(response.bodyBytes);
+    if (response is! Map<String, dynamic>) {
+      return null;
+    }
+    logger.v(response);
     bool checkResponse = hasError?.call(response) ?? (response["rc"] != 1);
     if (checkResponse) {
       return onError?.call(response);

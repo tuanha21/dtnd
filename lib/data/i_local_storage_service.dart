@@ -15,6 +15,8 @@ abstract class ILocalStorageService {
 
   SharedPreferences get sharedPreferences;
 
+  bool get isDeviceSupport;
+
   bool get biometricsRegistered;
 
   String get usernameRegistered;
