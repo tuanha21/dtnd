@@ -44,7 +44,7 @@ class MarketIndexItem extends StatelessWidget {
           borderRadius: const BorderRadius.all(Radius.circular(8)),
           child: Ink(
             width: 148,
-            height: 64,
+            height: 80,
             padding: const EdgeInsets.symmetric(horizontal: 12),
             decoration: BoxDecoration(
               border: border,
@@ -76,6 +76,9 @@ class MarketIndexItem extends StatelessWidget {
                     }),
                   ],
                 ),
+                const SizedBox(
+                  height: 4,
+                ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -94,6 +97,9 @@ class MarketIndexItem extends StatelessWidget {
                       ),
                     ),
                   ],
+                ),
+                const SizedBox(
+                  height: 4,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,

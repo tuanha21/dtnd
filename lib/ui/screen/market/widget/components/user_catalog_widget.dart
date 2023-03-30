@@ -49,6 +49,10 @@ class _UserCatalogWidgetState extends State<UserCatalogWidget> {
 
   late String user;
 
+  bool up = true;
+
+  bool upColumn = true;
+
   int get currentCatalogIndex => savedCatalog.catalogs
       .indexWhere((element) => element.name == currentCatalog.name);
 
@@ -87,6 +91,51 @@ class _UserCatalogWidgetState extends State<UserCatalogWidget> {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
+
+    final Widget sortArrow = Container(
+      padding: const EdgeInsets.all(5),
+      child: Column(
+        children: [
+          Opacity(
+            opacity: up ? 1.0 : 0.3,
+            child: const Icon(
+              Icons.expand_less_rounded,
+              size: 12,
+            ),
+          ),
+          Opacity(
+            opacity: !up ? 1.0 : 0.3,
+            child: const Icon(
+              Icons.expand_more_rounded,
+              size: 12,
+            ),
+          ),
+        ],
+      ),
+    );
+
+    final Widget sortColumn = Container(
+      padding: const EdgeInsets.all(5),
+      child: Column(
+        children: [
+          Opacity(
+            opacity: upColumn ? 1.0 : 0.3,
+            child: const Icon(
+              Icons.expand_less_rounded,
+              size: 12,
+            ),
+          ),
+          Opacity(
+            opacity: !upColumn ? 1.0 : 0.3,
+            child: const Icon(
+              Icons.expand_more_rounded,
+              size: 12,
+            ),
+          ),
+        ],
+      ),
+    );
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -166,7 +215,7 @@ class _UserCatalogWidgetState extends State<UserCatalogWidget> {
           child: Row(
             children: [
               Expanded(
-                flex: 2,
+                flex: 3,
                 child: Text(
                   "Mã CK",
                   style: textTheme.bodySmall?.copyWith(
@@ -175,44 +224,62 @@ class _UserCatalogWidgetState extends State<UserCatalogWidget> {
               ),
               Expanded(
                 flex: 2,
-                child: Align(
-                  alignment: Alignment.centerRight,
-                  child: Text(
-                    S.of(context).price,
-                    style: textTheme.bodySmall?.copyWith(
-                        fontWeight: FontWeight.w600,
-                        color: AppColors.neutral_04),
+                child: GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      up = !up;
+                    });
+                  },
+                  child: Row(
+                    children: [
+                      Text(
+                        S.of(context).price,
+                        style: textTheme.bodySmall?.copyWith(
+                            fontWeight: FontWeight.w600,
+                            color: AppColors.neutral_04),
+                      ),
+                      sortArrow,
+                    ],
                   ),
                 ),
               ),
               Expanded(
-                flex: 3,
+                flex: 1,
                 child: GestureDetector(
                   onTap: () {
                     setState(() {
                       isPercent = !isPercent;
                     });
                   },
-                  child: Align(
-                    alignment: Alignment.centerRight,
-                    child: Text(
-                      isPercent ? "<%>" : "<+/->",
-                      style: textTheme.bodySmall?.copyWith(
-                          fontWeight: FontWeight.w600,
-                          color: AppColors.neutral_04),
-                    ),
+                  child: Text(
+                    isPercent ? "<%>" : "<+/->",
+                    style: textTheme.bodySmall?.copyWith(
+                        fontWeight: FontWeight.w600,
+                        color: AppColors.neutral_04),
                   ),
                 ),
               ),
               Expanded(
-                flex: 3,
-                child: Align(
-                  alignment: Alignment.centerRight,
-                  child: Text(
-                    S.of(context).volumn,
-                    style: textTheme.bodySmall?.copyWith(
-                        fontWeight: FontWeight.w600,
-                        color: AppColors.neutral_04),
+                flex: 2,
+                child: GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      upColumn = !upColumn;
+                    });
+                  },
+                  child: Align(
+                    alignment: Alignment.center,
+                    child: Row(
+                      children: [
+                        Text(
+                          S.of(context).volumn,
+                          style: textTheme.bodySmall?.copyWith(
+                              fontWeight: FontWeight.w600,
+                              color: AppColors.neutral_04),
+                        ),
+                        sortColumn
+                      ],
+                    ),
                   ),
                 ),
               )
@@ -233,43 +300,52 @@ class _UserCatalogWidgetState extends State<UserCatalogWidget> {
                             (element) =>
                                 element.stock.stockCode ==
                                 list![index].stock.stockCode);
-                        return Slidable(
-                            endActionPane: ActionPane(
-                              extentRatio: 0.25,
-                              motion: const ScrollMotion(),
-                              children: [
-                                SlidableAction(
-                                  // An action can be bigger than the others.
-                                  onPressed: (BuildContext context) {
-                                    setState(() {
-                                      currentCatalog.listData
-                                          .remove(list![index].stock.stockCode);
-                                      savedCatalog
-                                              .catalogs[currentCatalogIndex] =
-                                          currentCatalog;
-                                      localStorageService
-                                          .putSavedCatalog(savedCatalog);
-                                      if (currentCatalog.listData.isNotEmpty) {
-                                        listStocks = dataCenterService
-                                            .getStocksModelsFromStockCodes(
-                                                currentCatalog.listData);
-                                      } else {
-                                        listStocks = Future.value([]);
-                                      }
-                                    });
-                                  },
-                                  backgroundColor: AppColors.semantic_03,
-                                  foregroundColor: Colors.white,
-                                  icon: Icons.delete_outline,
-                                  spacing: 0,
+                        return defaultCatalog.name != currentCatalog.name
+                            ? Slidable(
+                                endActionPane: ActionPane(
+                                  extentRatio: 0.25,
+                                  motion: const ScrollMotion(),
+                                  children: [
+                                    SlidableAction(
+                                      // An action can be bigger than the others.
+                                      onPressed: (BuildContext context) {
+                                        setState(() {
+                                          currentCatalog.listData.remove(
+                                              list![index].stock.stockCode);
+                                          savedCatalog.catalogs[
+                                                  currentCatalogIndex] =
+                                              currentCatalog;
+                                          localStorageService
+                                              .putSavedCatalog(savedCatalog);
+                                          if (currentCatalog
+                                              .listData.isNotEmpty) {
+                                            listStocks = dataCenterService
+                                                .getStocksModelsFromStockCodes(
+                                                    currentCatalog.listData);
+                                          } else {
+                                            listStocks = Future.value([]);
+                                          }
+                                        });
+                                      },
+                                      backgroundColor: AppColors.semantic_03,
+                                      foregroundColor: Colors.white,
+                                      icon: Icons.delete_outline,
+                                      spacing: 0,
+                                    ),
+                                  ],
                                 ),
-                              ],
-                            ),
-                            child: StockComponent(
-                              index: index,
-                              model: stock,
-                              isPercent: isPercent,
-                            ));
+                                child: StockComponent(
+                                  index: index,
+                                  model: stock,
+                                  isPercent: isPercent,
+                                ),
+                              )
+                            : StockComponent(
+                                //cái này là component
+                                index: index,
+                                model: stock,
+                                isPercent: isPercent,
+                              );
                       },
                       separatorBuilder: (context, index) {
                         return const Divider(

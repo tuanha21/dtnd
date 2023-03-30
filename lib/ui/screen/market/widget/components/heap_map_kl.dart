@@ -179,7 +179,7 @@ class _HeapMapKLState extends State<HeapMapKL> {
                             const SizedBox(height: 5),
                             Expanded(
                               child: Container(
-                                  color: Colors.grey,
+                                  color: AppColors.bg_1,
                                   child: SfTreemap(
                                     dataCount: listStock.length,
                                     weightValueMapper: (int index) {

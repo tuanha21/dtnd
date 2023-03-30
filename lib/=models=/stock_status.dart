@@ -181,4 +181,12 @@ abstract class StockStatus {
       }
     }
   }
+
+  Color get colorSingle {
+    if (sstatus == SStatus.up) {
+      return AppColors.semantic_01;
+    } else {
+      return AppColors.semantic_03;
+    }
+  }
 }

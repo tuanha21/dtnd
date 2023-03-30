@@ -118,7 +118,7 @@ class _ShareTransactionComponentState extends State<ShareTransactionComponent> {
                     ),
                   ),
                   Text(
-                    "${NumUtils.formatInteger(widget.data.change)}CP",
+                    "${NumUtils.formatInteger(widget.data.change)} CP",
                     style: AppTextStyle.titleSmall_14
                         .copyWith(color: widget.data.color),
                   ),

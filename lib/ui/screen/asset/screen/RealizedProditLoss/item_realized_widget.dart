@@ -177,8 +177,8 @@ class _ItemRealizedState extends State<ItemRealizedWidget> {
                         const SizedBox(height: 4),
                         Text(
                           NumUtils.formatDouble(widget.detail?.cEARNEDVALUE),
-                          style: AppTextStyle.labelMedium_12
-                              .copyWith(color: stockModel?.stockData.color),
+                          style: AppTextStyle.labelMedium_12.copyWith(
+                              color: stockModel?.stockData.colorSingle),
                         ),
                       ],
                     ),
@@ -195,8 +195,8 @@ class _ItemRealizedState extends State<ItemRealizedWidget> {
                         const SizedBox(height: 4),
                         Text(
                           NumUtils.formatDouble(widget.detail?.cEARNEDRATE),
-                          style: AppTextStyle.labelMedium_12
-                              .copyWith(color: stockModel?.stockData.color),
+                          style: AppTextStyle.labelMedium_12.copyWith(
+                              color: stockModel?.stockData.colorSingle),
                         ),
                       ],
                     ),
