@@ -95,7 +95,7 @@ class NetworkService implements INetworkService {
     String unencodedPath, [
     Map<String, dynamic>? queryParameters,
   ]) {
-    return Uri.https(core_url, unencodedPath, queryParameters);
+    return Uri.http(core_url, unencodedPath, queryParameters);
   }
 
   Uri url_core1(
@@ -107,8 +107,8 @@ class NetworkService implements INetworkService {
   }
 
   Uri get url_core_endpoint {
-    print(Uri.https(core_url, core_endpoint).toString());
-    return Uri.https(core_url, core_endpoint);
+    print(Uri.http(core_url, core_endpoint).toString());
+    return Uri.http(core_url, core_endpoint);
   }
 
   Uri url_board(String path) => Uri.https(board_url, path);
@@ -180,7 +180,7 @@ class NetworkService implements INetworkService {
   Future<void> init(Environment environment) async {
     this.environment = environment;
     await dotenv.load(fileName: environment.envFileName);
-    core_url = dotenv.env['core_domain']!;
+    core_url = dotenv.env['core_domain1']!;
     core_url1 = dotenv.env['core_domain1']!;
     core_endpoint = dotenv.env['core_endpoint']!;
     board_url = dotenv.env['board_domain']!;
