@@ -329,20 +329,17 @@ class _UserCatalogWidgetState extends State<UserCatalogWidget> {
                       },
                     );
                   },
-                  child: Container(
-                    color: Colors.amber,
-                    child: Align(
-                      child: Row(
-                        children: [
-                          Text(
-                            S.of(context).volumn,
-                            style: textTheme.bodySmall?.copyWith(
-                                fontWeight: FontWeight.w600,
-                                color: AppColors.neutral_04),
-                          ),
-                          sortColumn
-                        ],
-                      ),
+                  child: Align(
+                    child: Row(
+                      children: [
+                        Text(
+                          S.of(context).volumn,
+                          style: textTheme.bodySmall?.copyWith(
+                              fontWeight: FontWeight.w600,
+                              color: AppColors.neutral_04),
+                        ),
+                        sortColumn
+                      ],
                     ),
                   ),
                 ),
