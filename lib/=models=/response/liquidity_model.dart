@@ -14,13 +14,11 @@ class LiquidityModel {
   final List<num> week2PTVal = [];
   final List<num> monthPTVal = [];
   final List<String> time = [
-    "09:00",
     "09:30",
     "10:00",
     "10:30",
     "11:00",
     "11:30",
-    "13:05",
     "13:30",
     "14:00",
     "14:30",
@@ -28,56 +26,40 @@ class LiquidityModel {
   ];
 
   LiquidityModel.fromJson(Map<String, dynamic> json) {
-    currVal.addAll(json['currVal'].cast<num>());
-    prevVal.addAll(json['prevVal'].cast<num>());
-    week1Val.addAll(json['week1Val'].cast<num>());
-    week2Val.addAll(json['week2Val'].cast<num>());
-    monthVal.addAll(json['monthVal'].cast<num>());
-    currPTVal.addAll(json['currPTVal'].cast<num>());
-    prevPTVal.addAll(json['prevPTVal'].cast<num>());
-    week1PTVal.addAll(json['week1PTVal'].cast<num>());
-    week2PTVal.addAll(json['week2PTVal'].cast<num>());
-    monthPTVal.addAll(json['monthPTVal'].cast<num>());
-
-    _fold(currVal);
-    _fold(prevVal);
-    _fold(week1Val);
-    _fold(week2Val);
-    _fold(monthVal);
-    _fold(currPTVal);
-    _fold(prevPTVal);
-    _fold(week1PTVal);
-    _fold(week2PTVal);
-    _fold(monthPTVal);
-    // print(currVal.length);
-    // print(week1Val.length);
-    if (currVal.length < week1Val.length) {
-      currVal.addAll(List.filled(week1Val.length + 1 - currVal.length, 0));
+    try {
+      currVal.addAll(_fold(json['currVal'].cast<num>()));
+      logger.v(currVal);
+      prevVal.addAll(_fold(json['prevVal'].cast<num>()));
+      logger.v(prevVal);
+      week1Val.addAll(_fold(json['week1Val'].cast<num>()));
+      week2Val.addAll(_fold(json['week2Val'].cast<num>()));
+      monthVal.addAll(_fold(json['monthVal'].cast<num>()));
+      currPTVal.addAll(_fold(json['currPTVal'].cast<num>()));
+      prevPTVal.addAll(_fold(json['prevPTVal'].cast<num>()));
+      week1PTVal.addAll(_fold(json['week1PTVal'].cast<num>()));
+      week2PTVal.addAll(_fold(json['week2PTVal'].cast<num>()));
+      monthPTVal.addAll(_fold(json['monthPTVal'].cast<num>()));
+    } catch (e) {
+      logger.e(e);
     }
   }
 
   List<num> _fold(List<num> list) {
-    final length = _length(list);
-    final List<List<num>> sublist = [];
-    final List<num> result = [];
-    for (var i = 0; i < length; i++) {
+    final length = list.length;
+    final List<num> sublist = [];
+    for (var i = 0; i < length; i += _interval) {
       if (i == 0) {
-        sublist.add(list.sublist(0, 7));
+        sublist.add(list.elementAt(6));
+        i++;
       } else {
-        sublist.add(list.sublist(_interval * i + 1, _interval * i + _interval));
+        if (length - 1 - i > 0 && length - 1 - i < _interval) {
+          sublist.add(list.elementAt(length - 1));
+        } else {
+          sublist.add(list.elementAt(i + _interval - 1));
+        }
       }
     }
-    for (var element in sublist) {
-      result.add(element.reduce((a, b) => a + b));
-    }
-    //logger.v(sublist);
-    list.clear();
-    list.addAll(result);
-    return result;
-  }
-
-  int _length(List<num> list) {
-    return (list.length ~/ _interval);
+    return sublist;
   }
 
   Map<String, dynamic> toJson() {

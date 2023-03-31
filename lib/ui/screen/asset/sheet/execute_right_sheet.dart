@@ -7,6 +7,7 @@ import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_textstyle.dart';
 import 'package:dtnd/ui/widget/button/single_color_text_button.dart';
+import 'package:dtnd/ui/widget/expanded_widget.dart';
 import 'package:dtnd/ui/widget/icon/sheet_header.dart';
 import 'package:dtnd/ui/widget/icon/stock_icon.dart';
 import 'package:dtnd/ui/widget/input/interval_input.dart';
@@ -15,6 +16,7 @@ import 'package:dtnd/utilities/logger.dart';
 import 'package:dtnd/utilities/num_utils.dart';
 import 'package:dtnd/utilities/validator.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class ExecuteRightSheet extends StatefulWidget {
   const ExecuteRightSheet({
@@ -36,15 +38,20 @@ class _ExecuteRightSheetState extends State<ExecuteRightSheet>
   final TextEditingController pinController = TextEditingController();
   late final TextEditingController volumnController;
   final GlobalKey<FormState> pinKey = GlobalKey<FormState>();
-
+  final Rx<num?> buyValue = Rxn();
+  String? errorMsg;
   @override
   void initState() {
     volumnController = TextEditingController(
-        text: (widget.unexecutedRightModel.cSHARERIGHT.toInt()).toString());
+        text: (widget.unexecutedRightModel.shareAvailBuy.toInt()).toString());
+    buyValue.value = widget.unexecutedRightModel.shareAvailBuy;
     super.initState();
   }
 
   void registerRight() async {
+    if (!(pinKey.currentState?.validate() ?? false)) {
+      return;
+    }
     try {
       await exchangeService.registerRight(
           accountModel: widget.accountModel,
@@ -180,7 +187,7 @@ class _ExecuteRightSheetState extends State<ExecuteRightSheet>
                   _Row(
                     label: "Khối lượng tối đa",
                     value: NumUtils.formatInteger(
-                        widget.unexecutedRightModel.cSHARERIGHT),
+                        widget.unexecutedRightModel.shareAvailBuy),
                   ),
                   const SizedBox(height: 8),
                   _Row(
@@ -194,36 +201,70 @@ class _ExecuteRightSheetState extends State<ExecuteRightSheet>
                     value: widget.unexecutedRightModel.cACCOUNTCODE,
                   ),
                   const SizedBox(height: 8),
-                  _Row(
-                    label: "Tổng giao dịch",
-                    value: NumUtils.formatDouble(
-                        (num.tryParse(volumnController.text) ?? 0) *
-                            (widget.unexecutedRightModel.cBUYPRICE ?? 0)),
-                    valueColor: AppColors.primary_01,
-                  ),
+                  Obx(() => _Row(
+                        label: "Tổng giao dịch",
+                        value: widget.unexecutedRightModel.cBUYPRICE == null ||
+                                buyValue.value == null
+                            ? "-"
+                            : NumUtils.formatDouble(buyValue.value! *
+                                widget.unexecutedRightModel.cBUYPRICE!),
+                        valueColor: AppColors.primary_01,
+                      )),
                   const SizedBox(height: 8),
                 ],
               ),
             ),
             const SizedBox(height: 20),
-            Row(
-              children: [
-                Expanded(
-                  child: IntervalInput(
-                    controller: volumnController,
-                    labelText: S.of(context).volumn,
-                    interval: (p0) {
-                      return 1;
-                    },
-                    defaultValue: widget.unexecutedRightModel.cSHARERIGHT,
-                    // onChanged: onChangedPrice,
+            Form(
+              key: pinKey,
+              autovalidateMode: AutovalidateMode.disabled,
+              child: Row(
+                children: [
+                  Expanded(
+                    child: IntervalInput(
+                      validator: (vol) {
+                        if (vol == null) {
+                          setState(() {
+                            errorMsg = "Khối lượng không được bỏ trống";
+                          });
+                          return errorMsg;
+                        }
+                        late final num volume;
+                        try {
+                          volume = num.parse(vol);
+                        } catch (e) {
+                          volume = -1;
+                        }
+
+                        if (volume <= 0 ||
+                            volume >
+                                widget.unexecutedRightModel.shareAvailBuy) {
+                          setState(() {
+                            errorMsg = "Khối lượng không hợp lệ";
+                          });
+                          return errorMsg;
+                        }
+                      },
+                      controller: volumnController,
+                      labelText: S.of(context).volumn,
+                      interval: (p0) {
+                        return 1;
+                      },
+                      onChanged: (volume) {
+                        if (volume <= 0 ||
+                            volume >
+                                widget.unexecutedRightModel.shareAvailBuy) {
+                          buyValue.value = 0;
+                          return;
+                        }
+                        buyValue.value = volume;
+                      },
+                      defaultValue: widget.unexecutedRightModel.cSHARERIGHT,
+                      // onChanged: onChangedPrice,
+                    ),
                   ),
-                ),
-                const SizedBox(width: 16),
-                Expanded(
-                  child: Form(
-                    key: pinKey,
-                    autovalidateMode: AutovalidateMode.disabled,
+                  const SizedBox(width: 16),
+                  Expanded(
                     child: TextFormField(
                       controller: pinController,
                       // onChanged: (value) => pinFormKey.currentState?.didChange(value),
@@ -237,10 +278,24 @@ class _ExecuteRightSheetState extends State<ExecuteRightSheet>
                       ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 10),
+            // ExpandedSection(
+            //   expand: errorMsg != null,
+            //   child: Row(
+            //     children: [
+            //       Expanded(
+            //           child: Text(
+            //         errorMsg ?? "",
+            //         style:
+            //             AppTextStyle.bodySmall_12.copyWith(color: Colors.red),
+            //       ))
+            //     ],
+            //   ),
+            // ),
+            const SizedBox(height: 10),
             Row(
               children: [
                 Expanded(
