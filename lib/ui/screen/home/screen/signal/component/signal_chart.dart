@@ -81,15 +81,15 @@ class _SignalChartState extends State<SignalChart> {
       if (mounted) {
         setState(() {
           datas = history;
-          datas!.c.clear();
-          for (var i = 0; i < datas!.t.length; i += 3) {
-            if ((datas!.t.length - datas!.c.length) < 3) {
-              datas!.c.addAll(List.filled(datas!.t.length - datas!.c.length,
-                  math.Random().nextDouble()));
-            } else {
-              datas!.c.addAll(List.filled(3, math.Random().nextDouble()));
-            }
-          }
+          // datas!.c.clear();
+          // for (var i = 0; i < datas!.t.length; i += 3) {
+          //   if ((datas!.t.length - datas!.c.length) < 3) {
+          //     datas!.c.addAll(List.filled(datas!.t.length - datas!.c.length,
+          //         math.Random().nextDouble()));
+          //   } else {
+          //     datas!.c.addAll(List.filled(3, math.Random().nextDouble()));
+          //   }
+          // }
           max = datas!.c.reduce(math.max);
           min = datas!.c.reduce(math.min);
           length = datas!.c.length;
@@ -174,32 +174,38 @@ class _SignalChartState extends State<SignalChart> {
                       widget.stockModel?.stockData.color ??
                           AppColors.semantic_02),
                   data: datas!.c,
-                ),
-                // if (widget.data?.cBUYDATE != null)
-                //   charts.Series<TopSignalDetailModel, DateTime>(
-                //     id: 'Annotation Series 2',
-                //     colorFn: (_, __) =>
-                //         charts.MaterialPalette.green.shadeDefault,
-                //     domainFn: (TopSignalDetailModel event, _) =>
-                //         event.cBUYDATE!,
-                //     measureFn: (TopSignalDetailModel event, __) {
-                //       final int index = datas!.time.indexWhere((element) {
-                //         final int compare =
-                //             element.beginningOfDay.compareTo(event.cBUYDATE!);
-                //         switch (compare) {
-                //           case 0:
-                //             return true;
-                //           default:
-                //             return false;
-                //         }
-                //       });
-                //       return index > -1
-                //           ? datas!.o.elementAt(index)
-                //           : event.cBUYPRICE;
-                //     },
-                //     radiusPxFn: (_, __) => 5.0,
-                //     data: [widget.data!],
-                //   )..setAttribute(charts.boundsLineRadiusPxKey, 3.5),
+                )
+                  ..setAttribute(charts.rendererIdKey, 'scatterChart')
+                  ..setAttribute(
+                      charts.measureAxisIdKey, "secondaryMeasureAxisId"),
+                if (widget.data?.cBUYDATE != null)
+                  charts.Series<TopSignalDetailModel, DateTime>(
+                    id: 'Annotation Series 2',
+                    colorFn: (_, __) =>
+                        charts.MaterialPalette.green.shadeDefault,
+                    domainFn: (TopSignalDetailModel event, _) =>
+                        event.cBUYDATE!,
+                    measureFn: (TopSignalDetailModel event, __) {
+                      final int index = datas!.time.indexWhere((element) {
+                        final int compare =
+                            element.beginningOfDay.compareTo(event.cBUYDATE!);
+                        switch (compare) {
+                          case 0:
+                            return true;
+                          default:
+                            return false;
+                        }
+                      });
+                      return index > -1
+                          ? datas!.o.elementAt(index)
+                          : event.cBUYPRICE;
+                    },
+                    radiusPxFn: (_, __) => 5.0,
+                    data: [widget.data!],
+                  )
+                    ..setAttribute(charts.boundsLineRadiusPxKey, 3.5)
+                    ..setAttribute(
+                        charts.measureAxisIdKey, "secondaryMeasureAxisId"),
               ],
               animate: false,
               layoutConfig: charts.LayoutConfig(
