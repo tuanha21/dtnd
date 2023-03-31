@@ -81,6 +81,15 @@ class _SignalChartState extends State<SignalChart> {
       if (mounted) {
         setState(() {
           datas = history;
+          // datas!.c.clear();
+          // for (var i = 0; i < datas!.t.length; i += 3) {
+          //   if ((datas!.t.length - datas!.c.length) < 3) {
+          //     datas!.c.addAll(List.filled(datas!.t.length - datas!.c.length,
+          //         math.Random().nextDouble()));
+          //   } else {
+          //     datas!.c.addAll(List.filled(3, math.Random().nextDouble()));
+          //   }
+          // }
           max = datas!.c.reduce(math.max);
           min = datas!.c.reduce(math.min);
           length = datas!.c.length;
@@ -222,6 +231,9 @@ class _SignalChartState extends State<SignalChart> {
                       lineStyle: charts.LineStyleSpec(dashPattern: [4]))),
               primaryMeasureAxis: const charts.NumericAxisSpec(
                 showAxisLine: false,
+                tickProviderSpec: charts.BasicNumericTickProviderSpec(
+                  zeroBound: false,
+                ),
                 renderSpec: charts.NoneRenderSpec(),
               ),
               secondaryMeasureAxis: const charts.NumericAxisSpec(

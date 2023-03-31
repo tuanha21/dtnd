@@ -1,4 +1,4 @@
-import 'package:dtnd/ui/screen/asset/screen/RealizedProditLoss/realized_profit_loss_controller.dart';
+import 'package:dtnd/ui/screen/asset/screen/realized_profit_loss/realized_profit_loss_controller.dart';
 import 'package:dtnd/ui/theme/app_textstyle.dart';
 import 'package:dtnd/ui/widget/empty_list_widget.dart';
 import 'package:flutter/material.dart';

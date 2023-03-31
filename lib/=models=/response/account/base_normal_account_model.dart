@@ -1,7 +1,7 @@
 import 'package:dtnd/=models=/response/account/asset_chart_element.dart';
 import 'package:dtnd/=models=/response/account/i_account.dart';
 import 'package:dtnd/=models=/response/account/portfolio_status_model.dart';
-import 'package:dtnd/=models=/response/order_model/base_order_model.dart';
+import 'package:dtnd/=models=/response/account/unexecuted_right_model.dart';
 
 class BaseNormalAccountModel implements IAccountModel {
   ///Account Info
@@ -51,37 +51,21 @@ class BaseNormalAccountModel implements IAccountModel {
   @override
   List<AssetChartElementModel>? listAssetChart;
 
-  BaseNormalAccountModel(
-      {this.cashBalance,
-      this.debt,
-      this.cashAvai,
-      this.withdrawalCash,
-      this.withdrawalEe,
-      this.payment,
-      this.tempEe,
-      this.apT0,
-      this.apT1,
-      this.apT2,
-      this.arT0,
-      this.arT1,
-      this.arT2,
-      this.collateral,
-      this.sellUnmatch,
-      this.buyUnmatch,
-      this.cashBlock,
-      this.sumAp,
-      this.withdraw,
-      this.depositFee,
-      this.tempeeUsed,
-      this.tempeeUsing,
-      this.assets,
-      this.cashAdvanceAvai,
-      this.avaiColla,
-      this.cashInout,
-      this.cashTempDayOut,
-      this.vsd,
-      this.totalMarket,
-      this.totalCost});
+  List<UnexecutedRightModel>? listUnexecutedRight;
+
+  List<UnexecutedRightModel> get listUnexecutedBuyRight {
+    if (listUnexecutedRight?.isEmpty ?? true) {
+      return [];
+    }
+    final List<UnexecutedRightModel> result = [];
+    for (var right in listUnexecutedRight!) {
+      if (right.cRIGHTBUYFLAG != 0) {
+        result.add(right);
+      }
+    }
+    return result;
+  }
+
   BaseNormalAccountModel.fromJson(Map<String, dynamic> json) {
     accCode = json['accCode'];
     accName = json['accName'];
