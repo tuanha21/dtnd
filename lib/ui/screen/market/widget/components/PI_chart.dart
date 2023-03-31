@@ -54,7 +54,7 @@ class _PiValueChartState extends State<PiValueChart> {
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: Container(
                       height: 200,
-                      color: Colors.grey,
+                      color: AppColors.bg_1,
                       child: SfTreemap(
                         dataCount: data0.length,
                         weightValueMapper: (int index) {

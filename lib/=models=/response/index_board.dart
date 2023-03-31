@@ -37,7 +37,6 @@ class IndexBoard {
     return 100 - declinesPer - noChangesPer;
   }
 
-
   IndexBoard(
       {this.time,
       this.indexValue,

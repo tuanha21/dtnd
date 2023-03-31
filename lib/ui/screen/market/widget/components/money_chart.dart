@@ -1,20 +1,13 @@
-import 'dart:math';
-
 import 'package:dtnd/=models=/response/index_board.dart';
 import 'package:dtnd/utilities/charts_util.dart';
-import 'package:dtnd/utilities/logger.dart';
 import 'package:dtnd/utilities/num_utils.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
-import 'package:dtnd/utilities/time_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 import '../../../../../generated/l10n.dart';
 import '../../../../theme/app_color.dart';
-
-import 'package:charts_flutter/src/text_element.dart' as chart_text;
-import 'package:charts_flutter/src/text_style.dart' as chart_style;
 
 class MoneyChart extends StatefulWidget {
   final double height;
@@ -76,7 +69,7 @@ class _MoneyChartState extends State<MoneyChart> {
           ),
         ),
         SizedBox(
-          height: widget.height,
+          height: widget.height * 1.5,
           width: MediaQuery.of(context).size.width,
           child: FutureBuilder<List<IndexBoard>>(
               future: widget.indexBoard,
@@ -92,21 +85,20 @@ class _MoneyChartState extends State<MoneyChart> {
                   return Padding(
                     padding: const EdgeInsets.only(left: 0, right: 20),
                     child: charts.NumericComboChart(
-                      List<charts.Series<IndexBoard, num>>.generate(
-                          list.length,
-                          (index) => charts.Series<IndexBoard, num>(
-                                id: 'chart1',
-                                colorFn: (_, __) =>
-                                    charts.ColorUtil.fromDartColor(
-                                        AppColors.semantic_01),
-                                domainFn: (IndexBoard indexBoard, int? index) =>
-                                    index!,
-                                measureFn: (IndexBoard sales, _) {
-                                  return sales.totalBuyActivelyValues;
-                                },
-                                data: list,
-                              )..setAttribute(charts.measureAxisIdKey,
-                                  "secondaryMeasureAxisId")),
+                      [
+                        charts.Series<IndexBoard, num>(
+                          id: 'chart1',
+                          colorFn: (_, __) => charts.ColorUtil.fromDartColor(
+                              AppColors.semantic_01),
+                          domainFn: (IndexBoard indexBoard, int? index) =>
+                              index!,
+                          measureFn: (IndexBoard sales, _) {
+                            return sales.totalBuyActivelyValues;
+                          },
+                          data: list,
+                        )..setAttribute(
+                            charts.measureAxisIdKey, "secondaryMeasureAxisId")
+                      ],
                       behaviors: [
                         charts.SelectNearest(
                             eventTrigger: charts.SelectionTrigger.tapAndDrag),
@@ -222,9 +214,9 @@ class _MoneyChartState extends State<MoneyChart> {
                       domainAxis: domainSpec(list),
                       behaviors: [
                         charts.SelectNearest(
-                            eventTrigger: charts.SelectionTrigger.tapAndDrag,
-                            // selectionMode:
-                            //     charts.SelectionMode.selectOverlapping,
+                          eventTrigger: charts.SelectionTrigger.tapAndDrag,
+                          // selectionMode:
+                          //     charts.SelectionMode.selectOverlapping,
                         ),
                         charts.LinePointHighlighter(
                           // drawFollowLinesAcrossChart: false,

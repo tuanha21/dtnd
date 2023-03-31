@@ -83,7 +83,7 @@ class _IndFvalueState extends State<IndFvalue> {
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: Container(
                       height: 200,
-                      color: Colors.grey,
+                      color: AppColors.bg_1,
                       child: SfTreemap(
                         dataCount: data.length,
                         weightValueMapper: (int index) {

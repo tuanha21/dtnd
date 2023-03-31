@@ -178,7 +178,9 @@ class _ItemRealizedState extends State<ItemRealizedWidget> {
                         Text(
                           NumUtils.formatDouble(widget.detail?.cEARNEDVALUE),
                           style: AppTextStyle.labelMedium_12.copyWith(
-                              color: stockModel?.stockData.colorSingle),
+                              color: (widget.detail?.cEARNEDRATE ?? 0) > 0
+                                  ? AppColors.semantic_01
+                                  : AppColors.semantic_03),
                         ),
                       ],
                     ),
@@ -196,7 +198,9 @@ class _ItemRealizedState extends State<ItemRealizedWidget> {
                         Text(
                           NumUtils.formatDouble(widget.detail?.cEARNEDRATE),
                           style: AppTextStyle.labelMedium_12.copyWith(
-                              color: stockModel?.stockData.colorSingle),
+                              color: (widget.detail?.cEARNEDRATE ?? 0) > 0
+                                  ? AppColors.semantic_01
+                                  : AppColors.semantic_03),
                         ),
                       ],
                     ),

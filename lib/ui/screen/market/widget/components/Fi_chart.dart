@@ -88,7 +88,7 @@ class _FiChartValueState extends State<FiChartValue> {
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: Container(
                       height: 200,
-                      color: Colors.grey,
+                      color: AppColors.bg_1,
                       child: SfTreemap(
                         dataCount: _data.length,
                         weightValueMapper: (int index) {
@@ -124,7 +124,7 @@ class _FiChartValueState extends State<FiChartValue> {
                                       tile.group,
                                       overflow: TextOverflow.ellipsis,
                                       textAlign: TextAlign.center,
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                           fontSize: 14,
                                           color: AppColors.light_bg),
                                     ),
@@ -132,7 +132,7 @@ class _FiChartValueState extends State<FiChartValue> {
                                       NumUtils.formatInteger(tile.weight),
                                       overflow: TextOverflow.ellipsis,
                                       textAlign: TextAlign.center,
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                           fontSize: 11,
                                           fontWeight: FontWeight.w400,
                                           color: AppColors.light_bg),
