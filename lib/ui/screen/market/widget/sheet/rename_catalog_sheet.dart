@@ -1,10 +1,8 @@
 import 'package:dtnd/=models=/local/i_local_catalog.dart';
 import 'package:dtnd/=models=/local/saved_catalog.dart';
-import 'package:dtnd/=models=/local/user_catalog.dart';
 import 'package:dtnd/=models=/ui_model/user_cmd.dart';
 import 'package:dtnd/data/i_local_storage_service.dart';
 import 'package:dtnd/generated/l10n.dart';
-import 'package:dtnd/ui/screen/market/logic/cmd.dart';
 import 'package:dtnd/ui/widget/icon/sheet_header.dart';
 import 'package:dtnd/utilities/validator.dart';
 import 'package:flutter/material.dart';
@@ -89,7 +87,6 @@ class _RenameCatalogSheetState extends State<RenameCatalogSheet>
               ],
             ),
             const SizedBox(height: 20),
-            SizedBox(height: MediaQuery.of(context).viewInsets.bottom)
           ],
         ),
       ),

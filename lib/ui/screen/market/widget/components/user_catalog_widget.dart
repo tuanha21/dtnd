@@ -213,7 +213,7 @@ class _UserCatalogWidgetState extends State<UserCatalogWidget> {
           child: Row(
             children: [
               Expanded(
-                flex: 25,
+                flex: 30,
                 child: Text(
                   "Mã CK",
                   style: textTheme.bodySmall?.copyWith(
@@ -221,7 +221,7 @@ class _UserCatalogWidgetState extends State<UserCatalogWidget> {
                 ),
               ),
               Expanded(
-                flex: 25,
+                flex: 30,
                 child: GestureDetector(
                   onTap: () {
                     setState(() {
@@ -283,7 +283,7 @@ class _UserCatalogWidgetState extends State<UserCatalogWidget> {
                 ),
               ),
               Expanded(
-                flex: 25,
+                flex: 15,
                 child: GestureDetector(
                   onTap: () {
                     setState(() {
@@ -298,48 +298,54 @@ class _UserCatalogWidgetState extends State<UserCatalogWidget> {
                   ),
                 ),
               ),
-              Expanded(
-                flex: 25,
-                child: GestureDetector(
-                  onTap: () {
-                    setState(
-                      () {
-                        upColumn = !upColumn;
-                        listStocks.then(
-                          (stockList) {
-                            if (stockList != null) {
-                              if (upColumn) {
-                                stockList.sort((a, b) =>
-                                    (a.stockData.lot.value ?? 0)
-                                        .toDouble()
-                                        .compareTo((b.stockData.lot.value ?? 0)
-                                            .toDouble()));
+              Container(
+                color: Colors.transparent,
+                child: Expanded(
+                  flex: 30,
+                  child: GestureDetector(
+                    onTap: () {
+                      setState(
+                        () {
+                          upColumn = !upColumn;
+                          listStocks.then(
+                            (stockList) {
+                              if (stockList != null) {
+                                if (upColumn) {
+                                  stockList.sort((a, b) =>
+                                      (a.stockData.lot.value ?? 0)
+                                          .toDouble()
+                                          .compareTo(
+                                              (b.stockData.lot.value ?? 0)
+                                                  .toDouble()));
+                                } else {
+                                  stockList.sort((a, b) =>
+                                      (b.stockData.lot.value ?? 0)
+                                          .toDouble()
+                                          .compareTo(
+                                              (a.stockData.lot.value ?? 0)
+                                                  .toDouble()));
+                                }
                               } else {
-                                stockList.sort((a, b) =>
-                                    (b.stockData.lot.value ?? 0)
-                                        .toDouble()
-                                        .compareTo((a.stockData.lot.value ?? 0)
-                                            .toDouble()));
+                                print('error');
                               }
-                            } else {
-                              print('error');
-                            }
-                          },
-                        );
-                      },
-                    );
-                  },
-                  child: Align(
-                    child: Row(
-                      children: [
-                        Text(
-                          S.of(context).volumn,
-                          style: textTheme.bodySmall?.copyWith(
-                              fontWeight: FontWeight.w600,
-                              color: AppColors.neutral_04),
-                        ),
-                        sortColumn
-                      ],
+                            },
+                          );
+                        },
+                      );
+                    },
+                    child: Align(
+                      child: Row(
+                        children: [
+                          Text(
+                            S.of(context).volumn,
+                            style: textTheme.bodySmall?.copyWith(
+                                fontWeight: FontWeight.w600,
+                                color: AppColors.neutral_04),
+                            textAlign: TextAlign.center,
+                          ),
+                          sortColumn
+                        ],
+                      ),
                     ),
                   ),
                 ),

@@ -16,6 +16,7 @@ abstract class IDialog implements IOverlay {
       barrierDismissible: barrierDismissible,
       builder: (BuildContext context) {
         return Dialog(
+          backgroundColor: Colors.transparent,
           insetPadding: const EdgeInsets.all(16),
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),

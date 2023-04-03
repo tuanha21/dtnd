@@ -11,7 +11,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../=models=/ui_model/user_cmd.dart';
-import '../../../../utilities/logger.dart';
 import '../../stock_detail/sheet/AddStockCatalog.dart';
 
 class CreateCatalogISheet extends ISheet {
@@ -132,7 +131,7 @@ class CatalogOptionsISheet extends ISheet {
   Future<void>? onResultNext([cmd]) => null;
 }
 
-class DeleteCatalogIDialog extends ISheet {
+class DeleteCatalogIDialog extends IDialog {
   const DeleteCatalogIDialog(this.savedCatalog, this.catalog);
 
   final SavedCatalog savedCatalog;
