@@ -51,8 +51,7 @@ class LoginController {
         cmd: "Web.sCheckLogin",
         p1: username,
         p2: password,
-        p3: "M",
-        p4: "");
+        p3: "M");
     final requestModel = RequestModel.login(
       group: "L",
       user: username,

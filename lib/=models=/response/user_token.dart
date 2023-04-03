@@ -69,11 +69,11 @@ class UserToken implements CoreResponseModel {
   });
 
   UserToken.fromJson(Map<String, dynamic> json) {
-    user = json['user'];
     name = json['name'];
     sid = json['sid'];
     address = json['address'];
     defaultAcc = json['defaultAcc'];
+    user = defaultAcc.substring(0, 6);
     iFlag = json['iFlag'];
     countLoginFail = json['CountLoginFail'];
     authenType = json['AuthenType'];

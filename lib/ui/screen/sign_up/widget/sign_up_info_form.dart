@@ -171,7 +171,8 @@ class _SignUpInfoFormState extends State<SignUpInfoForm> with AppValidator {
                   final Digest digest = md5.convert(bytes);
 
                   // Convert the hash to a hex string
-                  final encodedPass = digest.toString();
+                  final encodedPass = digest.toString().toUpperCase();
+
                   return widget.onSuccess.call(
                     info: SignUpInfo(fullName.text, phoneNumber.text,
                         email.text, encodedPass),
