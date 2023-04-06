@@ -5,14 +5,11 @@ import 'package:dtnd/=models=/response/business_profile_model.dart';
 import 'package:dtnd/=models=/response/deep_model.dart';
 import 'package:dtnd/=models=/response/inday_matched_order.dart';
 import 'package:dtnd/=models=/response/index_model.dart';
-import 'package:dtnd/=models=/response/suggested_signal_model.dart';
-import 'package:dtnd/=models=/response/top_signal_detail_model.dart';
-import 'package:dtnd/=models=/response/top_signal_history_model.dart';
-import 'package:dtnd/=models=/response/top_signal_stock_model.dart';
 import 'package:dtnd/=models=/response/liquidity_model.dart';
 import 'package:dtnd/=models=/response/news_detail.dart';
 import 'package:dtnd/=models=/response/news_model.dart';
 import 'package:dtnd/=models=/response/security_basic_info_model.dart';
+import 'package:dtnd/=models=/response/signal_month_model.dart';
 import 'package:dtnd/=models=/response/stock.dart';
 import 'package:dtnd/=models=/response/stock_data.dart';
 import 'package:dtnd/=models=/response/stock_financial_index_model.dart';
@@ -21,7 +18,11 @@ import 'package:dtnd/=models=/response/stock_news.dart';
 import 'package:dtnd/=models=/response/stock_ranking_financial_index_model.dart';
 import 'package:dtnd/=models=/response/stock_trading_history.dart';
 import 'package:dtnd/=models=/response/subsidiaries_model.dart';
+import 'package:dtnd/=models=/response/suggested_signal_model.dart';
 import 'package:dtnd/=models=/response/top_influence_model.dart';
+import 'package:dtnd/=models=/response/top_signal_detail_model.dart';
+import 'package:dtnd/=models=/response/top_signal_history_model.dart';
+import 'package:dtnd/=models=/response/top_signal_stock_model.dart';
 import 'package:dtnd/=models=/response/trash_model.dart';
 import 'package:dtnd/=models=/ui_model/field_tree_element_model.dart';
 
@@ -30,9 +31,9 @@ import '../=models=/response/index_board.dart';
 import '../=models=/response/index_detail.dart';
 import '../=models=/response/introduct_company.dart';
 import '../=models=/response/sec_event.dart';
+import '../=models=/response/stock_derivative_model.dart';
 import '../=models=/response/stock_industry.dart';
 import '../=models=/response/stock_vol.dart';
-import '../=models=/response/stock_derivative_model.dart';
 
 abstract class IDataCenterService {
   Set<IndexModel> get listIndexs;
@@ -76,6 +77,8 @@ abstract class IDataCenterService {
 
   Future<TopSignalDetailModel?> getTopSignalDetail(
       String stockCode, String type);
+
+  Future<List<SignalMonthModel>?> getSignalMonth(String stockCode);
 
   Future<List<TopSignalHistoryModel>?> getTopSignalHistory(
       String stockCode, String type,

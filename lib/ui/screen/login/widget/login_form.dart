@@ -167,53 +167,59 @@ class _LoginFormState extends State<LoginForm> {
       key: widget.loginFormKey,
       child: Column(
         children: [
-          FormField<String?>(
-            key: usernameFormKey,
-            validator: usernameValidator,
-            initialValue: userNameInitialValue,
-            builder: (usernameState) => TextField(
-              autocorrect: false,
-              focusNode: usernameFocusNode,
-              controller: _userController,
-              onChanged: (value) =>
-                  _onUsernameChangeHandler(usernameState, value),
-              decoration: InputDecoration(
-                labelText: S.of(context).username,
-                hintText: S.of(context).username,
-                errorText: usernameHasError
-                    ? usernameFormKey.currentState?.errorText
-                    : null,
+          SizedBox(
+            height: 70,
+            child: FormField<String?>(
+              key: usernameFormKey,
+              validator: usernameValidator,
+              initialValue: userNameInitialValue,
+              builder: (usernameState) => TextField(
+                autocorrect: false,
+                focusNode: usernameFocusNode,
+                controller: _userController,
+                onChanged: (value) =>
+                    _onUsernameChangeHandler(usernameState, value),
+                decoration: InputDecoration(
+                  labelText: S.of(context).username,
+                  hintText: S.of(context).username,
+                  errorText: usernameHasError
+                      ? usernameFormKey.currentState?.errorText
+                      : null,
+                ),
               ),
             ),
           ),
           const SizedBox(
-            height: 20,
+            height: 10,
           ),
-          FormField<String?>(
-            key: passwordFormKey,
-            validator: passwordValidator,
-            builder: (passwordState) => TextField(
-              obscureText: !showPass,
-              autocorrect: false,
-              focusNode: passwordFocusNode,
-              controller: _passController,
-              onChanged: (value) =>
-                  _onPasswordChangeHandler(passwordState, value),
-              decoration: InputDecoration(
-                labelText: S.of(context).password,
-                hintText: S.of(context).password,
-                errorText: passwordHasError
-                    ? passwordFormKey.currentState?.errorText
-                    : null,
-                suffixIcon: GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      showPass = !showPass;
-                    });
-                  },
-                  child: Icon(showPass
-                      ? Icons.visibility_outlined
-                      : Icons.visibility_off_outlined),
+          SizedBox(
+            height: 70,
+            child: FormField<String?>(
+              key: passwordFormKey,
+              validator: passwordValidator,
+              builder: (passwordState) => TextField(
+                obscureText: !showPass,
+                autocorrect: false,
+                focusNode: passwordFocusNode,
+                controller: _passController,
+                onChanged: (value) =>
+                    _onPasswordChangeHandler(passwordState, value),
+                decoration: InputDecoration(
+                  labelText: S.of(context).password,
+                  hintText: S.of(context).password,
+                  errorText: passwordHasError
+                      ? passwordFormKey.currentState?.errorText
+                      : null,
+                  suffixIcon: GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        showPass = !showPass;
+                      });
+                    },
+                    child: Icon(showPass
+                        ? Icons.visibility_outlined
+                        : Icons.visibility_off_outlined),
+                  ),
                 ),
               ),
             ),
@@ -238,7 +244,7 @@ class _LoginFormState extends State<LoginForm> {
           //     },
           //   );
           // }, widget.otpRequired),
-          const SizedBox(height: 20),
+          const SizedBox(height: 10),
           IntrinsicHeight(
             child: Row(
               children: [

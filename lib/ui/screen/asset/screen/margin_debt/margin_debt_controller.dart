@@ -27,7 +27,7 @@ class MarginDebtControllers {
   final Rx<List<StockModel>> listStockModels = Rx(<StockModel>[]);
   final Rx<bool> portfolioInitialized = false.obs;
   final RxDouble sumCloanIn = 0.0.obs;
-  final RxDouble sumCloanOut = 0.0.obs;
+  final RxDouble sumCFEE = 0.0.obs;
   final RxDouble sumCloan = 0.0.obs;
   final Rx<List<GetBedtModel?>?> listData = Rxn();
 
@@ -60,7 +60,7 @@ class MarginDebtControllers {
         listData.value != null) {
       for (var item in listData.value ?? []) {
         sumCloanIn.value += item?.cLOANIN?.toDouble() ?? 0;
-        sumCloanOut.value += item?.cLOANOUT?.toDouble() ?? 0;
+        sumCFEE.value += item?.cFEE?.toDouble() ?? 0;
         sumCloan.value += item?.cLOAN?.toDouble() ?? 0;
       }
     }

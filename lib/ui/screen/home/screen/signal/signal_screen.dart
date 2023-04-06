@@ -21,11 +21,13 @@ class SignalScreen extends StatefulWidget {
       required this.type,
       this.defaulPeriod,
       this.defaulday});
+
   final String code;
   final String type;
   final StockModel? stockModel;
   final String? defaulPeriod;
   final int? defaulday;
+
   @override
   State<SignalScreen> createState() => _SignalScreenState();
 }
@@ -36,6 +38,7 @@ class _SignalScreenState extends State<SignalScreen> {
   TopSignalDetailModel? data;
   List<TopSignalHistoryModel>? listHis;
   Stock? stock;
+
   @override
   void initState() {
     super.initState();
@@ -63,6 +66,7 @@ class _SignalScreenState extends State<SignalScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
     return Scaffold(
       appBar: SignalAppbar(
         stock: stock,
@@ -81,19 +85,30 @@ class _SignalScreenState extends State<SignalScreen> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-            child: SignalEffective(
-              data: data,
-              onChanged: changePeriod,
-              defaulPeriod: widget.defaulPeriod,
-            ),
+            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
+            child: SignalEffective(code: widget.code),
           ),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-            child: SignalTradingHistory(
-              listHis: listHis,
+             child: Row(
+              children: [
+                Text(
+                  "Lịch sử giao dịch",
+                  style: textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.w700),
+                )
+              ],
             ),
           ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: SignalTradingHistory(
+              onChanged: changePeriod,
+              listHis: listHis,
+              data: data,
+              defaulPeriod: widget.defaulPeriod,
+            ),
+          ),
+          const SizedBox(height: 16,)
         ],
       ),
     );

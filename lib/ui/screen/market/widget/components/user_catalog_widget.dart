@@ -209,11 +209,14 @@ class _UserCatalogWidgetState extends State<UserCatalogWidget> {
         ),
         const SizedBox(height: 8),
         Container(
-          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
+          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 8),
           child: Row(
+            mainAxisSize: MainAxisSize.max,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
+              const SizedBox(width: 8),
               Expanded(
-                flex: 30,
+                flex: 25,
                 child: Text(
                   "Mã CK",
                   style: textTheme.bodySmall?.copyWith(
@@ -221,7 +224,7 @@ class _UserCatalogWidgetState extends State<UserCatalogWidget> {
                 ),
               ),
               Expanded(
-                flex: 30,
+                flex: 25,
                 child: GestureDetector(
                   onTap: () {
                     setState(() {
@@ -270,6 +273,7 @@ class _UserCatalogWidgetState extends State<UserCatalogWidget> {
                     });
                   },
                   child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
                         S.of(context).price,
@@ -282,8 +286,9 @@ class _UserCatalogWidgetState extends State<UserCatalogWidget> {
                   ),
                 ),
               ),
+              const SizedBox(width: 8),
               Expanded(
-                flex: 15,
+                flex: 25,
                 child: GestureDetector(
                   onTap: () {
                     setState(() {
@@ -295,58 +300,53 @@ class _UserCatalogWidgetState extends State<UserCatalogWidget> {
                     style: textTheme.bodySmall?.copyWith(
                         fontWeight: FontWeight.w600,
                         color: AppColors.neutral_04),
+                    textAlign: TextAlign.center,
                   ),
                 ),
               ),
-              Container(
-                color: Colors.transparent,
-                child: Expanded(
-                  flex: 30,
-                  child: GestureDetector(
-                    onTap: () {
-                      setState(
-                        () {
-                          upColumn = !upColumn;
-                          listStocks.then(
-                            (stockList) {
-                              if (stockList != null) {
-                                if (upColumn) {
-                                  stockList.sort((a, b) =>
-                                      (a.stockData.lot.value ?? 0)
-                                          .toDouble()
-                                          .compareTo(
-                                              (b.stockData.lot.value ?? 0)
-                                                  .toDouble()));
-                                } else {
-                                  stockList.sort((a, b) =>
-                                      (b.stockData.lot.value ?? 0)
-                                          .toDouble()
-                                          .compareTo(
-                                              (a.stockData.lot.value ?? 0)
-                                                  .toDouble()));
-                                }
+              Expanded(
+                flex: 25,
+                child: GestureDetector(
+                  onTap: () {
+                    setState(
+                      () {
+                        upColumn = !upColumn;
+                        listStocks.then(
+                          (stockList) {
+                            if (stockList != null) {
+                              if (upColumn) {
+                                stockList.sort((a, b) =>
+                                    (a.stockData.lot.value ?? 0)
+                                        .toDouble()
+                                        .compareTo((b.stockData.lot.value ?? 0)
+                                            .toDouble()));
                               } else {
-                                print('error');
+                                stockList.sort((a, b) =>
+                                    (b.stockData.lot.value ?? 0)
+                                        .toDouble()
+                                        .compareTo((a.stockData.lot.value ?? 0)
+                                            .toDouble()));
                               }
-                            },
-                          );
-                        },
-                      );
-                    },
-                    child: Align(
-                      child: Row(
-                        children: [
-                          Text(
-                            S.of(context).volumn,
-                            style: textTheme.bodySmall?.copyWith(
-                                fontWeight: FontWeight.w600,
-                                color: AppColors.neutral_04),
-                            textAlign: TextAlign.center,
-                          ),
-                          sortColumn
-                        ],
+                            } else {
+                              print('error');
+                            }
+                          },
+                        );
+                      },
+                    );
+                  },
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Text(
+                        S.of(context).volumn,
+                        style: textTheme.bodySmall?.copyWith(
+                            fontWeight: FontWeight.w600,
+                            color: AppColors.neutral_04),
+                        textAlign: TextAlign.center,
                       ),
-                    ),
+                      sortColumn
+                    ],
                   ),
                 ),
               )

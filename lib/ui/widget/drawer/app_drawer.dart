@@ -21,6 +21,7 @@ import 'package:dtnd/ui/widget/drawer/logic/function_data.dart';
 import 'package:dtnd/ui/widget/drawer/logic/icon_asset.dart';
 import 'package:dtnd/utilities/account_util.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import 'component/drawer_avatar.dart';
 
@@ -246,11 +247,12 @@ class _AppDrawerState extends State<AppDrawer> {
                 return SingleColorTextButton(
                   onTap: () {
                     back();
-                    Navigator.of(context).push<bool>(MaterialPageRoute(
-                      builder: (context) => const LoginScreen(
-                        toSignup: true,
-                      ),
-                    ));
+                    GoRouter.of(context).push('/SignUp');
+                    // Navigator.of(context).push<bool>(MaterialPageRoute(
+                    //   builder: (context) => const LoginScreen(
+                    //     toSignup: true,
+                    //   ),
+                    // ));
                   },
                   text: S.of(context).sign_up,
                   color: AppColors.neutral_05,

@@ -12,6 +12,7 @@ import 'package:dtnd/=models=/response/index_detail.dart';
 import 'package:dtnd/=models=/response/liquidity_model.dart';
 import 'package:dtnd/=models=/response/news_model.dart';
 import 'package:dtnd/=models=/response/security_basic_info_model.dart';
+import 'package:dtnd/=models=/response/signal_month_model.dart';
 import 'package:dtnd/=models=/response/stock.dart';
 import 'package:dtnd/=models=/response/stock_data.dart';
 import 'package:dtnd/=models=/response/stock_financial_index_model.dart';
@@ -104,6 +105,8 @@ abstract class INetworkService {
 
   Future<List<TopSignalHistoryModel>?> getTopSignalHistory(
       Map<String, String> body);
+
+  Future<List<SignalMonthModel>?> getSignalMonth(Map<String, String> body);
 
   Future<List<StockDataResponse>> getListStockData(String listStock);
 

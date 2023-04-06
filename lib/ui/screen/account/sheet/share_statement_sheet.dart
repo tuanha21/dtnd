@@ -23,6 +23,7 @@ class _ShareStatementSheetState extends State<ShareStatementSheet> {
   late DateTime toDay;
   late DateTime firstDay;
   late DateTime lastDay;
+
   @override
   void initState() {
     fromDay = TimeUtilities.getPreviousDateTime(TimeUtilities.month(1));
@@ -45,7 +46,6 @@ class _ShareStatementSheetState extends State<ShareStatementSheet> {
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
     return SafeArea(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 20),
@@ -57,7 +57,7 @@ class _ShareStatementSheetState extends State<ShareStatementSheet> {
               backData: null,
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8),
+              padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -72,6 +72,7 @@ class _ShareStatementSheetState extends State<ShareStatementSheet> {
                       getData();
                     },
                   ),
+                  Text("-"),
                   DayInput(
                     initialDay: toDay,
                     firstDay: firstDay,

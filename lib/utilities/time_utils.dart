@@ -30,6 +30,8 @@ class TimeUtilities {
   static final DateFormat commonTimeFormat = DateFormat("dd/MM/yyyy");
   static final DateFormat dateMonthTimeFormat = DateFormat("dd/MM");
   static final DateFormat onlyHourFormat = DateFormat("HH:mm");
+  static final DateFormat monthYearTimeFormat = DateFormat("MM/yy");
+
   static bool isLeapYear(DateTime dateTime) {
     if (dateTime.year % 4 == 0) {
       return true;

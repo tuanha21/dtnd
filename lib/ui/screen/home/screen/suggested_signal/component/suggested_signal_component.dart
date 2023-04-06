@@ -128,7 +128,7 @@ class _SuggestedSignalComponentState extends State<SuggestedSignalComponent> {
                       ],
                     ),
                     Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
                         Text(
                           'T',
@@ -141,7 +141,7 @@ class _SuggestedSignalComponentState extends State<SuggestedSignalComponent> {
                         ),
                         const SizedBox(height: 4),
                         Text(
-                          NumUtils.formatInteger(widget.data.t),
+                          widget.data.t.toString(),
                           style: textTheme.titleSmall,
                           textAlign: TextAlign.center,
                         ),

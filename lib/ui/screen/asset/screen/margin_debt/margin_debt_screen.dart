@@ -7,6 +7,7 @@ import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 
 import '../../../../../=models=/response/stock_model.dart';
 import '../../../../../config/service/app_services.dart';
+import '../../../../../utilities/num_utils.dart';
 import '../../../../../utilities/time_utils.dart';
 import '../../../../theme/app_image.dart';
 import '../../../../theme/app_textstyle.dart';
@@ -40,7 +41,8 @@ class _MarginDebtScreenState extends State<MarginDebtScreen> {
     lastDay = toDay;
     super.initState();
     EasyLoading.show();
-    controller.getAllShareEarned().whenComplete(() => EasyLoading.dismiss());
+    controller.getAllShareEarned();
+    EasyLoading.dismiss();
   }
 
   Future<void> getData() async {
@@ -56,7 +58,7 @@ class _MarginDebtScreenState extends State<MarginDebtScreen> {
   void dispose() {
     super.dispose();
     controller.sumCloan.value = 0;
-    controller.sumCloanOut.value = 0;
+    controller.sumCFEE.value = 0;
     controller.sumCloanIn.value = 0;
   }
 
@@ -101,7 +103,6 @@ class _MarginDebtScreenState extends State<MarginDebtScreen> {
                 children: [
                   Expanded(
                     child: DayInput(
-                      background: AppColors.light_bg,
                       initialDay: fromDay,
                       firstDay: firstDay,
                       lastDay: lastDay,
@@ -118,7 +119,6 @@ class _MarginDebtScreenState extends State<MarginDebtScreen> {
                   const SizedBox(width: 8),
                   Expanded(
                     child: DayInput(
-                      background: AppColors.light_bg,
                       initialDay: toDay,
                       firstDay: firstDay,
                       lastDay: lastDay,
@@ -147,32 +147,14 @@ class _MarginDebtScreenState extends State<MarginDebtScreen> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          'Tổng nợ',
-                          style: AppTextStyle.labelMedium_12.copyWith(
+                          'Tổng nợ còn lại',
+                          style: AppTextStyle.bodyMedium_14.copyWith(
                             color: AppColors.neutral_03,
                           ),
                         ),
                         Text(
-                          controller.sumCloanIn.value.toString(),
-                          style: AppTextStyle.bodyLarge_16.copyWith(
-                            color: AppColors.semantic_03,
-                          ),
-                        ),
-                      ],
-                    ),
-                    const Divider(height: 33),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Tổng nợ đã trả',
-                          style: AppTextStyle.bottomNavLabel.copyWith(
-                            color: AppColors.neutral_03,
-                          ),
-                        ),
-                        Text(
-                          controller.sumCloanOut.value.toString(),
-                          style: AppTextStyle.labelMedium_12.copyWith(
+                          NumUtils.formatDouble(controller.sumCloan.value),
+                          style: AppTextStyle.bodyMedium_14.copyWith(
                             color: AppColors.neutral_01,
                           ),
                         ),
@@ -185,14 +167,14 @@ class _MarginDebtScreenState extends State<MarginDebtScreen> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          'Tổng nợ còn lại',
-                          style: AppTextStyle.bottomNavLabel.copyWith(
+                          'Tổng lãi',
+                          style: AppTextStyle.bodyMedium_14.copyWith(
                             color: AppColors.neutral_03,
                           ),
                         ),
                         Text(
-                          controller.sumCloan.value.toString(),
-                          style: AppTextStyle.labelMedium_12.copyWith(
+                          NumUtils.formatDouble(controller.sumCFEE.value),
+                          style: AppTextStyle.bodyMedium_14.copyWith(
                             color: AppColors.neutral_01,
                           ),
                         ),
@@ -207,8 +189,10 @@ class _MarginDebtScreenState extends State<MarginDebtScreen> {
             ),
             Obx(
               () {
-                if(controller.listData.value?.isEmpty == true){
-                  return const EmptyListWidget();
+                if (controller.listData.value?.isEmpty == true) {
+                  return const Padding(
+                      padding: EdgeInsets.only(top: 100),
+                      child: EmptyListWidget());
                 }
                 return Container(
                   margin: const EdgeInsets.symmetric(horizontal: 16),
@@ -240,15 +224,14 @@ class _MarginDebtScreenState extends State<MarginDebtScreen> {
             onTap: () async {
               final StockModel? aaa = await controller.dataCenterService
                   .getStockModelFromStockCode("AAA");
-
               if (mounted) {}
-              // return StockOrderISheet(widget.stockModel).showSheet(context, );
               StockOrderISheet(null).show(
-                  context,
-                  StockOrderSheet(
-                    stockModel: aaa,
-                    orderData: null,
-                  ));
+                context,
+                StockOrderSheet(
+                  stockModel: aaa,
+                  orderData: null,
+                ),
+              );
             },
             child: Ink(
               padding: const EdgeInsets.all(8),

@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:dtnd/=models=/index.dart';
 import 'package:dtnd/=models=/response/business_profile_model.dart';
 import 'package:dtnd/=models=/response/deep_model.dart';
@@ -7,16 +5,13 @@ import 'package:dtnd/=models=/response/indContrib.dart';
 import 'package:dtnd/=models=/response/inday_matched_order.dart';
 import 'package:dtnd/=models=/response/index_detail.dart';
 import 'package:dtnd/=models=/response/index_model.dart';
-import 'package:dtnd/=models=/response/suggested_signal_model.dart';
-import 'package:dtnd/=models=/response/top_signal_detail_model.dart';
-import 'package:dtnd/=models=/response/top_signal_history_model.dart';
-import 'package:dtnd/=models=/response/top_signal_stock_model.dart';
 import 'package:dtnd/=models=/response/introduct_company.dart';
 import 'package:dtnd/=models=/response/liquidity_model.dart';
 import 'package:dtnd/=models=/response/news_detail.dart';
 import 'package:dtnd/=models=/response/news_model.dart';
 import 'package:dtnd/=models=/response/sec_event.dart';
 import 'package:dtnd/=models=/response/security_basic_info_model.dart';
+import 'package:dtnd/=models=/response/signal_month_model.dart';
 import 'package:dtnd/=models=/response/stock.dart';
 import 'package:dtnd/=models=/response/stock_data.dart';
 import 'package:dtnd/=models=/response/stock_financial_index_model.dart';
@@ -26,7 +21,11 @@ import 'package:dtnd/=models=/response/stock_ranking_financial_index_model.dart'
 import 'package:dtnd/=models=/response/stock_trading_history.dart';
 import 'package:dtnd/=models=/response/stock_vol.dart';
 import 'package:dtnd/=models=/response/subsidiaries_model.dart';
+import 'package:dtnd/=models=/response/suggested_signal_model.dart';
 import 'package:dtnd/=models=/response/top_influence_model.dart';
+import 'package:dtnd/=models=/response/top_signal_detail_model.dart';
+import 'package:dtnd/=models=/response/top_signal_history_model.dart';
+import 'package:dtnd/=models=/response/top_signal_stock_model.dart';
 import 'package:dtnd/=models=/response/trash_model.dart';
 import 'package:dtnd/=models=/ui_model/field_tree_element_model.dart';
 import 'package:dtnd/data/i_data_center_service.dart';
@@ -41,8 +40,8 @@ import 'package:get/get.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 import '../../=models=/response/index_board.dart';
-import '../../=models=/response/stock_industry.dart';
 import '../../=models=/response/stock_derivative_model.dart';
+import '../../=models=/response/stock_industry.dart';
 
 const List<String> defaultListStock = [
   'ACB',
@@ -528,6 +527,15 @@ class DataCenterService
       "params": "$stockCode,$type,$day",
     };
     return networkService.getTopSignalHistory(body);
+  }
+
+  @override
+  Future<List<SignalMonthModel>?> getSignalMonth(String stockCode) async {
+    final Map<String, String> body = {
+      "cmd": "signal_month",
+      "params": "$stockCode,MIN",
+    };
+    return networkService.getSignalMonth(body);
   }
 
   @override

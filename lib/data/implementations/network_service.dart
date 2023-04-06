@@ -20,6 +20,7 @@ import 'package:dtnd/=models=/response/liquidity_model.dart';
 import 'package:dtnd/=models=/response/news_model.dart';
 import 'package:dtnd/=models=/response/security_basic_info_model.dart';
 import 'package:dtnd/=models=/response/share_holder.dart';
+import 'package:dtnd/=models=/response/signal_month_model.dart';
 import 'package:dtnd/=models=/response/stock.dart';
 import 'package:dtnd/=models=/response/stock_board.dart';
 import 'package:dtnd/=models=/response/stock_data.dart';
@@ -1386,10 +1387,7 @@ class NetworkService implements INetworkService {
     try {
       // "VN30F2303","VN30F2304","VN30F2306","VN30F2309"
       final http.Response _res = await client.get(url_board(
-          "getpsalldatalsnapshot/" +
-              (listString.length > 0
-                  ? listString.join(',')
-                  : "VN30F2303,VN30F2304,VN30F2306,VN30F2309")));
+          "getpsalldatalsnapshot/${listString.isNotEmpty ? listString.join(',') : "VN30F2303,VN30F2304,VN30F2306,VN30F2309"}"));
 
       final List<dynamic> responseBody = decode(_res.bodyBytes);
       if (responseBody.isEmpty) throw Exception();
@@ -1431,6 +1429,7 @@ class NetworkService implements INetworkService {
     }
     var res = decode(response.bodyBytes);
     logger.v(res);
+    // đây để lưu data
 
     if (res["rc"] != 1) {
       return false;
@@ -1592,5 +1591,28 @@ class NetworkService implements INetworkService {
       result.add(CoreResponseModel.fromJson<T>(element)!);
     }
     return result;
+  }
+
+  @override
+  Future<List<SignalMonthModel>?> getSignalMonth(
+      Map<String, String> body) async {
+    try {
+      final http.Response response =
+          await client.get(url_info_sbsi("proxy", body));
+      final List<dynamic> responseBody = decode(response.bodyBytes)["data"];
+      List<SignalMonthModel> data = [];
+      for (var element in responseBody) {
+        try {
+          data.add(SignalMonthModel.fromJson(element));
+        } catch (e) {
+          logger.e(e);
+          continue;
+        }
+      }
+      return data;
+    } catch (e) {
+      logger.e(e);
+      rethrow;
+    }
   }
 }
