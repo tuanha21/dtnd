@@ -189,7 +189,7 @@ class _MarginDebtScreenState extends State<MarginDebtScreen> {
             ),
             Obx(
               () {
-                if (controller.listData.value?.isEmpty == true) {
+                if (controller.listData.value?.isEmpty ?? true) {
                   return const Padding(
                       padding: EdgeInsets.only(top: 100),
                       child: EmptyListWidget());

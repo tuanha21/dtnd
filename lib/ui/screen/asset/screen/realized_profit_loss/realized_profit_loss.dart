@@ -252,8 +252,8 @@ class _RealizedProfitLossState extends State<RealizedProfitLoss> {
             ),
             Obx(
               () {
-                if (controller.shareEarnedModel.value?.listDetail.isEmpty ==
-                    true) {
+                if (controller.shareEarnedModel.value?.listDetail.isEmpty ?? true
+                     ) {
                   return const Padding(
                       padding: EdgeInsets.only(top: 100),
                       child: EmptyListWidget());

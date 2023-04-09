@@ -1,19 +1,18 @@
+import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:dtnd/data/i_data_center_service.dart';
 import 'package:dtnd/data/implementations/data_center_service.dart';
-
+import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/utilities/charts_util.dart';
 import 'package:dtnd/utilities/num_utils.dart';
-import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:flutter/material.dart';
-import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:intl/intl.dart';
 
 import '../../../../../../=models=/response/signal_month_model.dart';
 
 class ForeignWidgetSignal extends StatefulWidget {
-  ForeignWidgetSignal({Key? key, required this.code}) : super(key: key);
+  const ForeignWidgetSignal({Key? key, required this.code}) : super(key: key);
 
-  String code;
+  final String code;
 
   @override
   State<ForeignWidgetSignal> createState() => _ForeignWidgetState();
@@ -50,7 +49,8 @@ class _ForeignWidgetState extends State<ForeignWidgetSignal> {
                       id: 'Sales',
                       colorFn: (_, __) =>
                           charts.MaterialPalette.blue.shadeDefault,
-                      domainFn: (SignalMonthModel model, _) => DateFormat('MM/yyyy').format(model.cMONTH),
+                      domainFn: (SignalMonthModel model, _) =>
+                          DateFormat('MM/yyyy').format(model.cMONTH),
                       measureFn: (SignalMonthModel model, _) => model.cPC,
                       fillColorFn: (SignalMonthModel model, _) =>
                           charts.ColorUtil.fromDartColor((model.cPC ?? 0) > 0
@@ -73,13 +73,11 @@ class _ForeignWidgetState extends State<ForeignWidgetSignal> {
                   secondaryMeasureAxis: charts.NumericAxisSpec(
                     showAxisLine: true,
                     tickFormatterSpec: charts.BasicNumericTickFormatterSpec(
-                        (value) => '${NumUtils.formatInteger(
-                            (value ?? 0))}%'),
-                    tickProviderSpec:
-                        const charts.BasicNumericTickProviderSpec(
-                            dataIsInWholeNumbers: false,
-                            desiredTickCount: 4,
-                            zeroBound: false),
+                        (value) => '${NumUtils.formatInteger((value ?? 0))}%'),
+                    tickProviderSpec: const charts.BasicNumericTickProviderSpec(
+                        dataIsInWholeNumbers: false,
+                        desiredTickCount: 4,
+                        zeroBound: true),
                     renderSpec: const charts.GridlineRendererSpec(
                         axisLineStyle: charts.LineStyleSpec(
                           dashPattern: [4],
@@ -113,8 +111,7 @@ class _ForeignWidgetState extends State<ForeignWidgetSignal> {
                       type: charts.SelectionModelType.info,
                       updatedListener: (charts.SelectionModel model) {
                         if (model.hasDatumSelection) {
-                          final selectedDatum =
-                              model.selectedDatum.first.datum;
+                          final selectedDatum = model.selectedDatum.first.datum;
                           final datas = <String>[
                             "Hiệu quả : ${selectedDatum.cPC}%"
                           ];

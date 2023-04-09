@@ -48,6 +48,7 @@ import 'package:dtnd/=models=/ui_model/field_tree_element_model.dart';
 import 'package:dtnd/config/service/environment.dart';
 import 'package:dtnd/data/i_network_service.dart';
 import 'package:dtnd/data/i_user_service.dart';
+import 'package:dtnd/data/implementations/local_storage_service.dart';
 import 'package:dtnd/data/implementations/user_service.dart';
 import 'package:dtnd/utilities/logger.dart';
 import 'package:flutter/services.dart';
@@ -62,6 +63,7 @@ import '../../=models=/response/indContrib.dart';
 import '../../=models=/response/sec_event.dart';
 import '../../=models=/response/sec_trading.dart';
 import '../../=models=/response/stock_industry.dart';
+import '../i_local_storage_service.dart';
 
 const List<String> sessionExpiredMsg = [
   "FOException.InvalidSessionException",
@@ -1429,7 +1431,6 @@ class NetworkService implements INetworkService {
     }
     var res = decode(response.bodyBytes);
     logger.v(res);
-    // đây để lưu data
 
     if (res["rc"] != 1) {
       return false;
@@ -1440,6 +1441,7 @@ class NetworkService implements INetworkService {
 
   @override
   Future<SignUpSuccessDataModel?> createAccount(String body) async {
+    final ILocalStorageService localStorageService = LocalStorageService();
     var response =
         await client.post(url_core1("openAccount/create"), body: body);
     if (response.statusCode != 200) {
@@ -1450,9 +1452,16 @@ class NetworkService implements INetworkService {
 
     if (res["iRs"] == 1) {
       final data = res["data"];
+      String? accountCode;
       if (data is List && data.length == 1) {
+        accountCode = SignUpSuccessDataModel.fromJson(data.first).cACCOUNTCODE;
+        localStorageService.saveInfoRegistered(
+            accountCode?.substring(0, accountCode.length - 1) ?? '');
         return SignUpSuccessDataModel.fromJson(data.first);
       } else if (data is Map<String, dynamic>) {
+        accountCode = SignUpSuccessDataModel.fromJson(data).cACCOUNTCODE;
+        localStorageService.saveInfoRegistered(
+            accountCode?.substring(0, accountCode.length - 1) ?? '');
         return SignUpSuccessDataModel.fromJson(data);
       } else {
         throw "Lỗi hệ thống. Vui lòng thử lại sau!";

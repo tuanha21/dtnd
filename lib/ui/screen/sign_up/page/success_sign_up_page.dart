@@ -1,17 +1,17 @@
+import 'package:dtnd/data/implementations/local_storage_service.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../../data/i_user_service.dart';
-import '../../../../data/implementations/user_service.dart';
+import '../../../../data/i_local_storage_service.dart';
 
 class SuccessSignUpPage extends StatelessWidget {
   const SuccessSignUpPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final IUserService userService = UserService();
+    final ILocalStorageService localStorageService = LocalStorageService();
     final headlineSmall = Theme.of(context).textTheme.headlineSmall;
     return Scaffold(
       body: SafeArea(
@@ -35,7 +35,7 @@ class SuccessSignUpPage extends StatelessWidget {
               ),
               const SizedBox(height: 24),
               Text(
-                'Số tài khoản : ${userService.userInfo.value?.cardId }',
+                'Số tài khoản : ${localStorageService.sharedPreferences.get('infoRegistered')}',
                 style: headlineSmall?.copyWith(fontWeight: FontWeight.w600,fontSize: 24),
                 textAlign: TextAlign.center,
               ),

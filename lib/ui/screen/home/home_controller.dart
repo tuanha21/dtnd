@@ -181,8 +181,9 @@ class HomeController {
       case 1:
         if (up) {
           hotToday.value = await getPriceIncrease();
+        } else {
+          hotToday.value = await getPriceDecrease();
         }
-        hotToday.value = await getPriceDecrease();
         break;
       case 2:
         hotToday.value = await getTopVolumn();
