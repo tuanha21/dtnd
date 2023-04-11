@@ -146,8 +146,14 @@ class UserService implements IUserService {
         data: RequestDataModel.cursorType(
           cmd: "ListAccount",
         ));
-    final listAccount = await networkService
-        .requestTraditionalApiResList<IAccountModel>(requestModel);
+    final listAccount =
+        await networkService.requestTraditionalApiResList<IAccountModel>(
+      requestModel,
+      hasError: (p0) {
+        logger.v(p0);
+        return false;
+      },
+    );
     if (listAccount?.isEmpty ?? true) {
       return [];
     } else {
@@ -163,8 +169,14 @@ class UserService implements IUserService {
               cmd: "Web.Portfolio.AccountStatus",
               p1: p1,
             ));
-        dynamic response = await networkService
-            .requestTraditionalApi<IAccountResponse>(requestModel);
+        dynamic response =
+            await networkService.requestTraditionalApi<IAccountResponse>(
+          requestModel,
+          modifyResponse: (res) {
+            res["accCode"] = listAccount.elementAt(i).accCode;
+            return res;
+          },
+        );
 
         listAccount.elementAt(i).updateDataFromJson(response!);
         requestModel = RequestModel(this,
@@ -187,10 +199,8 @@ class UserService implements IUserService {
 
         response =
             await getListUnexecutedRight(listAccount.elementAt(i).accCode);
-        if (listAccount.elementAt(i) is BaseMarginAccountModel &&
-            response != null) {
-          (listAccount.elementAt(i) as BaseMarginAccountModel)
-              .listUnexecutedRight = response;
+        if (response != null) {
+          listAccount.elementAt(i).listUnexecutedRight = response;
         }
       }
     }
@@ -214,7 +224,8 @@ class UserService implements IUserService {
         .requestTraditionalApiResList<AssetChartElementModel>(requestModel);
   }
 
-  Future<List<UnexecutedRightModel>?> getListUnexecutedRight(String account) {
+  Future<List<UnexecutedRightModel>?> getListUnexecutedRight(
+      String account) async {
     final requestModel = RequestModel(
       this,
       group: "B",
@@ -223,8 +234,14 @@ class UserService implements IUserService {
         p1: account,
       ),
     );
-    return networkService
-        .requestTraditionalApiResList<UnexecutedRightModel>(requestModel);
+    final res =
+        await networkService.requestTraditionalApiResList<UnexecutedRightModel>(
+      requestModel,
+      hasError: (p0) {
+        return p0["data"].first["DUMMY"] != null;
+      },
+    );
+    return res ?? [];
   }
 
   Future<UserInfo?> getUserInfo() async {

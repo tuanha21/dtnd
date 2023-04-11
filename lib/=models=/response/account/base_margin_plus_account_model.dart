@@ -4,7 +4,7 @@ import 'package:dtnd/=models=/response/account/unexecuted_right_model.dart';
 import 'asset_chart_element.dart';
 import 'portfolio_status_model.dart';
 
-class BaseMarginAccountModel implements IAccountModel {
+class BaseMarginPlusAccountModel implements IAccountModel {
   ///Account Info
   @override
   late final String accCode;
@@ -102,7 +102,7 @@ class BaseMarginAccountModel implements IAccountModel {
     return result;
   }
 
-  BaseMarginAccountModel.fromJson(Map<String, dynamic> json) {
+  BaseMarginPlusAccountModel.fromJson(Map<String, dynamic> json) {
     accCode = json['accCode'];
     accName = json['accName'];
     accType = json['accType'];

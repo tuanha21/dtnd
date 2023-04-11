@@ -71,7 +71,8 @@ abstract class INetworkService {
     RequestModel requestModel, {
     T? Function(Map<String, dynamic>)? onError,
     bool Function(Map<String, dynamic>)? hasError,
-    List<dynamic> Function(Map<String, dynamic>)? selectionData,
+    dynamic Function(Map<String, dynamic>)? selectionData,
+    Map<String, dynamic> Function(Map<String, dynamic>)? modifyResponse,
   });
 
   Future<List<T>?> requestTraditionalApiResList<T extends CoreResponseModel>(
@@ -79,6 +80,7 @@ abstract class INetworkService {
     List<T>? Function(Map<String, dynamic>)? onError,
     bool Function(Map<String, dynamic>)? hasError,
     List<dynamic> Function(Map<String, dynamic>)? selectionData,
+    Map<String, dynamic> Function(Map<String, dynamic>)? modifyResponse,
   });
 
   Future<List<Stock>> getListAllStock();
