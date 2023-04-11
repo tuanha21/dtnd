@@ -40,7 +40,7 @@ class DefaultFirebaseOptions {
       case TargetPlatform.linux:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for linux - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
+          'you can reconfigure this by running the FlutterFire CLI again..',
         );
       default:
         throw UnsupportedError(
@@ -63,7 +63,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '604885963745',
     projectId: 'dtnd-2c0d6',
     storageBucket: 'dtnd-2c0d6.appspot.com',
-    iosClientId: '604885963745-dq5g6c40ebf3723jo8gui8i9q6iukafr.apps.googleusercontent.com',
+    iosClientId:
+        '604885963745-dq5g6c40ebf3723jo8gui8i9q6iukafr.apps.googleusercontent.com',
     iosBundleId: 'com.example.dtnd',
   );
 }
