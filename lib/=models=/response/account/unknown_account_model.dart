@@ -1,6 +1,7 @@
 import 'package:dtnd/=models=/response/account/asset_chart_element.dart';
 import 'package:dtnd/=models=/response/account/i_account.dart';
 import 'package:dtnd/=models=/response/account/portfolio_status_model.dart';
+import 'package:dtnd/=models=/response/account/unexecuted_right_model.dart';
 
 class UnknownAccountModel implements IAccountModel {
   @override
@@ -18,4 +19,7 @@ class UnknownAccountModel implements IAccountModel {
 
   @override
   void updateDataFromJson(IAccountResponse data) {}
+
+  @override
+  List<UnexecutedRightModel>? listUnexecutedRight;
 }

@@ -230,6 +230,7 @@ class NetworkService implements INetworkService {
     T? Function(Map<String, dynamic>)? onError,
     bool Function(Map<String, dynamic>)? hasError,
     dynamic Function(Map<String, dynamic>)? selectionData,
+    Map<String, dynamic> Function(Map<String, dynamic>)? modifyResponse,
   }) async {
     dynamic response =
         await client.post(url_core_endpoint, body: requestModel.toString());
@@ -247,6 +248,9 @@ class NetworkService implements INetworkService {
     } else {
       response = response["data"];
     }
+    if (modifyResponse != null) {
+      response = modifyResponse.call(response);
+    }
     return CoreResponseModel.fromJson<T>(response);
   }
 
@@ -256,6 +260,7 @@ class NetworkService implements INetworkService {
     List<T>? Function(Map<String, dynamic>)? onError,
     bool Function(Map<String, dynamic>)? hasError,
     List<dynamic> Function(Map<String, dynamic>)? selectionData,
+    Map<String, dynamic> Function(Map<String, dynamic>)? modifyResponse,
   }) async {
     dynamic response =
         await client.post(url_core_endpoint, body: requestModel.toString());
