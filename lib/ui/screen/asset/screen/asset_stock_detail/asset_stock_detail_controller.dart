@@ -34,7 +34,7 @@ class AssetStockDetailController {
       group: "B",
       data: RequestDataModel.cursorType(
           cmd: "GetAllShareEarned",
-          p1: "${userService.token.value!.user}9",
+          p1: "${userService.token.value!.user}6",
           p2: stockCode.value,
           p3: fromDay,
           p4: toDay,
