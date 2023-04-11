@@ -7,7 +7,6 @@ import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_textstyle.dart';
 import 'package:dtnd/ui/widget/login_scaffold.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../generated/l10n.dart';
@@ -87,7 +86,7 @@ class _LoginScreenState extends State<LoginScreen> {
             style: Theme.of(context).textTheme.titleSmall,
           ),
           TextSpan(
-            text: "DTND",
+            text: "IFIS",
             style: Theme.of(context).textTheme.titleSmall!.copyWith(
                   color: AppColors.primary_01,
                   fontWeight: FontWeight.w700,

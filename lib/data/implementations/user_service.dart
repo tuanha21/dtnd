@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:dtnd/=models=/local/va_portfolio_model.dart';
 import 'package:dtnd/=models=/request/request_model.dart';
 import 'package:dtnd/=models=/response/account/asset_chart_element.dart';
 import 'package:dtnd/=models=/response/account/base_margin_account_model.dart';
@@ -10,7 +11,6 @@ import 'package:dtnd/=models=/response/account_info_model.dart';
 import 'package:dtnd/=models=/response/order_model/base_order_model.dart';
 import 'package:dtnd/=models=/response/total_asset_model.dart';
 import 'package:dtnd/=models=/response/user_token.dart';
-import 'package:dtnd/=models=/local/va_portfolio_model.dart';
 import 'package:dtnd/=models=/side.dart';
 import 'package:dtnd/=models=/sign_up_success_data_model.dart';
 import 'package:dtnd/=models=/ui_model/exception.dart';
@@ -26,6 +26,7 @@ import 'package:get/get.dart';
 class UserService implements IUserService {
   final ILocalStorageService localStorageService = LocalStorageService();
   final INetworkService networkService = NetworkService();
+
   UserService._internal();
 
   static final UserService _instance = UserService._internal();
@@ -152,11 +153,15 @@ class UserService implements IUserService {
     } else {
       listAccountModel.value = listAccount;
       for (var i = 0; i < listAccount!.length; i++) {
+        String p1 = listAccount.elementAt(i).accCode.replaceRange(
+            listAccount.elementAt(i).accCode.length - 1,
+            listAccount.elementAt(i).accCode.length,
+            '9');
         requestModel = RequestModel(this,
             group: "Q",
             data: RequestDataModel.stringType(
               cmd: "Web.Portfolio.AccountStatus",
-              p1: listAccount.elementAt(i).accCode,
+              p1: p1,
             ));
         dynamic response = await networkService
             .requestTraditionalApi<IAccountResponse>(requestModel);
@@ -166,8 +171,9 @@ class UserService implements IUserService {
             group: "Q",
             data: RequestDataModel.stringType(
               cmd: "Web.Portfolio.PortfolioStatus",
-              p1: listAccount.elementAt(i).accCode,
+              p1: p1,
             ));
+        print("tiennh" + requestModel.toString());
         response = await networkService
             .requestTraditionalApiResList<PorfolioStock>(requestModel);
         if (response != null) {

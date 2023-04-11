@@ -62,6 +62,11 @@ class AppTextStyle {
     fontSize: 18,
     fontWeight: FontWeight.w600,
   );
+  static final titleLarge_18 = _defaulTextStyle.copyWith(
+    fontSize: 18,
+    fontWeight: FontWeight.w700,
+    height: 1.5
+  );
   static final labelMedium_12 = _defaulTextStyle.copyWith(
     fontSize: 12,
     fontWeight: FontWeight.w500,

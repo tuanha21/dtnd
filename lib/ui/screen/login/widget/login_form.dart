@@ -342,6 +342,7 @@ class _LoginFormState extends State<LoginForm> {
                 action: () {},
                 textButtonAction: 'Quên mật khẩu',
                 textButtonExit: 'Thử lại',
+                type: TypeAlert.notification,
               );
             },
           );

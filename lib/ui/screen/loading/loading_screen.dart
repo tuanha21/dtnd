@@ -18,6 +18,7 @@ class _LoadingScreenState extends State<LoadingScreen>
   late final Stream<double> stream;
   late final AnimationController animationController;
   late final Animation<double> animation;
+
   @override
   void initState() {
     animationController = AnimationController(
@@ -26,17 +27,21 @@ class _LoadingScreenState extends State<LoadingScreen>
         CurvedAnimation(parent: animationController, curve: Curves.easeInCubic);
     super.initState();
     stream = homeController.initProcess;
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      homeController.init();
-    });
+    WidgetsBinding.instance.addPostFrameCallback(
+      (timeStamp) {
+        homeController.init();
+      },
+    );
   }
 
   void go(BuildContext savedContext) {
-    const Duration(milliseconds: 500).delay(() {
-      if (mounted) {
-        savedContext.goNamed("home");
-      }
-    });
+    const Duration(milliseconds: 500).delay(
+      () {
+        if (mounted) {
+          savedContext.goNamed("home");
+        }
+      },
+    );
   }
 
   @override
@@ -58,81 +63,86 @@ class _LoadingScreenState extends State<LoadingScreen>
         decoration: const BoxDecoration(
           image: DecorationImage(
             image: AssetImage(AppImages.loading_light_bg),
-            fit: BoxFit.cover,
+            fit: BoxFit.contain,
           ),
         ),
         child: Stack(
           alignment: AlignmentDirectional.center,
           children: [
             Positioned(
-                top: size.height / 5,
-                child: SizedBox(
-                    height: 245,
-                    child: Image.asset(
-                      AppImages.loading_light_logo,
-                      fit: BoxFit.fitHeight,
-                    ))),
+              top: size.height / 2.7,
+              child: SizedBox(
+                height: 150,
+                child: Image.asset(
+                  AppImages.loading_light_logo,
+                  fit: BoxFit.contain,
+                ),
+              ),
+            ),
+            // Positioned(
+            //     bottom: size.height * 0.1,
+            //     child: SizedBox(
+            //         width: 260,
+            //         child: Image.asset(
+            //           AppImages.loading_icon,
+            //           fit: BoxFit.fitWidth,
+            //         ))),
             Positioned(
-                bottom: size.height * 0.1,
-                child: SizedBox(
-                    width: 260,
-                    child: Image.asset(
-                      AppImages.loading_icon,
-                      fit: BoxFit.fitWidth,
-                    ))),
-            Positioned(
-                bottom: size.height * 0.12,
-                child: Container(
-                  width: size.width / 2,
-                  height: 8,
-                  decoration: const BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(20)),
-                    color: AppColors.neutral_05,
-                  ),
-                  child: StreamBuilder<double>(
-                      initialData: 0,
-                      stream: stream,
-                      builder: (_, snapshot) {
-                        if (snapshot.hasData) {
-                          if (snapshot.data! >= 1) {
-                            go(context);
-                          }
+              bottom: size.height * 0.4,
+              child: Container(
+                width: size.width / 2,
+                height: 8,
+                decoration: const BoxDecoration(
+                  borderRadius: BorderRadius.all(Radius.circular(20)),
+                  color: AppColors.neutral_05,
+                ),
+                child: StreamBuilder<double>(
+                  initialData: 0,
+                  stream: stream,
+                  builder: (_, snapshot) {
+                    if (snapshot.hasData) {
+                      if (snapshot.data! >= 1) {
+                        go(context);
+                      }
 
-                          return Row(
-                            children: [
-                              AnimatedContainer(
-                                width: snapshot.data! * (size.width / 2),
-                                height: 8,
-                                decoration: const BoxDecoration(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(20)),
-                                  color: AppColors.semantic_02,
-                                ),
-                                duration: const Duration(milliseconds: 200),
-                              ),
-                            ],
-                          );
-                        } else {
-                          return Container(
-                            width: 1,
+                      return Row(
+                        children: [
+                          AnimatedContainer(
+                            width: snapshot.data! * (size.width / 2),
                             height: 8,
                             decoration: const BoxDecoration(
                               borderRadius:
                                   BorderRadius.all(Radius.circular(20)),
-                              color: AppColors.semantic_02,
+                              color: AppColors.text_blue,
                             ),
-                          );
-                        }
-                      }),
-                )),
+                            duration: const Duration(milliseconds: 200),
+                          ),
+                        ],
+                      );
+                    } else {
+                      return Container(
+                        width: 1,
+                        height: 8,
+                        decoration: const BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(20)),
+                          color: AppColors.text_blue,
+                        ),
+                      );
+                    }
+                  },
+                ),
+              ),
+            ),
             Positioned(
-                bottom: size.height * 0.07,
-                child: SizedBox(
-                    height: 16,
-                    child: Image.asset(
-                      AppImages.loading_copyright,
-                      fit: BoxFit.fitHeight,
-                    ))),
+              bottom: size.height * 0.07,
+              child: SizedBox(
+                height: 16,
+                child: Image.asset(
+                  AppImages.loading_copyright,
+                  fit: BoxFit.fitHeight,
+                ),
+              ),
+            ),
           ],
         ),
       ),

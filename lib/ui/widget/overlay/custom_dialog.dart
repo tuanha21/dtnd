@@ -5,12 +5,15 @@ import '../../theme/app_color.dart';
 import '../../theme/app_image.dart';
 import '../../theme/app_textstyle.dart';
 
+enum TypeAlert { notification, delete, confirm, warning }
+
 class CustomDialog extends StatelessWidget {
   const CustomDialog(
       {super.key,
       required this.title,
       required this.content,
       required this.action,
+      required this.type,
       this.textButtonExit,
       this.textButtonAction});
 
@@ -19,6 +22,7 @@ class CustomDialog extends StatelessWidget {
   final String? textButtonExit;
   final String? textButtonAction;
   final VoidCallback action;
+  final TypeAlert type;
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +61,7 @@ class CustomDialog extends StatelessWidget {
                                 child: Column(
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
-                                    const SizedBox(height: 24),
+                                    const SizedBox(height: 30),
                                     Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
@@ -161,17 +165,32 @@ class CustomDialog extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Container(
-                    padding: const EdgeInsets.all(15),
                     decoration: const BoxDecoration(
-                      color: AppColors.primary_03,
+                      color: Colors.transparent,
                       borderRadius: BorderRadius.all(Radius.circular(12)),
                     ),
-                    child: SvgPicture.asset(AppImages.icon_alert)),
+                    margin: const EdgeInsets.only(top: 5),
+                    child: checkTypeAlert(type)),
               ],
             ),
           ),
         ],
       ),
     );
+  }
+
+  Widget checkTypeAlert(TypeAlert type) {
+    switch (type) {
+      case TypeAlert.confirm:
+        return SvgPicture.asset(AppImages.icon_confirm_dialog);
+      case TypeAlert.delete:
+        return SvgPicture.asset(AppImages.icon_delete_dialog);
+      case TypeAlert.notification:
+        return SvgPicture.asset(AppImages.icon_alert_dialog);
+      case TypeAlert.warning:
+        return SvgPicture.asset(AppImages.icon_warning_dialog);
+      default:
+        return SvgPicture.asset(AppImages.icon_alert_dialog);
+    }
   }
 }

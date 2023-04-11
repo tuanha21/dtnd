@@ -177,12 +177,11 @@ class _DeleteCatalogDialogState extends State<DeleteCatalogDialog> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Container(
-                  padding: const EdgeInsets.all(15),
                   decoration: const BoxDecoration(
                     color: AppColors.primary_03,
                     borderRadius: BorderRadius.all(Radius.circular(12)),
                   ),
-                  child: SvgPicture.asset(AppImages.icon_alert)),
+                  child: SvgPicture.asset(AppImages.icon_delete_dialog)),
             ],
           ),
         ),

@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:dtnd/=models=/response/trash_model.dart';
 import 'package:dtnd/generated/l10n.dart';
 import 'package:flutter/material.dart';

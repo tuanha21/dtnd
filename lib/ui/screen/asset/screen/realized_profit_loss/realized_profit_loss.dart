@@ -89,6 +89,7 @@ class _RealizedProfitLossState extends State<RealizedProfitLoss> {
                   content:
                       'Bạn chưa đăng ký đăng nhập bằng sinh trắc học\nBạn có muốn đăng ký ngay bây giờ không?',
                   action: () => Navigator.of(context).pop(true),
+                  type: TypeAlert.notification,
                 );
               },
             );

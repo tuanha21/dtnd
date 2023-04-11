@@ -108,7 +108,7 @@ class _MyAppBarState extends State<MyAppBar> {
             );
           }
         } else {
-          textTitle = "DTND";
+          textTitle = "IFIS";
           avatar = const SizedBox.square(
             dimension: 36,
             child: Icon(Icons.account_circle_rounded),

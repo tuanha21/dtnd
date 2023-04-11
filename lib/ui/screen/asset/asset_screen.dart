@@ -318,6 +318,7 @@ class _AssetScreenState extends State<AssetScreen>
                     action: () {
                       Navigator.of(context).pop();
                     },
+                    type: TypeAlert.notification,
                   );
                 },
               );

@@ -65,8 +65,15 @@ class AppImages {
   static const String icon_downt = "assets/svg/icon_downt.svg";
   static const String filter_icon = "assets/images/filter.png";
   static const String signal_icon = "assets/images/signal_icon.png";
-  static const String icon_alert = "assets/svg/icon_alert.svg";
+  static const String icon_alert_dialog = "assets/svg/icon_dialog_alert.svg";
+  static const String icon_delete_dialog = "assets/svg/icon_dialog_delete.svg";
+  static const String icon_confirm_dialog = "assets/svg/icon_dialog_confirm.svg";
+  static const String icon_warning_dialog = "assets/svg/icon_dialog_warning.svg";
   static const String margin_debt_icon = "assets/svg/margin_debt_icon.svg";
+  static const String night_mode_icon = "assets/svg/night_mode_icon.svg";
+  static const String back_draw_icon = "assets/svg/back_draw_icon.svg";
+  static const String around_right_icon = "assets/svg/around_right_icon.svg";
+  static const String verify_account_icon = "assets/svg/verify_account_icon.svg";
 
   static const String qa_base = "assets/svg/qa_base.svg";
   static const String qa_bond = "assets/svg/qa_bond.svg";

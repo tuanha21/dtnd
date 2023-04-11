@@ -61,6 +61,7 @@ class _RegisterFillOTP extends State<RegisterFillOTP> {
         action: () => Navigator.of(context).pop(),
         textButtonExit: 'Thoát',
         textButtonAction: 'OK',
+        type: TypeAlert.notification,
       );
       EasyLoading.dismiss();
     }

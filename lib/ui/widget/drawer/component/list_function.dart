@@ -1,8 +1,9 @@
 import 'package:dtnd/ui/widget/drawer/logic/function_data.dart';
-import 'package:dtnd/ui/widget/drawer/logic/icon_asset.dart';
-import 'package:dtnd/ui/widget/expanded_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:flutter_svg/svg.dart';
+
+import '../../../theme/app_image.dart';
 
 class ListFunction extends StatefulWidget {
   const ListFunction({super.key, required this.list});
@@ -14,6 +15,7 @@ class ListFunction extends StatefulWidget {
 
 class _ListFunctionState extends State<ListFunction> {
   int? currentIndex;
+
   @override
   void initState() {
     super.initState();
@@ -26,7 +28,7 @@ class _ListFunctionState extends State<ListFunction> {
       removeTop: true,
       child: ListView.builder(
         itemCount: widget.list.length,
-        itemBuilder: (context, index) => FunctionComponent(
+        itemBuilder: (context, index) => FunctionComponentDraw(
           data: widget.list.elementAt(index),
           expanded: currentIndex == index,
           onTap: () {
@@ -48,126 +50,133 @@ class _ListFunctionState extends State<ListFunction> {
   }
 }
 
-class FunctionComponent extends StatelessWidget {
-  const FunctionComponent(
+// class FunctionComponent extends StatelessWidget {
+//   const FunctionComponent(
+//       {super.key,
+//       required this.data,
+//       required this.expanded,
+//       required this.onTap});
+//   final FunctionData data;
+//   final bool expanded;
+//   final VoidCallback onTap;
+//   @override
+//   Widget build(BuildContext context) {
+//     if (data.subFunction != null) {
+//       return Padding(
+//         padding: const EdgeInsets.symmetric(vertical: 12),
+//         child: Column(
+//           children: [
+//             Material(
+//               borderRadius: const BorderRadius.all(Radius.circular(4)),
+//               color: Colors.transparent,
+//               child: InkWell(
+//                 onTap: () {
+//                   if (data.function != null) {
+//                     data.function!.call();
+//                     return;
+//                   }
+//
+//                   onTap.call();
+//                   return;
+//                 },
+//                 borderRadius: const BorderRadius.all(Radius.circular(4)),
+//                 child: Ink(
+//                   decoration: const BoxDecoration(
+//                     borderRadius: BorderRadius.all(Radius.circular(4)),
+//                   ),
+//                   child: Row(
+//                     children: [
+//                       SizedBox.square(
+//                           dimension: 24, child: Image.asset(data.iconPath!)),
+//                       const SizedBox(width: 8),
+//                       Expanded(
+//                           child: Text(
+//                         data.title,
+//                         style: Theme.of(context).textTheme.bodyMedium,
+//                         maxLines: 1,
+//                         overflow: TextOverflow.ellipsis,
+//                       )),
+//                       AnimatedRotation(
+//                         turns: expanded ? -0.5 : 0,
+//                         duration: const Duration(milliseconds: 500),
+//                         child: SizedBox.square(
+//                           dimension: 10,
+//                           child: Image.asset(DrawerIconAsset.expand_more_icon),
+//                         ),
+//                       ),
+//                       const SizedBox(width: 5),
+//                     ],
+//                   ),
+//                 ),
+//               ),
+//             ),
+//             ExpandedSection(
+//                 expand: expanded,
+//                 child: Column(
+//                   children: [
+//                     for (var element in data.subFunction!)
+//                       SubFunctionComponent(
+//                         data: element,
+//                       )
+//                   ],
+//                 ))
+//           ],
+//         ),
+//       );
+//     } else {
+//       return Padding(
+//         padding: const EdgeInsets.symmetric(vertical: 12),
+//         child: Material(
+//           borderRadius: const BorderRadius.all(Radius.circular(4)),
+//           color: Colors.transparent,
+//           child: InkWell(
+//             onTap: () {
+//               if (data.function != null) {
+//                 data.function!.call();
+//                 return;
+//               }
+//               onTap.call();
+//               return;
+//             },
+//             borderRadius: const BorderRadius.all(Radius.circular(4)),
+//             child: Ink(
+//               decoration: const BoxDecoration(
+//                 borderRadius: BorderRadius.all(Radius.circular(4)),
+//               ),
+//               child: Row(
+//                 children: [
+//                   SizedBox.square(
+//                       dimension: 24, child: Image.asset(data.iconPath!)),
+//                   const SizedBox(width: 8),
+//                   Expanded(
+//                       child: Text(
+//                     data.title,
+//                     style: Theme.of(context).textTheme.bodyMedium,
+//                     maxLines: 1,
+//                     overflow: TextOverflow.ellipsis,
+//                   )),
+//                   const SizedBox(width: 15),
+//                 ],
+//               ),
+//             ),
+//           ),
+//         ),
+//       );
+//     }
+//   }
+// }
+
+class FunctionComponentDraw extends StatelessWidget {
+  const FunctionComponentDraw(
       {super.key,
       required this.data,
       required this.expanded,
       required this.onTap});
+
   final FunctionData data;
   final bool expanded;
   final VoidCallback onTap;
-  @override
-  Widget build(BuildContext context) {
-    if (data.subFunction != null) {
-      return Padding(
-        padding: const EdgeInsets.symmetric(vertical: 12),
-        child: Column(
-          children: [
-            Material(
-              borderRadius: const BorderRadius.all(Radius.circular(4)),
-              color: Colors.transparent,
-              child: InkWell(
-                onTap: () {
-                  if (data.function != null) {
-                    data.function!.call();
-                    return;
-                  }
 
-                  onTap.call();
-                  return;
-                },
-                borderRadius: const BorderRadius.all(Radius.circular(4)),
-                child: Ink(
-                  decoration: const BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(4)),
-                  ),
-                  child: Row(
-                    children: [
-                      SizedBox.square(
-                          dimension: 24, child: Image.asset(data.iconPath!)),
-                      const SizedBox(width: 8),
-                      Expanded(
-                          child: Text(
-                        data.title,
-                        style: Theme.of(context).textTheme.bodyMedium,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                      )),
-                      AnimatedRotation(
-                        turns: expanded ? -0.5 : 0,
-                        duration: const Duration(milliseconds: 500),
-                        child: SizedBox.square(
-                          dimension: 10,
-                          child: Image.asset(DrawerIconAsset.expand_more_icon),
-                        ),
-                      ),
-                      const SizedBox(width: 5),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-            ExpandedSection(
-                expand: expanded,
-                child: Column(
-                  children: [
-                    for (var element in data.subFunction!)
-                      SubFunctionComponent(
-                        data: element,
-                      )
-                  ],
-                ))
-          ],
-        ),
-      );
-    } else {
-      return Padding(
-        padding: const EdgeInsets.symmetric(vertical: 12),
-        child: Material(
-          borderRadius: const BorderRadius.all(Radius.circular(4)),
-          color: Colors.transparent,
-          child: InkWell(
-            onTap: () {
-              if (data.function != null) {
-                data.function!.call();
-                return;
-              }
-              onTap.call();
-              return;
-            },
-            borderRadius: const BorderRadius.all(Radius.circular(4)),
-            child: Ink(
-              decoration: const BoxDecoration(
-                borderRadius: BorderRadius.all(Radius.circular(4)),
-              ),
-              child: Row(
-                children: [
-                  SizedBox.square(
-                      dimension: 24, child: Image.asset(data.iconPath!)),
-                  const SizedBox(width: 8),
-                  Expanded(
-                      child: Text(
-                    data.title,
-                    style: Theme.of(context).textTheme.bodyMedium,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                  )),
-                  const SizedBox(width: 15),
-                ],
-              ),
-            ),
-          ),
-        ),
-      );
-    }
-  }
-}
-
-class SubFunctionComponent extends StatelessWidget {
-  const SubFunctionComponent({super.key, required this.data, this.onTap});
-  final FunctionData data;
-  final VoidCallback? onTap;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -182,9 +191,9 @@ class SubFunctionComponent extends StatelessWidget {
                 if (data.function != null) {
                   data.function!.call();
                   return;
-                } else {
-                  EasyLoading.showToast("Tính năng đang phát triển");
                 }
+                onTap.call();
+                return;
               },
               borderRadius: const BorderRadius.all(Radius.circular(4)),
               child: Ink(
@@ -193,17 +202,19 @@ class SubFunctionComponent extends StatelessWidget {
                 ),
                 child: Row(
                   children: [
-                    const SizedBox(width: 32),
+                    SizedBox.square(
+                        dimension: 24, child: Image.asset(data.iconPath!)),
+                    const SizedBox(width: 8),
                     Expanded(
-                        child: Text(
-                      data.title,
-                      style: Theme.of(context)
-                          .textTheme
-                          .displaySmall!
-                          .copyWith(fontSize: 14, fontWeight: FontWeight.w500),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                    )),
+                      child: Text(
+                        data.title,
+                        style: Theme.of(context).textTheme.bodyMedium,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                    SvgPicture.asset(AppImages.around_right_icon),
+                    const SizedBox(width: 5),
                   ],
                 ),
               ),
@@ -214,3 +225,56 @@ class SubFunctionComponent extends StatelessWidget {
     );
   }
 }
+
+// class SubFunctionComponent extends StatelessWidget {
+//   const SubFunctionComponent({super.key, required this.data, this.onTap});
+//
+//   final FunctionData data;
+//   final VoidCallback? onTap;
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return Padding(
+//       padding: const EdgeInsets.symmetric(vertical: 12),
+//       child: Column(
+//         children: [
+//           Material(
+//             borderRadius: const BorderRadius.all(Radius.circular(4)),
+//             color: Colors.transparent,
+//             child: InkWell(
+//               onTap: () {
+//                 if (data.function != null) {
+//                   data.function!.call();
+//                   return;
+//                 } else {
+//                   EasyLoading.showToast("Tính năng đang phát triển");
+//                 }
+//               },
+//               borderRadius: const BorderRadius.all(Radius.circular(4)),
+//               child: Ink(
+//                 decoration: const BoxDecoration(
+//                   borderRadius: BorderRadius.all(Radius.circular(4)),
+//                 ),
+//                 child: Row(
+//                   children: [
+//                     const SizedBox(width: 32),
+//                     Expanded(
+//                         child: Text(
+//                       data.title,
+//                       style: Theme.of(context)
+//                           .textTheme
+//                           .displaySmall!
+//                           .copyWith(fontSize: 14, fontWeight: FontWeight.w500),
+//                       maxLines: 1,
+//                       overflow: TextOverflow.ellipsis,
+//                     )),
+//                   ],
+//                 ),
+//               ),
+//             ),
+//           ),
+//         ],
+//       ),
+//     );
+//   }
+// }
