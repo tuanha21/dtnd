@@ -51,7 +51,7 @@ class RealizedProfitLossController {
       userService,
       data: RequestDataModel.cursorType(
           cmd: "GetAllShareEarned",
-          p1: "${userService.token.value!.user}6",
+          p1: "${userService.token.value!.user}9",
           p2: maCP ?? '',
           p3: TimeUtilities.commonTimeFormat.format(fromDay ??
               TimeUtilities.getPreviousDateTime(TimeUtilities.month(1))),
@@ -80,7 +80,7 @@ class RealizedProfitLossController {
       userService,
       data: RequestDataModel.cursorType(
           cmd: "GetAllShareEarned",
-          p1: "${userService.token.value!.user}6",
+          p1: "${userService.token.value!.user}9",
           p2: maCP ?? '',
           p3: TimeUtilities.commonTimeFormat.format(fromDay ??
               TimeUtilities.getPreviousDateTime(TimeUtilities.month(1))),

@@ -161,7 +161,7 @@ class ExchangeService implements IExchangeService {
       required Side side}) async {
     final RequestDataModel requestDataModel = RequestDataModel.stringType(
       cmd: "Web.sCashBalance",
-      p1: "${userService.token.value!.user}6",
+      p1: "${userService.token.value!.user}9",
       p2: stockCode,
       p3: price,
       p4: side.code,
@@ -169,6 +169,7 @@ class ExchangeService implements IExchangeService {
 
     final RequestModel requestModel =
         RequestModel(userService, group: "Q", data: requestDataModel);
+    print('tiennh 3 : ' + requestModel.toString());
     return await networkService
         .requestTraditionalApi<StockCashBalanceModel>(requestModel);
   }
@@ -183,7 +184,7 @@ class ExchangeService implements IExchangeService {
       int? recordPerPage}) async {
     final RequestDataModel requestDataModel = RequestDataModel.cursorType(
       cmd: "ListOrder",
-      p1: "${userService.token.value!.user}6",
+      p1: "${userService.token.value!.user}9",
       p2: stockCode ?? "",
       p3: TimeUtilities.commonTimeFormat.format(
           fromDay ?? TimeUtilities.getPreviousDateTime(TimeUtilities.month(1))),
@@ -248,7 +249,7 @@ class ExchangeService implements IExchangeService {
     final RequestDataModel requestDataModel = RequestDataModel(
       cmd: "CashTransactionNew",
       p1: "0",
-      p2: "${userService.token.value!.user}6",
+      p2: "${userService.token.value!.user}9",
       p3: TimeUtilities.commonTimeFormat.format(
           fromDay ?? TimeUtilities.getPreviousDateTime(TimeUtilities.month(1))),
       p4: TimeUtilities.commonTimeFormat.format(toDay ?? DateTime.now()),
@@ -293,7 +294,7 @@ class ExchangeService implements IExchangeService {
       int? recordPerPage}) async {
     final RequestDataModel requestDataModel = RequestDataModel(
       cmd: "ShareTransaction",
-      p1: user ?? "${userService.token.value!.user}6",
+      p1: user ?? "${userService.token.value!.user}9",
       p3: TimeUtilities.commonTimeFormat.format(
           fromDay ?? TimeUtilities.getPreviousDateTime(TimeUtilities.month(1))),
       p4: TimeUtilities.commonTimeFormat.format(toDay ?? DateTime.now()),

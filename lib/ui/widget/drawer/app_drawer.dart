@@ -1,3 +1,4 @@
+import 'package:dtnd/=models=/response/user_token.dart';
 import 'package:dtnd/data/i_user_service.dart';
 import 'package:dtnd/data/implementations/user_service.dart';
 import 'package:dtnd/generated/l10n.dart';
@@ -226,8 +227,9 @@ class _AppDrawerState extends State<AppDrawer> {
   @override
   Widget build(BuildContext context) {
     bool isLogin = userService.isLogin;
-    const String version = "0.0.1";
     final info = userService.userInfo.value;
+    UserToken userToken;
+    print('tiennh'+ info.toString());
     return Container(
       padding: EdgeInsets.only(
           top: MediaQuery.of(context).padding.top, right: 16, left: 16),

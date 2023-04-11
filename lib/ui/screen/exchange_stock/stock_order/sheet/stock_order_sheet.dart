@@ -122,6 +122,7 @@ class _StockOrderSheetState extends State<StockOrderSheet>
         price: priceController.text,
         side: Side.buy);
     setState(() {});
+    print('tiennh2' + stockCashBalanceModel.toString());
   }
 
   void select(OrderType orderType) {
@@ -206,6 +207,7 @@ class _StockOrderSheetState extends State<StockOrderSheet>
 
   @override
   Widget build(BuildContext context) {
+    print("Ký quỹ ${stockCashBalanceModel?.imCk}%--tiennh");
     final textTheme = Theme.of(context).textTheme;
     return Form(
       key: orderKey,

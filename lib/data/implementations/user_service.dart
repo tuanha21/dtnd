@@ -173,7 +173,7 @@ class UserService implements IUserService {
             await networkService.requestTraditionalApi<IAccountResponse>(
           requestModel,
           modifyResponse: (res) {
-            res["accCode"] = listAccount.elementAt(i).accCode;
+            res["accCode"] = p1;
             return res;
           },
         );
@@ -185,20 +185,18 @@ class UserService implements IUserService {
               cmd: "Web.Portfolio.PortfolioStatus",
               p1: p1,
             ));
-        print("tiennh" + requestModel.toString());
-        response = await networkService
+         response = await networkService
             .requestTraditionalApiResList<PorfolioStock>(requestModel);
         if (response != null) {
           listAccount.elementAt(i).portfolioStatus =
               PortfolioStatus.fromPorfolioStock(response!);
         }
-        response = await getListAssetChart(listAccount.elementAt(i).accCode);
+        response = await getListAssetChart(p1);
         if (response != null) {
           listAccount.elementAt(i).listAssetChart = response;
         }
 
-        response =
-            await getListUnexecutedRight(listAccount.elementAt(i).accCode);
+        response = await getListUnexecutedRight(p1);
         if (response != null) {
           listAccount.elementAt(i).listUnexecutedRight = response;
         }

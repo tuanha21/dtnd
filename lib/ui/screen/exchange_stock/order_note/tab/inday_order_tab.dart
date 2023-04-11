@@ -34,7 +34,7 @@ class _IndayOrderTabState extends State<IndayOrderTab> {
 
   Future<void> getIndayOrder() async {
     listOrder = await userService.getIndayOrder(
-        accountCode: "${userService.token.value!.user}6", recordPerPage: 10);
+        accountCode: "${userService.token.value!.user}9", recordPerPage: 10);
     listOrderShow = List<BaseOrderModel>.from(listOrder ?? []);
     if (mounted) {
       setState(() {});
