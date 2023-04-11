@@ -10,11 +10,13 @@ import 'package:dtnd/ui/widget/button/single_color_text_button.dart';
 import 'package:dtnd/ui/widget/empty_list_widget.dart';
 import 'package:flutter/material.dart';
 
-enum _Period { m1, m3, m6 }
+enum _Period { w1, m1, m3, m6 }
 
 extension _PeriodX on _Period {
   String get title {
     switch (this) {
+      case _Period.w1:
+        return '1W';
       case _Period.m1:
         return "1M";
       case _Period.m3:
@@ -28,6 +30,8 @@ extension _PeriodX on _Period {
 
   int get period {
     switch (this) {
+      case _Period.w1:
+        return 7;
       case _Period.m1:
         return 30;
       case _Period.m3:

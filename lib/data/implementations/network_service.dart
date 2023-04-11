@@ -20,6 +20,7 @@ import 'package:dtnd/=models=/response/liquidity_model.dart';
 import 'package:dtnd/=models=/response/news_model.dart';
 import 'package:dtnd/=models=/response/security_basic_info_model.dart';
 import 'package:dtnd/=models=/response/share_holder.dart';
+import 'package:dtnd/=models=/response/signal_month_model.dart';
 import 'package:dtnd/=models=/response/stock.dart';
 import 'package:dtnd/=models=/response/stock_board.dart';
 import 'package:dtnd/=models=/response/stock_data.dart';
@@ -47,6 +48,7 @@ import 'package:dtnd/=models=/ui_model/field_tree_element_model.dart';
 import 'package:dtnd/config/service/environment.dart';
 import 'package:dtnd/data/i_network_service.dart';
 import 'package:dtnd/data/i_user_service.dart';
+import 'package:dtnd/data/implementations/local_storage_service.dart';
 import 'package:dtnd/data/implementations/user_service.dart';
 import 'package:dtnd/utilities/logger.dart';
 import 'package:flutter/services.dart';
@@ -61,6 +63,7 @@ import '../../=models=/response/indContrib.dart';
 import '../../=models=/response/sec_event.dart';
 import '../../=models=/response/sec_trading.dart';
 import '../../=models=/response/stock_industry.dart';
+import '../i_local_storage_service.dart';
 
 const List<String> sessionExpiredMsg = [
   "FOException.InvalidSessionException",
@@ -95,7 +98,7 @@ class NetworkService implements INetworkService {
     String unencodedPath, [
     Map<String, dynamic>? queryParameters,
   ]) {
-    return Uri.https(core_url, unencodedPath, queryParameters);
+    return Uri.http(core_url, unencodedPath, queryParameters);
   }
 
   Uri url_core1(
@@ -107,8 +110,8 @@ class NetworkService implements INetworkService {
   }
 
   Uri get url_core_endpoint {
-    print(Uri.https(core_url, core_endpoint).toString());
-    return Uri.https(core_url, core_endpoint);
+    print(Uri.http(core_url, core_endpoint).toString());
+    return Uri.http(core_url, core_endpoint);
   }
 
   Uri url_board(String path) => Uri.https(board_url, path);
@@ -180,7 +183,7 @@ class NetworkService implements INetworkService {
   Future<void> init(Environment environment) async {
     this.environment = environment;
     await dotenv.load(fileName: environment.envFileName);
-    core_url = dotenv.env['core_domain']!;
+    core_url = dotenv.env['core_domain1']!;
     core_url1 = dotenv.env['core_domain1']!;
     core_endpoint = dotenv.env['core_endpoint']!;
     board_url = dotenv.env['board_domain']!;
@@ -230,6 +233,7 @@ class NetworkService implements INetworkService {
     T? Function(Map<String, dynamic>)? onError,
     bool Function(Map<String, dynamic>)? hasError,
     dynamic Function(Map<String, dynamic>)? selectionData,
+    Map<String, dynamic> Function(Map<String, dynamic>)? modifyResponse,
   }) async {
     dynamic response =
         await client.post(url_core_endpoint, body: requestModel.toString());
@@ -247,6 +251,9 @@ class NetworkService implements INetworkService {
     } else {
       response = response["data"];
     }
+    if (modifyResponse != null) {
+      response = modifyResponse.call(response);
+    }
     return CoreResponseModel.fromJson<T>(response);
   }
 
@@ -256,6 +263,7 @@ class NetworkService implements INetworkService {
     List<T>? Function(Map<String, dynamic>)? onError,
     bool Function(Map<String, dynamic>)? hasError,
     List<dynamic> Function(Map<String, dynamic>)? selectionData,
+    Map<String, dynamic> Function(Map<String, dynamic>)? modifyResponse,
   }) async {
     dynamic response =
         await client.post(url_core_endpoint, body: requestModel.toString());
@@ -1386,10 +1394,7 @@ class NetworkService implements INetworkService {
     try {
       // "VN30F2303","VN30F2304","VN30F2306","VN30F2309"
       final http.Response _res = await client.get(url_board(
-          "getpsalldatalsnapshot/" +
-              (listString.length > 0
-                  ? listString.join(',')
-                  : "VN30F2303,VN30F2304,VN30F2306,VN30F2309")));
+          "getpsalldatalsnapshot/${listString.isNotEmpty ? listString.join(',') : "VN30F2303,VN30F2304,VN30F2306,VN30F2309"}"));
 
       final List<dynamic> responseBody = decode(_res.bodyBytes);
       if (responseBody.isEmpty) throw Exception();
@@ -1441,6 +1446,7 @@ class NetworkService implements INetworkService {
 
   @override
   Future<SignUpSuccessDataModel?> createAccount(String body) async {
+    final ILocalStorageService localStorageService = LocalStorageService();
     var response =
         await client.post(url_core1("openAccount/create"), body: body);
     if (response.statusCode != 200) {
@@ -1451,9 +1457,16 @@ class NetworkService implements INetworkService {
 
     if (res["iRs"] == 1) {
       final data = res["data"];
+      String? accountCode;
       if (data is List && data.length == 1) {
+        accountCode = SignUpSuccessDataModel.fromJson(data.first).cACCOUNTCODE;
+        localStorageService.saveInfoRegistered(
+            accountCode?.substring(0, accountCode.length - 1) ?? '');
         return SignUpSuccessDataModel.fromJson(data.first);
       } else if (data is Map<String, dynamic>) {
+        accountCode = SignUpSuccessDataModel.fromJson(data).cACCOUNTCODE;
+        localStorageService.saveInfoRegistered(
+            accountCode?.substring(0, accountCode.length - 1) ?? '');
         return SignUpSuccessDataModel.fromJson(data);
       } else {
         throw "Lỗi hệ thống. Vui lòng thử lại sau!";
@@ -1592,5 +1605,28 @@ class NetworkService implements INetworkService {
       result.add(CoreResponseModel.fromJson<T>(element)!);
     }
     return result;
+  }
+
+  @override
+  Future<List<SignalMonthModel>?> getSignalMonth(
+      Map<String, String> body) async {
+    try {
+      final http.Response response =
+          await client.get(url_info_sbsi("proxy", body));
+      final List<dynamic> responseBody = decode(response.bodyBytes)["data"];
+      List<SignalMonthModel> data = [];
+      for (var element in responseBody) {
+        try {
+          data.add(SignalMonthModel.fromJson(element));
+        } catch (e) {
+          logger.e(e);
+          continue;
+        }
+      }
+      return data;
+    } catch (e) {
+      logger.e(e);
+      rethrow;
+    }
   }
 }

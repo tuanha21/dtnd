@@ -12,4 +12,12 @@ class DrawerIconAsset {
   static const String shield_tick = "assets/drawer_icon/shield_tick.png";
   static const String expand_more_icon =
       "assets/drawer_icon/expand_more_icon.png";
+  static const String verify_account_icon =
+      "assets/drawer_icon/verify_account_icon.png";
+  static const String stock_statement_icon =
+      "assets/drawer_icon/stock_statement.png";
+  static const String profit_loss_history_icon =
+      "assets/drawer_icon/profit_loss_history.png";
+  static const String cashier_report_icon =
+      "assets/drawer_icon/cashier_report.png";
 }

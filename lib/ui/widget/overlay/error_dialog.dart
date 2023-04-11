@@ -14,6 +14,7 @@ class ErrorDialog extends StatelessWidget {
       content: content,
       action: () => Navigator.of(context).pop(true),
       textButtonAction: 'OK',
+      type: TypeAlert.notification,
     );
   }
 }

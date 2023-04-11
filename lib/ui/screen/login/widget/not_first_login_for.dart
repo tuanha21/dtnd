@@ -209,6 +209,7 @@ class _NotFirstLoginFormState extends State<NotFirstLoginForm> {
                     title: 'Xác nhận',
                     content: 'Bạn có chắc chắn muốn dùng tài khoản khác?',
                     action: () => Navigator.of(context).pop(true),
+                    type: TypeAlert.notification,
                   );
 
                   //   AppDialog(

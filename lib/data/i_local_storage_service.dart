@@ -52,4 +52,6 @@ abstract class ILocalStorageService {
   Future<void> registerBiometrics();
 
   Future<void> cancelBiometrics();
+
+  Future<void> saveInfoRegistered(String infoRegistered);
 }

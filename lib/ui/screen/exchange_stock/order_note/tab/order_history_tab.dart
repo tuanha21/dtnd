@@ -11,8 +11,8 @@ import 'package:dtnd/ui/screen/exchange_stock/order_note/sheet/order_filter_flow
 import 'package:dtnd/ui/screen/exchange_stock/order_note/sheet/order_filter_sheet.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
+import 'package:dtnd/ui/widget/calendar/day_input.dart';
 import 'package:dtnd/ui/widget/empty_list_widget.dart';
-import 'package:dtnd/ui/widget/picker/datetime_picker_widget.dart';
 import 'package:dtnd/utilities/time_utils.dart';
 import 'package:flutter/material.dart';
 
@@ -27,8 +27,10 @@ class _OrderHistoryTabState extends State<OrderHistoryTab> {
   final IUserService userService = UserService();
   final IExchangeService exchangeService = ExchangeService();
 
-  late final TextEditingController fromdayController;
-  late final TextEditingController todayController;
+  late DateTime fromDay;
+  late DateTime toDay;
+  late DateTime firstDay;
+  late DateTime lastDay;
 
   List<OrderHistoryModel>? listOrder;
   List<OrderHistoryModel>? listOrderShow;
@@ -36,22 +38,17 @@ class _OrderHistoryTabState extends State<OrderHistoryTab> {
 
   @override
   void initState() {
-    fromdayController = TextEditingController(
-        text: TimeUtilities.commonTimeFormat
-            .format(DateTime.now().subtract(TimeUtilities.month(1))));
-    todayController = TextEditingController(
-        text: TimeUtilities.commonTimeFormat.format(DateTime.now()));
+    fromDay = TimeUtilities.getPreviousDateTime(TimeUtilities.month(1));
+    toDay = DateTime.now();
+    firstDay = TimeUtilities.getPreviousDateTime(TimeUtilities.month(3));
+    lastDay = toDay;
     super.initState();
     getData();
   }
 
   Future<void> getData({DateTime? fromDay, DateTime? toDay}) async {
-    final from =
-        fromDay ?? TimeUtilities.commonTimeFormat.parse(fromdayController.text);
-    final to =
-        toDay ?? TimeUtilities.commonTimeFormat.parse(todayController.text);
     listOrder = await exchangeService.getOrdersHistory(userService,
-        fromDay: from, toDay: to);
+        fromDay: fromDay, toDay: toDay);
     listOrderShow = List<OrderHistoryModel>.from(listOrder ?? []);
     if (mounted) {
       setState(() {});
@@ -92,22 +89,30 @@ class _OrderHistoryTabState extends State<OrderHistoryTab> {
         children: [
           const SizedBox(height: 8),
           Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Expanded(
-                  child: DateTimePickerWidget(
-                controller: fromdayController,
-                labelText: S.of(context).from_day,
-                firstDate:
-                    TimeUtilities.getPreviousDateTime(TimeUtilities.month(3)),
-                onChanged: (value) => getData(fromDay: value),
-              )),
-              const SizedBox(width: 16),
-              Expanded(
-                  child: DateTimePickerWidget(
-                controller: todayController,
-                labelText: S.of(context).to_day,
-                onChanged: (value) => getData(toDay: value),
-              ))
+              DayInput(
+                  initialDay: fromDay,
+                  firstDay: firstDay,
+                  lastDay: lastDay,
+                  onChanged: (value) {
+                    setState(() {
+                      fromDay = value;
+                    });
+                    getData();
+                  }),
+              const SizedBox(width: 16,child: Text('-'),),
+              DayInput(
+                initialDay: toDay,
+                firstDay: firstDay,
+                lastDay: lastDay,
+                onChanged: (value) {
+                  setState(() {
+                    toDay = value;
+                  });
+                  getData();
+                },
+              ),
             ],
           ),
           const SizedBox(height: 8),

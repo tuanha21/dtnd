@@ -64,7 +64,7 @@ class _MoneyStatementSheetState extends State<MoneyStatementSheet> {
               backData: null,
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8),
+              padding: const EdgeInsets.symmetric(vertical: 8,horizontal: 16),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -79,6 +79,7 @@ class _MoneyStatementSheetState extends State<MoneyStatementSheet> {
                       getData();
                     },
                   ),
+                  const Text("-"),
                   DayInput(
                     initialDay: toDay,
                     firstDay: firstDay,

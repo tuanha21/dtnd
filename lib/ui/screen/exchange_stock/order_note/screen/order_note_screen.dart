@@ -1,5 +1,4 @@
 import 'package:dtnd/generated/l10n.dart';
-import 'package:dtnd/ui/screen/exchange_stock/order_note/tab/conditional_order_tab.dart';
 import 'package:dtnd/ui/screen/exchange_stock/order_note/tab/inday_order_tab.dart';
 import 'package:dtnd/ui/screen/exchange_stock/order_note/tab/order_history_tab.dart';
 import 'package:dtnd/ui/widget/appbar/simple_appbar.dart';
@@ -17,7 +16,7 @@ class _OrderNoteScreenState extends State<OrderNoteScreen>
   late final TabController tabController;
   @override
   void initState() {
-    tabController = TabController(length: 3, vsync: this);
+    tabController = TabController(length: 2, vsync: this);
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       tabController.animateTo(widget.defaultab);
@@ -42,9 +41,6 @@ class _OrderNoteScreenState extends State<OrderNoteScreen>
                 S.of(context).inday_note,
               ),
               Text(
-                S.of(context).conditional_note,
-              ),
-              Text(
                 S.of(context).order_history,
               ),
             ],
@@ -55,7 +51,7 @@ class _OrderNoteScreenState extends State<OrderNoteScreen>
             controller: tabController,
             children: const [
               IndayOrderTab(),
-              ConditionalOrderTab(),
+
               OrderHistoryTab(),
             ],
           ))

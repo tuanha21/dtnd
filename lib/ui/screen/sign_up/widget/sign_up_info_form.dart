@@ -36,6 +36,7 @@ class _SignUpInfoFormState extends State<SignUpInfoForm> with AppValidator {
   final fullName = TextEditingController();
   final phoneNumber = TextEditingController();
   final email = TextEditingController();
+  final idPresenter = TextEditingController();
 
   bool isAgree = false;
 
@@ -53,43 +54,67 @@ class _SignUpInfoFormState extends State<SignUpInfoForm> with AppValidator {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          AppTextFormField(
-            labelText: S.of(context).full_name,
-            controller: fullName,
-            hintText: "Họ và tên",
-            validator: checkFullName,
+          SizedBox(
+            height: 75,
+            child: AppTextFormField(
+              labelText: S.of(context).full_name,
+              controller: fullName,
+              hintText: "Họ và tên",
+              validator: checkFullName,
+            ),
           ),
-          const SizedBox(height: 16),
-          AppTextFormField(
-            labelText: S.of(context).phone_number,
-            controller: phoneNumber,
-            hintText: "Số điện thoại",
-            validator: phoneNumberValidator,
+          const SizedBox(height: 5),
+          SizedBox(
+            height: 75,
+            child: AppTextFormField(
+              labelText: S.of(context).phone_number,
+              controller: phoneNumber,
+              hintText: "Số điện thoại",
+              validator: phoneNumberValidator,
+            ),
           ),
-          const SizedBox(height: 16),
-          AppTextFormField(
-            labelText: S.of(context).email,
-            controller: email,
-            hintText: "example@gmail.com",
-            validator: checkEmail,
+          const SizedBox(height: 5),
+          SizedBox(
+            height: 75,
+            child: AppTextFormField(
+              labelText: S.of(context).email,
+              controller: email,
+              hintText: "example@gmail.com",
+              validator: checkEmail,
+            ),
           ),
-          const SizedBox(height: 16),
-          AppTextFormField(
-            formKey: passwordFormKey,
-            obscureText: true,
-            labelText: S.of(context).password,
-            hintText: S.of(context).password,
-            validator: passwordValidator,
+          const SizedBox(height: 5),
+          SizedBox(
+            height: 75,
+            child: AppTextFormField(
+              formKey: passwordFormKey,
+              obscureText: true,
+              labelText: S.of(context).password,
+              hintText: S.of(context).password,
+              validator: passwordValidator,
+            ),
           ),
-          const SizedBox(height: 16),
-          AppTextFormField(
-            obscureText: true,
-            labelText: "Nhập lại mật khẩu",
-            hintText: "Nhập lại mật khẩu",
-            validator: (repass) =>
-                checkConfirmPass(repass, passwordFormKey.currentState?.value),
+          const SizedBox(height: 5),
+          SizedBox(
+            height: 75,
+            child: AppTextFormField(
+              obscureText: true,
+              labelText: "Nhập lại mật khẩu",
+              hintText: "Nhập lại mật khẩu",
+              validator: (repass) =>
+                  checkConfirmRePass(repass, passwordFormKey.currentState?.value),
+            ),
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: 5),
+          SizedBox(
+            height: 75,
+            child: AppTextFormField(
+              labelText: 'ID người giới thiệu',
+              controller: idPresenter,
+              hintText: "Nhập ID người giới thiệu",
+            ),
+          ),
+          const SizedBox(height: 5),
           FormField<bool?>(
               initialValue: false,
               validator: (value) {
@@ -171,7 +196,8 @@ class _SignUpInfoFormState extends State<SignUpInfoForm> with AppValidator {
                   final Digest digest = md5.convert(bytes);
 
                   // Convert the hash to a hex string
-                  final encodedPass = digest.toString();
+                  final encodedPass = digest.toString().toUpperCase();
+
                   return widget.onSuccess.call(
                     info: SignUpInfo(fullName.text, phoneNumber.text,
                         email.text, encodedPass),

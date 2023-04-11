@@ -86,6 +86,7 @@ class BaseMarginAccountModel implements IAccountModel {
   @override
   List<AssetChartElementModel>? listAssetChart;
 
+  @override
   List<UnexecutedRightModel>? listUnexecutedRight;
 
   List<UnexecutedRightModel> get listUnexecutedBuyRight {

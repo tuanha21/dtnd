@@ -2,7 +2,6 @@ import 'package:dtnd/=models=/response/order_model/base_order_model.dart';
 import 'package:dtnd/=models=/ui_model/user_cmd.dart';
 import 'package:dtnd/data/i_user_service.dart';
 import 'package:dtnd/data/implementations/user_service.dart';
-import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/screen/exchange_stock/order_note/data/order_filter_data.dart';
 import 'package:dtnd/ui/screen/exchange_stock/order_note/flow/flow.dart';
 import 'package:dtnd/ui/screen/exchange_stock/order_note/sheet/order_filter_flow.dart';
@@ -12,6 +11,7 @@ import 'package:dtnd/ui/screen/exchange_stock/stock_order/sheet/cancel_order_she
 import 'package:dtnd/ui/screen/exchange_stock/stock_order/sheet/change_stock_order_sheet.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
+import 'package:dtnd/ui/widget/empty_list_widget.dart';
 import 'package:flutter/material.dart';
 
 class IndayOrderTab extends StatefulWidget {
@@ -69,6 +69,7 @@ class _IndayOrderTabState extends State<IndayOrderTab> {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
+    print(listOrderShow.toString());
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
       child: Column(
@@ -112,6 +113,7 @@ class _IndayOrderTabState extends State<IndayOrderTab> {
             ],
           ),
           const SizedBox(height: 8),
+          listOrderShow == null ?
           Expanded(child: Builder(
             builder: (context) {
               return ListView(
@@ -158,7 +160,10 @@ class _IndayOrderTabState extends State<IndayOrderTab> {
                 ],
               );
             },
-          ))
+          )) : const Padding(
+            padding: EdgeInsets.only(top: 100),
+            child: EmptyListWidget(),
+          )
         ],
       ),
     );

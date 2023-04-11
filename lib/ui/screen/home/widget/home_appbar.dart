@@ -63,7 +63,7 @@ class _HomeAppBarState extends State<HomeAppBar> {
   Widget? get title {
     return widget.titleWidget ??
         Text(
-          widget.title ?? "DTND",
+          widget.title ?? "IFIS",
           style: Theme.of(context)
               .textTheme
               .labelLarge

@@ -167,36 +167,46 @@ class _AssetScreenState extends State<AssetScreen>
                                 const BorderRadius.all(Radius.circular(6)),
                             onTap: () => const ExtensionsISheet()
                                 .show(context, const ExtensionsSheet())
-                                .then((value) {
-                              switch (value.runtimeType) {
-                                case ToBaseNoteCmd:
-                                  Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (context) =>
-                                        const OrderNoteScreen(),
-                                  ));
-                                  break;
-                                case ToOrderHistoryCmd:
-                                  Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (context) =>
-                                        const OrderNoteScreen(defaultab: 2),
-                                  ));
-                                  break;
-                                case ToProfitAndLossCmd:
-                                  Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (context) =>
-                                        const RealizedProfitLoss(),
-                                  ));
-                                  break;
-                                case ToMarginDebt:
-                                  Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (context) =>
-                                        const MarginDebtScreen(),
-                                  ));
-                                  break;
-                                default:
-                                  break;
-                              }
-                            }),
+                                .then(
+                              (value) {
+                                switch (value.runtimeType) {
+                                  case ToBaseNoteCmd:
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            const OrderNoteScreen(),
+                                      ),
+                                    );
+                                    break;
+                                  case ToOrderHistoryCmd:
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            const OrderNoteScreen(defaultab: 1),
+                                      ),
+                                    );
+                                    break;
+                                  case ToProfitAndLossCmd:
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            const RealizedProfitLoss(),
+                                      ),
+                                    );
+                                    break;
+                                  case ToMarginDebt:
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            const MarginDebtScreen(),
+                                      ),
+                                    );
+                                    break;
+                                  default:
+                                    break;
+                                }
+                              },
+                            ),
                             child: Ink(
                               padding: const EdgeInsets.all(8),
                               decoration: const BoxDecoration(
@@ -224,19 +234,22 @@ class _AssetScreenState extends State<AssetScreen>
               ),
               Padding(
                 padding: const EdgeInsets.all(16),
-                child: Obx(() {
-                  if (userService.listAccountModel.value?.isNotEmpty ?? false) {
-                    final data = userService.listAccountModel.value!
-                            .firstWhereOrNull((element) =>
-                                element.runtimeType == BaseMarginAccountModel)
-                        as BaseMarginAccountModel?;
-                    return AccountAssetOverviewWidget(
-                      data: data,
-                    );
-                  } else {
-                    return const AccountAssetOverviewWidget();
-                  }
-                }),
+                child: Obx(
+                  () {
+                    if (userService.listAccountModel.value?.isNotEmpty ??
+                        false) {
+                      final data = userService.listAccountModel.value!
+                              .firstWhereOrNull((element) =>
+                                  element.runtimeType == BaseMarginAccountModel)
+                          as BaseMarginAccountModel?;
+                      return AccountAssetOverviewWidget(
+                        data: data,
+                      );
+                    } else {
+                      return const AccountAssetOverviewWidget();
+                    }
+                  },
+                ),
               ),
               const PortfolioAndRightPanel(),
               const SizedBox(height: 100),
@@ -305,6 +318,7 @@ class _AssetScreenState extends State<AssetScreen>
                     action: () {
                       Navigator.of(context).pop();
                     },
+                    type: TypeAlert.notification,
                   );
                 },
               );

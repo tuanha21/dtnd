@@ -17,7 +17,7 @@ class AssetGridElement extends StatelessWidget {
   final EdgeInsetsGeometry? contentPadding;
   @override
   Widget build(BuildContext context) {
-    final textTheme = AppTextStyle.labelSmall_10;
+    final textTheme = AppTextStyle.labelMedium_12;
     final labelTheme = textTheme.copyWith(color: AppColors.neutral_03);
     bool hasSubElements = (subElements != null);
     List<Widget> child;

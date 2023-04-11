@@ -128,6 +128,27 @@ class _SuggestedSignalComponentState extends State<SuggestedSignalComponent> {
                       ],
                     ),
                     Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Text(
+                          'T',
+                          style: AppTextStyle.bodySmall_8.copyWith(
+                            fontSize: 12,
+                            color: AppColors.neutral_04,
+                            fontWeight: FontWeight.w600,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                        const SizedBox(height: 4),
+                        Text(
+                          widget.data.t.toString(),
+                          style: textTheme.titleSmall,
+                          textAlign: TextAlign.center,
+                        ),
+                      ],
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Text(
                           S.of(context).effective,
@@ -148,7 +169,7 @@ class _SuggestedSignalComponentState extends State<SuggestedSignalComponent> {
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
                         Text(
-                          S.of(context).ratio,
+                          '${S.of(context).ratio} lãi/lỗ',
                           style: AppTextStyle.bodySmall_8.copyWith(
                             fontSize: 12,
                             color: AppColors.neutral_04,

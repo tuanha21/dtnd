@@ -1,6 +1,7 @@
 import 'package:dtnd/ui/screen/asset/screen/realized_profit_loss/realized_profit_loss_controller.dart';
 import 'package:dtnd/ui/theme/app_textstyle.dart';
 import 'package:dtnd/ui/widget/empty_list_widget.dart';
+import 'package:dtnd/utilities/logger.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -52,7 +53,9 @@ class _RealizedProfitLossState extends State<RealizedProfitLoss> {
         controller.searching = true;
         try {
           controller.Search(fromDay, toDay, code.toString());
-        } catch (e) {}
+        } catch (e) {
+          logger.v(e);
+        }
       });
     } else {
       setState(() {
@@ -86,6 +89,7 @@ class _RealizedProfitLossState extends State<RealizedProfitLoss> {
                   content:
                       'Bạn chưa đăng ký đăng nhập bằng sinh trắc học\nBạn có muốn đăng ký ngay bây giờ không?',
                   action: () => Navigator.of(context).pop(true),
+                  type: TypeAlert.notification,
                 );
               },
             );
@@ -160,12 +164,9 @@ class _RealizedProfitLossState extends State<RealizedProfitLoss> {
         title: 'Lãi/lỗ đã thực hiện',
       ),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.only(top: 5, right: 16, left: 16, bottom: 16),
         child: Column(
           children: [
-            const SizedBox(
-              height: 18,
-            ),
             Container(
               decoration: const BoxDecoration(
                 color: AppColors.light_bg,
@@ -188,12 +189,11 @@ class _RealizedProfitLossState extends State<RealizedProfitLoss> {
                     disabledBorder: InputBorder.none),
               ),
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: 8),
             Row(
               children: [
                 Expanded(
                   child: DayInput(
-                    background: AppColors.light_bg,
                     initialDay: fromDay,
                     firstDay: firstDay,
                     lastDay: lastDay,
@@ -210,7 +210,6 @@ class _RealizedProfitLossState extends State<RealizedProfitLoss> {
                 const SizedBox(width: 8),
                 Expanded(
                   child: DayInput(
-                    background: AppColors.light_bg,
                     initialDay: toDay,
                     firstDay: firstDay,
                     lastDay: lastDay,
@@ -254,9 +253,11 @@ class _RealizedProfitLossState extends State<RealizedProfitLoss> {
             ),
             Obx(
               () {
-                if (controller.shareEarnedModel.value?.listDetail.isEmpty ==
-                    true) {
-                  return const EmptyListWidget();
+                if (controller.shareEarnedModel.value?.listDetail.isEmpty ?? true
+                     ) {
+                  return const Padding(
+                      padding: EdgeInsets.only(top: 100),
+                      child: EmptyListWidget());
                 }
                 if (!controller.searching) {
                   return Container(

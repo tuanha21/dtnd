@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:dtnd/=models=/local/va_portfolio_model.dart';
 import 'package:dtnd/=models=/request/request_model.dart';
 import 'package:dtnd/=models=/response/account/asset_chart_element.dart';
 import 'package:dtnd/=models=/response/account/base_margin_account_model.dart';
@@ -10,7 +11,6 @@ import 'package:dtnd/=models=/response/account_info_model.dart';
 import 'package:dtnd/=models=/response/order_model/base_order_model.dart';
 import 'package:dtnd/=models=/response/total_asset_model.dart';
 import 'package:dtnd/=models=/response/user_token.dart';
-import 'package:dtnd/=models=/local/va_portfolio_model.dart';
 import 'package:dtnd/=models=/side.dart';
 import 'package:dtnd/=models=/sign_up_success_data_model.dart';
 import 'package:dtnd/=models=/ui_model/exception.dart';
@@ -26,6 +26,7 @@ import 'package:get/get.dart';
 class UserService implements IUserService {
   final ILocalStorageService localStorageService = LocalStorageService();
   final INetworkService networkService = NetworkService();
+
   UserService._internal();
 
   static final UserService _instance = UserService._internal();
@@ -145,46 +146,59 @@ class UserService implements IUserService {
         data: RequestDataModel.cursorType(
           cmd: "ListAccount",
         ));
-    final listAccount = await networkService
-        .requestTraditionalApiResList<IAccountModel>(requestModel);
+    final listAccount =
+        await networkService.requestTraditionalApiResList<IAccountModel>(
+      requestModel,
+      hasError: (p0) {
+        logger.v(p0);
+        return false;
+      },
+    );
     if (listAccount?.isEmpty ?? true) {
       return [];
     } else {
       listAccountModel.value = listAccount;
       for (var i = 0; i < listAccount!.length; i++) {
+        String p1 = listAccount.elementAt(i).accCode.replaceRange(
+            listAccount.elementAt(i).accCode.length - 1,
+            listAccount.elementAt(i).accCode.length,
+            '9');
         requestModel = RequestModel(this,
             group: "Q",
             data: RequestDataModel.stringType(
               cmd: "Web.Portfolio.AccountStatus",
-              p1: listAccount.elementAt(i).accCode,
+              p1: p1,
             ));
-        dynamic response = await networkService
-            .requestTraditionalApi<IAccountResponse>(requestModel);
+        dynamic response =
+            await networkService.requestTraditionalApi<IAccountResponse>(
+          requestModel,
+          modifyResponse: (res) {
+            res["accCode"] = p1;
+            return res;
+          },
+        );
 
         listAccount.elementAt(i).updateDataFromJson(response!);
         requestModel = RequestModel(this,
             group: "Q",
             data: RequestDataModel.stringType(
               cmd: "Web.Portfolio.PortfolioStatus",
-              p1: listAccount.elementAt(i).accCode,
+              p1: p1,
             ));
-        response = await networkService
+         response = await networkService
             .requestTraditionalApiResList<PorfolioStock>(requestModel);
         if (response != null) {
           listAccount.elementAt(i).portfolioStatus =
               PortfolioStatus.fromPorfolioStock(response!);
         }
-        response = await getListAssetChart(listAccount.elementAt(i).accCode);
+        response = await getListAssetChart(p1);
         if (response != null) {
           listAccount.elementAt(i).listAssetChart = response;
         }
 
-        response =
-            await getListUnexecutedRight(listAccount.elementAt(i).accCode);
-        if (listAccount.elementAt(i) is BaseMarginAccountModel &&
-            response != null) {
-          (listAccount.elementAt(i) as BaseMarginAccountModel)
-              .listUnexecutedRight = response;
+        response = await getListUnexecutedRight(p1);
+        if (response != null) {
+          listAccount.elementAt(i).listUnexecutedRight = response;
         }
       }
     }
@@ -208,7 +222,8 @@ class UserService implements IUserService {
         .requestTraditionalApiResList<AssetChartElementModel>(requestModel);
   }
 
-  Future<List<UnexecutedRightModel>?> getListUnexecutedRight(String account) {
+  Future<List<UnexecutedRightModel>?> getListUnexecutedRight(
+      String account) async {
     final requestModel = RequestModel(
       this,
       group: "B",
@@ -217,8 +232,14 @@ class UserService implements IUserService {
         p1: account,
       ),
     );
-    return networkService
-        .requestTraditionalApiResList<UnexecutedRightModel>(requestModel);
+    final res =
+        await networkService.requestTraditionalApiResList<UnexecutedRightModel>(
+      requestModel,
+      hasError: (p0) {
+        return p0["data"].first["DUMMY"] != null;
+      },
+    );
+    return res ?? [];
   }
 
   Future<UserInfo?> getUserInfo() async {

@@ -1,11 +1,13 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:dtnd/=models=/response/account_info_model.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:flutter/material.dart';
 
 class DrawerAvatar extends StatefulWidget {
-  const DrawerAvatar({super.key, this.imageUrl});
+  const DrawerAvatar({super.key, this.imageUrl, this.info});
   final String? imageUrl;
+  final UserInfo? info;
   @override
   State<DrawerAvatar> createState() => _DrawerAvatarState();
 }
@@ -32,7 +34,6 @@ class _DrawerAvatarState extends State<DrawerAvatar> {
         ),
       );
     }
-
     return Stack(
       children: <Widget>[
         // Avatar widget with size of 80
@@ -50,7 +51,6 @@ class _DrawerAvatarState extends State<DrawerAvatar> {
             child: Container(
               width: 28,
               height: 28,
-              padding: const EdgeInsets.all(5),
               decoration: const BoxDecoration(
                 shape: BoxShape.circle,
                 color: Colors.white,

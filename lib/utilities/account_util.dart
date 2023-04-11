@@ -5,6 +5,7 @@ import 'package:dtnd/data/i_local_storage_service.dart';
 import 'package:dtnd/data/i_user_service.dart';
 import 'package:dtnd/data/implementations/local_storage_service.dart';
 import 'package:dtnd/data/implementations/user_service.dart';
+import 'package:dtnd/ui/screen/home_base/widget/home_base_nav.dart';
 import 'package:dtnd/ui/screen/login/login_screen.dart';
 import 'package:dtnd/ui/widget/overlay/custom_dialog.dart';
 import 'package:dtnd/ui/widget/overlay/login_first_dialog.dart';
@@ -34,12 +35,13 @@ class AccountUtil {
           title: 'Xác nhận',
           content: 'Bạn có chắc chắn muốn dùng tài khoản khác?',
           action: () => Navigator.of(context).pop(true),
+          type: TypeAlert.notification,
         );
       },
     ).then((change) {
       if (change ?? false) {
         userService.deleteToken();
-        Navigator.of(context).push<bool>(MaterialPageRoute(
+        Navigator.of(homeBaseKey.currentContext!).push<bool>(MaterialPageRoute(
           builder: (context) => const LoginScreen(),
         ));
         return;
@@ -80,6 +82,7 @@ class AccountUtil {
                       action: () {
                         Navigator.of(context).pop();
                       },
+                      type: TypeAlert.notification,
                     );
                   },
                 ).then((reg) {

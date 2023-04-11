@@ -112,7 +112,7 @@ class _ItemRealizedState extends State<ItemRealizedWidget> {
                               child: Text(
                                 stock?.nameShort ?? "",
                                 overflow: TextOverflow.ellipsis,
-                                style: AppTextStyle.labelSmall_10
+                                style: AppTextStyle.labelMedium_12
                                     .copyWith(color: AppColors.neutral_03),
                               ),
                             ),
@@ -132,7 +132,7 @@ class _ItemRealizedState extends State<ItemRealizedWidget> {
                       children: [
                         Text(
                           'Ngày',
-                          style: AppTextStyle.labelSmall_10
+                          style: AppTextStyle.labelMedium_12
                               .copyWith(color: AppColors.neutral_04),
                         ),
                         const SizedBox(height: 4),
@@ -153,7 +153,7 @@ class _ItemRealizedState extends State<ItemRealizedWidget> {
                       children: [
                         Text(
                           'KL bán',
-                          style: AppTextStyle.labelSmall_10
+                          style: AppTextStyle.labelMedium_12
                               .copyWith(color: AppColors.neutral_04),
                         ),
                         const SizedBox(height: 4),
@@ -171,7 +171,7 @@ class _ItemRealizedState extends State<ItemRealizedWidget> {
                       children: [
                         Text(
                           "Lãi/lỗ",
-                          style: AppTextStyle.labelSmall_10
+                          style: AppTextStyle.labelMedium_12
                               .copyWith(color: AppColors.neutral_04),
                         ),
                         const SizedBox(height: 4),
@@ -191,7 +191,7 @@ class _ItemRealizedState extends State<ItemRealizedWidget> {
                       children: [
                         Text(
                           "% lãi/lỗ",
-                          style: AppTextStyle.labelSmall_10
+                          style: AppTextStyle.labelMedium_12
                               .copyWith(color: AppColors.neutral_04),
                         ),
                         const SizedBox(height: 4),
@@ -223,14 +223,14 @@ class _ItemRealizedState extends State<ItemRealizedWidget> {
                         child: Row(
                           children: [
                             Expanded(
-                              child: AssetGridElement(element: {
+                              child: AssetGridElement(contentPadding:const EdgeInsets.all(5) ,element: {
                                 "Giá bán": NumUtils.formatDouble(
                                     widget.detail?.cSHAREPRICE),
                               }),
                             ),
                             const SizedBox(width: 2),
                             Expanded(
-                              child: AssetGridElement(
+                              child: AssetGridElement(contentPadding:const EdgeInsets.all(5) ,
                                 element: {
                                   "Phí thuế": NumUtils.formatDouble(
                                       widget.detail?.cCOMMVALUE)
@@ -239,7 +239,7 @@ class _ItemRealizedState extends State<ItemRealizedWidget> {
                             ),
                             const SizedBox(width: 2),
                             Expanded(
-                              child: AssetGridElement(
+                              child: AssetGridElement(contentPadding:const EdgeInsets.all(5) ,
                                 element: {
                                   "Giá trị bán": NumUtils.formatDouble(
                                       ((((widget
@@ -263,14 +263,14 @@ class _ItemRealizedState extends State<ItemRealizedWidget> {
                         child: Row(
                           children: [
                             Expanded(
-                              child: AssetGridElement(element: {
+                              child: AssetGridElement(contentPadding:const EdgeInsets.all(5) ,element: {
                                 "Giá vốn": NumUtils.formatDouble(
                                     widget.detail?.cAVERAGEPRICE),
                               }),
                             ),
                             const SizedBox(width: 2),
                             Expanded(
-                              child: AssetGridElement(
+                              child: AssetGridElement(contentPadding:const EdgeInsets.all(5) ,
                                 element: {
                                   "Giá trị vốn": NumUtils.formatDouble(
                                       widget.detail?.cCOSTVALUE)

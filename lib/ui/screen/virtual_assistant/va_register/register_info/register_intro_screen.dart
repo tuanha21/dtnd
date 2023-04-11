@@ -55,6 +55,7 @@ class _RegisterIntro extends State<RegisterIntro> {
         action: () => Navigator.of(context).pop(),
         textButtonExit: 'Thoát',
         textButtonAction: 'OK',
+        type: TypeAlert.notification,
       );
       EasyLoading.dismiss();
     }

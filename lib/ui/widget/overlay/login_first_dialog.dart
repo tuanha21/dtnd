@@ -14,6 +14,7 @@ class LoginFirstDialog extends StatelessWidget {
       title: S.of(context).login_required,
       content: S.of(context).login_to_continue,
       action: () => Navigator.of(context).pop(true),
+      type: TypeAlert.notification,
     );
   }
 }

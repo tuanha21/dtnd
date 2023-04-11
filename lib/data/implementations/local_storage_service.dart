@@ -25,6 +25,7 @@ const String listSavedCatalogKey = "listSavedCatalogKey";
 const String regBioKey = "regBioKey";
 const String usernameKey = "usernameKey";
 const String passwordKey = "passwordKey";
+const String infoRegisteredKey = "infoRegistered";
 
 class LocalStorageService implements ILocalStorageService {
   LocalStorageService._internal();
@@ -239,4 +240,9 @@ class LocalStorageService implements ILocalStorageService {
   @override
   Future<void> cancelBiometrics() =>
       sharedPreferences.setBool(regBioKey, false);
+
+  @override
+  Future<void> saveInfoRegistered(String infoRegistered) async {
+     sharedPreferences.setString(infoRegisteredKey, infoRegistered);
+  }
 }

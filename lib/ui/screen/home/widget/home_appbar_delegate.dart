@@ -1,11 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dtnd/=models=/response/stock.dart';
 import 'package:dtnd/config/service/app_services.dart';
 import 'package:dtnd/data/i_data_center_service.dart';
 import 'package:dtnd/data/i_user_service.dart';
 import 'package:dtnd/data/implementations/network_service.dart';
 import 'package:dtnd/ui/screen/home/widget/home_quick_access.dart';
-import 'package:dtnd/ui/screen/home_base/widget/home_base_nav.dart';
 import 'package:dtnd/ui/screen/search/search_screen.dart';
 import 'package:dtnd/ui/screen/stock_detail/stock_detail_screen.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
@@ -17,9 +17,11 @@ const imageHeight = 280.0;
 class HomeAppbarDelegate extends SliverPersistentHeaderDelegate {
   const HomeAppbarDelegate(
       this.appService, this.dataCenterService, this.userService);
+
   final AppService appService;
   final IDataCenterService dataCenterService;
   final IUserService userService;
+
   @override
   Widget build(
       BuildContext context, double shrinkOffset, bool overlapsContent) {
@@ -50,7 +52,7 @@ class HomeAppbarDelegate extends SliverPersistentHeaderDelegate {
           );
         }
       } else {
-        textTitle = "DTND";
+        textTitle = "IFIS";
         avatar = SizedBox.square(
           dimension: 36,
           child: Icon(
@@ -194,16 +196,41 @@ class __HomeBannerState extends State<_HomeBanner> {
           ),
         );
       }
-      if (widget.appService.homeBanner.value == null) {
-        return Image.asset(
-          AppImages.home_appbar_bg,
-          fit: BoxFit.fill,
-        );
-      }
-      return Image.network(
-        widget.appService.homeBanner.value!,
-        fit: BoxFit.fill,
+      // if (widget.appService.homeBanner.value == null) {
+      //   return Image.asset(
+      //     AppImages.home_appbar_bg,
+      //     fit: BoxFit.fill,
+      //   );
+      // }
+      return CarouselSlider(
+        options: CarouselOptions(
+          viewportFraction: 1,
+          autoPlay: true,
+          height: 400,
+          // aspectRatio: 1.0,
+          // enlargeCenterPage: true,
+          // enlargeStrategy: CenterPageEnlargeStrategy.zoom,
+        ),
+        items: [1, 2, 3, 4, 5].map((i) {
+          return Builder(
+            builder: (BuildContext context) {
+              return (widget.appService.homeBanner.value != null ) ? Image.network(
+                widget.appService.homeBanner.value!,
+                fit: BoxFit.fill,
+                width: MediaQuery.of(context).size.width,
+              ) : Image.asset(
+                AppImages.home_appbar_bg,
+                fit: BoxFit.fill,
+              );
+            },
+          );
+        }).toList(),
       );
+
+      // Image.network(
+      //   widget.appService.homeBanner.value!,
+      //   fit: BoxFit.fill,
+      // );
     });
   }
 }

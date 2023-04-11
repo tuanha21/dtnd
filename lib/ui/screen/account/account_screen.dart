@@ -74,6 +74,7 @@ class _AccountScreenState extends State<AccountScreen> {
                               action: () {
                                 Navigator.of(context).pop();
                               },
+                              type: TypeAlert.notification,
                             );
                           },
                         );
@@ -118,6 +119,7 @@ class _AccountScreenState extends State<AccountScreen> {
                     content:
                         'Bạn chưa đăng ký đăng nhập bằng sinh trắc học\nBạn có muốn đăng ký ngay bây giờ không?',
                     action: () => Navigator.of(context).pop(true),
+                    type: TypeAlert.notification,
                   );
                 },
               );

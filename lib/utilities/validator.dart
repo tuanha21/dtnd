@@ -93,6 +93,16 @@ mixin AppValidator {
     }
   }
 
+  String? checkConfirmRePass(String? rePass, String? pass) {
+    if (rePass?.isEmpty ?? true) {
+      return "Nhập lại mật khẩu";
+    } else if (rePass != pass) {
+      return S.current.pass_not_match;
+    } else {
+      return null;
+    }
+  }
+
   String? volumnValidator(String? vol) {
     if (vol?.isEmpty ?? true) {
       return "Khối lượng không được bỏ trống";

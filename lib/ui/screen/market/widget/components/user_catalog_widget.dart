@@ -209,9 +209,12 @@ class _UserCatalogWidgetState extends State<UserCatalogWidget> {
         ),
         const SizedBox(height: 8),
         Container(
-          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
+          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 8),
           child: Row(
+            mainAxisSize: MainAxisSize.max,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
+              const SizedBox(width: 8),
               Expanded(
                 flex: 25,
                 child: Text(
@@ -270,6 +273,7 @@ class _UserCatalogWidgetState extends State<UserCatalogWidget> {
                     });
                   },
                   child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
                         S.of(context).price,
@@ -282,6 +286,7 @@ class _UserCatalogWidgetState extends State<UserCatalogWidget> {
                   ),
                 ),
               ),
+              const SizedBox(width: 8),
               Expanded(
                 flex: 25,
                 child: GestureDetector(
@@ -295,6 +300,7 @@ class _UserCatalogWidgetState extends State<UserCatalogWidget> {
                     style: textTheme.bodySmall?.copyWith(
                         fontWeight: FontWeight.w600,
                         color: AppColors.neutral_04),
+                    textAlign: TextAlign.center,
                   ),
                 ),
               ),
@@ -329,21 +335,18 @@ class _UserCatalogWidgetState extends State<UserCatalogWidget> {
                       },
                     );
                   },
-                  child: Container(
-                    color: Colors.amber,
-                    child: Align(
-                      child: Row(
-                        children: [
-                          Text(
-                            S.of(context).volumn,
-                            style: textTheme.bodySmall?.copyWith(
-                                fontWeight: FontWeight.w600,
-                                color: AppColors.neutral_04),
-                          ),
-                          sortColumn
-                        ],
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Text(
+                        S.of(context).volumn,
+                        style: textTheme.bodySmall?.copyWith(
+                            fontWeight: FontWeight.w600,
+                            color: AppColors.neutral_04),
+                        textAlign: TextAlign.center,
                       ),
-                    ),
+                      sortColumn
+                    ],
                   ),
                 ),
               )
