@@ -5,9 +5,11 @@ import 'package:dtnd/config/service/app_services.dart';
 import 'package:dtnd/data/i_data_center_service.dart';
 import 'package:dtnd/data/i_user_service.dart';
 import 'package:dtnd/data/implementations/network_service.dart';
+import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/screen/home/widget/home_quick_access.dart';
 import 'package:dtnd/ui/screen/search/search_screen.dart';
 import 'package:dtnd/ui/screen/stock_detail/stock_detail_screen.dart';
+import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
@@ -31,7 +33,7 @@ class HomeAppbarDelegate extends SliverPersistentHeaderDelegate {
       String textTitle;
       Widget avatar;
       if (userService.userInfo.value != null) {
-        textTitle = userService.userInfo.value!.custFullName ?? "";
+        textTitle = userService.userInfo.value!.custFullName ?? "Kien Nguyen";
         if (userService.userInfo.value!.faceImg != null) {
           avatar = Container(
             width: 40,
@@ -43,22 +45,22 @@ class HomeAppbarDelegate extends SliverPersistentHeaderDelegate {
             ),
           );
         } else {
-          avatar = const SizedBox.square(
-            dimension: 40,
-            child: Icon(
-              Icons.account_circle_rounded,
-              color: Colors.white,
+          avatar = ClipOval(
+            child: Image.asset(
+              AppImages.home_avatar_default,
+              width: 40, // adjust the width as needed
+              height: 40, // adjust the height as needed
+              fit: BoxFit.cover,
             ),
           );
         }
       } else {
         textTitle = "IFIS";
-        avatar = SizedBox.square(
-          dimension: 36,
-          child: Icon(
-            Icons.account_circle_rounded,
-            color: ratio <= 0 ? Colors.black : Colors.white,
-          ),
+        avatar = Image.asset(
+          AppImages.logo_account_default,
+          width: 40,
+          height: 40,
+          fit: BoxFit.fill,
         );
       }
       if (userService.userInfo.value != null) {}
@@ -68,12 +70,30 @@ class HomeAppbarDelegate extends SliverPersistentHeaderDelegate {
           children: [
             avatar,
             const SizedBox(width: 8),
-            Text(
-              textTitle,
-              style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                    fontWeight: FontWeight.w700,
-                    color: ratio <= 0 ? Colors.black : Colors.white,
-                  ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                userService.userInfo.value != null
+                    ? Text(
+                        textAlign: TextAlign.left,
+                        S.of(context).hello,
+                        style: Theme.of(context)
+                            .textTheme
+                            .labelMedium
+                            ?.copyWith(
+                              fontWeight: FontWeight.w500,
+                              color: ratio <= 0 ? Colors.black : Colors.white,
+                            ),
+                      )
+                    : const SizedBox(),
+                Text(
+                  textTitle,
+                  style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                        fontWeight: FontWeight.w700,
+                        color: ratio <= 0 ? Colors.black : Colors.white,
+                      ),
+                ),
+              ],
             ),
           ],
         ),
@@ -90,21 +110,22 @@ class HomeAppbarDelegate extends SliverPersistentHeaderDelegate {
               child: _HomeBanner(appService),
             ),
           ),
-          Positioned(
-            top: 224 + (shrinkOffset / _difference * -imageHeight),
-            left: 16,
-            child: SizedBox(
-              width: size.width - 32,
-              child: const HomeQuickAccess(),
-            ),
-          ),
+          // Positioned(
+          //   top: 234 + (shrinkOffset / _difference * -imageHeight),
+          //   left: 16,
+          //   child: SizedBox(
+          //     width: size.width - 32,
+          //     child: const HomeQuickAccess(),
+          //   ),
+          // ),
           Align(
             alignment: Alignment.topCenter,
             child: SizedBox(
-              height: 80,
+              height: 120,
               child: AppBar(
                 automaticallyImplyLeading: false,
-                backgroundColor: ratio <= 0 ? Colors.white : Colors.transparent,
+                backgroundColor:
+                    ratio <= 0 ? AppColors.primary_01 : Colors.transparent,
                 title: title,
                 actions: [
                   SizedBox.square(
@@ -144,12 +165,22 @@ class HomeAppbarDelegate extends SliverPersistentHeaderDelegate {
                       dimension: 24,
                       child: Image.asset(
                         AppImages.home_icon_notification,
-                        color: ratio <= 0 ? Colors.black : Colors.white,
                       )),
                   const SizedBox(
                     width: 16,
                   ),
                 ],
+              ),
+            ),
+          ),
+
+          Positioned(
+            bottom: 20,
+            left: ratio <= 0 ? 0 : 16,
+            child: SizedBox(
+              width: ratio <= 0 ? size.width : size.width - 32,
+              child: HomeQuickAccess(
+                hasUser: userService.userInfo.value != null,
               ),
             ),
           ),
@@ -161,10 +192,10 @@ class HomeAppbarDelegate extends SliverPersistentHeaderDelegate {
   double get _difference => maxExtent - minExtent;
 
   @override
-  double get maxExtent => 400;
+  double get maxExtent => 350;
 
   @override
-  double get minExtent => 80;
+  double get minExtent => 233;
 
   @override
   bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) =>
@@ -214,14 +245,16 @@ class __HomeBannerState extends State<_HomeBanner> {
         items: [1, 2, 3, 4, 5].map((i) {
           return Builder(
             builder: (BuildContext context) {
-              return (widget.appService.homeBanner.value != null ) ? Image.network(
-                widget.appService.homeBanner.value!,
-                fit: BoxFit.fill,
-                width: MediaQuery.of(context).size.width,
-              ) : Image.asset(
-                AppImages.home_appbar_bg,
-                fit: BoxFit.fill,
-              );
+              return (widget.appService.homeBanner.value != null)
+                  ? Image.network(
+                      widget.appService.homeBanner.value!,
+                      fit: BoxFit.fill,
+                      width: MediaQuery.of(context).size.width,
+                    )
+                  : Image.asset(
+                      AppImages.home_appbar_bg,
+                      fit: BoxFit.fill,
+                    );
             },
           );
         }).toList(),
