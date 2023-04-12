@@ -63,7 +63,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '604885963745',
     projectId: 'dtnd-2c0d6',
     storageBucket: 'dtnd-2c0d6.appspot.com',
-    iosClientId: '604885963745-dq5g6c40ebf3723jo8gui8i9q6iukafr.apps.googleusercontent.com',
+    iosClientId:
+        '604885963745-dq5g6c40ebf3723jo8gui8i9q6iukafr.apps.googleusercontent.com',
     iosBundleId: 'com.example.dtnd',
   );
 }

@@ -37,8 +37,13 @@ class _AppDrawerStateSubView extends State<AppDrawerSubView> {
                 child: SvgPicture.asset(AppImages.back_draw_icon),
                 onTap: () => Navigator.of(context).pop(),
               ),
-              const SizedBox(width: 16,),
-              Text(widget.title,style: AppTextStyle.titleLarge_18,)
+              const SizedBox(
+                width: 16,
+              ),
+              Text(
+                widget.title,
+                style: AppTextStyle.titleLarge_18,
+              ),
             ],
           ),
           const SizedBox(

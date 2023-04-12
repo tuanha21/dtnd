@@ -6,6 +6,7 @@ import 'package:dtnd/ui/screen/home/widget/quick_access_element.dart';
 import 'package:dtnd/ui/screen/virtual_assistant/va_util.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
+import 'package:dtnd/ui/theme/app_textstyle.dart';
 import 'package:dtnd/ui/widget/seperator.dart';
 import 'package:dtnd/utilities/num_utils.dart';
 import 'package:flutter/material.dart';
@@ -76,7 +77,8 @@ extension QuickAccessX on QuickAccess {
 }
 
 class HomeQuickAccess extends StatefulWidget {
-  const HomeQuickAccess({super.key});
+  const HomeQuickAccess({super.key, required this.hasUser});
+  final bool hasUser;
 
   @override
   State<HomeQuickAccess> createState() => _HomeQuickAccessState();
@@ -89,39 +91,95 @@ class _HomeQuickAccessState extends State<HomeQuickAccess> {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constrains) {
-        final int elementPerRow = constrains.maxWidth ~/ 80;
+        // final int elementPerRow = constrains.maxWidth ~/ 80;
         return Container(
-          padding: const EdgeInsets.all(16),
-          decoration: const BoxDecoration(
-            borderRadius: BorderRadius.all(Radius.circular(12)),
-            color: Colors.white,
-          ),
-          child: Column(
-            children: [
-              for (int i = 0; i < QuickAccess.values.length; i += elementPerRow)
-                Row(
-                  children: [
-                    for (int j = 0; j < elementPerRow; j++)
-                      if (i + j < QuickAccess.values.length)
-                        Expanded(
-                          child: Padding(
-                            padding: EdgeInsets.only(left: j == 0 ? 0 : 16),
-                            child: HomeQuickAccessElement(
-                                value: QuickAccess.values.elementAt(i + j)),
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+            decoration: const BoxDecoration(
+              borderRadius: BorderRadius.all(Radius.circular(12)),
+              color: Colors.white,
+            ),
+            child: widget.hasUser
+                ? Column(
+                    children: [
+                      Row(
+                        children: [
+                          Text("Tài sản", style: AppTextStyle.titleLarge_18),
+                          Expanded(child: Container()),
+                          Container(
+                            padding: const EdgeInsets.only(
+                                top: 4, bottom: 4, right: 12.5, left: 12.5),
+                            decoration: BoxDecoration(
+                              color: AppColors.accent_light_02,
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                            child: Text(
+                              "Basic",
+                              textAlign: TextAlign.center,
+                              style: AppTextStyle.titleSmall_14
+                                  .copyWith(color: AppColors.graph_4),
+                            ),
+                          )
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 14,
+                      ),
+                      const _AssetRow(),
+                      // const Separator(
+                      //   padding: EdgeInsets.symmetric(vertical: 16),
+                      //   color: AppColors.neutral_05,
+                      // ),
+                      // for (int i = 0; i < QuickAccess.values.length; i += elementPerRow)
+                      //   Row(
+                      //     children: [
+                      //       for (int j = 0; j < elementPerRow; j++)
+                      //         if (i + j < QuickAccess.values.length)
+                      //           Expanded(
+                      //             child: Padding(
+                      //               padding: EdgeInsets.only(left: j == 0 ? 0 : 16),
+                      //               child: HomeQuickAccessElement(
+                      //                   value: QuickAccess.values.elementAt(i + j)),
+                      //             ),
+                      //           )
+                      //         else
+                      //           Expanded(child: Container())
+                      //     ],
+                      //   ),
+                    ],
+                  )
+                : Row(
+                    children: [
+                      Expanded(
+                        flex: 5,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text("Đăng nhập",
+                                style: AppTextStyle.titleLarge_18
+                                    .copyWith(color: AppColors.primary_01)),
+                            const SizedBox(
+                              height: 4,
+                            ),
+                            const Text(
+                              "Kết nối đến thị trường chứng khoán sôi động của IFIS ngay nào!",
+                              maxLines: 2,
+                            )
+                          ],
+                        ),
+                      ),
+                      // Expanded(child: SizedBox()),
+                      Expanded(
+                        flex: 1,
+                        child: GestureDetector(
+                          onTap: () => Scaffold.of(context).openDrawer(),
+                          child: const Icon(
+                            Icons.arrow_forward_ios_rounded,
+                            color: AppColors.text_black,
                           ),
-                        )
-                      else
-                        Expanded(child: Container())
-                  ],
-                ),
-              const Separator(
-                padding: EdgeInsets.symmetric(vertical: 16),
-                color: AppColors.neutral_05,
-              ),
-              const _AssetRow()
-            ],
-          ),
-        );
+                        ),
+                      ),
+                    ],
+                  ));
       },
     );
   }

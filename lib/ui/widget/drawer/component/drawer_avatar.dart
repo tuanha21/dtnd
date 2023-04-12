@@ -21,27 +21,19 @@ class _DrawerAvatarState extends State<DrawerAvatar> {
         imageUrl: widget.imageUrl!,
       );
     } else {
-      avatar = Container(
-        padding: const EdgeInsets.all(4),
-        width: 80,
-        height: 80,
-        decoration:
-            const BoxDecoration(shape: BoxShape.circle, color: Colors.white),
-        child: const Icon(
-          Icons.account_circle_outlined,
-          color: AppColors.neutral_03,
-          size: 72,
+      avatar = ClipOval(
+        child: Image.asset(
+          AppImages.home_avatar_default,
+          width: 72, // adjust the width as needed
+          height: 72, // adjust the height as needed
+          fit: BoxFit.cover,
         ),
       );
     }
     return Stack(
       children: <Widget>[
         // Avatar widget with size of 80
-        CircleAvatar(
-          radius: 40,
-          backgroundColor: Colors.grey[300],
-          child: avatar,
-        ),
+        avatar,
         // Camera icon button overlay at the bottom right corner
         Positioned(
           bottom: 0,

@@ -1,3 +1,4 @@
+import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/widget/drawer/logic/function_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -205,14 +206,40 @@ class FunctionComponentDraw extends StatelessWidget {
                     SizedBox.square(
                         dimension: 24, child: Image.asset(data.iconPath!)),
                     const SizedBox(width: 8),
-                    Expanded(
-                      child: Text(
-                        data.title,
-                        style: Theme.of(context).textTheme.bodyMedium,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ),
+                    data.title != 'Xác thực tài khoản'
+                        ? Expanded(
+                            child: Text(
+                              data.title,
+                              style: Theme.of(context).textTheme.bodyMedium,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          )
+                        : Expanded(
+                            child: Row(
+                              children: [
+                                Text(
+                                  data.title,
+                                  style: Theme.of(context).textTheme.bodyMedium,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                                const Spacer(),
+                                Text(
+                                  'Chưa xác thực',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyMedium
+                                      ?.copyWith(color: AppColors.semantic_03),
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                                const SizedBox(
+                                  width: 15,
+                                ),
+                              ],
+                            ),
+                          ),
                     SvgPicture.asset(AppImages.around_right_icon),
                     const SizedBox(width: 5),
                   ],
