@@ -179,7 +179,11 @@ class BaseMarginPlusAccountModel implements IAccountModel {
     totalCost = parse(data.json['total_cost']);
   }
 
-  num? parse(String string) {
-    return num.tryParse(string);
+  num? parse(dynamic string) {
+    if(string is String) {
+      return num.tryParse(string);
+    } else {
+      return null;
+    }
   }
 }

@@ -58,6 +58,7 @@ import 'package:intl/intl.dart';
 import 'package:socket_io_client/socket_io_client.dart';
 
 import '../../=models=/local/va_portfolio_model.dart';
+import '../../=models=/response/banner_model.dart';
 import '../../=models=/response/basic_company.dart';
 import '../../=models=/response/indContrib.dart';
 import '../../=models=/response/sec_event.dart';
@@ -221,10 +222,15 @@ class NetworkService implements INetworkService {
   }
 
   @override
-  Future<String?> getHomeBanner() async {
-    dynamic response = await client.get(Uri.http(core_url1, "banners"));
-    response = decode(response.bodyBytes);
-    return response["data"].first["img"];
+  Future<List<DataBanner>?> getHomeBanner() async {
+    var response = await client.get(Uri.http(core_url1, "banners"));
+    final List<dynamic> responseBody = decode(response.bodyBytes)["data"];
+    if (responseBody.isEmpty) throw Exception();
+    List<DataBanner> data = [];
+    for (var element in responseBody) {
+      data.add(DataBanner.fromJson(element));
+    }
+    return data;
   }
 
   @override
@@ -278,6 +284,7 @@ class NetworkService implements INetworkService {
       response = response["data"];
     }
     final List<T> result = [];
+    logger.v(response);
     for (var element in response) {
       result.add(CoreResponseModel.fromJson<T>(element)!);
     }

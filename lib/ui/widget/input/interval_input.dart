@@ -92,6 +92,7 @@ class IntervalInput extends StatelessWidget {
   Widget build(BuildContext context) {
     return Material(
       child: TextFormField(
+        textAlign: TextAlign.center,
         key: formKey,
         controller: controller,
         validator: validator,

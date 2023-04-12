@@ -98,6 +98,7 @@ class UserService implements IUserService {
       getUserInfo();
       getListAccount();
       getTotalAsset();
+      localStorageService.sharedPreferences.remove('pincode');
       // getSearchHistory();
       return true;
     } catch (e) {
@@ -159,44 +160,43 @@ class UserService implements IUserService {
     } else {
       listAccountModel.value = listAccount;
       for (var i = 0; i < listAccount!.length; i++) {
-        String p1 = listAccount.elementAt(i).accCode.replaceRange(
-            listAccount.elementAt(i).accCode.length - 1,
-            listAccount.elementAt(i).accCode.length,
-            '9');
         requestModel = RequestModel(this,
             group: "Q",
             data: RequestDataModel.stringType(
               cmd: "Web.Portfolio.AccountStatus",
-              p1: p1,
+              p1: listAccount.elementAt(i).accCode,
             ));
         dynamic response =
             await networkService.requestTraditionalApi<IAccountResponse>(
           requestModel,
           modifyResponse: (res) {
-            res["accCode"] = p1;
+            res["accCode"] = listAccount.elementAt(i).accCode;
             return res;
           },
         );
+
+        print('tiennh rq'+requestModel.toString());
 
         listAccount.elementAt(i).updateDataFromJson(response!);
         requestModel = RequestModel(this,
             group: "Q",
             data: RequestDataModel.stringType(
               cmd: "Web.Portfolio.PortfolioStatus",
-              p1: p1,
+              p1: listAccount.elementAt(i).accCode,
             ));
-         response = await networkService
+        response = await networkService
             .requestTraditionalApiResList<PorfolioStock>(requestModel);
         if (response != null) {
           listAccount.elementAt(i).portfolioStatus =
               PortfolioStatus.fromPorfolioStock(response!);
         }
-        response = await getListAssetChart(p1);
+        response = await getListAssetChart(listAccount.elementAt(i).accCode);
         if (response != null) {
           listAccount.elementAt(i).listAssetChart = response;
         }
 
-        response = await getListUnexecutedRight(p1);
+        response =
+            await getListUnexecutedRight(listAccount.elementAt(i).accCode);
         if (response != null) {
           listAccount.elementAt(i).listUnexecutedRight = response;
         }

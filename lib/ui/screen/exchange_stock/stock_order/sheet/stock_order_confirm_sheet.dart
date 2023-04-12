@@ -9,6 +9,7 @@ import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/screen/exchange_stock/stock_order/business/stock_order_flow.dart';
 import 'package:dtnd/ui/screen/exchange_stock/stock_order/data/order_data.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
+import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:dtnd/ui/theme/app_textstyle.dart';
 import 'package:dtnd/ui/widget/button/async_single_color_text_button.dart';
 import 'package:dtnd/ui/widget/icon/sheet_header.dart';
@@ -17,13 +18,20 @@ import 'package:dtnd/utilities/num_utils.dart';
 import 'package:dtnd/utilities/string_util.dart';
 import 'package:dtnd/utilities/validator.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:flutter_svg/svg.dart';
+
+import '../../../../../data/i_local_storage_service.dart';
+import '../../../../../data/implementations/local_storage_service.dart';
 
 class StockOrderConfirmSheet extends StatefulWidget {
   const StockOrderConfirmSheet({
     super.key,
     required this.orderData,
   });
+
   final OrderData orderData;
+
   @override
   State<StockOrderConfirmSheet> createState() => _StockOrderConfirmSheetState();
 }
@@ -33,12 +41,17 @@ class _StockOrderConfirmSheetState extends State<StockOrderConfirmSheet>
   final IExchangeService exchangeService = ExchangeService();
   final GlobalKey<FormState> pinKey = GlobalKey<FormState>();
   final GlobalKey<FormFieldState<String?>> pinFormKey =
-      GlobalKey<FormFieldState<String?>>();
+  GlobalKey<FormFieldState<String?>>();
+  final ILocalStorageService localStorageService = LocalStorageService();
 
   final TextEditingController pinController = TextEditingController();
+  bool checked = false;
+
   @override
   void initState() {
     super.initState();
+    pinController.text =
+        localStorageService.sharedPreferences.getString('pincode') ?? '';
   }
 
   @override
@@ -50,7 +63,9 @@ class _StockOrderConfirmSheetState extends State<StockOrderConfirmSheet>
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SheetHeader(
-              title: S.of(context).order_confirm,
+              title: S
+                  .of(context)
+                  .order_confirm,
               backData: widget.orderData,
             ),
             Row(
@@ -67,14 +82,16 @@ class _StockOrderConfirmSheetState extends State<StockOrderConfirmSheet>
                       children: [
                         Text(
                           widget.orderData.stockModel.stock.stockCode,
-                          style: Theme.of(context)
+                          style: Theme
+                              .of(context)
                               .textTheme
                               .bodyMedium!
                               .copyWith(fontWeight: FontWeight.w600),
                         ),
                         Text(
                           widget.orderData.stockModel.stock.postTo!.name,
-                          style: Theme.of(context)
+                          style: Theme
+                              .of(context)
                               .textTheme
                               .titleSmall!
                               .copyWith(fontWeight: FontWeight.w600),
@@ -85,7 +102,7 @@ class _StockOrderConfirmSheetState extends State<StockOrderConfirmSheet>
                 ),
                 Container(
                   padding:
-                      const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                  const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
                   decoration: BoxDecoration(
                     borderRadius: const BorderRadius.all(Radius.circular(4)),
                     color: widget.orderData.side.isBuy
@@ -114,24 +131,34 @@ class _StockOrderConfirmSheetState extends State<StockOrderConfirmSheet>
               child: Column(
                 children: [
                   _Row(
-                    label: S.of(context).volumn,
+                    label: S
+                        .of(context)
+                        .volumn,
                     value: widget.orderData.volumn.toString(),
                   ),
                   const SizedBox(height: 8),
                   _Row(
                     label: widget.orderData.side.isBuy
-                        ? S.of(context).buy_price
-                        : S.of(context).sell_price,
+                        ? S
+                        .of(context)
+                        .buy_price
+                        : S
+                        .of(context)
+                        .sell_price,
                     value: widget.orderData.price,
                   ),
                   const SizedBox(height: 8),
                   _Row(
-                    label: S.of(context).order_type,
+                    label: S
+                        .of(context)
+                        .order_type,
                     value: widget.orderData.orderType.detailName,
                   ),
                   const SizedBox(height: 8),
                   _Row(
-                    label: S.of(context).exchange_total,
+                    label: S
+                        .of(context)
+                        .exchange_total,
                     value: widget.orderData.exchangeTotal?.toString(),
                     valueColor: AppColors.primary_01,
                   ),
@@ -139,20 +166,11 @@ class _StockOrderConfirmSheetState extends State<StockOrderConfirmSheet>
                 ],
               ),
             ),
-            const SizedBox(height: 20),
-            Row(
-              children: [
-                Text(
-                  S.of(context).period_of_validity,
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodyMedium!
-                      .copyWith(fontWeight: FontWeight.w700),
-                ),
-              ],
-            ),
-            const SizedBox(height: 20),
-            Form(
+            (localStorageService.sharedPreferences
+                .getString('pincode')
+                ?.isEmpty ??
+                true)
+                ? Form(
               key: pinKey,
               autovalidateMode: AutovalidateMode.disabled,
               child: TextFormField(
@@ -161,13 +179,33 @@ class _StockOrderConfirmSheetState extends State<StockOrderConfirmSheet>
                 validator: pinValidator,
                 autovalidateMode: AutovalidateMode.disabled,
                 decoration: InputDecoration(
-                  labelText: S.of(context).pin_code,
+                  labelText: S
+                      .of(context)
+                      .pin_code,
                   // contentPadding: const EdgeInsets.all(0),
                   floatingLabelBehavior: FloatingLabelBehavior.always,
                   floatingLabelAlignment: FloatingLabelAlignment.start,
+                  suffixIcon: InkWell(
+                      onTap: () {
+                        checked = !checked;
+                        if (checked && pinController.text != ''){
+                        EasyLoading.showToast('Đã lưu pin code ',maskType: EasyLoadingMaskType.clear);
+                        }
+                        setState ( () {});
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.all(10),
+                        child: SvgPicture.asset(
+                          AppImages.save_pin_code_icon,
+                          color:(checked && pinController.text != '')
+                              ? AppColors.semantic_01
+                              : AppColors.primary_01,
+                        ),
+                      )),
                 ),
               ),
-            ),
+            )
+                : const SizedBox(),
             const SizedBox(height: 20),
             Row(
               children: [
@@ -189,10 +227,13 @@ class _StockOrderConfirmSheetState extends State<StockOrderConfirmSheet>
                 // )),
                 Expanded(
                   child: AsyncSingleColorTextButton(
-                    text: S.of(context).confirm.toUpperCase(),
+                    text: S
+                        .of(context)
+                        .confirm
+                        .toUpperCase(),
                     color: AppColors.semantic_01,
                     onTap: () async {
-                      if (pinKey.currentState!.validate()) {
+                      // if (pinKey.currentState!.validate()) {
                         // await Future.delayed(const Duration(seconds: 2))
                         //     .then((value) {
                         //   Navigator.of(context).pop(const NextCmd());
@@ -211,6 +252,10 @@ class _StockOrderConfirmSheetState extends State<StockOrderConfirmSheet>
                           return;
                         }
                         if (!mounted) return;
+                        if (checked) {
+                          localStorageService.sharedPreferences
+                              .setString('pincode', pinController.text);
+                        }
                         Navigator.of(context).pop(OrderSuccessCmd(response));
                         // Fluttertoast.showToast(
                         //   msg: response?.rs ?? S.of(context).unknown_error,
@@ -221,7 +266,7 @@ class _StockOrderConfirmSheetState extends State<StockOrderConfirmSheet>
                         //   textColor: Colors.white,
                         //   fontSize: 16.0,
                         // );
-                      }
+                      // }
                     },
                   ),
                 ),
@@ -240,12 +285,16 @@ class _Row extends StatelessWidget {
     this.value,
     this.valueColor,
   });
+
   final String label;
   final String? value;
   final Color? valueColor;
+
   @override
   Widget build(BuildContext context) {
-    final textheme = Theme.of(context).textTheme;
+    final textheme = Theme
+        .of(context)
+        .textTheme;
     final labelTheme = textheme.titleSmall!;
     final valueTheme = textheme.bodyMedium!
         .copyWith(fontWeight: FontWeight.w600, color: valueColor);

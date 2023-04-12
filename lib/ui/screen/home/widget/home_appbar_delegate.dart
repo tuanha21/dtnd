@@ -173,7 +173,9 @@ class HomeAppbarDelegate extends SliverPersistentHeaderDelegate {
 
 class _HomeBanner extends StatefulWidget {
   const _HomeBanner(this.appService);
+
   final AppService appService;
+
   @override
   State<_HomeBanner> createState() => __HomeBannerState();
 }
@@ -196,41 +198,32 @@ class __HomeBannerState extends State<_HomeBanner> {
           ),
         );
       }
-      // if (widget.appService.homeBanner.value == null) {
-      //   return Image.asset(
-      //     AppImages.home_appbar_bg,
-      //     fit: BoxFit.fill,
-      //   );
-      // }
-      return CarouselSlider(
+      if (widget.appService.homeBanner == null) {
+        return Image.asset(
+          AppImages.home_appbar_bg,
+          fit: BoxFit.fill,
+        );
+      }
+      return CarouselSlider.builder(
+        itemCount: widget.appService.homeBanner?.length,
+        itemBuilder: (context, index, _) {
+          return (widget.appService.homeBanner != null)
+              ? Image.network(
+                  widget.appService.homeBanner?[index].img ?? '',
+                  fit: BoxFit.fill,
+                  width: MediaQuery.of(context).size.width,
+                )
+              : Image.asset(
+                  AppImages.home_appbar_bg,
+                  fit: BoxFit.fill,
+                );
+        },
         options: CarouselOptions(
           viewportFraction: 1,
           autoPlay: true,
           height: 400,
-          // aspectRatio: 1.0,
-          // enlargeCenterPage: true,
-          // enlargeStrategy: CenterPageEnlargeStrategy.zoom,
         ),
-        items: [1, 2, 3, 4, 5].map((i) {
-          return Builder(
-            builder: (BuildContext context) {
-              return (widget.appService.homeBanner.value != null ) ? Image.network(
-                widget.appService.homeBanner.value!,
-                fit: BoxFit.fill,
-                width: MediaQuery.of(context).size.width,
-              ) : Image.asset(
-                AppImages.home_appbar_bg,
-                fit: BoxFit.fill,
-              );
-            },
-          );
-        }).toList(),
       );
-
-      // Image.network(
-      //   widget.appService.homeBanner.value!,
-      //   fit: BoxFit.fill,
-      // );
     });
   }
 }

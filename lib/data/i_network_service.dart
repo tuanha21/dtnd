@@ -38,6 +38,7 @@ import 'package:socket_io_client/socket_io_client.dart' as IO;
 import '../=models=/algo/filter.dart';
 import '../=models=/algo/stock_filter.dart';
 import '../=models=/request/request_model.dart';
+import '../=models=/response/banner_model.dart';
 import '../=models=/response/basic_company.dart';
 import '../=models=/response/company_info.dart';
 import '../=models=/response/indContrib.dart';
@@ -62,7 +63,7 @@ abstract class INetworkService {
 
   Future<void> startSocket();
 
-  Future<String?> getHomeBanner();
+  Future<List<DataBanner>?> getHomeBanner();
 
   void regSessionExpiredCallback(void Function() onSessionExpired);
 

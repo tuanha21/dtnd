@@ -36,4 +36,9 @@ class OrderData {
     }
     return null;
   }
+
+  @override
+  String toString() {
+    return 'OrderData{stockModel: $stockModel, price: $price, volumn: $volumn, orderType: $orderType, side: $side, pin: $pin}';
+  }
 }

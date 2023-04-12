@@ -1,4 +1,3 @@
-import 'package:dtnd/=models=/response/account/base_margin_account_model.dart';
 import 'package:dtnd/=models=/response/account/portfolio_status_model.dart';
 import 'package:dtnd/=models=/response/stock.dart';
 import 'package:dtnd/data/i_user_service.dart';
@@ -12,9 +11,12 @@ import 'package:dtnd/utilities/num_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../../../=models=/response/account/base_margin_plus_account_model.dart';
+
 class OrderOwnedStockPanel extends StatefulWidget {
   const OrderOwnedStockPanel({super.key, this.onSell});
-  final ValueChanged<String>? onSell;
+
+  final ValueChanged<PorfolioStock>? onSell;
 
   @override
   State<OrderOwnedStockPanel> createState() => _OrderOwnedStockPanelState();
@@ -22,12 +24,13 @@ class OrderOwnedStockPanel extends StatefulWidget {
 
 class _OrderOwnedStockPanelState extends State<OrderOwnedStockPanel> {
   final IUserService userService = UserService();
+
   @override
   Widget build(BuildContext context) {
     return Obx(() {
       final data = userService.listAccountModel.value?.firstWhereOrNull(
-              (element) => element.runtimeType == BaseMarginAccountModel)
-          as BaseMarginAccountModel?;
+              (element) => element.runtimeType == BaseMarginPlusAccountModel)
+          as BaseMarginPlusAccountModel?;
 
       List<PorfolioStock>? portfolioStocks =
           data?.portfolioStatus?.porfolioStocks ?? [];
@@ -54,8 +57,9 @@ class _OrderOwnedStockPanelState extends State<OrderOwnedStockPanel> {
 class OrderOwnedStockWidget extends StatefulWidget {
   const OrderOwnedStockWidget(
       {super.key, required this.portfolioStock, this.onSell});
+
   final PorfolioStock portfolioStock;
-  final ValueChanged<String>? onSell;
+  final ValueChanged<PorfolioStock>? onSell;
 
   @override
   State<OrderOwnedStockWidget> createState() => _OrderOwnedStockWidgetState();
@@ -63,6 +67,7 @@ class OrderOwnedStockWidget extends StatefulWidget {
 
 class _OrderOwnedStockWidgetState extends State<OrderOwnedStockWidget> {
   Stock? stock;
+
   @override
   void initState() {
     super.initState();
@@ -97,7 +102,7 @@ class _OrderOwnedStockWidgetState extends State<OrderOwnedStockWidget> {
               borderRadius: const BorderRadius.all(Radius.circular(4)),
               child: InkWell(
                   onTap: () =>
-                      widget.onSell?.call(widget.portfolioStock.symbol),
+                      widget.onSell?.call(widget.portfolioStock),
                   borderRadius: const BorderRadius.all(Radius.circular(4)),
                   child: Ink(
                     padding:
@@ -135,7 +140,6 @@ class _OrderOwnedStockWidgetState extends State<OrderOwnedStockWidget> {
               ],
             ),
             Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Text(
                   S.of(context).profit_and_loss,
@@ -152,6 +156,20 @@ class _OrderOwnedStockWidgetState extends State<OrderOwnedStockWidget> {
                     ),
                     const SizedBox(width: 3),
                     widget.portfolioStock.prefixIcon(size: 10),
+                  ],
+                ),
+              ],
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Text(
+                  '%${S.of(context).profit_and_loss}',
+                  style: AppTextStyle.labelSmall_10
+                      .copyWith(color: AppColors.neutral_03),
+                ),
+                Row(
+                  children: [
                     Text(
                       widget.portfolioStock.gainLossPer ?? "-%",
                       style: AppTextStyle.labelSmall_10.copyWith(

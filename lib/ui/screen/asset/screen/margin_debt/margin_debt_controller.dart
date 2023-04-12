@@ -45,7 +45,7 @@ class MarginDebtControllers {
       userService,
       data: RequestDataModel.cursorType(
           cmd: "GetDebtForWeb",
-          p1: "${userService.token.value!.user}6",
+          p1: "${userService.token.value!.user}9",
           p3: TimeUtilities.commonTimeFormat.format(fromDay ??
               TimeUtilities.getPreviousDateTime(TimeUtilities.month(1))),
           p4: TimeUtilities.commonTimeFormat.format(toDay ?? DateTime.now()),

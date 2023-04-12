@@ -74,6 +74,7 @@ class AppImages {
   static const String back_draw_icon = "assets/svg/back_draw_icon.svg";
   static const String around_right_icon = "assets/svg/around_right_icon.svg";
   static const String verify_account_icon = "assets/svg/verify_account_icon.svg";
+  static const String save_pin_code_icon = "assets/svg/save_pin_code_icon.svg";
 
   static const String qa_base = "assets/svg/qa_base.svg";
   static const String qa_bond = "assets/svg/qa_bond.svg";

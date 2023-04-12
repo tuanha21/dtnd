@@ -6,7 +6,7 @@ import 'order_model/i_order_model.dart';
 class OrderHistoryModel implements CoreResponseModel {
   num? rOWNUM;
   String? pKORDER;
-  num? cORDERNO;
+  String? cORDERNO;
   String? cACCOUNTCODE;
   late final String stockCode;
   late final Side side;

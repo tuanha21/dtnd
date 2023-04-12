@@ -51,7 +51,6 @@ class _OrderNoteScreenState extends State<OrderNoteScreen>
             controller: tabController,
             children: const [
               IndayOrderTab(),
-
               OrderHistoryTab(),
             ],
           ))

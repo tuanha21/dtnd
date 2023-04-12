@@ -8,6 +8,8 @@ import 'package:dtnd/ui/widget/chart/circle_process_chart.dart';
 import 'package:dtnd/utilities/num_utils.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../=models=/response/account/base_margin_plus_account_model.dart';
+
 enum TotalAssetWidgetType {
   white,
   withBackGround,
@@ -25,7 +27,7 @@ class TotalAssetWidget extends StatefulWidget {
     this.percent = 85,
     this.data,
   }) : super(key: key);
-  final BaseMarginAccountModel? data;
+  final BaseMarginPlusAccountModel? data;
   final TotalAssetWidgetType type;
   final String asset;
   final double percent;

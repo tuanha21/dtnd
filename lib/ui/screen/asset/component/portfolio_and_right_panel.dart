@@ -8,6 +8,7 @@ import 'package:dtnd/utilities/num_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../../=models=/response/account/base_margin_plus_account_model.dart';
 import '../../../../data/i_data_center_service.dart';
 import '../../../../data/i_user_service.dart';
 import '../../../../data/implementations/data_center_service.dart';
@@ -90,8 +91,8 @@ class _PortfolioAndRightPanelState extends State<PortfolioAndRightPanel>
               child: Obx(() {
                 final data = userService.listAccountModel.value
                         ?.firstWhereOrNull((element) =>
-                            element.runtimeType == BaseMarginAccountModel)
-                    as BaseMarginAccountModel?;
+                            element.runtimeType == BaseMarginPlusAccountModel)
+                    as BaseMarginPlusAccountModel?;
                 if (data?.portfolioStatus?.porfolioStocks?.isNotEmpty ??
                     false) {
                   return Row(
@@ -148,8 +149,8 @@ class _PortfolioAndRightPanelState extends State<PortfolioAndRightPanel>
             ),
           Obx(() {
             final data = userService.listAccountModel.value?.firstWhereOrNull(
-                    (element) => element.runtimeType == BaseMarginAccountModel)
-                as BaseMarginAccountModel?;
+                    (element) => element.runtimeType == BaseMarginPlusAccountModel)
+                as BaseMarginPlusAccountModel?;
 
             if (_tabController.index == 0) {
               if (data?.portfolioStatus?.porfolioStocks?.isEmpty ?? true) {

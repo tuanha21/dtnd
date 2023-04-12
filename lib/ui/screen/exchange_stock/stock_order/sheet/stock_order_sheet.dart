@@ -38,8 +38,10 @@ class StockOrderSheet extends StatefulWidget {
     required this.stockModel,
     this.orderData,
   });
+
   final StockModel? stockModel;
   final OrderData? orderData;
+
   @override
   State<StockOrderSheet> createState() => _StockOrderSheetState();
 }
@@ -55,8 +57,7 @@ class _StockOrderSheetState extends State<StockOrderSheet>
 
   late Set<OrderType> listOrderTypes;
   final TextEditingController priceController = TextEditingController();
-  final TextEditingController volumnController =
-      TextEditingController(text: "100");
+  final TextEditingController volumnController = TextEditingController();
   late final TabController tabController;
   Timer? onPriceStoppedTyping;
   bool typingPrice = false;
@@ -70,6 +71,7 @@ class _StockOrderSheetState extends State<StockOrderSheet>
   StockCashBalanceModel? stockCashBalanceModel;
 
   String? errorText;
+  String? _selectedItem;
 
   @override
   void initState() {
@@ -83,11 +85,12 @@ class _StockOrderSheetState extends State<StockOrderSheet>
       listOrderTypes = stockModel!.stock.postTo?.listOrderType ?? {};
       selectedOrderType = widget.orderData?.orderType ?? listOrderTypes.first;
       priceController.text = widget.orderData?.price ?? "0";
-      volumnController.text = widget.orderData?.volumn.toString() ?? "100";
+      volumnController.text = widget.orderData?.volumn.toString() ?? '100';
+      //widget.portfolioStock.avaiableVol
 
       // select(selectedOrderType);
     }
-    getStockInfoCore();
+    getStockInfoCore().then((value) => getStockCashBalance());
     getStockCashBalance();
     // stockSearchFocusNode.addListener(() {
     //   if (stockSearchFocusNode.hasFocus) {
@@ -122,12 +125,10 @@ class _StockOrderSheetState extends State<StockOrderSheet>
         price: priceController.text,
         side: Side.buy);
     setState(() {});
-    print('tiennh2' + stockCashBalanceModel.toString());
   }
 
   void select(OrderType orderType) {
     if (orderType.isLO && stockModel?.stockDataCore != null) {
-      print(stockModel!.stockDataCore!.lastPrice);
       final String currentPrice =
           stockModel!.stockDataCore!.lastPrice?.toStringAsFixed(2) ??
               stockModel!.stockDataCore!.r?.toString() ??
@@ -207,7 +208,6 @@ class _StockOrderSheetState extends State<StockOrderSheet>
 
   @override
   Widget build(BuildContext context) {
-    print("Ký quỹ ${stockCashBalanceModel?.imCk}%--tiennh");
     final textTheme = Theme.of(context).textTheme;
     return Form(
       key: orderKey,
@@ -287,11 +287,14 @@ class _StockOrderSheetState extends State<StockOrderSheet>
                       OrderOwnedStockPanel(
                         onSell: (stockCodes) async {
                           final model = await dataCenterService
-                              .getStocksModelsFromStockCodes([stockCodes]);
+                              .getStocksModelsFromStockCodes(
+                                  [stockCodes.symbol]);
                           if (model?.isNotEmpty ?? false) {
                             changeStock(model!.first);
                             tabController.animateTo(0);
                           }
+                          volumnController.text =
+                              stockCodes.avaiableVol.toString();
                         },
                       ),
                     ]),
@@ -370,12 +373,29 @@ class _StockOrderSheetState extends State<StockOrderSheet>
                       decoration: const BoxDecoration(
                           borderRadius: BorderRadius.all(Radius.circular(4)),
                           color: AppColors.primary_01),
-                      child: Text(
-                        "Ký quỹ ${stockCashBalanceModel?.imCk}%",
-                        style: AppTextStyle.labelSmall_10.copyWith(
-                          color: Colors.white,
-                          fontWeight: FontWeight.w600,
+                      child: GestureDetector(
+                        child: Text(
+                          "Ký quỹ ${stockCashBalanceModel?.imCk}%",
+                          style: AppTextStyle.labelSmall_10.copyWith(
+                            color: Colors.white,
+                            fontWeight: FontWeight.w600,
+                          ),
                         ),
+                        onTap: () {
+                          print(stockModel!.stockDataCore?.mr.toString());
+                          List<Mr>? listMR = stockModel!.stockDataCore?.mr;
+                          DropdownButton(
+                            value: _selectedItem,
+                            items:
+                                listMR?.map<DropdownMenuItem<Mr>>((Mr value) {
+                              return DropdownMenuItem<Mr>(
+                                value: value,
+                                child: Text(value.info.toString()),
+                              );
+                            }).toList(),
+                            onChanged: (Mr) {},
+                          );
+                        },
                       ),
                     )
                   ],
@@ -465,6 +485,23 @@ class _StockOrderSheetState extends State<StockOrderSheet>
     );
   }
 
+  // void _showDropdown(List<Mr>? data) {
+  //   DropdownButton(
+  //     value: _selectedItem,
+  //     items: data?.map((String item) {
+  //       return DropdownMenuItem(
+  //         value: item,
+  //         child: Text(item),
+  //       );
+  //     }).toList(),
+  //     onChanged: (String selectedItem) {
+  //       setState(() {
+  //         _selectedItem = selectedItem;
+  //       });
+  //     },
+  //   );
+  // }
+
   void _onPriceChangeHandler(String value) {
     if (onPriceStoppedTyping != null) {
       setState(() {
@@ -487,9 +524,11 @@ class _OrderTypeButton extends StatelessWidget {
     required this.isSelected,
     required this.select,
   });
+
   final OrderType orderType;
   final Function isSelected;
   final ValueChanged<OrderType> select;
+
   @override
   Widget build(BuildContext context) {
     final bool selected = isSelected.call(orderType);

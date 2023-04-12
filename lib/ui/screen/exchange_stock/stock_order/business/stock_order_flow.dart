@@ -1,5 +1,7 @@
 import 'package:dtnd/=models=/response/order_model/base_order_model.dart';
 import 'package:dtnd/=models=/response/stock_model.dart';
+import 'package:dtnd/=models=/ui_model/dialog.dart';
+import 'package:dtnd/=models=/ui_model/overlay.dart';
 import 'package:dtnd/=models=/ui_model/sheet.dart';
 import 'package:dtnd/=models=/ui_model/user_cmd.dart';
 import 'package:dtnd/ui/screen/exchange_stock/stock_order/sheet/cancel_order_sheet.dart';
@@ -88,8 +90,8 @@ class StockOrderConfirmISheet extends IStockOrderSheet {
 
   @override
   Widget? backWidget([cmd]) => StockOrderSheet(
-        stockModel: stockModel,
-        orderData: cmd!.data,
+        stockModel: cmd!.data.stockModel,
+        orderData: cmd.data,
       );
 
   @override

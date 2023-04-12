@@ -1,4 +1,4 @@
-import 'package:dtnd/=models=/response/account/base_margin_account_model.dart';
+import 'package:dtnd/=models=/response/account/base_margin_plus_account_model.dart';
 import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
@@ -12,7 +12,7 @@ class AccountAssetOverviewWidget extends StatefulWidget {
     Key? key,
     this.data,
   }) : super(key: key);
-  final BaseMarginAccountModel? data;
+  final BaseMarginPlusAccountModel? data;
 
   @override
   State<AccountAssetOverviewWidget> createState() =>
@@ -22,6 +22,7 @@ class AccountAssetOverviewWidget extends StatefulWidget {
 class _AccountAssetOverviewWidgetState
     extends State<AccountAssetOverviewWidget> {
   bool expanded = false;
+
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
@@ -52,7 +53,7 @@ class _AccountAssetOverviewWidgetState
                       ),
                       const SizedBox(height: 12),
                       Text(
-                        "${NumUtils.formatDouble(widget.data?.equity, "-")}đ",
+                        "${NumUtils.formatDouble(widget.data?.totalEquity, "-")}đ",
                         style: textTheme.bodyLarge!.copyWith(
                           fontWeight: FontWeight.w700,
                         ),
@@ -197,7 +198,7 @@ class _AccountAssetOverviewWidgetState
                                                   fontWeight: FontWeight.w500),
                                         ),
                                         Text(
-                                            "${NumUtils.formatInteger(widget.data?.depositFee ?? 0)}đ",
+                                            "${NumUtils.formatInteger(widget.data?.loanFee ?? 0)}đ",
                                             style: textTheme.labelMedium!
                                                 .copyWith(
                                                     fontWeight:
@@ -344,7 +345,9 @@ class _AccountAssetOverviewWidgetState
                                 S.of(context).returning_money,
                                 style: AppTextStyle.labelSmall_10,
                               ),
-                              Text("0đ",
+                              Text(
+                                  // (widget.data?.apT0 + widget.data?.apT1 + widget.data?.apT2),
+                                  "${NumUtils.formatInteger( (widget.data?.apT0 ?? 0) + (widget.data?.apT1 ?? 0) + (widget.data?.apT2 ?? 0))}đ",
                                   style: textTheme.labelMedium!
                                       .copyWith(fontWeight: FontWeight.w600))
                             ],
@@ -430,16 +433,19 @@ class _ExpandableRow extends StatefulWidget {
     required this.value,
     this.child,
   });
+
   final Widget icon;
   final String text;
   final Widget value;
   final Widget? child;
+
   @override
   State<_ExpandableRow> createState() => __ExpandableRowState();
 }
 
 class __ExpandableRowState extends State<_ExpandableRow> {
   bool expanded = false;
+
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;

@@ -254,7 +254,7 @@ class _VaSheetState extends State<VaSheet> with SingleTickerProviderStateMixin {
                       OrderOwnedStockPanel(
                         onSell: (stockCodes) async {
                           final model = await dataCenterService
-                              .getStocksModelsFromStockCodes([stockCodes]);
+                              .getStocksModelsFromStockCodes([stockCodes.symbol]);
                           if (model?.isNotEmpty ?? false) {
                             changeStock(model!.first);
                             tabController.animateTo(0);

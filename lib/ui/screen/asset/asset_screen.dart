@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:dtnd/=models=/response/account/base_margin_account_model.dart';
+import 'package:dtnd/=models=/response/account/base_margin_plus_account_model.dart';
 import 'package:dtnd/=models=/response/stock_model.dart';
 import 'package:dtnd/data/i_data_center_service.dart';
 import 'package:dtnd/data/i_local_storage_service.dart';
@@ -80,9 +81,11 @@ class _AssetScreenState extends State<AssetScreen>
           // final data = userService.listAccountModel.value?.firstWhereOrNull(
           //         (element) => element.runtimeType == BaseMarginAccountModel)
           //     as BaseMarginAccountModel?;
+          // đm là do ko có data
           final data = userService.listAccountModel.value?.firstWhereOrNull(
-                  (element) => element.runtimeType == BaseMarginAccountModel)
-              as BaseMarginAccountModel?;
+                  (element) => element.runtimeType == BaseMarginPlusAccountModel)
+              as BaseMarginPlusAccountModel?;
+
           return AssetChart(
             datas: data?.listAssetChart,
           );
@@ -93,8 +96,8 @@ class _AssetScreenState extends State<AssetScreen>
           //         (element) => element.runtimeType == BaseMarginAccountModel)
           //     as BaseMarginAccountModel?;
           final data = userService.listAccountModel.value?.firstWhereOrNull(
-                  (element) => element.runtimeType == BaseMarginAccountModel)
-              as BaseMarginAccountModel?;
+                  (element) => element.runtimeType == BaseMarginPlusAccountModel)
+              as BaseMarginPlusAccountModel?;
           List<ChartData> datas = [
             ChartData(
                 "Tiền",
@@ -240,8 +243,8 @@ class _AssetScreenState extends State<AssetScreen>
                         false) {
                       final data = userService.listAccountModel.value!
                               .firstWhereOrNull((element) =>
-                                  element.runtimeType == BaseMarginAccountModel)
-                          as BaseMarginAccountModel?;
+                                  element.runtimeType == BaseMarginPlusAccountModel)
+                          as BaseMarginPlusAccountModel?;
                       return AccountAssetOverviewWidget(
                         data: data,
                       );
