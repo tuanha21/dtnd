@@ -256,7 +256,8 @@ class _StockOrderConfirmSheetState extends State<StockOrderConfirmSheet>
                           localStorageService.sharedPreferences
                               .setString('pincode', pinController.text);
                         }
-                        Navigator.of(context).pop(OrderSuccessCmd(response));
+                        // print('tiennh'+ response.toString());
+                        Navigator.of(context).pop(OrderSuccessCmd(widget.orderData));
                         // Fluttertoast.showToast(
                         //   msg: response?.rs ?? S.of(context).unknown_error,
                         //   toastLength: Toast.LENGTH_SHORT,

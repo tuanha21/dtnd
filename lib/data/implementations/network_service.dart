@@ -285,6 +285,9 @@ class NetworkService implements INetworkService {
     }
     final List<T> result = [];
     logger.v(response);
+    if (response.runtimeType != List || response.isEmpty) {
+      return [];
+    }
     for (var element in response) {
       result.add(CoreResponseModel.fromJson<T>(element)!);
     }

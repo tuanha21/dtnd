@@ -20,10 +20,7 @@ abstract class IDialog implements IOverlay {
           insetPadding: const EdgeInsets.all(16),
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
-          child: Padding(
-            padding: const EdgeInsets.all(16),
-            child: child,
-          ),
+          child: child,
         );
       },
     ).then((result) => cmd(context, result));

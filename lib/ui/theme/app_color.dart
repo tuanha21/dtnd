@@ -81,6 +81,7 @@ class AppColors {
   static const text_blue = Color(0xFF004DF0);
   static const text_black = Color(0xFF242437);
   static const text_black_1 = Color(0xFF232338);
+  static const text_grey_1 = Color(0xFF45445B);
 
   static const neu_01 = Color(0xFF202033);
 }

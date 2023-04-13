@@ -10,6 +10,12 @@ import 'package:dtnd/ui/widget/button/single_color_text_button.dart';
 import 'package:dtnd/ui/widget/empty_list_widget.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../../=models=/ui_model/user_cmd.dart';
+import '../../../../theme/app_image.dart';
+import '../../../exchange_stock/order_note/data/order_filter_data.dart';
+import '../../../exchange_stock/order_note/sheet/order_filter_flow.dart';
+import '../../../exchange_stock/order_note/sheet/order_filter_sheet.dart';
+
 enum _Period { w1, m1, m3, m6 }
 
 extension _PeriodX on _Period {
@@ -56,6 +62,9 @@ class _SuggestedSignalScreenState extends State<SuggestedSignalScreen> {
 
   late _Period currentPeriod = _Period.m3;
   final List<SuggestedSignalModel> datas = <SuggestedSignalModel>[];
+  final List<SuggestedSignalModel> listDataShow = <SuggestedSignalModel>[];
+  OrderFilterData? orderFilterData;
+
   @override
   void initState() {
     super.initState();
@@ -69,6 +78,7 @@ class _SuggestedSignalScreenState extends State<SuggestedSignalScreen> {
     final listRes = await dataCenterService.getSuggestedSignal(period.period);
     datas.clear();
     datas.addAll(listRes);
+    listDataShow.addAll(listRes);
     setState(() {});
   }
 
@@ -120,6 +130,46 @@ class _SuggestedSignalScreenState extends State<SuggestedSignalScreen> {
               ),
             ),
             const SizedBox(height: 8),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "Loại tín hiệu",
+                  ),
+                  Material(
+                    borderRadius: const BorderRadius.all(Radius.circular(6)),
+                    child: InkWell(
+                      onTap: () {
+                        IOrderFilterISheet()
+                            .show(
+                                context,
+                                OrderFilterSheet(
+                                  data: orderFilterData,
+                                ))
+                            .then((value) {
+                          if (value is NextCmd) {
+                            // filter(value.data);
+                          }
+                        });
+                      },
+                      borderRadius: const BorderRadius.all(Radius.circular(6)),
+                      child: Ink(
+                        padding: const EdgeInsets.all(8),
+                        decoration: const BoxDecoration(
+                          color: AppColors.primary_03,
+                          borderRadius: BorderRadius.all(Radius.circular(6)),
+                        ),
+                        child: SizedBox.square(
+                            dimension: 16,
+                            child: Image.asset(AppImages.filter_icon)),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
             if (datas.isEmpty)
               const EmptyListWidget()
             else
@@ -163,9 +213,11 @@ class _PeriodButton extends StatelessWidget {
       {required this.period,
       required this.selectedPeriod,
       required this.onTap});
+
   final _Period period;
   final _Period selectedPeriod;
   final ValueChanged<_Period> onTap;
+
   @override
   Widget build(BuildContext context) {
     return SingleColorTextButton(
