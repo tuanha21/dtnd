@@ -36,6 +36,7 @@ class _ForeignWidgetState extends State<ForeignWidgetSignal> {
 
   @override
   Widget build(BuildContext context) {
+    print(listMonth.toString());
     final size = MediaQuery.of(context).size;
     listMonth?.sort((a, b) => a.cMONTH.compareTo(b.cMONTH));
     return listMonth?.isNotEmpty == true

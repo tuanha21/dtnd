@@ -380,5 +380,8 @@
 
     "unknown_exception": "Lỗi không xác định",
 
-    "end": "Kết thúc"
+    "end": "Kết thúc",
+    "ok": "Đồng ý",
+    "Later": "Để sau",
+    "biometric_authentication" : "Đăng nhập bằng sinh trắc học"
 }

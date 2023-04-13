@@ -380,6 +380,10 @@
 
     "unknown_exception": "Unknown exception",
 
-    "end": "End"
+    "end": "End",
+    "ok": "ok",
+    "Later":"Later",
+    "biometric_authentication" : "Biometric authentication"
+
 
 }

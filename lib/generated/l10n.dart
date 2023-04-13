@@ -3401,6 +3401,36 @@ class S {
       args: [],
     );
   }
+
+  /// `ok`
+  String get ok {
+    return Intl.message(
+      'ok',
+      name: 'ok',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Later`
+  String get Later {
+    return Intl.message(
+      'Later',
+      name: 'Later',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Biometric authentication`
+  String get biometric_authentication {
+    return Intl.message(
+      'Biometric authentication',
+      name: 'biometric_authentication',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

@@ -52,6 +52,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "DTNDs_virtual_assistant":
             MessageLookupByLibrary.simpleMessage(" của trợ lý ảo DTND"),
         "Extractive": MessageLookupByLibrary.simpleMessage("Khai khoáng"),
+        "Later": MessageLookupByLibrary.simpleMessage("Để sau"),
         "Medicine": MessageLookupByLibrary.simpleMessage("Dược phẩm"),
         "Metal": MessageLookupByLibrary.simpleMessage("Kim loại"),
         "Retail": MessageLookupByLibrary.simpleMessage("Bán lẻ"),
@@ -95,6 +96,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "billion_lowercase": MessageLookupByLibrary.simpleMessage("tỷ"),
         "billion_short": MessageLookupByLibrary.simpleMessage("Tỷ"),
         "biomestric": MessageLookupByLibrary.simpleMessage("Sinh trắc học"),
+        "biometric_authentication": MessageLookupByLibrary.simpleMessage(
+            "Đăng nhập bằng sinh trắc học"),
         "birthday": MessageLookupByLibrary.simpleMessage("Ngày sinh"),
         "bond": MessageLookupByLibrary.simpleMessage("Trái phiếu"),
         "bonus_sh": MessageLookupByLibrary.simpleMessage("CP thưởng"),
@@ -315,6 +318,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Mật khẩu cần tối thiểu 8 ký tự"),
         "null_username": MessageLookupByLibrary.simpleMessage(
             "Tên đăng nhập cần tối thiểu 6 ký tự"),
+        "ok": MessageLookupByLibrary.simpleMessage("Đồng ý"),
         "open_translations": MessageLookupByLibrary.simpleMessage("Giá mở cửa"),
         "order": MessageLookupByLibrary.simpleMessage("Đặt lệnh"),
         "order_confirm": MessageLookupByLibrary.simpleMessage("Xác nhận lệnh"),

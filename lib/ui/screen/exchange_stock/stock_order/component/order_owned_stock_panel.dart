@@ -6,6 +6,7 @@ import 'package:dtnd/data/implementations/user_service.dart';
 import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_textstyle.dart';
+import 'package:dtnd/ui/widget/empty_list_widget.dart';
 import 'package:dtnd/ui/widget/icon/stock_icon.dart';
 import 'package:dtnd/utilities/num_utils.dart';
 import 'package:flutter/material.dart';
@@ -40,16 +41,21 @@ class _OrderOwnedStockPanelState extends State<OrderOwnedStockPanel> {
       // } else if ((data?.portfolioStatus?.porfolioStocks?.length ?? 0) > 0) {
       //   portfolioStocks.addAll(data!.portfolioStatus!.porfolioStocks!);
       // }
-      return ListView(
-        shrinkWrap: true,
-        children: [
-          for (PorfolioStock porfolioStock in portfolioStocks)
-            OrderOwnedStockWidget(
-              portfolioStock: porfolioStock,
-              onSell: widget.onSell,
+      return portfolioStocks != null
+          ? ListView(
+              shrinkWrap: true,
+              children: [
+                for (PorfolioStock porfolioStock in portfolioStocks)
+                  OrderOwnedStockWidget(
+                    portfolioStock: porfolioStock,
+                    onSell: widget.onSell,
+                  )
+              ],
             )
-        ],
-      );
+          : const Padding(
+              padding: EdgeInsets.only(top: 50),
+              child: EmptyListWidget(),
+            );
     });
   }
 }
@@ -101,8 +107,7 @@ class _OrderOwnedStockWidgetState extends State<OrderOwnedStockWidget> {
             Material(
               borderRadius: const BorderRadius.all(Radius.circular(4)),
               child: InkWell(
-                  onTap: () =>
-                      widget.onSell?.call(widget.portfolioStock),
+                  onTap: () => widget.onSell?.call(widget.portfolioStock),
                   borderRadius: const BorderRadius.all(Radius.circular(4)),
                   child: Ink(
                     padding:
