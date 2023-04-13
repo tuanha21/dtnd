@@ -185,7 +185,7 @@ class UserService implements IUserService {
               cmd: "Web.Portfolio.PortfolioStatus",
               p1: p1,
             ));
-         response = await networkService
+        response = await networkService
             .requestTraditionalApiResList<PorfolioStock>(requestModel);
         if (response != null) {
           listAccount.elementAt(i).portfolioStatus =
@@ -253,6 +253,7 @@ class UserService implements IUserService {
           cmd: "GetAccountInfo",
           p1: token.value!.user,
         ));
+
     final listResponse = await networkService
         .requestTraditionalApiResList<UserInfo>(requestModel);
     userInfo.value = listResponse?.first;

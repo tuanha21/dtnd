@@ -2,9 +2,6 @@ import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/widget/drawer/logic/function_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:flutter_svg/svg.dart';
-
-import '../../../theme/app_image.dart';
 
 class ListFunction extends StatefulWidget {
   const ListFunction({super.key, required this.list});
@@ -203,45 +200,28 @@ class FunctionComponentDraw extends StatelessWidget {
                 ),
                 child: Row(
                   children: [
+                    const SizedBox(
+                      width: 8,
+                    ),
                     SizedBox.square(
                         dimension: 24, child: Image.asset(data.iconPath!)),
-                    const SizedBox(width: 8),
-                    data.title != 'Xác thực tài khoản'
-                        ? Expanded(
-                            child: Text(
-                              data.title,
-                              style: Theme.of(context).textTheme.bodyMedium,
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                            ),
+                    const SizedBox(width: 10),
+                    Expanded(
+                      child: Text(
+                        data.title,
+                        style: Theme.of(context).textTheme.bodyMedium,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                    // SvgPicture.asset(AppImages.around_right_icon),
+                    data.title != 'Xác thực tài khoản - eKYC'
+                        ? const Icon(
+                            Icons.expand_more,
+                            color: Colors.black,
+                            size: 24,
                           )
-                        : Expanded(
-                            child: Row(
-                              children: [
-                                Text(
-                                  data.title,
-                                  style: Theme.of(context).textTheme.bodyMedium,
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                                const Spacer(),
-                                Text(
-                                  'Chưa xác thực',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyMedium
-                                      ?.copyWith(color: AppColors.semantic_03),
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                                const SizedBox(
-                                  width: 15,
-                                ),
-                              ],
-                            ),
-                          ),
-                    SvgPicture.asset(AppImages.around_right_icon),
-                    const SizedBox(width: 5),
+                        : Container()
                   ],
                 ),
               ),

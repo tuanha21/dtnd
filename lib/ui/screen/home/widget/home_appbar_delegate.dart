@@ -33,7 +33,7 @@ class HomeAppbarDelegate extends SliverPersistentHeaderDelegate {
       String textTitle;
       Widget avatar;
       if (userService.userInfo.value != null) {
-        textTitle = userService.userInfo.value!.custFullName ?? "Kien Nguyen";
+        textTitle = userService.userInfo.value!.customerName ?? "Kien Nguyen";
         if (userService.userInfo.value!.faceImg != null) {
           avatar = Container(
             width: 40,
@@ -58,8 +58,8 @@ class HomeAppbarDelegate extends SliverPersistentHeaderDelegate {
         textTitle = "IFIS";
         avatar = Image.asset(
           AppImages.logo_account_default,
-          width: 40,
-          height: 40,
+          width: 32,
+          height: 32,
           fit: BoxFit.fill,
         );
       }
@@ -77,20 +77,18 @@ class HomeAppbarDelegate extends SliverPersistentHeaderDelegate {
                     ? Text(
                         textAlign: TextAlign.left,
                         S.of(context).hello,
-                        style: Theme.of(context)
-                            .textTheme
-                            .labelMedium
-                            ?.copyWith(
-                              fontWeight: FontWeight.w500,
-                              color: ratio <= 0 ? Colors.black : Colors.white,
-                            ),
+                        style:
+                            Theme.of(context).textTheme.labelMedium?.copyWith(
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.white,
+                                ),
                       )
                     : const SizedBox(),
                 Text(
                   textTitle,
                   style: Theme.of(context).textTheme.labelLarge?.copyWith(
                         fontWeight: FontWeight.w700,
-                        color: ratio <= 0 ? Colors.black : Colors.white,
+                        color: Colors.white,
                       ),
                 ),
               ],
@@ -118,12 +116,34 @@ class HomeAppbarDelegate extends SliverPersistentHeaderDelegate {
           //     child: const HomeQuickAccess(),
           //   ),
           // ),
+
+          Positioned(
+            bottom: 20,
+            left: ratio <= 0 ? 0 : 16,
+            child: SizedBox(
+              width: ratio <= 0 ? size.width : size.width - 32,
+              child: HomeQuickAccess(
+                hasUser: userService.userInfo.value != null,
+              ),
+            ),
+          ),
           Align(
             alignment: Alignment.topCenter,
             child: SizedBox(
               height: 120,
               child: AppBar(
                 automaticallyImplyLeading: false,
+                flexibleSpace: Container(
+                  decoration: ratio <= 0
+                      ? const BoxDecoration(
+                          gradient: LinearGradient(
+                            colors: [AppColors.linear_01, AppColors.linear_02],
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
+                          ),
+                        )
+                      : const BoxDecoration(),
+                ),
                 backgroundColor:
                     ratio <= 0 ? AppColors.primary_01 : Colors.transparent,
                 title: title,
@@ -154,7 +174,7 @@ class HomeAppbarDelegate extends SliverPersistentHeaderDelegate {
                       },
                       child: Image.asset(
                         AppImages.home_icon_search_normal,
-                        color: ratio <= 0 ? Colors.black : Colors.white,
+                        color: Colors.white,
                       ),
                     ),
                   ),
@@ -162,7 +182,7 @@ class HomeAppbarDelegate extends SliverPersistentHeaderDelegate {
                     width: 20,
                   ),
                   SizedBox.square(
-                      dimension: 24,
+                      dimension: 32,
                       child: Image.asset(
                         AppImages.home_icon_notification,
                       )),
@@ -170,17 +190,6 @@ class HomeAppbarDelegate extends SliverPersistentHeaderDelegate {
                     width: 16,
                   ),
                 ],
-              ),
-            ),
-          ),
-
-          Positioned(
-            bottom: 20,
-            left: ratio <= 0 ? 0 : 16,
-            child: SizedBox(
-              width: ratio <= 0 ? size.width : size.width - 32,
-              child: HomeQuickAccess(
-                hasUser: userService.userInfo.value != null,
               ),
             ),
           ),
@@ -195,7 +204,7 @@ class HomeAppbarDelegate extends SliverPersistentHeaderDelegate {
   double get maxExtent => 350;
 
   @override
-  double get minExtent => 233;
+  double get minExtent => userService.userInfo.value == null ? 233 : 188;
 
   @override
   bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) =>
