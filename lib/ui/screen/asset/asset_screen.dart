@@ -101,13 +101,13 @@ class _AssetScreenState extends State<AssetScreen>
               as BaseMarginPlusAccountModel?;
           List<ChartData> datas = [
             ChartData(
-                "Tiền",
+                S.of(context).money,
                 (data?.cashBalance ?? 0) *
                     100 /
                     ((data?.cashBalance ?? 0) +
                         (data?.portfolioStatus?.marketValue ?? 0))),
             ChartData(
-                "Cổ phiếu",
+                S.of(context).stock,
                 (data?.portfolioStatus?.marketValue ?? 0) *
                     100 /
                     ((data?.cashBalance ?? 0) +
@@ -315,11 +315,10 @@ class _AssetScreenState extends State<AssetScreen>
                 context: context,
                 builder: (context) {
                   return CustomDialog(
-                    textButtonAction: 'Đồng ý',
-                    textButtonExit: 'Để sau',
-                    title: 'Đăng nhập bằng sinh trắc học',
-                    content:
-                        'Bạn chưa đăng ký đăng nhập bằng sinh trắc học\nBạn có muốn đăng ký ngay bây giờ không?',
+                    textButtonAction: S.of(context).ok,
+                    textButtonExit: S.of(context).Later,
+                    title: S.of(context).biometric_authentication,
+                    content: S.of(context).login_with_biometric,
                     action: () {
                       Navigator.of(context).pop();
                     },

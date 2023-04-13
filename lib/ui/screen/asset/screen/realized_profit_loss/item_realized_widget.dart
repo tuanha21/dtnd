@@ -9,9 +9,11 @@ import 'package:dtnd/ui/theme/app_textstyle.dart';
 import 'package:dtnd/ui/widget/expanded_widget.dart';
 import 'package:dtnd/utilities/num_utils.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../../../../../=models=/response/stock.dart';
 import '../../../../../=models=/response/stock_model.dart';
+import '../../../../../generated/l10n.dart';
 import '../../../../widget/icon/stock_icon.dart';
 import '../../component/asset_grid_element.dart';
 
@@ -131,7 +133,7 @@ class _ItemRealizedState extends State<ItemRealizedWidget> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Ngày',
+                          S.of(context).date_translations,
                           style: AppTextStyle.labelMedium_12
                               .copyWith(color: AppColors.neutral_04),
                         ),
@@ -152,7 +154,7 @@ class _ItemRealizedState extends State<ItemRealizedWidget> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'KL bán',
+                          S.of(context).sold_vol,
                           style: AppTextStyle.labelMedium_12
                               .copyWith(color: AppColors.neutral_04),
                         ),
@@ -170,7 +172,7 @@ class _ItemRealizedState extends State<ItemRealizedWidget> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Text(
-                          "Lãi/lỗ",
+                          S.of(context).profit_and_loss,
                           style: AppTextStyle.labelMedium_12
                               .copyWith(color: AppColors.neutral_04),
                         ),
@@ -190,7 +192,7 @@ class _ItemRealizedState extends State<ItemRealizedWidget> {
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
                         Text(
-                          "% lãi/lỗ",
+                          "%${S.of(context).profit_and_loss}",
                           style: AppTextStyle.labelMedium_12
                               .copyWith(color: AppColors.neutral_04),
                         ),
@@ -224,7 +226,7 @@ class _ItemRealizedState extends State<ItemRealizedWidget> {
                           children: [
                             Expanded(
                               child: AssetGridElement(contentPadding:const EdgeInsets.all(5) ,element: {
-                                "Giá bán": NumUtils.formatDouble(
+                                S.of(context).selling_price: NumUtils.formatDouble(
                                     widget.detail?.cSHAREPRICE),
                               }),
                             ),
@@ -232,7 +234,7 @@ class _ItemRealizedState extends State<ItemRealizedWidget> {
                             Expanded(
                               child: AssetGridElement(contentPadding:const EdgeInsets.all(5) ,
                                 element: {
-                                  "Phí thuế": NumUtils.formatDouble(
+                                  S.of(context).tax_fee: NumUtils.formatDouble(
                                       widget.detail?.cCOMMVALUE)
                                 },
                               ),
@@ -241,7 +243,7 @@ class _ItemRealizedState extends State<ItemRealizedWidget> {
                             Expanded(
                               child: AssetGridElement(contentPadding:const EdgeInsets.all(5) ,
                                 element: {
-                                  "Giá trị bán": NumUtils.formatDouble(
+                                  S.of(context).sale_value: NumUtils.formatDouble(
                                       ((((widget
                                                       .detail?.cSHAREPRICE!
                                                       .toDouble() ??
@@ -264,7 +266,7 @@ class _ItemRealizedState extends State<ItemRealizedWidget> {
                           children: [
                             Expanded(
                               child: AssetGridElement(contentPadding:const EdgeInsets.all(5) ,element: {
-                                "Giá vốn": NumUtils.formatDouble(
+                                S.of(context).cost_price: NumUtils.formatDouble(
                                     widget.detail?.cAVERAGEPRICE),
                               }),
                             ),
@@ -272,7 +274,7 @@ class _ItemRealizedState extends State<ItemRealizedWidget> {
                             Expanded(
                               child: AssetGridElement(contentPadding:const EdgeInsets.all(5) ,
                                 element: {
-                                  "Giá trị vốn": NumUtils.formatDouble(
+                                  S.of(context).cost_value: NumUtils.formatDouble(
                                       widget.detail?.cCOSTVALUE)
                                 },
                               ),

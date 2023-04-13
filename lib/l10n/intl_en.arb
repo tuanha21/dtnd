@@ -97,6 +97,8 @@
     "other_vol": "Other vol",
     "sold_returning": "Sold returning",
     "sold_returning_vol": "Sold returning vol",
+    "sold_vol": "Sold vol",
+    "selling_price": "Selling price",
     "bought_returning": "Bought returning",
     "bought_returning_vol": "Bought returning vol",
     "extension": "Extension",
@@ -383,7 +385,21 @@
     "end": "End",
     "ok": "ok",
     "Later":"Later",
-    "biometric_authentication" : "Biometric authentication"
+    "biometric_authentication" : "Biometric authentication",
+    "login_with_biometric" : "You have not registered for biometric authentication.\nWould you like to register now?",
+    "money": "Money",
+    "stock":"stock",
+    "register_to_buy": "Register to buy",
+    "maximum_load" : "Maximum load",
+    "buying_price" : "Buying Price",
+    "deduction_account" : "Deduction account",
+    "total_transaction" : "Total transaction",
+    "Weight_must_be_filled_in" : "Weight must be filled in",
+    "invalid_weight" : "invalid weight",
+    "tax_fee" : "Tax fee",
+    "sale_value" : "Sale value",
+    "cost_price" : "Cost price",
+    "cost_value" : "Cost value"
 
 
 }
