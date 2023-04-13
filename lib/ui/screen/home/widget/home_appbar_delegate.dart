@@ -7,6 +7,7 @@ import 'package:dtnd/data/i_user_service.dart';
 import 'package:dtnd/data/implementations/network_service.dart';
 import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/screen/home/widget/home_quick_access.dart';
+import 'package:dtnd/ui/screen/home_base/widget/home_base_nav.dart';
 import 'package:dtnd/ui/screen/search/search_screen.dart';
 import 'package:dtnd/ui/screen/stock_detail/stock_detail_screen.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
@@ -18,11 +19,12 @@ const imageHeight = 280.0;
 
 class HomeAppbarDelegate extends SliverPersistentHeaderDelegate {
   const HomeAppbarDelegate(
-      this.appService, this.dataCenterService, this.userService);
+      this.appService, this.dataCenterService, this.userService, this.navigateTab);
 
   final AppService appService;
   final IDataCenterService dataCenterService;
   final IUserService userService;
+  final ValueChanged<HomeNav> navigateTab;
 
   @override
   Widget build(
@@ -114,6 +116,7 @@ class HomeAppbarDelegate extends SliverPersistentHeaderDelegate {
             child: SizedBox(
               width: ratio <= 0 ? size.width : size.width - 32,
               child: HomeQuickAccess(
+                navigateTab: navigateTab,
                 hasUser: userService.userInfo.value != null,
               ),
             ),

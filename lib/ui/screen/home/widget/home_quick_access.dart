@@ -13,6 +13,11 @@ import 'package:dtnd/utilities/num_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../../data/i_local_storage_service.dart';
+import '../../../../data/implementations/local_storage_service.dart';
+import '../../../widget/overlay/custom_dialog.dart';
+import '../../home_base/widget/home_base_nav.dart';
+
 enum QuickAccess {
   money,
   baseTrading,
@@ -78,8 +83,9 @@ extension QuickAccessX on QuickAccess {
 }
 
 class HomeQuickAccess extends StatefulWidget {
-  const HomeQuickAccess({super.key, required this.hasUser});
+  const HomeQuickAccess({super.key, required this.hasUser, required this.navigateTab});
   final bool hasUser;
+  final ValueChanged<HomeNav> navigateTab;
 
   @override
   State<HomeQuickAccess> createState() => _HomeQuickAccessState();
@@ -125,7 +131,9 @@ class _HomeQuickAccessState extends State<HomeQuickAccess> {
                       const SizedBox(
                         height: 14,
                       ),
-                      const _AssetRow(),
+                       _AssetRow(
+                          widget.navigateTab
+                      ),
                       // const Separator(
                       //   padding: EdgeInsets.symmetric(vertical: 16),
                       //   color: AppColors.neutral_05,
@@ -193,7 +201,8 @@ class _HomeQuickAccessState extends State<HomeQuickAccess> {
 }
 
 class _AssetRow extends StatefulWidget {
-  const _AssetRow();
+  const _AssetRow(this.navigateTab);
+  final ValueChanged<HomeNav> navigateTab;
 
   @override
   State<_AssetRow> createState() => __AssetRowState();
@@ -228,9 +237,9 @@ class __AssetRowState extends State<_AssetRow> {
             show
                 ? Obx(() {
                     final String data;
-                    if (userService.totalAsset.value?.totalEnquity != null) {
+                    if (userService.totalAsset.value?.totalNav != null) {
                       data = NumUtils.formatInteger(
-                          userService.totalAsset.value?.totalEnquity);
+                          userService.totalAsset.value?.totalNav);
                     } else {
                       data = "-";
                     }
@@ -239,9 +248,21 @@ class __AssetRowState extends State<_AssetRow> {
                 : Text("**********")
           ],
         ),
-        const Icon(
-          Icons.arrow_forward_ios_rounded,
-          color: AppColors.text_black,
+        GestureDetector(
+          child: const Icon(
+            Icons.arrow_forward_ios_rounded,
+            color: AppColors.text_black,
+          ),
+          onTap: (){
+            if(!userService.isLogin){
+              Navigator.of(context)
+                  .push<bool>(MaterialPageRoute(
+                builder: (context) => const LoginScreen(),
+              ),);
+            }else{
+              widget.navigateTab.call(HomeNav.asset);
+            }
+          },
         ),
       ],
     );

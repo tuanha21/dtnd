@@ -144,7 +144,7 @@ class _StockOrderSuccessSheetState extends State<StockOrderSuccessSheet> {
                 _Row(
                   label: S.of(context).exchange_total,
                   value: widget.orderData?.exchangeTotal?.toString(),
-                  valueColor: AppColors.primary_01,
+                  valueColor: AppColors.linear_01,
                 ),
                 const SizedBox(height: 8),
               ],
@@ -162,12 +162,15 @@ class _StockOrderSuccessSheetState extends State<StockOrderSuccessSheet> {
                   ),
                   onPressed: () {
                     Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) =>
-                      const OrderNoteScreen(defaultab: 2),
+                      builder: (context) => const OrderNoteScreen(defaultab: 2),
                     ));
                   },
                   child: const Text('Về sổ lệnh',
-                      style: TextStyle(color: AppColors.text_blue)),
+                      style: TextStyle(
+                          color: AppColors.text_blue,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w700,
+                          height: 1.4)),
                 ),
               ),
               const SizedBox(
@@ -175,10 +178,17 @@ class _StockOrderSuccessSheetState extends State<StockOrderSuccessSheet> {
               ),
               Expanded(
                 child: TextButton(
+                  style: TextButton.styleFrom(
+                    backgroundColor: AppColors.color_primary_1, // Text Color
+                  ),
                   onPressed: () {
                     Navigator.of(context).pop(NextCmd(widget.orderData));
                   },
-                  child: Text(S.of(context).create_new_order),
+                  child: Text(
+                    S.of(context).create_new_order,
+                    style: const TextStyle(
+                        fontSize: 14, fontWeight: FontWeight.w700, height: 1.4),
+                  ),
                 ),
               ),
             ],
