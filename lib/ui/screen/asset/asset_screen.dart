@@ -82,7 +82,8 @@ class _AssetScreenState extends State<AssetScreen>
           //     as BaseMarginAccountModel?;
           // đm là do ko có data
           final data = userService.listAccountModel.value?.firstWhereOrNull(
-                  (element) => element.runtimeType == BaseMarginPlusAccountModel)
+                  (element) =>
+                      element.runtimeType == BaseMarginPlusAccountModel)
               as BaseMarginPlusAccountModel?;
 
           return AssetChart(
@@ -95,7 +96,8 @@ class _AssetScreenState extends State<AssetScreen>
           //         (element) => element.runtimeType == BaseMarginAccountModel)
           //     as BaseMarginAccountModel?;
           final data = userService.listAccountModel.value?.firstWhereOrNull(
-                  (element) => element.runtimeType == BaseMarginPlusAccountModel)
+                  (element) =>
+                      element.runtimeType == BaseMarginPlusAccountModel)
               as BaseMarginPlusAccountModel?;
           List<ChartData> datas = [
             ChartData(
@@ -242,7 +244,8 @@ class _AssetScreenState extends State<AssetScreen>
                         false) {
                       final data = userService.listAccountModel.value!
                               .firstWhereOrNull((element) =>
-                                  element.runtimeType == BaseMarginPlusAccountModel)
+                                  element.runtimeType ==
+                                  BaseMarginPlusAccountModel)
                           as BaseMarginPlusAccountModel?;
                       return AccountAssetOverviewWidget(
                         data: data,

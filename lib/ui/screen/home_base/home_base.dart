@@ -89,8 +89,9 @@ class _HomeBaseState extends State<HomeBase> with WidgetsBindingObserver {
   Widget build(BuildContext context) {
     return Scaffold(
       key: homeBaseKey,
-
-      drawer: const AppDrawer(),
+      drawer: AppDrawer(
+        onLogout: () => setState(() {}),
+      ),
       body: ObxValue<Rx<HomeNav>>(
         (currentHomeNav) {
           return routeBuilders[currentHomeNav.value] ??

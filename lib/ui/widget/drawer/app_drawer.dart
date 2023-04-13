@@ -9,6 +9,7 @@ import 'package:dtnd/ui/screen/asset/screen/margin_debt/margin_debt_screen.dart'
 import 'package:dtnd/ui/screen/asset/screen/realized_profit_loss/realized_profit_loss.dart';
 import 'package:dtnd/ui/screen/exchange_stock/order_note/screen/order_note_screen.dart';
 import 'package:dtnd/ui/screen/exchange_stock/stock_order/business/stock_order_util.dart';
+import 'package:dtnd/ui/screen/home_base/widget/home_base_nav.dart';
 import 'package:dtnd/ui/screen/login/login_screen.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_textstyle.dart';
@@ -24,7 +25,8 @@ import '../../theme/app_image.dart';
 import 'component/drawer_avatar.dart';
 
 class AppDrawer extends StatefulWidget {
-  const AppDrawer({super.key});
+  const AppDrawer({super.key, this.onLogout});
+  final VoidCallback? onLogout;
 
   @override
   State<AppDrawer> createState() => _AppDrawerState();
@@ -325,7 +327,7 @@ class _AppDrawerState extends State<AppDrawer> {
             onTap: () {
               back();
               if (isLogin) {
-                AccountUtil.logout(context);
+                AccountUtil.logout(context, afterLogout: widget.onLogout);
               } else {
                 Navigator.of(context).push<bool>(
                   MaterialPageRoute(

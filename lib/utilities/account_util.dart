@@ -24,7 +24,7 @@ class AccountUtil {
     }
   }
 
-  static void logout(BuildContext context) {
+  static void logout(BuildContext context, {VoidCallback? afterLogout}) {
     final IUserService userService = UserService();
     showDialog<bool>(
       context: context,
@@ -44,6 +44,7 @@ class AccountUtil {
         Navigator.of(homeBaseKey.currentContext!).push<bool>(MaterialPageRoute(
           builder: (context) => const LoginScreen(),
         ));
+        afterLogout?.call();
         return;
       }
     });

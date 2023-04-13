@@ -442,30 +442,31 @@ class _AssetStockDetailScreenState extends State<AssetStockDetailScreen>
                                                 ],
                                               )),
                                               Expanded(
-                                                  child: Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.end,
-                                                children: [
-                                                  Text(
-                                                    "Lãi/lỗ",
-                                                    style: AppTextStyle
-                                                        .labelSmall_10
-                                                        .copyWith(
-                                                      color:
-                                                          AppColors.neutral_03,
-                                                      fontWeight:
-                                                          FontWeight.w500,
+                                                child: Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.end,
+                                                  children: [
+                                                    Text(
+                                                      "Lãi/lỗ",
+                                                      style: AppTextStyle
+                                                          .labelSmall_10
+                                                          .copyWith(
+                                                        color: AppColors
+                                                            .neutral_03,
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                      ),
                                                     ),
-                                                  ),
-                                                  Text(
-                                                    NumUtils.formatInteger(
-                                                        (detail.cEARNEDVALUE ??
-                                                            0)),
-                                                    style: AppTextStyle
-                                                        .labelSmall_10,
-                                                  )
-                                                ],
-                                              ))
+                                                    Text(
+                                                      NumUtils.formatInteger(
+                                                          (detail.cEARNEDVALUE ??
+                                                              0)),
+                                                      style: AppTextStyle
+                                                          .labelSmall_10,
+                                                    )
+                                                  ],
+                                                ),
+                                              )
                                             ],
                                           ),
                                         ],
