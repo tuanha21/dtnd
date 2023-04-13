@@ -19,9 +19,7 @@ import 'package:dtnd/ui/widget/drawer/logic/function_data.dart';
 import 'package:dtnd/ui/widget/drawer/logic/icon_asset.dart';
 import 'package:dtnd/utilities/account_util.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
-
 import '../../theme/app_image.dart';
 import 'component/drawer_avatar.dart';
 
@@ -46,7 +44,7 @@ class _AppDrawerState extends State<AppDrawer> {
     if (userService.isLogin) {
       list = <FunctionData>[
         const FunctionData(
-          title: "Xác thực tài khoản",
+          title: "Xác thực tài khoản - eKYC",
           iconPath: DrawerIconAsset.verify_account_icon,
         ),
         FunctionData(
@@ -228,128 +226,74 @@ class _AppDrawerState extends State<AppDrawer> {
   Widget build(BuildContext context) {
     bool isLogin = userService.isLogin;
     final info = userService.userInfo.value;
+
     UserToken userToken;
-    print('tiennh' + info.toString());
+
     return Container(
       padding: EdgeInsets.only(
           top: MediaQuery.of(context).padding.top, right: 16, left: 16),
       decoration: const BoxDecoration(color: Colors.white),
       // width: 275,
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           const SizedBox(
-            height: 23,
+            height: 30,
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              GestureDetector(
-                child: SvgPicture.asset(AppImages.back_draw_icon),
-                onTap: () => Navigator.of(context).pop(),
-              ),
-              SvgPicture.asset(AppImages.night_mode_icon)
-            ],
+          DrawerAvatar(info: info),
+          const SizedBox(height: 8),
+          Text(
+            userService.userInfo.value?.customerName ?? "",
+            style:
+                AppTextStyle.bodyLarge_16.copyWith(color: AppColors.primary_01),
           ),
-          const SizedBox(
-            height: 20,
+          const SizedBox(height: 4),
+          Text(
+            userService.userInfo.value?.customerCode ?? "",
+            style:
+                AppTextStyle.bodySmall_12.copyWith(color: AppColors.neutral_03),
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Row(
-                children: [
-                  DrawerAvatar(info: info),
-                  const SizedBox(
-                    width: 8,
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        userService.userInfo.value?.customerCode ?? "",
-                        style: AppTextStyle.bodyLarge_16
-                            .copyWith(color: AppColors.text_black_1),
+          const SizedBox(height: 16),
+          isLogin
+              ? Material(
+                  child: InkWell(
+                    onTap: () {},
+                    child: Ink(
+                      height: 36,
+                      decoration: BoxDecoration(
+                        color: AppColors.accent_light_03,
+                        borderRadius: BorderRadius.circular(12),
                       ),
-                      const SizedBox(
-                        height: 8,
+                      child: Row(
+                        children: [
+                          const SizedBox(width: 8),
+                          SizedBox.square(
+                            dimension: 24,
+                            child: Image.asset(
+                              AppImages.red_ring_icon,
+                              width: 20,
+                              height: 20,
+                            ),
+                          ),
+                          const SizedBox(width: 8),
+                          Text(
+                            "Bạn chưa xác thực tài khoản",
+                            style: AppTextStyle.bodySmall_12.copyWith(
+                                color: AppColors.semantic_03,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ],
                       ),
-                      Container(
-                        padding: const EdgeInsets.only(
-                            top: 4, bottom: 4, right: 12.5, left: 12.5),
-                        decoration: BoxDecoration(
-                          color: AppColors.accent_light_02,
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        child: Text(
-                          "Basic",
-                          textAlign: TextAlign.center,
-                          style: AppTextStyle.titleSmall_14
-                              .copyWith(color: AppColors.graph_4),
-                        ),
-                      )
-                    ],
+                    ),
                   ),
-                ],
-              ),
-              SvgPicture.asset(AppImages.around_right_icon)
-            ],
-          ),
+                )
+              : Container(),
           const SizedBox(
-            height: 20,
+            height: 30,
           ),
           Builder(
             builder: (context) {
               if (isLogin) {
                 return const SizedBox();
-                //   return Row(
-                //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                //     children: [
-                //       Column(
-                //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                //         crossAxisAlignment: CrossAxisAlignment.start,
-                //         children: [
-                //           Text(
-                //             info?.custFullName ?? "",
-                //             style: textTheme.titleSmall!.copyWith(
-                //                 fontSize: 16,
-                //                 color: AppColors.primary_01,
-                //                 fontWeight: FontWeight.w700),
-                //           ),
-                //           Text(
-                //             info?.customerCode ?? "",
-                //             style: textTheme.displaySmall!.copyWith(
-                //                 fontSize: 12, fontWeight: FontWeight.w400),
-                //           ),
-                //         ],
-                //       ),
-                //       Material(
-                //         borderRadius: const BorderRadius.all(Radius.circular(8)),
-                //         child: InkWell(
-                //           onTap: () {
-                //             const UserInfoDetailISheet().show(
-                //                 context, UserInfoDetailSheet(userInfo: info),
-                //                 wrap: false);
-                //           },
-                //           borderRadius:
-                //               const BorderRadius.all(Radius.circular(8)),
-                //           child: Ink(
-                //             padding: const EdgeInsets.symmetric(
-                //                 vertical: 4, horizontal: 12),
-                //             decoration: const BoxDecoration(
-                //               borderRadius: BorderRadius.all(Radius.circular(8)),
-                //               color: AppColors.accent_light_04,
-                //             ),
-                //             child: Image.asset(
-                //               AccountIcon.people,
-                //               width: 20,
-                //               height: 20,
-                //             ),
-                //           ),
-                //         ),
-                //       )
-                //     ],
-                //   );
               } else {
                 return SingleColorTextButton(
                   onTap: () {
@@ -396,7 +340,7 @@ class _AppDrawerState extends State<AppDrawer> {
                 .copyWith(color: isLogin ? AppColors.primary_01 : Colors.white),
           ),
           const SizedBox(
-            height: 44,
+            height: 40,
           )
         ],
       ),

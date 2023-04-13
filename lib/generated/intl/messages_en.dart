@@ -52,6 +52,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "DTNDs_virtual_assistant": MessageLookupByLibrary.simpleMessage(
             " of DTND\'s virtual assistant"),
         "Extractive": MessageLookupByLibrary.simpleMessage("Extractive"),
+        "Later": MessageLookupByLibrary.simpleMessage("Later"),
         "Medicine": MessageLookupByLibrary.simpleMessage("Medicine"),
         "Metal": MessageLookupByLibrary.simpleMessage("Metal"),
         "Retail": MessageLookupByLibrary.simpleMessage("Retail"),
@@ -97,6 +98,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "billion_lowercase": MessageLookupByLibrary.simpleMessage("b"),
         "billion_short": MessageLookupByLibrary.simpleMessage("B"),
         "biomestric": MessageLookupByLibrary.simpleMessage("Biomestric"),
+        "biometric_authentication":
+            MessageLookupByLibrary.simpleMessage("Biometric authentication"),
         "birthday": MessageLookupByLibrary.simpleMessage("Birthday"),
         "bond": MessageLookupByLibrary.simpleMessage("Bond"),
         "bonus_sh": MessageLookupByLibrary.simpleMessage("Bonus share"),
@@ -319,6 +322,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Password requires at least 8 characters"),
         "null_username": MessageLookupByLibrary.simpleMessage(
             "Username requires at least 6 characters"),
+        "ok": MessageLookupByLibrary.simpleMessage("ok"),
         "open_translations": MessageLookupByLibrary.simpleMessage("Open"),
         "order": MessageLookupByLibrary.simpleMessage("Order"),
         "order_confirm": MessageLookupByLibrary.simpleMessage("Confirm order"),

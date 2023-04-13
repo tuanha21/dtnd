@@ -8,6 +8,7 @@ class UserInfo implements CoreResponseModel {
   late final String? marketingId;
   late final String? mktName;
   late final String? customerCode;
+  late final String? customerName;
   late final String? cardIdType;
   late final String? cardId;
   late final String? idIssueDate;
@@ -51,6 +52,7 @@ class UserInfo implements CoreResponseModel {
     marketingId = parse(json['C_MARKETING_ID']);
     mktName = parse(json['C_MKT_NAME']);
     customerCode = parse(json['C_CUSTOMER_CODE']);
+    customerName = parse(json['C_CUSTOMER_NAME']);
     cardIdType = parse(json['C_CARD_ID_TYPE']);
     cardId = parse(json['C_CARD_ID']);
     idIssueDate = parse(json['C_ID_ISSUE_DATE']);
@@ -88,6 +90,7 @@ class UserInfo implements CoreResponseModel {
     data['C_MARKETING_ID'] = marketingId;
     data['C_MKT_NAME'] = mktName;
     data['C_CUSTOMER_CODE'] = customerCode;
+    data['C_CUSTOMER_NAME'] = customerName;
     data['C_CARD_ID_TYPE'] = cardIdType;
     data['C_CARD_ID'] = cardId;
     data['C_ID_ISSUE_DATE'] = idIssueDate;

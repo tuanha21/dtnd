@@ -24,8 +24,8 @@ class _DrawerAvatarState extends State<DrawerAvatar> {
       avatar = ClipOval(
         child: Image.asset(
           AppImages.home_avatar_default,
-          width: 72, // adjust the width as needed
-          height: 72, // adjust the height as needed
+          width: 80, // adjust the width as needed
+          height: 80, // adjust the height as needed
           fit: BoxFit.cover,
         ),
       );

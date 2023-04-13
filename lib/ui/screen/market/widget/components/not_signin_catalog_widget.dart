@@ -30,9 +30,9 @@ class NotSigninCatalogWidget extends StatelessWidget {
             context: context,
             builder: (context) {
               return CustomDialog(
-                textButtonAction: 'Đồng ý',
-                textButtonExit: 'Để sau',
-                title: 'Đăng nhập bằng sinh trắc học',
+                textButtonAction: S.of(context).ok,
+                textButtonExit: S.of(context).Later,
+                title: S.of(context).biometric_authentication,
                 content:
                     'Bạn chưa đăng ký đăng nhập bằng sinh trắc học\nBạn có muốn đăng ký ngay bây giờ không?',
                 action: () => Navigator.of(context).pop(true),
