@@ -2,7 +2,7 @@ import 'package:dtnd/=models=/stock_status.dart';
 
 class SuggestedSignalModel extends StockStatus {
   late final String cSHARECODE;
-  late final String cTYPE;
+  late final String type;
   num? cPC;
   num? t;
   late final num cGAIN;
@@ -19,7 +19,7 @@ class SuggestedSignalModel extends StockStatus {
 
   SuggestedSignalModel.fromJson(Map<String, dynamic> json) {
     cSHARECODE = json['C_SHARE_CODE'];
-    cTYPE = json['C_TYPE'];
+    type = json['C_TYPE'];
     cPC = json['C_PC'];
     t = json['T'];
     cGAIN = json['C_GAIN'] ?? 0;
@@ -29,7 +29,7 @@ class SuggestedSignalModel extends StockStatus {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['C_SHARE_CODE'] = cSHARECODE;
-    data['C_TYPE'] = cTYPE;
+    data['C_TYPE'] = type;
     data['C_PC'] = cPC;
     data['T'] = t;
     data['C_GAIN'] = cGAIN;

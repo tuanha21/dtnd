@@ -180,8 +180,6 @@ class UserService implements IUserService {
           },
         );
 
-        print('tiennh rq' + requestModel.toString());
-
         listAccount.elementAt(i).updateDataFromJson(response!);
         requestModel = RequestModel(this,
             group: "Q",
@@ -202,7 +200,6 @@ class UserService implements IUserService {
 
         response =
             await getListUnexecutedRight(listAccount.elementAt(i).accCode);
-        print('tiennh rq2' + requestModel.toString());
         if (response != null) {
           listAccount.elementAt(i).listUnexecutedRight = response;
         }

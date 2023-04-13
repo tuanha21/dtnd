@@ -21,6 +21,7 @@ import 'package:dtnd/=models=/response/news_model.dart';
 import 'package:dtnd/=models=/response/security_basic_info_model.dart';
 import 'package:dtnd/=models=/response/share_holder.dart';
 import 'package:dtnd/=models=/response/signal_month_model.dart';
+import 'package:dtnd/=models=/response/signal_type.dart';
 import 'package:dtnd/=models=/response/stock.dart';
 import 'package:dtnd/=models=/response/stock_board.dart';
 import 'package:dtnd/=models=/response/stock_data.dart';
@@ -685,6 +686,28 @@ class NetworkService implements INetworkService {
       for (var element in responseBody) {
         try {
           data.add(TopSignalStockModel.fromJson(element));
+        } catch (e) {
+          logger.e(e);
+          continue;
+        }
+      }
+      return data;
+    } catch (e) {
+      logger.e(e);
+      return [];
+    }
+  }
+
+  @override
+  Future<List<SignalType>?> getSignalList(Map<String, String> body) async {
+    try {
+      final http.Response response =
+          await client.get(url_info_sbsi("proxy", body));
+      final List<dynamic> responseBody = decode(response.bodyBytes)["data"];
+      List<SignalType> data = [];
+      for (var element in responseBody) {
+        try {
+          data.add(SignalType.fromJson(element));
         } catch (e) {
           logger.e(e);
           continue;

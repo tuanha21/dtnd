@@ -10,6 +10,7 @@ import 'package:dtnd/=models=/response/news_detail.dart';
 import 'package:dtnd/=models=/response/news_model.dart';
 import 'package:dtnd/=models=/response/security_basic_info_model.dart';
 import 'package:dtnd/=models=/response/signal_month_model.dart';
+import 'package:dtnd/=models=/response/signal_type.dart';
 import 'package:dtnd/=models=/response/stock.dart';
 import 'package:dtnd/=models=/response/stock_data.dart';
 import 'package:dtnd/=models=/response/stock_financial_index_model.dart';
@@ -73,12 +74,14 @@ abstract class IDataCenterService {
 
   Future<List<TopSignalStockModel>> getTopSignalStocks({int count = 5});
 
+  Future<List<SignalType>> getSignalList();
+
   Future<List<SuggestedSignalModel>> getSuggestedSignal(int day);
 
   Future<TopSignalDetailModel?> getTopSignalDetail(
       String stockCode, String type);
 
-  Future<List<SignalMonthModel>?> getSignalMonth(String stockCode);
+  Future<List<SignalMonthModel>?> getSignalMonth(String stockCode, String type);
 
   Future<List<TopSignalHistoryModel>?> getTopSignalHistory(
       String stockCode, String type,

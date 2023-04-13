@@ -122,7 +122,7 @@ class _SuggestedSignalComponentState extends State<SuggestedSignalComponent> {
                         ),
                         const SizedBox(height: 4),
                         Text(
-                          widget.data.cTYPE,
+                          widget.data.type,
                           style: textTheme.titleSmall,
                         ),
                       ],

@@ -1,6 +1,8 @@
+import 'package:dtnd/=models=/response/signal_type.dart';
 import 'package:dtnd/=models=/response/suggested_signal_model.dart';
 import 'package:dtnd/data/i_data_center_service.dart';
 import 'package:dtnd/data/implementations/data_center_service.dart';
+import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/screen/home/screen/signal/signal_screen.dart';
 import 'package:dtnd/ui/screen/home/screen/suggested_signal/component/suggested_signal_component.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
@@ -15,6 +17,8 @@ import '../../../../theme/app_image.dart';
 import '../../../exchange_stock/order_note/data/order_filter_data.dart';
 import '../../../exchange_stock/order_note/sheet/order_filter_flow.dart';
 import '../../../exchange_stock/order_note/sheet/order_filter_sheet.dart';
+import 'flow/suggested_signal_flow.dart';
+import 'sheet/suggested_signal_filter_sheet.dart';
 
 enum _Period { w1, m1, m3, m6 }
 
@@ -61,14 +65,22 @@ class _SuggestedSignalScreenState extends State<SuggestedSignalScreen> {
   final IDataCenterService dataCenterService = DataCenterService();
 
   late _Period currentPeriod = _Period.m3;
+  final List<SignalType> signalList = <SignalType>[];
   final List<SuggestedSignalModel> datas = <SuggestedSignalModel>[];
   final List<SuggestedSignalModel> listDataShow = <SuggestedSignalModel>[];
   OrderFilterData? orderFilterData;
-
+  List<SignalType>? filter;
   @override
   void initState() {
     super.initState();
+    getSignalList();
     getData(_Period.values.first);
+  }
+
+  Future<void> getSignalList() async {
+    final listRes = await dataCenterService.getSignalList();
+    signalList.addAll(listRes);
+    if (mounted) setState(() {});
   }
 
   Future<void> getData(_Period period) async {
@@ -79,7 +91,7 @@ class _SuggestedSignalScreenState extends State<SuggestedSignalScreen> {
     datas.clear();
     datas.addAll(listRes);
     listDataShow.addAll(listRes);
-    setState(() {});
+    if (mounted) setState(() {});
   }
 
   void onTap(SuggestedSignalModel model) {
@@ -88,7 +100,7 @@ class _SuggestedSignalScreenState extends State<SuggestedSignalScreen> {
         .then((value) => Navigator.of(context).push(MaterialPageRoute(
               builder: (context) => SignalScreen(
                 code: model.cSHARECODE,
-                type: model.cTYPE,
+                type: model.type,
                 stockModel: value,
                 defaulPeriod: currentPeriod.title,
                 defaulday: currentPeriod.period,
@@ -96,11 +108,79 @@ class _SuggestedSignalScreenState extends State<SuggestedSignalScreen> {
             )));
   }
 
+  void onFilter(List<SignalType>? options) {
+    if (options == null) {
+      if (filter != null) {
+        filter = options;
+        listDataShow.clear();
+        listDataShow.addAll(datas);
+      }
+      setState(() {});
+      return;
+    }
+    if (options != filter) {
+      filter = options;
+      final List<bool> listSelect =
+          List.generate(datas.length, (index) => false);
+      for (var index = 0; index < options.length; index++) {
+        for (var i = 0; i < datas.length; i++) {
+          if (datas.elementAt(i).type == options.elementAt(index).signalCode) {
+            listSelect[i] = true;
+          }
+        }
+      }
+      listDataShow.clear();
+      for (var i = 0; i < listSelect.length; i++) {
+        if (listSelect.elementAt(i)) {
+          listDataShow.add(datas.elementAt(i));
+        }
+      }
+      setState(() {});
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const SimpleAppbar(
+      appBar: SimpleAppbar(
         title: "Hiệu quả tín hiệu",
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(right: 16),
+            child: Center(
+              child: Material(
+                borderRadius: const BorderRadius.all(Radius.circular(6)),
+                child: InkWell(
+                  onTap: () {
+                    SuggestedSignalISheet()
+                        .show(
+                            context,
+                            SuggestedSignalFilterSheet(
+                              listOptions: signalList,
+                              listSelected: filter,
+                            ))
+                        .then((value) {
+                      if (value is NextCmd) {
+                        onFilter(value.data);
+                      }
+                    });
+                  },
+                  borderRadius: const BorderRadius.all(Radius.circular(6)),
+                  child: Ink(
+                    padding: const EdgeInsets.all(8),
+                    decoration: const BoxDecoration(
+                      color: AppColors.primary_03,
+                      borderRadius: BorderRadius.all(Radius.circular(6)),
+                    ),
+                    child: SizedBox.square(
+                        dimension: 16,
+                        child: Image.asset(AppImages.filter_icon)),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
       body: SafeArea(
         child: Column(
@@ -130,47 +210,7 @@ class _SuggestedSignalScreenState extends State<SuggestedSignalScreen> {
               ),
             ),
             const SizedBox(height: 8),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "Loại tín hiệu",
-                  ),
-                  Material(
-                    borderRadius: const BorderRadius.all(Radius.circular(6)),
-                    child: InkWell(
-                      onTap: () {
-                        IOrderFilterISheet()
-                            .show(
-                                context,
-                                OrderFilterSheet(
-                                  data: orderFilterData,
-                                ))
-                            .then((value) {
-                          if (value is NextCmd) {
-                            // filter(value.data);
-                          }
-                        });
-                      },
-                      borderRadius: const BorderRadius.all(Radius.circular(6)),
-                      child: Ink(
-                        padding: const EdgeInsets.all(8),
-                        decoration: const BoxDecoration(
-                          color: AppColors.primary_03,
-                          borderRadius: BorderRadius.all(Radius.circular(6)),
-                        ),
-                        child: SizedBox.square(
-                            dimension: 16,
-                            child: Image.asset(AppImages.filter_icon)),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            if (datas.isEmpty)
+            if (listDataShow.isEmpty)
               const EmptyListWidget()
             else
               Expanded(
@@ -183,7 +223,7 @@ class _SuggestedSignalScreenState extends State<SuggestedSignalScreen> {
                   child: ListView(
                     shrinkWrap: true,
                     children: [
-                      for (int i = 0; i < datas.length; i++)
+                      for (int i = 0; i < listDataShow.length; i++)
                         if (i != 0)
                           Column(
                             children: [
@@ -191,12 +231,13 @@ class _SuggestedSignalScreenState extends State<SuggestedSignalScreen> {
                                 height: 8,
                               ),
                               SuggestedSignalComponent(
-                                  onTap: onTap, data: datas.elementAt(i)),
+                                  onTap: onTap,
+                                  data: listDataShow.elementAt(i)),
                             ],
                           )
                         else
                           SuggestedSignalComponent(
-                              onTap: onTap, data: datas.elementAt(i)),
+                              onTap: onTap, data: listDataShow.elementAt(i)),
                     ],
                   ),
                 ),
