@@ -240,7 +240,7 @@ class _AppDrawerState extends State<AppDrawer> {
             height: 30,
           ),
           DrawerAvatar(info: info),
-          const SizedBox(width: 8),
+          const SizedBox(height: 8),
           Text(
             userService.userInfo.value?.customerName ?? "",
             style:
