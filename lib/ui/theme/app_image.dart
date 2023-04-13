@@ -177,6 +177,8 @@ class AppImages {
   static const String home_avatar_default =
       "assets/home_icon/avatar_default.png";
 
+  static const String background_ifis = "assets/home_icon/background_ifis.png";
+
   /// Asset Icon
   static const String arrow_drop_down_rounded =
       "assets/images/arrow_drop_down_rounded.png";
@@ -185,6 +187,7 @@ class AppImages {
   static const String calendar_2 = "assets/images/calendar_2.png";
   static const String logo_account_default =
       "assets/images/logo_account_default.png";
+  static const String red_ring_icon = "assets/images/red_ring.png";
 
   /// BG
   static const String home_asset_card_light_bg =
