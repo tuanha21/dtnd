@@ -8,8 +8,8 @@ class AppColors {
   static const primary_03 = Color(0xFFECF1FD);
   static const primary_04 = Color(0xFF6697FF);
   static const primary_05 = Color(0xFF2222FF);
-  static const linear_01 = Color(0x004DF0);
-  static const linear_02 = Color(0x012267);
+  static const linear_01 = Color(0xFF004DF0);
+  static const linear_02 = Color(0xFF012267);
 
   static const lighter_primary = Color(0xFFDFE7FF);
   static const secondary = Color(0xFFFCC927);

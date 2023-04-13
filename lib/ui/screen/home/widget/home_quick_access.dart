@@ -3,6 +3,7 @@ import 'package:dtnd/data/i_user_service.dart';
 import 'package:dtnd/data/implementations/user_service.dart';
 import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/screen/home/widget/quick_access_element.dart';
+import 'package:dtnd/ui/screen/login/login_screen.dart';
 import 'package:dtnd/ui/screen/virtual_assistant/va_util.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
@@ -171,7 +172,13 @@ class _HomeQuickAccessState extends State<HomeQuickAccess> {
                       Expanded(
                         flex: 1,
                         child: GestureDetector(
-                          onTap: () => Scaffold.of(context).openDrawer(),
+                          onTap: () => {
+                            Navigator.of(context).push<bool>(
+                              MaterialPageRoute(
+                                builder: (context) => const LoginScreen(),
+                              ),
+                            ),
+                          },
                           child: const Icon(
                             Icons.arrow_forward_ios_rounded,
                             color: AppColors.text_black,
