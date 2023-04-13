@@ -25,6 +25,11 @@ class OrderOwnedStockPanel extends StatefulWidget {
 
 class _OrderOwnedStockPanelState extends State<OrderOwnedStockPanel> {
   final IUserService userService = UserService();
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +38,7 @@ class _OrderOwnedStockPanelState extends State<OrderOwnedStockPanel> {
               (element) => element.runtimeType == BaseMarginPlusAccountModel)
           as BaseMarginPlusAccountModel?;
 
-      List<PorfolioStock>? portfolioStocks =
+      final List<PorfolioStock> portfolioStocks =
           data?.portfolioStatus?.porfolioStocks ?? [];
       // if ((data?.portfolioStatus?.porfolioStocks?.length ?? 0) > 3) {
       //   portfolioStocks
@@ -41,7 +46,7 @@ class _OrderOwnedStockPanelState extends State<OrderOwnedStockPanel> {
       // } else if ((data?.portfolioStatus?.porfolioStocks?.length ?? 0) > 0) {
       //   portfolioStocks.addAll(data!.portfolioStatus!.porfolioStocks!);
       // }
-      return portfolioStocks != null
+      return portfolioStocks.isNotEmpty
           ? ListView(
               shrinkWrap: true,
               children: [

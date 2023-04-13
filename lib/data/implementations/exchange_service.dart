@@ -169,6 +169,7 @@ class ExchangeService implements IExchangeService {
 
     final RequestModel requestModel =
         RequestModel(userService, group: "Q", data: requestDataModel);
+    logger.v(requestModel);
     return await networkService
         .requestTraditionalApi<StockCashBalanceModel>(requestModel);
   }

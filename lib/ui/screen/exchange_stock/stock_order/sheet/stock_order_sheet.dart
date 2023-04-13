@@ -117,13 +117,14 @@ class _StockOrderSheetState extends State<StockOrderSheet>
   }
 
   Future<void> getStockCashBalance() async {
-    if (stockModel == null) {
+    if (stockModel == null || priceController.text == "0") {
       return;
     }
     stockCashBalanceModel = await exchangeService.getSCashBalance(
         stockCode: stockModel!.stock.stockCode,
         price: priceController.text,
         side: Side.buy);
+    logger.v(stockCashBalanceModel);
     setState(() {});
   }
 

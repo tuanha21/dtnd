@@ -162,8 +162,7 @@ class _StockOrderSuccessSheetState extends State<StockOrderSuccessSheet> {
                   ),
                   onPressed: () {
                     Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) =>
-                      const OrderNoteScreen(defaultab: 2),
+                      builder: (context) => const OrderNoteScreen(defaultab: 2),
                     ));
                   },
                   child: const Text('Về sổ lệnh',

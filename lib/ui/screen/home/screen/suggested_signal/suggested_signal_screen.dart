@@ -90,7 +90,9 @@ class _SuggestedSignalScreenState extends State<SuggestedSignalScreen> {
     final listRes = await dataCenterService.getSuggestedSignal(period.period);
     datas.clear();
     datas.addAll(listRes);
+    listDataShow.clear();
     listDataShow.addAll(listRes);
+    filterData(filter);
     if (mounted) setState(() {});
   }
 
@@ -120,23 +122,29 @@ class _SuggestedSignalScreenState extends State<SuggestedSignalScreen> {
     }
     if (options != filter) {
       filter = options;
-      final List<bool> listSelect =
-          List.generate(datas.length, (index) => false);
-      for (var index = 0; index < options.length; index++) {
-        for (var i = 0; i < datas.length; i++) {
-          if (datas.elementAt(i).type == options.elementAt(index).signalCode) {
-            listSelect[i] = true;
-          }
-        }
-      }
-      listDataShow.clear();
-      for (var i = 0; i < listSelect.length; i++) {
-        if (listSelect.elementAt(i)) {
-          listDataShow.add(datas.elementAt(i));
-        }
-      }
-      setState(() {});
+      filterData(filter);
     }
+  }
+
+  void filterData(List<SignalType>? options) {
+    if (options == null) {
+      return;
+    }
+    final List<bool> listSelect = List.generate(datas.length, (index) => false);
+    for (var index = 0; index < options.length; index++) {
+      for (var i = 0; i < datas.length; i++) {
+        if (datas.elementAt(i).type == options.elementAt(index).signalCode) {
+          listSelect[i] = true;
+        }
+      }
+    }
+    listDataShow.clear();
+    for (var i = 0; i < listSelect.length; i++) {
+      if (listSelect.elementAt(i)) {
+        listDataShow.add(datas.elementAt(i));
+      }
+    }
+    setState(() {});
   }
 
   @override

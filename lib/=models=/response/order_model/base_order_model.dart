@@ -59,7 +59,10 @@ class BaseOrderModel extends CoreResponseModel implements IOrderModel {
 
   BaseOrderModel.fromJson(Map<String, dynamic> json) {
     try {
-      orderNo = num.parse(json['orderNo']);
+      if (json['orderNo'] is num) {
+        orderNo = json['orderNo'];
+      }
+      orderNo = num.tryParse(json['orderNo'] ?? "0");
       id = json['pk_orderNo'];
       orderTime = DateFormat("HH:mm:ss").parseStrict(json['orderTime']);
       orderAccount = json['accountCode'];
@@ -68,7 +71,10 @@ class BaseOrderModel extends CoreResponseModel implements IOrderModel {
       volume = json['volume'];
       showPrice = json['showPrice'];
       orderPrice = json['orderPrice'];
-      matchVolume = num.parse(json['matchVolume'] ?? "0");
+      if (json['matchVolume'] is num) {
+        matchVolume = json['matchVolume'];
+      }
+      matchVolume = num.tryParse(json['matchVolume'] ?? "0");
       status = json['status'];
       channel = json['channel'];
       group = json['group'];
@@ -86,6 +92,7 @@ class BaseOrderModel extends CoreResponseModel implements IOrderModel {
       orderStatus = _getStatusOrder(json['status']);
       reVol = num.parse(volume ?? "0") - (matchVolume ?? 0);
     } catch (e) {
+      logger.e(e.runtimeType);
       logger.e(e);
     }
   }

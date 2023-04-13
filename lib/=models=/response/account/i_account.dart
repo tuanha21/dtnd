@@ -27,6 +27,8 @@ abstract class IAccountModel implements CoreResponseModel {
   }
 
   void updateDataFromJson(IAccountResponse jsonData);
+
+  // void reloadPortfolio();
 }
 
 class IAccountResponse implements CoreResponseModel {

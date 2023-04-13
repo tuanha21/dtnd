@@ -179,7 +179,7 @@ class _AccountAssetOverviewWidgetState
                                                   fontWeight: FontWeight.w500),
                                         ),
                                         Text(
-                                            "${NumUtils.formatInteger(widget.data?.lmv ?? 0)}đ",
+                                            "${NumUtils.formatInteger(widget.data?.debt ?? 0)}đ",
                                             style: textTheme.labelMedium!
                                                 .copyWith(
                                                     fontWeight:
@@ -347,7 +347,7 @@ class _AccountAssetOverviewWidgetState
                               ),
                               Text(
                                   // (widget.data?.apT0 + widget.data?.apT1 + widget.data?.apT2),
-                                  "${NumUtils.formatInteger( (widget.data?.apT0 ?? 0) + (widget.data?.apT1 ?? 0) + (widget.data?.apT2 ?? 0))}đ",
+                                  "${NumUtils.formatInteger((widget.data?.apT0 ?? 0) + (widget.data?.apT1 ?? 0) + (widget.data?.apT2 ?? 0))}đ",
                                   style: textTheme.labelMedium!
                                       .copyWith(fontWeight: FontWeight.w600))
                             ],

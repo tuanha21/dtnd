@@ -121,6 +121,7 @@ class BaseMarginPlusAccountModel implements IAccountModel {
     collateral = parse(data.json['collateral']);
     lmv = parse(data.json['lmv']);
     lmv0 = parse(data.json['lmv_0']);
+    print(data.json['debt']);
     debt = parse(data.json['debt']);
     ee = parse(data.json['ee']);
     ee50 = parse(data.json['ee_50']);
@@ -180,7 +181,7 @@ class BaseMarginPlusAccountModel implements IAccountModel {
   }
 
   num? parse(dynamic string) {
-    if(string is String) {
+    if (string is String) {
       return num.tryParse(string);
     } else {
       return null;

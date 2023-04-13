@@ -11,7 +11,7 @@ import 'package:dtnd/ui/screen/exchange_stock/stock_order/sheet/change_stock_ord
 import 'package:dtnd/ui/screen/exchange_stock/stock_order/sheet/stock_order_confirm_sheet.dart';
 import 'package:dtnd/ui/screen/exchange_stock/stock_order/sheet/stock_order_fail_sheet.dart';
 import 'package:dtnd/ui/screen/exchange_stock/stock_order/sheet/stock_order_sheet.dart';
-import 'package:dtnd/ui/screen/exchange_stock/stock_order/sheet/stock_order_success_sheet.dart';
+import 'package:dtnd/ui/screen/exchange_stock/stock_order/sheet/stock_order_success_dialog.dart';
 import 'package:flutter/material.dart';
 
 class OrderSuccessCmd extends NextCmd {
@@ -204,15 +204,15 @@ class StockOrderSuccessISheet extends IDialog {
   ISheet? back([dynamic cmd]) => null;
 
   @override
-  ISheet? next([dynamic cmd]) => StockOrderISheet(stockModel);
+  ISheet? next([dynamic cmd]) => StockOrderISheet(cmd?.data.stockModel);
 
   @override
   Widget? backWidget([cmd]) => null;
 
   @override
   Widget? nextWidget([cmd]) => StockOrderSheet(
-        stockModel: stockModel,
-        orderData: null,
+        stockModel: cmd?.data.stockModel,
+        orderData: cmd?.data,
       );
 
   @override
