@@ -108,15 +108,6 @@ class HomeAppbarDelegate extends SliverPersistentHeaderDelegate {
               child: _HomeBanner(appService),
             ),
           ),
-          // Positioned(
-          //   top: 234 + (shrinkOffset / _difference * -imageHeight),
-          //   left: 16,
-          //   child: SizedBox(
-          //     width: size.width - 32,
-          //     child: const HomeQuickAccess(),
-          //   ),
-          // ),
-
           Positioned(
             bottom: 20,
             left: ratio <= 0 ? 0 : 16,
@@ -130,22 +121,21 @@ class HomeAppbarDelegate extends SliverPersistentHeaderDelegate {
           Align(
             alignment: Alignment.topCenter,
             child: SizedBox(
-              height: 120,
+              height: 85,
               child: AppBar(
                 automaticallyImplyLeading: false,
                 flexibleSpace: Container(
                   decoration: ratio <= 0
                       ? const BoxDecoration(
                           gradient: LinearGradient(
+                            begin: Alignment.topCenter,
+                            end: Alignment.bottomCenter,
                             colors: [AppColors.linear_01, AppColors.linear_02],
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomRight,
                           ),
                         )
                       : const BoxDecoration(),
                 ),
-                backgroundColor:
-                    ratio <= 0 ? AppColors.primary_01 : Colors.transparent,
+                backgroundColor: AppColors.linear_01.withOpacity(0.001),
                 title: title,
                 actions: [
                   SizedBox.square(
@@ -204,7 +194,7 @@ class HomeAppbarDelegate extends SliverPersistentHeaderDelegate {
   double get maxExtent => 350;
 
   @override
-  double get minExtent => userService.userInfo.value == null ? 233 : 188;
+  double get minExtent => userService.userInfo.value == null ? 200 : 148;
 
   @override
   bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) =>
