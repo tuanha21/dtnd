@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dtnd/=models=/response/stock.dart';
@@ -60,8 +61,8 @@ class HomeAppbarDelegate extends SliverPersistentHeaderDelegate {
         textTitle = "IFIS";
         avatar = Image.asset(
           AppImages.logo_account_default,
-          width: 32,
-          height: 32,
+          width: 28,
+          height: 28,
           fit: BoxFit.fill,
         );
       }
@@ -124,7 +125,7 @@ class HomeAppbarDelegate extends SliverPersistentHeaderDelegate {
           Align(
             alignment: Alignment.topCenter,
             child: SizedBox(
-              height: 85,
+              height: Platform.isAndroid ? 85 : 110,
               child: AppBar(
                 automaticallyImplyLeading: false,
                 flexibleSpace: Container(
@@ -197,7 +198,15 @@ class HomeAppbarDelegate extends SliverPersistentHeaderDelegate {
   double get maxExtent => 350;
 
   @override
-  double get minExtent => userService.userInfo.value == null ? 200 : 148;
+  double get minExtent {
+    if (Platform.isAndroid) {
+      if (userService.userInfo.value == null) return 200;
+      return 148;
+    } else {
+      if (userService.userInfo.value == null) return 215;
+      return 175;
+    }
+  }
 
   @override
   bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) =>
