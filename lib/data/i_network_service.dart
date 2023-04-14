@@ -103,7 +103,7 @@ abstract class INetworkService {
       Map<String, String> body);
 
   Future<List<SignalType>?> getSignalList(Map<String, String> body);
-  
+
   Future<List<SuggestedSignalModel>?> getSuggestedSignal(
       Map<String, String> body);
 
@@ -241,16 +241,4 @@ abstract class INetworkService {
   Future<void> createBot(String body);
 
   Future<void> deleteBot(String body);
-
-  Future<List<T>?> getDataProfitLoss<T extends CoreResponseModel>(
-    RequestModel requestModel, {
-    List<T>? Function(Map<String, dynamic>)? onError,
-    bool Function(Map<String, dynamic>)? hasError,
-  });
-
-  Future<List<T>?> getDataMarginDebt<T extends CoreResponseModel>(
-    RequestModel requestModel, {
-    List<T>? Function(Map<String, dynamic>)? onError,
-    bool Function(Map<String, dynamic>)? hasError,
-  });
 }

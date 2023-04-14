@@ -51,7 +51,7 @@ class RealizedProfitLossController {
       userService,
       data: RequestDataModel.cursorType(
           cmd: "GetAllShareEarned",
-          p1: "${userService.token.value!.user}9",
+          p1: userService.token.value!.defaultAcc,
           p2: maCP ?? '',
           p3: TimeUtilities.commonTimeFormat.format(fromDay ??
               TimeUtilities.getPreviousDateTime(TimeUtilities.month(1))),
@@ -61,7 +61,7 @@ class RealizedProfitLossController {
     );
     logger.v(requestModel.toJson());
     final listDetail = await networkService
-        .getDataProfitLoss<ShareEarnedDetailModel>(requestModel);
+        .requestTraditionalApiResList<ShareEarnedDetailModel>(requestModel);
     logger.v(listDetail?.length.toString());
     if (listDetail?.isNotEmpty ?? false) {
       shareEarnedModel.value = ShareEarnedModel.fromListDetail(listDetail);
@@ -70,7 +70,7 @@ class RealizedProfitLossController {
     return shareEarnedModel.value;
   }
 
-  Future<ShareEarnedModel?> Search(
+  Future<ShareEarnedModel?> search(
       DateTime? fromDay, DateTime? toDay, String? maCP) async {
     if (!userService.isLogin) {
       return null;
@@ -90,7 +90,7 @@ class RealizedProfitLossController {
     );
     logger.v(requestModel.toJson());
     final listDetail = await networkService
-        .getDataProfitLoss<ShareEarnedDetailModel>(requestModel);
+        .requestTraditionalApiResList<ShareEarnedDetailModel>(requestModel);
     logger.v(listDetail?.length.toString());
     if (listDetail?.isNotEmpty ?? false) {
       listSearch.value = ShareEarnedModel.fromListDetail(listDetail);

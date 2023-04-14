@@ -1600,47 +1600,6 @@ class NetworkService implements INetworkService {
   }
 
   @override
-  Future<List<T>?> getDataProfitLoss<T extends CoreResponseModel>(
-      RequestModel requestModel,
-      {List<T>? Function(Map<String, dynamic> p1)? onError,
-      bool Function(Map<String, dynamic> p1)? hasError}) async {
-    dynamic response =
-        await client.post(url_core_endpoint, body: requestModel.toString());
-    response = decode(response.bodyBytes);
-    bool checkResponse = hasError?.call(response) ?? (response["rc"] != 1);
-    if (checkResponse) {
-      return onError?.call(response);
-    }
-    response = response["data"];
-    final List<T> result = [];
-    for (var element in response) {
-      result.add(CoreResponseModel.fromJson<T>(element)!);
-    }
-    return result;
-  }
-
-  @override
-  Future<List<T>?> getDataMarginDebt<T extends CoreResponseModel>(
-      RequestModel requestModel,
-      {List<T>? Function(Map<String, dynamic> p1)? onError,
-      bool Function(Map<String, dynamic> p1)? hasError}) async {
-    dynamic response =
-        await client.post(url_core_endpoint, body: requestModel.toString());
-    response = decode(response.bodyBytes);
-    bool checkResponse = hasError?.call(response) ?? (response["rc"] != 1);
-    if (checkResponse) {
-      return onError?.call(response);
-    }
-    response = response["data"];
-
-    final List<T> result = [];
-    for (var element in response) {
-      result.add(CoreResponseModel.fromJson<T>(element)!);
-    }
-    return result;
-  }
-
-  @override
   Future<List<SignalMonthModel>?> getSignalMonth(
       Map<String, String> body) async {
     try {
