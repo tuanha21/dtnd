@@ -61,8 +61,8 @@ class HomeAppbarDelegate extends SliverPersistentHeaderDelegate {
         textTitle = "IFIS";
         avatar = Image.asset(
           AppImages.logo_account_default,
-          width: 28,
-          height: 28,
+          width: 24,
+          height: 24,
           fit: BoxFit.fill,
         );
       }
@@ -125,7 +125,7 @@ class HomeAppbarDelegate extends SliverPersistentHeaderDelegate {
           Align(
             alignment: Alignment.topCenter,
             child: SizedBox(
-              height: Platform.isAndroid ? 85 : 110,
+              height: Platform.isAndroid ? 80 : 110,
               child: AppBar(
                 automaticallyImplyLeading: false,
                 flexibleSpace: Container(
@@ -166,17 +166,19 @@ class HomeAppbarDelegate extends SliverPersistentHeaderDelegate {
                           }
                         });
                       },
-                      child: Image.asset(
-                        AppImages.home_icon_search_normal,
-                        color: Colors.white,
-                      ),
+                      child: SizedBox.square(
+                          dimension: 22,
+                          child: Image.asset(
+                            AppImages.home_icon_search_normal,
+                            color: Colors.white,
+                          )),
                     ),
                   ),
                   const SizedBox(
                     width: 20,
                   ),
                   SizedBox.square(
-                      dimension: 32,
+                      dimension: 28,
                       child: Image.asset(
                         AppImages.home_icon_notification,
                       )),
@@ -200,7 +202,7 @@ class HomeAppbarDelegate extends SliverPersistentHeaderDelegate {
   @override
   double get minExtent {
     if (Platform.isAndroid) {
-      if (userService.userInfo.value == null) return 200;
+      if (userService.userInfo.value == null) return 185;
       return 148;
     } else {
       if (userService.userInfo.value == null) return 215;

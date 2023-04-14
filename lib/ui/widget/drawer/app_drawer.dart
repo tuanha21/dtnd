@@ -245,7 +245,7 @@ class _AppDrawerState extends State<AppDrawer> {
           Container(
             padding: const EdgeInsets.symmetric(vertical: 8),
             child: const Text(
-              'DTND - 1.0.1',
+              'IFIS - 1.0.1',
               style: TextStyle(color: AppColors.neutral_03),
             ),
           ),

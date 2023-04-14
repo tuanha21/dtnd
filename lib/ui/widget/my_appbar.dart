@@ -107,17 +107,19 @@ class _MyAppBarState extends State<MyAppBar> {
             avatar = ClipOval(
               child: Image.asset(
                 AppImages.home_avatar_default,
-                width: 40, // adjust the width as needed
-                height: 40, // adjust the height as needed
+                width: 36, // adjust the width as needed
+                height: 36, // adjust the height as needed
                 fit: BoxFit.cover,
               ),
             );
           }
         } else {
           textTitle = "IFIS";
-          avatar = const SizedBox.square(
-            dimension: 36,
-            child: Icon(Icons.account_circle_rounded),
+          avatar = Image.asset(
+            AppImages.logo_account_default,
+            width: 22,
+            height: 22,
+            fit: BoxFit.fill,
           );
         }
         if (userService.userInfo.value != null) {}
@@ -143,7 +145,7 @@ class _MyAppBarState extends State<MyAppBar> {
                   Text(
                     textTitle,
                     style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                          fontWeight: FontWeight.w500,
+                          fontWeight: FontWeight.w700,
                           color: Colors.white,
                         ),
                   ),
@@ -155,6 +157,14 @@ class _MyAppBarState extends State<MyAppBar> {
       });
     }
     return AppBar(
+      flexibleSpace: Container(
+          decoration: const BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [AppColors.linear_01, AppColors.linear_02],
+        ),
+      )),
       leading: widget.leading ?? backButton,
       title: title,
       actions: _actions,
