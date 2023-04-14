@@ -40,35 +40,40 @@ class _MarketScreenState extends State<MarketScreen>
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: MyAppBar(
-          backgroundColor: AppColors.linear_01,
+          // backgroundColor: AppColors.linear_01,
           actions: [
             GestureDetector(
-                onTap: () {
-                  Navigator.of(context)
-                      .push(MaterialPageRoute(
-                    builder: (context) => const SearchScreen(),
-                  ))
-                      .then((value) async {
-                    if (value is Stock) {
-                      dataCenterService.getStocksModelsFromStockCodes(
-                          [value.stockCode]).then((stockModels) {
-                        if (stockModels != null) {
-                          return Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => StockDetailScreen(
-                              stockModel: stockModels.first,
-                            ),
-                          ));
-                        }
-                      });
-                    }
-                  });
-                },
-                child: SvgPicture.asset(AppImages.search_appbar_icon)),
+              onTap: () {
+                Navigator.of(context)
+                    .push(MaterialPageRoute(
+                  builder: (context) => const SearchScreen(),
+                ))
+                    .then((value) async {
+                  if (value is Stock) {
+                    dataCenterService.getStocksModelsFromStockCodes(
+                        [value.stockCode]).then((stockModels) {
+                      if (stockModels != null) {
+                        return Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => StockDetailScreen(
+                            stockModel: stockModels.first,
+                          ),
+                        ));
+                      }
+                    });
+                  }
+                });
+              },
+              child: SizedBox.square(
+                  dimension: 22,
+                  child: Image.asset(
+                    AppImages.home_icon_search_normal,
+                  )),
+            ),
             const SizedBox(
               width: 20,
             ),
             SizedBox.square(
-                dimension: 32,
+                dimension: 24,
                 child: Image.asset(
                   AppImages.home_icon_notification,
                 )),

@@ -48,7 +48,7 @@ class _ListFunctionState extends State<ListFunction> {
         break;
       case 'Sao kê chứng khoán':
         const ShareStatementISheet()
-            .show(context, const ShareStatementSheet(), wrap: true);
+            .show(context, const ShareStatementSheet(), wrap: false);
         break;
       case 'Lịch sử lệnh':
         Navigator.of(context).push(MaterialPageRoute(
