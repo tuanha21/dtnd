@@ -35,7 +35,7 @@ class MessageLookup extends MessageLookupByLibrary {
   static String m6(minutes) => "${minutes} minutes ago";
 
   static String m7(value) =>
-      "The OTP has been sent to your ${value} extension phone number. Enter the 6-digit code to continue.";
+      "The OTP has been sent to your ${value} extension email. Enter the 6-digit code to continue.";
 
   static String m8(name) => "Rename catalog “${name}” to";
 
@@ -241,6 +241,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "index": MessageLookupByLibrary.simpleMessage("Index"),
         "industry": MessageLookupByLibrary.simpleMessage("Industry"),
         "industry_list": MessageLookupByLibrary.simpleMessage("Industry list"),
+        "info_sent_to_email": MessageLookupByLibrary.simpleMessage(
+            "Your account information has been sent to your email!"),
         "interested": MessageLookupByLibrary.simpleMessage("Interested"),
         "interested_catalog":
             MessageLookupByLibrary.simpleMessage("Interested catalog"),
@@ -397,6 +399,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "rename_catalog_to": m8,
         "return_command":
             MessageLookupByLibrary.simpleMessage("return command"),
+        "return_home_page":
+            MessageLookupByLibrary.simpleMessage("Return home page"),
         "returning_money":
             MessageLookupByLibrary.simpleMessage("Returning money"),
         "revenue": MessageLookupByLibrary.simpleMessage("Revenue"),

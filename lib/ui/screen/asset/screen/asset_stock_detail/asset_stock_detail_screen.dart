@@ -17,7 +17,10 @@ import 'package:dtnd/ui/widget/empty_list_widget.dart';
 import 'package:dtnd/ui/widget/overlay/login_first_dialog.dart';
 import 'package:dtnd/utilities/num_utils.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
+import '../../../../widget/calendar/day_input.dart';
 import 'component/asset_stock_detail_overview.dart';
 import 'tab/closed_deal_tab.dart';
 import 'tab/history_tab.dart';
@@ -28,8 +31,10 @@ class AssetStockDetailScreen extends StatefulWidget {
     required this.stockCode,
     required this.porfolioStock,
   });
+
   final String stockCode;
   final PorfolioStock porfolioStock;
+
   @override
   State<AssetStockDetailScreen> createState() => _AssetStockDetailScreenState();
 }
@@ -40,6 +45,12 @@ class _AssetStockDetailScreenState extends State<AssetStockDetailScreen>
   late final AssetStockDetailController assetStockDetailController;
   late final TabController tabController;
   StockModel? stockModel;
+
+  late DateTime fromDay;
+  late DateTime toDay;
+  late DateTime firstDay;
+  late DateTime lastDay;
+
   @override
   void initState() {
     tabController = TabController(length: 3, vsync: this);

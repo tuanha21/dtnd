@@ -150,6 +150,8 @@ class AppImages {
   static const String chart_3 = "assets/images/chart_3.png";
   static const String drawer_camera_icon =
       "assets/images/drawer_camera_icon.png";
+  static const String register_success =
+      "assets/images/register_success.png";
 
   ///Loading
   static const String loading_light_bg = "assets/images/loading_light_bg.png";

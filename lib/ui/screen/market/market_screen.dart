@@ -4,6 +4,7 @@ import 'package:dtnd/ui/screen/market/widget/tabs/interested_tab.dart';
 import 'package:dtnd/ui/screen/market/widget/tabs/market_analysis_tab.dart';
 import 'package:dtnd/ui/screen/market/widget/tabs/market_industry_tab.dart';
 import 'package:dtnd/ui/screen/market/widget/tabs/market_overview_tab.dart';
+import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/widget/my_appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -39,6 +40,7 @@ class _MarketScreenState extends State<MarketScreen>
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: MyAppBar(
+          backgroundColor: AppColors.linear_01,
           actions: [
             GestureDetector(
                 onTap: () {
@@ -65,7 +67,11 @@ class _MarketScreenState extends State<MarketScreen>
             const SizedBox(
               width: 20,
             ),
-            SvgPicture.asset(AppImages.notification_appbar_icon),
+            SizedBox.square(
+                dimension: 32,
+                child: Image.asset(
+                  AppImages.home_icon_notification,
+                )),
             const SizedBox(
               width: 16,
             ),
