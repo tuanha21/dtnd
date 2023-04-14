@@ -1,7 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dtnd/data/i_user_service.dart';
 import 'package:dtnd/data/implementations/user_service.dart';
+import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/screen/home_base/widget/home_base_nav.dart';
+import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -90,7 +92,7 @@ class _MyAppBarState extends State<MyAppBar> {
         String textTitle;
         Widget avatar;
         if (userService.userInfo.value != null) {
-          textTitle = userService.userInfo.value!.custFullName ?? "";
+          textTitle = userService.userInfo.value!.customerName ?? "";
           if (userService.userInfo.value!.faceImg != null) {
             avatar = Container(
               width: 36,
@@ -102,9 +104,13 @@ class _MyAppBarState extends State<MyAppBar> {
               ),
             );
           } else {
-            avatar = const SizedBox.square(
-              dimension: 36,
-              child: Icon(Icons.account_circle_rounded),
+            avatar = ClipOval(
+              child: Image.asset(
+                AppImages.home_avatar_default,
+                width: 40, // adjust the width as needed
+                height: 40, // adjust the height as needed
+                fit: BoxFit.cover,
+              ),
             );
           }
         } else {
@@ -121,12 +127,27 @@ class _MyAppBarState extends State<MyAppBar> {
             children: [
               avatar,
               const SizedBox(width: 8),
-              Text(
-                textTitle,
-                style: Theme.of(context)
-                    .textTheme
-                    .labelLarge
-                    ?.copyWith(fontWeight: FontWeight.w700),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  userService.userInfo.value != null
+                      ? Text(
+                          S.of(context).hello,
+                          style:
+                              Theme.of(context).textTheme.labelMedium?.copyWith(
+                                    fontWeight: FontWeight.w500,
+                                    color: Colors.white,
+                                  ),
+                        )
+                      : Container(),
+                  Text(
+                    textTitle,
+                    style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                          fontWeight: FontWeight.w500,
+                          color: Colors.white,
+                        ),
+                  ),
+                ],
               ),
             ],
           ),
