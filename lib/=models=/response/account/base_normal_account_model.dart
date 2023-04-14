@@ -2,6 +2,8 @@ import 'package:dtnd/=models=/response/account/asset_chart_element.dart';
 import 'package:dtnd/=models=/response/account/i_account.dart';
 import 'package:dtnd/=models=/response/account/portfolio_status_model.dart';
 import 'package:dtnd/=models=/response/account/unexecuted_right_model.dart';
+import 'package:dtnd/data/i_user_service.dart';
+import 'package:dtnd/data/i_network_service.dart';
 
 class BaseNormalAccountModel implements IAccountModel {
   ///Account Info
@@ -112,5 +114,12 @@ class BaseNormalAccountModel implements IAccountModel {
 
   num? parse(String string) {
     return num.tryParse(string);
+  }
+
+  @override
+  Future<List<UnexecutedRightModel>> getListUnexecutedRight(
+      IUserService userService, INetworkService networkService) {
+    // TODO: implement getListUnexecutedRight
+    throw UnimplementedError();
   }
 }

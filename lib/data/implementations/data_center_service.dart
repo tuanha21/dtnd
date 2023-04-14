@@ -523,6 +523,20 @@ class DataCenterService
   }
 
   @override
+  Future<List<SuggestedSignalModel>> getSuggestedSignalFilter(
+      int day, String type) async {
+    final Map<String, String> body = {
+      "cmd": "signal_sum",
+      "params": "$day,$type",
+    };
+    final listTop = await networkService.getSuggestedSignal(body);
+    if (listTop?.isEmpty ?? true) {
+      return [];
+    }
+    return listTop ?? [];
+  }
+
+  @override
   Future<TopSignalDetailModel?> getTopSignalDetail(
       String stockCode, String type) {
     final Map<String, String> body = {

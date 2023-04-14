@@ -1,4 +1,5 @@
 import 'package:dtnd/=models=/response/account/base_margin_account_model.dart';
+import 'package:dtnd/data/implementations/network_service.dart';
 import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/screen/asset/component/investment_catalog_widget.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
@@ -60,7 +61,7 @@ class _PortfolioAndRightPanelState extends State<PortfolioAndRightPanel>
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
+    // final textTheme = Theme.of(context).textTheme;
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
       margin: const EdgeInsets.symmetric(horizontal: 16),
@@ -148,12 +149,13 @@ class _PortfolioAndRightPanelState extends State<PortfolioAndRightPanel>
               }),
             ),
           Obx(() {
-            final data = userService.listAccountModel.value?.firstWhereOrNull(
-                    (element) => element.runtimeType == BaseMarginPlusAccountModel)
+            final account = userService.listAccountModel.value
+                    ?.firstWhereOrNull((element) =>
+                        element.runtimeType == BaseMarginPlusAccountModel)
                 as BaseMarginPlusAccountModel?;
 
             if (_tabController.index == 0) {
-              if (data?.portfolioStatus?.porfolioStocks?.isEmpty ?? true) {
+              if (account?.portfolioStatus?.porfolioStocks?.isEmpty ?? true) {
                 return const Padding(
                   padding: EdgeInsets.symmetric(vertical: 16),
                   child: EmptyListWidget(),
@@ -162,26 +164,28 @@ class _PortfolioAndRightPanelState extends State<PortfolioAndRightPanel>
               return Column(
                 children: [
                   for (int i = 0;
-                      i < (data?.portfolioStatus?.porfolioStocks?.length ?? 0);
+                      i <
+                          (account?.portfolioStatus?.porfolioStocks?.length ??
+                              0);
                       i++)
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 4),
                       child: InvestmentCatalogWidget(
                         showFullMode: showProfitAndLoss,
-                        data:
-                            data!.portfolioStatus!.porfolioStocks!.elementAt(i),
-                        volPc: (data.portfolioStatus!.porfolioStocks!
+                        data: account!.portfolioStatus!.porfolioStocks!
+                            .elementAt(i),
+                        volPc: (account.portfolioStatus!.porfolioStocks!
                                     .elementAt(i)
                                     .marketValue ??
                                 0) /
-                            (data.portfolioStatus!.marketValue ?? 1) *
+                            (account.portfolioStatus!.marketValue ?? 1) *
                             100,
                       ),
                     )
                 ],
               );
             } else {
-              if (data?.listUnexecutedBuyRight.isEmpty ?? true) {
+              if (account?.listUnexecutedBuyRight.isEmpty ?? true) {
                 return const Padding(
                   padding: EdgeInsets.symmetric(vertical: 16),
                   child: EmptyListWidget(),
@@ -191,13 +195,15 @@ class _PortfolioAndRightPanelState extends State<PortfolioAndRightPanel>
               return Column(
                 children: [
                   for (int i = 0;
-                      i < (data?.listUnexecutedBuyRight.length ?? 0);
+                      i < (account?.listUnexecutedBuyRight.length ?? 0);
                       i++)
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 4),
                       child: BuyRightWidget(
-                        accountModel: data!,
-                        data: data.listUnexecutedBuyRight.elementAt(i),
+                        accountModel: account!,
+                        data: account.listUnexecutedBuyRight.elementAt(i),
+                        onSuccessExecute: () => account.getListUnexecutedRight(
+                            userService, NetworkService()),
                       ),
                     )
                 ],

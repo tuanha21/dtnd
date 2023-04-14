@@ -15,8 +15,6 @@ import 'package:flutter/material.dart';
 import '../../../../../=models=/ui_model/user_cmd.dart';
 import '../../../../theme/app_image.dart';
 import '../../../exchange_stock/order_note/data/order_filter_data.dart';
-import '../../../exchange_stock/order_note/sheet/order_filter_flow.dart';
-import '../../../exchange_stock/order_note/sheet/order_filter_sheet.dart';
 import 'flow/suggested_signal_flow.dart';
 import 'sheet/suggested_signal_filter_sheet.dart';
 
@@ -69,7 +67,7 @@ class _SuggestedSignalScreenState extends State<SuggestedSignalScreen> {
   final List<SuggestedSignalModel> datas = <SuggestedSignalModel>[];
   final List<SuggestedSignalModel> listDataShow = <SuggestedSignalModel>[];
   OrderFilterData? orderFilterData;
-  List<SignalType>? filter;
+  SignalType? filter;
   @override
   void initState() {
     super.initState();
@@ -87,13 +85,54 @@ class _SuggestedSignalScreenState extends State<SuggestedSignalScreen> {
     setState(() {
       currentPeriod = period;
     });
-    final listRes = await dataCenterService.getSuggestedSignal(period.period);
+    final List<SuggestedSignalModel> listRes;
+    if (filter != null) {
+      listRes = await dataCenterService.getSuggestedSignalFilter(
+          period.period, filter!.signalCode);
+    } else {
+      listRes = await dataCenterService.getSuggestedSignal(period.period);
+    }
     datas.clear();
     datas.addAll(listRes);
     listDataShow.clear();
     listDataShow.addAll(listRes);
     filterData(filter);
     if (mounted) setState(() {});
+  }
+
+  void onFilter(SignalType? option) {
+    if (option == null) {
+      if (filter != null) {
+        filter = option;
+        listDataShow.clear();
+        listDataShow.addAll(datas);
+      }
+      setState(() {});
+      return;
+    }
+    if (option != filter) {
+      filter = option;
+      filterData(filter);
+    }
+  }
+
+  void filterData(SignalType? option) {
+    if (option == null) {
+      return;
+    }
+    final List<bool> listSelect = List.generate(datas.length, (index) => false);
+    for (var i = 0; i < datas.length; i++) {
+      if (datas.elementAt(i).type == option.signalCode) {
+        listSelect[i] = true;
+      }
+    }
+    listDataShow.clear();
+    for (var i = 0; i < listSelect.length; i++) {
+      if (listSelect.elementAt(i)) {
+        listDataShow.add(datas.elementAt(i));
+      }
+    }
+    setState(() {});
   }
 
   void onTap(SuggestedSignalModel model) {
@@ -108,43 +147,6 @@ class _SuggestedSignalScreenState extends State<SuggestedSignalScreen> {
                 defaulday: currentPeriod.period,
               ),
             )));
-  }
-
-  void onFilter(List<SignalType>? options) {
-    if (options == null) {
-      if (filter != null) {
-        filter = options;
-        listDataShow.clear();
-        listDataShow.addAll(datas);
-      }
-      setState(() {});
-      return;
-    }
-    if (options != filter) {
-      filter = options;
-      filterData(filter);
-    }
-  }
-
-  void filterData(List<SignalType>? options) {
-    if (options == null) {
-      return;
-    }
-    final List<bool> listSelect = List.generate(datas.length, (index) => false);
-    for (var index = 0; index < options.length; index++) {
-      for (var i = 0; i < datas.length; i++) {
-        if (datas.elementAt(i).type == options.elementAt(index).signalCode) {
-          listSelect[i] = true;
-        }
-      }
-    }
-    listDataShow.clear();
-    for (var i = 0; i < listSelect.length; i++) {
-      if (listSelect.elementAt(i)) {
-        listDataShow.add(datas.elementAt(i));
-      }
-    }
-    setState(() {});
   }
 
   @override
@@ -165,7 +167,7 @@ class _SuggestedSignalScreenState extends State<SuggestedSignalScreen> {
                             context,
                             SuggestedSignalFilterSheet(
                               listOptions: signalList,
-                              listSelected: filter,
+                              selected: filter,
                             ))
                         .then((value) {
                       if (value is NextCmd) {

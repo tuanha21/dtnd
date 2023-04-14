@@ -10,9 +10,9 @@ import 'package:flutter/material.dart';
 
 class SuggestedSignalFilterSheet extends StatefulWidget {
   const SuggestedSignalFilterSheet(
-      {super.key, required this.listOptions, this.listSelected});
+      {super.key, required this.listOptions, this.selected});
   final List<SignalType> listOptions;
-  final List<SignalType>? listSelected;
+  final SignalType? selected;
   @override
   State<SuggestedSignalFilterSheet> createState() =>
       _SuggestedSignalFilterSheetState();
@@ -21,20 +21,20 @@ class SuggestedSignalFilterSheet extends StatefulWidget {
 class _SuggestedSignalFilterSheetState
     extends State<SuggestedSignalFilterSheet> {
   late final List<SignalType?> listOptions;
-  late final List<bool> listSelected;
+  late SignalType? selected;
   @override
   void initState() {
     listOptions = [null, ...widget.listOptions];
-
-    listSelected = List.filled(listOptions.length + 1, false);
-    if (widget.listSelected != null) {
-      for (SignalType type in widget.listSelected!) {
-        listSelected[listOptions.indexWhere((element) => element == type)] =
-            true;
-      }
-    } else {
-      listSelected[0] = true;
-    }
+    selected = widget.selected;
+    // listSelected = List.filled(listOptions.length + 1, false);
+    // if (widget.listSelected != null) {
+    //   for (SignalType type in widget.listSelected!) {
+    //     listSelected[listOptions.indexWhere((element) => element == type)] =
+    //         true;
+    //   }
+    // } else {
+    //   listSelected[0] = true;
+    // }
     super.initState();
   }
 
@@ -53,7 +53,14 @@ class _SuggestedSignalFilterSheetState
             ),
             const SizedBox(height: 20),
             _FilterField<SignalType>(
-              listSelect: listSelected,
+              currentValue: selected,
+              onChanged: (value) {
+                if (value != selected) {
+                  setState(() {
+                    selected = value;
+                  });
+                }
+              },
               title: S.of(context).signal_type,
               values: listOptions,
               name: (SignalType? value) =>
@@ -64,18 +71,18 @@ class _SuggestedSignalFilterSheetState
               color: AppColors.primary_01,
               text: "Áp dụng",
               onTap: () {
-                late final List<SignalType>? listReturn;
-                if (listSelected[0]) {
-                  listReturn = null;
-                } else {
-                  listReturn = [];
-                  for (var i = 0; i < listSelected.length; i++) {
-                    if (listSelected.elementAt(i)) {
-                      listReturn.add(listOptions.elementAt(i)!);
-                    }
-                  }
-                }
-                Navigator.of(context).pop(NextCmd(listReturn));
+                // late final List<SignalType>? listReturn;
+                // if (listSelected[0]) {
+                //   listReturn = null;
+                // } else {
+                //   listReturn = [];
+                //   for (var i = 0; i < listSelected.length; i++) {
+                //     if (listSelected.elementAt(i)) {
+                //       listReturn.add(listOptions.elementAt(i)!);
+                //     }
+                //   }
+                // }
+                Navigator.of(context).pop(NextCmd(selected));
               },
             )
           ],
@@ -87,12 +94,14 @@ class _SuggestedSignalFilterSheetState
 
 class _FilterField<T> extends StatefulWidget {
   const _FilterField(
-      {required this.listSelect,
+      {required this.onChanged,
       required this.values,
+      required this.currentValue,
       required this.title,
       required this.name});
-  final List<bool> listSelect;
   final List<T?> values;
+  final T? currentValue;
+  final ValueChanged<T?> onChanged;
   final String Function(T?) name;
   final String title;
   @override
@@ -100,42 +109,42 @@ class _FilterField<T> extends StatefulWidget {
 }
 
 class __FilterFieldState<T> extends State<_FilterField<T>> {
-  void onChanged(int index) {
-    switch (index) {
-      case 0:
-        setState(() {
-          if (!widget.listSelect[0]) {
-            for (var i = 1; i < widget.listSelect.length; i++) {
-              widget.listSelect[i] = false;
-            }
-            widget.listSelect[0] = true;
-          }
-        });
+  // void onChanged(int index) {
+  //   switch (index) {
+  //     case 0:
+  //       setState(() {
+  //         if (!widget.listSelect[0]) {
+  //           for (var i = 1; i < widget.listSelect.length; i++) {
+  //             widget.listSelect[i] = false;
+  //           }
+  //           widget.listSelect[0] = true;
+  //         }
+  //       });
 
-        break;
-      default:
-        setState(() {
-          widget.listSelect[index] = !widget.listSelect[index];
-          if (widget.listSelect[0]) {
-            widget.listSelect[0] = false;
-          }
-        });
-        int count = 0;
-        for (var i = 1; i < widget.listSelect.length; i++) {
-          if (widget.listSelect.elementAt(i)) {
-            count++;
-          }
-        }
-        if (count == widget.listSelect.length - 1 || count == 0) {
-          setState(() {
-            for (var i = 1; i < widget.listSelect.length; i++) {
-              widget.listSelect[i] = false;
-            }
-            widget.listSelect[0] = true;
-          });
-        }
-    }
-  }
+  //       break;
+  //     default:
+  //       setState(() {
+  //         widget.listSelect[index] = !widget.listSelect[index];
+  //         if (widget.listSelect[0]) {
+  //           widget.listSelect[0] = false;
+  //         }
+  //       });
+  //       int count = 0;
+  //       for (var i = 1; i < widget.listSelect.length; i++) {
+  //         if (widget.listSelect.elementAt(i)) {
+  //           count++;
+  //         }
+  //       }
+  //       if (count == widget.listSelect.length - 1 || count == 0) {
+  //         setState(() {
+  //           for (var i = 1; i < widget.listSelect.length; i++) {
+  //             widget.listSelect[i] = false;
+  //           }
+  //           widget.listSelect[0] = true;
+  //         });
+  //       }
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -148,8 +157,8 @@ class __FilterFieldState<T> extends State<_FilterField<T>> {
             padding: const EdgeInsets.symmetric(vertical: 6),
             child: CircleCheckboxWithTitle(
               title: widget.name.call(widget.values.elementAt(i)),
-              onCheck: () => onChanged(i),
-              ischeck: widget.listSelect.elementAt(i),
+              onCheck: () => widget.onChanged.call(widget.values.elementAt(i)),
+              ischeck: widget.values.elementAt(i) == widget.currentValue,
             ),
           )
       ],
