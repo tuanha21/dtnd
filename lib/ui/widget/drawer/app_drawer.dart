@@ -15,6 +15,7 @@ import 'package:dtnd/ui/theme/app_textstyle.dart';
 import 'package:dtnd/ui/widget/button/single_color_text_button.dart';
 import 'package:dtnd/ui/widget/drawer/app_drawer_sub_view.dart';
 import 'package:dtnd/ui/widget/drawer/component/list_function.dart';
+import 'package:dtnd/ui/widget/drawer/component/list_function2.dart';
 import 'package:dtnd/ui/widget/drawer/logic/function_data.dart';
 import 'package:dtnd/ui/widget/drawer/logic/icon_asset.dart';
 import 'package:dtnd/utilities/account_util.dart';
@@ -43,10 +44,10 @@ class _AppDrawerState extends State<AppDrawer> {
   void initState() {
     if (userService.isLogin) {
       list = <FunctionData>[
-        const FunctionData(
-          title: "Xác thực tài khoản - eKYC",
-          iconPath: DrawerIconAsset.verify_account_icon,
-        ),
+        FunctionData(
+            title: "Xác thực tài khoản - eKYC",
+            iconPath: DrawerIconAsset.verify_account_icon,
+            subTitle: []),
         FunctionData(
           title: 'Giao dịch chứng khoán',
           iconPath: DrawerIconAsset.chart_2,
@@ -63,20 +64,29 @@ class _AppDrawerState extends State<AppDrawer> {
                         function: () {
                           // back();
                           StockModelUtil.openSheet(context);
-                        }),
+                        },
+                        subTitle: []),
                     FunctionData(
                       title: S.current.derivative_trading,
                       iconPath: DrawerIconAsset.chart_2,
+                      subTitle: [],
                     ),
                   ],
                 ),
               ),
             );
           },
+          subTitle: [
+            'Giao dịch cơ sở',
+            'Giao dịch phái sinh',
+            'Thực hiện quyền',
+            'Chuyển chứng khoán'
+          ],
         ),
         FunctionData(
           title: S.current.money_trading,
           iconPath: DrawerIconAsset.money_change,
+          subTitle: [],
         ),
         FunctionData(
           title: 'Công cụ phân tích',
@@ -93,16 +103,19 @@ class _AppDrawerState extends State<AppDrawer> {
                         function: () {
                           // back();
                           StockModelUtil.openSheet(context);
-                        }),
+                        },
+                        subTitle: []),
                   ],
                 ),
               ),
             );
           },
+          subTitle: [],
         ),
         FunctionData(
             title: S.current.accumulate,
-            iconPath: DrawerIconAsset.archive_book),
+            iconPath: DrawerIconAsset.archive_book,
+            subTitle: []),
         FunctionData(
           title: 'Sao kê tài khoản',
           iconPath: DrawerIconAsset.clipboard_text,
@@ -119,7 +132,8 @@ class _AppDrawerState extends State<AppDrawer> {
                           const MoneyStatementISheet().show(
                               context, const MoneyStatementSheet(),
                               wrap: false);
-                        }),
+                        },
+                        subTitle: []),
                     FunctionData(
                       title: S.current.stock_statement,
                       iconPath: DrawerIconAsset.stock_statement_icon,
@@ -128,6 +142,7 @@ class _AppDrawerState extends State<AppDrawer> {
                             context, const ShareStatementSheet(),
                             wrap: false);
                       },
+                      subTitle: [],
                     ),
                     FunctionData(
                       title: S.current.order_history,
@@ -139,6 +154,7 @@ class _AppDrawerState extends State<AppDrawer> {
                               const OrderNoteScreen(defaultab: 2),
                         ));
                       },
+                      subTitle: [],
                     ),
                     FunctionData(
                       title: S.current.gain_loss_history,
@@ -149,6 +165,7 @@ class _AppDrawerState extends State<AppDrawer> {
                           builder: (context) => const RealizedProfitLoss(),
                         ));
                       },
+                      subTitle: [],
                     ),
                     FunctionData(
                       title: S.current.margin_debt,
@@ -159,16 +176,19 @@ class _AppDrawerState extends State<AppDrawer> {
                           builder: (context) => const MarginDebtScreen(),
                         ));
                       },
+                      subTitle: [],
                     ),
                   ],
                 ),
               ),
             );
           },
+          subTitle: [],
         ),
         FunctionData(
           title: S.current.security,
           iconPath: DrawerIconAsset.shield_security,
+          subTitle: [],
         ),
         FunctionData(
           title: S.current.setting,
@@ -182,16 +202,19 @@ class _AppDrawerState extends State<AppDrawer> {
                     FunctionData(
                       title: S.current.languges,
                       iconPath: DrawerIconAsset.shield_security,
+                      subTitle: [],
                     ),
                     FunctionData(
                       title: S.current.interface,
                       iconPath: DrawerIconAsset.shield_security,
+                      subTitle: [],
                     ),
                   ],
                 ),
               ),
             );
           },
+          subTitle: [],
         ),
       ];
     } else {
@@ -207,15 +230,18 @@ class _AppDrawerState extends State<AppDrawer> {
                   list: <FunctionData>[
                     FunctionData(
                         title: S.current.languges,
-                        iconPath: DrawerIconAsset.archive_book),
+                        iconPath: DrawerIconAsset.archive_book,
+                        subTitle: []),
                     FunctionData(
                         title: S.current.interface,
-                        iconPath: DrawerIconAsset.archive_book),
+                        iconPath: DrawerIconAsset.archive_book,
+                        subTitle: []),
                   ],
                 ),
               ),
             );
           },
+          subTitle: [],
         ),
       ];
     }
@@ -313,7 +339,7 @@ class _AppDrawerState extends State<AppDrawer> {
               }
             },
           ),
-          Expanded(child: ListFunction(list: list)),
+          Expanded(child: ListFunction2(list: list)),
           Container(
             padding: const EdgeInsets.symmetric(vertical: 8),
             child: const Text(

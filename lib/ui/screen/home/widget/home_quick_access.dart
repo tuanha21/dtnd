@@ -230,7 +230,7 @@ class __AssetRowState extends State<_AssetRow> {
                     final String data;
                     if (userService.totalAsset.value?.totalEnquity != null) {
                       data = NumUtils.formatInteger(
-                          userService.totalAsset.value?.totalEnquity);
+                          userService.totalAsset.value?.totalNav);
                     } else {
                       data = "-";
                     }
