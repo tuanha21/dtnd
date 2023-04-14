@@ -2,7 +2,7 @@ import 'package:dtnd/ui/screen/account/logic/account_sheet.dart';
 import 'package:dtnd/ui/screen/account/sheet/money_statement_sheet.dart';
 import 'package:dtnd/ui/screen/account/sheet/share_statement_sheet.dart';
 import 'package:dtnd/ui/screen/asset/screen/margin_debt/margin_debt_screen.dart';
-import 'package:dtnd/ui/screen/asset/screen/realized_profit_loss/realized_profit_loss.dart';
+import 'package:dtnd/ui/screen/asset/screen/executed_profit_loss/realized_profit_loss.dart';
 import 'package:dtnd/ui/screen/exchange_stock/order_note/screen/order_note_screen.dart';
 import 'package:dtnd/ui/screen/exchange_stock/stock_order/business/stock_order_util.dart';
 import 'package:dtnd/ui/theme/app_color.dart';

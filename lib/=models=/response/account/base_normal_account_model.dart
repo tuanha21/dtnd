@@ -1,3 +1,4 @@
+import 'package:dtnd/=models=/request/request_model.dart';
 import 'package:dtnd/=models=/response/account/asset_chart_element.dart';
 import 'package:dtnd/=models=/response/account/i_account.dart';
 import 'package:dtnd/=models=/response/account/portfolio_status_model.dart';
@@ -118,8 +119,26 @@ class BaseNormalAccountModel implements IAccountModel {
 
   @override
   Future<List<UnexecutedRightModel>> getListUnexecutedRight(
-      IUserService userService, INetworkService networkService) {
-    // TODO: implement getListUnexecutedRight
-    throw UnimplementedError();
+      IUserService userService, INetworkService networkService) async {
+    final requestModel = RequestModel(
+      userService,
+      group: "B",
+      data: RequestDataModel.cursorType(
+        cmd: "ListRightUnExec",
+        p1: accCode,
+      ),
+    );
+    final res =
+        await networkService.requestTraditionalApiResList<UnexecutedRightModel>(
+      requestModel,
+      hasError: (p0) {
+        if (p0["data"].runtimeType is List && p0["data"].isNotEmpty) {
+          return p0["data"].first["DUMMY"] != null;
+        }
+        return false;
+      },
+    );
+    listUnexecutedRight = res ?? [];
+    return res ?? [];
   }
 }
