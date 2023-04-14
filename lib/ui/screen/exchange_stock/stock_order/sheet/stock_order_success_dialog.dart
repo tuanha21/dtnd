@@ -2,17 +2,16 @@ import 'package:dtnd/=models=/exchange.dart';
 import 'package:dtnd/=models=/side.dart';
 import 'package:dtnd/=models=/ui_model/user_cmd.dart';
 import 'package:dtnd/generated/l10n.dart';
+import 'package:dtnd/ui/screen/exchange_stock/order_note/screen/order_note_screen.dart';
 import 'package:dtnd/ui/screen/exchange_stock/stock_order/data/order_data.dart';
+import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
+import 'package:dtnd/ui/theme/app_textstyle.dart';
+import 'package:dtnd/ui/widget/icon/stock_circle_icon.dart';
+import 'package:dtnd/utilities/num_utils.dart';
 import 'package:dtnd/utilities/string_util.dart';
+import 'package:dtnd/utilities/time_utils.dart';
 import 'package:flutter/material.dart';
-
-import '../../../../../utilities/num_utils.dart';
-import '../../../../../utilities/time_utils.dart';
-import '../../../../theme/app_color.dart';
-import '../../../../theme/app_textstyle.dart';
-import '../../../../widget/icon/stock_circle_icon.dart';
-import '../../order_note/screen/order_note_screen.dart';
 
 class StockOrderSuccessSheet extends StatefulWidget {
   const StockOrderSuccessSheet({
@@ -132,12 +131,12 @@ class _StockOrderSuccessSheetState extends State<StockOrderSuccessSheet> {
                 ),
                 const SizedBox(height: 8),
                 _Row(
-                  label: 'Lệnh',
+                  label: S.of(context).command_type,
                   value: widget.orderData?.orderType.detailName,
                 ),
                 const SizedBox(height: 8),
                 _Row(
-                  label: 'Thời gian',
+                  label: S.of(context).time,
                   value: TimeUtilities.commonTimeFormat.format(DateTime.now()),
                 ),
                 const SizedBox(height: 8),
@@ -165,8 +164,8 @@ class _StockOrderSuccessSheetState extends State<StockOrderSuccessSheet> {
                       builder: (context) => const OrderNoteScreen(defaultab: 2),
                     ));
                   },
-                  child: const Text('Về sổ lệnh',
-                      style: TextStyle(
+                  child: Text(S.of(context).return_command,
+                      style: const TextStyle(
                           color: AppColors.text_blue,
                           fontSize: 14,
                           fontWeight: FontWeight.w700,

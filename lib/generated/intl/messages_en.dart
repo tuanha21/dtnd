@@ -140,6 +140,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "choose_stocks_you_interested": MessageLookupByLibrary.simpleMessage(
             "Select the stocks you are interested in. You can update later"),
         "close_translations": MessageLookupByLibrary.simpleMessage("Close"),
+        "command_type": MessageLookupByLibrary.simpleMessage("command type"),
         "commodities": MessageLookupByLibrary.simpleMessage("Commodities"),
         "community": MessageLookupByLibrary.simpleMessage("Community"),
         "condition_ordnote":
@@ -394,6 +395,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "register_to_buy":
             MessageLookupByLibrary.simpleMessage("Register to buy"),
         "rename_catalog_to": m8,
+        "return_command":
+            MessageLookupByLibrary.simpleMessage("return command"),
         "returning_money":
             MessageLookupByLibrary.simpleMessage("Returning money"),
         "revenue": MessageLookupByLibrary.simpleMessage("Revenue"),

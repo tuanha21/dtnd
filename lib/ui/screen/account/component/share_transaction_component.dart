@@ -61,7 +61,7 @@ class _ShareTransactionComponentState extends State<ShareTransactionComponent> {
                       children: [
                         Expanded(
                           child: Text(
-                            widget.data.cSHARECODE ?? "-",
+                            widget.data.cSTATUSNODE ?? "-",
                             style: textTheme.titleSmall,
                           ),
                         ),
@@ -102,8 +102,11 @@ class _ShareTransactionComponentState extends State<ShareTransactionComponent> {
                     ),
                   ),
                   Text(
-                    widget.data.cTRANSACTIONDATE ?? "",
-                    style: textTheme.titleSmall,
+                    widget.data.cDUEDATE ?? "",
+                    style:  AppTextStyle.bodySmall_12.copyWith(
+                      color: AppColors.neutral_01,
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
                 ],
               ),

@@ -9,6 +9,7 @@ class ShareTransactionModel extends StockStatus implements CoreResponseModel {
   String? cSHARECODE;
   String? cSHARESTATUS;
   String? cSTATUSNAME;
+  String? cSTATUSNODE;
   num? cSHAREIN;
   num? cSHAREOUT;
   String? cCONTENT;
@@ -37,6 +38,7 @@ class ShareTransactionModel extends StockStatus implements CoreResponseModel {
     cSHARECODE = json['C_SHARE_CODE'];
     cSHARESTATUS = json['C_SHARE_STATUS'];
     cSTATUSNAME = json['C_STATUS_NAME'];
+    cSTATUSNODE = json['C_STATUS_NOTE'];
     cSHAREIN = json['C_SHARE_IN'];
     cSHAREOUT = json['C_SHARE_OUT'];
     cCONTENT = json['C_CONTENT'];
@@ -51,6 +53,7 @@ class ShareTransactionModel extends StockStatus implements CoreResponseModel {
     data['C_SHARE_CODE'] = cSHARECODE;
     data['C_SHARE_STATUS'] = cSHARESTATUS;
     data['C_STATUS_NAME'] = cSTATUSNAME;
+    data['C_STATUS_NOTE'] = cSTATUSNODE;
     data['C_SHARE_IN'] = cSHAREIN;
     data['C_SHARE_OUT'] = cSHAREOUT;
     data['C_CONTENT'] = cCONTENT;
