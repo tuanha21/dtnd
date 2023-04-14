@@ -25,11 +25,13 @@ class BuyRightWidget extends StatefulWidget {
     this.onHold,
     this.onExpand,
     required this.accountModel,
+    required this.onSuccessExecute,
   });
   final UnexecutedRightModel? data;
   final ValueChanged<UnexecutedRightModel?>? onExpand;
   final VoidCallback? onHold;
   final IAccountModel accountModel;
+  final VoidCallback onSuccessExecute;
 
   @override
   State<BuyRightWidget> createState() => _BuyRightWidgetState();
@@ -88,22 +90,7 @@ class _BuyRightWidgetState extends State<BuyRightWidget> {
                     color: Colors.white,
                     stockCode: widget.data?.cRECEIVESHARECODE,
                   ),
-
                   const SizedBox(width: 8),
-                  // Expanded(
-                  //   child: Obx(() {
-                  //     if (data.stockTradingHistory.value?.c?.isEmpty ?? true) {
-                  //       return Container();
-                  //     } else {
-                  //       return Container(
-                  //         constraints: BoxConstraints(
-                  //             minWidth: MediaQuery.of(context).size.width / 5,
-                  //             maxWidth: MediaQuery.of(context).size.width / 4),
-                  //         child: HomeMarketOverviewItemChart(data: data),
-                  //       );
-                  //     }
-                  //   }),
-                  // ),
                   Expanded(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -136,35 +123,6 @@ class _BuyRightWidgetState extends State<BuyRightWidget> {
                                     .copyWith(color: AppColors.neutral_03),
                               ),
                             ),
-                            // Expanded(
-                            //   child: Container(
-                            //     height: 4,
-                            //     decoration: const BoxDecoration(
-                            //       borderRadius:
-                            //           BorderRadius.all(Radius.circular(4)),
-                            //       color: AppColors.neutral_06,
-                            //     ),
-                            //     child: Row(
-                            //       children: [
-                            //         Flexible(
-                            //           flex: (widget.volPc ?? 0) ~/ 1,
-                            //           child: Container(
-                            //             height: 4,
-                            //             decoration: const BoxDecoration(
-                            //               borderRadius: BorderRadius.all(
-                            //                   Radius.circular(4)),
-                            //               color: AppColors.graph_7,
-                            //             ),
-                            //           ),
-                            //         ),
-                            //         Flexible(
-                            //           flex: 100 - ((widget.volPc ?? 0) ~/ 1),
-                            //           child: Container(),
-                            //         )
-                            //       ],
-                            //     ),
-                            //   ),
-                            // )
                           ],
                         )
                       ],
@@ -297,6 +255,8 @@ class _BuyRightWidgetState extends State<BuyRightWidget> {
                                         accountModel: widget.accountModel,
                                         unexecutedRightModel: widget.data!,
                                         stock: stock!,
+                                        onSuccessExecute:
+                                            widget.onSuccessExecute,
                                       ));
                                 },
                               ),

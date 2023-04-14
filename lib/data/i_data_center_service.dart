@@ -78,6 +78,9 @@ abstract class IDataCenterService {
 
   Future<List<SuggestedSignalModel>> getSuggestedSignal(int day);
 
+  Future<List<SuggestedSignalModel>> getSuggestedSignalFilter(
+      int day, String type);
+
   Future<TopSignalDetailModel?> getTopSignalDetail(
       String stockCode, String type);
 

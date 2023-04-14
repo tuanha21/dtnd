@@ -1,5 +1,8 @@
+import 'package:dtnd/=models=/request/request_model.dart';
 import 'package:dtnd/=models=/response/account/i_account.dart';
 import 'package:dtnd/=models=/response/account/unexecuted_right_model.dart';
+import 'package:dtnd/data/i_network_service.dart';
+import 'package:dtnd/data/i_user_service.dart';
 
 import 'asset_chart_element.dart';
 import 'portfolio_status_model.dart';
@@ -121,7 +124,6 @@ class BaseMarginPlusAccountModel implements IAccountModel {
     collateral = parse(data.json['collateral']);
     lmv = parse(data.json['lmv']);
     lmv0 = parse(data.json['lmv_0']);
-    print(data.json['debt']);
     debt = parse(data.json['debt']);
     ee = parse(data.json['ee']);
     ee50 = parse(data.json['ee_50']);
@@ -186,5 +188,30 @@ class BaseMarginPlusAccountModel implements IAccountModel {
     } else {
       return null;
     }
+  }
+
+  @override
+  Future<List<UnexecutedRightModel>> getListUnexecutedRight(
+      IUserService userService, INetworkService networkService) async {
+    final requestModel = RequestModel(
+      userService,
+      group: "B",
+      data: RequestDataModel.cursorType(
+        cmd: "ListRightUnExec",
+        p1: accCode,
+      ),
+    );
+    final res =
+        await networkService.requestTraditionalApiResList<UnexecutedRightModel>(
+      requestModel,
+      hasError: (p0) {
+        if (p0["data"].runtimeType is List && p0["data"].isNotEmpty) {
+          return p0["data"].first["DUMMY"] != null;
+        }
+        return false;
+      },
+    );
+    listUnexecutedRight = res ?? [];
+    return res ?? [];
   }
 }

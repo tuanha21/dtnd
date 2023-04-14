@@ -23,12 +23,13 @@ class ExecuteRightSheet extends StatefulWidget {
     required this.unexecutedRightModel,
     required this.stock,
     required this.accountModel,
+    required this.onSuccessExecute,
   });
 
   final UnexecutedRightModel unexecutedRightModel;
   final Stock stock;
   final IAccountModel accountModel;
-
+  final VoidCallback onSuccessExecute;
   @override
   State<ExecuteRightSheet> createState() => _ExecuteRightSheetState();
 }
@@ -60,12 +61,14 @@ class _ExecuteRightSheetState extends State<ExecuteRightSheet>
           right: widget.unexecutedRightModel,
           volumn: volumnController.text,
           pin: pinController.text);
+      widget.onSuccessExecute.call();
       if (mounted) {
         await DialogUtilities.showErrorDialog(
             context: context,
             title: S.of(context).register_right_successfully,
             content: S.of(context).register_right_successfully);
       }
+
       if (mounted) {
         Navigator.of(context).pop();
       }

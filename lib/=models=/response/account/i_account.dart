@@ -1,5 +1,7 @@
 import 'package:dtnd/=models=/core_response_model.dart';
 import 'package:dtnd/=models=/response/account/unexecuted_right_model.dart';
+import 'package:dtnd/data/i_network_service.dart';
+import 'package:dtnd/data/i_user_service.dart';
 import 'package:dtnd/utilities/logger.dart';
 
 import 'asset_chart_element.dart';
@@ -13,6 +15,10 @@ abstract class IAccountModel implements CoreResponseModel {
   PortfolioStatus? portfolioStatus;
   List<AssetChartElementModel>? listAssetChart;
   List<UnexecutedRightModel>? listUnexecutedRight;
+
+  Future<List<UnexecutedRightModel>> getListUnexecutedRight(
+      IUserService userService, INetworkService networkService);
+
   factory IAccountModel.fromJson(Map<String, dynamic> json) {
     logger.v(json);
     final lastChar = (json["accCode"] as String)[json["accCode"].length - 1];

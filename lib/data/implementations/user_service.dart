@@ -197,12 +197,9 @@ class UserService implements IUserService {
         if (response != null) {
           listAccount.elementAt(i).listAssetChart = response;
         }
-
-        response =
-            await getListUnexecutedRight(listAccount.elementAt(i).accCode);
-        if (response != null) {
-          listAccount.elementAt(i).listUnexecutedRight = response;
-        }
+        await listAccount
+            .elementAt(i)
+            .getListUnexecutedRight(this, networkService);
       }
     }
     listAccountModel.refresh();
