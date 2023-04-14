@@ -1830,10 +1830,10 @@ class S {
     );
   }
 
-  /// `The OTP has been sent to your {value} extension phone number. Enter the 6-digit code to continue.`
+  /// `The OTP has been sent to your {value} extension email. Enter the 6-digit code to continue.`
   String otp_code_sent_to_phone_number(Object value) {
     return Intl.message(
-      'The OTP has been sent to your $value extension phone number. Enter the 6-digit code to continue.',
+      'The OTP has been sent to your $value extension email. Enter the 6-digit code to continue.',
       name: 'otp_code_sent_to_phone_number',
       desc: '',
       args: [value],
@@ -3607,6 +3607,26 @@ class S {
     return Intl.message(
       'return command',
       name: 'return_command',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Return home page`
+  String get return_home_page {
+    return Intl.message(
+      'Return home page',
+      name: 'return_home_page',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Your account information has been sent to your email!`
+  String get info_sent_to_email {
+    return Intl.message(
+      'Your account information has been sent to your email!',
+      name: 'info_sent_to_email',
       desc: '',
       args: [],
     );

@@ -18,12 +18,13 @@ import 'package:dtnd/ui/theme/app_textstyle.dart';
 import 'package:dtnd/ui/widget/button/single_color_text_button.dart';
 import 'package:dtnd/ui/widget/empty_list_widget.dart';
 import 'package:dtnd/ui/widget/overlay/login_first_dialog.dart';
-import 'package:dtnd/ui/widget/picker/datetime_picker_widget.dart';
 import 'package:dtnd/utilities/num_utils.dart';
 import 'package:dtnd/utilities/time_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
+import '../../../../widget/calendar/day_input.dart';
 import 'component/asset_stock_detail_overview.dart';
 
 class AssetStockDetailScreen extends StatefulWidget {
@@ -32,8 +33,10 @@ class AssetStockDetailScreen extends StatefulWidget {
     required this.stockCode,
     required this.porfolioStock,
   });
+
   final String stockCode;
   final PorfolioStock porfolioStock;
+
   @override
   State<AssetStockDetailScreen> createState() => _AssetStockDetailScreenState();
 }
@@ -46,6 +49,12 @@ class _AssetStockDetailScreenState extends State<AssetStockDetailScreen>
   late final AssetStockDetailController assetStockDetailController;
   late final TabController tabController;
   StockModel? stockModel;
+
+  late DateTime fromDay;
+  late DateTime toDay;
+  late DateTime firstDay;
+  late DateTime lastDay;
+
   @override
   void initState() {
     tabController = TabController(length: 3, vsync: this);
@@ -56,8 +65,15 @@ class _AssetStockDetailScreenState extends State<AssetStockDetailScreen>
             .format(DateTime.now().subtract(const Duration(days: 7))));
     todayController = TextEditingController(
         text: TimeUtilities.commonTimeFormat.format(DateTime.now()));
+
     assetStockDetailController.getAllShareEarned(
         fromdayController.text, todayController.text);
+
+    fromDay = TimeUtilities.getPreviousDateTime(TimeUtilities.day(7));
+    toDay = DateTime.now();
+    firstDay = TimeUtilities.getPreviousDateTime(TimeUtilities.month(3));
+    lastDay = toDay;
+
     super.initState();
     getData(widget.stockCode);
   }
@@ -257,30 +273,72 @@ class _AssetStockDetailScreenState extends State<AssetStockDetailScreen>
                           children: [
                             const SizedBox(height: 8),
                             Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Expanded(
-                                    child: DateTimePickerWidget(
-                                  controller: fromdayController,
-                                  labelText: S.of(context).from_day,
-                                  onChanged: (value) =>
+                                DayInput(
+                                    initialDay: fromDay,
+                                    firstDay: firstDay,
+                                    lastDay: lastDay,
+                                    onChanged: (value) {
+                                      setState(() {
+                                        fromDay = value;
+                                      });
                                       assetStockDetailController
                                           .getAllShareEarned(
-                                              fromdayController.text,
-                                              todayController.text),
-                                )),
-                                const SizedBox(width: 16),
-                                Expanded(
-                                    child: DateTimePickerWidget(
-                                  controller: todayController,
-                                  labelText: S.of(context).to_day,
-                                  onChanged: (value) =>
-                                      assetStockDetailController
-                                          .getAllShareEarned(
-                                              fromdayController.text,
-                                              todayController.text),
-                                ))
+                                        DateFormat("dd/MM/yyyy")
+                                            .format(fromDay),
+                                        DateFormat("dd/MM/yyyy").format(toDay),
+                                      );
+                                    }),
+                                const SizedBox(
+                                  width: 16,
+                                  child: Text('-'),
+                                ),
+                                DayInput(
+                                  initialDay: toDay,
+                                  firstDay: firstDay,
+                                  lastDay: lastDay,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      toDay = value;
+                                    });
+                                    assetStockDetailController
+                                        .getAllShareEarned(
+                                        DateFormat("dd/MM/yyyy")
+                                            .format(fromDay),
+                                        DateFormat("dd/MM/yyyy").format(toDay)
+                                    );
+                                  },
+                                ),
                               ],
                             ),
+
+                            // Row(
+                            //   children: [
+                            //     Expanded(
+                            //         child: DateTimePickerWidget(
+                            //       controller: fromdayController,
+                            //       labelText: S.of(context).from_day,
+                            //       onChanged: (value) =>
+                            //           assetStockDetailController
+                            //               .getAllShareEarned(
+                            //                   fromdayController.text,
+                            //                   todayController.text),
+                            //     )),
+                            //     const SizedBox(width: 16),
+                            //     Expanded(
+                            //         child: DateTimePickerWidget(
+                            //       controller: todayController,
+                            //       labelText: S.of(context).to_day,
+                            //       onChanged: (value) =>
+                            //           assetStockDetailController
+                            //               .getAllShareEarned(
+                            //                   fromdayController.text,
+                            //                   todayController.text),
+                            //     ))
+                            //   ],
+                            // ),
+
                             const SizedBox(height: 8),
                             Container(
                               padding: const EdgeInsets.all(16),

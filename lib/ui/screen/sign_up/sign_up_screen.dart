@@ -39,8 +39,21 @@ class _SignUpViewState extends State<SignUpView> with AppValidator {
   }
 
   Future<SignUpSuccessDataModel?> createAccount() {
-    return userService.createAccount(
-        info!.name, info!.phone, info!.email, info!.password);
+    return userService
+        .createAccount(info!.name, info!.phone, info!.email, info!.password)
+        .then(
+      (value) {
+        if (value != null) {
+          return showDialog(
+            context: context,
+            builder: (context) {
+              return const SuccessSignUpPage();
+            },
+          );
+        }
+        return null;
+      },
+    );
   }
 
   Future<bool> verifyOTP(SignUpInfo info) {
@@ -74,13 +87,14 @@ class _SignUpViewState extends State<SignUpView> with AppValidator {
             verifyRegisterInfo: verifyRegisterInfo,
           ),
           FillOTPPage(
+            email: info?.email,
             onSuccess: onSuccess,
             resendOTP: () => verifyRegisterInfo(info!.phone, info!.email),
             verifyOTP: (otp) =>
                 userService.verifyRegisterOTP(info!.phone, info!.email, otp),
             createAccount: createAccount,
           ),
-          const SuccessSignUpPage(),
+          // const SuccessSignUpPage(),
         ],
       ),
     );

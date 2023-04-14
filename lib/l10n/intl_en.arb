@@ -187,7 +187,7 @@
     "agree_with": "Agree with ",
     "confirm": "Confirm",
     "DTNDs_virtual_assistant": " of DTND's virtual assistant",
-    "otp_code_sent_to_phone_number": "The OTP has been sent to your {value} extension phone number. Enter the 6-digit code to continue.",
+    "otp_code_sent_to_phone_number": "The OTP has been sent to your {value} extension email. Enter the 6-digit code to continue.",
     "successfully_create_assistant_account": "Create virtual assistant successfully",
     "the_DTND_virtual_assistant_will_help_you_with_successful_transaction": "The DTND virtual assistant will help you with successful transaction",
     "stocks_you_interested": "Stocks you are interested in",
@@ -401,7 +401,9 @@
     "cost_price" : "Cost price",
     "cost_value" : "Cost value",
     "command_type" : "command type",
-    "return_command" : "return command"
+    "return_command" : "return command",
+    "return_home_page" : "Return home page",
+     "info_sent_to_email" :"Your account information has been sent to your email!"
 
 
 }

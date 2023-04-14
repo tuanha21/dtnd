@@ -36,7 +36,7 @@ class MessageLookup extends MessageLookupByLibrary {
   static String m6(minutes) => "${minutes} phút trước";
 
   static String m7(value) =>
-      "Mã OTP đã được gửi về số điện thoại đuôi ${value} của bạn. Nhập mã 6 số để tiếp tục.";
+      "Mã OTP đã được gửi về email ${value} của bạn. Nhập mã 6 số để tiếp tục.";
 
   static String m8(name) => "Sửa tên danh mục “${name}” thành";
 
@@ -236,6 +236,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "industry": MessageLookupByLibrary.simpleMessage("Ngành"),
         "industry_list":
             MessageLookupByLibrary.simpleMessage("Danh sách ngành"),
+        "info_sent_to_email": MessageLookupByLibrary.simpleMessage(
+            "Thông tin tài khoản đã được gửi về Email của quý khách!"),
         "interested": MessageLookupByLibrary.simpleMessage("Quan tâm"),
         "interested_catalog":
             MessageLookupByLibrary.simpleMessage("Danh mục quan tâm"),
@@ -388,6 +390,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "register_to_buy": MessageLookupByLibrary.simpleMessage("Đăng ký mua"),
         "rename_catalog_to": m8,
         "return_command": MessageLookupByLibrary.simpleMessage("Về sổ lệnh"),
+        "return_home_page":
+            MessageLookupByLibrary.simpleMessage("Về trang chủ"),
         "returning_money": MessageLookupByLibrary.simpleMessage("Tiền chờ về"),
         "revenue": MessageLookupByLibrary.simpleMessage("Doanh thu"),
         "right": MessageLookupByLibrary.simpleMessage("Quyền"),

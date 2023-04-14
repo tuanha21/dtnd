@@ -18,11 +18,13 @@ class FillOTPPage extends StatefulWidget {
     required this.verifyOTP,
     required this.createAccount,
     required this.resendOTP,
+    required this.email
   });
   final VoidCallback onSuccess;
   final VoidCallback resendOTP;
   final Future<bool> Function(String) verifyOTP;
   final Future<SignUpSuccessDataModel?> Function() createAccount;
+  final String? email;
   @override
   State<FillOTPPage> createState() => _FillOTPPageState();
 }
@@ -83,7 +85,7 @@ class _FillOTPPageState extends State<FillOTPPage> {
             children: [
               Expanded(
                   child:
-                      Text(S.of(context).otp_code_sent_to_phone_number("*sdk")))
+                      Text(S.of(context).otp_code_sent_to_phone_number(widget.email.toString())))
             ],
           ),
           const SizedBox(height: 36),

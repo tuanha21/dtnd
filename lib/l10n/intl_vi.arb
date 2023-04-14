@@ -187,7 +187,7 @@
     "agree_with": "Đồng ý với ",
     "confirm": "Xác nhận",
     "DTNDs_virtual_assistant": " của trợ lý ảo DTND",
-    "otp_code_sent_to_phone_number": "Mã OTP đã được gửi về số điện thoại đuôi {value} của bạn. Nhập mã 6 số để tiếp tục.",
+    "otp_code_sent_to_phone_number": "Mã OTP đã được gửi về email {value} của bạn. Nhập mã 6 số để tiếp tục.",
     "successfully_create_assistant_account": "Tạo tài khoản\ntrợ lý ảo thành công",
     "the_DTND_virtual_assistant_will_help_you_with_successful_transaction": "Trợ lý ảo DTND sẽ giúp bạn có những\ngiao dịch thành công",
     "stocks_you_interested": "Các mã CK mà bạn quan tâm",
@@ -401,5 +401,7 @@
     "cost_price" : "Giá vốn",
     "cost_value" : "Giá trị vốn",
     "command_type" : "Lệnh",
-    "return_command" : "Về sổ lệnh"
+    "return_command" : "Về sổ lệnh",
+    "return_home_page" : "Về trang chủ",
+    "info_sent_to_email" : "Thông tin tài khoản đã được gửi về Email của quý khách!"
 }

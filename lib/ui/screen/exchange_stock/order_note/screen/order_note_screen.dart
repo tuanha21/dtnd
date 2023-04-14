@@ -4,8 +4,6 @@ import 'package:dtnd/ui/screen/exchange_stock/order_note/tab/order_history_tab.d
 import 'package:dtnd/ui/widget/appbar/simple_appbar.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../theme/app_image.dart';
-
 class OrderNoteScreen extends StatefulWidget {
   const OrderNoteScreen({super.key, this.defaultab = 0});
   final int defaultab;
@@ -29,19 +27,7 @@ class _OrderNoteScreenState extends State<OrderNoteScreen>
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
     return Scaffold(
-      appBar:
-      SimpleAppbar(
-        title: S.of(context).base_note,
-        actions: [
-          IconButton(
-              onPressed: () {},
-              icon: Image.asset(
-                AppImages.setting_2,
-                width: 24,
-                height: 24,
-              ))
-        ],
-      ),
+      appBar: SimpleAppbar(title: S.of(context).base_note),
       body: Column(
         children: [
           TabBar(
