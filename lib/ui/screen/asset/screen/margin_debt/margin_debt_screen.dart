@@ -41,15 +41,15 @@ class _MarginDebtScreenState extends State<MarginDebtScreen> {
     lastDay = toDay;
     super.initState();
     EasyLoading.show();
-    controller.getAllShareEarned();
+    controller.getDebt();
     EasyLoading.dismiss();
   }
 
   Future<void> getData() async {
-    controller.listData.value?.clear();
+    controller.listData.value.clear();
     EasyLoading.show();
     await controller
-        .getAllShareEarned(fromDay: fromDay, toDay: toDay)
+        .getDebt(fromDay: fromDay, toDay: toDay)
         .whenComplete(() => EasyLoading.dismiss());
     setState(() {});
   }
@@ -189,7 +189,7 @@ class _MarginDebtScreenState extends State<MarginDebtScreen> {
             ),
             Obx(
               () {
-                if (controller.listData.value?.isEmpty ?? true) {
+                if (controller.listData.value.isEmpty) {
                   return const Padding(
                       padding: EdgeInsets.only(top: 100),
                       child: EmptyListWidget());
@@ -202,7 +202,7 @@ class _MarginDebtScreenState extends State<MarginDebtScreen> {
                       borderRadius: BorderRadius.circular(12)),
                   child: Column(
                     children: [
-                      for (var detail in controller.listData.value ?? [])
+                      for (var detail in controller.listData.value)
                         Padding(
                           padding: const EdgeInsets.symmetric(vertical: 4),
                           child: ItemMarginDebtWidget(detail: detail),

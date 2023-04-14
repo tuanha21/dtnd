@@ -51,8 +51,8 @@ abstract class CoreResponseModel {
         return CashTransactionHistoryModel.fromJson(json) as T;
       case ShareTransactionModel:
         return ShareTransactionModel.fromJson(json) as T;
-      case GetBedtModel:
-        return GetBedtModel.fromJson(json) as T;
+      case GetDebtModel:
+        return GetDebtModel.fromJson(json) as T;
       default:
         return null;
     }
