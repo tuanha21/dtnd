@@ -112,7 +112,7 @@ class StockModel {
       INetworkService networkService, IUserService userService) async {
     final RequestDataModel requestDataModel = RequestDataModel.stringType(
       cmd: "Web.sStockInfo",
-      p1: "${userService.token.value!.user}6",
+      p1: userService.token.value!.defaultAcc,
       p2: stock.stockCode,
     );
     final RequestModel requestModel =

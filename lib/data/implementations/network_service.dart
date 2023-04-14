@@ -21,6 +21,7 @@ import 'package:dtnd/=models=/response/news_model.dart';
 import 'package:dtnd/=models=/response/security_basic_info_model.dart';
 import 'package:dtnd/=models=/response/share_holder.dart';
 import 'package:dtnd/=models=/response/signal_month_model.dart';
+import 'package:dtnd/=models=/response/signal_type.dart';
 import 'package:dtnd/=models=/response/stock.dart';
 import 'package:dtnd/=models=/response/stock_board.dart';
 import 'package:dtnd/=models=/response/stock_data.dart';
@@ -58,6 +59,7 @@ import 'package:intl/intl.dart';
 import 'package:socket_io_client/socket_io_client.dart';
 
 import '../../=models=/local/va_portfolio_model.dart';
+import '../../=models=/response/banner_model.dart';
 import '../../=models=/response/basic_company.dart';
 import '../../=models=/response/indContrib.dart';
 import '../../=models=/response/sec_event.dart';
@@ -221,10 +223,15 @@ class NetworkService implements INetworkService {
   }
 
   @override
-  Future<String?> getHomeBanner() async {
-    dynamic response = await client.get(Uri.http(core_url1, "banners"));
-    response = decode(response.bodyBytes);
-    return response["data"].first["img"];
+  Future<List<DataBanner>?> getHomeBanner() async {
+    var response = await client.get(Uri.http(core_url1, "banners"));
+    final List<dynamic> responseBody = decode(response.bodyBytes)["data"];
+    if (responseBody.isEmpty) throw Exception();
+    List<DataBanner> data = [];
+    for (var element in responseBody) {
+      data.add(DataBanner.fromJson(element));
+    }
+    return data;
   }
 
   @override
@@ -278,6 +285,10 @@ class NetworkService implements INetworkService {
       response = response["data"];
     }
     final List<T> result = [];
+    logger.v(response);
+    if (response.runtimeType != List || response.isEmpty) {
+      return [];
+    }
     for (var element in response) {
       result.add(CoreResponseModel.fromJson<T>(element)!);
     }
@@ -288,6 +299,7 @@ class NetworkService implements INetworkService {
   Future<List<Stock>> getListAllStock() async {
     const String path = "getlistallstock";
     final http.Response response = await client.get(url_board(path));
+    print('tiennh'+response.toString());
     final List<dynamic> responseBody = decode(response.bodyBytes);
     if (responseBody.isEmpty) throw Exception();
     List<Stock> data = [];
@@ -675,6 +687,28 @@ class NetworkService implements INetworkService {
       for (var element in responseBody) {
         try {
           data.add(TopSignalStockModel.fromJson(element));
+        } catch (e) {
+          logger.e(e);
+          continue;
+        }
+      }
+      return data;
+    } catch (e) {
+      logger.e(e);
+      return [];
+    }
+  }
+
+  @override
+  Future<List<SignalType>?> getSignalList(Map<String, String> body) async {
+    try {
+      final http.Response response =
+          await client.get(url_info_sbsi("proxy", body));
+      final List<dynamic> responseBody = decode(response.bodyBytes)["data"];
+      List<SignalType> data = [];
+      for (var element in responseBody) {
+        try {
+          data.add(SignalType.fromJson(element));
         } catch (e) {
           logger.e(e);
           continue;
@@ -1564,47 +1598,6 @@ class NetworkService implements INetworkService {
     } else {
       throw res["rs"];
     }
-  }
-
-  @override
-  Future<List<T>?> getDataProfitLoss<T extends CoreResponseModel>(
-      RequestModel requestModel,
-      {List<T>? Function(Map<String, dynamic> p1)? onError,
-      bool Function(Map<String, dynamic> p1)? hasError}) async {
-    dynamic response =
-        await client.post(url_core_endpoint, body: requestModel.toString());
-    response = decode(response.bodyBytes);
-    bool checkResponse = hasError?.call(response) ?? (response["rc"] != 1);
-    if (checkResponse) {
-      return onError?.call(response);
-    }
-    response = response["data"];
-    final List<T> result = [];
-    for (var element in response) {
-      result.add(CoreResponseModel.fromJson<T>(element)!);
-    }
-    return result;
-  }
-
-  @override
-  Future<List<T>?> getDataMarginDebt<T extends CoreResponseModel>(
-      RequestModel requestModel,
-      {List<T>? Function(Map<String, dynamic> p1)? onError,
-      bool Function(Map<String, dynamic> p1)? hasError}) async {
-    dynamic response =
-        await client.post(url_core_endpoint, body: requestModel.toString());
-    response = decode(response.bodyBytes);
-    bool checkResponse = hasError?.call(response) ?? (response["rc"] != 1);
-    if (checkResponse) {
-      return onError?.call(response);
-    }
-    response = response["data"];
-
-    final List<T> result = [];
-    for (var element in response) {
-      result.add(CoreResponseModel.fromJson<T>(element)!);
-    }
-    return result;
   }
 
   @override

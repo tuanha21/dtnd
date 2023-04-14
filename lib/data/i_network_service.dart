@@ -13,6 +13,7 @@ import 'package:dtnd/=models=/response/liquidity_model.dart';
 import 'package:dtnd/=models=/response/news_model.dart';
 import 'package:dtnd/=models=/response/security_basic_info_model.dart';
 import 'package:dtnd/=models=/response/signal_month_model.dart';
+import 'package:dtnd/=models=/response/signal_type.dart';
 import 'package:dtnd/=models=/response/stock.dart';
 import 'package:dtnd/=models=/response/stock_data.dart';
 import 'package:dtnd/=models=/response/stock_financial_index_model.dart';
@@ -38,6 +39,7 @@ import 'package:socket_io_client/socket_io_client.dart' as IO;
 import '../=models=/algo/filter.dart';
 import '../=models=/algo/stock_filter.dart';
 import '../=models=/request/request_model.dart';
+import '../=models=/response/banner_model.dart';
 import '../=models=/response/basic_company.dart';
 import '../=models=/response/company_info.dart';
 import '../=models=/response/indContrib.dart';
@@ -62,7 +64,7 @@ abstract class INetworkService {
 
   Future<void> startSocket();
 
-  Future<String?> getHomeBanner();
+  Future<List<DataBanner>?> getHomeBanner();
 
   void regSessionExpiredCallback(void Function() onSessionExpired);
 
@@ -99,6 +101,8 @@ abstract class INetworkService {
 
   Future<List<TopSignalStockModel>?> getTopSignalStocks(
       Map<String, String> body);
+
+  Future<List<SignalType>?> getSignalList(Map<String, String> body);
 
   Future<List<SuggestedSignalModel>?> getSuggestedSignal(
       Map<String, String> body);
@@ -237,16 +241,4 @@ abstract class INetworkService {
   Future<void> createBot(String body);
 
   Future<void> deleteBot(String body);
-
-  Future<List<T>?> getDataProfitLoss<T extends CoreResponseModel>(
-    RequestModel requestModel, {
-    List<T>? Function(Map<String, dynamic>)? onError,
-    bool Function(Map<String, dynamic>)? hasError,
-  });
-
-  Future<List<T>?> getDataMarginDebt<T extends CoreResponseModel>(
-    RequestModel requestModel, {
-    List<T>? Function(Map<String, dynamic>)? onError,
-    bool Function(Map<String, dynamic>)? hasError,
-  });
 }

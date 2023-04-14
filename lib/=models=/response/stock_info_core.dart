@@ -23,7 +23,7 @@ class StockInfoCore implements CoreResponseModel {
   String? g6;
   String? g7;
   String? mc;
-  String? mr;
+  late final List<Mr> mr = [];
   num? fBVol;
   num? fSVolume;
   num? stepPrice;
@@ -55,7 +55,6 @@ class StockInfoCore implements CoreResponseModel {
       this.g6,
       this.g7,
       this.mc,
-      this.mr,
       this.fBVol,
       this.fSVolume,
       this.stepPrice,
@@ -87,7 +86,11 @@ class StockInfoCore implements CoreResponseModel {
     g6 = json['g6'];
     g7 = json['g7'];
     mc = json['mc'];
-    mr = json['mr'];
+    if (json['mr'] != null) {
+      json['mr'].forEach((v) {
+        mr.add(Mr.fromJson(v));
+      });
+    }
     fBVol = json['fBVol'];
     fSVolume = json['fSVolume'];
     stepPrice = json['stepPrice'];
@@ -121,7 +124,7 @@ class StockInfoCore implements CoreResponseModel {
     data['g6'] = g6;
     data['g7'] = g7;
     data['mc'] = mc;
-    data['mr'] = mr;
+    data['mr'] = mr.map((v) => v.toJson()).toList();
     data['fBVol'] = fBVol;
     data['fSVolume'] = fSVolume;
     data['stepPrice'] = stepPrice;
@@ -129,6 +132,31 @@ class StockInfoCore implements CoreResponseModel {
     data['stockType'] = stockType;
     data['status_info'] = statusInfo;
     data['force_use'] = forceUse;
+    return data;
+  }
+}
+
+class Mr {
+  String? prod;
+  String? mr;
+  String? info;
+  num? theDefault;
+
+  Mr({this.prod, this.mr, this.info, this.theDefault});
+
+  Mr.fromJson(Map<String, dynamic> json) {
+    prod = json['prod'];
+    mr = json['mr'];
+    info = json['info'];
+    theDefault = json['default'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['prod'] = prod;
+    data['mr'] = mr;
+    data['info'] = info;
+    data['default'] = theDefault;
     return data;
   }
 }

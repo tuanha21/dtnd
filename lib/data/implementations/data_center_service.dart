@@ -12,6 +12,7 @@ import 'package:dtnd/=models=/response/news_model.dart';
 import 'package:dtnd/=models=/response/sec_event.dart';
 import 'package:dtnd/=models=/response/security_basic_info_model.dart';
 import 'package:dtnd/=models=/response/signal_month_model.dart';
+import 'package:dtnd/=models=/response/signal_type.dart';
 import 'package:dtnd/=models=/response/stock.dart';
 import 'package:dtnd/=models=/response/stock_data.dart';
 import 'package:dtnd/=models=/response/stock_financial_index_model.dart';
@@ -496,10 +497,37 @@ class DataCenterService
   }
 
   @override
+  Future<List<SignalType>> getSignalList() async {
+    final Map<String, String> body = {
+      "cmd": "signal_list",
+      "params": "0",
+    };
+    final listTop = await networkService.getSignalList(body);
+    if (listTop?.isEmpty ?? true) {
+      return [];
+    }
+    return listTop ?? [];
+  }
+
+  @override
   Future<List<SuggestedSignalModel>> getSuggestedSignal(int day) async {
     final Map<String, String> body = {
       "cmd": "signal_sum",
       "params": "$day",
+    };
+    final listTop = await networkService.getSuggestedSignal(body);
+    if (listTop?.isEmpty ?? true) {
+      return [];
+    }
+    return listTop ?? [];
+  }
+
+  @override
+  Future<List<SuggestedSignalModel>> getSuggestedSignalFilter(
+      int day, String type) async {
+    final Map<String, String> body = {
+      "cmd": "signal_sum",
+      "params": "$day,$type",
     };
     final listTop = await networkService.getSuggestedSignal(body);
     if (listTop?.isEmpty ?? true) {
@@ -530,10 +558,11 @@ class DataCenterService
   }
 
   @override
-  Future<List<SignalMonthModel>?> getSignalMonth(String stockCode) async {
+  Future<List<SignalMonthModel>?> getSignalMonth(
+      String stockCode, String type) async {
     final Map<String, String> body = {
       "cmd": "signal_month",
-      "params": "$stockCode,MIN",
+      "params": "$stockCode,$type",
     };
     return networkService.getSignalMonth(body);
   }

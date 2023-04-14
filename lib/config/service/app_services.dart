@@ -5,8 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../=models=/response/banner_model.dart';
+
 extension ThemeModeX on ThemeMode {
   bool get isLight => this == ThemeMode.light;
+
   bool get isDark => this == ThemeMode.dark;
 }
 
@@ -14,6 +17,7 @@ class AppService {
   AppService._internal();
 
   static final AppService _instance = AppService._internal();
+
   static AppService get instance => _instance;
 
   late final SharedPreferences sharedPreferencesInstance;
@@ -28,7 +32,7 @@ class AppService {
 
   factory AppService() => _instance;
 
-  final Rx<String?> homeBanner = Rxn();
+  final RxList<DataBanner>? homeBanner = RxList();
 
   final Rx<bool> loadingHomBanner = false.obs;
 
@@ -79,27 +83,21 @@ class AppService {
     return locale;
   }
 
-  Future<String> getHomeBanner(INetworkService networkService) async {
+  Future<List<DataBanner>?> getHomeBanner(
+      INetworkService networkService) async {
     if (loadingHomBanner.value) {
       await 1.delay();
       return getHomeBanner(networkService);
     }
-    if (homeBanner.value == null) {
-      loadingHomBanner.value = true;
-        final res = await networkService.getHomeBanner().onError((error, stackTrace) {
-          loadingHomBanner.value = false;
-        throw Exception();
-        });
-      if (res != null) {
-        homeBanner.value = res;
-        loadingHomBanner.value = false;
-        return res;
-      } else {
-        loadingHomBanner.value = false;
-        throw Exception();
-      }
+    loadingHomBanner.value = true;
+    var res = await networkService.getHomeBanner();
+    if (res != null) {
+      homeBanner?.value = res;
+      loadingHomBanner.value = false;
+      return homeBanner;
     } else {
-      return homeBanner.value!;
+      loadingHomBanner.value = false;
+      throw Exception();
     }
   }
 }

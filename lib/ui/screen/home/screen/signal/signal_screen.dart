@@ -86,15 +86,19 @@ class _SignalScreenState extends State<SignalScreen> {
           ),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
-            child: SignalEffective(code: widget.code),
+            child: SignalEffective(
+              code: widget.code,
+              type: widget.type,
+            ),
           ),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-             child: Row(
+            child: Row(
               children: [
                 Text(
                   "Lịch sử giao dịch",
-                  style: textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.w700),
+                  style: textTheme.bodyLarge
+                      ?.copyWith(fontWeight: FontWeight.w700),
                 )
               ],
             ),
@@ -108,7 +112,9 @@ class _SignalScreenState extends State<SignalScreen> {
               defaulPeriod: widget.defaulPeriod,
             ),
           ),
-          const SizedBox(height: 16,)
+          const SizedBox(
+            height: 16,
+          )
         ],
       ),
     );

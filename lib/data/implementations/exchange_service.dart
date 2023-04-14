@@ -1,6 +1,6 @@
 import 'package:dtnd/=models=/request/request_model.dart';
-import 'package:dtnd/=models=/response/account/unexecuted_right_model.dart';
 import 'package:dtnd/=models=/response/account/i_account.dart';
+import 'package:dtnd/=models=/response/account/unexecuted_right_model.dart';
 import 'package:dtnd/=models=/response/cash_transaction_model.dart';
 import 'package:dtnd/=models=/response/order_history_model.dart';
 import 'package:dtnd/=models=/response/order_model/base_order_model.dart';
@@ -37,7 +37,7 @@ class ExchangeService implements IExchangeService {
     final String refId = "$user.H.${NumUtils.getRandom()}";
     final RequestDataModel requestDataModel = RequestDataModel.stringType(
         cmd: "Web.newOrder",
-        account: "${user}6",
+        account: userService.token.value!.defaultAcc,
         side: orderData.side.code,
         symbol: orderData.stockModel.stock.stockCode,
         volume: orderData.volumn.toInt(),
@@ -161,7 +161,7 @@ class ExchangeService implements IExchangeService {
       required Side side}) async {
     final RequestDataModel requestDataModel = RequestDataModel.stringType(
       cmd: "Web.sCashBalance",
-      p1: "${userService.token.value!.user}9",
+      p1: userService.token.value!.defaultAcc,
       p2: stockCode,
       p3: price,
       p4: side.code,
@@ -169,7 +169,7 @@ class ExchangeService implements IExchangeService {
 
     final RequestModel requestModel =
         RequestModel(userService, group: "Q", data: requestDataModel);
-    print('tiennh 3 : ' + requestModel.toString());
+    logger.v(requestModel);
     return await networkService
         .requestTraditionalApi<StockCashBalanceModel>(requestModel);
   }
@@ -184,7 +184,7 @@ class ExchangeService implements IExchangeService {
       int? recordPerPage}) async {
     final RequestDataModel requestDataModel = RequestDataModel.cursorType(
       cmd: "ListOrder",
-      p1: "${userService.token.value!.user}9",
+      p1: userService.token.value!.defaultAcc,
       p2: stockCode ?? "",
       p3: TimeUtilities.commonTimeFormat.format(
           fromDay ?? TimeUtilities.getPreviousDateTime(TimeUtilities.month(1))),
@@ -249,7 +249,7 @@ class ExchangeService implements IExchangeService {
     final RequestDataModel requestDataModel = RequestDataModel(
       cmd: "CashTransactionNew",
       p1: "0",
-      p2: "${userService.token.value!.user}9",
+      p2: userService.token.value!.defaultAcc,
       p3: TimeUtilities.commonTimeFormat.format(
           fromDay ?? TimeUtilities.getPreviousDateTime(TimeUtilities.month(1))),
       p4: TimeUtilities.commonTimeFormat.format(toDay ?? DateTime.now()),
@@ -294,7 +294,7 @@ class ExchangeService implements IExchangeService {
       int? recordPerPage}) async {
     final RequestDataModel requestDataModel = RequestDataModel(
       cmd: "ShareTransaction",
-      p1: user ?? "${userService.token.value!.user}9",
+      p1: user ?? userService.token.value!.defaultAcc,
       p3: TimeUtilities.commonTimeFormat.format(
           fromDay ?? TimeUtilities.getPreviousDateTime(TimeUtilities.month(1))),
       p4: TimeUtilities.commonTimeFormat.format(toDay ?? DateTime.now()),

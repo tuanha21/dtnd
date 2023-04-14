@@ -55,6 +55,12 @@ class _LoginScreenState extends State<LoginScreen> {
     }
   }
 
+  @override
+  void dispose() {
+    super.dispose();
+
+  }
+
   void init() {
     final savedUser = localStorageService.sharedPreferences.getString(_userKey);
     if (savedUser != null) {

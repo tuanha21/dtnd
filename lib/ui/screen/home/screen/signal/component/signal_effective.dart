@@ -9,9 +9,11 @@ class SignalEffective extends StatefulWidget {
   const SignalEffective({
     super.key,
     required this.code,
+    required this.type,
   });
 
   final String code;
+  final String type;
 
   @override
   State<SignalEffective> createState() => _SignalEffectiveState();
@@ -46,7 +48,10 @@ class _SignalEffectiveState extends State<SignalEffective> {
               ],
             ),
           ),
-          ForeignWidgetSignal(code: widget.code),
+          ForeignWidgetSignal(
+            code: widget.code,
+            type: widget.type,
+          ),
         ],
       ),
     );

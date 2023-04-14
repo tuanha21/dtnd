@@ -970,6 +970,26 @@ class S {
     );
   }
 
+  /// `Sold vol`
+  String get sold_vol {
+    return Intl.message(
+      'Sold vol',
+      name: 'sold_vol',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Selling price`
+  String get selling_price {
+    return Intl.message(
+      'Selling price',
+      name: 'selling_price',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Bought returning`
   String get bought_returning {
     return Intl.message(
@@ -1810,10 +1830,10 @@ class S {
     );
   }
 
-  /// `The OTP has been sent to your {value} extension phone number. Enter the 6-digit code to continue.`
+  /// `The OTP has been sent to your {value} extension email. Enter the 6-digit code to continue.`
   String otp_code_sent_to_phone_number(Object value) {
     return Intl.message(
-      'The OTP has been sent to your $value extension phone number. Enter the 6-digit code to continue.',
+      'The OTP has been sent to your $value extension email. Enter the 6-digit code to continue.',
       name: 'otp_code_sent_to_phone_number',
       desc: '',
       args: [value],
@@ -3397,6 +3417,216 @@ class S {
     return Intl.message(
       'End',
       name: 'end',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `ok`
+  String get ok {
+    return Intl.message(
+      'ok',
+      name: 'ok',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Later`
+  String get Later {
+    return Intl.message(
+      'Later',
+      name: 'Later',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Biometric authentication`
+  String get biometric_authentication {
+    return Intl.message(
+      'Biometric authentication',
+      name: 'biometric_authentication',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You have not registered for biometric authentication.\nWould you like to register now?`
+  String get login_with_biometric {
+    return Intl.message(
+      'You have not registered for biometric authentication.\nWould you like to register now?',
+      name: 'login_with_biometric',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Money`
+  String get money {
+    return Intl.message(
+      'Money',
+      name: 'money',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `stock`
+  String get stock {
+    return Intl.message(
+      'stock',
+      name: 'stock',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Register to buy`
+  String get register_to_buy {
+    return Intl.message(
+      'Register to buy',
+      name: 'register_to_buy',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Maximum load`
+  String get maximum_load {
+    return Intl.message(
+      'Maximum load',
+      name: 'maximum_load',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Buying Price`
+  String get buying_price {
+    return Intl.message(
+      'Buying Price',
+      name: 'buying_price',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Deduction account`
+  String get deduction_account {
+    return Intl.message(
+      'Deduction account',
+      name: 'deduction_account',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Total transaction`
+  String get total_transaction {
+    return Intl.message(
+      'Total transaction',
+      name: 'total_transaction',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Weight must be filled in`
+  String get Weight_must_be_filled_in {
+    return Intl.message(
+      'Weight must be filled in',
+      name: 'Weight_must_be_filled_in',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `invalid weight`
+  String get invalid_weight {
+    return Intl.message(
+      'invalid weight',
+      name: 'invalid_weight',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Tax fee`
+  String get tax_fee {
+    return Intl.message(
+      'Tax fee',
+      name: 'tax_fee',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Sale value`
+  String get sale_value {
+    return Intl.message(
+      'Sale value',
+      name: 'sale_value',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Cost price`
+  String get cost_price {
+    return Intl.message(
+      'Cost price',
+      name: 'cost_price',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Cost value`
+  String get cost_value {
+    return Intl.message(
+      'Cost value',
+      name: 'cost_value',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `command type`
+  String get command_type {
+    return Intl.message(
+      'command type',
+      name: 'command_type',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `return command`
+  String get return_command {
+    return Intl.message(
+      'return command',
+      name: 'return_command',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Return home page`
+  String get return_home_page {
+    return Intl.message(
+      'Return home page',
+      name: 'return_home_page',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Your account information has been sent to your email!`
+  String get info_sent_to_email {
+    return Intl.message(
+      'Your account information has been sent to your email!',
+      name: 'info_sent_to_email',
       desc: '',
       args: [],
     );

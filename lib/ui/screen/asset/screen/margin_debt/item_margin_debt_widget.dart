@@ -24,7 +24,7 @@ class ItemMarginDebtWidget extends StatefulWidget {
 
   final ValueChanged<UnexecutedRightModel?>? onExpand;
   final VoidCallback? onHold;
-  final GetBedtModel? detail;
+  final GetDebtModel? detail;
 
   @override
   State<ItemMarginDebtWidget> createState() => _ItemRealizedState();
@@ -125,7 +125,7 @@ class _ItemRealizedState extends State<ItemMarginDebtWidget> {
                         ),
                         const SizedBox(height: 4),
                         Text(
-                          widget.detail?.cEXPIREDATE1 ?? '',
+                          widget.detail?.expireDate ?? '',
                           style: AppTextStyle.labelMedium_12
                               .copyWith(color: AppColors.neutral_01),
                         ),
@@ -143,7 +143,7 @@ class _ItemRealizedState extends State<ItemMarginDebtWidget> {
                         ),
                         const SizedBox(height: 4),
                         Text(
-                          NumUtils.formatDouble(widget.detail?.cLOAN),
+                          NumUtils.formatDouble(widget.detail?.loan),
                           style: AppTextStyle.labelMedium_12
                               .copyWith(color: AppColors.neutral_01),
                         ),
@@ -161,7 +161,7 @@ class _ItemRealizedState extends State<ItemMarginDebtWidget> {
                         ),
                         const SizedBox(height: 4),
                         Text(
-                          NumUtils.formatDouble(widget.detail?.cFEE),
+                          NumUtils.formatDouble(widget.detail?.fee),
                           style: AppTextStyle.labelMedium_12
                               .copyWith(color: stockModel?.stockData.color),
                         ),
@@ -197,8 +197,7 @@ class _ItemRealizedState extends State<ItemMarginDebtWidget> {
                               child: AssetGridElement(
                                 contentPadding: const EdgeInsets.all(5),
                                 element: {
-                                  "Ngày tính lãi": NumUtils.formatDouble(
-                                      widget.detail?.cINTERESTRATE),
+                                  "Ngày tính lãi": widget.detail?.interestDate,
                                 },
                               ),
                             ),

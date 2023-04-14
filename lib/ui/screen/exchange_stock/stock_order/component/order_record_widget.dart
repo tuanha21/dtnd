@@ -17,9 +17,11 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 class OrderRecordWidget extends StatefulWidget {
   const OrderRecordWidget(
       {super.key, required this.data, this.onChange, this.onCancel});
+
   final BaseOrderModel data;
   final VoidCallback? onChange;
   final VoidCallback? onCancel;
+
   @override
   State<OrderRecordWidget> createState() => _OrderRecordWidgetState();
 }
@@ -97,7 +99,7 @@ class _OrderRecordWidgetState extends State<OrderRecordWidget> {
         ],
       ),
       child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 4),
+        padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 4),
         child: Column(
           children: [
             Row(
@@ -238,7 +240,11 @@ class _OrderRecordWidgetState extends State<OrderRecordWidget> {
                   ),
                 ),
               ],
-            )
+            ),
+            const Padding(
+              padding: EdgeInsets.symmetric(vertical: 4),
+              child: Divider(),
+            ),
           ],
         ),
       ),

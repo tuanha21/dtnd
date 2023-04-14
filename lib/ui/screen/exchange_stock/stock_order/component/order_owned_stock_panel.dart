@@ -1,4 +1,3 @@
-import 'package:dtnd/=models=/response/account/base_margin_account_model.dart';
 import 'package:dtnd/=models=/response/account/portfolio_status_model.dart';
 import 'package:dtnd/=models=/response/stock.dart';
 import 'package:dtnd/data/i_user_service.dart';
@@ -7,14 +6,18 @@ import 'package:dtnd/data/implementations/user_service.dart';
 import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_textstyle.dart';
+import 'package:dtnd/ui/widget/empty_list_widget.dart';
 import 'package:dtnd/ui/widget/icon/stock_icon.dart';
 import 'package:dtnd/utilities/num_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../../../=models=/response/account/base_margin_plus_account_model.dart';
+
 class OrderOwnedStockPanel extends StatefulWidget {
   const OrderOwnedStockPanel({super.key, this.onSell});
-  final ValueChanged<String>? onSell;
+
+  final ValueChanged<PorfolioStock>? onSell;
 
   @override
   State<OrderOwnedStockPanel> createState() => _OrderOwnedStockPanelState();
@@ -23,13 +26,19 @@ class OrderOwnedStockPanel extends StatefulWidget {
 class _OrderOwnedStockPanelState extends State<OrderOwnedStockPanel> {
   final IUserService userService = UserService();
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Obx(() {
       final data = userService.listAccountModel.value?.firstWhereOrNull(
-              (element) => element.runtimeType == BaseMarginAccountModel)
-          as BaseMarginAccountModel?;
+              (element) => element.runtimeType == BaseMarginPlusAccountModel)
+          as BaseMarginPlusAccountModel?;
 
-      List<PorfolioStock>? portfolioStocks =
+      final List<PorfolioStock> portfolioStocks =
           data?.portfolioStatus?.porfolioStocks ?? [];
       // if ((data?.portfolioStatus?.porfolioStocks?.length ?? 0) > 3) {
       //   portfolioStocks
@@ -37,16 +46,21 @@ class _OrderOwnedStockPanelState extends State<OrderOwnedStockPanel> {
       // } else if ((data?.portfolioStatus?.porfolioStocks?.length ?? 0) > 0) {
       //   portfolioStocks.addAll(data!.portfolioStatus!.porfolioStocks!);
       // }
-      return ListView(
-        shrinkWrap: true,
-        children: [
-          for (PorfolioStock porfolioStock in portfolioStocks)
-            OrderOwnedStockWidget(
-              portfolioStock: porfolioStock,
-              onSell: widget.onSell,
+      return portfolioStocks.isNotEmpty
+          ? ListView(
+              shrinkWrap: true,
+              children: [
+                for (PorfolioStock porfolioStock in portfolioStocks)
+                  OrderOwnedStockWidget(
+                    portfolioStock: porfolioStock,
+                    onSell: widget.onSell,
+                  )
+              ],
             )
-        ],
-      );
+          : const Padding(
+              padding: EdgeInsets.only(top: 50),
+              child: EmptyListWidget(),
+            );
     });
   }
 }
@@ -54,8 +68,9 @@ class _OrderOwnedStockPanelState extends State<OrderOwnedStockPanel> {
 class OrderOwnedStockWidget extends StatefulWidget {
   const OrderOwnedStockWidget(
       {super.key, required this.portfolioStock, this.onSell});
+
   final PorfolioStock portfolioStock;
-  final ValueChanged<String>? onSell;
+  final ValueChanged<PorfolioStock>? onSell;
 
   @override
   State<OrderOwnedStockWidget> createState() => _OrderOwnedStockWidgetState();
@@ -63,6 +78,7 @@ class OrderOwnedStockWidget extends StatefulWidget {
 
 class _OrderOwnedStockWidgetState extends State<OrderOwnedStockWidget> {
   Stock? stock;
+
   @override
   void initState() {
     super.initState();
@@ -96,8 +112,7 @@ class _OrderOwnedStockWidgetState extends State<OrderOwnedStockWidget> {
             Material(
               borderRadius: const BorderRadius.all(Radius.circular(4)),
               child: InkWell(
-                  onTap: () =>
-                      widget.onSell?.call(widget.portfolioStock.symbol),
+                  onTap: () => widget.onSell?.call(widget.portfolioStock),
                   borderRadius: const BorderRadius.all(Radius.circular(4)),
                   child: Ink(
                     padding:
@@ -135,7 +150,6 @@ class _OrderOwnedStockWidgetState extends State<OrderOwnedStockWidget> {
               ],
             ),
             Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Text(
                   S.of(context).profit_and_loss,
@@ -152,6 +166,20 @@ class _OrderOwnedStockWidgetState extends State<OrderOwnedStockWidget> {
                     ),
                     const SizedBox(width: 3),
                     widget.portfolioStock.prefixIcon(size: 10),
+                  ],
+                ),
+              ],
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Text(
+                  '%${S.of(context).profit_and_loss}',
+                  style: AppTextStyle.labelSmall_10
+                      .copyWith(color: AppColors.neutral_03),
+                ),
+                Row(
+                  children: [
                     Text(
                       widget.portfolioStock.gainLossPer ?? "-%",
                       style: AppTextStyle.labelSmall_10.copyWith(

@@ -98,6 +98,7 @@ class UserService implements IUserService {
       getUserInfo();
       getListAccount();
       getTotalAsset();
+      localStorageService.sharedPreferences.remove('pincode');
       // getSearchHistory();
       return true;
     } catch (e) {
@@ -154,26 +155,27 @@ class UserService implements IUserService {
         return false;
       },
     );
+    logger.v(listAccount.toString());
+
     if (listAccount?.isEmpty ?? true) {
       return [];
     } else {
       listAccountModel.value = listAccount;
+      logger.v(listAccount);
       for (var i = 0; i < listAccount!.length; i++) {
-        String p1 = listAccount.elementAt(i).accCode.replaceRange(
-            listAccount.elementAt(i).accCode.length - 1,
-            listAccount.elementAt(i).accCode.length,
-            '9');
         requestModel = RequestModel(this,
             group: "Q",
             data: RequestDataModel.stringType(
               cmd: "Web.Portfolio.AccountStatus",
-              p1: p1,
+              p1: listAccount.elementAt(i).accCode,
             ));
+        logger.v(requestModel);
+
         dynamic response =
             await networkService.requestTraditionalApi<IAccountResponse>(
           requestModel,
           modifyResponse: (res) {
-            res["accCode"] = p1;
+            res["accCode"] = listAccount.elementAt(i).accCode;
             return res;
           },
         );
@@ -183,7 +185,7 @@ class UserService implements IUserService {
             group: "Q",
             data: RequestDataModel.stringType(
               cmd: "Web.Portfolio.PortfolioStatus",
-              p1: p1,
+              p1: listAccount.elementAt(i).accCode,
             ));
         response = await networkService
             .requestTraditionalApiResList<PorfolioStock>(requestModel);
@@ -191,15 +193,13 @@ class UserService implements IUserService {
           listAccount.elementAt(i).portfolioStatus =
               PortfolioStatus.fromPorfolioStock(response!);
         }
-        response = await getListAssetChart(p1);
+        response = await getListAssetChart(listAccount.elementAt(i).accCode);
         if (response != null) {
           listAccount.elementAt(i).listAssetChart = response;
         }
-
-        response = await getListUnexecutedRight(p1);
-        if (response != null) {
-          listAccount.elementAt(i).listUnexecutedRight = response;
-        }
+        await listAccount
+            .elementAt(i)
+            .getListUnexecutedRight(this, networkService);
       }
     }
     listAccountModel.refresh();
@@ -232,11 +232,16 @@ class UserService implements IUserService {
         p1: account,
       ),
     );
+    logger.v(requestModel);
     final res =
         await networkService.requestTraditionalApiResList<UnexecutedRightModel>(
       requestModel,
       hasError: (p0) {
-        return p0["data"].first["DUMMY"] != null;
+        logger.v(p0);
+        if (p0["data"].runtimeType is List && p0["data"].isNotEmpty) {
+          return p0["data"].first["DUMMY"] != null;
+        }
+        return false;
       },
     );
     return res ?? [];
@@ -247,17 +252,21 @@ class UserService implements IUserService {
       return null;
     }
 
-    final RequestModel requestModel = RequestModel(this,
-        group: "B",
-        data: RequestDataModel.cursorType(
-          cmd: "GetAccountInfo",
-          p1: token.value!.user,
-        ));
-
-    final listResponse = await networkService
-        .requestTraditionalApiResList<UserInfo>(requestModel);
-    userInfo.value = listResponse?.first;
-    return userInfo.value;
+    try {
+      final RequestModel requestModel = RequestModel(this,
+          group: "B",
+          data: RequestDataModel.cursorType(
+            cmd: "GetAccountInfo",
+            p1: token.value!.user,
+          ));
+      final listResponse = await networkService
+          .requestTraditionalApiResList<UserInfo>(requestModel);
+      userInfo.value = listResponse?.first;
+      return userInfo.value;
+    } catch (e) {
+      logger.e(e.toString());
+      return null;
+    }
   }
 
   Future<TotalAsset?> getTotalAsset() async {

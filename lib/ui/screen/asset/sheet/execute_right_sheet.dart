@@ -7,7 +7,6 @@ import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_textstyle.dart';
 import 'package:dtnd/ui/widget/button/single_color_text_button.dart';
-import 'package:dtnd/ui/widget/expanded_widget.dart';
 import 'package:dtnd/ui/widget/icon/sheet_header.dart';
 import 'package:dtnd/ui/widget/icon/stock_icon.dart';
 import 'package:dtnd/ui/widget/input/interval_input.dart';
@@ -24,10 +23,13 @@ class ExecuteRightSheet extends StatefulWidget {
     required this.unexecutedRightModel,
     required this.stock,
     required this.accountModel,
+    required this.onSuccessExecute,
   });
+
   final UnexecutedRightModel unexecutedRightModel;
   final Stock stock;
   final IAccountModel accountModel;
+  final VoidCallback onSuccessExecute;
   @override
   State<ExecuteRightSheet> createState() => _ExecuteRightSheetState();
 }
@@ -40,6 +42,7 @@ class _ExecuteRightSheetState extends State<ExecuteRightSheet>
   final GlobalKey<FormState> pinKey = GlobalKey<FormState>();
   final Rx<num?> buyValue = Rxn();
   String? errorMsg;
+
   @override
   void initState() {
     volumnController = TextEditingController(
@@ -58,12 +61,14 @@ class _ExecuteRightSheetState extends State<ExecuteRightSheet>
           right: widget.unexecutedRightModel,
           volumn: volumnController.text,
           pin: pinController.text);
+      widget.onSuccessExecute.call();
       if (mounted) {
         await DialogUtilities.showErrorDialog(
             context: context,
             title: S.of(context).register_right_successfully,
             content: S.of(context).register_right_successfully);
       }
+
       if (mounted) {
         Navigator.of(context).pop();
       }
@@ -104,8 +109,8 @@ class _ExecuteRightSheetState extends State<ExecuteRightSheet>
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SheetHeader(
-              title: "Đăng ký mua",
+            SheetHeader(
+              title: S.of(context).register_to_buy,
               implementBackButton: false,
             ),
             const SizedBox(height: 20),
@@ -185,24 +190,24 @@ class _ExecuteRightSheetState extends State<ExecuteRightSheet>
               child: Column(
                 children: [
                   _Row(
-                    label: "Khối lượng tối đa",
+                    label: S.of(context).maximum_load,
                     value: NumUtils.formatInteger(
                         widget.unexecutedRightModel.shareAvailBuy),
                   ),
                   const SizedBox(height: 8),
                   _Row(
-                    label: "Giá mua vào",
+                    label: S.of(context).buying_price,
                     value: NumUtils.formatInteger(
                         widget.unexecutedRightModel.cBUYPRICE),
                   ),
                   const SizedBox(height: 8),
                   _Row(
-                    label: "Tài khoản cắt tiền",
+                    label: S.of(context).deduction_account,
                     value: widget.unexecutedRightModel.cACCOUNTCODE,
                   ),
                   const SizedBox(height: 8),
                   Obx(() => _Row(
-                        label: "Tổng giao dịch",
+                        label: S.of(context).total_transaction,
                         value: widget.unexecutedRightModel.cBUYPRICE == null ||
                                 buyValue.value == null
                             ? "-"
@@ -225,7 +230,7 @@ class _ExecuteRightSheetState extends State<ExecuteRightSheet>
                       validator: (vol) {
                         if (vol == null) {
                           setState(() {
-                            errorMsg = "Khối lượng không được bỏ trống";
+                            errorMsg = S.of(context).Weight_must_be_filled_in;
                           });
                           return errorMsg;
                         }
@@ -240,10 +245,11 @@ class _ExecuteRightSheetState extends State<ExecuteRightSheet>
                             volume >
                                 widget.unexecutedRightModel.shareAvailBuy) {
                           setState(() {
-                            errorMsg = "Khối lượng không hợp lệ";
+                            errorMsg = S.of(context).invalid_weight;
                           });
                           return errorMsg;
                         }
+                        return null;
                       },
                       controller: volumnController,
                       labelText: S.of(context).volumn,
@@ -320,9 +326,11 @@ class _Row extends StatelessWidget {
     this.value,
     this.valueColor,
   });
+
   final String label;
   final String? value;
   final Color? valueColor;
+
   @override
   Widget build(BuildContext context) {
     final textheme = Theme.of(context).textTheme;

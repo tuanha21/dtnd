@@ -1,4 +1,4 @@
-import 'package:dtnd/ui/screen/asset/screen/realized_profit_loss/realized_profit_loss_controller.dart';
+import 'package:dtnd/ui/screen/asset/screen/executed_profit_loss/realized_profit_loss_controller.dart';
 import 'package:dtnd/ui/theme/app_textstyle.dart';
 import 'package:dtnd/ui/widget/empty_list_widget.dart';
 import 'package:dtnd/utilities/logger.dart';
@@ -52,7 +52,7 @@ class _RealizedProfitLossState extends State<RealizedProfitLoss> {
       setState(() {
         controller.searching = true;
         try {
-          controller.Search(fromDay, toDay, code.toString());
+          controller.search(fromDay, toDay, code.toString());
         } catch (e) {
           logger.v(e);
         }
@@ -253,8 +253,8 @@ class _RealizedProfitLossState extends State<RealizedProfitLoss> {
             ),
             Obx(
               () {
-                if (controller.shareEarnedModel.value?.listDetail.isEmpty ?? true
-                     ) {
+                if (controller.shareEarnedModel.value?.listDetail.isEmpty ??
+                    true) {
                   return const Padding(
                       padding: EdgeInsets.only(top: 100),
                       child: EmptyListWidget());

@@ -14,8 +14,10 @@ import 'i_user_service.dart';
 abstract class IExchangeService {
   Future<BaseOrderModel?> createNewOrder(
       IUserService userService, OrderData orderData);
+
   Future<ChangeOrderModel?> changeOrder(IUserService userService,
       BaseOrderModel baseOrderModel, num vol, String price, String pin);
+
   Future<ChangeOrderModel?> cancelOrder(
       IUserService userService, BaseOrderModel baseOrderModel, String pin);
 
@@ -35,6 +37,7 @@ abstract class IExchangeService {
       required UnexecutedRightModel right,
       required String volumn,
       required String pin});
+
   Future<CashTransactionModel> getCashTransactions({
     String? user,
     DateTime? fromDay,
@@ -42,6 +45,7 @@ abstract class IExchangeService {
     int? page,
     int? recordPerPage,
   });
+
   Future<List<ShareTransactionModel>> getShareTransactions({
     String? user,
     DateTime? fromDay,

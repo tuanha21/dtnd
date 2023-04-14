@@ -34,7 +34,7 @@ class _IndayOrderTabState extends State<IndayOrderTab> {
 
   Future<void> getIndayOrder() async {
     listOrder = await userService.getIndayOrder(
-        accountCode: "${userService.token.value!.user}6", recordPerPage: 10);
+        accountCode: "${userService.token.value!.user}9", recordPerPage: 10);
     listOrderShow = List<BaseOrderModel>.from(listOrder ?? []);
     if (mounted) {
       setState(() {});
@@ -69,8 +69,7 @@ class _IndayOrderTabState extends State<IndayOrderTab> {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
-    print(listOrderShow.toString());
-    return Padding(
+     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
       child: Column(
         children: [
@@ -113,7 +112,7 @@ class _IndayOrderTabState extends State<IndayOrderTab> {
             ],
           ),
           const SizedBox(height: 8),
-          listOrderShow == null ?
+         listOrderShow?.isEmpty == false ?
           Expanded(child: Builder(
             builder: (context) {
               return ListView(
@@ -128,7 +127,7 @@ class _IndayOrderTabState extends State<IndayOrderTab> {
                         for (int i = 0; i < (listOrderShow?.length ?? 0); i++)
                           Column(
                             children: [
-                              i != 0 ? const Divider(height: 1) : Container(),
+                              // i != 0 ? const Divider(height: 1) : Container(),
                               OrderRecordWidget(
                                 data: listOrderShow!.elementAt(i),
                                 onChange: () async {

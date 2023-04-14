@@ -10,9 +10,11 @@ import 'package:intl/intl.dart';
 import '../../../../../../=models=/response/signal_month_model.dart';
 
 class ForeignWidgetSignal extends StatefulWidget {
-  const ForeignWidgetSignal({Key? key, required this.code}) : super(key: key);
+  const ForeignWidgetSignal({Key? key, required this.code, required this.type})
+      : super(key: key);
 
   final String code;
+  final String type;
 
   @override
   State<ForeignWidgetSignal> createState() => _ForeignWidgetState();
@@ -30,12 +32,22 @@ class _ForeignWidgetState extends State<ForeignWidgetSignal> {
   }
 
   Future<void> getData() async {
-    listMonth = await dataCenterService.getSignalMonth(widget.code);
-    setState(() {});
+    listMonth =
+        await dataCenterService.getSignalMonth(widget.code, widget.type);
+    if (mounted) setState(() {});
   }
+
+  // @override
+  // void didUpdateWidget(covariant ForeignWidgetSignal oldWidget) {
+  //   super.didUpdateWidget(oldWidget);
+  //   if (oldWidget.code != widget.code || oldWidget.type != widget.type) {
+  //     getData();
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
+    print(listMonth.toString());
     final size = MediaQuery.of(context).size;
     listMonth?.sort((a, b) => a.cMONTH.compareTo(b.cMONTH));
     return listMonth?.isNotEmpty == true

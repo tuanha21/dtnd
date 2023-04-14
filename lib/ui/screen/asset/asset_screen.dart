@@ -1,6 +1,6 @@
 import 'dart:ui';
 
-import 'package:dtnd/=models=/response/account/base_margin_account_model.dart';
+import 'package:dtnd/=models=/response/account/base_margin_plus_account_model.dart';
 import 'package:dtnd/=models=/response/stock_model.dart';
 import 'package:dtnd/data/i_data_center_service.dart';
 import 'package:dtnd/data/i_local_storage_service.dart';
@@ -12,7 +12,7 @@ import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/screen/asset/component/account_asset_overview_widget.dart';
 import 'package:dtnd/ui/screen/asset/component/asset_distribution_chart.dart';
 import 'package:dtnd/ui/screen/asset/screen/margin_debt/margin_debt_screen.dart';
-import 'package:dtnd/ui/screen/asset/screen/realized_profit_loss/realized_profit_loss.dart';
+import 'package:dtnd/ui/screen/asset/screen/executed_profit_loss/realized_profit_loss.dart';
 import 'package:dtnd/ui/screen/asset/sheet/extensions_sheet.dart';
 import 'package:dtnd/ui/screen/exchange_stock/order_note/screen/order_note_screen.dart';
 import 'package:dtnd/ui/screen/exchange_stock/stock_order/business/stock_order_flow.dart';
@@ -35,8 +35,9 @@ import 'component/portfolio_and_right_panel.dart';
 import 'sheet/sheet_flow.dart';
 
 class AssetScreen extends StatefulWidget {
-  const AssetScreen({super.key});
-
+  const AssetScreen({
+    super.key,
+  });
   @override
   State<AssetScreen> createState() => _AssetScreenState();
 }
@@ -65,202 +66,211 @@ class _AssetScreenState extends State<AssetScreen>
   @override
   Widget build(BuildContext context) {
     Widget child;
-    if (!userService.isLogin) {
-      child = Center(
-        child: NotSigninCatalogWidget(
-          afterLogin: rebuild,
-          localStorageService: localStorageService,
-        ),
-      );
-    } else {
-      final textTheme = Theme.of(context).textTheme;
-      Widget chart;
-      if (showTotalAsset) {
-        chart = Obx(() {
-          // final data = userService.listAccountModel.value?.firstWhereOrNull(
-          //         (element) => element.runtimeType == BaseMarginAccountModel)
-          //     as BaseMarginAccountModel?;
-          final data = userService.listAccountModel.value?.firstWhereOrNull(
-                  (element) => element.runtimeType == BaseMarginAccountModel)
-              as BaseMarginAccountModel?;
-          return AssetChart(
-            datas: data?.listAssetChart,
+
+    return Scaffold(
+      appBar: const MyAppBar(),
+      body: Obx(() {
+        if (userService.token.value == null) {
+          child = Center(
+            child: NotSigninCatalogWidget(
+              afterLogin: rebuild,
+              localStorageService: localStorageService,
+            ),
           );
-        });
-      } else {
-        chart = Obx(() {
-          // final data = userService.listAccountModel.value?.firstWhereOrNull(
-          //         (element) => element.runtimeType == BaseMarginAccountModel)
-          //     as BaseMarginAccountModel?;
-          final data = userService.listAccountModel.value?.firstWhereOrNull(
-                  (element) => element.runtimeType == BaseMarginAccountModel)
-              as BaseMarginAccountModel?;
-          List<ChartData> datas = [
-            ChartData(
-                "Tiền",
-                (data?.cashBalance ?? 0) *
-                    100 /
-                    ((data?.cashBalance ?? 0) +
-                        (data?.portfolioStatus?.marketValue ?? 0))),
-            ChartData(
-                "Cổ phiếu",
-                (data?.portfolioStatus?.marketValue ?? 0) *
-                    100 /
-                    ((data?.cashBalance ?? 0) +
-                        (data?.portfolioStatus?.marketValue ?? 0))),
-          ];
-          return AssetDistributionChart(
-            datas: datas,
-            total: (data?.cashBalance ?? 0) +
-                (data?.portfolioStatus?.marketValue ?? 0),
-          );
-        });
-      }
-      child = RefreshIndicator(
-        onRefresh: userService.refreshAssets,
-        child: ScrollConfiguration(
-          behavior: ScrollConfiguration.of(context).copyWith(
-            dragDevices: {
-              PointerDeviceKind.touch,
-              PointerDeviceKind.mouse,
-            },
-          ),
-          child: ListView(
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(16),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
+        } else {
+          final textTheme = Theme.of(context).textTheme;
+          Widget chart;
+          if (showTotalAsset) {
+            chart = Obx(() {
+              // final data = userService.listAccountModel.value?.firstWhereOrNull(
+              //         (element) => element.runtimeType == BaseMarginAccountModel)
+              //     as BaseMarginAccountModel?;
+              // đm là do ko có data
+              final data = userService.listAccountModel.value?.firstWhereOrNull(
+                      (element) =>
+                          element.runtimeType == BaseMarginPlusAccountModel)
+                  as BaseMarginPlusAccountModel?;
+
+              return AssetChart(
+                datas: data?.listAssetChart,
+              );
+            });
+          } else {
+            chart = Obx(() {
+              // final data = userService.listAccountModel.value?.firstWhereOrNull(
+              //         (element) => element.runtimeType == BaseMarginAccountModel)
+              //     as BaseMarginAccountModel?;
+              final data = userService.listAccountModel.value?.firstWhereOrNull(
+                      (element) =>
+                          element.runtimeType == BaseMarginPlusAccountModel)
+                  as BaseMarginPlusAccountModel?;
+              List<ChartData> datas = [
+                ChartData(
+                    S.of(context).money,
+                    (data?.cashBalance ?? 0) *
+                        100 /
+                        ((data?.cashBalance ?? 0) +
+                            (data?.portfolioStatus?.marketValue ?? 0))),
+                ChartData(
+                    S.of(context).stock,
+                    (data?.portfolioStatus?.marketValue ?? 0) *
+                        100 /
+                        ((data?.cashBalance ?? 0) +
+                            (data?.portfolioStatus?.marketValue ?? 0))),
+              ];
+              return AssetDistributionChart(
+                datas: datas,
+                total: (data?.cashBalance ?? 0) +
+                    (data?.portfolioStatus?.marketValue ?? 0),
+              );
+            });
+          }
+          child = RefreshIndicator(
+            onRefresh: userService.refreshAssets,
+            child: ScrollConfiguration(
+              behavior: ScrollConfiguration.of(context).copyWith(
+                dragDevices: {
+                  PointerDeviceKind.touch,
+                  PointerDeviceKind.mouse,
+                },
+              ),
+              child: ListView(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        AppIconButton(
-                          icon: AppImages.arrow_swap,
-                          onPressed: changeChart,
-                        ),
-                        const SizedBox(width: 10),
-                        Text(
-                          showTotalAsset
-                              ? S.of(context).total_asset
-                              : S.of(context).asset_distribution,
-                          style: textTheme.bodyMedium!.copyWith(
-                            color: AppColors.primary_01,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        )
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        const CustomDropDownButton(
-                          items: [
-                            "Tài khoản Demo",
-                            "Tài khoản liên kết",
+                        Row(
+                          children: [
+                            AppIconButton(
+                              icon: AppImages.arrow_swap,
+                              onPressed: changeChart,
+                            ),
+                            const SizedBox(width: 10),
+                            Text(
+                              showTotalAsset
+                                  ? S.of(context).total_asset
+                                  : S.of(context).asset_distribution,
+                              style: textTheme.bodyMedium!.copyWith(
+                                color: AppColors.primary_01,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            )
                           ],
                         ),
-                        const SizedBox(width: 8),
-                        Material(
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(6)),
-                          child: InkWell(
-                            borderRadius:
-                                const BorderRadius.all(Radius.circular(6)),
-                            onTap: () => const ExtensionsISheet()
-                                .show(context, const ExtensionsSheet())
-                                .then(
-                              (value) {
-                                switch (value.runtimeType) {
-                                  case ToBaseNoteCmd:
-                                    Navigator.of(context).push(
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            const OrderNoteScreen(),
-                                      ),
-                                    );
-                                    break;
-                                  case ToOrderHistoryCmd:
-                                    Navigator.of(context).push(
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            const OrderNoteScreen(defaultab: 1),
-                                      ),
-                                    );
-                                    break;
-                                  case ToProfitAndLossCmd:
-                                    Navigator.of(context).push(
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            const RealizedProfitLoss(),
-                                      ),
-                                    );
-                                    break;
-                                  case ToMarginDebt:
-                                    Navigator.of(context).push(
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            const MarginDebtScreen(),
-                                      ),
-                                    );
-                                    break;
-                                  default:
-                                    break;
-                                }
-                              },
+                        Row(
+                          children: [
+                            const CustomDropDownButton(
+                              items: [
+                                "Tài khoản Demo",
+                                "Tài khoản liên kết",
+                              ],
                             ),
-                            child: Ink(
-                              padding: const EdgeInsets.all(8),
-                              decoration: const BoxDecoration(
-                                color: AppColors.primary_03,
+                            const SizedBox(width: 8),
+                            Material(
+                              borderRadius:
+                                  const BorderRadius.all(Radius.circular(6)),
+                              child: InkWell(
                                 borderRadius:
-                                    BorderRadius.all(Radius.circular(6)),
-                              ),
-                              child: SizedBox.square(
-                                dimension: 20,
-                                child: Image.asset(
-                                  AppImages.asset_menu_icon,
+                                    const BorderRadius.all(Radius.circular(6)),
+                                onTap: () => const ExtensionsISheet()
+                                    .show(context, const ExtensionsSheet())
+                                    .then(
+                                  (value) {
+                                    switch (value.runtimeType) {
+                                      case ToBaseNoteCmd:
+                                        Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                const OrderNoteScreen(),
+                                          ),
+                                        );
+                                        break;
+                                      case ToOrderHistoryCmd:
+                                        Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                const OrderNoteScreen(
+                                                    defaultab: 1),
+                                          ),
+                                        );
+                                        break;
+                                      case ToProfitAndLossCmd:
+                                        Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                const RealizedProfitLoss(),
+                                          ),
+                                        );
+                                        break;
+                                      case ToMarginDebt:
+                                        Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                const MarginDebtScreen(),
+                                          ),
+                                        );
+                                        break;
+                                      default:
+                                        break;
+                                    }
+                                  },
+                                ),
+                                child: Ink(
+                                  padding: const EdgeInsets.all(8),
+                                  decoration: const BoxDecoration(
+                                    color: AppColors.primary_03,
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(6)),
+                                  ),
+                                  child: SizedBox.square(
+                                    dimension: 20,
+                                    child: Image.asset(
+                                      AppImages.asset_menu_icon,
+                                    ),
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                        ),
+                          ],
+                        )
                       ],
-                    )
-                  ],
-                ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 215,
+                    child: chart,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: Obx(
+                      () {
+                        if (userService.listAccountModel.value?.isNotEmpty ??
+                            false) {
+                          final data = userService.listAccountModel.value!
+                                  .firstWhereOrNull((element) =>
+                                      element.runtimeType ==
+                                      BaseMarginPlusAccountModel)
+                              as BaseMarginPlusAccountModel?;
+                          return AccountAssetOverviewWidget(
+                            data: data,
+                          );
+                        } else {
+                          return const AccountAssetOverviewWidget();
+                        }
+                      },
+                    ),
+                  ),
+                  const PortfolioAndRightPanel(),
+                  const SizedBox(height: 100),
+                ],
               ),
-              SizedBox(
-                height: 215,
-                child: chart,
-              ),
-              Padding(
-                padding: const EdgeInsets.all(16),
-                child: Obx(
-                  () {
-                    if (userService.listAccountModel.value?.isNotEmpty ??
-                        false) {
-                      final data = userService.listAccountModel.value!
-                              .firstWhereOrNull((element) =>
-                                  element.runtimeType == BaseMarginAccountModel)
-                          as BaseMarginAccountModel?;
-                      return AccountAssetOverviewWidget(
-                        data: data,
-                      );
-                    } else {
-                      return const AccountAssetOverviewWidget();
-                    }
-                  },
-                ),
-              ),
-              const PortfolioAndRightPanel(),
-              const SizedBox(height: 100),
-            ],
-          ),
-        ),
-      );
-    }
-    return Scaffold(
-      appBar: const MyAppBar(),
-      body: child,
+            ),
+          );
+        }
+        return child;
+      }),
       floatingActionButton: Padding(
         padding: const EdgeInsets.only(bottom: 60),
         child: SizedBox.square(
@@ -316,11 +326,10 @@ class _AssetScreenState extends State<AssetScreen>
                 context: context,
                 builder: (context) {
                   return CustomDialog(
-                    textButtonAction: 'Đồng ý',
-                    textButtonExit: 'Để sau',
-                    title: 'Đăng nhập bằng sinh trắc học',
-                    content:
-                        'Bạn chưa đăng ký đăng nhập bằng sinh trắc học\nBạn có muốn đăng ký ngay bây giờ không?',
+                    textButtonAction: S.of(context).ok,
+                    textButtonExit: S.of(context).Later,
+                    title: S.of(context).biometric_authentication,
+                    content: S.of(context).login_with_biometric,
                     action: () {
                       Navigator.of(context).pop();
                     },

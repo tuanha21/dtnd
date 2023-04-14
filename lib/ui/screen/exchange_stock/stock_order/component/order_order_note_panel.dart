@@ -2,6 +2,7 @@ import 'package:dtnd/=models=/response/order_model/base_order_model.dart';
 import 'package:dtnd/data/i_user_service.dart';
 import 'package:dtnd/data/implementations/user_service.dart';
 import 'package:dtnd/ui/screen/exchange_stock/stock_order/business/stock_order_flow.dart';
+import 'package:dtnd/ui/widget/empty_list_widget.dart';
 import 'package:flutter/material.dart';
 
 import 'order_record_widget.dart';
@@ -23,8 +24,9 @@ class _OrderOrderNotePanelState extends State<OrderOrderNotePanel> {
   }
 
   Future<void> getIndayOrder() async {
+    print("getDâta");
     listOrder = await userService.getIndayOrder(
-        accountCode: "${userService.token.value!.user}6", recordPerPage: 3);
+        accountCode: "${userService.token.value!.user}9", recordPerPage: 3);
     if (mounted) {
       setState(() {});
     }
@@ -43,7 +45,14 @@ class _OrderOrderNotePanelState extends State<OrderOrderNotePanel> {
       }
     }
     return Column(
-      children: records,
+      children: records.isNotEmpty
+          ? records
+          : [
+              const Padding(
+                padding: EdgeInsets.only(top: 50),
+                child: EmptyListWidget(),
+              )
+            ],
     );
   }
 }

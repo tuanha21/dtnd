@@ -15,7 +15,8 @@ class CustomDialog extends StatelessWidget {
       required this.action,
       required this.type,
       this.textButtonExit,
-      this.textButtonAction});
+      this.textButtonAction,
+      this.disableBack});
 
   final String? title;
   final String? content;
@@ -23,6 +24,7 @@ class CustomDialog extends StatelessWidget {
   final String? textButtonAction;
   final VoidCallback action;
   final TypeAlert type;
+  final bool? disableBack;
 
   @override
   Widget build(BuildContext context) {
@@ -92,29 +94,34 @@ class CustomDialog extends StatelessWidget {
                                           horizontal: 16),
                                       child: Row(
                                         children: [
-                                          Expanded(
-                                            child: InkWell(
-                                              child: Container(
-                                                height: 40,
-                                                decoration: const BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.all(
-                                                          Radius.circular(8)),
-                                                  color: AppColors.neutral_06,
+                                          Visibility(
+                                            visible: disableBack ?? true,
+                                            child: Expanded(
+                                              child: InkWell(
+                                                child: Container(
+                                                  height: 40,
+                                                  decoration:
+                                                      const BoxDecoration(
+                                                    borderRadius:
+                                                        BorderRadius.all(
+                                                            Radius.circular(8)),
+                                                    color: AppColors.neutral_06,
+                                                  ),
+                                                  alignment: Alignment.center,
+                                                  child: Text(
+                                                      textButtonExit ??
+                                                          "Để sau",
+                                                      style: AppTextStyle
+                                                          .bodyMedium_14
+                                                          .copyWith(
+                                                              color: AppColors
+                                                                  .primary_01)),
                                                 ),
-                                                alignment: Alignment.center,
-                                                child: Text(
-                                                    textButtonExit ?? "Để sau",
-                                                    style: AppTextStyle
-                                                        .bodyMedium_14
-                                                        .copyWith(
-                                                            color: AppColors
-                                                                .primary_01)),
+                                                onTap: () {
+                                                  Navigator.of(context)
+                                                      .pop(false);
+                                                },
                                               ),
-                                              onTap: () {
-                                                Navigator.of(context)
-                                                    .pop(false);
-                                              },
                                             ),
                                           ),
                                           const SizedBox(width: 20),

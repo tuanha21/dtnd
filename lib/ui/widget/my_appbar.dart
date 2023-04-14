@@ -51,7 +51,7 @@ class _MyAppBarState extends State<MyAppBar> {
         child: Padding(
           padding: const EdgeInsets.only(left: 16),
           child: InkWell(
-            onTap: () => Navigator.of(context).pop(),
+            onTap: () => Navigator.of(context).pop(false),
             borderRadius: const BorderRadius.all(Radius.circular(6)),
             child: Ink(
               padding: const EdgeInsets.all(10),

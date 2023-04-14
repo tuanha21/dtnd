@@ -40,7 +40,7 @@ class _HomeScreenState extends State<HomeScreen>
         SliverPersistentHeader(
           pinned: true,
           delegate: HomeAppbarDelegate(homeController.appService,
-              homeController.dataCenterService, userService),
+              homeController.dataCenterService, userService,widget.navigateTab),
         ),
         SliverToBoxAdapter(
           child: HomeSection(

@@ -35,7 +35,7 @@ class MessageLookup extends MessageLookupByLibrary {
   static String m6(minutes) => "${minutes} minutes ago";
 
   static String m7(value) =>
-      "The OTP has been sent to your ${value} extension phone number. Enter the 6-digit code to continue.";
+      "The OTP has been sent to your ${value} extension email. Enter the 6-digit code to continue.";
 
   static String m8(name) => "Rename catalog “${name}” to";
 
@@ -52,9 +52,12 @@ class MessageLookup extends MessageLookupByLibrary {
         "DTNDs_virtual_assistant": MessageLookupByLibrary.simpleMessage(
             " of DTND\'s virtual assistant"),
         "Extractive": MessageLookupByLibrary.simpleMessage("Extractive"),
+        "Later": MessageLookupByLibrary.simpleMessage("Later"),
         "Medicine": MessageLookupByLibrary.simpleMessage("Medicine"),
         "Metal": MessageLookupByLibrary.simpleMessage("Metal"),
         "Retail": MessageLookupByLibrary.simpleMessage("Retail"),
+        "Weight_must_be_filled_in":
+            MessageLookupByLibrary.simpleMessage("Weight must be filled in"),
         "account": MessageLookupByLibrary.simpleMessage("Account"),
         "account_infomation":
             MessageLookupByLibrary.simpleMessage("Account information"),
@@ -97,6 +100,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "billion_lowercase": MessageLookupByLibrary.simpleMessage("b"),
         "billion_short": MessageLookupByLibrary.simpleMessage("B"),
         "biomestric": MessageLookupByLibrary.simpleMessage("Biomestric"),
+        "biometric_authentication":
+            MessageLookupByLibrary.simpleMessage("Biometric authentication"),
         "birthday": MessageLookupByLibrary.simpleMessage("Birthday"),
         "bond": MessageLookupByLibrary.simpleMessage("Bond"),
         "bonus_sh": MessageLookupByLibrary.simpleMessage("Bonus share"),
@@ -110,6 +115,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "buy_date": MessageLookupByLibrary.simpleMessage("Buy date"),
         "buy_price": MessageLookupByLibrary.simpleMessage("Buy price"),
         "buy_short": MessageLookupByLibrary.simpleMessage("B"),
+        "buying_price": MessageLookupByLibrary.simpleMessage("Buying Price"),
         "by": MessageLookupByLibrary.simpleMessage("by"),
         "cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
         "cancel_order_successfully":
@@ -134,6 +140,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "choose_stocks_you_interested": MessageLookupByLibrary.simpleMessage(
             "Select the stocks you are interested in. You can update later"),
         "close_translations": MessageLookupByLibrary.simpleMessage("Close"),
+        "command_type": MessageLookupByLibrary.simpleMessage("command type"),
         "commodities": MessageLookupByLibrary.simpleMessage("Commodities"),
         "community": MessageLookupByLibrary.simpleMessage("Community"),
         "condition_ordnote":
@@ -146,6 +153,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "copyTrade_asset":
             MessageLookupByLibrary.simpleMessage("CopyTrade asset"),
         "copytrade": MessageLookupByLibrary.simpleMessage("Copytrade"),
+        "cost_price": MessageLookupByLibrary.simpleMessage("Cost price"),
+        "cost_value": MessageLookupByLibrary.simpleMessage("Cost value"),
         "create": MessageLookupByLibrary.simpleMessage("Create"),
         "create_account":
             MessageLookupByLibrary.simpleMessage("Create account"),
@@ -161,6 +170,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "days_ago": m1,
         "debt_following":
             MessageLookupByLibrary.simpleMessage("Debt following"),
+        "deduction_account":
+            MessageLookupByLibrary.simpleMessage("Deduction account"),
         "delete": MessageLookupByLibrary.simpleMessage("Delete"),
         "delete_catalog":
             MessageLookupByLibrary.simpleMessage("Delete catalog"),
@@ -230,12 +241,16 @@ class MessageLookup extends MessageLookupByLibrary {
         "index": MessageLookupByLibrary.simpleMessage("Index"),
         "industry": MessageLookupByLibrary.simpleMessage("Industry"),
         "industry_list": MessageLookupByLibrary.simpleMessage("Industry list"),
+        "info_sent_to_email": MessageLookupByLibrary.simpleMessage(
+            "Your account information has been sent to your email!"),
         "interested": MessageLookupByLibrary.simpleMessage("Interested"),
         "interested_catalog":
             MessageLookupByLibrary.simpleMessage("Interested catalog"),
         "interface": MessageLookupByLibrary.simpleMessage("Interface"),
         "invalid_account": MessageLookupByLibrary.simpleMessage(
             "This account has not been registered or Internet trading feature is no longer available"),
+        "invalid_weight":
+            MessageLookupByLibrary.simpleMessage("invalid weight"),
         "investment_value":
             MessageLookupByLibrary.simpleMessage("Investment value"),
         "issue_date": MessageLookupByLibrary.simpleMessage("Issue date"),
@@ -257,6 +272,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "login_upper": MessageLookupByLibrary.simpleMessage("LOGIN"),
         "login_with_another_account":
             MessageLookupByLibrary.simpleMessage("Login with another account"),
+        "login_with_biometric": MessageLookupByLibrary.simpleMessage(
+            "You have not registered for biometric authentication.\nWould you like to register now?"),
         "login_with_facebook":
             MessageLookupByLibrary.simpleMessage("Login with Facebook"),
         "login_with_google":
@@ -289,6 +306,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "matched_vol": MessageLookupByLibrary.simpleMessage("Matched vol"),
         "matching": MessageLookupByLibrary.simpleMessage("Matching"),
         "maximum": MessageLookupByLibrary.simpleMessage("Maximum"),
+        "maximum_load": MessageLookupByLibrary.simpleMessage("Maximum load"),
         "million": MessageLookupByLibrary.simpleMessage("Million"),
         "million_lower": MessageLookupByLibrary.simpleMessage("million"),
         "million_short": MessageLookupByLibrary.simpleMessage("M"),
@@ -299,6 +317,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "minutes_ago": m6,
         "mk_price": MessageLookupByLibrary.simpleMessage("MK price"),
         "mk_value": MessageLookupByLibrary.simpleMessage("MK value"),
+        "money": MessageLookupByLibrary.simpleMessage("Money"),
         "money_statement":
             MessageLookupByLibrary.simpleMessage("Money statement"),
         "money_trading": MessageLookupByLibrary.simpleMessage("Money trading"),
@@ -319,6 +338,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Password requires at least 8 characters"),
         "null_username": MessageLookupByLibrary.simpleMessage(
             "Username requires at least 6 characters"),
+        "ok": MessageLookupByLibrary.simpleMessage("ok"),
         "open_translations": MessageLookupByLibrary.simpleMessage("Open"),
         "order": MessageLookupByLibrary.simpleMessage("Order"),
         "order_confirm": MessageLookupByLibrary.simpleMessage("Confirm order"),
@@ -374,12 +394,19 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Register right failed"),
         "register_right_successfully":
             MessageLookupByLibrary.simpleMessage("Register right successfully"),
+        "register_to_buy":
+            MessageLookupByLibrary.simpleMessage("Register to buy"),
         "rename_catalog_to": m8,
+        "return_command":
+            MessageLookupByLibrary.simpleMessage("return command"),
+        "return_home_page":
+            MessageLookupByLibrary.simpleMessage("Return home page"),
         "returning_money":
             MessageLookupByLibrary.simpleMessage("Returning money"),
         "revenue": MessageLookupByLibrary.simpleMessage("Revenue"),
         "right": MessageLookupByLibrary.simpleMessage("Right"),
         "safe_ratio": MessageLookupByLibrary.simpleMessage("Safe ratio"),
+        "sale_value": MessageLookupByLibrary.simpleMessage("Sale value"),
         "save": MessageLookupByLibrary.simpleMessage("Save"),
         "search": MessageLookupByLibrary.simpleMessage("Search"),
         "search_history":
@@ -391,6 +418,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "sell_date": MessageLookupByLibrary.simpleMessage("Sell date"),
         "sell_price": MessageLookupByLibrary.simpleMessage("Sell price"),
         "sell_short": MessageLookupByLibrary.simpleMessage("S"),
+        "selling_price": MessageLookupByLibrary.simpleMessage("Selling price"),
         "session_expired_in":
             MessageLookupByLibrary.simpleMessage("Session expired in "),
         "session_had_been_expired":
@@ -407,6 +435,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Sold returning money"),
         "sold_returning_vol":
             MessageLookupByLibrary.simpleMessage("Sold returning vol"),
+        "sold_vol": MessageLookupByLibrary.simpleMessage("Sold vol"),
         "something_went_wrong":
             MessageLookupByLibrary.simpleMessage("Something went erong"),
         "statement": MessageLookupByLibrary.simpleMessage("Statement"),
@@ -414,6 +443,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "status_intermission":
             MessageLookupByLibrary.simpleMessage("Intermission"),
         "status_open": MessageLookupByLibrary.simpleMessage("Opening"),
+        "stock": MessageLookupByLibrary.simpleMessage("stock"),
         "stock_already_exist":
             MessageLookupByLibrary.simpleMessage("This stock is already exist"),
         "stock_analysis":
@@ -429,6 +459,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "successfully_create_assistant_account":
             MessageLookupByLibrary.simpleMessage(
                 "Create virtual assistant successfully"),
+        "tax_fee": MessageLookupByLibrary.simpleMessage("Tax fee"),
         "technical_analysis":
             MessageLookupByLibrary.simpleMessage("Technical analysis"),
         "technical_trading_newbie": MessageLookupByLibrary.simpleMessage(
@@ -452,6 +483,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "total_debt": MessageLookupByLibrary.simpleMessage("Total debt"),
         "total_principal_debt":
             MessageLookupByLibrary.simpleMessage("Total principal debt"),
+        "total_transaction":
+            MessageLookupByLibrary.simpleMessage("Total transaction"),
         "total_vol": MessageLookupByLibrary.simpleMessage("Total vol"),
         "total_wvalue": m9,
         "trading": MessageLookupByLibrary.simpleMessage("Trading"),

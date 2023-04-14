@@ -1,6 +1,8 @@
+import 'package:dtnd/=models=/response/signal_type.dart';
 import 'package:dtnd/=models=/response/suggested_signal_model.dart';
 import 'package:dtnd/data/i_data_center_service.dart';
 import 'package:dtnd/data/implementations/data_center_service.dart';
+import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/screen/home/screen/signal/signal_screen.dart';
 import 'package:dtnd/ui/screen/home/screen/suggested_signal/component/suggested_signal_component.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
@@ -9,6 +11,12 @@ import 'package:dtnd/ui/widget/appbar/simple_appbar.dart';
 import 'package:dtnd/ui/widget/button/single_color_text_button.dart';
 import 'package:dtnd/ui/widget/empty_list_widget.dart';
 import 'package:flutter/material.dart';
+
+import '../../../../../=models=/ui_model/user_cmd.dart';
+import '../../../../theme/app_image.dart';
+import '../../../exchange_stock/order_note/data/order_filter_data.dart';
+import 'flow/suggested_signal_flow.dart';
+import 'sheet/suggested_signal_filter_sheet.dart';
 
 enum _Period { w1, m1, m3, m6 }
 
@@ -55,20 +63,75 @@ class _SuggestedSignalScreenState extends State<SuggestedSignalScreen> {
   final IDataCenterService dataCenterService = DataCenterService();
 
   late _Period currentPeriod = _Period.m3;
+  final List<SignalType> signalList = <SignalType>[];
   final List<SuggestedSignalModel> datas = <SuggestedSignalModel>[];
+  final List<SuggestedSignalModel> listDataShow = <SuggestedSignalModel>[];
+  OrderFilterData? orderFilterData;
+  SignalType? filter;
   @override
   void initState() {
     super.initState();
+    getSignalList();
     getData(_Period.values.first);
+  }
+
+  Future<void> getSignalList() async {
+    final listRes = await dataCenterService.getSignalList();
+    signalList.addAll(listRes);
+    if (mounted) setState(() {});
   }
 
   Future<void> getData(_Period period) async {
     setState(() {
       currentPeriod = period;
     });
-    final listRes = await dataCenterService.getSuggestedSignal(period.period);
+    final List<SuggestedSignalModel> listRes;
+    if (filter != null) {
+      listRes = await dataCenterService.getSuggestedSignalFilter(
+          period.period, filter!.signalCode);
+    } else {
+      listRes = await dataCenterService.getSuggestedSignal(period.period);
+    }
     datas.clear();
     datas.addAll(listRes);
+    listDataShow.clear();
+    listDataShow.addAll(listRes);
+    filterData(filter);
+    if (mounted) setState(() {});
+  }
+
+  void onFilter(SignalType? option) {
+    if (option == null) {
+      if (filter != null) {
+        filter = option;
+        listDataShow.clear();
+        listDataShow.addAll(datas);
+      }
+      setState(() {});
+      return;
+    }
+    if (option != filter) {
+      filter = option;
+      filterData(filter);
+    }
+  }
+
+  void filterData(SignalType? option) {
+    if (option == null) {
+      return;
+    }
+    final List<bool> listSelect = List.generate(datas.length, (index) => false);
+    for (var i = 0; i < datas.length; i++) {
+      if (datas.elementAt(i).type == option.signalCode) {
+        listSelect[i] = true;
+      }
+    }
+    listDataShow.clear();
+    for (var i = 0; i < listSelect.length; i++) {
+      if (listSelect.elementAt(i)) {
+        listDataShow.add(datas.elementAt(i));
+      }
+    }
     setState(() {});
   }
 
@@ -78,7 +141,7 @@ class _SuggestedSignalScreenState extends State<SuggestedSignalScreen> {
         .then((value) => Navigator.of(context).push(MaterialPageRoute(
               builder: (context) => SignalScreen(
                 code: model.cSHARECODE,
-                type: model.cTYPE,
+                type: model.type,
                 stockModel: value,
                 defaulPeriod: currentPeriod.title,
                 defaulday: currentPeriod.period,
@@ -89,8 +152,45 @@ class _SuggestedSignalScreenState extends State<SuggestedSignalScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const SimpleAppbar(
+      appBar: SimpleAppbar(
         title: "Hiệu quả tín hiệu",
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(right: 16),
+            child: Center(
+              child: Material(
+                borderRadius: const BorderRadius.all(Radius.circular(6)),
+                child: InkWell(
+                  onTap: () {
+                    SuggestedSignalISheet()
+                        .show(
+                            context,
+                            SuggestedSignalFilterSheet(
+                              listOptions: signalList,
+                              selected: filter,
+                            ))
+                        .then((value) {
+                      if (value is NextCmd) {
+                        onFilter(value.data);
+                      }
+                    });
+                  },
+                  borderRadius: const BorderRadius.all(Radius.circular(6)),
+                  child: Ink(
+                    padding: const EdgeInsets.all(8),
+                    decoration: const BoxDecoration(
+                      color: AppColors.primary_03,
+                      borderRadius: BorderRadius.all(Radius.circular(6)),
+                    ),
+                    child: SizedBox.square(
+                        dimension: 16,
+                        child: Image.asset(AppImages.filter_icon)),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
       body: SafeArea(
         child: Column(
@@ -120,7 +220,7 @@ class _SuggestedSignalScreenState extends State<SuggestedSignalScreen> {
               ),
             ),
             const SizedBox(height: 8),
-            if (datas.isEmpty)
+            if (listDataShow.isEmpty)
               const EmptyListWidget()
             else
               Expanded(
@@ -133,7 +233,7 @@ class _SuggestedSignalScreenState extends State<SuggestedSignalScreen> {
                   child: ListView(
                     shrinkWrap: true,
                     children: [
-                      for (int i = 0; i < datas.length; i++)
+                      for (int i = 0; i < listDataShow.length; i++)
                         if (i != 0)
                           Column(
                             children: [
@@ -141,12 +241,13 @@ class _SuggestedSignalScreenState extends State<SuggestedSignalScreen> {
                                 height: 8,
                               ),
                               SuggestedSignalComponent(
-                                  onTap: onTap, data: datas.elementAt(i)),
+                                  onTap: onTap,
+                                  data: listDataShow.elementAt(i)),
                             ],
                           )
                         else
                           SuggestedSignalComponent(
-                              onTap: onTap, data: datas.elementAt(i)),
+                              onTap: onTap, data: listDataShow.elementAt(i)),
                     ],
                   ),
                 ),
@@ -163,9 +264,11 @@ class _PeriodButton extends StatelessWidget {
       {required this.period,
       required this.selectedPeriod,
       required this.onTap});
+
   final _Period period;
   final _Period selectedPeriod;
   final ValueChanged<_Period> onTap;
+
   @override
   Widget build(BuildContext context) {
     return SingleColorTextButton(

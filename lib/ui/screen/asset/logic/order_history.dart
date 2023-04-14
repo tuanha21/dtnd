@@ -1,9 +1,11 @@
 import 'package:dtnd/=models=/side.dart';
 
+import '../../../../=models=/response/order_model/i_order_model.dart';
+
 class OrderHistory {
   final String stockCode;
   final Side side;
-  // final OrderStatus orderStatus;
+  final OrderStatus orderStatus;
   final num price;
   final String margin = "100%";
   final String orderPrice = "MP";
@@ -13,7 +15,7 @@ class OrderHistory {
   OrderHistory({
     required this.stockCode,
     required this.side,
-    // required this.orderStatus,
+    required this.orderStatus,
     required this.price,
   });
 }

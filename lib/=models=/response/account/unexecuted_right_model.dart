@@ -52,7 +52,7 @@ class UnexecutedRightModel implements CoreResponseModel {
   }
 
   UnexecutedRightModel.fromJson(Map<String, dynamic> json) {
-    pKRIGHTSTOCKINFO = json['PK_RIGHT_STOCK_INFO'];
+    pKRIGHTSTOCKINFO = json['PK_RIGHT_INFO'];
     cRIGHTTYPENAME = json['C_RIGHT_TYPE_NAME'];
     cRIGHTTYPENAMEEN = json['C_RIGHT_TYPE_NAME_EN'];
     cRIGHTBUYFLAG = json['C_RIGHT_BUY_FLAG'];

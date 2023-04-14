@@ -1,7 +1,7 @@
 import 'package:dtnd/=models=/core_response_model.dart';
 import 'package:dtnd/=models=/stock_status.dart';
 
-class GetBedtModel extends StockStatus implements CoreResponseModel {
+class GetDebtModel extends StockStatus implements CoreResponseModel {
   String? cLOANID;
   String? cACCOUNTCODE;
   String? cBANKCODE;
@@ -9,15 +9,15 @@ class GetBedtModel extends StockStatus implements CoreResponseModel {
   num? cLOANOUT;
   num? cFEEIN;
   num? cFEEOUT;
-  num? cLOAN;
-  num? cFEE;
+  num? loan;
+  num? fee;
   num? cINTERESTRATE;
   String? cDELIVERDATE;
-  String? cINTERESTDATE;
+  String? interestDate;
   num? cCOUNTDAY;
-  String? cEXPIREDATE1;
+  String? expireDate;
 
-  GetBedtModel(
+  GetDebtModel(
       {this.cLOANID,
       this.cACCOUNTCODE,
       this.cBANKCODE,
@@ -25,15 +25,15 @@ class GetBedtModel extends StockStatus implements CoreResponseModel {
       this.cLOANOUT,
       this.cFEEIN,
       this.cFEEOUT,
-      this.cLOAN,
-      this.cFEE,
+      this.loan,
+      this.fee,
       this.cINTERESTRATE,
       this.cDELIVERDATE,
-      this.cINTERESTDATE,
+      this.interestDate,
       this.cCOUNTDAY,
-      this.cEXPIREDATE1});
+      this.expireDate});
 
-  GetBedtModel.fromJson(Map<String, dynamic> json) {
+  GetDebtModel.fromJson(Map<String, dynamic> json) {
     cLOANID = json['C_LOAN_ID'];
     cACCOUNTCODE = json['C_ACCOUNT_CODE'];
     cBANKCODE = json['C_BANK_CODE'];
@@ -41,13 +41,13 @@ class GetBedtModel extends StockStatus implements CoreResponseModel {
     cLOANOUT = json['C_LOAN_OUT'];
     cFEEIN = json['C_FEE_IN'];
     cFEEOUT = json['C_FEE_OUT'];
-    cLOAN = json['C_LOAN'];
-    cFEE = json['C_FEE'];
+    loan = json['C_LOAN'];
+    fee = json['C_FEE'];
     cINTERESTRATE = json['C_INTEREST_RATE'];
     cDELIVERDATE = json['C_DELIVER_DATE'];
-    cINTERESTDATE = json['C_INTEREST_DATE'];
+    interestDate = json['C_INTEREST_DATE'];
     cCOUNTDAY = json['C_COUNT_DAY'];
-    cEXPIREDATE1 = json['C_EXPIRE_DATE1'];
+    expireDate = json['C_EXPIRE_DATE'];
   }
 
   Map<String, dynamic> toJson() {
@@ -59,17 +59,16 @@ class GetBedtModel extends StockStatus implements CoreResponseModel {
     data['C_LOAN_OUT'] = cLOANOUT;
     data['C_FEE_IN'] = cFEEIN;
     data['C_FEE_OUT'] = cFEEOUT;
-    data['C_LOAN'] = cLOAN;
-    data['C_FEE'] = cFEE;
+    data['C_LOAN'] = loan;
+    data['C_FEE'] = fee;
     data['C_INTEREST_RATE'] = cINTERESTRATE;
     data['C_DELIVER_DATE'] = cDELIVERDATE;
-    data['C_INTEREST_DATE'] = cINTERESTDATE;
+    data['C_INTEREST_DATE'] = interestDate;
     data['C_COUNT_DAY'] = cCOUNTDAY;
-    data['C_EXPIRE_DATE1'] = cEXPIREDATE1;
+    data['C_EXPIRE_DATE'] = expireDate;
     return data;
   }
 
   @override
   SStatus get sstatus => throw UnimplementedError();
-
 }

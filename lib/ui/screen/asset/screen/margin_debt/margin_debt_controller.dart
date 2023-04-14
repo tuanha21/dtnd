@@ -29,13 +29,13 @@ class MarginDebtControllers {
   final RxDouble sumCloanIn = 0.0.obs;
   final RxDouble sumCFEE = 0.0.obs;
   final RxDouble sumCloan = 0.0.obs;
-  final Rx<List<GetBedtModel?>?> listData = Rxn();
+  final Rx<List<GetDebtModel?>> listData = Rx([]);
 
   final Rx<String?> stockCode = Rxn();
 
   final INetworkService networkService = NetworkService();
 
-  Future<List<GetBedtModel?>?> getAllShareEarned(
+  Future<List<GetDebtModel?>?> getDebt(
       {DateTime? fromDay, DateTime? toDay}) async {
     if (!userService.isLogin) {
       return [];
@@ -45,7 +45,7 @@ class MarginDebtControllers {
       userService,
       data: RequestDataModel.cursorType(
           cmd: "GetDebtForWeb",
-          p1: "${userService.token.value!.user}6",
+          p1: userService.token.value!.defaultAcc,
           p3: TimeUtilities.commonTimeFormat.format(fromDay ??
               TimeUtilities.getPreviousDateTime(TimeUtilities.month(1))),
           p4: TimeUtilities.commonTimeFormat.format(toDay ?? DateTime.now()),
@@ -53,15 +53,14 @@ class MarginDebtControllers {
           p6: "20"),
     );
     logger.v(requestModel.toJson());
-    listData.value =
-        await networkService.getDataMarginDebt<GetBedtModel>(requestModel);
-    if (listData.value?.isNotEmpty == true &&
-        listData.value != [] &&
-        listData.value != null) {
-      for (var item in listData.value ?? []) {
+    listData.value = await networkService
+            .requestTraditionalApiResList<GetDebtModel>(requestModel) ??
+        [];
+    if (listData.value.isNotEmpty) {
+      for (GetDebtModel? item in listData.value) {
         sumCloanIn.value += item?.cLOANIN?.toDouble() ?? 0;
-        sumCFEE.value += item?.cFEE?.toDouble() ?? 0;
-        sumCloan.value += item?.cLOAN?.toDouble() ?? 0;
+        sumCFEE.value += item?.fee?.toDouble() ?? 0;
+        sumCloan.value += item?.loan?.toDouble() ?? 0;
       }
     }
     return listData.value;
