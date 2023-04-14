@@ -1,8 +1,8 @@
 import 'package:dtnd/=models=/response/order_history_model.dart';
 import 'package:dtnd/=models=/response/order_model/i_order_model.dart';
+import 'package:dtnd/=models=/side.dart';
 import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
-import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:dtnd/ui/theme/app_textstyle.dart';
 import 'package:dtnd/utilities/num_utils.dart';
 import 'package:flutter/material.dart';
@@ -25,7 +25,21 @@ class _OrderHistoryElementState extends State<OrderHistoryElement> {
             Row(
               children: [
                 SizedBox.square(
-                    dimension: 20, child: Image.asset(AppImages.calendar_2)),
+                  dimension: 20,
+                  child: Container(
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      color: widget.model.side.kColor,
+                      borderRadius: BorderRadius.circular(4),
+                    ),
+                    // padding: const EdgeInsets.symmetric(horizontal: 5),
+                    child: Text(
+                      widget.model.side.nameShort(context),
+                      style: AppTextStyle.titleSmall_14
+                          .copyWith(color: Colors.white),
+                    ),
+                  ),
+                ),
                 const SizedBox(width: 8),
                 Text(
                   widget.model.stockCode,

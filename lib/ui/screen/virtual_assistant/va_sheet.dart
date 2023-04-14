@@ -212,10 +212,10 @@ class _VaSheetState extends State<VaSheet> with SingleTickerProviderStateMixin {
                   Material(
                     borderRadius: const BorderRadius.all(Radius.circular(6)),
                     child: InkWell(
-                      onTap: () {
+                      onTap: ()
+                      {
                         Navigator.of(context)
-                          ..pop()
-                          ..push(MaterialPageRoute(
+                           .push(MaterialPageRoute(
                             builder: (context) => const OrderNoteScreen(),
                           ));
                       },

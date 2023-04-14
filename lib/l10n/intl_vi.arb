@@ -397,7 +397,9 @@
     "Weight_must_be_filled_in" : "Khối lượng không được bỏ trống",
     "invalid_weight" : "Khối lượng không hợp lệ",
     "tax_fee" : "Phí thuê",
-    "sale_value" : "giá trị bán",
-    "cost_price" : "giá vốn",
-    "cost_value" : "giá trị vốn"
+    "sale_value" : "Giá trị bán",
+    "cost_price" : "Giá vốn",
+    "cost_value" : "Giá trị vốn",
+    "command_type" : "Lệnh",
+    "return_command" : "Về sổ lệnh"
 }

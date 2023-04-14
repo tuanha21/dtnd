@@ -3591,6 +3591,26 @@ class S {
       args: [],
     );
   }
+
+  /// `command type`
+  String get command_type {
+    return Intl.message(
+      'command type',
+      name: 'command_type',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `return command`
+  String get return_command {
+    return Intl.message(
+      'return command',
+      name: 'return_command',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

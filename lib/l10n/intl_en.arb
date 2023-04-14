@@ -399,7 +399,9 @@
     "tax_fee" : "Tax fee",
     "sale_value" : "Sale value",
     "cost_price" : "Cost price",
-    "cost_value" : "Cost value"
+    "cost_value" : "Cost value",
+    "command_type" : "command type",
+    "return_command" : "return command"
 
 
 }

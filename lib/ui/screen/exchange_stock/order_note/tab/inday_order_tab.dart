@@ -127,7 +127,7 @@ class _IndayOrderTabState extends State<IndayOrderTab> {
                         for (int i = 0; i < (listOrderShow?.length ?? 0); i++)
                           Column(
                             children: [
-                              i != 0 ? const Divider(height: 1) : Container(),
+                              // i != 0 ? const Divider(height: 1) : Container(),
                               OrderRecordWidget(
                                 data: listOrderShow!.elementAt(i),
                                 onChange: () async {

@@ -138,6 +138,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Chọn các mã CK mà bạn đang quan tâm. Bạn có thể cập nhật thêm các mã CK sau"),
         "close_translations":
             MessageLookupByLibrary.simpleMessage("Giá đóng cửa"),
+        "command_type": MessageLookupByLibrary.simpleMessage("Lệnh"),
         "commodities": MessageLookupByLibrary.simpleMessage("Hàng hoá"),
         "community": MessageLookupByLibrary.simpleMessage("Cộng đồng"),
         "condition_ordnote":
@@ -150,8 +151,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "copyTrade_asset":
             MessageLookupByLibrary.simpleMessage("Tài sản CopyTrade"),
         "copytrade": MessageLookupByLibrary.simpleMessage("Copytrade"),
-        "cost_price": MessageLookupByLibrary.simpleMessage("giá vốn"),
-        "cost_value": MessageLookupByLibrary.simpleMessage("giá trị vốn"),
+        "cost_price": MessageLookupByLibrary.simpleMessage("Giá vốn"),
+        "cost_value": MessageLookupByLibrary.simpleMessage("Giá trị vốn"),
         "create": MessageLookupByLibrary.simpleMessage("Tạo"),
         "create_account": MessageLookupByLibrary.simpleMessage("Tạo tài khoản"),
         "create_catalog": MessageLookupByLibrary.simpleMessage("Tạo danh mục"),
@@ -386,11 +387,12 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Đăng ký quyền thành công"),
         "register_to_buy": MessageLookupByLibrary.simpleMessage("Đăng ký mua"),
         "rename_catalog_to": m8,
+        "return_command": MessageLookupByLibrary.simpleMessage("Về sổ lệnh"),
         "returning_money": MessageLookupByLibrary.simpleMessage("Tiền chờ về"),
         "revenue": MessageLookupByLibrary.simpleMessage("Doanh thu"),
         "right": MessageLookupByLibrary.simpleMessage("Quyền"),
         "safe_ratio": MessageLookupByLibrary.simpleMessage("Tỷ lệ an toàn"),
-        "sale_value": MessageLookupByLibrary.simpleMessage("giá trị bán"),
+        "sale_value": MessageLookupByLibrary.simpleMessage("Giá trị bán"),
         "save": MessageLookupByLibrary.simpleMessage("Lưu"),
         "search": MessageLookupByLibrary.simpleMessage("Tìm kiếm"),
         "search_history":
