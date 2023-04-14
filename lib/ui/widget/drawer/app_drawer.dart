@@ -2,21 +2,12 @@ import 'package:dtnd/=models=/response/user_token.dart';
 import 'package:dtnd/data/i_user_service.dart';
 import 'package:dtnd/data/implementations/user_service.dart';
 import 'package:dtnd/generated/l10n.dart';
-import 'package:dtnd/ui/screen/account/logic/account_sheet.dart';
-import 'package:dtnd/ui/screen/account/sheet/money_statement_sheet.dart';
-import 'package:dtnd/ui/screen/account/sheet/share_statement_sheet.dart';
-import 'package:dtnd/ui/screen/asset/screen/margin_debt/margin_debt_screen.dart';
-import 'package:dtnd/ui/screen/asset/screen/realized_profit_loss/realized_profit_loss.dart';
-import 'package:dtnd/ui/screen/exchange_stock/order_note/screen/order_note_screen.dart';
-import 'package:dtnd/ui/screen/exchange_stock/stock_order/business/stock_order_util.dart';
-import 'package:dtnd/ui/screen/home_base/widget/home_base_nav.dart';
 import 'package:dtnd/ui/screen/login/login_screen.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_textstyle.dart';
 import 'package:dtnd/ui/widget/button/single_color_text_button.dart';
 import 'package:dtnd/ui/widget/drawer/app_drawer_sub_view.dart';
 import 'package:dtnd/ui/widget/drawer/component/list_function.dart';
-import 'package:dtnd/ui/widget/drawer/component/list_function2.dart';
 import 'package:dtnd/ui/widget/drawer/logic/function_data.dart';
 import 'package:dtnd/ui/widget/drawer/logic/icon_asset.dart';
 import 'package:dtnd/utilities/account_util.dart';
@@ -63,10 +54,6 @@ class _AppDrawerState extends State<AppDrawer> {
                     FunctionData(
                         title: S.current.base_trading,
                         iconPath: DrawerIconAsset.chart_2,
-                        function: () {
-                          // back();
-                          StockModelUtil.openSheet(context);
-                        },
                         subTitle: []),
                     FunctionData(
                       title: S.current.derivative_trading,
@@ -93,26 +80,7 @@ class _AppDrawerState extends State<AppDrawer> {
         FunctionData(
           title: 'Công cụ phân tích',
           iconPath: DrawerIconAsset.setting_3,
-          function: () {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (context) => AppDrawerSubView(
-                  title: 'Công cụ phân tích',
-                  list: <FunctionData>[
-                    FunctionData(
-                        title: S.current.filter_stock,
-                        iconPath: DrawerIconAsset.chart_2,
-                        function: () {
-                          // back();
-                          StockModelUtil.openSheet(context);
-                        },
-                        subTitle: []),
-                  ],
-                ),
-              ),
-            );
-          },
-          subTitle: [],
+          subTitle: ['Lọc cổ phiếu'],
         ),
         FunctionData(
             title: S.current.accumulate,
@@ -121,71 +89,13 @@ class _AppDrawerState extends State<AppDrawer> {
         FunctionData(
           title: 'Sao kê tài khoản',
           iconPath: DrawerIconAsset.clipboard_text,
-          function: () {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (context) => AppDrawerSubView(
-                  title: 'Sao kê tài khoản',
-                  list: <FunctionData>[
-                    FunctionData(
-                        title: S.current.money_statement,
-                        iconPath: DrawerIconAsset.cashier_report_icon,
-                        function: () {
-                          const MoneyStatementISheet().show(
-                              context, const MoneyStatementSheet(),
-                              wrap: false);
-                        },
-                        subTitle: []),
-                    FunctionData(
-                      title: S.current.stock_statement,
-                      iconPath: DrawerIconAsset.stock_statement_icon,
-                      function: () {
-                        const ShareStatementISheet().show(
-                            context, const ShareStatementSheet(),
-                            wrap: false);
-                      },
-                      subTitle: [],
-                    ),
-                    FunctionData(
-                      title: S.current.order_history,
-                      iconPath: DrawerIconAsset.profit_loss_history_icon,
-                      function: () {
-                        // back();
-                        Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) =>
-                              const OrderNoteScreen(defaultab: 2),
-                        ));
-                      },
-                      subTitle: [],
-                    ),
-                    FunctionData(
-                      title: S.current.gain_loss_history,
-                      iconPath: DrawerIconAsset.profit_loss_history_icon,
-                      function: () {
-                        // back();
-                        Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => const RealizedProfitLoss(),
-                        ));
-                      },
-                      subTitle: [],
-                    ),
-                    FunctionData(
-                      title: S.current.margin_debt,
-                      iconPath: DrawerIconAsset.profit_loss_history_icon,
-                      function: () {
-                        // back();
-                        Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => const MarginDebtScreen(),
-                        ));
-                      },
-                      subTitle: [],
-                    ),
-                  ],
-                ),
-              ),
-            );
-          },
-          subTitle: [],
+          subTitle: [
+            'Sao kê tiền',
+            'Sao kê chứng khoán',
+            'Lịch sử lệnh',
+            'Lịch sử lãi/lỗ',
+            'Công cụ margin'
+          ],
         ),
         FunctionData(
           title: S.current.security,
@@ -195,28 +105,7 @@ class _AppDrawerState extends State<AppDrawer> {
         FunctionData(
           title: S.current.setting,
           iconPath: DrawerIconAsset.setting_2,
-          function: () {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (context) => AppDrawerSubView(
-                  title: S.current.setting,
-                  list: <FunctionData>[
-                    FunctionData(
-                      title: S.current.languges,
-                      iconPath: DrawerIconAsset.shield_security,
-                      subTitle: [],
-                    ),
-                    FunctionData(
-                      title: S.current.interface,
-                      iconPath: DrawerIconAsset.shield_security,
-                      subTitle: [],
-                    ),
-                  ],
-                ),
-              ),
-            );
-          },
-          subTitle: [],
+          subTitle: ['Ngôn ngữ', 'Giao diện'],
         ),
       ];
     } else {
@@ -341,7 +230,7 @@ class _AppDrawerState extends State<AppDrawer> {
               }
             },
           ),
-          Expanded(child: ListFunction2(list: list)),
+          Expanded(child: ListFunction(list: list)),
           Container(
             padding: const EdgeInsets.symmetric(vertical: 8),
             child: const Text(
