@@ -37,8 +37,8 @@ class HomeAppbarDelegate extends SliverPersistentHeaderDelegate {
         textTitle = userService.userInfo.value!.customerName ?? "Kien Nguyen";
         if (userService.userInfo.value!.faceImg != null) {
           avatar = Container(
-            width: 40,
-            height: 40,
+            width: 36,
+            height: 36,
             decoration: const BoxDecoration(shape: BoxShape.circle),
             child: CachedNetworkImage(
               imageUrl: "${userService.userInfo.value!.faceImg}",
