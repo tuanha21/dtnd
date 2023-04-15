@@ -286,12 +286,9 @@ class _AssetScreenState extends State<AssetScreen>
                   borderRadius: BorderRadius.all(Radius.circular(6)),
                   color: AppColors.primary_01,
                 ),
-                child: SizedBox.square(
-                    dimension: 22,
-                    child: Image.asset(
-                      AppImages.home_icon_search_normal,
-                      color: Colors.white,
-                    )),
+                child: SvgPicture.asset(
+                  AppImages.arrange_circle,
+                ),
                 // child: SvgPicture.asset(
                 //   AppImages.arrange_circle,
                 // ),
