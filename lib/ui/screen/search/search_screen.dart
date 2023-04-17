@@ -10,6 +10,7 @@ import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:dtnd/ui/theme/app_textstyle.dart';
+import 'package:dtnd/ui/widget/appbar/simple_appbar.dart';
 import 'package:dtnd/ui/widget/icon/stock_icon.dart';
 import 'package:dtnd/ui/widget/my_appbar.dart';
 import 'package:dtnd/utilities/num_utils.dart';
@@ -455,12 +456,12 @@ class _SearchScreenState extends State<SearchScreen>
       }
     }
     return Scaffold(
-      appBar: MyAppBar(
+      appBar: SimpleAppbar(
         title: S.of(context).search,
         // showActions: false,
       ),
       body: Padding(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.symmetric(horizontal: 16),
         child: Column(
           children: [
             SizedBox(

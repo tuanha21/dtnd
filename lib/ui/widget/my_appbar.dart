@@ -85,7 +85,7 @@ class _MyAppBarState extends State<MyAppBar> {
         style: Theme.of(context)
             .textTheme
             .labelLarge
-            ?.copyWith(fontWeight: FontWeight.w700),
+            ?.copyWith(fontWeight: FontWeight.w700, color: Colors.white),
       );
     } else {
       title = Obx(() {

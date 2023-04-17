@@ -43,12 +43,18 @@ class _ListFunctionState extends State<ListFunction> {
         StockModelUtil.openSheet(context);
         break;
       case 'Sao kê tiền':
-        const MoneyStatementISheet()
-            .show(context, const MoneyStatementSheet(), wrap: false);
+        Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => const MoneyStatementSheet(),
+        ));
+        // const MoneyStatementISheet()
+        //     .show(context, const MoneyStatementSheet(), wrap: false);
         break;
       case 'Sao kê chứng khoán':
-        const ShareStatementISheet()
-            .show(context, const ShareStatementSheet(), wrap: false);
+        Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => const ShareStatementSheet(),
+        ));
+        // const ShareStatementISheet()
+        //     .show(context, const ShareStatementSheet(), wrap: false);
         break;
       case 'Lịch sử lệnh':
         Navigator.of(context).push(MaterialPageRoute(

@@ -58,7 +58,6 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   void dispose() {
     super.dispose();
-
   }
 
   void init() {
@@ -118,8 +117,12 @@ class _LoginScreenState extends State<LoginScreen> {
       );
       quote = Text(
         S.of(context).not_first_login_quote,
-        style: Theme.of(context).textTheme.titleSmall,
+        style: Theme.of(context)
+            .textTheme
+            .titleSmall
+            ?.copyWith(color: AppColors.neutral_02),
       );
+
       form = NotFirstLoginForm(
         loginFormKey: loginController.loginFormKey,
         otpRequired: loginController.otpRequired,
