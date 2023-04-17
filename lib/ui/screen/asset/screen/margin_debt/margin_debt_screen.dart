@@ -1,9 +1,12 @@
+import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
+import 'package:dtnd/ui/widget/appbar/simple_appbar.dart';
 import 'package:dtnd/ui/widget/empty_list_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
+import 'package:get/get_utils/get_utils.dart';
 
 import '../../../../../=models=/response/stock_model.dart';
 import '../../../../../config/service/app_services.dart';
@@ -66,36 +69,13 @@ class _MarginDebtScreenState extends State<MarginDebtScreen> {
   Widget build(BuildContext context) {
     final themeMode = AppService.instance.themeMode.value;
     return Scaffold(
-      appBar: MyAppBar(
-        leading: Align(
-          alignment: Alignment.centerRight,
-          child: SizedBox.square(
-            dimension: 32,
-            child: InkWell(
-              onTap: () => Navigator.of(context).pop(false),
-              borderRadius: const BorderRadius.all(Radius.circular(6)),
-              child: Ink(
-                padding: const EdgeInsets.all(8),
-                decoration: BoxDecoration(
-                  borderRadius: const BorderRadius.all(Radius.circular(6)),
-                  color: themeMode.isLight
-                      ? AppColors.neutral_05
-                      : AppColors.neutral_01,
-                ),
-                child: const Icon(
-                  Icons.arrow_back_ios_new,
-                  color: AppColors.primary_01,
-                  size: 10,
-                ),
-              ),
-            ),
-          ),
-        ),
-        title: 'Công nợ margin',
+      appBar: SimpleAppbar(
+        title: S.of(context).margin_debt,
       ),
       body: SingleChildScrollView(
         child: Column(
           children: [
+            const Divider(height: 1).paddingZero,
             Container(
               padding: const EdgeInsets.all(16),
               child: Row(

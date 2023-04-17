@@ -134,6 +134,7 @@ class _NotFirstLoginFormState extends State<NotFirstLoginForm> {
     return Form(
       key: widget.loginFormKey,
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           FormField<String?>(
             key: passwordFormKey,
@@ -174,7 +175,20 @@ class _NotFirstLoginFormState extends State<NotFirstLoginForm> {
                     .bodyMedium!
                     .copyWith(color: AppColors.semantic_03),
               )),
+          // const SizedBox(height: 10),
+          Column(
+            children: [
+              GestureDetector(
+                child: Text(
+                  'Quên mật khẩu ?',
+                  style: titleSmall?.copyWith(
+                      fontWeight: FontWeight.w500, color: AppColors.primary_01),
+                ),
+              ),
+            ],
+          ),
           const SizedBox(height: 10),
+
           IntrinsicHeight(
             child: Row(
               children: [
@@ -248,10 +262,12 @@ class _NotFirstLoginFormState extends State<NotFirstLoginForm> {
                 widget.onBack?.call();
               }
             },
-            child: Text(
-              S.of(context).login_with_another_account,
-              style: titleSmall?.copyWith(
-                  fontWeight: FontWeight.w500, color: AppColors.primary_01),
+            child: Center(
+              child: Text(
+                S.of(context).login_with_another_account,
+                style: titleSmall?.copyWith(
+                    fontWeight: FontWeight.w500, color: AppColors.primary_01),
+              ),
             ),
           )
         ],

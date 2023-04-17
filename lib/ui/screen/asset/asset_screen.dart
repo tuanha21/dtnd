@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:dtnd/=models=/response/account/base_margin_plus_account_model.dart';
+import 'package:dtnd/=models=/response/stock.dart';
 import 'package:dtnd/=models=/response/stock_model.dart';
 import 'package:dtnd/data/i_data_center_service.dart';
 import 'package:dtnd/data/i_local_storage_service.dart';
@@ -19,6 +20,8 @@ import 'package:dtnd/ui/screen/exchange_stock/stock_order/business/stock_order_f
 import 'package:dtnd/ui/screen/exchange_stock/stock_order/sheet/stock_order_sheet.dart';
 import 'package:dtnd/ui/screen/login/login_screen.dart';
 import 'package:dtnd/ui/screen/market/widget/components/not_signin_catalog_widget.dart';
+import 'package:dtnd/ui/screen/search/search_screen.dart';
+import 'package:dtnd/ui/screen/stock_detail/stock_detail_screen.dart';
 import 'package:dtnd/ui/screen/virtual_assistant/va_volatolity_warning/component/asset_chart.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
@@ -68,7 +71,48 @@ class _AssetScreenState extends State<AssetScreen>
     Widget child;
 
     return Scaffold(
-      appBar: const MyAppBar(),
+      appBar: MyAppBar(
+        actions: [
+          GestureDetector(
+            onTap: () {
+              Navigator.of(context)
+                  .push(MaterialPageRoute(
+                builder: (context) => const SearchScreen(),
+              ))
+                  .then((value) async {
+                if (value is Stock) {
+                  dataCenterService.getStocksModelsFromStockCodes(
+                      [value.stockCode]).then((stockModels) {
+                    if (stockModels != null) {
+                      return Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => StockDetailScreen(
+                          stockModel: stockModels.first,
+                        ),
+                      ));
+                    }
+                  });
+                }
+              });
+            },
+            child: SizedBox.square(
+                dimension: 26,
+                child: Image.asset(
+                  AppImages.home_icon_search_normal,
+                )),
+          ),
+          const SizedBox(
+            width: 20,
+          ),
+          SizedBox.square(
+              dimension: 26,
+              child: Image.asset(
+                AppImages.home_icon_notification,
+              )),
+          const SizedBox(
+            width: 16,
+          ),
+        ],
+      ),
       body: Obx(() {
         if (userService.token.value == null) {
           child = Center(

@@ -1,3 +1,8 @@
+import 'package:dtnd/=models=/response/stock.dart';
+import 'package:dtnd/data/i_data_center_service.dart';
+import 'package:dtnd/data/implementations/data_center_service.dart';
+import 'package:dtnd/ui/screen/search/search_screen.dart';
+import 'package:dtnd/ui/screen/stock_detail/stock_detail_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import '../../../generated/l10n.dart';
@@ -17,6 +22,7 @@ class CommunityScreen extends StatefulWidget {
 class _CommunityScreenState extends State<CommunityScreen>
     with SingleTickerProviderStateMixin {
   late final TabController _tabController;
+  final IDataCenterService dataCenterService = DataCenterService();
 
   @override
   void initState() {
@@ -27,21 +33,43 @@ class _CommunityScreenState extends State<CommunityScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar:  MyAppBar(
-        leading: const Padding(
-          padding: EdgeInsets.only(left: 16, right: 4),
-          child: CircleAvatar(
-            child: Icon(Icons.person),
-          ),
-        ),
-        titleWidget: Text('Kien Nguyen'),
-        title: '',
+      appBar: MyAppBar(
         actions: [
-          SvgPicture.asset(AppImages.search_appbar_icon),
+          GestureDetector(
+            onTap: () {
+              Navigator.of(context)
+                  .push(MaterialPageRoute(
+                builder: (context) => const SearchScreen(),
+              ))
+                  .then((value) async {
+                if (value is Stock) {
+                  dataCenterService.getStocksModelsFromStockCodes(
+                      [value.stockCode]).then((stockModels) {
+                    if (stockModels != null) {
+                      return Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => StockDetailScreen(
+                          stockModel: stockModels.first,
+                        ),
+                      ));
+                    }
+                  });
+                }
+              });
+            },
+            child: SizedBox.square(
+                dimension: 26,
+                child: Image.asset(
+                  AppImages.home_icon_search_normal,
+                )),
+          ),
           const SizedBox(
             width: 20,
           ),
-          SvgPicture.asset(AppImages.notification_appbar_icon),
+          SizedBox.square(
+              dimension: 26,
+              child: Image.asset(
+                AppImages.home_icon_notification,
+              )),
           const SizedBox(
             width: 16,
           ),
