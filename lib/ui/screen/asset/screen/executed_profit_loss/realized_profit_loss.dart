@@ -1,5 +1,6 @@
 import 'package:dtnd/ui/screen/asset/screen/executed_profit_loss/realized_profit_loss_controller.dart';
 import 'package:dtnd/ui/theme/app_textstyle.dart';
+import 'package:dtnd/ui/widget/appbar/simple_appbar.dart';
 import 'package:dtnd/ui/widget/empty_list_widget.dart';
 import 'package:dtnd/utilities/logger.dart';
 import 'package:flutter/material.dart';
@@ -136,33 +137,36 @@ class _RealizedProfitLossState extends State<RealizedProfitLoss> {
     final themeMode = AppService.instance.themeMode.value;
 
     return Scaffold(
-      appBar: MyAppBar(
-        leading: Align(
-          alignment: Alignment.centerRight,
-          child: SizedBox.square(
-            dimension: 32,
-            child: InkWell(
-              onTap: () => Navigator.of(context).pop(false),
-              borderRadius: const BorderRadius.all(Radius.circular(6)),
-              child: Ink(
-                padding: const EdgeInsets.all(8),
-                decoration: BoxDecoration(
-                  borderRadius: const BorderRadius.all(Radius.circular(6)),
-                  color: themeMode.isLight
-                      ? AppColors.neutral_05
-                      : AppColors.neutral_01,
-                ),
-                child: const Icon(
-                  Icons.arrow_back_ios_new,
-                  color: AppColors.primary_01,
-                  size: 10,
-                ),
-              ),
-            ),
-          ),
-        ),
-        title: 'Lãi/lỗ đã thực hiện',
+      appBar: const SimpleAppbar(
+        title: "Lãi/lỗ đã thực hiện",
       ),
+      // appBar: MyAppBar(
+      //   leading: Align(
+      //     alignment: Alignment.centerRight,
+      //     child: SizedBox.square(
+      //       dimension: 32,
+      //       child: InkWell(
+      //         onTap: () => Navigator.of(context).pop(false),
+      //         borderRadius: const BorderRadius.all(Radius.circular(6)),
+      //         child: Ink(
+      //           padding: const EdgeInsets.all(8),
+      //           decoration: BoxDecoration(
+      //             borderRadius: const BorderRadius.all(Radius.circular(6)),
+      //             color: themeMode.isLight
+      //                 ? AppColors.neutral_05
+      //                 : AppColors.neutral_01,
+      //           ),
+      //           child: const Icon(
+      //             Icons.arrow_back_ios_new,
+      //             color: AppColors.primary_01,
+      //             size: 10,
+      //           ),
+      //         ),
+      //       ),
+      //     ),
+      //   ),
+      //   title: 'Lãi/lỗ đã thực hiện',
+      // ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.only(top: 5, right: 16, left: 16, bottom: 16),
         child: Column(

@@ -156,7 +156,7 @@ class _SignalChartState extends State<SignalChart> with ChartDatasMixin {
                   id: 'signal2Chart',
                   domainFn: (OhlcHistoryItem data, int? index) =>
                       data.time.beginningOfDay,
-                  measureFn: (OhlcHistoryItem data, _) => data.open,
+                  measureFn: (OhlcHistoryItem data, _) => data.close,
                   seriesColor: charts.ColorUtil.fromDartColor(
                       widget.stockModel?.stockData.color ??
                           AppColors.semantic_02),
@@ -260,13 +260,13 @@ class _SignalChartState extends State<SignalChart> with ChartDatasMixin {
                         data.add(
                             "Ngày ${TimeUtilities.commonTimeFormat.format(topSignalStockModel.cBUYDATE!)}");
                         data.add("Giá mua ${topSignalStockModel.cBUYPRICE}");
-                        data.add("Giá ${item.open}");
+                        data.add("Giá ${item.close}");
                       } else {
                         dynamic item = model.selectedDatum.first.datum;
                         if (item is OhlcHistoryItem) {
                           data.add(
                               "Ngày ${TimeUtilities.commonTimeFormat.format(item.time)}");
-                          data.add("Giá ${item.open}");
+                          data.add("Giá ${item.close}");
                         } else {
                           logger.v(item.cBUYDATE.toString());
                           data.add(

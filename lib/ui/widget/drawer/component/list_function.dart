@@ -58,15 +58,22 @@ class _ListFunctionState extends State<ListFunction> {
         break;
       case 'Lịch sử lệnh':
         Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => const OrderNoteScreen(defaultab: 2),
+          builder: (context) => const OrderNoteScreen(defaultab: 1),
         ));
+        break;
+      case 'Lịch sử lãi/lỗ':
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => const RealizedProfitLoss(),
+          ),
+        );
         break;
       case 'Lịch sử lãi lỗ':
         Navigator.of(context).push(MaterialPageRoute(
           builder: (context) => const RealizedProfitLoss(),
         ));
         break;
-      case 'Công cụ margin':
+      case 'Công nợ margin':
         Navigator.of(context).push(MaterialPageRoute(
           builder: (context) => const MarginDebtScreen(),
         ));
@@ -118,6 +125,7 @@ class _ListFunctionState extends State<ListFunction> {
                         removeTop: true,
                         removeBottom: true,
                         child: ListView.builder(
+                            physics: const NeverScrollableScrollPhysics(),
                             padding: const EdgeInsets.only(left: 21),
                             shrinkWrap: true,
                             itemCount: item.subTitle?.length,
