@@ -247,12 +247,10 @@ class _SignalChartState extends State<SignalChart> with ChartDatasMixin {
                   changedListener: (charts.SelectionModel model) {
                     if (model.hasDatumSelection) {
                       final List<String> data = [];
-                      print(model.selectedDatum.length);
                       if (model.selectedDatum.length > 1) {
                         late TopSignalDetailModel topSignalStockModel;
                         late OhlcHistoryItem item;
                         for (var element in model.selectedDatum) {
-                          print(element.datum);
                           if (element.datum is TopSignalDetailModel) {
                             topSignalStockModel = element.datum;
                           } else if (element.datum is OhlcHistoryItem) {
@@ -266,12 +264,10 @@ class _SignalChartState extends State<SignalChart> with ChartDatasMixin {
                       } else {
                         dynamic item = model.selectedDatum.first.datum;
                         if (item is OhlcHistoryItem) {
-                          print("item is OhlcHistoryItem");
                           data.add(
                               "Ngày ${TimeUtilities.commonTimeFormat.format(item.time)}");
                           data.add("Giá ${item.open}");
                         } else {
-                          print("item is not OhlcHistoryItem");
                           logger.v(item.cBUYDATE.toString());
                           data.add(
                               "Ngày ${TimeUtilities.commonTimeFormat.format(item.cBUYDATE)}");
