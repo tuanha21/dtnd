@@ -193,7 +193,7 @@ class _AppDrawerState extends State<AppDrawer> {
                       ),
                       child: Row(
                         children: [
-                          const SizedBox(width: 8),
+                          const SizedBox(width: 10),
                           SizedBox.square(
                             dimension: 24,
                             child: Image.asset(
@@ -202,7 +202,7 @@ class _AppDrawerState extends State<AppDrawer> {
                               height: 20,
                             ),
                           ),
-                          const SizedBox(width: 8),
+                          const SizedBox(width: 30),
                           Text(
                             "Bạn chưa xác thực tài khoản",
                             style: AppTextStyle.bodySmall_12.copyWith(
@@ -216,7 +216,7 @@ class _AppDrawerState extends State<AppDrawer> {
                 )
               : Container(),
           const SizedBox(
-            height: 30,
+            height: 20,
           ),
           Builder(
             builder: (context) {
