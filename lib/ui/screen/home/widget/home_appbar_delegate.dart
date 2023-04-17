@@ -125,7 +125,7 @@ class HomeAppbarDelegate extends SliverPersistentHeaderDelegate {
           Align(
             alignment: Alignment.topCenter,
             child: SizedBox(
-              height: Platform.isAndroid ? 80 : 110,
+              height: Platform.isAndroid ? 85 : 110,
               child: AppBar(
                 automaticallyImplyLeading: false,
                 flexibleSpace: Container(
