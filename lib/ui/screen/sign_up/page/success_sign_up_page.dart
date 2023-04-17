@@ -47,7 +47,7 @@ class SuccessSignUpPage extends StatelessWidget {
                             const SizedBox(height: 30),
                             SizedBox.square(
                                 dimension: 200,
-                                child: Image.asset(AppImages.register_success)),
+                                child: Image.asset(AppImages.illust04)),
                             const SizedBox(height: 8),
                             Container(
                               padding:

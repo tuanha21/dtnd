@@ -105,7 +105,7 @@ class _AppDrawerState extends State<AppDrawer> {
             'Sao kê chứng khoán',
             'Lịch sử lệnh',
             'Lịch sử lãi/lỗ',
-            'Công cụ margin'
+            'Công nợ margin'
           ],
         ),
         FunctionData(

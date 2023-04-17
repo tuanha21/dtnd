@@ -5,7 +5,9 @@ import 'package:dtnd/data/i_data_center_service.dart';
 import 'package:dtnd/data/implementations/data_center_service.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_textstyle.dart';
+import 'package:dtnd/utilities/charts/chart_data_mixin.dart';
 import 'package:dtnd/utilities/charts_util.dart';
+import 'package:dtnd/utilities/logger.dart';
 import 'package:dtnd/utilities/time_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
@@ -21,19 +23,16 @@ class SignalChart extends StatefulWidget {
   State<SignalChart> createState() => _SignalChartState();
 }
 
-class _SignalChartState extends State<SignalChart> {
+class _SignalChartState extends State<SignalChart> with ChartDatasMixin {
   final IDataCenterService dataCenterService = DataCenterService();
   String currentPeriod = _label[1];
-  StockTradingHistory? datas;
+  List<OhlcHistoryItem> datas = [];
   late num annotationX;
   late DateTime annotationY;
   charts.RangeAnnotation? rangeAnnotation;
   num max = 2;
   num min = 0;
   num length = 2;
-
-  num maxX = 1;
-  num minX = 0;
 
   @override
   void initState() {
@@ -80,7 +79,7 @@ class _SignalChartState extends State<SignalChart> {
     } else {
       if (mounted) {
         setState(() {
-          datas = history;
+          datas = historyToChartItem(history);
           // datas!.c.clear();
           // for (var i = 0; i < datas!.t.length; i += 3) {
           //   if ((datas!.t.length - datas!.c.length) < 3) {
@@ -90,11 +89,7 @@ class _SignalChartState extends State<SignalChart> {
           //     datas!.c.addAll(List.filled(3, math.Random().nextDouble()));
           //   }
           // }
-          max = datas!.c.reduce(math.max);
-          min = datas!.c.reduce(math.min);
-          length = datas!.c.length;
-          maxX = datas!.t.reduce(math.max);
-          minX = datas!.t.reduce(math.min);
+          length = datas.length;
         });
       }
 
@@ -150,30 +145,22 @@ class _SignalChartState extends State<SignalChart> {
           ],
         ),
         const SizedBox(height: 16),
-        if (datas == null || (datas!.t.isEmpty))
+        if (datas.isEmpty)
           const SizedBox(height: 20)
         else
           SizedBox(
             height: 240,
             child: charts.TimeSeriesChart(
               [
-                charts.Series<num, DateTime>(
+                charts.Series<OhlcHistoryItem, DateTime>(
                   id: 'signal2Chart',
-                  domainFn: (_, int? index) {
-                    if (index != null) {
-                      final DateTime date = datas!.time[index].beginningOfDay;
-                      return date;
-                    } else {
-                      throw Exception("Chart index null");
-                    }
-                  },
-                  measureFn: (num o, _) {
-                    return o;
-                  },
+                  domainFn: (OhlcHistoryItem data, int? index) =>
+                      data.time.beginningOfDay,
+                  measureFn: (OhlcHistoryItem data, _) => data.open,
                   seriesColor: charts.ColorUtil.fromDartColor(
                       widget.stockModel?.stockData.color ??
                           AppColors.semantic_02),
-                  data: datas!.c,
+                  data: datas,
                 )
                   ..setAttribute(charts.rendererIdKey, 'scatterChart')
                   ..setAttribute(
@@ -185,21 +172,8 @@ class _SignalChartState extends State<SignalChart> {
                         charts.MaterialPalette.green.shadeDefault,
                     domainFn: (TopSignalDetailModel event, _) =>
                         event.cBUYDATE!,
-                    measureFn: (TopSignalDetailModel event, __) {
-                      final int index = datas!.time.indexWhere((element) {
-                        final int compare =
-                            element.beginningOfDay.compareTo(event.cBUYDATE!);
-                        switch (compare) {
-                          case 0:
-                            return true;
-                          default:
-                            return false;
-                        }
-                      });
-                      return index > -1
-                          ? datas!.o.elementAt(index)
-                          : event.cBUYPRICE;
-                    },
+                    measureFn: (TopSignalDetailModel event, __) =>
+                        event.cBUYPRICE,
                     radiusPxFn: (_, __) => 5.0,
                     data: [widget.data!],
                   )
@@ -276,24 +250,33 @@ class _SignalChartState extends State<SignalChart> {
                       print(model.selectedDatum.length);
                       if (model.selectedDatum.length > 1) {
                         late TopSignalDetailModel topSignalStockModel;
-                        late num price;
+                        late OhlcHistoryItem item;
                         for (var element in model.selectedDatum) {
                           print(element.datum);
                           if (element.datum is TopSignalDetailModel) {
                             topSignalStockModel = element.datum;
-                          } else if (element.datum is num) {
-                            price = element.datum;
+                          } else if (element.datum is OhlcHistoryItem) {
+                            item = element.datum as OhlcHistoryItem;
                           }
                         }
                         data.add(
                             "Ngày ${TimeUtilities.commonTimeFormat.format(topSignalStockModel.cBUYDATE!)}");
                         data.add("Giá mua ${topSignalStockModel.cBUYPRICE}");
-                        data.add("Giá $price");
+                        data.add("Giá ${item.open}");
                       } else {
-                        final index = model.selectedDatum.first.index ?? 0;
-                        data.add(
-                            "Ngày ${TimeUtilities.commonTimeFormat.format(datas!.time.elementAt(index))}");
-                        data.add("Giá ${model.selectedDatum.first.datum}");
+                        dynamic item = model.selectedDatum.first.datum;
+                        if (item is OhlcHistoryItem) {
+                          print("item is OhlcHistoryItem");
+                          data.add(
+                              "Ngày ${TimeUtilities.commonTimeFormat.format(item.time)}");
+                          data.add("Giá ${item.open}");
+                        } else {
+                          print("item is not OhlcHistoryItem");
+                          logger.v(item.cBUYDATE.toString());
+                          data.add(
+                              "Ngày ${TimeUtilities.commonTimeFormat.format(item.cBUYDATE)}");
+                          data.add("Giá mua ${item.cBUYPRICE}");
+                        }
                       }
                       _ToolTipMgr.instance.setData(data);
                     } else {
