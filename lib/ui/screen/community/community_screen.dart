@@ -4,7 +4,6 @@ import 'package:dtnd/data/implementations/data_center_service.dart';
 import 'package:dtnd/ui/screen/search/search_screen.dart';
 import 'package:dtnd/ui/screen/stock_detail/stock_detail_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import '../../../generated/l10n.dart';
 
 import '../../theme/app_image.dart';
@@ -83,7 +82,7 @@ class _CommunityScreenState extends State<CommunityScreen>
               isScrollable: false,
               labelPadding:
                   const EdgeInsets.symmetric(horizontal: 18, vertical: 6),
-              padding: EdgeInsets.zero,
+              padding: const EdgeInsets.only(top: 8),
               tabs: <Widget>[
                 Text(S.of(context).community),
                 Text(S.of(context).copytrade)

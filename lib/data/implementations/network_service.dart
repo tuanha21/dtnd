@@ -299,7 +299,7 @@ class NetworkService implements INetworkService {
   Future<List<Stock>> getListAllStock() async {
     const String path = "getlistallstock";
     final http.Response response = await client.get(url_board(path));
-    print('tiennh'+response.toString());
+    print('tiennh' + response.toString());
     final List<dynamic> responseBody = decode(response.bodyBytes);
     if (responseBody.isEmpty) throw Exception();
     List<Stock> data = [];

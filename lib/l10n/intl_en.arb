@@ -403,7 +403,8 @@
     "command_type" : "command type",
     "return_command" : "return command",
     "return_home_page" : "Return home page",
-     "info_sent_to_email" :"Your account information has been sent to your email!"
+     "info_sent_to_email" :"Your account information has been sent to your email!",
+     "title_change_password" :"Let us protect your account and important information"
 
 
 }

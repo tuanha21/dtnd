@@ -403,5 +403,7 @@
     "command_type" : "Lệnh",
     "return_command" : "Về sổ lệnh",
     "return_home_page" : "Về trang chủ",
-    "info_sent_to_email" : "Thông tin tài khoản đã được gửi về Email của quý khách!"
+    "info_sent_to_email" : "Thông tin tài khoản đã được gửi về Email của quý khách!",
+     "title_change_password" :"Để chúng tôi bảo vệ tài khoản và các thông tin quan trọng của bạn"
+
 }

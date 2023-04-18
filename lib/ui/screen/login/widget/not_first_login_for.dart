@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:dtnd/=models=/response/user_token.dart';
 import 'package:dtnd/generated/l10n.dart';
+import 'package:dtnd/ui/screen/forgot_password/forgot_password.dart';
 import 'package:dtnd/ui/screen/login/login_controller.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/widget/button/async_button.dart';
@@ -179,6 +180,13 @@ class _NotFirstLoginFormState extends State<NotFirstLoginForm> {
           Column(
             children: [
               GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const ForgotPassword()),
+                  );
+                },
                 child: Text(
                   'Quên mật khẩu ?',
                   style: titleSmall?.copyWith(
