@@ -29,6 +29,7 @@ class _HomeBaseState extends State<HomeBase> with WidgetsBindingObserver {
   final Rx<HomeNav> currentHomeNav = Rx<HomeNav>(HomeNav.home);
 
   bool onSessionExpiredCalled = false;
+  bool isLogin = false;
 
   late final Map<HomeNav, Widget> routeBuilders;
 
@@ -90,7 +91,9 @@ class _HomeBaseState extends State<HomeBase> with WidgetsBindingObserver {
     return Scaffold(
       key: homeBaseKey,
       drawer: AppDrawer(
-        onLogout: () => setState(() {}),
+        onLogout: () => setState(() {
+          isLogin = false;
+        }),
       ),
       body: ObxValue<Rx<HomeNav>>(
         (currentHomeNav) {

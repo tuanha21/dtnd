@@ -2,12 +2,6 @@ import 'package:dtnd/=models=/response/user_token.dart';
 import 'package:dtnd/data/i_user_service.dart';
 import 'package:dtnd/data/implementations/user_service.dart';
 import 'package:dtnd/generated/l10n.dart';
-import 'package:dtnd/ui/screen/account/logic/account_sheet.dart';
-import 'package:dtnd/ui/screen/account/sheet/money_statement_sheet.dart';
-import 'package:dtnd/ui/screen/account/sheet/share_statement_sheet.dart';
-import 'package:dtnd/ui/screen/asset/screen/margin_debt/margin_debt_screen.dart';
-import 'package:dtnd/ui/screen/asset/screen/executed_profit_loss/realized_profit_loss.dart';
-import 'package:dtnd/ui/screen/exchange_stock/order_note/screen/order_note_screen.dart';
 import 'package:dtnd/ui/screen/exchange_stock/stock_order/business/stock_order_util.dart';
 import 'package:dtnd/ui/screen/login/login_screen.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
@@ -105,7 +99,7 @@ class _AppDrawerState extends State<AppDrawer> {
             'Sao kê chứng khoán',
             'Lịch sử lệnh',
             'Lịch sử lãi/lỗ',
-            'Công cụ margin'
+            'Công nợ margin'
           ],
         ),
         FunctionData(
@@ -193,7 +187,7 @@ class _AppDrawerState extends State<AppDrawer> {
                       ),
                       child: Row(
                         children: [
-                          const SizedBox(width: 8),
+                          const SizedBox(width: 10),
                           SizedBox.square(
                             dimension: 24,
                             child: Image.asset(
@@ -202,7 +196,7 @@ class _AppDrawerState extends State<AppDrawer> {
                               height: 20,
                             ),
                           ),
-                          const SizedBox(width: 8),
+                          const SizedBox(width: 30),
                           Text(
                             "Bạn chưa xác thực tài khoản",
                             style: AppTextStyle.bodySmall_12.copyWith(
@@ -216,7 +210,7 @@ class _AppDrawerState extends State<AppDrawer> {
                 )
               : Container(),
           const SizedBox(
-            height: 30,
+            height: 20,
           ),
           Builder(
             builder: (context) {

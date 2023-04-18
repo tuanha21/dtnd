@@ -19,8 +19,8 @@ import 'package:get/get_state_manager/get_state_manager.dart';
 const imageHeight = 280.0;
 
 class HomeAppbarDelegate extends SliverPersistentHeaderDelegate {
-  const HomeAppbarDelegate(
-      this.appService, this.dataCenterService, this.userService, this.navigateTab);
+  const HomeAppbarDelegate(this.appService, this.dataCenterService,
+      this.userService, this.navigateTab);
 
   final AppService appService;
   final IDataCenterService dataCenterService;
@@ -39,8 +39,8 @@ class HomeAppbarDelegate extends SliverPersistentHeaderDelegate {
         textTitle = userService.userInfo.value!.customerName ?? "Kien Nguyen";
         if (userService.userInfo.value!.faceImg != null) {
           avatar = Container(
-            width: 40,
-            height: 40,
+            width: 36,
+            height: 36,
             decoration: const BoxDecoration(shape: BoxShape.circle),
             child: CachedNetworkImage(
               imageUrl: "${userService.userInfo.value!.faceImg}",
@@ -51,8 +51,8 @@ class HomeAppbarDelegate extends SliverPersistentHeaderDelegate {
           avatar = ClipOval(
             child: Image.asset(
               AppImages.home_avatar_default,
-              width: 40, // adjust the width as needed
-              height: 40, // adjust the height as needed
+              width: 36, // adjust the width as needed
+              height: 36, // adjust the height as needed
               fit: BoxFit.cover,
             ),
           );
@@ -61,8 +61,8 @@ class HomeAppbarDelegate extends SliverPersistentHeaderDelegate {
         textTitle = "IFIS";
         avatar = Image.asset(
           AppImages.logo_account_default,
-          width: 24,
-          height: 24,
+          width: 22,
+          height: 22,
           fit: BoxFit.fill,
         );
       }
@@ -86,7 +86,7 @@ class HomeAppbarDelegate extends SliverPersistentHeaderDelegate {
                                   color: Colors.white,
                                 ),
                       )
-                    : const SizedBox(),
+                    : Container(),
                 Text(
                   textTitle,
                   style: Theme.of(context).textTheme.labelLarge?.copyWith(
@@ -125,7 +125,7 @@ class HomeAppbarDelegate extends SliverPersistentHeaderDelegate {
           Align(
             alignment: Alignment.topCenter,
             child: SizedBox(
-              height: Platform.isAndroid ? 80 : 110,
+              height: Platform.isAndroid ? 85 : 110,
               child: AppBar(
                 automaticallyImplyLeading: false,
                 flexibleSpace: Container(
@@ -143,7 +143,7 @@ class HomeAppbarDelegate extends SliverPersistentHeaderDelegate {
                 title: title,
                 actions: [
                   SizedBox.square(
-                    dimension: 24,
+                    dimension: 26,
                     child: InkWell(
                       onTap: () {
                         Navigator.of(context)
@@ -167,7 +167,7 @@ class HomeAppbarDelegate extends SliverPersistentHeaderDelegate {
                         });
                       },
                       child: SizedBox.square(
-                          dimension: 22,
+                          dimension: 26,
                           child: Image.asset(
                             AppImages.home_icon_search_normal,
                             color: Colors.white,
@@ -178,7 +178,7 @@ class HomeAppbarDelegate extends SliverPersistentHeaderDelegate {
                     width: 20,
                   ),
                   SizedBox.square(
-                      dimension: 28,
+                      dimension: 26,
                       child: Image.asset(
                         AppImages.home_icon_notification,
                       )),

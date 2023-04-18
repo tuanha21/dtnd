@@ -238,10 +238,10 @@ class _AssetStockDetailScreenState extends State<AssetStockDetailScreen>
                           horizontal: 0, vertical: 4),
                       tabs: const [
                         Text(
-                          "Deal chưa khớp",
+                          "Lệnh mở",
                         ),
                         Text(
-                          "Deal đã khớp",
+                          "Lệnh đóng",
                         ),
                         Text("Lịch sử"),
                       ],

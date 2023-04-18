@@ -1,12 +1,14 @@
 import 'package:dtnd/=models=/response/share_transaction_model.dart';
 import 'package:dtnd/data/i_exchange_service.dart';
 import 'package:dtnd/data/implementations/exchange_service.dart';
+import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/screen/account/component/share_transaction_component.dart';
+import 'package:dtnd/ui/widget/appbar/simple_appbar.dart';
 import 'package:dtnd/ui/widget/calendar/day_input.dart';
 import 'package:dtnd/ui/widget/empty_list_widget.dart';
-import 'package:dtnd/ui/widget/icon/sheet_header.dart';
 import 'package:dtnd/utilities/time_utils.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class ShareStatementSheet extends StatefulWidget {
   const ShareStatementSheet({super.key});
@@ -46,18 +48,22 @@ class _ShareStatementSheetState extends State<ShareStatementSheet> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 20),
+    return Scaffold(
+      appBar: SimpleAppbar(
+        title: S.of(context).stock_statement,
+      ),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SheetHeader(
-              title: "Sao kê chứng khoán",
-              backData: null,
-            ),
+            const Divider(height: 1).paddingZero,
+            // const SheetHeader(
+            //   title: "Sao kê chứng khoán",
+            //   backData: null,
+            // ),
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+              padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [

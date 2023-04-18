@@ -41,7 +41,9 @@ class AssetStockDetailOverview extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Text(
-                stockModel?.stockData.lastPrice.toString() ?? "-",
+                (stockModel?.stockData.lastPrice.value ?? 0) == 0
+                    ? (stockModel?.stockData.r.value.toString() ?? "-")
+                    : (stockModel?.stockData.lastPrice.toString() ?? "-"),
                 style: AppTextStyle.headlineLarge_32
                     .copyWith(fontWeight: FontWeight.w700),
               ),
@@ -58,7 +60,7 @@ class AssetStockDetailOverview extends StatelessWidget {
                         ),
                       Text(
                         "${stockModel?.stockData.ot ?? "-"} (${stockModel?.stockData.changePc ?? "-"}%)",
-                        style: AppTextStyle.bodySmall_8.copyWith(
+                        style: AppTextStyle.labelSmall_10.copyWith(
                             fontWeight: FontWeight.w500,
                             color: stockModel?.stockData.color ??
                                 AppColors.semantic_02),
@@ -70,7 +72,7 @@ class AssetStockDetailOverview extends StatelessWidget {
                       return Text(
                         "${NumUtils.formatInteger10(lot.value, "-")} CP",
                         textAlign: TextAlign.left,
-                        style: AppTextStyle.bodySmall_8
+                        style: AppTextStyle.labelSmall_10
                             .copyWith(color: AppColors.neutral_04),
                       );
                     },

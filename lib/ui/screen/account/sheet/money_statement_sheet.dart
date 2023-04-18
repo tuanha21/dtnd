@@ -1,16 +1,19 @@
 import 'package:dtnd/=models=/response/cash_transaction_model.dart';
 import 'package:dtnd/data/i_exchange_service.dart';
 import 'package:dtnd/data/implementations/exchange_service.dart';
+import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/screen/account/component/cash_transaction_component.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:dtnd/ui/theme/app_textstyle.dart';
+import 'package:dtnd/ui/widget/appbar/simple_appbar.dart';
 import 'package:dtnd/ui/widget/calendar/day_input.dart';
 import 'package:dtnd/ui/widget/empty_list_widget.dart';
 import 'package:dtnd/ui/widget/icon/sheet_header.dart';
 import 'package:dtnd/utilities/num_utils.dart';
 import 'package:dtnd/utilities/time_utils.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class MoneyStatementSheet extends StatefulWidget {
   const MoneyStatementSheet({super.key});
@@ -53,18 +56,23 @@ class _MoneyStatementSheetState extends State<MoneyStatementSheet> {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
-    return SafeArea(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 20),
+    return Scaffold(
+      appBar: SimpleAppbar(
+        title: S.of(context).money_statement,
+      ),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SheetHeader(
-              title: "Sao kê tiền",
-              backData: null,
-            ),
+            // const SheetHeader(
+            //   title: "Sao kê tiền",
+            //   backData: null,
+            // ),
+            // const Divider().paddingZero,
+            const Divider(height: 1).paddingZero,
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+              padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -106,7 +114,8 @@ class _MoneyStatementSheetState extends State<MoneyStatementSheet> {
                 return Column(
                   children: [
                     Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 8),
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 8, horizontal: 12),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [

@@ -61,8 +61,9 @@ class BaseOrderModel extends CoreResponseModel implements IOrderModel {
     try {
       if (json['orderNo'] is num) {
         orderNo = json['orderNo'];
+      } else {
+        orderNo = num.tryParse(json['orderNo'] ?? "0");
       }
-      orderNo = num.tryParse(json['orderNo'] ?? "0");
       id = json['pk_orderNo'];
       orderTime = DateFormat("HH:mm:ss").parseStrict(json['orderTime']);
       orderAccount = json['accountCode'];
@@ -73,8 +74,9 @@ class BaseOrderModel extends CoreResponseModel implements IOrderModel {
       orderPrice = json['orderPrice'];
       if (json['matchVolume'] is num) {
         matchVolume = json['matchVolume'];
+      } else {
+        matchVolume = num.tryParse(json['matchVolume'] ?? "0");
       }
-      matchVolume = num.tryParse(json['matchVolume'] ?? "0");
       status = json['status'];
       channel = json['channel'];
       group = json['group'];

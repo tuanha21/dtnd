@@ -1,3 +1,4 @@
+import 'package:dtnd/=models=/response/order_history_model.dart';
 import 'package:dtnd/data/i_exchange_service.dart';
 import 'package:dtnd/data/i_user_service.dart';
 import 'package:dtnd/data/implementations/exchange_service.dart';
@@ -29,6 +30,8 @@ class _HistoryTabState extends State<HistoryTab>
   late final TextEditingController fromdayController;
   late final TextEditingController todayController;
 
+  final List<OrderHistoryModel> listDatas = [];
+
   @override
   void initState() {
     assetStockDetailController =
@@ -41,6 +44,20 @@ class _HistoryTabState extends State<HistoryTab>
     assetStockDetailController.getAllShareEarned(
         fromdayController.text, todayController.text);
     super.initState();
+    getData();
+  }
+
+  Future<void> getData() async {
+    final res = await exchangeService.getOrdersHistory(
+      userService,
+      stockCode: widget.stockCode,
+      fromDay: TimeUtilities.commonTimeFormat.parse(fromdayController.text),
+      toDay: TimeUtilities.commonTimeFormat.parse(todayController.text),
+    );
+    if (res.isNotEmpty) {
+      listDatas.addAll(res);
+      setState(() {});
+    }
   }
 
   @override
@@ -56,44 +73,33 @@ class _HistoryTabState extends State<HistoryTab>
                   child: DateTimePickerWidget(
                 controller: fromdayController,
                 labelText: S.of(context).from_day,
-                onChanged: (value) =>
-                    assetStockDetailController.getAllShareEarned(
-                        fromdayController.text, todayController.text),
+                onChanged: (value) => getData(),
               )),
               const SizedBox(width: 16),
               Expanded(
                   child: DateTimePickerWidget(
                 controller: todayController,
                 labelText: S.of(context).to_day,
-                onChanged: (value) =>
-                    assetStockDetailController.getAllShareEarned(
-                        fromdayController.text, todayController.text),
+                onChanged: (value) => getData(),
               ))
             ],
           ),
           //
           const SizedBox(height: 16),
-          Obx(() {
-            if (assetStockDetailController
-                    .shareEarnedModel.value?.listDetail.isEmpty ??
-                true) {
-              return const Padding(
-                padding: EdgeInsets.symmetric(vertical: 16),
-                child: EmptyListWidget(),
-              );
-            }
-            return Container(
+          if (listDatas.isEmpty)
+            const Padding(
+              padding: EdgeInsets.symmetric(vertical: 16),
+              child: EmptyListWidget(),
+            )
+          else
+            Container(
               padding: const EdgeInsets.all(16),
               decoration: const BoxDecoration(
                   color: AppColors.neutral_06,
                   borderRadius: BorderRadius.all(Radius.circular(12))),
               child: Column(
                 children: [
-                  for (int i = 0;
-                      i <
-                          assetStockDetailController
-                              .shareEarnedModel.value!.listDetail.length;
-                      i++)
+                  for (int i = 0; i < listDatas.length; i++)
                     Column(
                       children: [
                         if (i != 0)
@@ -109,15 +115,11 @@ class _HistoryTabState extends State<HistoryTab>
                                     dimension: 20,
                                     child: Image.asset(AppImages.calendar_2)),
                                 const SizedBox(width: 8),
-                                Text(assetStockDetailController
-                                        .shareEarnedModel.value!.listDetail
-                                        .elementAt(i)
-                                        .cTRADINGDATE ??
-                                    "-"),
+                                Text(listDatas.elementAt(i).cORDERTIME ?? "-"),
                               ],
                             ),
                             Text(
-                              "Đã khớp",
+                              listDatas.elementAt(i).cSTATUSNAME ?? "",
                               style: AppTextStyle.bodyMedium_14
                                   .copyWith(color: AppColors.semantic_01),
                             ),
@@ -139,13 +141,7 @@ class _HistoryTabState extends State<HistoryTab>
                                 ),
                                 Text(
                                   NumUtils.formatInteger(
-                                      assetStockDetailController
-                                              .shareEarnedModel
-                                              .value!
-                                              .listDetail
-                                              .elementAt(i)
-                                              .cSHAREVOLUME ??
-                                          0),
+                                      listDatas.elementAt(i).cORDERVOLUME ?? 0),
                                   style: AppTextStyle.labelSmall_10,
                                 )
                               ],
@@ -154,7 +150,7 @@ class _HistoryTabState extends State<HistoryTab>
                                 child: Column(
                               children: [
                                 Text(
-                                  "Giá bán",
+                                  S.of(context).match_vol,
                                   style: AppTextStyle.labelSmall_10.copyWith(
                                     color: AppColors.neutral_03,
                                     fontWeight: FontWeight.w500,
@@ -162,14 +158,7 @@ class _HistoryTabState extends State<HistoryTab>
                                 ),
                                 Text(
                                   NumUtils.formatInteger(
-                                      (assetStockDetailController
-                                                  .shareEarnedModel
-                                                  .value!
-                                                  .listDetail
-                                                  .elementAt(i)
-                                                  .cSHAREPRICE ??
-                                              0) /
-                                          1000),
+                                      (listDatas.elementAt(i).cMATCHVOL ?? 0)),
                                   style: AppTextStyle.labelSmall_10,
                                 )
                               ],
@@ -178,7 +167,7 @@ class _HistoryTabState extends State<HistoryTab>
                                 child: Column(
                               children: [
                                 Text(
-                                  "Giá vốn",
+                                  "Giá khớp",
                                   style: AppTextStyle.labelSmall_10.copyWith(
                                     color: AppColors.neutral_03,
                                     fontWeight: FontWeight.w500,
@@ -186,12 +175,7 @@ class _HistoryTabState extends State<HistoryTab>
                                 ),
                                 Text(
                                   NumUtils.formatInteger(
-                                      (assetStockDetailController
-                                                  .shareEarnedModel
-                                                  .value!
-                                                  .listDetail
-                                                  .elementAt(i)
-                                                  .cAVERAGEPRICE ??
+                                      (listDatas.elementAt(i).cMATCHPRICE ??
                                               0) /
                                           1000),
                                   style: AppTextStyle.labelSmall_10,
@@ -203,7 +187,7 @@ class _HistoryTabState extends State<HistoryTab>
                                 crossAxisAlignment: CrossAxisAlignment.end,
                                 children: [
                                   Text(
-                                    "Lãi/lỗ",
+                                    "Phí GD",
                                     style: AppTextStyle.labelSmall_10.copyWith(
                                       color: AppColors.neutral_03,
                                       fontWeight: FontWeight.w500,
@@ -211,12 +195,7 @@ class _HistoryTabState extends State<HistoryTab>
                                   ),
                                   Text(
                                     NumUtils.formatInteger(
-                                        (assetStockDetailController
-                                                .shareEarnedModel
-                                                .value!
-                                                .listDetail
-                                                .elementAt(i)
-                                                .cEARNEDVALUE ??
+                                        (listDatas.elementAt(i).cFEEVALUE ??
                                             0)),
                                     style: AppTextStyle.labelSmall_10,
                                   )
@@ -229,8 +208,7 @@ class _HistoryTabState extends State<HistoryTab>
                     )
                 ],
               ),
-            );
-          }),
+            ),
           const SizedBox(height: 80),
         ],
       ),

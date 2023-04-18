@@ -64,16 +64,17 @@ class _MarketScreenState extends State<MarketScreen>
                 });
               },
               child: SizedBox.square(
-                  dimension: 22,
+                  dimension: 26,
                   child: Image.asset(
                     AppImages.home_icon_search_normal,
+                    color: Colors.white,
                   )),
             ),
             const SizedBox(
               width: 20,
             ),
             SizedBox.square(
-                dimension: 24,
+                dimension: 26,
                 child: Image.asset(
                   AppImages.home_icon_notification,
                 )),
