@@ -62,6 +62,7 @@ import '../../=models=/local/va_portfolio_model.dart';
 import '../../=models=/response/banner_model.dart';
 import '../../=models=/response/basic_company.dart';
 import '../../=models=/response/indContrib.dart';
+import '../../=models=/response/radar_chart_model.dart';
 import '../../=models=/response/sec_event.dart';
 import '../../=models=/response/sec_trading.dart';
 import '../../=models=/response/stock_industry.dart';
@@ -299,7 +300,6 @@ class NetworkService implements INetworkService {
   Future<List<Stock>> getListAllStock() async {
     const String path = "getlistallstock";
     final http.Response response = await client.get(url_board(path));
-    print('tiennh'+response.toString());
     final List<dynamic> responseBody = decode(response.bodyBytes);
     if (responseBody.isEmpty) throw Exception();
     List<Stock> data = [];
@@ -1621,5 +1621,22 @@ class NetworkService implements INetworkService {
       logger.e(e);
       rethrow;
     }
+  }
+
+  @override
+  Future<RadarChartModel> getDataRadarChart(String body) async {
+    RadarChartModel radarChartModel;
+    var response =
+        await client.post(url_algo("secRankingFSRatios"), body: body);
+    if (response.statusCode != 200) {
+      throw response;
+    }
+    var res = decode(response.bodyBytes);
+    if (res["status"] != 200) {
+      throw res["message"];
+    }
+    var data = decode(res["data"]);
+    radarChartModel = RadarChartModel.fromJson(data);
+    return radarChartModel;
   }
 }

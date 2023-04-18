@@ -41,6 +41,7 @@ import 'package:get/get.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 import '../../=models=/response/index_board.dart';
+import '../../=models=/response/radar_chart_model.dart';
 import '../../=models=/response/stock_derivative_model.dart';
 import '../../=models=/response/stock_industry.dart';
 
@@ -728,6 +729,13 @@ class DataCenterService
       [String freg = "Y", String lang = "vi"]) {
     final body = '{"lang":"$lang", "secCode": "$code", "freq":"$freg"}';
     return networkService.getStockFinancialIndex(body);
+  }
+
+  @override
+  Future<RadarChartModel> getDataRadarChart(String code,
+      [String lang = "vi"]) {
+    final body = '{"lang":"$lang", "secCode": "$code"}';
+    return networkService.getDataRadarChart(body);
   }
 
   @override

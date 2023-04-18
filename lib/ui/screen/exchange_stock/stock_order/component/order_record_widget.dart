@@ -241,10 +241,7 @@ class _OrderRecordWidgetState extends State<OrderRecordWidget> {
                 ),
               ],
             ),
-            const Padding(
-              padding: EdgeInsets.symmetric(vertical: 4),
-              child: Divider(),
-            ),
+            // Divider(),
           ],
         ),
       ),
