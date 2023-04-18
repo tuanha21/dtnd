@@ -45,6 +45,7 @@ import '../=models=/response/company_info.dart';
 import '../=models=/response/indContrib.dart';
 import '../=models=/response/index_board.dart';
 import '../=models=/response/introduct_company.dart';
+import '../=models=/response/radar_chart_model.dart';
 import '../=models=/response/sec_event.dart';
 import '../=models=/response/sec_trading.dart';
 import '../=models=/response/share_holder.dart';
@@ -161,6 +162,8 @@ abstract class INetworkService {
   Future<List<SecEvent>> getListEvent(String stockCode);
 
   Future<List<StockFinancialIndex>> getStockFinancialIndex(String body);
+
+  Future<RadarChartModel> getDataRadarChart(String body);
 
   Future<StockRankingFinancialIndex?> getStockRankingFinancialIndex(
       String body);

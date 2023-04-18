@@ -1,15 +1,18 @@
-import 'package:dtnd/=models=/response/stock.dart';
+import 'dart:math' as math;
+
+import 'package:charts_flutter/flutter.dart' as charts;
+import 'package:dtnd/=models=/response/radar_chart_model.dart';
 import 'package:dtnd/=models=/response/stock_model.dart';
 import 'package:dtnd/data/i_data_center_service.dart';
 import 'package:dtnd/data/implementations/data_center_service.dart';
 import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/screen/stock_detail/widget/component/benefit_chart.dart';
 import 'package:dtnd/ui/screen/stock_detail/widget/financial_index.dart';
+import 'package:dtnd/ui/theme/app_textstyle.dart';
+import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:charts_flutter/flutter.dart' as charts;
-import 'dart:math' as math;
+
 import '../../../../=models=/response/stock_financial_index_model.dart';
-import '../../../../utilities/logger.dart';
 import '../../../../utilities/time_utils.dart';
 import '../../../theme/app_color.dart';
 
@@ -29,6 +32,10 @@ class _FinanceIndexTabState extends State<FinanceIndexTab> {
   final IDataCenterService dataCenterService = DataCenterService();
 
   late Future<List<StockFinancialIndex>> listFinancial;
+  late Future<RadarChartModel> dataRadar;
+  RadarChartModel? chartData;
+  int selectedDataSetIndex = -1;
+  bool relativeAngleMode = true;
 
   @override
   void initState() {
@@ -39,9 +46,80 @@ class _FinanceIndexTabState extends State<FinanceIndexTab> {
   void initData() {
     listFinancial = dataCenterService.getStockFinancialIndex(
         widget.stockModel.stock.stockCode, type);
+    dataRadar =
+        dataCenterService.getDataRadarChart(widget.stockModel.stock.stockCode);
+    dataRadar.then((value) {
+      chartData = value;
+    });
   }
 
   String type = "Y";
+
+  List<RadarDataSet> showingDataSets() {
+    return rawDataSets().asMap().entries.map((entry) {
+      final index = entry.key;
+      final rawDataSet = entry.value;
+
+      final isSelected = index == selectedDataSetIndex
+          ? true
+          : selectedDataSetIndex == -1
+              ? true
+              : false;
+
+      return RadarDataSet(
+        fillColor: isSelected
+            ? rawDataSet.color.withOpacity(0.6)
+            : rawDataSet.color.withOpacity(0.05),
+        borderColor:
+            isSelected ? rawDataSet.color : rawDataSet.color.withOpacity(0.6),
+        entryRadius: isSelected ? 3 : 2,
+        dataEntries:
+            rawDataSet.values.map((e) => RadarEntry(value: e)).toList(),
+        borderWidth: isSelected ? 2 : 2,
+      );
+    }).toList();
+  }
+
+  List<RawDataSet> rawDataSets() {
+    return [
+      RawDataSet(
+        color: AppColors.semantic_06_1,
+        values: [
+          chartData?.secPe?.toDouble() ?? 0,
+          chartData?.secEpsGrowthQy?.toDouble() ?? 0,
+          chartData?.secRevGrowthQy?.toDouble() ?? 0,
+          chartData?.secPriceBvpst?.toDouble() ?? 0,
+          chartData?.secPs?.toDouble() ?? 0,
+          chartData?.secRoa?.toDouble() ?? 0,
+          chartData?.secRoe?.toDouble() ?? 0,
+        ],
+      ),
+      RawDataSet(
+        color: AppColors.data_2,
+        values: [
+          chartData?.indPe?.toDouble() ?? 0,
+          chartData?.indEpsGrowthQy?.toDouble() ?? 0,
+          chartData?.indRevGrowthQy?.toDouble() ?? 0,
+          chartData?.indPriceBvpst?.toDouble() ?? 0,
+          chartData?.indPs?.toDouble() ?? 0,
+          chartData?.indRoa?.toDouble() ?? 0,
+          chartData?.indRoe?.toDouble() ?? 0,
+        ],
+      ),
+      RawDataSet(
+        color: AppColors.semantic_04_1,
+        values: [
+          chartData?.mkPe?.toDouble() ?? 0,
+          chartData?.mkEpsGrowthQy?.toDouble() ?? 0,
+          chartData?.mkRevGrowthQy?.toDouble() ?? 0,
+          chartData?.mkPriceBvpst?.toDouble() ?? 0,
+          chartData?.mkPs?.toDouble() ?? 0,
+          chartData?.mkRoa?.toDouble() ?? 0,
+          chartData?.mkRoe?.toDouble() ?? 0,
+        ],
+      ),
+    ];
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -72,43 +150,174 @@ class _FinanceIndexTabState extends State<FinanceIndexTab> {
               removeTop: true,
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: ListView(
-                  shrinkWrap: true,
-                  children: <Widget>[
-                    FinancialIndex(stockModel: widget.stockModel),
-                    const SizedBox(height: 20),
-                    IndexChart(
-                      stockModel: widget.stockModel,
-                      min: min,
-                      max: max,
-                      getType: (String typeSTr) {
-                        setState(() {
-                          type = typeSTr;
-                          listFinancial =
-                              dataCenterService.getStockFinancialIndex(
-                                  widget.stockModel.stock.stockCode, type);
-                        });
-                      },
-                    ),
-                    const SizedBox(height: 20),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          "Doanh thu",
-                          style: Theme.of(context)
-                              .textTheme
-                              .titleMedium!
-                              .copyWith(fontWeight: FontWeight.w700),
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      const SizedBox(
+                        height: 16,
+                      ),
+                      AspectRatio(
+                        aspectRatio: 1.35,
+                        child: RadarChart(
+                          RadarChartData(
+                              borderData: FlBorderData(
+                                show: true,
+                                border: Border.all(
+                                    color: AppColors.neutral_03, width: 1),
+                              ),
+                              radarBorderData: const BorderSide(
+                                  color: AppColors.neutral_03, width: 1),
+                              radarBackgroundColor: Colors.transparent,
+                              tickBorderData :  const BorderSide(
+                                  color: AppColors.neutral_03, width: 1),
+                              gridBorderData: const BorderSide(
+                                  color: AppColors.neutral_03, width: 1),
+                                ticksTextStyle: TextStyle(color: Colors.transparent,),
+                              getTitle: (index, angle) {
+                                switch (index) {
+                                  case 0:
+                                    return const RadarChartTitle(
+                                      text: 'Quản trị bền vững',
+                                      angle: 0,
+                                    );
+                                  case 1:
+                                    return const RadarChartTitle(
+                                        text: 'Tốc độ \ntăng trưởng', angle: 1);
+                                  case 2:
+                                    return const RadarChartTitle(
+                                      text: 'Khả năng \nsinh lãi',
+                                      angle: 1,
+                                    );
+                                  case 3:
+                                    return const RadarChartTitle(
+                                      text: 'Vị thế \ndoanh nghiệp',
+                                      angle: 1,
+                                    );
+                                  case 4:
+                                    return const RadarChartTitle(
+                                      text: 'Sức khỏe \ntài chính',
+                                      angle: 1,
+                                    );
+                                  case 5:
+                                    return const RadarChartTitle(
+                                      text: 'Cam kết \ncổ đông',
+                                      angle: 1,
+                                    );
+                                  case 6:
+                                    return const RadarChartTitle(
+                                      text: 'Cam kết \ncổ đông',
+                                      angle: 1,
+                                    );
+                                  default:
+                                    return const RadarChartTitle(text: '');
+                                }
+                              },
+                              titlePositionPercentageOffset: 0.2,
+                              titleTextStyle: const TextStyle(
+                                  fontSize: 14, color: AppColors.neutral_03),
+                              tickCount: 5,
+                              dataSets: showingDataSets(),
+                              radarShape: RadarShape.polygon),
+                          swapAnimationCurve: Curves.linear,
+                          // swapAnimationDuration: Duration(milliseconds: ),
                         ),
-                      ],
-                    ),
-                    const SizedBox(height: 16),
-                    DoanhThuWidget(
-                      list: list,
-                      type: type,
-                    )
-                  ],
+                      ),
+                      const SizedBox(
+                        height: 16,
+                      ),
+                      Row(
+                        children: [
+                          Container(
+                            width: 21,
+                            height: 8,
+                            color: AppColors.semantic_06_1,
+                          ),
+                          const SizedBox(
+                            width: 9,
+                          ),
+                          Text('KBC', style: AppTextStyle.bodySmall_12)
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 4,
+                      ),
+                      Row(
+                        children: [
+                          Container(
+                            width: 21,
+                            height: 8,
+                            color: AppColors.data_2,
+                          ),
+                          const SizedBox(
+                            width: 9,
+                          ),
+                          Text(
+                            'Dịch vụ đầu tư BĐS',
+                            style: AppTextStyle.bodySmall_12,
+                          )
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 4,
+                      ),
+                      Row(
+                        children: [
+                          Container(
+                            width: 21,
+                            height: 8,
+                            color: AppColors.semantic_04_1,
+                          ),
+                          const SizedBox(
+                            width: 9,
+                          ),
+                          Text('TB thị trường',
+                              style: AppTextStyle.bodySmall_12)
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 16,
+                      ),
+                      ListView(
+                        shrinkWrap: true,
+                        children: <Widget>[
+                          FinancialIndex(stockModel: widget.stockModel),
+                          const SizedBox(height: 20),
+                          IndexChart(
+                            stockModel: widget.stockModel,
+                            min: min,
+                            max: max,
+                            getType: (String typeSTr) {
+                              setState(() {
+                                type = typeSTr;
+                                listFinancial =
+                                    dataCenterService.getStockFinancialIndex(
+                                        widget.stockModel.stock.stockCode,
+                                        type);
+                              });
+                            },
+                          ),
+                          const SizedBox(height: 20),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "Doanh thu",
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .titleMedium!
+                                    .copyWith(fontWeight: FontWeight.w700),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 16),
+                          DoanhThuWidget(
+                            list: list,
+                            type: type,
+                          )
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
             );
@@ -196,11 +405,15 @@ class DoanhThuWidget extends StatelessWidget {
     num min = 0;
     if (listData.isNotEmpty) {
       max = listData
-          .map((e) => type == "Y" ? e.rEPORTDATE.year : e.rEPORTDATE.millisecondsSinceEpoch)
+          .map((e) => type == "Y"
+              ? e.rEPORTDATE.year
+              : e.rEPORTDATE.millisecondsSinceEpoch)
           .toList()
           .reduce(math.max);
       min = listData
-          .map((e) => type == "Y" ? e.rEPORTDATE.year : e.rEPORTDATE.millisecondsSinceEpoch)
+          .map((e) => type == "Y"
+              ? e.rEPORTDATE.year
+              : e.rEPORTDATE.millisecondsSinceEpoch)
           .reduce(math.min);
     }
 
@@ -270,7 +483,7 @@ class DoanhThuWidget extends StatelessWidget {
                         String time = "";
                         if (type == "Q") {
                           time =
-                          'Q${TimeUtilities.getQuarter(listData[index].rEPORTDATE)}/${listData[index].rEPORTDATE.year}';
+                              'Q${TimeUtilities.getQuarter(listData[index].rEPORTDATE)}/${listData[index].rEPORTDATE.year}';
                         }
                         if (type == "Y") {
                           time = '${listData[index].rEPORTDATE.year}';
@@ -362,4 +575,14 @@ class DoanhThuWidget extends StatelessWidget {
       ],
     );
   }
+}
+
+class RawDataSet {
+  RawDataSet({
+    required this.color,
+    required this.values,
+  });
+
+  final Color color;
+  final List<double> values;
 }

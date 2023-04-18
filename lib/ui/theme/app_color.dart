@@ -87,4 +87,7 @@ class AppColors {
   static const color_primary_1 = Color(0xFF004DF0);
 
   static const neu_01 = Color(0xFF202033);
+  static const semantic_06_1 = Color(0xFFFB6714);
+  static const data_2 = Color(0xFFA155B9);
+  static const semantic_04_1 = Color(0xFF14B5FB);
 }
