@@ -177,35 +177,35 @@ class _FinanceIndexTabState extends State<FinanceIndexTab> {
                                 switch (index) {
                                   case 0:
                                     return const RadarChartTitle(
-                                      text: 'Quản trị bền vững',
+                                      text: 'P/E (T12M)',
                                       angle: 0,
                                     );
                                   case 1:
                                     return const RadarChartTitle(
-                                        text: 'Tốc độ \ntăng trưởng', angle: 1);
+                                        text: 'TEPS (%) \n(T12M)', angle: 1);
                                   case 2:
                                     return const RadarChartTitle(
-                                      text: 'Khả năng \nsinh lãi',
+                                      text: 'Tăng trưởng \ndoanh thu(%)\n(T12M)',
                                       angle: 1,
                                     );
                                   case 3:
                                     return const RadarChartTitle(
-                                      text: 'Vị thế \ndoanh nghiệp',
+                                      text: 'P/Tangible BV\n(T12M)',
                                       angle: 1,
                                     );
                                   case 4:
                                     return const RadarChartTitle(
-                                      text: 'Sức khỏe \ntài chính',
+                                      text: 'P/S',
                                       angle: 1,
                                     );
                                   case 5:
                                     return const RadarChartTitle(
-                                      text: 'Cam kết \ncổ đông',
+                                      text: 'ROE',
                                       angle: 1,
                                     );
                                   case 6:
                                     return const RadarChartTitle(
-                                      text: 'Cam kết \ncổ đông',
+                                      text: 'RO',
                                       angle: 1,
                                     );
                                   default:
@@ -235,7 +235,7 @@ class _FinanceIndexTabState extends State<FinanceIndexTab> {
                           const SizedBox(
                             width: 9,
                           ),
-                          Text('KBC', style: AppTextStyle.bodySmall_12)
+                          Text('Theo mã', style: AppTextStyle.bodySmall_12)
                         ],
                       ),
                       const SizedBox(
@@ -252,7 +252,7 @@ class _FinanceIndexTabState extends State<FinanceIndexTab> {
                             width: 9,
                           ),
                           Text(
-                            'Dịch vụ đầu tư BĐS',
+                            'Theo ngành',
                             style: AppTextStyle.bodySmall_12,
                           )
                         ],
@@ -270,7 +270,7 @@ class _FinanceIndexTabState extends State<FinanceIndexTab> {
                           const SizedBox(
                             width: 9,
                           ),
-                          Text('TB thị trường',
+                          Text('Theo thị trường',
                               style: AppTextStyle.bodySmall_12)
                         ],
                       ),
