@@ -75,6 +75,7 @@ android {
             signingConfig signingConfigs.release
         }
         debug {
+            shrinkResources false
             signingConfig signingConfigs.release
         }
     }
