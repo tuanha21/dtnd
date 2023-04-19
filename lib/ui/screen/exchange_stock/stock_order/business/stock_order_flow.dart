@@ -26,6 +26,10 @@ class ToChangeOrderCmd extends NextCmd {
   const ToChangeOrderCmd([super.data]);
 }
 
+class ToStockOrderCmd extends NextCmd {
+  const ToStockOrderCmd([super.data]);
+}
+
 class ToCancelOrderCmd extends NextCmd {
   const ToCancelOrderCmd([super.data]);
 }
@@ -210,10 +214,19 @@ class StockOrderSuccessISheet extends IDialog {
   Widget? backWidget([cmd]) => null;
 
   @override
-  Widget? nextWidget([cmd]) => StockOrderSheet(
-        stockModel: cmd?.data.stockModel,
-        orderData: cmd?.data,
+  Widget? nextWidget([cmd]) {
+    if (cmd is ToStockOrderCmd) {
+      return StockOrderSheet(
+        stockModel: cmd.data.stockModel,
+        orderData: cmd.data,
+        defaultTab: 1,
       );
+    }
+    return StockOrderSheet(
+      stockModel: cmd?.data.stockModel,
+      orderData: cmd?.data,
+    );
+  }
 
   @override
   Future<void>? onResultBack([cmd]) => null;

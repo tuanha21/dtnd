@@ -37,11 +37,12 @@ class StockOrderSheet extends StatefulWidget {
     super.key,
     required this.stockModel,
     this.orderData,
+    this.defaultTab,
   });
 
   final StockModel? stockModel;
   final OrderData? orderData;
-
+  final int? defaultTab;
   @override
   State<StockOrderSheet> createState() => _StockOrderSheetState();
 }
@@ -85,7 +86,7 @@ class _StockOrderSheetState extends State<StockOrderSheet>
       listOrderTypes = stockModel!.stock.postTo?.listOrderType ?? {};
       selectedOrderType = widget.orderData?.orderType ?? listOrderTypes.first;
       priceController.text = widget.orderData?.price ?? "0";
-      volumeController.text = widget.orderData?.volumn.toString() ?? '0';
+      volumeController.text = widget.orderData?.volumn.toString() ?? '100';
       //widget.portfolioStock.avaiableVol
 
       // select(selectedOrderType);
@@ -103,6 +104,11 @@ class _StockOrderSheetState extends State<StockOrderSheet>
     //     });
     //   }
     // });
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      if (widget.defaultTab != null) {
+        tabController.animateTo(widget.defaultTab!);
+      }
+    });
   }
 
   Future<void> getStockInfoCore() async {
@@ -248,11 +254,11 @@ class _StockOrderSheetState extends State<StockOrderSheet>
                     child: InkWell(
                       onTap: () {
                         Navigator.of(context)
-                          // ..pop()
-                          // .
+                            // ..pop()
+                            // .
                             .push(MaterialPageRoute(
-                            builder: (context) => const OrderNoteScreen(),
-                          ));
+                          builder: (context) => const OrderNoteScreen(),
+                        ));
                       },
                       borderRadius: const BorderRadius.all(Radius.circular(6)),
                       child: Ink(
@@ -486,6 +492,7 @@ class _StockOrderSheetState extends State<StockOrderSheet>
       ),
     );
   }
+
   void _onPriceChangeHandler(String value) {
     if (onPriceStoppedTyping != null) {
       setState(() {

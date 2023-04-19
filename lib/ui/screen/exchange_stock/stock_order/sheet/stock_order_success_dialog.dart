@@ -1,5 +1,6 @@
 import 'package:dtnd/=models=/ui_model/user_cmd.dart';
 import 'package:dtnd/generated/l10n.dart';
+import 'package:dtnd/ui/screen/exchange_stock/stock_order/business/stock_order_flow.dart';
 import 'package:dtnd/ui/screen/exchange_stock/stock_order/data/order_data.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
@@ -63,7 +64,8 @@ class _StockOrderSuccessSheetState extends State<StockOrderSuccessSheet> {
                       backgroundColor: AppColors.light_tabBar_bg, // Text Color
                     ),
                     onPressed: () {
-                      Navigator.of(context).pop(NextCmd(widget.orderData));
+                      Navigator.of(context)
+                          .pop(ToStockOrderCmd(widget.orderData));
                     },
                     child: Text(S.of(context).return_command,
                         style: const TextStyle(
