@@ -163,40 +163,8 @@ class UserService implements IUserService {
       listAccountModel.value = listAccount;
       logger.v(listAccount);
       for (var i = 0; i < listAccount!.length; i++) {
-        requestModel = RequestModel(this,
-            group: "Q",
-            data: RequestDataModel.stringType(
-              cmd: "Web.Portfolio.AccountStatus",
-              p1: listAccount.elementAt(i).accCode,
-            ));
-        logger.v(requestModel);
-
-        dynamic response =
-            await networkService.requestTraditionalApi<IAccountResponse>(
-          requestModel,
-          modifyResponse: (res) {
-            res["accCode"] = listAccount.elementAt(i).accCode;
-            return res;
-          },
-        );
-
-        listAccount.elementAt(i).updateDataFromJson(response!);
-        requestModel = RequestModel(this,
-            group: "Q",
-            data: RequestDataModel.stringType(
-              cmd: "Web.Portfolio.PortfolioStatus",
-              p1: listAccount.elementAt(i).accCode,
-            ));
-        response = await networkService
-            .requestTraditionalApiResList<PorfolioStock>(requestModel);
-        if (response != null) {
-          listAccount.elementAt(i).portfolioStatus =
-              PortfolioStatus.fromPorfolioStock(response!);
-        }
-        response = await getListAssetChart(listAccount.elementAt(i).accCode);
-        if (response != null) {
-          listAccount.elementAt(i).listAssetChart = response;
-        }
+        await listAccount.elementAt(i).refreshAsset(this, networkService);
+        await listAccount.elementAt(i).getListAssetChart(this, networkService);
         await listAccount
             .elementAt(i)
             .getListUnexecutedRight(this, networkService);
@@ -204,47 +172,6 @@ class UserService implements IUserService {
     }
     listAccountModel.refresh();
     return listAccountModel.value;
-  }
-
-  Future<List<AssetChartElementModel>?> getListAssetChart(String account,
-      {DateTime? fromTime, DateTime? toTime}) {
-    final requestModel = RequestModel(
-      this,
-      group: "B",
-      data: RequestDataModel.cursorType(
-          cmd: "ListAssetChart",
-          p1: account,
-          p2: TimeUtilities.commonTimeFormat.format(fromTime ??
-              TimeUtilities.getPreviousDateTime(TimeUtilities.month(3))),
-          p3: TimeUtilities.commonTimeFormat.format(toTime ?? DateTime.now())),
-    );
-    return networkService
-        .requestTraditionalApiResList<AssetChartElementModel>(requestModel);
-  }
-
-  Future<List<UnexecutedRightModel>?> getListUnexecutedRight(
-      String account) async {
-    final requestModel = RequestModel(
-      this,
-      group: "B",
-      data: RequestDataModel.cursorType(
-        cmd: "ListRightUnExec",
-        p1: account,
-      ),
-    );
-    logger.v(requestModel);
-    final res =
-        await networkService.requestTraditionalApiResList<UnexecutedRightModel>(
-      requestModel,
-      hasError: (p0) {
-        logger.v(p0);
-        if (p0["data"].runtimeType is List && p0["data"].isNotEmpty) {
-          return p0["data"].first["DUMMY"] != null;
-        }
-        return false;
-      },
-    );
-    return res ?? [];
   }
 
   Future<UserInfo?> getUserInfo() async {

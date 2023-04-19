@@ -1,15 +1,8 @@
-import 'package:dtnd/=models=/request/request_model.dart';
-import 'package:dtnd/=models=/response/account/asset_chart_element.dart';
 import 'package:dtnd/=models=/response/account/i_account.dart';
-import 'package:dtnd/=models=/response/account/portfolio_status_model.dart';
 import 'package:dtnd/=models=/response/account/unexecuted_right_model.dart';
-import 'package:dtnd/data/i_user_service.dart';
-import 'package:dtnd/data/i_network_service.dart';
 
-class BaseNormalAccountModel implements IAccountModel {
+class BaseNormalAccountModel extends IAccountModel {
   ///Account Info
-  @override
-  late final String accCode;
   String? accName;
   String? accType;
   String? type;
@@ -48,15 +41,6 @@ class BaseNormalAccountModel implements IAccountModel {
   num? totalMarket;
   num? totalCost;
 
-  @override
-  PortfolioStatus? portfolioStatus;
-
-  @override
-  List<AssetChartElementModel>? listAssetChart;
-
-  @override
-  List<UnexecutedRightModel>? listUnexecutedRight;
-
   List<UnexecutedRightModel> get listUnexecutedBuyRight {
     if (listUnexecutedRight?.isEmpty ?? true) {
       return [];
@@ -70,8 +54,8 @@ class BaseNormalAccountModel implements IAccountModel {
     return result;
   }
 
-  BaseNormalAccountModel.fromJson(Map<String, dynamic> json) {
-    accCode = json['accCode'];
+  BaseNormalAccountModel.fromJson(Map<String, dynamic> json)
+      : super(accCode: json['accCode']) {
     accName = json['accName'];
     accType = json['accType'];
     type = json['type'];
@@ -80,65 +64,42 @@ class BaseNormalAccountModel implements IAccountModel {
   }
 
   @override
-  void updateDataFromJson(IAccountResponse data) {
-    cashBalance = parse(data.json['cash_balance']);
-    debt = parse(data.json['debt']);
-    cashAvai = parse(data.json['cash_avai']);
-    withdrawalCash = parse(data.json['withdrawal_cash']);
-    withdrawalEe = parse(data.json['withdrawal_ee']);
-    payment = parse(data.json['payment']);
-    tempEe = parse(data.json['temp_ee']);
-    apT0 = parse(data.json['ap_t0']);
-    apT1 = parse(data.json['ap_t1']);
-    apT2 = parse(data.json['ap_t2']);
-    arT0 = parse(data.json['ar_t0']);
-    arT1 = parse(data.json['ar_t1']);
-    arT2 = parse(data.json['ar_t2']);
-    collateral = parse(data.json['collateral']);
-    sellUnmatch = parse(data.json['sell_unmatch']);
-    buyUnmatch = parse(data.json['buy_unmatch']);
-    cashBlock = parse(data.json['cash_block']);
-    sumAp = parse(data.json['sum_ap']);
-    withdraw = parse(data.json['withdraw']);
-    depositFee = parse(data.json['deposit_fee']);
-    tempeeUsed = parse(data.json['tempee_used']);
-    tempeeUsing = parse(data.json['tempee_using']);
-    assets = parse(data.json['assets']);
-    cashAdvanceAvai = parse(data.json['cash_advance_avai']);
-    avaiColla = parse(data.json['avaiColla']);
-    cashInout = parse(data.json['cash_inout']);
-    cashTempDayOut = parse(data.json['cash_temp_day_out']);
-    vsd = parse(data.json['vsd']);
-    totalMarket = parse(data.json['total_market']);
-    totalCost = parse(data.json['total_cost']);
+  void updateDataFromJson(IAccountResponse? jsonData) {
+    if (jsonData != null) {
+      cashBalance = parse(jsonData.json['cash_balance']);
+      debt = parse(jsonData.json['debt']);
+      cashAvai = parse(jsonData.json['cash_avai']);
+      withdrawalCash = parse(jsonData.json['withdrawal_cash']);
+      withdrawalEe = parse(jsonData.json['withdrawal_ee']);
+      payment = parse(jsonData.json['payment']);
+      tempEe = parse(jsonData.json['temp_ee']);
+      apT0 = parse(jsonData.json['ap_t0']);
+      apT1 = parse(jsonData.json['ap_t1']);
+      apT2 = parse(jsonData.json['ap_t2']);
+      arT0 = parse(jsonData.json['ar_t0']);
+      arT1 = parse(jsonData.json['ar_t1']);
+      arT2 = parse(jsonData.json['ar_t2']);
+      collateral = parse(jsonData.json['collateral']);
+      sellUnmatch = parse(jsonData.json['sell_unmatch']);
+      buyUnmatch = parse(jsonData.json['buy_unmatch']);
+      cashBlock = parse(jsonData.json['cash_block']);
+      sumAp = parse(jsonData.json['sum_ap']);
+      withdraw = parse(jsonData.json['withdraw']);
+      depositFee = parse(jsonData.json['deposit_fee']);
+      tempeeUsed = parse(jsonData.json['tempee_used']);
+      tempeeUsing = parse(jsonData.json['tempee_using']);
+      assets = parse(jsonData.json['assets']);
+      cashAdvanceAvai = parse(jsonData.json['cash_advance_avai']);
+      avaiColla = parse(jsonData.json['avaiColla']);
+      cashInout = parse(jsonData.json['cash_inout']);
+      cashTempDayOut = parse(jsonData.json['cash_temp_day_out']);
+      vsd = parse(jsonData.json['vsd']);
+      totalMarket = parse(jsonData.json['total_market']);
+      totalCost = parse(jsonData.json['total_cost']);
+    }
   }
 
   num? parse(String string) {
     return num.tryParse(string);
-  }
-
-  @override
-  Future<List<UnexecutedRightModel>> getListUnexecutedRight(
-      IUserService userService, INetworkService networkService) async {
-    final requestModel = RequestModel(
-      userService,
-      group: "B",
-      data: RequestDataModel.cursorType(
-        cmd: "ListRightUnExec",
-        p1: accCode,
-      ),
-    );
-    final res =
-        await networkService.requestTraditionalApiResList<UnexecutedRightModel>(
-      requestModel,
-      hasError: (p0) {
-        if (p0["data"].runtimeType is List && p0["data"].isNotEmpty) {
-          return p0["data"].first["DUMMY"] != null;
-        }
-        return false;
-      },
-    );
-    listUnexecutedRight = res ?? [];
-    return res ?? [];
   }
 }
