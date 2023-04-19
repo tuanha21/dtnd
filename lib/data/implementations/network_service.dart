@@ -4,7 +4,6 @@ import 'dart:convert';
 
 import 'package:dtnd/=models=/algo/filter.dart';
 import 'package:dtnd/=models=/algo/stock_filter.dart';
-import 'package:dtnd/=models=/check_account_success_data_model.dart';
 import 'package:dtnd/=models=/core_response_model.dart';
 import 'package:dtnd/=models=/index.dart';
 import 'package:dtnd/=models=/request/request_model.dart';
@@ -63,6 +62,7 @@ import '../../=models=/local/va_portfolio_model.dart';
 import '../../=models=/response/banner_model.dart';
 import '../../=models=/response/basic_company.dart';
 import '../../=models=/response/indContrib.dart';
+import '../../=models=/response/radar_chart_model.dart';
 import '../../=models=/response/sec_event.dart';
 import '../../=models=/response/sec_trading.dart';
 import '../../=models=/response/stock_industry.dart';
@@ -300,7 +300,6 @@ class NetworkService implements INetworkService {
   Future<List<Stock>> getListAllStock() async {
     const String path = "getlistallstock";
     final http.Response response = await client.get(url_board(path));
-    print('tiennh' + response.toString());
     final List<dynamic> responseBody = decode(response.bodyBytes);
     if (responseBody.isEmpty) throw Exception();
     List<Stock> data = [];
@@ -1625,33 +1624,19 @@ class NetworkService implements INetworkService {
   }
 
   @override
-  Future<CheckAccountSuccessDataModel?> checkAccount(String body) async {
-    final ILocalStorageService localStorageService = LocalStorageService();
-    var response = await client.post(url_core1("openAccount/di"), body: body);
+  Future<RadarChartModel> getDataRadarChart(String body) async {
+    RadarChartModel radarChartModel;
+    var response =
+        await client.post(url_algo("secRankingFSRatios"), body: body);
     if (response.statusCode != 200) {
       throw response;
     }
     var res = decode(response.bodyBytes);
-    logger.v(res);
-
-    if (res["iRs"] == 1) {
-      final data = res["data"];
-      String? accountCode;
-      if (data is List && data.length == 1) {
-        accountCode = SignUpSuccessDataModel.fromJson(data.first).cACCOUNTCODE;
-        localStorageService.saveInfoRegistered(
-            accountCode?.substring(0, accountCode.length - 1) ?? '');
-        return CheckAccountSuccessDataModel.fromJson(data.first);
-      } else if (data is Map<String, dynamic>) {
-        accountCode = SignUpSuccessDataModel.fromJson(data).cACCOUNTCODE;
-        localStorageService.saveInfoRegistered(
-            accountCode?.substring(0, accountCode.length - 1) ?? '');
-        return CheckAccountSuccessDataModel.fromJson(data);
-      } else {
-        throw "Lỗi hệ thống. Vui lòng thử lại sau!";
-      }
-    } else {
-      throw res["sRs"];
+    if (res["status"] != 200) {
+      throw res["message"];
     }
+    var data = decode(res["data"]);
+    radarChartModel = RadarChartModel.fromJson(data);
+    return radarChartModel;
   }
 }

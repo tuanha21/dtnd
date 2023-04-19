@@ -27,7 +27,6 @@ class _LiquidityChartState extends State<LiquidityChart> {
         FutureBuilder<LiquidityModel>(
             future: widget.liquidityModel,
             builder: (context, snapshot) {
-              print(snapshot.connectionState);
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return SizedBox(
                   child: Text(S.of(context).loading),

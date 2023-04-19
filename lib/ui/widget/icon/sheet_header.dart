@@ -32,7 +32,7 @@ class SheetHeader extends StatelessWidget {
                   ? Row(
                       children: [
                         SheetBackButton(
-                          onTap: () => Navigator.pop(context),
+                          onTap: backData,
                         ),
                         const SizedBox(width: 10),
                         Text(

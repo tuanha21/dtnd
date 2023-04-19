@@ -17,10 +17,7 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      throw UnsupportedError(
-        'DefaultFirebaseOptions have not been configured for web - '
-        'you can reconfigure this by running the FlutterFire CLI again.',
-      );
+      return web;
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
@@ -28,10 +25,7 @@ class DefaultFirebaseOptions {
       case TargetPlatform.iOS:
         return ios;
       case TargetPlatform.macOS:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for macos - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return macos;
       case TargetPlatform.windows:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for windows - '
@@ -49,9 +43,19 @@ class DefaultFirebaseOptions {
     }
   }
 
+  static const FirebaseOptions web = FirebaseOptions(
+    apiKey: 'AIzaSyCS2_RJCvaEyV3elNTkjnCf75BA-KAf-q0',
+    appId: '1:604885963745:web:09f779c3a11adf7390f8a0',
+    messagingSenderId: '604885963745',
+    projectId: 'dtnd-2c0d6',
+    authDomain: 'dtnd-2c0d6.firebaseapp.com',
+    storageBucket: 'dtnd-2c0d6.appspot.com',
+    measurementId: 'G-Z9KJJ9HB7Q',
+  );
+
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyCbFjpdKsuDi5A-umJw-qVsQX9DVrDeiQo',
-    appId: '1:604885963745:android:90e1b89eb9fdfdd090f8a0',
+    appId: '1:604885963745:android:9ddaea8e2034ae8d90f8a0',
     messagingSenderId: '604885963745',
     projectId: 'dtnd-2c0d6',
     storageBucket: 'dtnd-2c0d6.appspot.com',
@@ -59,12 +63,23 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyC7122mgP81IE6NJRz55W34S3--cxqHJqQ',
+    appId: '1:604885963745:ios:9b9a5ad680b7f44290f8a0',
+    messagingSenderId: '604885963745',
+    projectId: 'dtnd-2c0d6',
+    storageBucket: 'dtnd-2c0d6.appspot.com',
+    androidClientId: '604885963745-lj0t1bk6r8gjmutq343eocmlv7h2nh0u.apps.googleusercontent.com',
+    iosClientId: '604885963745-tpscahdfg48h3ppjqj4c762486lf91f0.apps.googleusercontent.com',
+    iosBundleId: 'com.test.dtnd',
+  );
+
+  static const FirebaseOptions macos = FirebaseOptions(
+    apiKey: 'AIzaSyC7122mgP81IE6NJRz55W34S3--cxqHJqQ',
     appId: '1:604885963745:ios:72f608511a5c36e690f8a0',
     messagingSenderId: '604885963745',
     projectId: 'dtnd-2c0d6',
     storageBucket: 'dtnd-2c0d6.appspot.com',
-    iosClientId:
-        '604885963745-dq5g6c40ebf3723jo8gui8i9q6iukafr.apps.googleusercontent.com',
+    androidClientId: '604885963745-lj0t1bk6r8gjmutq343eocmlv7h2nh0u.apps.googleusercontent.com',
+    iosClientId: '604885963745-dq5g6c40ebf3723jo8gui8i9q6iukafr.apps.googleusercontent.com',
     iosBundleId: 'com.example.dtnd',
   );
 }

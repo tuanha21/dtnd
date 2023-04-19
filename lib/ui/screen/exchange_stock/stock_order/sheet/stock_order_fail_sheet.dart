@@ -21,7 +21,7 @@ class _StockOrderFailSheetState extends State<StockOrderFailSheet>
     return SafeArea(
       child: CustomDialog(
         title: 'Đặt lệnh không thành công',
-        disableBack: false,
+        disableBack: true,
         action: () {
           Navigator.of(context).pop(const BackCmd());
         },

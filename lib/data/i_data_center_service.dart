@@ -31,6 +31,7 @@ import '../=models=/response/indContrib.dart';
 import '../=models=/response/index_board.dart';
 import '../=models=/response/index_detail.dart';
 import '../=models=/response/introduct_company.dart';
+import '../=models=/response/radar_chart_model.dart';
 import '../=models=/response/sec_event.dart';
 import '../=models=/response/stock_derivative_model.dart';
 import '../=models=/response/stock_industry.dart';
@@ -129,6 +130,8 @@ abstract class IDataCenterService {
 
   Future<List<StockFinancialIndex>> getStockFinancialIndex(String code,
       [String freg, String lang]);
+
+  Future<RadarChartModel> getDataRadarChart(String code, [String lang]);
 
   Future<StockRankingFinancialIndex?> getStockRankingFinancialIndex(String code,
       [String lang]);
