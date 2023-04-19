@@ -1,11 +1,15 @@
 import 'dart:async';
+import 'package:dtnd/=models=/check_account_success_data_model.dart';
+import 'package:dtnd/data/i_user_service.dart';
+import 'package:dtnd/data/implementations/user_service.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:dtnd/ui/theme/app_textstyle.dart';
 import 'package:flutter/material.dart';
 
 class ChangePassword extends StatefulWidget {
-  const ChangePassword({super.key});
+  const ChangePassword({super.key, required this.accountInfo});
+  final CheckAccountSuccessDataModel accountInfo;
 
   @override
   State<ChangePassword> createState() => _ChangePasswordState();

@@ -4,6 +4,7 @@ import 'dart:convert';
 
 import 'package:dtnd/=models=/algo/filter.dart';
 import 'package:dtnd/=models=/algo/stock_filter.dart';
+import 'package:dtnd/=models=/check_account_success_data_model.dart';
 import 'package:dtnd/=models=/core_response_model.dart';
 import 'package:dtnd/=models=/index.dart';
 import 'package:dtnd/=models=/request/request_model.dart';
@@ -1638,5 +1639,25 @@ class NetworkService implements INetworkService {
     var data = decode(res["data"]);
     radarChartModel = RadarChartModel.fromJson(data);
     return radarChartModel;
+  }
+
+  @override
+  Future<CheckAccountSuccessDataModel?> checkAccountInfo(String body) async {
+    print('inheare######');
+    print(body);
+
+    var response = await client.post(url_core1("openAccount/di"), body: body);
+    if (response.statusCode != 200) {
+      throw response;
+    }
+    var res = decode(response.bodyBytes);
+    logger.v(res);
+
+    if (res["iRs"] == 1) {
+      final data = res["data"];
+      return CheckAccountSuccessDataModel.fromJson(data.first);
+    } else {
+      throw res["sRs"];
+    }
   }
 }

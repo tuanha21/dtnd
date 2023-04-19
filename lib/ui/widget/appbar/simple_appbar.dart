@@ -1,4 +1,3 @@
-import 'package:dtnd/ui/widget/icon/back_button.dart';
 import 'package:flutter/material.dart';
 
 import 'i_appbar.dart';
@@ -20,9 +19,6 @@ class SimpleAppbar extends IAppbar {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      leading: SheetBackButton(
-        onTap: () {},
-      ),
       title: titleBuilder(context),
       titleTextStyle: Theme.of(context)
           .textTheme
