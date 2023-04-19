@@ -57,7 +57,7 @@ class _StockOrderSheetState extends State<StockOrderSheet>
 
   late Set<OrderType> listOrderTypes;
   final TextEditingController priceController = TextEditingController();
-  final TextEditingController volumnController = TextEditingController();
+  final TextEditingController volumeController = TextEditingController();
   late final TabController tabController;
   Timer? onPriceStoppedTyping;
   bool typingPrice = false;
@@ -85,7 +85,7 @@ class _StockOrderSheetState extends State<StockOrderSheet>
       listOrderTypes = stockModel!.stock.postTo?.listOrderType ?? {};
       selectedOrderType = widget.orderData?.orderType ?? listOrderTypes.first;
       priceController.text = widget.orderData?.price ?? "0";
-      volumnController.text = widget.orderData?.volumn.toString() ?? '100';
+      volumeController.text = widget.orderData?.volumn.toString() ?? '0';
       //widget.portfolioStock.avaiableVol
 
       // select(selectedOrderType);
@@ -170,7 +170,7 @@ class _StockOrderSheetState extends State<StockOrderSheet>
         stockModel: stockModel!,
         side: side,
         orderType: selectedOrderType,
-        volumn: num.parse(volumnController.text),
+        volumn: num.parse(volumeController.text),
         price: priceController.text,
       );
       Navigator.of(context).pop(NextCmd(orderData));
@@ -248,8 +248,9 @@ class _StockOrderSheetState extends State<StockOrderSheet>
                     child: InkWell(
                       onTap: () {
                         Navigator.of(context)
-                          ..pop()
-                          ..push(MaterialPageRoute(
+                          // ..pop()
+                          // .
+                            .push(MaterialPageRoute(
                             builder: (context) => const OrderNoteScreen(),
                           ));
                       },
@@ -294,7 +295,7 @@ class _StockOrderSheetState extends State<StockOrderSheet>
                             changeStock(model!.first);
                             tabController.animateTo(0);
                           }
-                          volumnController.text =
+                          volumeController.text =
                               stockCodes.avaiableVol.toString();
                         },
                       ),
@@ -410,7 +411,7 @@ class _StockOrderSheetState extends State<StockOrderSheet>
                   Builder(
                     builder: (context) {
                       num price;
-                      num vol = num.tryParse(volumnController.text) ?? 0;
+                      num vol = num.tryParse(volumeController.text) ?? 0;
                       switch (selectedOrderType) {
                         case OrderType.LO:
                           price = num.tryParse(priceController.text) ?? 0;
@@ -443,7 +444,7 @@ class _StockOrderSheetState extends State<StockOrderSheet>
                   const SizedBox(width: 16),
                   Expanded(
                     child: IntervalInput(
-                      controller: volumnController,
+                      controller: volumeController,
                       labelText: S.of(context).volumn,
                       interval: (value) => 100,
                       onChanged: onChangeVol,
@@ -485,24 +486,6 @@ class _StockOrderSheetState extends State<StockOrderSheet>
       ),
     );
   }
-
-  // void _showDropdown(List<Mr>? data) {
-  //   DropdownButton(
-  //     value: _selectedItem,
-  //     items: data?.map((String item) {
-  //       return DropdownMenuItem(
-  //         value: item,
-  //         child: Text(item),
-  //       );
-  //     }).toList(),
-  //     onChanged: (String selectedItem) {
-  //       setState(() {
-  //         _selectedItem = selectedItem;
-  //       });
-  //     },
-  //   );
-  // }
-
   void _onPriceChangeHandler(String value) {
     if (onPriceStoppedTyping != null) {
       setState(() {

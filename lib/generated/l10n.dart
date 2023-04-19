@@ -3631,6 +3631,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Let us protect your account and important information`
+  String get title_change_password {
+    return Intl.message(
+      'Let us protect your account and important information',
+      name: 'title_change_password',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
