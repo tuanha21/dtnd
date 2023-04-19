@@ -1,11 +1,8 @@
 import 'dart:async';
-
-import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:dtnd/ui/theme/app_textstyle.dart';
 import 'package:flutter/material.dart';
-import 'package:get/utils.dart';
 
 class ChangePassword extends StatefulWidget {
   const ChangePassword({super.key});
@@ -74,7 +71,7 @@ class _ChangePasswordState extends State<ChangePassword> {
               height: 16,
             ),
             Text(
-              // S.of(context).changeAmount_translations,
+              // S.of(context).title_change_password,
               'Để chúng tôi bảo vệ tài khoản và các thông tin quan trọng của bạn',
               style: AppTextStyle.titleSmall_14
                   .copyWith(color: AppColors.neutral_02),
@@ -139,13 +136,13 @@ class _ChangePasswordState extends State<ChangePassword> {
                     ),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'Vui lòng nhập mật khẩu mới';
+                        return 'Vui lòng nhập lại mật khẩu mới';
+                      } else if (value != _passwordController.text) {
+                        return 'Mật khẩu nhập lại không trùng khớp';
                       }
                       return null;
                     },
-                    onSaved: (value) {
-                      // _name = value;
-                    },
+                    onSaved: (value) {},
                   ),
                   const SizedBox(
                     height: 16,
@@ -157,6 +154,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                       onPressed: () {
                         if (_formKey.currentState!.validate()) {
                           _formKey.currentState!.save();
+                          print('Change Successs!!');
                         }
                       },
                       child: const Text('Lưu mật khẩu'),

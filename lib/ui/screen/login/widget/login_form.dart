@@ -358,7 +358,14 @@ class _LoginFormState extends State<LoginForm> {
               return CustomDialog(
                 title: S.of(context).login_falied,
                 content: e.toString(),
-                action: () {},
+                action: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const ForgotPassword(),
+                    ),
+                  );
+                },
                 textButtonAction: 'Quên mật khẩu',
                 textButtonExit: 'Thử lại',
                 type: TypeAlert.notification,

@@ -1,5 +1,5 @@
 import 'package:dtnd/generated/l10n.dart';
-import 'package:dtnd/ui/screen/otp/otp_forgot_password.dart';
+import 'package:dtnd/ui/screen/forgot_password/screen/otp_forgot_password.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_textstyle.dart';
 import 'package:flutter/material.dart';
