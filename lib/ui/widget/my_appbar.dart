@@ -157,6 +157,7 @@ class _MyAppBarState extends State<MyAppBar> {
       });
     }
     return AppBar(
+      automaticallyImplyLeading: false,
       flexibleSpace: Container(
           decoration: const BoxDecoration(
         gradient: LinearGradient(
