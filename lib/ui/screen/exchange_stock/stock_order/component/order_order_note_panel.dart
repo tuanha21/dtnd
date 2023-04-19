@@ -24,7 +24,6 @@ class _OrderOrderNotePanelState extends State<OrderOrderNotePanel> {
   }
 
   Future<void> getIndayOrder() async {
-    print("getDâta");
     listOrder = await userService.getIndayOrder(
         accountCode: "${userService.token.value!.user}9", recordPerPage: 3);
     if (mounted) {
