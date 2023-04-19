@@ -67,6 +67,7 @@ class _OrderRecordWidgetState extends State<OrderRecordWidget> {
               ),
             ),
           ),
+          const SizedBox(width: 1,),
           Flexible(
             child: Material(
               child: InkWell(
@@ -96,10 +97,11 @@ class _OrderRecordWidgetState extends State<OrderRecordWidget> {
               ),
             ),
           ),
+          // Divider(),
         ],
       ),
       child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 4),
+        padding: const EdgeInsets.only(right: 4,left: 4,top: 8),
         child: Column(
           children: [
             Row(
@@ -145,7 +147,7 @@ class _OrderRecordWidgetState extends State<OrderRecordWidget> {
                 ))
               ],
             ),
-            const SizedBox(height: 8),
+            const SizedBox(height: 12),
             Row(
               children: [
                 Expanded(
@@ -241,7 +243,8 @@ class _OrderRecordWidgetState extends State<OrderRecordWidget> {
                 ),
               ],
             ),
-            // Divider(),
+            const SizedBox(height: 12,),
+            Container(padding: const EdgeInsets.symmetric(horizontal: 4),color: AppColors.neutral_05,height: 1,)
           ],
         ),
       ),

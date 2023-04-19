@@ -75,7 +75,8 @@ class AppImages {
   static const String night_mode_icon = "assets/svg/night_mode_icon.svg";
   static const String back_draw_icon = "assets/svg/back_draw_icon.svg";
   static const String around_right_icon = "assets/svg/around_right_icon.svg";
-  static const String verify_account_icon = "assets/svg/verify_account_icon.svg";
+  static const String verify_account_icon =
+      "assets/svg/verify_account_icon.svg";
   static const String save_pin_code_icon = "assets/svg/save_pin_code_icon.svg";
 
   static const String qa_base = "assets/svg/qa_base.svg";
@@ -150,8 +151,7 @@ class AppImages {
   static const String chart_3 = "assets/images/chart_3.png";
   static const String drawer_camera_icon =
       "assets/images/drawer_camera_icon.png";
-  static const String register_success =
-      "assets/images/register_success.png";
+  static const String register_success = "assets/images/register_success.png";
 
   ///Loading
   static const String loading_light_bg = "assets/images/loading_light_bg.png";
@@ -190,6 +190,8 @@ class AppImages {
   static const String logo_account_default =
       "assets/images/logo_account_default.png";
   static const String red_ring_icon = "assets/images/red_ring.png";
+  static const String validate_check = "assets/images/validate_check.png";
+  static const String validate_fail = "assets/images/validate_fail.png";
 
   /// BG
   static const String home_asset_card_light_bg =

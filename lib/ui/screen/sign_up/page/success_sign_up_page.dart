@@ -1,12 +1,9 @@
 import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 
 import '../../../theme/app_image.dart';
 import '../../../theme/app_textstyle.dart';
-import '../../home_base/home_base.dart';
-import '../../login/login_screen.dart';
 
 class SuccessSignUpPage extends StatelessWidget {
   const SuccessSignUpPage({Key? key}) : super(key: key);
@@ -86,14 +83,17 @@ class SuccessSignUpPage extends StatelessWidget {
                                                         AppColors.linear_01)),
                                       ),
                                       onTap: () {
-                                        GoRoute(
-                                          path: '/Home',
-                                          name: "home",
-                                          builder: (BuildContext context,
-                                              GoRouterState state) {
-                                            return const HomeBase();
-                                          },
-                                        );
+                                        Navigator.of(context).pop();
+                                        Navigator.of(context).pop();
+                                        Navigator.of(context).pop();
+                                        // GoRoute(
+                                        //   path: '/Home',
+                                        //   name: "home",
+                                        //   builder: (BuildContext context,
+                                        //       GoRouterState state) {
+                                        //     return const HomeBase();
+                                        //   },
+                                        // );
                                       },
                                     ),
                                   ),
@@ -101,13 +101,15 @@ class SuccessSignUpPage extends StatelessWidget {
                                   Expanded(
                                     child: InkWell(
                                       onTap: () {
-                                        GoRoute(
-                                          path: '/SignIn',
-                                          builder: (BuildContext context,
-                                              GoRouterState state) {
-                                            return const LoginScreen();
-                                          },
-                                        );
+                                        Navigator.of(context).pop();
+                                        Navigator.of(context).pop();
+                                        // GoRoute(
+                                        //   path: '/SignIn',
+                                        //   builder: (BuildContext context,
+                                        //       GoRouterState state) {
+                                        //     return const LoginScreen();
+                                        //   },
+                                        // );
                                       },
                                       child: Container(
                                         height: 40,

@@ -94,7 +94,7 @@ class _MarketScreenState extends State<MarketScreen>
                   isScrollable: true,
                   labelPadding:
                       const EdgeInsets.symmetric(horizontal: 18, vertical: 6),
-                  padding: EdgeInsets.zero,
+                  padding: const EdgeInsets.only(top: 8),
                   tabs: <Widget>[
                     Text(S.of(context).overview),
                     Text(S.of(context).interested),
