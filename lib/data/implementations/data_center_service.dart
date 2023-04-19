@@ -525,10 +525,10 @@ class DataCenterService
 
   @override
   Future<List<SuggestedSignalModel>> getSuggestedSignalFilter(
-      int day, String type) async {
+      int day, String? type) async {
     final Map<String, String> body = {
       "cmd": "signal_sum",
-      "params": "$day,$type",
+      "params": "$day,${type ?? "ALL"}",
     };
     final listTop = await networkService.getSuggestedSignal(body);
     if (listTop?.isEmpty ?? true) {
@@ -732,8 +732,7 @@ class DataCenterService
   }
 
   @override
-  Future<RadarChartModel> getDataRadarChart(String code,
-      [String lang = "vi"]) {
+  Future<RadarChartModel> getDataRadarChart(String code, [String lang = "vi"]) {
     final body = '{"lang":"$lang", "secCode": "$code"}';
     return networkService.getDataRadarChart(body);
   }

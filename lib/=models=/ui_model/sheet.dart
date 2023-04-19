@@ -41,6 +41,9 @@ abstract class ISheet implements IOverlay {
 
   @override
   Future<UserCmd?> cmd(BuildContext context, UserCmd? cmd) {
+    if (cmd == null) {
+      return Future.value(null);
+    }
     if (cmd is BackCmd) {
       return onResultBack.call(cmd)?.then(
               (_) => back.call(cmd)?.show(context, backWidget.call(cmd))) ??

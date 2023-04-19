@@ -5,9 +5,11 @@ import 'package:dtnd/=models=/response/stock.dart';
 import 'package:dtnd/=models=/response/stock_model.dart';
 import 'package:dtnd/data/i_data_center_service.dart';
 import 'package:dtnd/data/i_local_storage_service.dart';
+import 'package:dtnd/data/i_network_service.dart';
 import 'package:dtnd/data/i_user_service.dart';
 import 'package:dtnd/data/implementations/data_center_service.dart';
 import 'package:dtnd/data/implementations/local_storage_service.dart';
+import 'package:dtnd/data/implementations/network_service.dart';
 import 'package:dtnd/data/implementations/user_service.dart';
 import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/screen/asset/component/account_asset_overview_widget.dart';
@@ -49,6 +51,7 @@ class _AssetScreenState extends State<AssetScreen>
     with SingleTickerProviderStateMixin {
   final IUserService userService = UserService();
   final IDataCenterService dataCenterService = DataCenterService();
+  final INetworkService networkService = NetworkService();
   final ILocalStorageService localStorageService = LocalStorageService();
 
   void rebuild() => setState(() {});
@@ -126,10 +129,6 @@ class _AssetScreenState extends State<AssetScreen>
           Widget chart;
           if (showTotalAsset) {
             chart = Obx(() {
-              // final data = userService.listAccountModel.value?.firstWhereOrNull(
-              //         (element) => element.runtimeType == BaseMarginAccountModel)
-              //     as BaseMarginAccountModel?;
-              // đm là do ko có data
               final data = userService.listAccountModel.value?.firstWhereOrNull(
                       (element) =>
                           element.runtimeType == BaseMarginPlusAccountModel)
@@ -141,9 +140,6 @@ class _AssetScreenState extends State<AssetScreen>
             });
           } else {
             chart = Obx(() {
-              // final data = userService.listAccountModel.value?.firstWhereOrNull(
-              //         (element) => element.runtimeType == BaseMarginAccountModel)
-              //     as BaseMarginAccountModel?;
               final data = userService.listAccountModel.value?.firstWhereOrNull(
                       (element) =>
                           element.runtimeType == BaseMarginPlusAccountModel)
@@ -292,10 +288,7 @@ class _AssetScreenState extends State<AssetScreen>
                       () {
                         if (userService.listAccountModel.value?.isNotEmpty ??
                             false) {
-                          final data = userService.listAccountModel.value!
-                                  .firstWhereOrNull((element) =>
-                                      element.runtimeType ==
-                                      BaseMarginPlusAccountModel)
+                          final data = userService.defaultAccount.value
                               as BaseMarginPlusAccountModel?;
                           return AccountAssetOverviewWidget(
                             data: data,
@@ -403,12 +396,15 @@ class _AssetScreenState extends State<AssetScreen>
       }
       if (mounted) {}
       // return StockOrderISheet(widget.stockModel).showSheet(context, );
-      StockOrderISheet(null).show(
-          context,
-          StockOrderSheet(
-            stockModel: aaa,
-            orderData: null,
-          ));
+      StockOrderISheet(null)
+          .show(
+              context,
+              StockOrderSheet(
+                stockModel: aaa,
+                orderData: null,
+              ))
+          .then((value) => userService.defaultAccount.value
+              ?.refreshAsset(userService, networkService));
     }
   }
 }

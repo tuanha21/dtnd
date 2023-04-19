@@ -118,7 +118,7 @@ class _StockOrderSheetState extends State<StockOrderSheet>
     stockModel!.stockDataCore =
         await stockModel!.getStockInfoCore(networkService, userService);
     select(selectedOrderType);
-    logger.v(stockModel!.stockDataCore?.toJson());
+    // logger.v(stockModel!.stockDataCore?.toJson());
     setState(() {});
   }
 
@@ -130,7 +130,6 @@ class _StockOrderSheetState extends State<StockOrderSheet>
         stockCode: stockModel!.stock.stockCode,
         price: priceController.text,
         side: Side.buy);
-    logger.v(stockCashBalanceModel);
     setState(() {});
   }
 

@@ -32,6 +32,7 @@ abstract class IAccountModel implements CoreResponseModel {
         return BaseNormalAccountModel.fromJson(json);
     }
   }
+
   void updateDataFromJson(IAccountResponse? jsonData);
 
   Future<void> getAccountStatus(

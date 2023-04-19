@@ -40,7 +40,6 @@ class _SuggestedSignalFilterSheetState
 
   @override
   Widget build(BuildContext context) {
-    final ThemeMode themeMode = AppService.instance.themeMode.value;
     return SafeArea(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 20),

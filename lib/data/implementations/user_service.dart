@@ -4,6 +4,7 @@ import 'package:dtnd/=models=/local/va_portfolio_model.dart';
 import 'package:dtnd/=models=/request/request_model.dart';
 import 'package:dtnd/=models=/response/account/asset_chart_element.dart';
 import 'package:dtnd/=models=/response/account/base_margin_account_model.dart';
+import 'package:dtnd/=models=/response/account/base_margin_plus_account_model.dart';
 import 'package:dtnd/=models=/response/account/i_account.dart';
 import 'package:dtnd/=models=/response/account/portfolio_status_model.dart';
 import 'package:dtnd/=models=/response/account/unexecuted_right_model.dart';
@@ -45,6 +46,8 @@ class UserService implements IUserService {
 
   @override
   final Rx<TotalAsset?> totalAsset = Rxn();
+  @override
+  Rx<IAccountModel?> defaultAccount = Rxn();
 
   @override
   Rx<List<IAccountModel>?> listAccountModel = Rxn();
@@ -168,6 +171,9 @@ class UserService implements IUserService {
         await listAccount
             .elementAt(i)
             .getListUnexecutedRight(this, networkService);
+        if (listAccount.elementAt(i) is BaseMarginPlusAccountModel) {
+          defaultAccount.value = listAccount.elementAt(i);
+        }
       }
     }
     listAccountModel.refresh();

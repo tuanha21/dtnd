@@ -48,15 +48,6 @@ class _PortfolioAndRightPanelState extends State<PortfolioAndRightPanel>
         setState(() {});
       }
     });
-    // userService.listAccountModel.listen((model) {
-    //   if (model != null && data == null) {
-    //     setState(() {
-    //       data = model.firstWhereOrNull(
-    //               (element) => element.runtimeType == BaseMarginAccountModel)
-    //           as BaseMarginAccountModel?;
-    //     });
-    //   }
-    // });
   }
 
   @override
@@ -90,9 +81,7 @@ class _PortfolioAndRightPanelState extends State<PortfolioAndRightPanel>
                 borderRadius: BorderRadius.all(Radius.circular(8)),
               ),
               child: Obx(() {
-                final data = userService.listAccountModel.value
-                        ?.firstWhereOrNull((element) =>
-                            element.runtimeType == BaseMarginPlusAccountModel)
+                final data = userService.defaultAccount.value
                     as BaseMarginPlusAccountModel?;
                 if (data?.portfolioStatus?.porfolioStocks?.isNotEmpty ??
                     false) {
@@ -149,10 +138,8 @@ class _PortfolioAndRightPanelState extends State<PortfolioAndRightPanel>
               }),
             ),
           Obx(() {
-            final account = userService.listAccountModel.value
-                    ?.firstWhereOrNull((element) =>
-                        element.runtimeType == BaseMarginPlusAccountModel)
-                as BaseMarginPlusAccountModel?;
+            final account =
+                userService.defaultAccount.value as BaseMarginPlusAccountModel?;
 
             if (_tabController.index == 0) {
               if (account?.portfolioStatus?.porfolioStocks?.isEmpty ?? true) {

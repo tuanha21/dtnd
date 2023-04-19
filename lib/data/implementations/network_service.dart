@@ -249,7 +249,6 @@ class NetworkService implements INetworkService {
     if (response is! Map<String, dynamic>) {
       return null;
     }
-    logger.v(response);
     bool checkResponse = hasError?.call(response) ?? (response["rc"] != 1);
     if (checkResponse) {
       return onError?.call(response);
@@ -286,7 +285,6 @@ class NetworkService implements INetworkService {
       response = response["data"];
     }
     final List<T> result = [];
-    logger.v(response);
     if (response.runtimeType != List || response.isEmpty) {
       return [];
     }

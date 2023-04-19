@@ -19,6 +19,8 @@ abstract class IUserService {
 
   Rx<TotalAsset?> get totalAsset;
 
+  Rx<IAccountModel?> get defaultAccount;
+
   Rx<List<IAccountModel>?> get listAccountModel;
 
   List<String> get searchHistory;

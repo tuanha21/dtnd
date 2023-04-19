@@ -169,7 +169,6 @@ class ExchangeService implements IExchangeService {
 
     final RequestModel requestModel =
         RequestModel(userService, group: "Q", data: requestDataModel);
-    logger.v(requestModel);
     return await networkService
         .requestTraditionalApi<StockCashBalanceModel>(requestModel);
   }
@@ -196,7 +195,6 @@ class ExchangeService implements IExchangeService {
 
     final RequestModel requestModel =
         RequestModel(userService, group: "B", data: requestDataModel);
-    logger.v(requestModel.toJson());
 
     final response = await networkService
         .requestTraditionalApiResList<OrderHistoryModel>(requestModel);
