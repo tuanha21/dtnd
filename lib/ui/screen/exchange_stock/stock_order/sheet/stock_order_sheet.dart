@@ -62,6 +62,7 @@ class _StockOrderSheetState extends State<StockOrderSheet>
   late final TabController tabController;
   Timer? onPriceStoppedTyping;
   bool typingPrice = false;
+  bool ifFocus = false;
 
   late OrderType selectedOrderType;
 
@@ -134,22 +135,23 @@ class _StockOrderSheetState extends State<StockOrderSheet>
   }
 
   void select(OrderType orderType) {
-    if (orderType.isLO && stockModel?.stockDataCore != null) {
-      final String currentPrice =
-          stockModel!.stockDataCore!.lastPrice?.toStringAsFixed(2) ??
-              stockModel!.stockDataCore!.r?.toString() ??
-              stockModel!.stockData.lastPrice.value?.toStringAsFixed(2) ??
-              "0";
-      priceController.value = TextEditingValue(
-        text: currentPrice,
-        selection: TextSelection.collapsed(offset: currentPrice.length),
-      );
-    } else {
-      priceController.value = TextEditingValue(
-        text: orderType.value,
-        selection: TextSelection.collapsed(offset: orderType.value.length),
-      );
-    }
+    // if (orderType.isLO && stockModel?.stockDataCore != null) {
+    //   final String currentPrice =
+    //       stockModel!.stockDataCore!.lastPrice?.toStringAsFixed(2) ??
+    //           stockModel!.stockDataCore!.r?.toString() ??
+    //           stockModel!.stockData.lastPrice.value?.toStringAsFixed(2) ??
+    //           "0";
+    //   priceController.value = TextEditingValue(
+    //     text: currentPrice,
+    //     selection: TextSelection.collapsed(offset: currentPrice.length),
+    //   );
+    // } else {
+    ifFocus = false;
+    priceController.value = TextEditingValue(
+      text: orderType.value,
+      selection: TextSelection.collapsed(offset: orderType.value.length),
+    );
+    // }
     setState(() {
       selectedOrderType = orderType;
     });
@@ -157,6 +159,7 @@ class _StockOrderSheetState extends State<StockOrderSheet>
   }
 
   void onChangedPrice(num value) {
+    ifFocus = true;
     setState(() {
       selectedOrderType = listOrderTypes.first;
     });
@@ -167,7 +170,14 @@ class _StockOrderSheetState extends State<StockOrderSheet>
     setState(() {});
   }
 
-  bool isSelected(OrderType orderType) => orderType == selectedOrderType;
+  bool isSelected(OrderType orderType) {
+    if(ifFocus){
+      return false;
+    }else{
+      return orderType == selectedOrderType;
+    }
+
+  }
 
   void toConfirmPanel(Side side) async {
     if (orderKey.currentState?.validate() ?? false) {

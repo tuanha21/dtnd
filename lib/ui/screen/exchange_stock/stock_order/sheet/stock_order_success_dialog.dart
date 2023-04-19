@@ -1,9 +1,16 @@
+import 'package:dtnd/=models=/exchange.dart';
+import 'package:dtnd/=models=/side.dart';
 import 'package:dtnd/=models=/ui_model/user_cmd.dart';
 import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/screen/exchange_stock/stock_order/business/stock_order_flow.dart';
 import 'package:dtnd/ui/screen/exchange_stock/stock_order/data/order_data.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
+import 'package:dtnd/ui/theme/app_textstyle.dart';
+import 'package:dtnd/ui/widget/icon/stock_circle_icon.dart';
+import 'package:dtnd/utilities/num_utils.dart';
+import 'package:dtnd/utilities/string_util.dart';
+import 'package:dtnd/utilities/time_utils.dart';
 import 'package:flutter/material.dart';
 
 class StockOrderSuccessSheet extends StatefulWidget {
@@ -52,7 +59,97 @@ class _StockOrderSuccessSheetState extends State<StockOrderSuccessSheet> {
                 )
               ],
             ),
+            const SizedBox(height: 20),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  children: [
+                    StockCirleIcon(
+                      stockCode:
+                          widget.orderData?.stockModel.stock.stockCode ?? '',
+                    ),
+                    const SizedBox(width: 8),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          widget.orderData?.stockModel.stock.stockCode ?? '',
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyMedium!
+                              .copyWith(fontWeight: FontWeight.w600),
+                        ),
+                        Text(
+                          widget.orderData?.stockModel.stock.postTo!.name ?? '',
+                          style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                              color: AppColors.neutral_03,
+                              fontWeight: FontWeight.w600),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+                Container(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                  decoration: BoxDecoration(
+                    borderRadius: const BorderRadius.all(Radius.circular(4)),
+                    color: widget.orderData?.side.isBuy ?? true
+                        ? AppColors.accent_light_01
+                        : AppColors.accent_light_03,
+                  ),
+                  child: Text(
+                    widget.orderData?.side.name(context).toUpperCase() ?? '',
+                    style: AppTextStyle.titleSmall_14.copyWith(
+                      color: widget.orderData?.side.isBuy ?? true
+                          ? AppColors.semantic_01
+                          : AppColors.semantic_03,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                )
+              ],
+            ),
             const SizedBox(height: 10),
+            Container(
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                  color: AppColors.neutral_06,
+                  borderRadius: BorderRadius.circular(8)),
+              child: Column(
+                children: [
+                  _Row(
+                    label: S.of(context).volumn,
+                    value: widget.orderData?.volumn.toString(),
+                  ),
+                  const SizedBox(height: 8),
+                  _Row(
+                    label: widget.orderData?.side.isBuy ?? true
+                        ? S.of(context).buy_price
+                        : S.of(context).sell_price,
+                    value: widget.orderData?.price,
+                  ),
+                  const SizedBox(height: 8),
+                  _Row(
+                    label: S.of(context).command_type,
+                    value: widget.orderData?.orderType.detailName,
+                  ),
+                  const SizedBox(height: 8),
+                  _Row(
+                    label: S.of(context).time,
+                    value: TimeUtilities.commonTimeFormat.format(DateTime.now()),
+                  ),
+                  const SizedBox(height: 8),
+                  _Row(
+                    label: S.of(context).exchange_total,
+                    value: widget.orderData?.exchangeTotal?.toString(),
+                    valueColor: AppColors.linear_01,
+                  ),
+                  const SizedBox(height: 8),
+                ],
+              ),
+            ),
             const SizedBox(
               height: 8,
             ),
@@ -89,9 +186,7 @@ class _StockOrderSuccessSheetState extends State<StockOrderSuccessSheet> {
                     child: Text(
                       S.of(context).create_new_order,
                       style: const TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w700,
-                          height: 1.4),
+                          fontSize: 14, fontWeight: FontWeight.w700, height: 1.4),
                     ),
                   ),
                 ),
@@ -100,6 +195,50 @@ class _StockOrderSuccessSheetState extends State<StockOrderSuccessSheet> {
           ],
         ),
       ),
+    );
+  }
+}
+
+class _Row extends StatelessWidget {
+  const _Row({
+    required this.label,
+    this.value,
+    this.valueColor,
+  });
+
+  final String label;
+  final String? value;
+  final Color? valueColor;
+
+  @override
+  Widget build(BuildContext context) {
+    final textheme = Theme.of(context).textTheme;
+    final valueTheme = textheme.bodyMedium!
+        .copyWith(fontWeight: FontWeight.w600, color: valueColor);
+    String valueTxt;
+    if (value == null) {
+      valueTxt = "-";
+    } else if (value!.isNum) {
+      valueTxt = NumUtils.formatDoubleString(value);
+    } else {
+      valueTxt = value!;
+    }
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(
+          label,
+          style: const TextStyle(
+              color: AppColors.text_grey_1,
+              fontSize: 14,
+              fontWeight: FontWeight.w500,
+              height: 1.4),
+        ),
+        Text(
+          valueTxt,
+          style: valueTheme,
+        ),
+      ],
     );
   }
 }
