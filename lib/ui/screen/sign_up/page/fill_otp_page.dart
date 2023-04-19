@@ -12,14 +12,13 @@ import 'package:get/get.dart';
 import 'package:pinput/pinput.dart';
 
 class FillOTPPage extends StatefulWidget {
-  const FillOTPPage({
-    super.key,
-    required this.onSuccess,
-    required this.verifyOTP,
-    required this.createAccount,
-    required this.resendOTP,
-    required this.email
-  });
+  const FillOTPPage(
+      {super.key,
+      required this.onSuccess,
+      required this.verifyOTP,
+      required this.createAccount,
+      required this.resendOTP,
+      required this.email});
   final VoidCallback onSuccess;
   final VoidCallback resendOTP;
   final Future<bool> Function(String) verifyOTP;
@@ -84,8 +83,9 @@ class _FillOTPPageState extends State<FillOTPPage> {
           Row(
             children: [
               Expanded(
-                  child:
-                      Text(S.of(context).otp_code_sent_to_phone_number(widget.email.toString())))
+                  child: Text(S
+                      .of(context)
+                      .otp_code_sent_to_phone_number(widget.email.toString())))
             ],
           ),
           const SizedBox(height: 36),

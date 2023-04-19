@@ -1,5 +1,6 @@
 // ignore_for_file: library_prefixes
 
+import 'package:dtnd/=models=/check_account_success_data_model.dart';
 import 'package:dtnd/=models=/core_response_model.dart';
 import 'package:dtnd/=models=/index.dart';
 import 'package:dtnd/=models=/local/va_portfolio_model.dart';
@@ -232,6 +233,8 @@ abstract class INetworkService {
   Future<bool> verifySignupOTP(String body);
 
   Future<SignUpSuccessDataModel?> createAccount(String body);
+
+  Future<CheckAccountSuccessDataModel?> checkAccountInfo(String body);
 
   Future<bool> checkInfoVa(String body);
 

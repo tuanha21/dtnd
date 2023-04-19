@@ -1,3 +1,4 @@
+import 'package:dtnd/=models=/check_account_success_data_model.dart';
 import 'package:dtnd/=models=/response/account/i_account.dart';
 import 'package:dtnd/=models=/response/account_info_model.dart';
 import 'package:dtnd/=models=/response/order_model/base_order_model.dart';
@@ -74,4 +75,6 @@ abstract class IUserService {
   Future<void> destroyBot();
 
   Future<void> saveValueRegisterVa();
+
+  Future<CheckAccountSuccessDataModel?> checkAccountInfo(String mail);
 }

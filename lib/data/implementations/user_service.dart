@@ -1,5 +1,7 @@
 import 'dart:convert';
+import 'dart:math';
 
+import 'package:dtnd/=models=/check_account_success_data_model.dart';
 import 'package:dtnd/=models=/local/va_portfolio_model.dart';
 import 'package:dtnd/=models=/request/request_model.dart';
 import 'package:dtnd/=models=/response/account/asset_chart_element.dart';
@@ -299,6 +301,26 @@ class UserService implements IUserService {
       }
     };
     return networkService.createAccount(jsonEncode(body));
+  }
+
+  //check account info
+  @override
+  Future<CheckAccountSuccessDataModel?> checkAccountInfo(String mail) {
+    print(mail);
+    print('getin@@@@@');
+    Map<String, dynamic> body = {
+      "user": "back",
+      "cmd": "CHECK_ACCOUNT_INFO",
+      "sid": "",
+      "param": {
+        "CUST_EMAIL": mail,
+      }
+    };
+    // "CUSTOMER_NAME": name,
+    // "CUSTOMER_MOBILE": mobile,
+    // "CUSTOMER_PASS": pass,
+
+    return networkService.checkAccountInfo(jsonEncode(body));
   }
 
   // VA

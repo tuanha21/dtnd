@@ -1,10 +1,8 @@
 import 'dart:async';
 
-import 'package:dtnd/=models=/sign_up_success_data_model.dart';
 import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_textstyle.dart';
-import 'package:dtnd/ui/widget/app_snack_bar.dart';
 import 'package:dtnd/ui/widget/button/async_button.dart';
 import 'package:dtnd/ui/widget/expanded_widget.dart';
 import 'package:flutter/material.dart';

@@ -125,7 +125,7 @@ class HomeAppbarDelegate extends SliverPersistentHeaderDelegate {
           Align(
             alignment: Alignment.topCenter,
             child: SizedBox(
-              height: Platform.isAndroid ? 85 : 110,
+              height: Platform.isAndroid ? 90 : 110,
               child: AppBar(
                 automaticallyImplyLeading: false,
                 flexibleSpace: Container(
@@ -202,7 +202,7 @@ class HomeAppbarDelegate extends SliverPersistentHeaderDelegate {
   @override
   double get minExtent {
     if (Platform.isAndroid) {
-      if (userService.userInfo.value == null) return 185;
+      if (userService.userInfo.value == null) return 190;
       return 148;
     } else {
       if (userService.userInfo.value == null) return 215;

@@ -24,61 +24,73 @@ class _HomeScreenState extends State<HomeScreen>
 // with AutomaticKeepAliveClientMixin
 {
   final IUserService userService = UserService();
+
   final HomeController homeController = HomeController();
 
-  // @override
-  // void initState() {
-  //   homeController.init();
-  //   super.initState();
-  // }
+  @override
+  void initState() {
+    homeController.init();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     // super.build(context);
-    return CustomScrollView(
-      slivers: [
-        SliverPersistentHeader(
-          pinned: true,
-          delegate: HomeAppbarDelegate(homeController.appService,
-              homeController.dataCenterService, userService,widget.navigateTab),
-        ),
-        SliverToBoxAdapter(
-          child: HomeSection(
-            title: S.of(context).market_today,
-            onMoreDot: () => widget.navigateTab.call(HomeNav.market),
-            child: const HomeMarketToday(),
+    return RefreshIndicator(
+      onRefresh: () async {
+        await userService.refreshAssets();
+        await homeController.getTopSignal();
+        await homeController.getWorldIndex();
+        await homeController.getCommodities();
+      },
+      child: CustomScrollView(
+        slivers: [
+          SliverPersistentHeader(
+            pinned: true,
+            delegate: HomeAppbarDelegate(
+                homeController.appService,
+                homeController.dataCenterService,
+                userService,
+                widget.navigateTab),
           ),
-        ),
-        SliverPadding(
-          padding: const EdgeInsets.only(top: 24),
-          sliver: SliverToBoxAdapter(
+          SliverToBoxAdapter(
             child: HomeSection(
-              title: S.of(context).market_overview,
-              child: const HomeMarketOverview(),
+              title: S.of(context).market_today,
+              onMoreDot: () => widget.navigateTab.call(HomeNav.market),
+              child: const HomeMarketToday(),
             ),
           ),
-        ),
-        const SliverPadding(
-          padding: EdgeInsets.symmetric(vertical: 24),
-          sliver: SliverToBoxAdapter(
-            child: HomeTopSignalStocks(),
-          ),
-        ),
-        SliverPadding(
-          padding: const EdgeInsets.only(bottom: 120),
-          sliver: SliverToBoxAdapter(
-            child: HomeSection(
-              title: S.of(context).news,
-              onTitleTap: () => HomeController().getNews(),
-              onMore: () {
-                const ListNewsISheet()
-                    .show(context, const ListNewsSheet(), wrap: false);
-              },
-              child: const HomeNews(),
+          SliverPadding(
+            padding: const EdgeInsets.only(top: 24),
+            sliver: SliverToBoxAdapter(
+              child: HomeSection(
+                title: S.of(context).market_overview,
+                child: const HomeMarketOverview(),
+              ),
             ),
           ),
-        ),
-      ],
+          const SliverPadding(
+            padding: EdgeInsets.symmetric(vertical: 24),
+            sliver: SliverToBoxAdapter(
+              child: HomeTopSignalStocks(),
+            ),
+          ),
+          SliverPadding(
+            padding: const EdgeInsets.only(bottom: 120),
+            sliver: SliverToBoxAdapter(
+              child: HomeSection(
+                title: S.of(context).news,
+                onTitleTap: () => HomeController().getNews(),
+                onMore: () {
+                  const ListNewsISheet()
+                      .show(context, const ListNewsSheet(), wrap: false);
+                },
+                child: const HomeNews(),
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 
