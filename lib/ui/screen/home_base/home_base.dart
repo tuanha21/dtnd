@@ -1,5 +1,7 @@
 import 'package:dtnd/data/i_network_service.dart';
+import 'package:dtnd/data/i_user_service.dart';
 import 'package:dtnd/data/implementations/network_service.dart';
+import 'package:dtnd/data/implementations/user_service.dart';
 import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/screen/account/account_screen.dart';
 import 'package:dtnd/ui/screen/asset/asset_screen.dart';
@@ -26,6 +28,7 @@ class HomeBase extends StatefulWidget {
 
 class _HomeBaseState extends State<HomeBase> with WidgetsBindingObserver {
   final INetworkService networkService = NetworkService();
+  final IUserService userService = UserService();
   final Rx<HomeNav> currentHomeNav = Rx<HomeNav>(HomeNav.home);
 
   bool onSessionExpiredCalled = false;
@@ -41,11 +44,6 @@ class _HomeBaseState extends State<HomeBase> with WidgetsBindingObserver {
     }
   }
 
-  // @override
-  // void didChangeAppLifecycleState(AppLifecycleState state) {
-  //   print(state);
-  // }
-
   void onSessionExpired() async {
     logger.v("onSessionExpired called!");
     if (onSessionExpiredCalled) {
@@ -55,6 +53,7 @@ class _HomeBaseState extends State<HomeBase> with WidgetsBindingObserver {
     if (!mounted) {
       return;
     }
+    userService.deleteToken();
     await DialogUtilities.showErrorDialog(
         key: sessionExpiredKey,
         context: context,
