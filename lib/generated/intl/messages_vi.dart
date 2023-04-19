@@ -464,6 +464,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "time": MessageLookupByLibrary.simpleMessage("Thời gian"),
         "timeout": MessageLookupByLibrary.simpleMessage(
             "Không nhận được phản hồi từ máy chủ"),
+        "title_change_password": MessageLookupByLibrary.simpleMessage(
+            "Để chúng tôi bảo vệ tài khoản và các thông tin quan trọng của bạn"),
         "to_day": MessageLookupByLibrary.simpleMessage("Tới ngày"),
         "top_foreign": MessageLookupByLibrary.simpleMessage("Top nước ngoài"),
         "top_influence": MessageLookupByLibrary.simpleMessage("Top ảnh hưởng"),

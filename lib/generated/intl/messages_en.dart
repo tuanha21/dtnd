@@ -474,6 +474,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "time": MessageLookupByLibrary.simpleMessage("Time"),
         "timeout":
             MessageLookupByLibrary.simpleMessage("No response from server"),
+        "title_change_password": MessageLookupByLibrary.simpleMessage(
+            "Let us protect your account and important information"),
         "to_day": MessageLookupByLibrary.simpleMessage("To date"),
         "top_foreign": MessageLookupByLibrary.simpleMessage("Top foreign"),
         "top_influence": MessageLookupByLibrary.simpleMessage("Top influence"),
