@@ -37,7 +37,7 @@ class IntervalInput extends StatelessWidget {
       String newString = newValue.toStringAsFixed(2);
       newString = newString.replaceAll(".00", "");
       controller.value = TextEditingValue(
-        text: newString,
+        text: newString.replaceAll(".00", ""),
         selection: TextSelection.collapsed(
           offset: newString.length,
         ),
@@ -98,7 +98,10 @@ class IntervalInput extends StatelessWidget {
         validator: validator,
         onChanged: onTextChanged,
         keyboardType: const TextInputType.numberWithOptions(decimal: true),
-        inputFormatters: [ThousandsSeparatorInputFormatter()],
+        inputFormatters: [
+          ThousandsSeparatorInputFormatter(),
+
+        ],
         decoration: InputDecoration(
           labelText: labelText,
           contentPadding: const EdgeInsets.all(0),

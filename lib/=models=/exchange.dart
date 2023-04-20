@@ -17,14 +17,14 @@ extension ExchangeX on Exchange {
     switch (this) {
       case Exchange.HOSE:
         return {
-          // OrderType.LO,
+          OrderType.LO,
           OrderType.MP,
           OrderType.ATO,
           OrderType.ATC,
         };
       case Exchange.HNX:
         return {
-          // OrderType.LO,
+          OrderType.LO,
           OrderType.MTL,
           OrderType.ATC,
           OrderType.PLO,
