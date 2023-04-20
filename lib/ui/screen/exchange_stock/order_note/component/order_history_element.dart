@@ -89,10 +89,16 @@ class _OrderHistoryElementState extends State<OrderHistoryElement> {
                     fontWeight: FontWeight.w500,
                   ),
                 ),
-                Text(
-                  NumUtils.formatDouble((widget.model.cMATCHPRICE ?? 0) / 1000),
-                  style: AppTextStyle.labelSmall_10,
-                )
+                (widget.model.cMATCHPRICE == 0.0)
+                    ? Text(
+                        '-',
+                        style: AppTextStyle.labelSmall_10,
+                      )
+                    : Text(
+                        NumUtils.formatDouble(
+                            (widget.model.cMATCHPRICE ?? 0) / 1000),
+                        style: AppTextStyle.labelSmall_10,
+                      )
               ],
             )),
             Expanded(
@@ -105,10 +111,15 @@ class _OrderHistoryElementState extends State<OrderHistoryElement> {
                     fontWeight: FontWeight.w500,
                   ),
                 ),
-                Text(
-                  NumUtils.formatInteger(widget.model.cFEEVALUE ?? 0),
-                  style: AppTextStyle.labelSmall_10,
-                )
+                widget.model.cFEEVALUE == 0.0
+                    ? Text(
+                        '-',
+                        style: AppTextStyle.labelSmall_10,
+                      )
+                    : Text(
+                        NumUtils.formatInteger(widget.model.cFEEVALUE ?? 0),
+                        style: AppTextStyle.labelSmall_10,
+                      )
               ],
             )),
             Expanded(
@@ -123,7 +134,9 @@ class _OrderHistoryElementState extends State<OrderHistoryElement> {
                   ),
                 ),
                 Text(
-                  NumUtils.formatInteger((widget.model.cMATCHVOL ?? 0)),
+                  widget.model.cMATCHVOL == 0.0
+                      ? '-'
+                      : '${NumUtils.formatInteger((widget.model.cMATCHVOL))}/${NumUtils.formatInteger((widget.model.cORDERVOLUME))}',
                   style: AppTextStyle.labelSmall_10,
                 )
               ],

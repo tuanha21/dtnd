@@ -236,6 +236,8 @@ abstract class INetworkService {
 
   Future<CheckAccountSuccessDataModel?> checkAccountInfo(String body);
 
+  Future<bool> resetPassword(String body);
+
   Future<bool> checkInfoVa(String body);
 
   Future<bool> registerVirtualBroker(String body);

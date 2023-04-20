@@ -2,9 +2,12 @@ import 'dart:async';
 import 'package:dtnd/=models=/check_account_success_data_model.dart';
 import 'package:dtnd/data/i_user_service.dart';
 import 'package:dtnd/data/implementations/user_service.dart';
+import 'package:dtnd/ui/screen/forgot_password/%20widget/success_reset_password.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:dtnd/ui/theme/app_textstyle.dart';
+import 'package:dtnd/ui/widget/button/async_button.dart';
+import 'package:dtnd/ui/widget/expanded_widget.dart';
 import 'package:flutter/material.dart';
 
 class ChangePassword extends StatefulWidget {
@@ -26,6 +29,8 @@ class _ChangePasswordState extends State<ChangePassword> {
   bool condition4 = false;
   bool _passwordVisible = false;
   bool _rePasswordVisible = false;
+  String? _errorReset;
+  final IUserService userService = UserService();
 
   Timer? _timer;
 
@@ -81,94 +86,134 @@ class _ChangePasswordState extends State<ChangePassword> {
                   .copyWith(color: AppColors.neutral_02),
             ),
             const SizedBox(height: 36),
-            Form(
-              key: _formKey,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  TextFormField(
-                    obscureText: _passwordVisible,
-                    decoration: InputDecoration(
-                      errorStyle: const TextStyle(height: 0),
-                      labelText: 'Mật khẩu mới',
-                      hintText: 'Mật khẩu mới',
-                      suffixIcon: IconButton(
-                        icon: Icon(
-                          !_passwordVisible
-                              ? Icons.visibility
-                              : Icons.visibility_off,
-                          color: AppColors.text_black_1,
-                        ),
-                        onPressed: () {
-                          setState(() {
-                            _passwordVisible = !_passwordVisible;
-                          });
-                        },
-                      ),
-                    ),
-                    controller: _passwordController,
-                    autovalidateMode: AutovalidateMode.onUserInteraction,
-                    onChanged: (value) => {},
-                    validator: validatePassword,
-                    onSaved: (value) {
-                      // _name = value;
-                    },
-                  ),
-                  !(isValid) ? _showCodition(context) : Container(),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  TextFormField(
-                    obscureText: _rePasswordVisible,
-                    controller: _rePasswordController,
-                    decoration: InputDecoration(
-                      suffixIcon: IconButton(
-                        icon: Icon(
-                          !_rePasswordVisible
-                              ? Icons.visibility
-                              : Icons.visibility_off,
-                          color: AppColors.text_black_1,
-                        ),
-                        onPressed: () {
-                          setState(() {
-                            _rePasswordVisible = !_rePasswordVisible;
-                          });
-                        },
-                      ),
-                      hintText: 'Nhập lại mật khẩu mới',
-                      labelText: 'Nhập lại mật khẩu mới',
-                    ),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Vui lòng nhập lại mật khẩu mới';
-                      } else if (value != _passwordController.text) {
-                        return 'Mật khẩu nhập lại không trùng khớp';
-                      }
-                      return null;
-                    },
-                    onSaved: (value) {},
-                  ),
-                  const SizedBox(
-                    height: 16,
-                  ),
-                  SizedBox(
-                    height: 50,
-                    width: double.infinity,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        if (_formKey.currentState!.validate()) {
-                          _formKey.currentState!.save();
-                          print('Change Successs!!');
-                        }
-                      },
-                      child: const Text('Lưu mật khẩu'),
-                    ),
-                  ),
-                ],
-              ),
-            )
+            formChangePass(context)
           ]),
         ));
+  }
+
+  Form formChangePass(BuildContext context) {
+    return Form(
+      key: _formKey,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          TextFormField(
+            obscureText: _passwordVisible,
+            decoration: InputDecoration(
+              errorStyle: const TextStyle(height: 0),
+              labelText: 'Mật khẩu mới',
+              hintText: 'Mật khẩu mới',
+              suffixIcon: IconButton(
+                icon: Icon(
+                  !_passwordVisible ? Icons.visibility : Icons.visibility_off,
+                  color: AppColors.text_black_1,
+                ),
+                onPressed: () {
+                  setState(() {
+                    _passwordVisible = !_passwordVisible;
+                  });
+                },
+              ),
+            ),
+            controller: _passwordController,
+            autovalidateMode: AutovalidateMode.onUserInteraction,
+            validator: validatePassword,
+            onSaved: (value) {
+              // _name = value;
+            },
+          ),
+          !(isValid) ? _showCodition(context) : Container(),
+          const SizedBox(
+            height: 20,
+          ),
+          TextFormField(
+            obscureText: _rePasswordVisible,
+            controller: _rePasswordController,
+            decoration: InputDecoration(
+              suffixIcon: IconButton(
+                icon: Icon(
+                  !_rePasswordVisible ? Icons.visibility : Icons.visibility_off,
+                  color: AppColors.text_black_1,
+                ),
+                onPressed: () {
+                  setState(() {
+                    _rePasswordVisible = !_rePasswordVisible;
+                  });
+                },
+              ),
+              hintText: 'Nhập lại mật khẩu mới',
+              labelText: 'Nhập lại mật khẩu mới',
+            ),
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Vui lòng nhập lại mật khẩu mới';
+              } else if (value != _passwordController.text) {
+                return 'Mật khẩu nhập lại không trùng khớp';
+              }
+              return null;
+            },
+            onSaved: (value) {},
+          ),
+          ExpandedSection(
+              expand: _errorReset != null,
+              child: Row(
+                children: [
+                  Text(
+                    _errorReset ?? "",
+                    style: AppTextStyle.bodySmall_12
+                        .copyWith(color: AppColors.semantic_03),
+                  )
+                ],
+              )),
+          const SizedBox(
+            height: 16,
+          ),
+          SizedBox(
+            height: 50,
+            width: double.infinity,
+            child: AsyncButton(
+              onPressed: onChangePass,
+              child: Text(
+                'Lưu mật khẩu',
+                style: AppTextStyle.bodyMedium_14.copyWith(
+                    fontWeight: FontWeight.w700, color: AppColors.neutral_07),
+              ),
+            ),
+          )
+        ],
+      ),
+    );
+  }
+
+  Future<void> onChangePass() async {
+    setState(() {
+      _errorReset = null;
+    });
+    if (_formKey.currentState!.validate()) {
+      _formKey.currentState!.save();
+
+      final result = await userService.resetPassword(
+          widget.accountInfo.cCARDID!,
+          widget.accountInfo.cCUSTMOBILE!,
+          widget.accountInfo.cCUSTEMAIL!,
+          _passwordController.text);
+      if (result) {
+        if (!mounted) {
+          return;
+        }
+        return showDialog(
+          context: context,
+          builder: (context) {
+            return const SuccessResetPasswordPage();
+          },
+        );
+      } else {
+        setState(() {
+          _errorReset = 'Có lỗi xảy ra, vui lòng thử lại!';
+        });
+      }
+    }
+    return;
   }
 
   String? validatePassword(String? value) {

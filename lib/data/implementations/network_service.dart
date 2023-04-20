@@ -1643,9 +1643,6 @@ class NetworkService implements INetworkService {
 
   @override
   Future<CheckAccountSuccessDataModel?> checkAccountInfo(String body) async {
-    print('inheare######');
-    print(body);
-
     var response = await client.post(url_core1("openAccount/di"), body: body);
     if (response.statusCode != 200) {
       throw response;
@@ -1658,6 +1655,17 @@ class NetworkService implements INetworkService {
       return CheckAccountSuccessDataModel.fromJson(data.first);
     } else {
       throw res["sRs"];
+    }
+  }
+
+  @override
+  Future<bool> resetPassword(String body) async {
+    var response =
+        await client.post(url_core1("openAccount/resetPass"), body: body);
+    if (response.statusCode != 200) {
+      return false;
+    } else {
+      return true;
     }
   }
 }
