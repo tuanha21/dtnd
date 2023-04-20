@@ -27,7 +27,6 @@ import 'package:dtnd/ui/widget/button/single_color_text_button.dart';
 import 'package:dtnd/ui/widget/expanded_widget.dart';
 import 'package:dtnd/ui/widget/icon/sheet_header.dart';
 import 'package:dtnd/ui/widget/input/interval_input.dart';
-import 'package:dtnd/utilities/logger.dart';
 import 'package:dtnd/utilities/num_utils.dart';
 import 'package:dtnd/utilities/time_utils.dart';
 import 'package:flutter/material.dart';
@@ -43,6 +42,7 @@ class StockOrderSheet extends StatefulWidget {
   final StockModel? stockModel;
   final OrderData? orderData;
   final int? defaultTab;
+
   @override
   State<StockOrderSheet> createState() => _StockOrderSheetState();
 }
@@ -62,8 +62,7 @@ class _StockOrderSheetState extends State<StockOrderSheet>
   late final TabController tabController;
   Timer? onPriceStoppedTyping;
   bool typingPrice = false;
-  bool ifFocus = false;
-
+  List<String?>? listMR;
   late OrderType selectedOrderType;
 
   StockModel? stockModel;
@@ -73,7 +72,7 @@ class _StockOrderSheetState extends State<StockOrderSheet>
   StockCashBalanceModel? stockCashBalanceModel;
 
   String? errorText;
-  String? _selectedItem;
+  String? _selectedItem = '';
 
   @override
   void initState() {
@@ -110,6 +109,8 @@ class _StockOrderSheetState extends State<StockOrderSheet>
         tabController.animateTo(widget.defaultTab!);
       }
     });
+    listMR = stockModel!.stockDataCore?.mr.map((mr) => mr.mr).toList();
+    _selectedItem = listMR?.first ?? '';
   }
 
   Future<void> getStockInfoCore() async {
@@ -135,23 +136,22 @@ class _StockOrderSheetState extends State<StockOrderSheet>
   }
 
   void select(OrderType orderType) {
-    // if (orderType.isLO && stockModel?.stockDataCore != null) {
-    //   final String currentPrice =
-    //       stockModel!.stockDataCore!.lastPrice?.toStringAsFixed(2) ??
-    //           stockModel!.stockDataCore!.r?.toString() ??
-    //           stockModel!.stockData.lastPrice.value?.toStringAsFixed(2) ??
-    //           "0";
-    //   priceController.value = TextEditingValue(
-    //     text: currentPrice,
-    //     selection: TextSelection.collapsed(offset: currentPrice.length),
-    //   );
-    // } else {
-    ifFocus = false;
-    priceController.value = TextEditingValue(
-      text: orderType.value,
-      selection: TextSelection.collapsed(offset: orderType.value.length),
-    );
-    // }
+    if (orderType.isLO && stockModel?.stockDataCore != null) {
+      final String currentPrice =
+          stockModel!.stockDataCore!.lastPrice?.toStringAsFixed(2) ??
+              stockModel!.stockDataCore!.r?.toString() ??
+              stockModel!.stockData.lastPrice.value?.toStringAsFixed(2) ??
+              "0";
+      priceController.value = TextEditingValue(
+        text: currentPrice,
+        selection: TextSelection.collapsed(offset: currentPrice.length),
+      );
+    } else {
+      priceController.value = TextEditingValue(
+        text: orderType.value,
+        selection: TextSelection.collapsed(offset: orderType.value.length),
+      );
+    }
     setState(() {
       selectedOrderType = orderType;
     });
@@ -159,7 +159,6 @@ class _StockOrderSheetState extends State<StockOrderSheet>
   }
 
   void onChangedPrice(num value) {
-    ifFocus = true;
     setState(() {
       selectedOrderType = listOrderTypes.first;
     });
@@ -170,22 +169,16 @@ class _StockOrderSheetState extends State<StockOrderSheet>
     setState(() {});
   }
 
-  bool isSelected(OrderType orderType) {
-    if(ifFocus){
-      return false;
-    }else{
-      return orderType == selectedOrderType;
-    }
-
-  }
+  bool isSelected(OrderType orderType) => orderType == selectedOrderType;
 
   void toConfirmPanel(Side side) async {
+    String format = volumeController.text;
     if (orderKey.currentState?.validate() ?? false) {
       final OrderData orderData = OrderData(
         stockModel: stockModel!,
         side: side,
         orderType: selectedOrderType,
-        volumn: num.parse(volumeController.text),
+        volumn: num.parse(format.replaceAll(',', '')),
         price: priceController.text,
       );
       Navigator.of(context).pop(NextCmd(orderData));
@@ -390,30 +383,42 @@ class _StockOrderSheetState extends State<StockOrderSheet>
                       decoration: const BoxDecoration(
                           borderRadius: BorderRadius.all(Radius.circular(4)),
                           color: AppColors.primary_01),
-                      child: GestureDetector(
-                        child: Text(
-                          "Ký quỹ ${stockCashBalanceModel?.imCk}%",
-                          style: AppTextStyle.labelSmall_10.copyWith(
-                            color: Colors.white,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                        onTap: () {
-                          print(stockModel!.stockDataCore?.mr.toString());
-                          List<Mr>? listMR = stockModel!.stockDataCore?.mr;
-                          DropdownButton(
-                            value: _selectedItem,
-                            items:
-                                listMR?.map<DropdownMenuItem<Mr>>((Mr value) {
-                              return DropdownMenuItem<Mr>(
-                                value: value,
-                                child: Text(value.info.toString()),
-                              );
-                            }).toList(),
-                            onChanged: (Mr) {},
-                          );
-                        },
-                      ),
+                      child: (listMR?.isNotEmpty == true)
+                          ? DropdownButton(
+                              alignment: AlignmentDirectional.topCenter,
+                              dropdownColor: AppColors.color_secondary,
+                              underline: const SizedBox.shrink(),
+                              borderRadius: BorderRadius.circular(12),
+                              icon: const SizedBox.shrink(),
+                              value: _selectedItem,
+                              onChanged: (String? newValue) {
+                                setState(() {
+                                  _selectedItem = newValue ?? '';
+                                });
+                              },
+                              items: listMR?.map<DropdownMenuItem<String>>(
+                                (String? option) {
+                                  return DropdownMenuItem(
+                                    value: option,
+                                    child: Text(
+                                      'Ký quỹ $option',
+                                      style:
+                                          AppTextStyle.labelSmall_10.copyWith(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                  );
+                                },
+                              ).toList(),
+                            )
+                          : Text(
+                              "Ký quỹ 100%",
+                              style: AppTextStyle.labelSmall_10.copyWith(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
                     )
                   ],
                 ),
