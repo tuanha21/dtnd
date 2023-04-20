@@ -1,15 +1,10 @@
 import 'dart:convert';
-import 'dart:math';
 
 import 'package:dtnd/=models=/check_account_success_data_model.dart';
 import 'package:dtnd/=models=/local/va_portfolio_model.dart';
 import 'package:dtnd/=models=/request/request_model.dart';
-import 'package:dtnd/=models=/response/account/asset_chart_element.dart';
-import 'package:dtnd/=models=/response/account/base_margin_account_model.dart';
 import 'package:dtnd/=models=/response/account/base_margin_plus_account_model.dart';
 import 'package:dtnd/=models=/response/account/i_account.dart';
-import 'package:dtnd/=models=/response/account/portfolio_status_model.dart';
-import 'package:dtnd/=models=/response/account/unexecuted_right_model.dart';
 import 'package:dtnd/=models=/response/account_info_model.dart';
 import 'package:dtnd/=models=/response/order_model/base_order_model.dart';
 import 'package:dtnd/=models=/response/total_asset_model.dart';
@@ -23,7 +18,6 @@ import 'package:dtnd/data/i_user_service.dart';
 import 'package:dtnd/data/implementations/local_storage_service.dart';
 import 'package:dtnd/data/implementations/network_service.dart';
 import 'package:dtnd/utilities/logger.dart';
-import 'package:dtnd/utilities/time_utils.dart';
 import 'package:get/get.dart';
 
 class UserService implements IUserService {
@@ -113,6 +107,7 @@ class UserService implements IUserService {
 
   @override
   Future<void> refreshAssets() {
+    getTotalAsset();
     return getListAccount();
   }
 
@@ -306,8 +301,6 @@ class UserService implements IUserService {
   //check account info
   @override
   Future<CheckAccountSuccessDataModel?> checkAccountInfo(String mail) {
-    print(mail);
-    print('getin@@@@@');
     Map<String, dynamic> body = {
       "user": "back",
       "cmd": "CHECK_ACCOUNT_INFO",

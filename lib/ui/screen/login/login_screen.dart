@@ -35,6 +35,7 @@ class _LoginScreenState extends State<LoginScreen> {
     localStorageService.sharedPreferences.setString(_userKey, userToken.user);
     localStorageService.sharedPreferences
         .setString(_userNameKey(userToken.user), userToken.name);
+    // return Navigator.of(context).pop(true);
     final NavigatorState? navigator = Navigator.maybeOf(context);
     if (navigator != null && navigator.canPop()) {
       return navigator.pop(true);
@@ -81,6 +82,7 @@ class _LoginScreenState extends State<LoginScreen> {
     if (firstTimeLogin || (widget.toSignup ?? false)) {
       hi = Text(
         S.of(context).hello,
+        overflow: TextOverflow.ellipsis,
         style:
             AppTextStyle.headlineSmall_24.copyWith(fontWeight: FontWeight.w700),
       );
@@ -112,6 +114,7 @@ class _LoginScreenState extends State<LoginScreen> {
     } else {
       hi = Text(
         "${S.of(context).hi} $name!",
+        overflow: TextOverflow.ellipsis,
         style:
             AppTextStyle.headlineSmall_24.copyWith(fontWeight: FontWeight.w700),
       );
@@ -147,7 +150,7 @@ class _LoginScreenState extends State<LoginScreen> {
               children: [
                 Row(
                   children: [
-                    hi,
+                    Expanded(child: hi),
                   ],
                 ),
                 const SizedBox(

@@ -43,34 +43,34 @@ class _MyAppBarState extends State<MyAppBar> {
   }
 
   Widget? get backButton {
-    final themeMode = AppService.instance.themeMode.value;
+    // final themeMode = AppService.instance.themeMode.value;
 
-    if (Navigator.canPop(context)) {
-      return Align(
-        alignment: Alignment.centerLeft,
-        child: Padding(
-          padding: const EdgeInsets.only(left: 16),
-          child: InkWell(
-            onTap: () => Navigator.of(context).pop(false),
-            borderRadius: const BorderRadius.all(Radius.circular(6)),
-            child: Ink(
-              padding: const EdgeInsets.all(10),
-              decoration: BoxDecoration(
-                borderRadius: const BorderRadius.all(Radius.circular(6)),
-                color: themeMode.isLight
-                    ? AppColors.neutral_05
-                    : AppColors.neutral_01,
-              ),
-              child: const Icon(
-                Icons.arrow_back_ios_new,
-                color: AppColors.primary_01,
-                size: 13,
-              ),
-            ),
-          ),
-        ),
-      );
-    }
+    // if (Navigator.canPop(context)) {
+    //   return Align(
+    //     alignment: Alignment.centerLeft,
+    //     child: Padding(
+    //       padding: const EdgeInsets.only(left: 16),
+    //       child: InkWell(
+    //         onTap: () => Navigator.of(context).pop(false),
+    //         borderRadius: const BorderRadius.all(Radius.circular(6)),
+    //         child: Ink(
+    //           padding: const EdgeInsets.all(10),
+    //           decoration: BoxDecoration(
+    //             borderRadius: const BorderRadius.all(Radius.circular(6)),
+    //             color: themeMode.isLight
+    //                 ? AppColors.neutral_05
+    //                 : AppColors.neutral_01,
+    //           ),
+    //           child: const Icon(
+    //             Icons.arrow_back_ios_new,
+    //             color: AppColors.primary_01,
+    //             size: 13,
+    //           ),
+    //         ),
+    //       ),
+    //     ),
+    //   );
+    // }
     return null;
   }
 

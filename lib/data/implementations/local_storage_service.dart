@@ -243,6 +243,6 @@ class LocalStorageService implements ILocalStorageService {
 
   @override
   Future<void> saveInfoRegistered(String infoRegistered) async {
-     sharedPreferences.setString(infoRegisteredKey, infoRegistered);
+    sharedPreferences.setString(infoRegisteredKey, infoRegistered);
   }
 }

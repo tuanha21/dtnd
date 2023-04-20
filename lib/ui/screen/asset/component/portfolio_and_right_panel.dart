@@ -1,4 +1,5 @@
 import 'package:dtnd/=models=/response/account/base_margin_account_model.dart';
+import 'package:dtnd/=models=/response/account/i_account.dart';
 import 'package:dtnd/data/implementations/network_service.dart';
 import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/screen/asset/component/investment_catalog_widget.dart';
@@ -18,8 +19,8 @@ import '../../../widget/tabbar/rounded_tabbar.dart';
 import 'buy_right_widget.dart';
 
 class PortfolioAndRightPanel extends StatefulWidget {
-  const PortfolioAndRightPanel({super.key});
-
+  const PortfolioAndRightPanel({super.key, this.account});
+  final IAccountModel? account;
   @override
   State<PortfolioAndRightPanel> createState() => _PortfolioAndRightPanelState();
 }

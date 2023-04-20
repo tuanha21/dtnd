@@ -36,14 +36,20 @@ abstract class ISheet implements IOverlay {
           child: content,
         );
       },
-    ).then((result) => cmd(ctx, result));
+    ).then((result) {
+      if (result == null) {
+        try {
+          return onTapOutside(ctx);
+        } catch (e) {
+          return Future.value(null);
+        }
+      }
+      return cmd(ctx, result);
+    });
   }
 
   @override
-  Future<UserCmd?> cmd(BuildContext context, UserCmd? cmd) {
-    if (cmd == null) {
-      return Future.value(null);
-    }
+  Future<UserCmd?> cmd(BuildContext context, UserCmd cmd) {
     if (cmd is BackCmd) {
       return onResultBack.call(cmd)?.then(
               (_) => back.call(cmd)?.show(context, backWidget.call(cmd))) ??
@@ -59,12 +65,10 @@ abstract class ISheet implements IOverlay {
             () => cmd,
           );
     }
-    // if (cmd is ToOptionCmd) {
-    //   for (var element in options!) {
-    //     if (element.runtimeType == cmd.runtimeType) {
-    //       return toOption(element, cmd)!.showSheet(context);
-    //     }
-    //   }
-    // }
+  }
+
+  @override
+  Future<UserCmd?> onTapOutside(BuildContext context) {
+    throw Exception();
   }
 }

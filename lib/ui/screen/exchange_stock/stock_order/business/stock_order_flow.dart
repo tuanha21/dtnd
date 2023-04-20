@@ -4,6 +4,7 @@ import 'package:dtnd/=models=/ui_model/dialog.dart';
 import 'package:dtnd/=models=/ui_model/overlay.dart';
 import 'package:dtnd/=models=/ui_model/sheet.dart';
 import 'package:dtnd/=models=/ui_model/user_cmd.dart';
+import 'package:dtnd/ui/screen/exchange_stock/stock_order/data/order_data.dart';
 import 'package:dtnd/ui/screen/exchange_stock/stock_order/sheet/cancel_order_sheet.dart';
 import 'package:dtnd/ui/screen/exchange_stock/stock_order/sheet/cancel_order_success_sheet.dart';
 import 'package:dtnd/ui/screen/exchange_stock/stock_order/sheet/change_order_success_sheet.dart';
@@ -87,7 +88,7 @@ class StockOrderConfirmISheet extends IStockOrderSheet {
   @override
   IOverlay? next([UserCmd? cmd]) {
     if (cmd is OrderSuccessCmd) {
-      return StockOrderSuccessISheet(stockModel);
+      return StockOrderSuccessISheet(cmd.data);
     } else {
       return StockOrderFailISheet(stockModel);
     }
@@ -200,9 +201,9 @@ class CancelStockOrderISheet extends IStockOrderSheet {
 }
 
 class StockOrderSuccessISheet extends IDialog {
-  final StockModel? stockModel;
+  final OrderData? orderData;
 
-  StockOrderSuccessISheet(this.stockModel);
+  StockOrderSuccessISheet(this.orderData);
 
   @override
   ISheet? back([dynamic cmd]) => null;
@@ -233,6 +234,11 @@ class StockOrderSuccessISheet extends IDialog {
 
   @override
   Future<void>? onResultNext([cmd]) => null;
+
+  @override
+  Future<UserCmd?> onTapOutside(BuildContext context) {
+    return cmd(context, ToStockOrderCmd(orderData));
+  }
 }
 
 class ChangeOrderSuccessISheet extends IDialog {

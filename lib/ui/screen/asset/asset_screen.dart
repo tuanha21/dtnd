@@ -348,14 +348,15 @@ class _AssetScreenState extends State<AssetScreen>
       );
       if (toLogin ?? false) {
         if (!mounted) return;
-        await Navigator.of(context)
+        Navigator.of(context)
             .push<bool>(MaterialPageRoute(
           builder: (context) => const LoginScreen(),
         ))
             .then((result) async {
           if ((result ?? false)) {
             setState(() {});
-            if (!localStorageService.biometricsRegistered) {
+            if (!localStorageService.biometricsRegistered &&
+                localStorageService.isDeviceSupport) {
               final reg = await showDialog<bool>(
                 context: context,
                 builder: (context) {
@@ -383,6 +384,7 @@ class _AssetScreenState extends State<AssetScreen>
             }
             return _onFABTapped();
           }
+          return _onFABTapped();
         });
       }
     } else {
@@ -404,7 +406,8 @@ class _AssetScreenState extends State<AssetScreen>
                 orderData: null,
               ))
           .then((value) => userService.defaultAccount.value
-              ?.refreshAsset(userService, networkService));
+              ?.refreshAsset(userService, networkService)
+              .then((value) => setState(() {})));
     }
   }
 }

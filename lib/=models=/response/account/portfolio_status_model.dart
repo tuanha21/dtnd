@@ -4,11 +4,9 @@ import 'package:dtnd/=models=/core_response_model.dart';
 import 'package:dtnd/=models=/stock_status.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
-import 'package:dtnd/utilities/logger.dart';
 
 class PortfolioStatus {
   String? symbol;
-
   String? account;
   num? value;
   num? marketValue;

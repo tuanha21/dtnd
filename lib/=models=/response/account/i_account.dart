@@ -5,6 +5,7 @@ import 'package:dtnd/data/i_network_service.dart';
 import 'package:dtnd/data/i_user_service.dart';
 import 'package:dtnd/utilities/logger.dart';
 import 'package:dtnd/utilities/time_utils.dart';
+import 'package:get/get.dart';
 
 import 'asset_chart_element.dart';
 import 'base_margin_account_model.dart';
