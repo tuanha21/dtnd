@@ -236,7 +236,9 @@ class _OrderRecordWidgetState extends State<OrderRecordWidget> {
                       ),
                       const SizedBox(height: 6),
                       Text(
-                        '${NumUtils.formatDouble(widget.data.matchVolume, "-")}/${widget.data.volume!}',
+                        widget.data.matchVolume == 0.0
+                            ? '_'
+                            : '${NumUtils.formatDouble(widget.data.matchVolume)}/${widget.data.volume!}',
                         style: AppTextStyle.labelSmall_10
                             .copyWith(color: AppColors.neutral_01),
                       ),

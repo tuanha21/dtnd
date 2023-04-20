@@ -173,13 +173,19 @@ class _HistoryTabState extends State<HistoryTab>
                                     fontWeight: FontWeight.w500,
                                   ),
                                 ),
-                                Text(
-                                  NumUtils.formatInteger(
-                                      (listDatas.elementAt(i).cMATCHPRICE ??
-                                              0) /
-                                          1000),
-                                  style: AppTextStyle.labelSmall_10,
-                                )
+                                listDatas.elementAt(i).cMATCHPRICE == 0.0
+                                    ? Text(
+                                        '-',
+                                        style: AppTextStyle.labelSmall_10,
+                                      )
+                                    : Text(
+                                        NumUtils.formatInteger((listDatas
+                                                    .elementAt(i)
+                                                    .cMATCHPRICE ??
+                                                0) /
+                                            1000),
+                                        style: AppTextStyle.labelSmall_10,
+                                      )
                               ],
                             )),
                             Expanded(
@@ -193,12 +199,18 @@ class _HistoryTabState extends State<HistoryTab>
                                       fontWeight: FontWeight.w500,
                                     ),
                                   ),
-                                  Text(
-                                    NumUtils.formatInteger(
-                                        (listDatas.elementAt(i).cFEEVALUE ??
-                                            0)),
-                                    style: AppTextStyle.labelSmall_10,
-                                  )
+                                  listDatas.elementAt(i).cFEEVALUE == 0.0
+                                      ? Text(
+                                          '_',
+                                          style: AppTextStyle.labelSmall_10,
+                                        )
+                                      : Text(
+                                          NumUtils.formatInteger((listDatas
+                                                  .elementAt(i)
+                                                  .cFEEVALUE ??
+                                              0)),
+                                          style: AppTextStyle.labelSmall_10,
+                                        )
                                 ],
                               ),
                             )

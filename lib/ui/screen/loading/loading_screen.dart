@@ -72,13 +72,51 @@ class _LoadingScreenState extends State<LoadingScreen>
             Positioned(
               top: size.height / 2.7,
               child: SizedBox(
-                height: 150,
-                child: Image.asset(
-                  AppImages.loading_light_logo,
-                  fit: BoxFit.contain,
+                width: MediaQuery.of(context).size.width * 0.6,
+                child: Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Text(
+                          'IFIS',
+                          style: Theme.of(context)
+                              .textTheme
+                              .labelLarge
+                              ?.copyWith(
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 50,
+                                  color: AppColors.loading_text),
+                        ),
+                        SizedBox(
+                          height: 85,
+                          child: Image.asset(
+                            AppImages.loading_light_logo,
+                            fit: BoxFit.fitHeight,
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Text(
+                      'TÀI CHÍNH THÔNG MINH',
+                      style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                          fontWeight: FontWeight.w700,
+                          color: AppColors.loading_text),
+                    ),
+                    Text(
+                      'TƯƠNG LAI SÁNG TẠO',
+                      style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                          fontWeight: FontWeight.w700,
+                          color: AppColors.loading_text),
+                    )
+                  ],
                 ),
               ),
             ),
+
             // Positioned(
             //     bottom: size.height * 0.1,
             //     child: SizedBox(

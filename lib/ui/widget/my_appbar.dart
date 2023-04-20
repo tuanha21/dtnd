@@ -166,7 +166,7 @@ class _MyAppBarState extends State<MyAppBar> {
           colors: [AppColors.linear_01, AppColors.linear_02],
         ),
       )),
-      leading: widget.leading ?? backButton,
+      leading: widget.leading,
       title: title,
       actions: _actions,
       backgroundColor: widget.backgroundColor,

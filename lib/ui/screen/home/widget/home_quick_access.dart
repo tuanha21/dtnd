@@ -83,7 +83,8 @@ extension QuickAccessX on QuickAccess {
 }
 
 class HomeQuickAccess extends StatefulWidget {
-  const HomeQuickAccess({super.key, required this.hasUser, required this.navigateTab});
+  const HomeQuickAccess(
+      {super.key, required this.hasUser, required this.navigateTab});
   final bool hasUser;
   final ValueChanged<HomeNav> navigateTab;
 
@@ -131,9 +132,7 @@ class _HomeQuickAccessState extends State<HomeQuickAccess> {
                       const SizedBox(
                         height: 14,
                       ),
-                       _AssetRow(
-                          widget.navigateTab
-                      ),
+                      _AssetRow(widget.navigateTab),
                       // const Separator(
                       //   padding: EdgeInsets.symmetric(vertical: 16),
                       //   color: AppColors.neutral_05,
@@ -156,44 +155,44 @@ class _HomeQuickAccessState extends State<HomeQuickAccess> {
                       //   ),
                     ],
                   )
-                : Row(
-                    children: [
-                      Expanded(
-                        flex: 5,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text("Đăng nhập",
-                                style: AppTextStyle.titleLarge_18
-                                    .copyWith(color: AppColors.primary_01)),
-                            const SizedBox(
-                              height: 4,
-                            ),
-                            const Text(
-                              "Kết nối đến thị trường chứng khoán sôi động của IFIS ngay nào!",
-                              maxLines: 2,
-                            )
-                          ],
+                : GestureDetector(
+                    onTap: () => {
+                      Navigator.of(context).push<bool>(
+                        MaterialPageRoute(
+                          builder: (context) => const LoginScreen(),
                         ),
                       ),
-                      // Expanded(child: SizedBox()),
-                      Expanded(
-                        flex: 1,
-                        child: GestureDetector(
-                          onTap: () => {
-                            Navigator.of(context).push<bool>(
-                              MaterialPageRoute(
-                                builder: (context) => const LoginScreen(),
+                    },
+                    child: Row(
+                      children: [
+                        Expanded(
+                          flex: 5,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text("Đăng nhập",
+                                  style: AppTextStyle.titleLarge_18
+                                      .copyWith(color: AppColors.primary_01)),
+                              const SizedBox(
+                                height: 4,
                               ),
-                            ),
-                          },
-                          child: const Icon(
+                              const Text(
+                                "Kết nối đến thị trường chứng khoán sôi động của IFIS ngay nào!",
+                                maxLines: 2,
+                              )
+                            ],
+                          ),
+                        ),
+                        // Expanded(child: SizedBox()),
+                        const Expanded(
+                          flex: 1,
+                          child: Icon(
                             Icons.arrow_forward_ios_rounded,
                             color: AppColors.text_black,
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ));
       },
     );
@@ -253,13 +252,14 @@ class __AssetRowState extends State<_AssetRow> {
             Icons.arrow_forward_ios_rounded,
             color: AppColors.text_black,
           ),
-          onTap: (){
-            if(!userService.isLogin){
-              Navigator.of(context)
-                  .push<bool>(MaterialPageRoute(
-                builder: (context) => const LoginScreen(),
-              ),);
-            }else{
+          onTap: () {
+            if (!userService.isLogin) {
+              Navigator.of(context).push<bool>(
+                MaterialPageRoute(
+                  builder: (context) => const LoginScreen(),
+                ),
+              );
+            } else {
               widget.navigateTab.call(HomeNav.asset);
             }
           },

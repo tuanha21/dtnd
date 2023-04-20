@@ -44,7 +44,6 @@ class _OtpForgotPasswordState extends State<OtpForgotPassword> {
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: OtpWidget(
-          // changePassword: () {},
           email: widget.email,
           onSuccess: () {
             Navigator.push(

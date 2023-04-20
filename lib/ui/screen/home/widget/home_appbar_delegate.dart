@@ -203,7 +203,7 @@ class HomeAppbarDelegate extends SliverPersistentHeaderDelegate {
   double get minExtent {
     if (Platform.isAndroid) {
       if (userService.userInfo.value == null) return 190;
-      return 148;
+      return 155;
     } else {
       if (userService.userInfo.value == null) return 215;
       return 175;

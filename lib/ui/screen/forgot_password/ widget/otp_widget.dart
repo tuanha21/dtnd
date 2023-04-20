@@ -202,28 +202,6 @@ class _OtpWidgetState extends State<OtpWidget> {
                   fontWeight: FontWeight.w700, color: AppColors.neutral_07),
             ),
           ),
-          // Builder(builder: (context) {
-          //   late final VoidCallback? next;
-          //   if (canNext) {
-          //     next = onVerify;
-          //   } else {
-          //     next = null;
-          //   }
-
-          //   return SizedBox(
-          //     width: Responsive.getMaxWidth(context) - 32,
-          //     child: TextButton(
-          //       onPressed: next,
-          //       style: const ButtonStyle(
-          //           padding: MaterialStatePropertyAll(EdgeInsets.all(14))),
-          //       child: Text(
-          //         S.of(context).confirm,
-          //         style: AppTextStyle.bodyMedium_14.copyWith(
-          //             fontWeight: FontWeight.w700, color: AppColors.neutral_07),
-          //       ),
-          //     ),
-          //   );
-          // }),
         ],
       ),
     );
@@ -235,15 +213,6 @@ class _OtpWidgetState extends State<OtpWidget> {
     });
     final verified = await widget.verifyOTP.call(controller.text);
     if (verified) {
-      // try {
-      //   await widget.changePassword.call();
-      // } catch (e) {
-      //   if (mounted) {
-      //     return AppSnackBar.showInfo(context, message: e.toString());
-      //   } else {
-      //     return;
-      //   }
-      // }
       widget.onSuccess.call();
     } else {
       setState(() {

@@ -77,4 +77,6 @@ abstract class IUserService {
   Future<void> saveValueRegisterVa();
 
   Future<CheckAccountSuccessDataModel?> checkAccountInfo(String mail);
+  Future<bool> resetPassword(
+      String id, String phone, String mail, String password);
 }

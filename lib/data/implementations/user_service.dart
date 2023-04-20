@@ -316,6 +316,20 @@ class UserService implements IUserService {
     return networkService.checkAccountInfo(jsonEncode(body));
   }
 
+  @override
+  Future<bool> resetPassword(
+      String id, String phone, String mail, String password) {
+    Map<String, dynamic> body = {
+      "user": "back",
+      "cmd": "CHECK_ACCOUNT_INFO",
+      "sid": "",
+      "param": {
+        "CUST_EMAIL": mail,
+      }
+    };
+    return networkService.resetPassword(jsonEncode(body));
+  }
+
   // VA
   @override
   Future<VAPortfolio> getVAPortfolio() async {

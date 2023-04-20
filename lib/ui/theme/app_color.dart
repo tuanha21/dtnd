@@ -10,6 +10,7 @@ class AppColors {
   static const primary_05 = Color(0xFF2222FF);
   static const linear_01 = Color(0xFF004DF0);
   static const linear_02 = Color(0xFF012267);
+  static const loading_text = Color(0xFF01287B);
 
   static const lighter_primary = Color(0xFFDFE7FF);
   static const secondary = Color(0xFFFCC927);
