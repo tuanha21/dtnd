@@ -47,6 +47,7 @@ class _OverviewTabState extends State<OverviewTab>
   @override
   void initState() {
     super.initState();
+
     getEvent();
   }
 

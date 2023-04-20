@@ -27,12 +27,15 @@ class _DerivativeWidgetState extends State<DerivativeWidget> {
   }
 
   void initDerivative() {
+    print('333333333333333');
+
     // get list derivative
     listStocks = dataCenterService.getListDerivative();
   }
 
   @override
   Widget build(BuildContext context) {
+    print('222222222@@22');
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [

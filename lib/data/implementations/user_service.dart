@@ -395,10 +395,13 @@ class UserService implements IUserService {
       String id, String phone, String mail, String password) {
     Map<String, dynamic> body = {
       "user": "back",
-      "cmd": "CHECK_ACCOUNT_INFO",
+      "cmd": "RESET_ACCOUNT_PASS",
       "sid": "",
       "param": {
+        "USER_ID": id,
+        "CUST_MOBILE": phone,
         "CUST_EMAIL": mail,
+        "CUST_PASSWORD": password
       }
     };
     return networkService.resetPassword(jsonEncode(body));
