@@ -90,66 +90,66 @@ class _ListFunctionState extends State<ListFunction> {
         itemCount: widget.list.length,
         itemBuilder: (BuildContext context, int index) {
           var item = widget.list[index];
-          return ExpansionTile(
-              // onExpansionChanged: (value) {
-              //   onRouteBigTitle(item.title, context);
-              // },
-              iconColor: AppColors.text_black_1,
-              tilePadding: const EdgeInsets.only(left: 4),
-              leading: Image.asset(
-                item.iconPath!,
-                height: 24,
-                width: 24,
-                fit: BoxFit.cover,
-              ),
-              title: Container(
-                padding: EdgeInsets.zero, //
-                child: Text(
-                  item.title,
-                  textAlign: TextAlign.left,
-                  style: Theme.of(context).textTheme.bodyMedium,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
+          return Theme(
+            data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
+            child: ExpansionTile(
+                iconColor: AppColors.text_black_1,
+                tilePadding: const EdgeInsets.only(left: 4),
+                leading: Image.asset(
+                  item.iconPath!,
+                  height: 24,
+                  width: 24,
+                  fit: BoxFit.cover,
                 ),
-              ),
-              trailing: (index == 0 || index == 2 || index == 4 || index == 6)
-                  ? const SizedBox.shrink()
-                  : const Icon(
-                      Icons.keyboard_arrow_down,
-                      color: AppColors.neutral_01,
-                    ),
-              children: [
-                item.subTitle!.isNotEmpty == true
-                    ? MediaQuery.removePadding(
-                        context: context,
-                        removeTop: true,
-                        removeBottom: true,
-                        child: ListView.builder(
-                            physics: const NeverScrollableScrollPhysics(),
-                            padding: const EdgeInsets.only(left: 21),
-                            shrinkWrap: true,
-                            itemCount: item.subTitle?.length,
-                            itemBuilder: (BuildContext context, int index) {
-                              return GestureDetector(
-                                onTap: () => onRouteSubTitle(
-                                    item.subTitle![index], context),
-                                child: Container(
-                                    padding: const EdgeInsets.only(
-                                        left: 40, bottom: 10),
-                                    height: 40,
-                                    child: Text(
-                                      item.subTitle![index],
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyMedium
-                                          ?.copyWith(
-                                              color: AppColors.neutral_02),
-                                    )),
-                              );
-                            }),
-                      )
-                    : Container(),
-              ]);
+                title: Container(
+                  padding: EdgeInsets.zero, //
+                  child: Text(
+                    item.title,
+                    textAlign: TextAlign.left,
+                    style: Theme.of(context).textTheme.bodyMedium,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+                trailing: (index == 0 || index == 2 || index == 4 || index == 6)
+                    ? const SizedBox.shrink()
+                    : const Icon(
+                        Icons.keyboard_arrow_down,
+                        color: AppColors.neutral_01,
+                      ),
+                children: [
+                  item.subTitle!.isNotEmpty == true
+                      ? MediaQuery.removePadding(
+                          context: context,
+                          removeTop: true,
+                          removeBottom: true,
+                          child: ListView.builder(
+                              physics: const NeverScrollableScrollPhysics(),
+                              padding: const EdgeInsets.only(left: 21),
+                              shrinkWrap: true,
+                              itemCount: item.subTitle?.length,
+                              itemBuilder: (BuildContext context, int index) {
+                                return GestureDetector(
+                                  onTap: () => onRouteSubTitle(
+                                      item.subTitle![index], context),
+                                  child: Container(
+                                      padding: const EdgeInsets.only(
+                                          left: 40, bottom: 10),
+                                      height: 40,
+                                      child: Text(
+                                        item.subTitle![index],
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyMedium
+                                            ?.copyWith(
+                                                color: AppColors.neutral_02),
+                                      )),
+                                );
+                              }),
+                        )
+                      : Container(),
+                ]),
+          );
         });
   }
 }
