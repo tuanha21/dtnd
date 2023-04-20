@@ -35,7 +35,6 @@ class _HomeScreenState extends State<HomeScreen>
 
   @override
   Widget build(BuildContext context) {
-    // super.build(context);
     return RefreshIndicator(
       onRefresh: () async {
         await userService.refreshAssets();

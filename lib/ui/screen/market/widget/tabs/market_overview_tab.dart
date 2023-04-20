@@ -27,13 +27,14 @@ class _MarketOverviewTabState extends State<MarketOverviewTab> {
   final ILocalStorageService localStorageService = LocalStorageService();
   final IUserService userService = UserService();
   final MarketController marketController = MarketController();
-
   late final List<StockModel> listCatalog;
 
   @override
   void initState() {
     super.initState();
   }
+
+  Future<void> _reloadData() async {}
 
   List<charts.Series<DeepModel, String>> _generateData(List<DeepModel> datas) {
     datas.removeWhere((element) => element.tYPE == "Total");
@@ -82,25 +83,28 @@ class _MarketOverviewTabState extends State<MarketOverviewTab> {
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      children: const [
-        IndexChart(),
-        DerivativeWidget(),
-        // ObxValue<Rx<bool>>((loading) {
-        //   if (loading.value) {
-        //     return Center(
-        //       child: Text(S.of(context).loading),
-        //     );
-        //   }
-        //   final seriesList = _generateData(marketController.listDeepMarket);
-        //   return Padding(
-        //     padding: const EdgeInsets.symmetric(horizontal: 20),
-        //     child: DeepMarketChart(seriesList),
-        //   );
-        // }, marketController.loadingDeepModel),
-        HeapMapKL(),
-        SizedBox(height: 100),
-      ],
+    return RefreshIndicator(
+      onRefresh: _reloadData,
+      child: ListView(
+        children: const [
+          IndexChart(),
+          DerivativeWidget(),
+          // ObxValue<Rx<bool>>((loading) {
+          //   if (loading.value) {
+          //     return Center(
+          //       child: Text(S.of(context).loading),
+          //     );
+          //   }
+          //   final seriesList = _generateData(marketController.listDeepMarket);
+          //   return Padding(
+          //     padding: const EdgeInsets.symmetric(horizontal: 20),
+          //     child: DeepMarketChart(seriesList),
+          //   );
+          // }, marketController.loadingDeepModel),
+          HeapMapKL(),
+          SizedBox(height: 100),
+        ],
+      ),
     );
   }
 }

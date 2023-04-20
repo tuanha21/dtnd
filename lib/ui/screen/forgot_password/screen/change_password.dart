@@ -1,4 +1,6 @@
 import 'dart:async';
+import 'dart:convert';
+import 'package:crypto/crypto.dart';
 import 'package:dtnd/=models=/check_account_success_data_model.dart';
 import 'package:dtnd/data/i_user_service.dart';
 import 'package:dtnd/data/implementations/user_service.dart';
@@ -192,11 +194,15 @@ class _ChangePasswordState extends State<ChangePassword> {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
 
+      List<int> inputPass = utf8.encode(_passwordController.text);
+      Digest md5Hash = md5.convert(inputPass);
+      String passCode = md5Hash.toString().toUpperCase();
+
       final result = await userService.resetPassword(
           widget.accountInfo.cCARDID!,
           widget.accountInfo.cCUSTMOBILE!,
           widget.accountInfo.cCUSTEMAIL!,
-          _passwordController.text);
+          passCode);
       if (result) {
         if (!mounted) {
           return;
