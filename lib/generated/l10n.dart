@@ -500,6 +500,26 @@ class S {
     );
   }
 
+  /// `Stock code`
+  String get stock_code {
+    return Intl.message(
+      'Stock code',
+      name: 'stock_code',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Stock code`
+  String get stk_code {
+    return Intl.message(
+      'Stock code',
+      name: 'stk_code',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Ceil`
   String get ceil {
     return Intl.message(
@@ -1295,6 +1315,26 @@ class S {
     return Intl.message(
       'Order value',
       name: 'order_value',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Trading fee`
+  String get td_fee {
+    return Intl.message(
+      'Trading fee',
+      name: 'td_fee',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Trading fee`
+  String get trading_fee {
+    return Intl.message(
+      'Trading fee',
+      name: 'trading_fee',
       desc: '',
       args: [],
     );
@@ -2187,6 +2227,16 @@ class S {
     return Intl.message(
       'Create new order',
       name: 'create_new_order',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Confirm change order`
+  String get confirm_change_order {
+    return Intl.message(
+      'Confirm change order',
+      name: 'confirm_change_order',
       desc: '',
       args: [],
     );

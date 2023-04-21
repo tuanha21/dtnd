@@ -250,7 +250,6 @@ class UserService implements IUserService {
       "account": token.value!.user,
       "textSearch": searchString,
     };
-    print(jsonEncode(body));
     networkService.putSearchHistory(jsonEncode(body));
     return;
   }
@@ -259,7 +258,7 @@ class UserService implements IUserService {
 
   @override
   Future<bool> verifyRegisterInfo(String mobile, String mail) async {
-    Map<String, dynamic> body = {
+    final Map<String, dynamic> body = {
       "user": "back",
       "cmd": "CHECK_OPENACC",
       "param": {"C_MOBILE": mobile, "C_EMAIL": mail}
@@ -405,5 +404,31 @@ class UserService implements IUserService {
     };
     isRegisterVa.value = await networkService.checkInfoVa(jsonEncode(body));
     return;
+  }
+
+  @override
+  Future<void> deleteAccount() async {
+    final Map<String, dynamic> body = {
+      "user": token.value?.user ?? '',
+      "session": token.value?.sid ?? '',
+      "group": "B",
+      "data": {
+        "type": "object",
+        "cmd": "ClosedAccount",
+        "p1": {
+          "ACCOUNT_CODE": token.value?.defaultAcc ?? "",
+        },
+      },
+    };
+    try {
+      await networkService.deleteAccount(jsonEncode(body));
+      deleteToken();
+      return;
+    } on Map<String, dynamic> catch (res) {
+      throw res['sRs'];
+    } catch (e) {
+      logger.e(e);
+      throw e.runtimeType.toString();
+    }
   }
 }

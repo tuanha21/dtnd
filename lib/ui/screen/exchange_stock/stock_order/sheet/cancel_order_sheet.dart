@@ -48,13 +48,19 @@ class _CancelStockOrderSheetState extends State<CancelStockOrderSheet>
   final GlobalKey<FormState> pinKey = GlobalKey<FormState>();
   final TextEditingController pinController = TextEditingController();
   final ILocalStorageService localStorageService = LocalStorageService();
+
+  bool loading = false;
   bool checked = false;
 
   String? errorText;
 
   void onConfirm() async {
+    if (loading) {
+      return;
+    }
     setState(() {
       errorText = null;
+      loading = true;
     });
     if (pinKey.currentState?.validate() ?? false) {
       await exchangeService
@@ -64,12 +70,14 @@ class _CancelStockOrderSheetState extends State<CancelStockOrderSheet>
         pinController.text,
       )
           .then((value) {
+        loading = false;
         if (checked) {
           localStorageService.sharedPreferences
               .setString('pincode', pinController.text);
         }
         return Navigator.of(context).pop(const OrderSuccessCmd());
       }).onError((error, stackTrace) {
+        loading = false;
         logger.e(error);
         if (error is String) {
           setState(() {

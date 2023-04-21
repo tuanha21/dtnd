@@ -1,15 +1,18 @@
 import 'package:dtnd/=models=/response/order_model/base_order_model.dart';
 import 'package:dtnd/data/i_user_service.dart';
 import 'package:dtnd/data/implementations/user_service.dart';
-import 'package:dtnd/ui/screen/exchange_stock/stock_order/business/stock_order_flow.dart';
 import 'package:dtnd/ui/widget/empty_list_widget.dart';
 import 'package:flutter/material.dart';
 
 import 'order_record_widget.dart';
 
 class OrderOrderNotePanel extends StatefulWidget {
-  const OrderOrderNotePanel({super.key});
-
+  const OrderOrderNotePanel(
+      {super.key,
+      required this.onChangedOrder,
+      required this.onCancelledOrder});
+  final ValueChanged<BaseOrderModel> onChangedOrder;
+  final ValueChanged<BaseOrderModel> onCancelledOrder;
   @override
   State<OrderOrderNotePanel> createState() => _OrderOrderNotePanelState();
 }
@@ -25,7 +28,7 @@ class _OrderOrderNotePanelState extends State<OrderOrderNotePanel> {
 
   Future<void> getIndayOrder() async {
     listOrder = await userService.getIndayOrder(
-        accountCode: "${userService.token.value!.user}9", recordPerPage: 3);
+        accountCode: userService.token.value!.defaultAcc, recordPerPage: 3);
     if (mounted) {
       setState(() {});
     }
@@ -38,8 +41,8 @@ class _OrderOrderNotePanelState extends State<OrderOrderNotePanel> {
       for (BaseOrderModel record in listOrder!) {
         records.add(OrderRecordWidget(
           data: record,
-          onChange: () => Navigator.of(context).pop(ToChangeOrderCmd(record)),
-          onCancel: () => Navigator.of(context).pop(ToCancelOrderCmd(record)),
+          onChange: () => widget.onChangedOrder.call(record),
+          onCancel: () => widget.onCancelledOrder.call(record),
         ));
       }
     }

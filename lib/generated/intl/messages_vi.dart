@@ -146,6 +146,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "conditional_note":
             MessageLookupByLibrary.simpleMessage("SL điều kiện"),
         "confirm": MessageLookupByLibrary.simpleMessage("Xác nhận"),
+        "confirm_change_order":
+            MessageLookupByLibrary.simpleMessage("Xác nhận sửa lệnh"),
         "contact_infomation":
             MessageLookupByLibrary.simpleMessage("Thông tin liên lạc"),
         "copyTrade_asset":
@@ -431,11 +433,13 @@ class MessageLookup extends MessageLookupByLibrary {
         "status_close": MessageLookupByLibrary.simpleMessage("Đóng cửa"),
         "status_intermission": MessageLookupByLibrary.simpleMessage("Tạm nghỉ"),
         "status_open": MessageLookupByLibrary.simpleMessage("Mở cửa"),
+        "stk_code": MessageLookupByLibrary.simpleMessage("Mã CK"),
         "stock": MessageLookupByLibrary.simpleMessage("Cổ phiếu"),
         "stock_already_exist": MessageLookupByLibrary.simpleMessage(
             "Mã đã tồn tại trong danh mục"),
         "stock_analysis":
             MessageLookupByLibrary.simpleMessage("Phân tích cổ phiếu"),
+        "stock_code": MessageLookupByLibrary.simpleMessage("Mã chứng khoán"),
         "stock_order": MessageLookupByLibrary.simpleMessage("Đặt lệnh"),
         "stock_statement":
             MessageLookupByLibrary.simpleMessage("Sao kê chứng khoán"),
@@ -450,6 +454,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage(
                 "Tạo tài khoản\ntrợ lý ảo thành công"),
         "tax_fee": MessageLookupByLibrary.simpleMessage("Phí thuê"),
+        "td_fee": MessageLookupByLibrary.simpleMessage("Phí GD"),
         "technical_analysis":
             MessageLookupByLibrary.simpleMessage("Phân tích kỹ thuật"),
         "technical_trading_newbie": MessageLookupByLibrary.simpleMessage(
@@ -481,6 +486,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "total_wvalue": m9,
         "trading": MessageLookupByLibrary.simpleMessage("Giao dịch"),
         "trading_board": MessageLookupByLibrary.simpleMessage("Bảng giá"),
+        "trading_fee": MessageLookupByLibrary.simpleMessage("Phí giao dịch"),
         "trading_volatility":
             MessageLookupByLibrary.simpleMessage("Biến động GD"),
         "transaction": MessageLookupByLibrary.simpleMessage("Giao dịch"),

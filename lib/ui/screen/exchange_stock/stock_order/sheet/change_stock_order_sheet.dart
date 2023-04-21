@@ -33,7 +33,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_svg/svg.dart';
 
-
 class ChangeStockOrderSheet extends StatefulWidget {
   const ChangeStockOrderSheet({
     super.key,
@@ -60,6 +59,8 @@ class _ChangeStockOrderSheetState extends State<ChangeStockOrderSheet>
 
   final TextEditingController pinController = TextEditingController();
   final ILocalStorageService localStorageService = LocalStorageService();
+
+  bool loading = false;
   bool checked = false;
 
   Timer? onPriceStoppedTyping;
@@ -94,18 +95,15 @@ class _ChangeStockOrderSheetState extends State<ChangeStockOrderSheet>
   }
 
   void onConfirm() async {
-    // final OrderData orderData = OrderData(
-    //   stockModel: stockModel!,
-    //   side: side,
-    //   volumn: num.parse(volumnController.text),
-    //   price: priceController.text,
-    //   orderType: OrderType.LO,
-    // );
+    if (loading) {
+      return;
+    }
     setState(() {
       errorText = null;
+      loading = true;
     });
     if (pinKey.currentState?.validate() ?? false) {
-      await exchangeService
+      exchangeService
           .changeOrder(
         userService,
         widget.data,
@@ -115,13 +113,16 @@ class _ChangeStockOrderSheetState extends State<ChangeStockOrderSheet>
       )
           .then(
         (value) {
+          loading = false;
           if (checked) {
             localStorageService.sharedPreferences
                 .setString('pincode', pinController.text);
           }
-          return Navigator.of(context).pop(OrderSuccessCmd());
+          return Navigator.of(context).pop(const OrderSuccessCmd());
         },
       ).onError((error, stackTrace) {
+        loading = false;
+
         logger.e(error);
         if (error is int) {
           setState(() {
@@ -142,15 +143,15 @@ class _ChangeStockOrderSheetState extends State<ChangeStockOrderSheet>
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SheetHeader(
-              title: "Xác nhận sửa lệnh",
+            SheetHeader(
+              title: S.of(context).confirm_change_order,
               implementBackButton: true,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "Mã CK",
+                  S.of(context).stk_code,
                   style: textTheme.bodySmall,
                 ),
                 Text(
@@ -228,7 +229,7 @@ class _ChangeStockOrderSheetState extends State<ChangeStockOrderSheet>
                                 onTap: () {
                                   checked = !checked;
                                   if (checked && pinController.text != '') {
-                                    EasyLoading.showToast('Đã lưu pin code ',
+                                    EasyLoading.showToast('Đã lưu pincode ',
                                         maskType: EasyLoadingMaskType.clear);
                                   }
                                   setState(() {});

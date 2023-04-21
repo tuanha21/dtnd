@@ -50,9 +50,9 @@ class StockOrderISheet extends IStockOrderSheet {
   @override
   ISheet? next([UserCmd? cmd]) {
     if (cmd is ToChangeOrderCmd) {
-      return ChangeStockOrderISheet(stockModel, cmd.data);
+      return ChangeStockOrderISheet(cmd.data.first, cmd.data.last);
     } else if (cmd is ToCancelOrderCmd) {
-      return CancelStockOrderISheet(stockModel, cmd.data);
+      return CancelStockOrderISheet(cmd.data.first, cmd.data.last);
     }
     return StockOrderConfirmISheet(stockModel);
   }
@@ -63,9 +63,9 @@ class StockOrderISheet extends IStockOrderSheet {
   @override
   Widget? nextWidget([cmd]) {
     if (cmd is ToChangeOrderCmd) {
-      return ChangeStockOrderSheet(data: cmd.data);
+      return ChangeStockOrderSheet(data: cmd.data.last);
     } else if (cmd is ToCancelOrderCmd) {
-      return CancelStockOrderSheet(data: cmd.data);
+      return CancelStockOrderSheet(data: cmd.data.last);
     }
     return StockOrderConfirmSheet(
       orderData: cmd!.data,
@@ -138,7 +138,7 @@ class ChangeStockOrderISheet extends IStockOrderSheet {
   @override
   Widget? backWidget([cmd]) => StockOrderSheet(
         stockModel: stockModel,
-        orderData: cmd!.data,
+        orderData: cmd?.data,
       );
 
   @override
