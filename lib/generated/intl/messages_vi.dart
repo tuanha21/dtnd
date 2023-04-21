@@ -161,6 +161,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "confirm": MessageLookupByLibrary.simpleMessage("Xác nhận"),
         "confirm_change_order":
             MessageLookupByLibrary.simpleMessage("Xác nhận sửa lệnh"),
+        "confirm_command_edit":
+            MessageLookupByLibrary.simpleMessage("Xác nhận sửa lệnh"),
         "contact_infomation":
             MessageLookupByLibrary.simpleMessage("Thông tin liên lạc"),
         "copyTrade_asset":
@@ -464,6 +466,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "stock_analysis":
             MessageLookupByLibrary.simpleMessage("Phân tích cổ phiếu"),
         "stock_code": MessageLookupByLibrary.simpleMessage("Mã chứng khoán"),
+        "stock_exchange":
+            MessageLookupByLibrary.simpleMessage("Sàn chứng khoán"),
         "stock_order": MessageLookupByLibrary.simpleMessage("Đặt lệnh"),
         "stock_statement":
             MessageLookupByLibrary.simpleMessage("Sao kê chứng khoán"),

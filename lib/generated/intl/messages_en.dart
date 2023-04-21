@@ -167,6 +167,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "confirm": MessageLookupByLibrary.simpleMessage("Confirm"),
         "confirm_change_order":
             MessageLookupByLibrary.simpleMessage("Confirm change order"),
+        "confirm_command_edit":
+            MessageLookupByLibrary.simpleMessage("Confirm command edit"),
         "contact_infomation":
             MessageLookupByLibrary.simpleMessage("Contact information"),
         "copyTrade_asset":
@@ -481,7 +483,6 @@ class MessageLookup extends MessageLookupByLibrary {
         "stock_code": MessageLookupByLibrary.simpleMessage("Stock code"),
         "stock_exchange":
             MessageLookupByLibrary.simpleMessage("stock exchange"),
-        "stock_code": MessageLookupByLibrary.simpleMessage("Stock code"),
         "stock_order": MessageLookupByLibrary.simpleMessage("Create order"),
         "stock_statement":
             MessageLookupByLibrary.simpleMessage("Stock statement"),

@@ -3702,16 +3702,6 @@ class S {
     );
   }
 
-  /// `Stock code`
-  String get stock_code {
-    return Intl.message(
-      'Stock code',
-      name: 'stock_code',
-      desc: '',
-      args: [],
-    );
-  }
-
   /// ` saved pin code`
   String get saved_pin_code {
     return Intl.message(
