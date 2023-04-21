@@ -25,11 +25,9 @@ extension ExchangeX on Exchange {
       case Exchange.HNX:
         return {
           OrderType.LO,
-          OrderType.PLO,
-          OrderType.MOK,
-          OrderType.MAK,
-          OrderType.ATO,
+          OrderType.MTL,
           OrderType.ATC,
+          OrderType.PLO,
         };
       case Exchange.UPCOM:
         return {
@@ -49,7 +47,7 @@ extension ExchangeX on Exchange {
     }
   }
 
-  num get volumnInterval => 100;
+  num get volumeInterval => 100;
 }
 
 enum OrderType { LO, MP, ATO, ATC, PLO, MAK, MOK, MTL }

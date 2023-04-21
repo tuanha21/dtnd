@@ -237,7 +237,7 @@ class _MarketAnalysisTabState extends State<MarketAnalysisTab>
                                       color: AppColors.primary_02),
                                   child: Center(
                                     child: Text(
-                                      "Nước ngoài",
+                                      S.of(context).foreign,
                                       style: Theme.of(context)
                                           .textTheme
                                           .bodySmall
@@ -436,7 +436,7 @@ class _BottomSheetState extends State<BottomSheet> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: Text(
-                  "Sàn chứng khoán",
+                  S.of(context).stock_exchange,
                   style: Theme.of(context)
                       .textTheme
                       .labelLarge
@@ -462,7 +462,7 @@ class _BottomSheetState extends State<BottomSheet> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: Text(
-                  "Loại",
+                  S.of(context).type,
                   style: Theme.of(context)
                       .textTheme
                       .labelLarge
@@ -493,7 +493,7 @@ class _BottomSheetState extends State<BottomSheet> {
                       onPressed: () {
                         Navigator.pop(context, orgFiltered);
                       },
-                      child: const Text("Áp dụng")),
+                      child:   Text(S.of(context).apply)),
                 ),
               ),
               const SizedBox(height: 20),

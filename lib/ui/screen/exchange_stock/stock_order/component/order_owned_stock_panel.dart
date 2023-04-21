@@ -27,7 +27,6 @@ class _OrderOwnedStockPanelState extends State<OrderOwnedStockPanel> {
   final IUserService userService = UserService();
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
   }
 
@@ -40,12 +39,6 @@ class _OrderOwnedStockPanelState extends State<OrderOwnedStockPanel> {
 
       final List<PorfolioStock> portfolioStocks =
           data?.portfolioStatus?.porfolioStocks ?? [];
-      // if ((data?.portfolioStatus?.porfolioStocks?.length ?? 0) > 3) {
-      //   portfolioStocks
-      //       .addAll(data!.portfolioStatus!.porfolioStocks!.getRange(0, 3));
-      // } else if ((data?.portfolioStatus?.porfolioStocks?.length ?? 0) > 0) {
-      //   portfolioStocks.addAll(data!.portfolioStatus!.porfolioStocks!);
-      // }
       return portfolioStocks.isNotEmpty
           ? ListView(
               shrinkWrap: true,

@@ -1,4 +1,5 @@
 import 'package:dtnd/=models=/response/account/base_margin_account_model.dart';
+import 'package:dtnd/=models=/response/account/i_account.dart';
 import 'package:dtnd/data/implementations/network_service.dart';
 import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/screen/asset/component/investment_catalog_widget.dart';
@@ -18,8 +19,8 @@ import '../../../widget/tabbar/rounded_tabbar.dart';
 import 'buy_right_widget.dart';
 
 class PortfolioAndRightPanel extends StatefulWidget {
-  const PortfolioAndRightPanel({super.key});
-
+  const PortfolioAndRightPanel({super.key, this.account});
+  final IAccountModel? account;
   @override
   State<PortfolioAndRightPanel> createState() => _PortfolioAndRightPanelState();
 }
@@ -48,15 +49,6 @@ class _PortfolioAndRightPanelState extends State<PortfolioAndRightPanel>
         setState(() {});
       }
     });
-    // userService.listAccountModel.listen((model) {
-    //   if (model != null && data == null) {
-    //     setState(() {
-    //       data = model.firstWhereOrNull(
-    //               (element) => element.runtimeType == BaseMarginAccountModel)
-    //           as BaseMarginAccountModel?;
-    //     });
-    //   }
-    // });
   }
 
   @override
@@ -90,9 +82,7 @@ class _PortfolioAndRightPanelState extends State<PortfolioAndRightPanel>
                 borderRadius: BorderRadius.all(Radius.circular(8)),
               ),
               child: Obx(() {
-                final data = userService.listAccountModel.value
-                        ?.firstWhereOrNull((element) =>
-                            element.runtimeType == BaseMarginPlusAccountModel)
+                final data = userService.defaultAccount.value
                     as BaseMarginPlusAccountModel?;
                 if (data?.portfolioStatus?.porfolioStocks?.isNotEmpty ??
                     false) {
@@ -149,10 +139,8 @@ class _PortfolioAndRightPanelState extends State<PortfolioAndRightPanel>
               }),
             ),
           Obx(() {
-            final account = userService.listAccountModel.value
-                    ?.firstWhereOrNull((element) =>
-                        element.runtimeType == BaseMarginPlusAccountModel)
-                as BaseMarginPlusAccountModel?;
+            final account =
+                userService.defaultAccount.value as BaseMarginPlusAccountModel?;
 
             if (_tabController.index == 0) {
               if (account?.portfolioStatus?.porfolioStocks?.isEmpty ?? true) {

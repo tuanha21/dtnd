@@ -1,6 +1,5 @@
 import 'package:dtnd/=models=/response/signal_type.dart';
 import 'package:dtnd/=models=/ui_model/user_cmd.dart';
-import 'package:dtnd/config/service/app_services.dart';
 import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/widget/button/single_color_text_button.dart';
@@ -11,8 +10,10 @@ import 'package:flutter/material.dart';
 class SuggestedSignalFilterSheet extends StatefulWidget {
   const SuggestedSignalFilterSheet(
       {super.key, required this.listOptions, this.selected});
+
   final List<SignalType> listOptions;
   final SignalType? selected;
+
   @override
   State<SuggestedSignalFilterSheet> createState() =>
       _SuggestedSignalFilterSheetState();
@@ -22,6 +23,7 @@ class _SuggestedSignalFilterSheetState
     extends State<SuggestedSignalFilterSheet> {
   late final List<SignalType?> listOptions;
   late SignalType? selected;
+
   @override
   void initState() {
     listOptions = [null, ...widget.listOptions];
@@ -40,7 +42,6 @@ class _SuggestedSignalFilterSheetState
 
   @override
   Widget build(BuildContext context) {
-    final ThemeMode themeMode = AppService.instance.themeMode.value;
     return SafeArea(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 20),
@@ -69,7 +70,7 @@ class _SuggestedSignalFilterSheetState
             const SizedBox(height: 20),
             SingleColorTextButton(
               color: AppColors.primary_01,
-              text: "Áp dụng",
+              text: S.of(context).apply,
               onTap: () {
                 // late final List<SignalType>? listReturn;
                 // if (listSelected[0]) {
@@ -99,11 +100,13 @@ class _FilterField<T> extends StatefulWidget {
       required this.currentValue,
       required this.title,
       required this.name});
+
   final List<T?> values;
   final T? currentValue;
   final ValueChanged<T?> onChanged;
   final String Function(T?) name;
   final String title;
+
   @override
   State<_FilterField<T>> createState() => __FilterFieldState<T>();
 }
@@ -158,7 +161,7 @@ class __FilterFieldState<T> extends State<_FilterField<T>> {
             child: CircleCheckboxWithTitle(
               title: widget.name.call(widget.values.elementAt(i)),
               onCheck: () => widget.onChanged.call(widget.values.elementAt(i)),
-              ischeck: widget.values.elementAt(i) == widget.currentValue,
+              isCheck: widget.values.elementAt(i) == widget.currentValue,
             ),
           )
       ],

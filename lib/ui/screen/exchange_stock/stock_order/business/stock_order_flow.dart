@@ -4,6 +4,7 @@ import 'package:dtnd/=models=/ui_model/dialog.dart';
 import 'package:dtnd/=models=/ui_model/overlay.dart';
 import 'package:dtnd/=models=/ui_model/sheet.dart';
 import 'package:dtnd/=models=/ui_model/user_cmd.dart';
+import 'package:dtnd/ui/screen/exchange_stock/stock_order/data/order_data.dart';
 import 'package:dtnd/ui/screen/exchange_stock/stock_order/sheet/cancel_order_sheet.dart';
 import 'package:dtnd/ui/screen/exchange_stock/stock_order/sheet/cancel_order_success_sheet.dart';
 import 'package:dtnd/ui/screen/exchange_stock/stock_order/sheet/change_order_success_sheet.dart';
@@ -26,6 +27,10 @@ class ToChangeOrderCmd extends NextCmd {
   const ToChangeOrderCmd([super.data]);
 }
 
+class ToStockOrderCmd extends NextCmd {
+  const ToStockOrderCmd([super.data]);
+}
+
 class ToCancelOrderCmd extends NextCmd {
   const ToCancelOrderCmd([super.data]);
 }
@@ -45,9 +50,9 @@ class StockOrderISheet extends IStockOrderSheet {
   @override
   ISheet? next([UserCmd? cmd]) {
     if (cmd is ToChangeOrderCmd) {
-      return ChangeStockOrderISheet(stockModel, cmd.data);
+      return ChangeStockOrderISheet(cmd.data.first, cmd.data.last);
     } else if (cmd is ToCancelOrderCmd) {
-      return CancelStockOrderISheet(stockModel, cmd.data);
+      return CancelStockOrderISheet(cmd.data.first, cmd.data.last);
     }
     return StockOrderConfirmISheet(stockModel);
   }
@@ -58,9 +63,9 @@ class StockOrderISheet extends IStockOrderSheet {
   @override
   Widget? nextWidget([cmd]) {
     if (cmd is ToChangeOrderCmd) {
-      return ChangeStockOrderSheet(data: cmd.data);
+      return ChangeStockOrderSheet(data: cmd.data.last);
     } else if (cmd is ToCancelOrderCmd) {
-      return CancelStockOrderSheet(data: cmd.data);
+      return CancelStockOrderSheet(data: cmd.data.last);
     }
     return StockOrderConfirmSheet(
       orderData: cmd!.data,
@@ -83,7 +88,7 @@ class StockOrderConfirmISheet extends IStockOrderSheet {
   @override
   IOverlay? next([UserCmd? cmd]) {
     if (cmd is OrderSuccessCmd) {
-      return StockOrderSuccessISheet(stockModel);
+      return StockOrderSuccessISheet(cmd.data);
     } else {
       return StockOrderFailISheet(stockModel);
     }
@@ -133,7 +138,7 @@ class ChangeStockOrderISheet extends IStockOrderSheet {
   @override
   Widget? backWidget([cmd]) => StockOrderSheet(
         stockModel: stockModel,
-        orderData: cmd!.data,
+        orderData: cmd?.data,
       );
 
   @override
@@ -180,8 +185,9 @@ class CancelStockOrderISheet extends IStockOrderSheet {
   @override
   Widget? nextWidget([UserCmd? cmd]) {
     if (cmd is OrderSuccessCmd) {
-      return const CancelOrderSuccessSheet(
+      return CancelOrderSuccessSheet(
         showButton: true,
+        orderData: cmd.data,
       );
     } else {
       return StockOrderFailSheet(rc: cmd!.data as int);
@@ -196,9 +202,9 @@ class CancelStockOrderISheet extends IStockOrderSheet {
 }
 
 class StockOrderSuccessISheet extends IDialog {
-  final StockModel? stockModel;
+  final OrderData? orderData;
 
-  StockOrderSuccessISheet(this.stockModel);
+  StockOrderSuccessISheet(this.orderData);
 
   @override
   ISheet? back([dynamic cmd]) => null;
@@ -210,16 +216,30 @@ class StockOrderSuccessISheet extends IDialog {
   Widget? backWidget([cmd]) => null;
 
   @override
-  Widget? nextWidget([cmd]) => StockOrderSheet(
-        stockModel: cmd?.data.stockModel,
-        orderData: cmd?.data,
+  Widget? nextWidget([cmd]) {
+    if (cmd is ToStockOrderCmd) {
+      return StockOrderSheet(
+        stockModel: cmd.data.stockModel,
+        orderData: cmd.data,
+        defaultTab: 1,
       );
+    }
+    return StockOrderSheet(
+      stockModel: cmd?.data.stockModel,
+      orderData: cmd?.data,
+    );
+  }
 
   @override
   Future<void>? onResultBack([cmd]) => null;
 
   @override
   Future<void>? onResultNext([cmd]) => null;
+
+  @override
+  Future<UserCmd?> onTapOutside(BuildContext context) {
+    return cmd(context, ToStockOrderCmd(orderData));
+  }
 }
 
 class ChangeOrderSuccessISheet extends IDialog {

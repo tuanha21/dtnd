@@ -21,7 +21,6 @@ import '../../../../theme/app_color.dart';
 import '../../../../theme/app_image.dart';
 import '../../../../widget/calendar/day_input.dart';
 import '../../../../widget/expanded_widget.dart';
-import '../../../../widget/my_appbar.dart';
 import '../../../../widget/overlay/custom_dialog.dart';
 import '../../../../widget/overlay/login_first_dialog.dart';
 import '../../../exchange_stock/stock_order/business/stock_order_flow.dart';
@@ -84,11 +83,10 @@ class _RealizedProfitLossState extends State<RealizedProfitLoss> {
               context: context,
               builder: (context) {
                 return CustomDialog(
-                  textButtonAction: 'Đồng ý',
-                  textButtonExit: 'Để sau',
-                  title: 'Đăng nhập bằng sinh trắc học',
-                  content:
-                      'Bạn chưa đăng ký đăng nhập bằng sinh trắc học\nBạn có muốn đăng ký ngay bây giờ không?',
+                  textButtonAction: S.of(context).ok,
+                  textButtonExit: S.of(context).Later,
+                  title: S.of(context).biometric_authentication,
+                  content: S.of(context).login_with_biometric,
                   action: () => Navigator.of(context).pop(true),
                   type: TypeAlert.notification,
                 );

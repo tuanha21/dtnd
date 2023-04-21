@@ -1,14 +1,10 @@
 import 'dart:convert';
-import 'dart:math';
 
 import 'package:dtnd/=models=/check_account_success_data_model.dart';
 import 'package:dtnd/=models=/local/va_portfolio_model.dart';
 import 'package:dtnd/=models=/request/request_model.dart';
-import 'package:dtnd/=models=/response/account/asset_chart_element.dart';
-import 'package:dtnd/=models=/response/account/base_margin_account_model.dart';
+import 'package:dtnd/=models=/response/account/base_margin_plus_account_model.dart';
 import 'package:dtnd/=models=/response/account/i_account.dart';
-import 'package:dtnd/=models=/response/account/portfolio_status_model.dart';
-import 'package:dtnd/=models=/response/account/unexecuted_right_model.dart';
 import 'package:dtnd/=models=/response/account_info_model.dart';
 import 'package:dtnd/=models=/response/order_model/base_order_model.dart';
 import 'package:dtnd/=models=/response/total_asset_model.dart';
@@ -22,7 +18,6 @@ import 'package:dtnd/data/i_user_service.dart';
 import 'package:dtnd/data/implementations/local_storage_service.dart';
 import 'package:dtnd/data/implementations/network_service.dart';
 import 'package:dtnd/utilities/logger.dart';
-import 'package:dtnd/utilities/time_utils.dart';
 import 'package:get/get.dart';
 
 class UserService implements IUserService {
@@ -47,6 +42,8 @@ class UserService implements IUserService {
 
   @override
   final Rx<TotalAsset?> totalAsset = Rxn();
+  @override
+  Rx<IAccountModel?> defaultAccount = Rxn();
 
   @override
   Rx<List<IAccountModel>?> listAccountModel = Rxn();
@@ -100,7 +97,7 @@ class UserService implements IUserService {
       getUserInfo();
       getListAccount();
       getTotalAsset();
-      localStorageService.sharedPreferences.remove('pincode');
+      localStorageService.sharedPreferences.remove('pinCode');
       // getSearchHistory();
       return true;
     } catch (e) {
@@ -110,6 +107,7 @@ class UserService implements IUserService {
 
   @override
   Future<void> refreshAssets() {
+    getTotalAsset();
     return getListAccount();
   }
 
@@ -165,88 +163,18 @@ class UserService implements IUserService {
       listAccountModel.value = listAccount;
       logger.v(listAccount);
       for (var i = 0; i < listAccount!.length; i++) {
-        requestModel = RequestModel(this,
-            group: "Q",
-            data: RequestDataModel.stringType(
-              cmd: "Web.Portfolio.AccountStatus",
-              p1: listAccount.elementAt(i).accCode,
-            ));
-        logger.v(requestModel);
-
-        dynamic response =
-            await networkService.requestTraditionalApi<IAccountResponse>(
-          requestModel,
-          modifyResponse: (res) {
-            res["accCode"] = listAccount.elementAt(i).accCode;
-            return res;
-          },
-        );
-
-        listAccount.elementAt(i).updateDataFromJson(response!);
-        requestModel = RequestModel(this,
-            group: "Q",
-            data: RequestDataModel.stringType(
-              cmd: "Web.Portfolio.PortfolioStatus",
-              p1: listAccount.elementAt(i).accCode,
-            ));
-        response = await networkService
-            .requestTraditionalApiResList<PorfolioStock>(requestModel);
-        if (response != null) {
-          listAccount.elementAt(i).portfolioStatus =
-              PortfolioStatus.fromPorfolioStock(response!);
-        }
-        response = await getListAssetChart(listAccount.elementAt(i).accCode);
-        if (response != null) {
-          listAccount.elementAt(i).listAssetChart = response;
-        }
+        await listAccount.elementAt(i).refreshAsset(this, networkService);
+        await listAccount.elementAt(i).getListAssetChart(this, networkService);
         await listAccount
             .elementAt(i)
             .getListUnexecutedRight(this, networkService);
+        if (listAccount.elementAt(i) is BaseMarginPlusAccountModel) {
+          defaultAccount.value = listAccount.elementAt(i);
+        }
       }
     }
     listAccountModel.refresh();
     return listAccountModel.value;
-  }
-
-  Future<List<AssetChartElementModel>?> getListAssetChart(String account,
-      {DateTime? fromTime, DateTime? toTime}) {
-    final requestModel = RequestModel(
-      this,
-      group: "B",
-      data: RequestDataModel.cursorType(
-          cmd: "ListAssetChart",
-          p1: account,
-          p2: TimeUtilities.commonTimeFormat.format(fromTime ??
-              TimeUtilities.getPreviousDateTime(TimeUtilities.month(3))),
-          p3: TimeUtilities.commonTimeFormat.format(toTime ?? DateTime.now())),
-    );
-    return networkService
-        .requestTraditionalApiResList<AssetChartElementModel>(requestModel);
-  }
-
-  Future<List<UnexecutedRightModel>?> getListUnexecutedRight(
-      String account) async {
-    final requestModel = RequestModel(
-      this,
-      group: "B",
-      data: RequestDataModel.cursorType(
-        cmd: "ListRightUnExec",
-        p1: account,
-      ),
-    );
-    logger.v(requestModel);
-    final res =
-        await networkService.requestTraditionalApiResList<UnexecutedRightModel>(
-      requestModel,
-      hasError: (p0) {
-        logger.v(p0);
-        if (p0["data"].runtimeType is List && p0["data"].isNotEmpty) {
-          return p0["data"].first["DUMMY"] != null;
-        }
-        return false;
-      },
-    );
-    return res ?? [];
   }
 
   Future<UserInfo?> getUserInfo() async {
@@ -322,7 +250,6 @@ class UserService implements IUserService {
       "account": token.value!.user,
       "textSearch": searchString,
     };
-    print(jsonEncode(body));
     networkService.putSearchHistory(jsonEncode(body));
     return;
   }
@@ -331,7 +258,7 @@ class UserService implements IUserService {
 
   @override
   Future<bool> verifyRegisterInfo(String mobile, String mail) async {
-    Map<String, dynamic> body = {
+    final Map<String, dynamic> body = {
       "user": "back",
       "cmd": "CHECK_OPENACC",
       "param": {"C_MOBILE": mobile, "C_EMAIL": mail}
@@ -373,8 +300,6 @@ class UserService implements IUserService {
   //check account info
   @override
   Future<CheckAccountSuccessDataModel?> checkAccountInfo(String mail) {
-    print(mail);
-    print('getin@@@@@');
     Map<String, dynamic> body = {
       "user": "back",
       "cmd": "CHECK_ACCOUNT_INFO",
@@ -479,5 +404,31 @@ class UserService implements IUserService {
     };
     isRegisterVa.value = await networkService.checkInfoVa(jsonEncode(body));
     return;
+  }
+
+  @override
+  Future<void> deleteAccount() async {
+    final Map<String, dynamic> body = {
+      "user": token.value?.user ?? '',
+      "session": token.value?.sid ?? '',
+      "group": "B",
+      "data": {
+        "type": "object",
+        "cmd": "ClosedAccount",
+        "p1": {
+          "ACCOUNT_CODE": token.value?.defaultAcc ?? "",
+        },
+      },
+    };
+    try {
+      await networkService.deleteAccount(jsonEncode(body));
+      deleteToken();
+      return;
+    } on Map<String, dynamic> catch (res) {
+      throw res['sRs'];
+    } catch (e) {
+      logger.e(e);
+      throw e.runtimeType.toString();
+    }
   }
 }

@@ -23,32 +23,35 @@ abstract class IDialog implements IOverlay {
           child: child,
         );
       },
-    ).then((result) => cmd(context, result));
+    ).then((result) {
+      if (result == null) {
+        try {
+          return onTapOutside(context);
+        } catch (e) {
+          return Future.value(null);
+        }
+      }
+      return cmd(context, result);
+    });
   }
 
   @override
-  Future<UserCmd?> cmd(BuildContext context, UserCmd? cmd) {
-    if (cmd is BackCmd) {
-      return onResultBack.call(cmd)?.then(
-              (_) => back.call(cmd)?.show(context, backWidget.call(cmd))) ??
-          back.call(cmd)?.show(context, backWidget.call(cmd)) ??
-          Future(
-            () => null,
-          );
+  Future<UserCmd?> cmd(BuildContext context, UserCmd userCmd) {
+    if (userCmd is BackCmd) {
+      return onResultBack.call(userCmd)?.then((_) =>
+              back.call(userCmd)?.show(context, backWidget.call(userCmd))) ??
+          back.call(userCmd)?.show(context, backWidget.call(userCmd)) ??
+          Future.value(null);
     } else {
-      return onResultNext.call(cmd)?.then(
-              (_) => next.call(cmd)?.show(context, nextWidget.call(cmd))) ??
-          next.call(cmd)?.show(context, nextWidget.call(cmd)) ??
-          Future(
-            () => null,
-          );
+      return onResultNext.call(userCmd)?.then((_) =>
+              next.call(userCmd)?.show(context, nextWidget.call(userCmd))) ??
+          next.call(userCmd)?.show(context, nextWidget.call(userCmd)) ??
+          Future.value(null);
     }
-    // if (cmd is ToOptionCmd) {
-    //   for (var element in options!) {
-    //     if (element.runtimeType == cmd.runtimeType) {
-    //       return toOption(element, cmd)!.showSheet(context);
-    //     }
-    //   }
-    // }
+  }
+
+  @override
+  Future<UserCmd?> onTapOutside(BuildContext context) {
+    throw Exception();
   }
 }

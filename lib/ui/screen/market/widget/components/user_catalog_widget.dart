@@ -218,7 +218,7 @@ class _UserCatalogWidgetState extends State<UserCatalogWidget> {
               Expanded(
                 flex: 25,
                 child: Text(
-                  "Mã CK",
+                  S.of(context).stock_code,
                   style: textTheme.bodySmall?.copyWith(
                       fontWeight: FontWeight.w600, color: AppColors.neutral_04),
                 ),

@@ -4,10 +4,12 @@ import 'package:dtnd/=models=/response/order_model/base_order_model.dart';
 import 'package:dtnd/=models=/ui_model/user_cmd.dart';
 import 'package:dtnd/data/i_data_center_service.dart';
 import 'package:dtnd/data/i_exchange_service.dart';
+import 'package:dtnd/data/i_local_storage_service.dart';
 import 'package:dtnd/data/i_network_service.dart';
 import 'package:dtnd/data/i_user_service.dart';
 import 'package:dtnd/data/implementations/data_center_service.dart';
 import 'package:dtnd/data/implementations/exchange_service.dart';
+import 'package:dtnd/data/implementations/local_storage_service.dart';
 import 'package:dtnd/data/implementations/network_service.dart';
 import 'package:dtnd/data/implementations/user_service.dart';
 import 'package:dtnd/generated/l10n.dart';
@@ -20,13 +22,19 @@ import 'package:dtnd/ui/widget/icon/sheet_header.dart';
 import 'package:dtnd/utilities/logger.dart';
 import 'package:dtnd/utilities/validator.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:flutter_svg/svg.dart';
+
+import '../../../../theme/app_image.dart';
 
 class CancelStockOrderSheet extends StatefulWidget {
   const CancelStockOrderSheet({
     super.key,
     required this.data,
   });
+
   final BaseOrderModel data;
+
   @override
   State<CancelStockOrderSheet> createState() => _CancelStockOrderSheetState();
 }
@@ -39,22 +47,36 @@ class _CancelStockOrderSheetState extends State<CancelStockOrderSheet>
   final IDataCenterService dataCenterService = DataCenterService();
   final GlobalKey<FormState> pinKey = GlobalKey<FormState>();
   final TextEditingController pinController = TextEditingController();
+  final ILocalStorageService localStorageService = LocalStorageService();
+
+  bool loading = false;
+  bool checked = false;
 
   String? errorText;
 
   void onConfirm() async {
+    if (loading) {
+      return;
+    }
     setState(() {
       errorText = null;
+      loading = true;
     });
     if (pinKey.currentState?.validate() ?? false) {
       await exchangeService
           .cancelOrder(
-            userService,
-            widget.data,
-            pinController.text,
-          )
-          .then((value) => Navigator.of(context).pop(const OrderSuccessCmd()))
-          .onError((error, stackTrace) {
+        userService,
+        widget.data,
+        pinController.text,
+      )
+          .then((value) {
+        loading = false;
+        if (checked) {
+          localStorageService.savePinCode(pinController.text);
+        }
+        return Navigator.of(context).pop(const OrderSuccessCmd());
+      }).onError((error, stackTrace) {
+        loading = false;
         logger.e(error);
         if (error is String) {
           setState(() {
@@ -67,6 +89,13 @@ class _CancelStockOrderSheetState extends State<CancelStockOrderSheet>
   }
 
   @override
+  void initState() {
+    super.initState();
+    pinController.text =
+        localStorageService.sharedPreferences.getString(pinCodeKey) ?? '';
+  }
+
+  @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
     return SafeArea(
@@ -75,33 +104,58 @@ class _CancelStockOrderSheetState extends State<CancelStockOrderSheet>
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SheetHeader(
-              title: "Xác nhận huỷ lệnh",
+            SheetHeader(
+              title: S.of(context).order_cancellation_confirmation,
               implementBackButton: true,
             ),
             const SizedBox(height: 8),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
-                Text("Bạn có chắc chắn muốn huỷ lệnh?"),
+              children: [
+                Text(S.of(context).Are_you_sure_you_want_to_cancel_the_order),
               ],
             ),
             const SizedBox(height: 8),
             Form(
               key: pinKey,
               autovalidateMode: AutovalidateMode.disabled,
-              child: TextFormField(
-                controller: pinController,
-                // onChanged: (value) => pinFormKey.currentState?.didChange(value),
-                validator: pinValidator,
-                autovalidateMode: AutovalidateMode.disabled,
-                decoration: InputDecoration(
-                  labelText: S.of(context).pin_code,
-                  // contentPadding: const EdgeInsets.all(0),
-                  floatingLabelBehavior: FloatingLabelBehavior.always,
-                  floatingLabelAlignment: FloatingLabelAlignment.start,
-                ),
-              ),
+              child: (localStorageService.sharedPreferences
+                          .getString(pinCodeKey)
+                          ?.isEmpty ??
+                      true)
+                  ? TextFormField(
+                      controller: pinController,
+                      // onChanged: (value) => pinFormKey.currentState?.didChange(value),
+                      validator: pinValidator,
+                      autovalidateMode: AutovalidateMode.disabled,
+                      decoration: InputDecoration(
+                        labelText: S.of(context).pin_code,
+                        // contentPadding: const EdgeInsets.all(0),
+                        floatingLabelBehavior: FloatingLabelBehavior.always,
+                        floatingLabelAlignment: FloatingLabelAlignment.start,
+                        suffixIcon: InkWell(
+                          onTap: () {
+                            checked = !checked;
+                            if (checked && pinController.text != '') {
+                              EasyLoading.showToast(
+                                  S.of(context).saved_pin_code,
+                                  maskType: EasyLoadingMaskType.clear);
+                            }
+                            setState(() {});
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.all(10),
+                            child: SvgPicture.asset(
+                              AppImages.save_pin_code_icon,
+                              color: (checked && pinController.text != '')
+                                  ? AppColors.semantic_01
+                                  : AppColors.primary_01,
+                            ),
+                          ),
+                        ),
+                      ),
+                    )
+                  : const SizedBox(),
             ),
             const SizedBox(height: 8),
             ExpandedSection(

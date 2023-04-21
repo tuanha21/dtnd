@@ -65,14 +65,13 @@ class _SuggestedSignalScreenState extends State<SuggestedSignalScreen> {
   late _Period currentPeriod = _Period.m3;
   final List<SignalType> signalList = <SignalType>[];
   final List<SuggestedSignalModel> datas = <SuggestedSignalModel>[];
-  final List<SuggestedSignalModel> listDataShow = <SuggestedSignalModel>[];
   OrderFilterData? orderFilterData;
   SignalType? filter;
   @override
   void initState() {
     super.initState();
     getSignalList();
-    getData(_Period.values.first);
+    getData(_Period.values.first, filter);
   }
 
   Future<void> getSignalList() async {
@@ -81,58 +80,25 @@ class _SuggestedSignalScreenState extends State<SuggestedSignalScreen> {
     if (mounted) setState(() {});
   }
 
-  Future<void> getData(_Period period) async {
+  Future<void> getData(_Period period, SignalType? type) async {
     setState(() {
       currentPeriod = period;
     });
     final List<SuggestedSignalModel> listRes;
-    if (filter != null) {
-      listRes = await dataCenterService.getSuggestedSignalFilter(
-          period.period, filter!.signalCode);
-    } else {
-      listRes = await dataCenterService.getSuggestedSignal(period.period);
-    }
+    listRes = await dataCenterService.getSuggestedSignalFilter(
+        period.period, type?.signalCode);
     datas.clear();
     datas.addAll(listRes);
-    listDataShow.clear();
-    listDataShow.addAll(listRes);
-    filterData(filter);
     if (mounted) setState(() {});
   }
 
   void onFilter(SignalType? option) {
-    if (option == null) {
-      if (filter != null) {
-        filter = option;
-        listDataShow.clear();
-        listDataShow.addAll(datas);
-      }
-      setState(() {});
-      return;
-    }
     if (option != filter) {
-      filter = option;
-      filterData(filter);
+      setState(() {
+        filter = option;
+      });
+      getData(currentPeriod, filter);
     }
-  }
-
-  void filterData(SignalType? option) {
-    if (option == null) {
-      return;
-    }
-    final List<bool> listSelect = List.generate(datas.length, (index) => false);
-    for (var i = 0; i < datas.length; i++) {
-      if (datas.elementAt(i).type == option.signalCode) {
-        listSelect[i] = true;
-      }
-    }
-    listDataShow.clear();
-    for (var i = 0; i < listSelect.length; i++) {
-      if (listSelect.elementAt(i)) {
-        listDataShow.add(datas.elementAt(i));
-      }
-    }
-    setState(() {});
   }
 
   void onTap(SuggestedSignalModel model) {
@@ -211,7 +177,7 @@ class _SuggestedSignalScreenState extends State<SuggestedSignalScreen> {
                             vertical: 8, horizontal: 6),
                         child: _PeriodButton(
                           period: period,
-                          onTap: getData,
+                          onTap: (value) => getData(value, filter),
                           selectedPeriod: currentPeriod,
                         ),
                       ))
@@ -220,7 +186,7 @@ class _SuggestedSignalScreenState extends State<SuggestedSignalScreen> {
               ),
             ),
             const SizedBox(height: 8),
-            if (listDataShow.isEmpty)
+            if (datas.isEmpty)
               const EmptyListWidget()
             else
               Expanded(
@@ -233,7 +199,7 @@ class _SuggestedSignalScreenState extends State<SuggestedSignalScreen> {
                   child: ListView(
                     shrinkWrap: true,
                     children: [
-                      for (int i = 0; i < listDataShow.length; i++)
+                      for (int i = 0; i < datas.length; i++)
                         if (i != 0)
                           Column(
                             children: [
@@ -241,13 +207,12 @@ class _SuggestedSignalScreenState extends State<SuggestedSignalScreen> {
                                 height: 8,
                               ),
                               SuggestedSignalComponent(
-                                  onTap: onTap,
-                                  data: listDataShow.elementAt(i)),
+                                  onTap: onTap, data: datas.elementAt(i)),
                             ],
                           )
                         else
                           SuggestedSignalComponent(
-                              onTap: onTap, data: listDataShow.elementAt(i)),
+                              onTap: onTap, data: datas.elementAt(i)),
                     ],
                   ),
                 ),

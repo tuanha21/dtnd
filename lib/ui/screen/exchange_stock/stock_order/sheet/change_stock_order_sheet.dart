@@ -9,31 +9,38 @@ import 'package:dtnd/=models=/side.dart';
 import 'package:dtnd/=models=/ui_model/user_cmd.dart';
 import 'package:dtnd/data/i_data_center_service.dart';
 import 'package:dtnd/data/i_exchange_service.dart';
+import 'package:dtnd/data/i_local_storage_service.dart';
 import 'package:dtnd/data/i_network_service.dart';
 import 'package:dtnd/data/i_user_service.dart';
 import 'package:dtnd/data/implementations/data_center_service.dart';
 import 'package:dtnd/data/implementations/exchange_service.dart';
+import 'package:dtnd/data/implementations/local_storage_service.dart';
 import 'package:dtnd/data/implementations/network_service.dart';
 import 'package:dtnd/data/implementations/user_service.dart';
 import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/screen/exchange_stock/stock_order/business/stock_order_flow.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
+import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:dtnd/ui/theme/app_textstyle.dart';
 import 'package:dtnd/ui/widget/button/single_color_text_button.dart';
 import 'package:dtnd/ui/widget/expanded_widget.dart';
 import 'package:dtnd/ui/widget/icon/sheet_header.dart';
 import 'package:dtnd/ui/widget/input/interval_input.dart';
-import 'package:dtnd/utilities/logger.dart';
 import 'package:dtnd/utilities/error_definition.dart';
+import 'package:dtnd/utilities/logger.dart';
 import 'package:dtnd/utilities/validator.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:flutter_svg/svg.dart';
 
 class ChangeStockOrderSheet extends StatefulWidget {
   const ChangeStockOrderSheet({
     super.key,
     required this.data,
   });
+
   final BaseOrderModel data;
+
   @override
   State<ChangeStockOrderSheet> createState() => _ChangeStockOrderSheetState();
 }
@@ -46,11 +53,16 @@ class _ChangeStockOrderSheetState extends State<ChangeStockOrderSheet>
   final IDataCenterService dataCenterService = DataCenterService();
   late final Set<OrderType> listOrderTypes;
   final TextEditingController priceController = TextEditingController();
-  final TextEditingController volumnController =
+  final TextEditingController volumeController =
       TextEditingController(text: "100");
   final GlobalKey<FormState> pinKey = GlobalKey<FormState>();
 
   final TextEditingController pinController = TextEditingController();
+  final ILocalStorageService localStorageService = LocalStorageService();
+
+  bool loading = false;
+  bool checked = false;
+
   Timer? onPriceStoppedTyping;
   bool typingPrice = false;
 
@@ -66,6 +78,8 @@ class _ChangeStockOrderSheetState extends State<ChangeStockOrderSheet>
   void initState() {
     super.initState();
     getData();
+    pinController.text =
+        localStorageService.sharedPreferences.getString(pinCodeKey) ?? '';
   }
 
   Future<void> getData() async {
@@ -81,27 +95,33 @@ class _ChangeStockOrderSheetState extends State<ChangeStockOrderSheet>
   }
 
   void onConfirm() async {
-    // final OrderData orderData = OrderData(
-    //   stockModel: stockModel!,
-    //   side: side,
-    //   volumn: num.parse(volumnController.text),
-    //   price: priceController.text,
-    //   orderType: OrderType.LO,
-    // );
+    if (loading) {
+      return;
+    }
     setState(() {
       errorText = null;
+      loading = true;
     });
     if (pinKey.currentState?.validate() ?? false) {
-      await exchangeService
+      exchangeService
           .changeOrder(
-            userService,
-            widget.data,
-            num.tryParse(volumnController.text) ?? 0,
-            priceController.text,
-            pinController.text,
-          )
-          .then((value) => Navigator.of(context).pop(OrderSuccessCmd()))
-          .onError((error, stackTrace) {
+        userService,
+        widget.data,
+        num.tryParse(volumeController.text) ?? 0,
+        priceController.text,
+        pinController.text,
+      )
+          .then(
+        (value) {
+          loading = false;
+          if (checked) {
+            localStorageService.savePinCode(pinController.text);
+          }
+          return Navigator.of(context).pop(const OrderSuccessCmd());
+        },
+      ).onError((error, stackTrace) {
+        loading = false;
+
         logger.e(error);
         if (error is int) {
           setState(() {
@@ -122,15 +142,15 @@ class _ChangeStockOrderSheetState extends State<ChangeStockOrderSheet>
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SheetHeader(
-              title: "Xác nhận sửa lệnh",
+            SheetHeader(
+              title: S.of(context).confirm_change_order,
               implementBackButton: true,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "Mã CK",
+                  S.of(context).stk_code,
                   style: textTheme.bodySmall,
                 ),
                 Text(
@@ -179,7 +199,7 @@ class _ChangeStockOrderSheetState extends State<ChangeStockOrderSheet>
                       const SizedBox(width: 16),
                       Expanded(
                         child: IntervalInput(
-                          controller: volumnController,
+                          controller: volumeController,
                           labelText: S.of(context).volumn,
                           interval: (value) => 100,
                           validator: volumnValidator,
@@ -189,18 +209,42 @@ class _ChangeStockOrderSheetState extends State<ChangeStockOrderSheet>
                     ],
                   ),
                   const SizedBox(height: 16),
-                  TextFormField(
-                    controller: pinController,
-                    // onChanged: (value) => pinFormKey.currentState?.didChange(value),
-                    validator: pinValidator,
-                    autovalidateMode: AutovalidateMode.disabled,
-                    decoration: InputDecoration(
-                      labelText: S.of(context).pin_code,
-                      // contentPadding: const EdgeInsets.all(0),
-                      floatingLabelBehavior: FloatingLabelBehavior.always,
-                      floatingLabelAlignment: FloatingLabelAlignment.start,
-                    ),
-                  ),
+                  (localStorageService.sharedPreferences
+                              .getString(pinCodeKey)
+                              ?.isEmpty ??
+                          true)
+                      ? TextFormField(
+                          controller: pinController,
+                          // onChanged: (value) => pinFormKey.currentState?.didChange(value),
+                          validator: pinValidator,
+                          autovalidateMode: AutovalidateMode.disabled,
+                          decoration: InputDecoration(
+                            labelText: S.of(context).pin_code,
+                            // contentPadding: const EdgeInsets.all(0),
+                            floatingLabelBehavior: FloatingLabelBehavior.always,
+                            floatingLabelAlignment:
+                                FloatingLabelAlignment.start,
+                            suffixIcon: InkWell(
+                                onTap: () {
+                                  checked = !checked;
+                                  if (checked && pinController.text != '') {
+                                    EasyLoading.showToast(S.of(context).saved_pin_code,
+                                        maskType: EasyLoadingMaskType.clear);
+                                  }
+                                  setState(() {});
+                                },
+                                child: Padding(
+                                  padding: const EdgeInsets.all(10),
+                                  child: SvgPicture.asset(
+                                    AppImages.save_pin_code_icon,
+                                    color: (checked && pinController.text != '')
+                                        ? AppColors.semantic_01
+                                        : AppColors.primary_01,
+                                  ),
+                                )),
+                          ),
+                        )
+                      : const SizedBox(),
                 ],
               ),
             ),

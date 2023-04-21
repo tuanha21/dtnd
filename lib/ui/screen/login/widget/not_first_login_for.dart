@@ -226,9 +226,9 @@ class _NotFirstLoginFormState extends State<NotFirstLoginForm> {
                 context: context,
                 builder: (context) {
                   return CustomDialog(
-                    textButtonAction: 'Đồng ý',
-                    textButtonExit: 'Để sau',
-                    title: 'Xác nhận',
+                    textButtonAction: S.of(context).ok,
+                    textButtonExit: S.of(context).Later,
+                    title: S.of(context).confirm,
                     content: 'Bạn có chắc chắn muốn dùng tài khoản khác?',
                     action: () => Navigator.of(context).pop(true),
                     type: TypeAlert.notification,

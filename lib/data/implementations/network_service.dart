@@ -239,8 +239,9 @@ class NetworkService implements INetworkService {
   @override
   Future<T?> requestTraditionalApi<T extends CoreResponseModel>(
     RequestModel requestModel, {
-    T? Function(Map<String, dynamic>)? onError,
     bool Function(Map<String, dynamic>)? hasError,
+    T? Function(Map<String, dynamic>)? onError,
+    T? Function()? onParseError,
     dynamic Function(Map<String, dynamic>)? selectionData,
     Map<String, dynamic> Function(Map<String, dynamic>)? modifyResponse,
   }) async {
@@ -250,7 +251,6 @@ class NetworkService implements INetworkService {
     if (response is! Map<String, dynamic>) {
       return null;
     }
-    logger.v(response);
     bool checkResponse = hasError?.call(response) ?? (response["rc"] != 1);
     if (checkResponse) {
       return onError?.call(response);
@@ -263,14 +263,23 @@ class NetworkService implements INetworkService {
     if (modifyResponse != null) {
       response = modifyResponse.call(response);
     }
-    return CoreResponseModel.fromJson<T>(response);
+    try {
+      return CoreResponseModel.fromJson<T>(response);
+    } catch (e) {
+      if (onParseError != null) {
+        return onParseError.call();
+      } else {
+        rethrow;
+      }
+    }
   }
 
   @override
   Future<List<T>?> requestTraditionalApiResList<T extends CoreResponseModel>(
     RequestModel requestModel, {
-    List<T>? Function(Map<String, dynamic>)? onError,
     bool Function(Map<String, dynamic>)? hasError,
+    List<T>? Function(Map<String, dynamic>)? onError,
+    List<T>? Function()? onParseError,
     List<dynamic> Function(Map<String, dynamic>)? selectionData,
     Map<String, dynamic> Function(Map<String, dynamic>)? modifyResponse,
   }) async {
@@ -287,13 +296,21 @@ class NetworkService implements INetworkService {
       response = response["data"];
     }
     final List<T> result = [];
-    logger.v(response);
     if (response.runtimeType != List || response.isEmpty) {
       return [];
     }
     for (var element in response) {
-      result.add(CoreResponseModel.fromJson<T>(element)!);
+      try {
+        result.add(CoreResponseModel.fromJson<T>(element)!);
+      } catch (e) {
+        if (onParseError != null) {
+          return onParseError.call();
+        } else {
+          rethrow;
+        }
+      }
     }
+
     return result;
   }
 
@@ -575,6 +592,12 @@ class NetworkService implements INetworkService {
   }
 
   @override
+  Future<void> deleteAccount(String body) async {
+    var res = await client.post(url_core_endpoint, body: body);
+    logger.d(jsonDecode(res.body));
+  }
+
+  @override
   Future<List<String>> getTopSearch(String body) async {
     dynamic response =
         await client.post(url_core1("searchMarket/top"), body: body);
@@ -796,7 +819,7 @@ class NetworkService implements INetworkService {
     }
     response = response['data'];
     if (response.isEmpty ?? true) {
-      throw NullThrownError();
+      throw Exception();
     }
     final List<IndayMatchedOrder> result = <IndayMatchedOrder>[];
     for (var element in response) {
@@ -813,7 +836,7 @@ class NetworkService implements INetworkService {
     }
     response = decode(response.bodyBytes);
     if (response["name"].isEmpty ?? true) {
-      throw NullThrownError();
+      throw Exception();
     }
     final List<dynamic> val = response["upVal"];
     val.addAll(response["downVal"]);

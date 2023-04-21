@@ -106,13 +106,17 @@ class ExchangeService implements IExchangeService {
       throw rc;
     }
 
+    onParseError() {
+      return null;
+    }
+
     final response = await networkService
         .requestTraditionalApiResList<ChangeOrderModel>(requestModel,
-            hasError: hasError, onError: onError);
+            hasError: hasError, onError: onError, onParseError: onParseError);
     logger.v(response);
-    if (response?.isNotEmpty ?? false) {
-      return response!.first;
-    }
+    // if (response?.isNotEmpty ?? false) {
+    //   return response!.first;
+    // }
     return null;
   }
 
@@ -169,7 +173,6 @@ class ExchangeService implements IExchangeService {
 
     final RequestModel requestModel =
         RequestModel(userService, group: "Q", data: requestDataModel);
-    logger.v(requestModel);
     return await networkService
         .requestTraditionalApi<StockCashBalanceModel>(requestModel);
   }
@@ -196,7 +199,6 @@ class ExchangeService implements IExchangeService {
 
     final RequestModel requestModel =
         RequestModel(userService, group: "B", data: requestDataModel);
-    logger.v(requestModel.toJson());
 
     final response = await networkService
         .requestTraditionalApiResList<OrderHistoryModel>(requestModel);

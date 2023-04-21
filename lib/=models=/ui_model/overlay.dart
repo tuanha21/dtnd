@@ -10,5 +10,6 @@ abstract class IOverlay {
   IOverlay? next([UserCmd? cmd]);
   Future<UserCmd?> show(BuildContext context, Widget? child);
 
-  Future<UserCmd?> cmd(BuildContext context, UserCmd? cmd);
+  Future<UserCmd?> cmd(BuildContext context, UserCmd cmd);
+  Future<UserCmd?> onTapOutside(BuildContext context);
 }

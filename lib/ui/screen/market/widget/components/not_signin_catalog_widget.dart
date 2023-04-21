@@ -25,7 +25,8 @@ class NotSigninCatalogWidget extends StatelessWidget {
       if ((result ?? false)) {
         afterLogin?.call();
 
-        if (!localStorageService.biometricsRegistered) {
+        if (!localStorageService.biometricsRegistered &&
+            localStorageService.isDeviceSupport) {
           final reg = await showDialog<bool>(
             context: context,
             builder: (context) {
@@ -33,8 +34,7 @@ class NotSigninCatalogWidget extends StatelessWidget {
                 textButtonAction: S.of(context).ok,
                 textButtonExit: S.of(context).Later,
                 title: S.of(context).biometric_authentication,
-                content:
-                    S.of(context).login_with_biometric,
+                content: S.of(context).login_with_biometric,
                 action: () => Navigator.of(context).pop(true),
                 type: TypeAlert.notification,
               );
@@ -49,7 +49,9 @@ class NotSigninCatalogWidget extends StatelessWidget {
             }
           }
         }
+        return;
       }
+      return;
     });
     return;
   }

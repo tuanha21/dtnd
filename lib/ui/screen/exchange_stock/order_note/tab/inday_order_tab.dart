@@ -69,7 +69,7 @@ class _IndayOrderTabState extends State<IndayOrderTab> {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
-     return Padding(
+    return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
       child: Column(
         children: [
@@ -112,57 +112,63 @@ class _IndayOrderTabState extends State<IndayOrderTab> {
             ],
           ),
           const SizedBox(height: 8),
-         listOrderShow?.isEmpty == false ?
-          Expanded(child: Builder(
-            builder: (context) {
-              return ListView(
-                children: [
-                  Container(
-                    padding: const EdgeInsets.all(16),
-                    decoration: const BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.all(Radius.circular(12))),
-                    child: Column(
+          listOrderShow?.isEmpty == false
+              ? Expanded(child: Builder(
+                  builder: (context) {
+                    return ListView(
                       children: [
-                        for (int i = 0; i < (listOrderShow?.length ?? 0); i++)
-                          Column(
+                        Container(
+                          padding: const EdgeInsets.all(16),
+                          decoration: const BoxDecoration(
+                              color: Colors.white,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(12))),
+                          child: Column(
                             children: [
-                              i != 0 ? const Divider(height: 1) : Container(),
-                              OrderRecordWidget(
-                                data: listOrderShow!.elementAt(i),
-                                onChange: () async {
-                                  ChangeStockOrderISheet(
-                                          listOrderShow!.elementAt(i))
-                                      .show(
-                                          context,
-                                          ChangeStockOrderSheet(
-                                              data:
-                                                  listOrderShow!.elementAt(i)))
-                                      .then((value) => getIndayOrder());
-                                },
-                                onCancel: () async {
-                                  CancelStockOrderISheet(
-                                          listOrderShow!.elementAt(i))
-                                      .show(
-                                          context,
-                                          CancelStockOrderSheet(
-                                              data:
-                                                  listOrderShow!.elementAt(i)))
-                                      .then((value) => getIndayOrder());
-                                },
-                              )
+                              for (int i = 0;
+                                  i < (listOrderShow?.length ?? 0);
+                                  i++)
+                                Column(
+                                  children: [
+                                    i != 0
+                                        ? const Divider(height: 1)
+                                        : Container(),
+                                    OrderRecordWidget(
+                                      data: listOrderShow!.elementAt(i),
+                                      onChange: () async {
+                                        ChangeStockOrderISheet(
+                                                listOrderShow!.elementAt(i))
+                                            .show(
+                                                context,
+                                                ChangeStockOrderSheet(
+                                                    data: listOrderShow!
+                                                        .elementAt(i)))
+                                            .then((value) => getIndayOrder());
+                                      },
+                                      onCancel: () async {
+                                        CancelStockOrderISheet(
+                                                listOrderShow!.elementAt(i))
+                                            .show(
+                                                context,
+                                                CancelStockOrderSheet(
+                                                    data: listOrderShow!
+                                                        .elementAt(i)))
+                                            .then((value) => getIndayOrder());
+                                      },
+                                    )
+                                  ],
+                                )
                             ],
-                          )
+                          ),
+                        ),
                       ],
-                    ),
-                  ),
-                ],
-              );
-            },
-          )) : const Padding(
-            padding: EdgeInsets.only(top: 100),
-            child: EmptyListWidget(),
-          )
+                    );
+                  },
+                ))
+              : const Padding(
+                  padding: EdgeInsets.only(top: 100),
+                  child: EmptyListWidget(),
+                )
         ],
       ),
     );

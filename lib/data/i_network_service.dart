@@ -73,16 +73,18 @@ abstract class INetworkService {
   //core api
   Future<T?> requestTraditionalApi<T extends CoreResponseModel>(
     RequestModel requestModel, {
-    T? Function(Map<String, dynamic>)? onError,
     bool Function(Map<String, dynamic>)? hasError,
+    T? Function(Map<String, dynamic>)? onError,
+    T? Function()? onParseError,
     dynamic Function(Map<String, dynamic>)? selectionData,
     Map<String, dynamic> Function(Map<String, dynamic>)? modifyResponse,
   });
 
   Future<List<T>?> requestTraditionalApiResList<T extends CoreResponseModel>(
     RequestModel requestModel, {
-    List<T>? Function(Map<String, dynamic>)? onError,
     bool Function(Map<String, dynamic>)? hasError,
+    List<T>? Function(Map<String, dynamic>)? onError,
+    List<T>? Function()? onParseError,
     List<dynamic> Function(Map<String, dynamic>)? selectionData,
     Map<String, dynamic> Function(Map<String, dynamic>)? modifyResponse,
   });
@@ -178,6 +180,8 @@ abstract class INetworkService {
   Future<List<String>> getSearchHistory(String body);
 
   Future<void> putSearchHistory(String body);
+
+  Future<void> deleteAccount(String body);
 
   //business info
   Future<BusinnessProfileModel?> getBusinnessProfile(String body);

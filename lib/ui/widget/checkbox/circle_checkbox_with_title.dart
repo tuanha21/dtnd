@@ -6,10 +6,10 @@ class CircleCheckboxWithTitle extends StatelessWidget {
     super.key,
     required this.title,
     this.initialValue,
-    required this.ischeck,
+    required this.isCheck,
     required this.onCheck,
   });
-  final bool ischeck;
+  final bool isCheck;
   final String title;
   final bool? initialValue;
   final VoidCallback onCheck;
@@ -26,7 +26,7 @@ class CircleCheckboxWithTitle extends StatelessWidget {
               decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   border: Border.all(
-                      color: ischeck
+                      color: isCheck
                           ? AppColors.primary_01
                           : AppColors.neutral_03)),
               child: Container(
@@ -34,7 +34,7 @@ class CircleCheckboxWithTitle extends StatelessWidget {
                 height: 12,
                 decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: ischeck ? AppColors.primary_01 : Colors.transparent),
+                    color: isCheck ? AppColors.primary_01 : Colors.transparent),
               ),
             ),
           ),

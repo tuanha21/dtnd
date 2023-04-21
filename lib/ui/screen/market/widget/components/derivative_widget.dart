@@ -54,7 +54,7 @@ class _DerivativeWidgetState extends State<DerivativeWidget> {
               Expanded(
                 flex: 3,
                 child: Text(
-                  "Mã CK",
+                  S.of(context).stock_code,
                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
                       fontWeight: FontWeight.w700, color: AppColors.neutral_04),
                 ),

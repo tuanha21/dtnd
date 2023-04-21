@@ -12,7 +12,9 @@ import 'package:flutter/material.dart';
 
 class OrderFilterSheet extends StatefulWidget {
   const OrderFilterSheet({super.key, this.data});
+
   final OrderFilterData? data;
+
   @override
   State<OrderFilterSheet> createState() => _OrderFilterSheetState();
 }
@@ -23,6 +25,7 @@ class _OrderFilterSheetState extends State<OrderFilterSheet> {
   final List<OrderStatus?> listStatuss = [null, ...OrderStatus.values];
   late final List<bool> listSideSelect;
   late final List<bool> listStatusSelect;
+
   @override
   void initState() {
     initListSide();
@@ -83,7 +86,7 @@ class _OrderFilterSheetState extends State<OrderFilterSheet> {
             const SizedBox(height: 20),
             SingleColorTextButton(
               color: AppColors.primary_01,
-              text: "Áp dụng",
+              text: S.of(context).apply,
               onTap: () {
                 OrderFilterData orderFilterData = OrderFilterData();
                 if (!listSideSelect.first) {
@@ -119,10 +122,12 @@ class _FilterField<T> extends StatefulWidget {
       required this.values,
       required this.title,
       required this.name});
+
   final List<bool> listSelect;
   final List<T?> values;
   final String Function(T?) name;
   final String title;
+
   @override
   State<_FilterField<T>> createState() => __FilterFieldState<T>();
 }
@@ -177,7 +182,7 @@ class __FilterFieldState<T> extends State<_FilterField<T>> {
             child: CircleCheckboxWithTitle(
               title: widget.name.call(widget.values.elementAt(i)),
               onCheck: () => onChanged(i),
-              ischeck: widget.listSelect.elementAt(i),
+              isCheck: widget.listSelect.elementAt(i),
             ),
           )
       ],

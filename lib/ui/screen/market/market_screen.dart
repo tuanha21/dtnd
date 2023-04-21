@@ -4,10 +4,8 @@ import 'package:dtnd/ui/screen/market/widget/tabs/interested_tab.dart';
 import 'package:dtnd/ui/screen/market/widget/tabs/market_analysis_tab.dart';
 import 'package:dtnd/ui/screen/market/widget/tabs/market_industry_tab.dart';
 import 'package:dtnd/ui/screen/market/widget/tabs/market_overview_tab.dart';
-import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/widget/my_appbar.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import '../../../=models=/response/stock.dart';
 import '../../../data/i_data_center_service.dart';
 import '../../../data/implementations/data_center_service.dart';
@@ -39,83 +37,92 @@ class _MarketScreenState extends State<MarketScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: MyAppBar(
-          // backgroundColor: AppColors.linear_01,
-          actions: [
-            GestureDetector(
-              onTap: () {
-                Navigator.of(context)
-                    .push(MaterialPageRoute(
-                  builder: (context) => const SearchScreen(),
-                ))
-                    .then((value) async {
+      appBar: MyAppBar(
+        // backgroundColor: AppColors.linear_01,
+        actions: [
+          GestureDetector(
+            onTap: () {
+              Navigator.of(context)
+                  .push(MaterialPageRoute(
+                builder: (context) => const SearchScreen(),
+              ))
+                  .then(
+                (value) async {
                   if (value is Stock) {
-                    dataCenterService.getStocksModelsFromStockCodes(
-                        [value.stockCode]).then((stockModels) {
-                      if (stockModels != null) {
-                        return Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => StockDetailScreen(
-                            stockModel: stockModels.first,
-                          ),
-                        ));
-                      }
-                    });
+                    dataCenterService
+                        .getStocksModelsFromStockCodes([value.stockCode]).then(
+                      (stockModels) {
+                        if (stockModels != null) {
+                          return Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => StockDetailScreen(
+                                stockModel: stockModels.first,
+                              ),
+                            ),
+                          );
+                        }
+                      },
+                    );
                   }
-                });
-              },
-              child: SizedBox.square(
-                  dimension: 26,
-                  child: Image.asset(
-                    AppImages.home_icon_search_normal,
-                    color: Colors.white,
-                  )),
-            ),
-            const SizedBox(
-              width: 20,
-            ),
-            SizedBox.square(
-                dimension: 26,
-                child: Image.asset(
-                  AppImages.home_icon_notification,
-                )),
-            const SizedBox(
-              width: 16,
-            ),
-          ],
-        ),
-        body: Column(
-          children: [
-            PreferredSize(
-              preferredSize: const Size.fromHeight(kToolbarHeight),
-              child: Align(
-                alignment: Alignment.centerLeft,
-                child: TabBar(
-                  controller: _tabController,
-                  isScrollable: true,
-                  labelPadding:
-                      const EdgeInsets.symmetric(horizontal: 18, vertical: 6),
-                  padding: const EdgeInsets.only(top: 8),
-                  tabs: <Widget>[
-                    Text(S.of(context).overview),
-                    Text(S.of(context).interested),
-                    const Text("Tổ chức"),
-                    Text(S.of(context).cash_flow),
-                  ],
-                ),
+                },
+              );
+            },
+            child: SizedBox.square(
+              dimension: 26,
+              child: Image.asset(
+                AppImages.home_icon_search_normal,
+                color: Colors.white,
               ),
             ),
-            Expanded(
-              child: TabBarView(
+          ),
+          const SizedBox(
+            width: 20,
+          ),
+          SizedBox.square(
+            dimension: 26,
+            child: Image.asset(
+              AppImages.home_icon_notification,
+            ),
+          ),
+          const SizedBox(
+            width: 16,
+          ),
+        ],
+      ),
+      body: Column(
+        children: [
+          PreferredSize(
+            preferredSize: const Size.fromHeight(kToolbarHeight),
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: TabBar(
                 controller: _tabController,
-                children: const [
-                  MarketOverviewTab(),
-                  InterestedTab(),
-                  MarketAnalysisTab(),
-                  MarketIndustryTab(),
+                isScrollable: true,
+                labelPadding:
+                    const EdgeInsets.symmetric(horizontal: 18, vertical: 6),
+                padding: const EdgeInsets.only(top: 8),
+                tabs: <Widget>[
+                  Text(S.of(context).overview),
+                  Text(S.of(context).interested),
+                  Text(S.of(context).Institution),
+                  Text(S.of(context).cash_flow),
                 ],
               ),
-            )
-          ],
-        ));
+            ),
+          ),
+          Expanded(
+            child: TabBarView(
+              controller: _tabController,
+              children: const [
+                MarketOverviewTab(),
+                InterestedTab(),
+                MarketAnalysisTab(),
+                MarketIndustryTab(),
+              ],
+            ),
+          )
+        ],
+      ),
+    );
   }
 }

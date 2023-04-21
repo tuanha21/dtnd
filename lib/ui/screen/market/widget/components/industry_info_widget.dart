@@ -8,6 +8,7 @@ import 'package:flutter_typeahead/flutter_typeahead.dart';
 import '../../../../../=models=/response/stock_data.dart';
 import '../../../../../data/i_data_center_service.dart';
 import '../../../../../data/implementations/data_center_service.dart';
+import '../../../../../generated/l10n.dart';
 import 'industry_detail_page.dart';
 
 class IndustryInfoWidget extends StatefulWidget {
@@ -136,56 +137,60 @@ class _IndustryInfoWidgetState extends State<IndustryInfoWidget> {
 
   Widget get searchWidget {
     return TypeAheadField<MapEntry<String, dynamic>>(
-        textFieldConfiguration: TextFieldConfiguration(
-            controller: searchController,
-            onChanged: (value) {
-              if (value.isEmpty) {
-                setState(() {
-                  industry = null;
-                  getCodeIndustry = Future.wait(listIndustry.entries
-                      .map((e) => dataCenterService.getSectors(e.key))
-                      .toList());
-                });
-              }
-            },
-            decoration: InputDecoration(
-                filled: true,
-                fillColor: AppColors.neutral_06,
-                enabledBorder: InputBorder.none,
-                hintText: 'Tìm ngành..',
-                suffixIcon: Padding(
-                  padding: const EdgeInsets.only(right: 20),
-                  child: SvgPicture.asset(
-                    AppImages.search_appbar_icon,
-                    height: 24,
-                    width: 24,
-                  ),
-                ))),
-        suggestionsCallback: (text) async {
-          return listIndustry.entries.toList().where((element) =>
-              element.value.toLowerCase().contains(text.toLowerCase()));
+      textFieldConfiguration: TextFieldConfiguration(
+        controller: searchController,
+        onChanged: (value) {
+          if (value.isEmpty) {
+            setState(() {
+              industry = null;
+              getCodeIndustry = Future.wait(listIndustry.entries
+                  .map((e) => dataCenterService.getSectors(e.key))
+                  .toList());
+            });
+          }
         },
-        itemBuilder: (context, industry) {
-          return ListTile(
-            title: Text(industry.value),
-          );
-        },
-        onSuggestionSelected: (suggestion) {
-          searchController.text = suggestion.value;
-          industry = suggestion;
-          setState(() {
-            getCodeIndustry =
-                Future.wait([dataCenterService.getSectors(industry!.key)]);
-          });
-        },
-        noItemsFoundBuilder: (context) {
-          return ListTile(
-              title: Text(
-            'Ngành không hợp lệ',
+        decoration: InputDecoration(
+          filled: true,
+          fillColor: AppColors.neutral_06,
+          enabledBorder: InputBorder.none,
+          hintText: S.of(context).find_sector,
+          suffixIcon: Padding(
+            padding: const EdgeInsets.only(right: 20),
+            child: SvgPicture.asset(
+              AppImages.search_appbar_icon,
+              height: 24,
+              width: 24,
+            ),
+          ),
+        ),
+      ),
+      suggestionsCallback: (text) async {
+        return listIndustry.entries.toList().where((element) =>
+            element.value.toLowerCase().contains(text.toLowerCase()));
+      },
+      itemBuilder: (context, industry) {
+        return ListTile(
+          title: Text(industry.value),
+        );
+      },
+      onSuggestionSelected: (suggestion) {
+        searchController.text = suggestion.value;
+        industry = suggestion;
+        setState(() {
+          getCodeIndustry =
+              Future.wait([dataCenterService.getSectors(industry!.key)]);
+        });
+      },
+      noItemsFoundBuilder: (context) {
+        return ListTile(
+          title: Text(
+            S.of(context).invalid_industry,
             style: TextStyle(
                 color: Theme.of(context).disabledColor, fontSize: 18.0),
-          ));
-        });
+          ),
+        );
+      },
+    );
   }
 }
 

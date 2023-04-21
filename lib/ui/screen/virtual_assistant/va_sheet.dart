@@ -16,6 +16,7 @@ import 'package:dtnd/data/implementations/network_service.dart';
 import 'package:dtnd/data/implementations/user_service.dart';
 import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/screen/exchange_stock/order_note/screen/order_note_screen.dart';
+import 'package:dtnd/ui/screen/exchange_stock/stock_order/business/stock_order_flow.dart';
 import 'package:dtnd/ui/screen/exchange_stock/stock_order/component/order_order_note_panel.dart';
 import 'package:dtnd/ui/screen/exchange_stock/stock_order/component/order_order_panel.dart';
 import 'package:dtnd/ui/screen/exchange_stock/stock_order/component/order_owned_stock_panel.dart';
@@ -212,12 +213,10 @@ class _VaSheetState extends State<VaSheet> with SingleTickerProviderStateMixin {
                   Material(
                     borderRadius: const BorderRadius.all(Radius.circular(6)),
                     child: InkWell(
-                      onTap: ()
-                      {
-                        Navigator.of(context)
-                           .push(MaterialPageRoute(
-                            builder: (context) => const OrderNoteScreen(),
-                          ));
+                      onTap: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => const OrderNoteScreen(),
+                        ));
                       },
                       borderRadius: const BorderRadius.all(Radius.circular(6)),
                       child: Ink(
@@ -250,11 +249,17 @@ class _VaSheetState extends State<VaSheet> with SingleTickerProviderStateMixin {
                           });
                         },
                       ),
-                      const OrderOrderNotePanel(),
+                      OrderOrderNotePanel(
+                        onChangedOrder: (value) => Navigator.of(context)
+                            .pop(ToChangeOrderCmd([stockModel, value])),
+                        onCancelledOrder: (value) => Navigator.of(context)
+                            .pop(ToCancelOrderCmd([stockModel, value])),
+                      ),
                       OrderOwnedStockPanel(
                         onSell: (stockCodes) async {
                           final model = await dataCenterService
-                              .getStocksModelsFromStockCodes([stockCodes.symbol]);
+                              .getStocksModelsFromStockCodes(
+                                  [stockCodes.symbol]);
                           if (model?.isNotEmpty ?? false) {
                             changeStock(model!.first);
                             tabController.animateTo(0);

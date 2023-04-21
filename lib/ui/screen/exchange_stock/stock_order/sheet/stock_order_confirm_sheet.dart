@@ -41,7 +41,7 @@ class _StockOrderConfirmSheetState extends State<StockOrderConfirmSheet>
   final IExchangeService exchangeService = ExchangeService();
   final GlobalKey<FormState> pinKey = GlobalKey<FormState>();
   final GlobalKey<FormFieldState<String?>> pinFormKey =
-  GlobalKey<FormFieldState<String?>>();
+      GlobalKey<FormFieldState<String?>>();
   final ILocalStorageService localStorageService = LocalStorageService();
 
   final TextEditingController pinController = TextEditingController();
@@ -51,7 +51,7 @@ class _StockOrderConfirmSheetState extends State<StockOrderConfirmSheet>
   void initState() {
     super.initState();
     pinController.text =
-        localStorageService.sharedPreferences.getString('pincode') ?? '';
+        localStorageService.sharedPreferences.getString(pinCodeKey) ?? '';
   }
 
   @override
@@ -63,9 +63,7 @@ class _StockOrderConfirmSheetState extends State<StockOrderConfirmSheet>
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SheetHeader(
-              title: S
-                  .of(context)
-                  .order_confirm,
+              title: S.of(context).order_confirm,
               backData: widget.orderData,
             ),
             Row(
@@ -82,16 +80,14 @@ class _StockOrderConfirmSheetState extends State<StockOrderConfirmSheet>
                       children: [
                         Text(
                           widget.orderData.stockModel.stock.stockCode,
-                          style: Theme
-                              .of(context)
+                          style: Theme.of(context)
                               .textTheme
                               .bodyMedium!
                               .copyWith(fontWeight: FontWeight.w600),
                         ),
                         Text(
                           widget.orderData.stockModel.stock.postTo!.name,
-                          style: Theme
-                              .of(context)
+                          style: Theme.of(context)
                               .textTheme
                               .titleSmall!
                               .copyWith(fontWeight: FontWeight.w600),
@@ -102,7 +98,7 @@ class _StockOrderConfirmSheetState extends State<StockOrderConfirmSheet>
                 ),
                 Container(
                   padding:
-                  const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                      const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
                   decoration: BoxDecoration(
                     borderRadius: const BorderRadius.all(Radius.circular(4)),
                     color: widget.orderData.side.isBuy
@@ -131,34 +127,24 @@ class _StockOrderConfirmSheetState extends State<StockOrderConfirmSheet>
               child: Column(
                 children: [
                   _Row(
-                    label: S
-                        .of(context)
-                        .volumn,
+                    label: S.of(context).volumn,
                     value: widget.orderData.volumn.toString(),
                   ),
                   const SizedBox(height: 8),
                   _Row(
                     label: widget.orderData.side.isBuy
-                        ? S
-                        .of(context)
-                        .buy_price
-                        : S
-                        .of(context)
-                        .sell_price,
+                        ? S.of(context).buy_price
+                        : S.of(context).sell_price,
                     value: widget.orderData.price,
                   ),
                   const SizedBox(height: 8),
                   _Row(
-                    label: S
-                        .of(context)
-                        .order_type,
+                    label: S.of(context).order_type,
                     value: widget.orderData.orderType.detailName,
                   ),
                   const SizedBox(height: 8),
                   _Row(
-                    label: S
-                        .of(context)
-                        .exchange_total,
+                    label: S.of(context).exchange_total,
                     value: widget.orderData.exchangeTotal?.toString(),
                     valueColor: AppColors.primary_01,
                   ),
@@ -167,107 +153,77 @@ class _StockOrderConfirmSheetState extends State<StockOrderConfirmSheet>
               ),
             ),
             (localStorageService.sharedPreferences
-                .getString('pincode')
+                .getString(pinCodeKey)
                 ?.isEmpty ??
                 true)
                 ? Form(
-              key: pinKey,
-              autovalidateMode: AutovalidateMode.disabled,
-              child: TextFormField(
-                controller: pinController,
-                // onChanged: (value) => pinFormKey.currentState?.didChange(value),
-                validator: pinValidator,
-                autovalidateMode: AutovalidateMode.disabled,
-                decoration: InputDecoration(
-                  labelText: S
-                      .of(context)
-                      .pin_code,
-                  // contentPadding: const EdgeInsets.all(0),
-                  floatingLabelBehavior: FloatingLabelBehavior.always,
-                  floatingLabelAlignment: FloatingLabelAlignment.start,
-                  suffixIcon: InkWell(
-                      onTap: () {
-                        checked = !checked;
-                        if (checked && pinController.text != ''){
-                        EasyLoading.showToast('Đã lưu pin code ',maskType: EasyLoadingMaskType.clear);
-                        }
-                        setState ( () {});
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.all(10),
-                        child: SvgPicture.asset(
-                          AppImages.save_pin_code_icon,
-                          color:(checked && pinController.text != '')
-                              ? AppColors.semantic_01
-                              : AppColors.primary_01,
+                    key: pinKey,
+                    autovalidateMode: AutovalidateMode.disabled,
+                    child: TextFormField(
+                      controller: pinController,
+                      // onChanged: (value) => pinFormKey.currentState?.didChange(value),
+                      validator: pinValidator,
+                      autovalidateMode: AutovalidateMode.disabled,
+                      decoration: InputDecoration(
+                        labelText: S.of(context).pin_code,
+                        // contentPadding: const EdgeInsets.all(0),
+                        floatingLabelBehavior: FloatingLabelBehavior.always,
+                        floatingLabelAlignment: FloatingLabelAlignment.start,
+                        suffixIcon: InkWell(
+                            onTap: () {
+                              checked = !checked;
+                              if (checked && pinController.text != '') {
+                                EasyLoading.showToast(S.of(context).saved_pin_code,
+                                    maskType: EasyLoadingMaskType.clear);
+                              }
+                              setState(() {});
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.all(10),
+                              child: SvgPicture.asset(
+                                AppImages.save_pin_code_icon,
+                                color: (checked && pinController.text != '')
+                                    ? AppColors.semantic_01
+                                    : AppColors.primary_01,
+                              ),
+                            ),
                         ),
-                      )),
-                ),
-              ),
-            )
+                      ),
+                    ),
+                  )
                 : const SizedBox(),
             const SizedBox(height: 20),
             Row(
               children: [
-                // Expanded(
-                //     child: AsyncButton(
-                //   onPressed: () async {
-                //     if (pinKey.currentState!.validate()) {
-                //       await exchangeService.createNewOrder(widget.orderData
-                //           .copyWithPin(pinFormKey.currentState!.value!));
-                //     }
-                //   },
-                //   child: Center(
-                //     child: Text(
-                //       S.of(context).confirm.toUpperCase(),
-                //       style: AppTextStyle.titleSmall_14.copyWith(
-                //           color: Colors.white, fontWeight: FontWeight.w700),
-                //     ),
-                //   ),
-                // )),
                 Expanded(
                   child: AsyncSingleColorTextButton(
-                    text: S
-                        .of(context)
-                        .confirm
-                        .toUpperCase(),
+                    text: S.of(context).confirm.toUpperCase(),
                     color: AppColors.semantic_01,
                     onTap: () async {
                       // if (pinKey.currentState!.validate()) {
-                        // await Future.delayed(const Duration(seconds: 2))
-                        //     .then((value) {
-                        //   Navigator.of(context).pop(const NextCmd());
-                        // });
-                        final IUserService userService = UserService();
+                      // await Future.delayed(const Duration(seconds: 2))
+                      //     .then((value) {
+                      //   Navigator.of(context).pop(const NextCmd());
+                      // });
+                      final IUserService userService = UserService();
 
-                        /// code dat lenh
-                        BaseOrderModel? response;
-                        try {
-                          response = await exchangeService.createNewOrder(
-                              userService,
-                              widget.orderData.copyWithPin(pinController.text));
-                        } on int catch (rc) {
-                          response = null;
-                          Navigator.of(context).pop(OrderFailCmd(rc));
-                          return;
-                        }
-                        if (!mounted) return;
-                        if (checked) {
-                          localStorageService.sharedPreferences
-                              .setString('pincode', pinController.text);
-                        }
-                        // print('tiennh'+ response.toString());
-                        Navigator.of(context).pop(OrderSuccessCmd(widget.orderData));
-                        // Fluttertoast.showToast(
-                        //   msg: response?.rs ?? S.of(context).unknown_error,
-                        //   toastLength: Toast.LENGTH_SHORT,
-                        //   gravity: ToastGravity.CENTER,
-                        //   timeInSecForIosWeb: 1,
-                        //   backgroundColor: Colors.red,
-                        //   textColor: Colors.white,
-                        //   fontSize: 16.0,
-                        // );
-                      // }
+                      /// code dat lenh
+                      BaseOrderModel? response;
+                      try {
+                        response = await exchangeService.createNewOrder(
+                            userService,
+                            widget.orderData.copyWithPin(pinController.text));
+                      } on int catch (rc) {
+                        response = null;
+                        Navigator.of(context).pop(OrderFailCmd(rc));
+                        return;
+                      }
+                      if (!mounted) return;
+                      if (checked) {
+                        localStorageService.savePinCode(pinController.text);
+                      }
+                      Navigator.of(context)
+                          .pop(OrderSuccessCmd(widget.orderData));
                     },
                   ),
                 ),
@@ -293,9 +249,7 @@ class _Row extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final textheme = Theme
-        .of(context)
-        .textTheme;
+    final textheme = Theme.of(context).textTheme;
     final labelTheme = textheme.titleSmall!;
     final valueTheme = textheme.bodyMedium!
         .copyWith(fontWeight: FontWeight.w600, color: valueColor);

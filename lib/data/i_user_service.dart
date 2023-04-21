@@ -20,6 +20,8 @@ abstract class IUserService {
 
   Rx<TotalAsset?> get totalAsset;
 
+  Rx<IAccountModel?> get defaultAccount;
+
   Rx<List<IAccountModel>?> get listAccountModel;
 
   List<String> get searchHistory;
@@ -75,6 +77,9 @@ abstract class IUserService {
   Future<void> saveValueRegisterVa();
 
   Future<CheckAccountSuccessDataModel?> checkAccountInfo(String mail);
+
   Future<bool> resetPassword(
       String id, String phone, String mail, String password);
+
+  Future<void> deleteAccount();
 }

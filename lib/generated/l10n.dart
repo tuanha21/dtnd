@@ -497,6 +497,26 @@ class S {
     );
   }
 
+  /// `Stock code`
+  String get stock_code {
+    return Intl.message(
+      'Stock code',
+      name: 'stock_code',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Stock code`
+  String get stk_code {
+    return Intl.message(
+      'Stock code',
+      name: 'stk_code',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Ceil`
   String get ceil {
     return Intl.message(
@@ -1292,6 +1312,26 @@ class S {
     return Intl.message(
       'Order value',
       name: 'order_value',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Trading fee`
+  String get td_fee {
+    return Intl.message(
+      'Trading fee',
+      name: 'td_fee',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Trading fee`
+  String get trading_fee {
+    return Intl.message(
+      'Trading fee',
+      name: 'trading_fee',
       desc: '',
       args: [],
     );
@@ -2182,6 +2222,16 @@ class S {
     return Intl.message(
       'Create new order',
       name: 'create_new_order',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Confirm change order`
+  String get confirm_change_order {
+    return Intl.message(
+      'Confirm change order',
+      name: 'confirm_change_order',
       desc: '',
       args: [],
     );
@@ -3627,46 +3677,6 @@ class S {
     );
   }
 
-  /// `New password`
-  String get hint_password {
-    return Intl.message(
-      'New password',
-      name: 'hint_password',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Re-enter new password`
-  String get hint_re_password {
-    return Intl.message(
-      'Re-enter new password',
-      name: 'hint_re_password',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Please re-enter new password`
-  String get validate_null_repassword {
-    return Intl.message(
-      'Please re-enter new password',
-      name: 'validate_null_repassword',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Re-entered password does not match`
-  String get validate_same_repassword {
-    return Intl.message(
-      'Re-entered password does not match',
-      name: 'validate_same_repassword',
-      desc: '',
-      args: [],
-    );
-  }
-
   /// `Let us protect your account and important information`
   String get title_change_password {
     return Intl.message(
@@ -3677,101 +3687,211 @@ class S {
     );
   }
 
-  /// `8 -16 character`
-  String get condition_password1 {
+  /// `Confirm command edit`
+  String get confirm_command_edit {
     return Intl.message(
-      '8 -16 character',
-      name: 'condition_password1',
+      'Confirm command edit',
+      name: 'confirm_command_edit',
       desc: '',
       args: [],
     );
   }
 
-  /// `1 capital letter`
-  String get condition_password2 {
+  /// ` saved pin code`
+  String get saved_pin_code {
     return Intl.message(
-      '1 capital letter',
-      name: 'condition_password2',
+      ' saved pin code',
+      name: 'saved_pin_code',
       desc: '',
       args: [],
     );
   }
 
-  /// `1 digit`
-  String get condition_password3 {
+  /// `edit filter`
+  String get edit_filter {
     return Intl.message(
-      '1 digit',
-      name: 'condition_password3',
+      'edit filter',
+      name: 'edit_filter',
       desc: '',
       args: [],
     );
   }
 
-  /// `1 special character`
-  String get condition_password4 {
+  /// `create filter`
+  String get create_filter {
     return Intl.message(
-      '1 special character',
-      name: 'condition_password4',
+      'create filter',
+      name: 'create_filter',
       desc: '',
       args: [],
     );
   }
 
-  /// `INTELLIGENT FINANCE`
-  String get loading_quote1 {
+  /// `apply`
+  String get apply {
     return Intl.message(
-      'INTELLIGENT FINANCE',
-      name: 'loading_quote1',
+      'apply',
+      name: 'apply',
       desc: '',
       args: [],
     );
   }
 
-  /// `Forgot password?`
-  String get forgot_password {
+  /// `type`
+  String get type {
     return Intl.message(
-      'Forgot password?',
-      name: 'forgot_password',
+      'type',
+      name: 'type',
       desc: '',
       args: [],
     );
   }
 
-  /// `Please enter email`
-  String get validate_null_email {
+  /// `stock exchange`
+  String get stock_exchange {
     return Intl.message(
-      'Please enter email',
-      name: 'validate_null_email',
+      'stock exchange',
+      name: 'stock_exchange',
       desc: '',
       args: [],
     );
   }
 
-  /// `Email không đúng định dạng`
-  String get validate_format_email {
+  /// `Please provide a list`
+  String get Please_provide_a_list {
     return Intl.message(
-      'Email không đúng định dạng',
-      name: 'validate_format_email',
+      'Please provide a list',
+      name: 'Please_provide_a_list',
       desc: '',
       args: [],
     );
   }
 
-  /// `Don't worry, use the email you registered to start setting a new password for your account.`
-  String get forgot_pasword_quote1 {
+  /// `Invalid value`
+  String get invalid_value {
     return Intl.message(
-      'Don\'t worry, use the email you registered to start setting a new password for your account.',
-      name: 'forgot_pasword_quote1',
+      'Invalid value',
+      name: 'invalid_value',
       desc: '',
       args: [],
     );
   }
 
-  /// `CREATIVE FUTURE`
-  String get loading_quote2 {
+  /// `A chart comparing the cash flow at the current time with the previous session, averaging one week. Data is based on a daily basis `
+  String get chart_comparing_the_cash {
     return Intl.message(
-      'CREATIVE FUTURE',
-      name: 'loading_quote2',
+      'A chart comparing the cash flow at the current time with the previous session, averaging one week. Data is based on a daily basis ',
+      name: 'chart_comparing_the_cash',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Order cancellation confirmation`
+  String get order_cancellation_confirmation {
+    return Intl.message(
+      'Order cancellation confirmation',
+      name: 'order_cancellation_confirmation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Are you sure you want to cancel the order ?`
+  String get Are_you_sure_you_want_to_cancel_the_order {
+    return Intl.message(
+      'Are you sure you want to cancel the order ?',
+      name: 'Are_you_sure_you_want_to_cancel_the_order',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Value`
+  String get value {
+    return Intl.message(
+      'Value',
+      name: 'value',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Top traded stocks by sector`
+  String get top_traded_stocks_by_sector {
+    return Intl.message(
+      'Top traded stocks by sector',
+      name: 'top_traded_stocks_by_sector',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Find sector...`
+  String get find_sector {
+    return Intl.message(
+      'Find sector...',
+      name: 'find_sector',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Invalid industry`
+  String get invalid_industry {
+    return Intl.message(
+      'Invalid industry',
+      name: 'invalid_industry',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `stock_symbol`
+  String get stock_symbol {
+    return Intl.message(
+      'stock_symbol',
+      name: 'stock_symbol',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Institution`
+  String get Institution {
+    return Intl.message(
+      'Institution',
+      name: 'Institution',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Setting up Smart OTP password`
+  String get Setting_up_Smart_OTP_password {
+    return Intl.message(
+      'Setting up Smart OTP password',
+      name: 'Setting_up_Smart_OTP_password',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please remember your SmartOTP password`
+  String get Please_remember_your_SmartOTP_password {
+    return Intl.message(
+      'Please remember your SmartOTP password',
+      name: 'Please_remember_your_SmartOTP_password',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Set a password consisting of 6 digits`
+  String get Set_a_password_consisting_of_6_digits {
+    return Intl.message(
+      'Set a password consisting of 6 digits',
+      name: 'Set_a_password_consisting_of_6_digits',
       desc: '',
       args: [],
     );
