@@ -1,3 +1,4 @@
+import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/screen/home/home_controller.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
@@ -101,13 +102,13 @@ class _LoadingScreenState extends State<LoadingScreen>
                       height: 20,
                     ),
                     Text(
-                      'TÀI CHÍNH THÔNG MINH',
+                      S.of(context).loading_quote1,
                       style: Theme.of(context).textTheme.labelLarge?.copyWith(
                           fontWeight: FontWeight.w700,
                           color: AppColors.loading_text),
                     ),
                     Text(
-                      'TƯƠNG LAI SÁNG TẠO',
+                      S.of(context).loading_quote2,
                       style: Theme.of(context).textTheme.labelLarge?.copyWith(
                           fontWeight: FontWeight.w700,
                           color: AppColors.loading_text),
@@ -116,15 +117,6 @@ class _LoadingScreenState extends State<LoadingScreen>
                 ),
               ),
             ),
-
-            // Positioned(
-            //     bottom: size.height * 0.1,
-            //     child: SizedBox(
-            //         width: 260,
-            //         child: Image.asset(
-            //           AppImages.loading_icon,
-            //           fit: BoxFit.fitWidth,
-            //         ))),
             Positioned(
               bottom: size.height * 0.4,
               child: Container(
@@ -142,7 +134,6 @@ class _LoadingScreenState extends State<LoadingScreen>
                       if (snapshot.data! >= 1) {
                         go(context);
                       }
-
                       return Row(
                         children: [
                           AnimatedContainer(

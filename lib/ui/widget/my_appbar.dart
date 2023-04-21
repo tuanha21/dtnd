@@ -7,7 +7,6 @@ import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../config/service/app_services.dart';
 import '../theme/app_color.dart';
 
 class MyAppBar extends StatefulWidget implements PreferredSizeWidget {
@@ -134,7 +133,7 @@ class _MyAppBarState extends State<MyAppBar> {
                 children: [
                   userService.userInfo.value != null
                       ? Text(
-                          S.of(context).hello,
+                          '${S.of(context).hello} 👋',
                           style:
                               Theme.of(context).textTheme.labelMedium?.copyWith(
                                     fontWeight: FontWeight.w500,

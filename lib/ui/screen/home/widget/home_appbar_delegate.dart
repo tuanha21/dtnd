@@ -79,7 +79,7 @@ class HomeAppbarDelegate extends SliverPersistentHeaderDelegate {
                 userService.userInfo.value != null
                     ? Text(
                         textAlign: TextAlign.left,
-                        S.of(context).hello,
+                        '${S.of(context).hello} 👋',
                         style:
                             Theme.of(context).textTheme.labelMedium?.copyWith(
                                   fontWeight: FontWeight.w500,

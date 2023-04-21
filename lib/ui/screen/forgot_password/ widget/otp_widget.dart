@@ -70,140 +70,139 @@ class _OtpWidgetState extends State<OtpWidget> {
     final theme = Theme.of(context).textTheme;
     return Padding(
       padding: const EdgeInsets.all(16.0),
-      child: Expanded(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              S.of(context).fill_OTP,
-              style: theme.headlineSmall!.copyWith(fontWeight: FontWeight.w700),
-            ),
-            const SizedBox(height: 16),
-            Row(
-              children: [
-                Expanded(
-                    child: Text(S.of(context).otp_code_sent_to_phone_number(
-                        widget.email.toString())))
-              ],
-            ),
-            const SizedBox(height: 36),
-            Builder(builder: (context) {
-              final defaultPinTheme = PinTheme(
-                width: 45,
-                height: 45,
-                textStyle: const TextStyle(
-                    fontSize: 20,
-                    color: Color.fromRGBO(30, 60, 87, 1),
-                    fontWeight: FontWeight.w600),
-                decoration: BoxDecoration(
-                  border: Border.all(color: AppColors.neutral_04),
-                  borderRadius: BorderRadius.circular(12),
-                  color: AppColors.neutral_06,
-                ),
-              );
-
-              final focusedPinTheme = defaultPinTheme.copyDecorationWith(
-                border: Border.all(
-                  color: AppColors.primary_01,
-                ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            S.of(context).fill_OTP,
+            style: theme.headlineSmall!.copyWith(fontWeight: FontWeight.w700),
+          ),
+          const SizedBox(height: 16),
+          Row(
+            children: [
+              Expanded(
+                  child: Text(S
+                      .of(context)
+                      .otp_code_sent_to_phone_number(widget.email.toString())))
+            ],
+          ),
+          const SizedBox(height: 36),
+          Builder(builder: (context) {
+            final defaultPinTheme = PinTheme(
+              width: 45,
+              height: 45,
+              textStyle: const TextStyle(
+                  fontSize: 20,
+                  color: Color.fromRGBO(30, 60, 87, 1),
+                  fontWeight: FontWeight.w600),
+              decoration: BoxDecoration(
+                border: Border.all(color: AppColors.neutral_04),
                 borderRadius: BorderRadius.circular(12),
-              );
+                color: AppColors.neutral_06,
+              ),
+            );
 
-              final preFilledWidget = Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Container(
-                    width: 24,
-                    height: 2,
-                    margin: const EdgeInsets.symmetric(vertical: 10),
-                    decoration: BoxDecoration(
-                      color: AppColors.neutral_04,
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                  ),
-                ],
-              );
-              final cursor = Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Container(
-                    width: 24,
-                    height: 2,
-                    margin: const EdgeInsets.symmetric(vertical: 10),
-                    decoration: BoxDecoration(
-                      color: AppColors.primary_01,
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                  ),
-                ],
-              );
+            final focusedPinTheme = defaultPinTheme.copyDecorationWith(
+              border: Border.all(
+                color: AppColors.primary_01,
+              ),
+              borderRadius: BorderRadius.circular(12),
+            );
 
-              return Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Pinput(
-                    controller: controller,
-                    length: 6,
-                    defaultPinTheme: defaultPinTheme,
-                    focusedPinTheme: focusedPinTheme,
-                    cursor: cursor,
-                    preFilledWidget: preFilledWidget,
-                    pinputAutovalidateMode: PinputAutovalidateMode.onSubmit,
-                    onCompleted: (pin) => setState(() {
-                      canNext = true;
-                    }),
+            final preFilledWidget = Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Container(
+                  width: 24,
+                  height: 2,
+                  margin: const EdgeInsets.symmetric(vertical: 10),
+                  decoration: BoxDecoration(
+                    color: AppColors.neutral_04,
+                    borderRadius: BorderRadius.circular(8),
                   ),
-                ],
-              );
-            }),
-            const SizedBox(height: 8),
-            ExpandedSection(
-                expand: errorTxt != null,
-                child: Row(
-                  children: [
-                    Text(
-                      errorTxt ?? "",
-                      style: AppTextStyle.bodySmall_12
-                          .copyWith(color: AppColors.semantic_03),
-                    )
-                  ],
-                )),
-            const SizedBox(height: 8),
-            Row(
+                ),
+              ],
+            );
+            final cursor = Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Container(
+                  width: 24,
+                  height: 2,
+                  margin: const EdgeInsets.symmetric(vertical: 10),
+                  decoration: BoxDecoration(
+                    color: AppColors.primary_01,
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                ),
+              ],
+            );
+
+            return Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                InkWell(
-                  onTap: resendOTP,
-                  child: Text(
-                    'Gửi lại mã?',
-                    style: AppTextStyle.bodySmall_12.copyWith(
-                      color: resendOTP != null
-                          ? AppColors.primary_01
-                          : AppColors.neutral_03,
-                      fontWeight: FontWeight.w600,
-                    ),
+                Pinput(
+                  controller: controller,
+                  length: 6,
+                  defaultPinTheme: defaultPinTheme,
+                  focusedPinTheme: focusedPinTheme,
+                  cursor: cursor,
+                  preFilledWidget: preFilledWidget,
+                  pinputAutovalidateMode: PinputAutovalidateMode.onSubmit,
+                  onCompleted: (pin) => setState(() {
+                    canNext = true;
+                  }),
+                ),
+              ],
+            );
+          }),
+          const SizedBox(height: 8),
+          ExpandedSection(
+              expand: errorTxt != null,
+              child: Row(
+                children: [
+                  Text(
+                    errorTxt ?? "",
+                    style: AppTextStyle.bodySmall_12
+                        .copyWith(color: AppColors.semantic_03),
+                  )
+                ],
+              )),
+          const SizedBox(height: 8),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              InkWell(
+                onTap: resendOTP,
+                child: Text(
+                  'Gửi lại mã?',
+                  style: AppTextStyle.bodySmall_12.copyWith(
+                    color: resendOTP != null
+                        ? AppColors.primary_01
+                        : AppColors.neutral_03,
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
-                Obx(() => Text(
-                      _timeLeft,
-                      style: AppTextStyle.bodyMedium_14.copyWith(
-                        color: AppColors.neutral_03,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    )),
-              ],
-            ),
-            const SizedBox(height: 36),
-            AsyncButton(
-              onPressed: onVerify,
-              child: Text(
-                S.of(context).confirm,
-                style: AppTextStyle.bodyMedium_14.copyWith(
-                    fontWeight: FontWeight.w700, color: AppColors.neutral_07),
               ),
+              Obx(() => Text(
+                    _timeLeft,
+                    style: AppTextStyle.bodyMedium_14.copyWith(
+                      color: AppColors.neutral_03,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  )),
+            ],
+          ),
+          const SizedBox(height: 36),
+          AsyncButton(
+            onPressed: onVerify,
+            child: Text(
+              S.of(context).confirm,
+              style: AppTextStyle.bodyMedium_14.copyWith(
+                  fontWeight: FontWeight.w700, color: AppColors.neutral_07),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
