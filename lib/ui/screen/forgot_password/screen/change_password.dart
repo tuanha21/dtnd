@@ -4,6 +4,7 @@ import 'package:crypto/crypto.dart';
 import 'package:dtnd/=models=/check_account_success_data_model.dart';
 import 'package:dtnd/data/i_user_service.dart';
 import 'package:dtnd/data/implementations/user_service.dart';
+import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/screen/forgot_password/%20widget/success_reset_password.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
@@ -82,8 +83,7 @@ class _ChangePasswordState extends State<ChangePassword> {
               height: 16,
             ),
             Text(
-              // S.of(context).title_change_password,
-              'Để chúng tôi bảo vệ tài khoản và các thông tin quan trọng của bạn',
+              S.of(context).title_change_password,
               style: AppTextStyle.titleSmall_14
                   .copyWith(color: AppColors.neutral_02),
             ),
@@ -103,8 +103,8 @@ class _ChangePasswordState extends State<ChangePassword> {
             obscureText: _passwordVisible,
             decoration: InputDecoration(
               errorStyle: const TextStyle(height: 0),
-              labelText: 'Mật khẩu mới',
-              hintText: 'Mật khẩu mới',
+              labelText: S.of(context).hint_password,
+              hintText: S.of(context).hint_password,
               suffixIcon: IconButton(
                 icon: Icon(
                   !_passwordVisible ? Icons.visibility : Icons.visibility_off,
@@ -143,14 +143,14 @@ class _ChangePasswordState extends State<ChangePassword> {
                   });
                 },
               ),
-              hintText: 'Nhập lại mật khẩu mới',
-              labelText: 'Nhập lại mật khẩu mới',
+              hintText: S.of(context).hint_re_password,
+              labelText: S.of(context).hint_re_password,
             ),
             validator: (value) {
               if (value == null || value.isEmpty) {
-                return 'Vui lòng nhập lại mật khẩu mới';
+                return S.of(context).validate_null_repassword;
               } else if (value != _passwordController.text) {
-                return 'Mật khẩu nhập lại không trùng khớp';
+                return S.of(context).validate_same_repassword;
               }
               return null;
             },
@@ -215,7 +215,7 @@ class _ChangePasswordState extends State<ChangePassword> {
         );
       } else {
         setState(() {
-          _errorReset = 'Có lỗi xảy ra, vui lòng thử lại!';
+          _errorReset = S.of(context).something_went_wrong;
         });
       }
     }
@@ -280,7 +280,7 @@ class _ChangePasswordState extends State<ChangePassword> {
           children: [
             getIcon(condition1),
             Text(
-              '8 -16 ký tự',
+              S.of(context).condition_password1,
               style: Theme.of(context)
                   .textTheme
                   .bodyMedium
@@ -293,7 +293,7 @@ class _ChangePasswordState extends State<ChangePassword> {
           children: [
             getIcon(condition2),
             Text(
-              '1 chữ cái viết hoa',
+              S.of(context).condition_password2,
               style: Theme.of(context)
                   .textTheme
                   .bodyMedium
@@ -306,7 +306,7 @@ class _ChangePasswordState extends State<ChangePassword> {
           children: [
             getIcon(condition3),
             Text(
-              '1 chữ số',
+              S.of(context).condition_password3,
               style: Theme.of(context)
                   .textTheme
                   .bodyMedium
@@ -318,7 +318,7 @@ class _ChangePasswordState extends State<ChangePassword> {
         Row(
           children: [
             getIcon(condition4),
-            Text('1 ký tự đặc biệt',
+            Text(S.of(context).condition_password4,
                 style: Theme.of(context)
                     .textTheme
                     .bodyMedium

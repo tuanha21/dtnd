@@ -1,6 +1,3 @@
-import 'dart:convert';
-
-import 'package:crypto/crypto.dart';
 import 'package:dtnd/=models=/check_account_success_data_model.dart';
 import 'package:dtnd/data/i_user_service.dart';
 import 'package:dtnd/data/implementations/user_service.dart';
@@ -85,7 +82,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
           child:
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             Text(
-              "Quên mật khẩu?",
+              S.of(context).forgot_password,
               style: AppTextStyle.headlineSmall_24
                   .copyWith(fontWeight: FontWeight.w700),
             ),
@@ -93,7 +90,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
               height: 16,
             ),
             Text(
-              "Đừng lo lắng, sử dụng email bạn đã đăng ký để bắt đầu cài đặt mật khẩu mới cho tài khoản nhé.",
+              S.of(context).forgot_pasword_quote1,
               style: AppTextStyle.titleSmall_14
                   .copyWith(color: AppColors.neutral_02),
             ),
@@ -107,17 +104,17 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                 children: <Widget>[
                   TextFormField(
                     controller: _emailController,
-                    decoration: const InputDecoration(
-                      hintText: 'Email',
-                      labelText: 'Email',
+                    decoration: InputDecoration(
+                      hintText: S.of(context).email,
+                      labelText: S.of(context).email,
                     ),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         refreshError();
-                        return 'Vui lòng nhập email';
+                        return S.of(context).validate_null_email;
                       } else if (!isValidEmail(value)) {
                         refreshError();
-                        return 'Email không đúng định dạng';
+                        return S.of(context).validate_format_email;
                       }
                       return null;
                     },
@@ -141,7 +138,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                     child: AsyncButton(
                       onPressed: _handleAsyncButtonPress,
                       child: Text(
-                        'Tiếp tục',
+                        S.of(context).next,
                         style: AppTextStyle.bodyMedium_14.copyWith(
                             fontWeight: FontWeight.w700,
                             color: AppColors.neutral_07),

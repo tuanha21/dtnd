@@ -27,15 +27,12 @@ class _DerivativeWidgetState extends State<DerivativeWidget> {
   }
 
   void initDerivative() {
-    print('333333333333333');
-
     // get list derivative
     listStocks = dataCenterService.getListDerivative();
   }
 
   @override
   Widget build(BuildContext context) {
-    print('222222222@@22');
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -104,8 +101,6 @@ class _DerivativeWidgetState extends State<DerivativeWidget> {
         FutureBuilder<List<DerivativeResModel>?>(
             future: listStocks,
             builder: (context, snapshot) {
-              print(snapshot.stackTrace);
-              print(snapshot.connectionState);
               if (snapshot.connectionState == ConnectionState.done) {
                 if (snapshot.hasData) {
                   var list = snapshot.data;

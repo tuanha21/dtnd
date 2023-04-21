@@ -404,6 +404,25 @@
     "return_command" : "Về sổ lệnh",
     "return_home_page" : "Về trang chủ",
     "info_sent_to_email" : "Thông tin tài khoản đã được gửi về Email của quý khách!",
-     "title_change_password" :"Để chúng tôi bảo vệ tài khoản và các thông tin quan trọng của bạn"
+    "hint_password" : "Mật khẩu mới",
+    "hint_re_password" : "Nhập lại mật khẩu mới",
+    "validate_null_repassword" : "Vui lòng nhập lại mật khẩu mới",
+    "validate_same_repassword" : "Mật khẩu nhập lại không trùng khớp",
+     "title_change_password" :"Để chúng tôi bảo vệ tài khoản và các thông tin quan trọng của bạn",
+    "condition_password1" : "8 -16 ký tự",
+    "condition_password2" : "1 chữ cái viết hoa",
+    "condition_password3" : "1 chữ số",
+    "condition_password4" : "1 ký tự đặc biệt",
+    "validate_null_email" : "Vui lòng nhập email",
+    "validate_format_email" : "Email không đúng định dạng",
 
+    
+
+    "loading_quote1" : "TÀI CHÍNH THÔNG MINH",
+    "forgot_password" : "Quên mật khẩu?",
+    "forgot_pasword_quote1" : "Đừng lo lắng, sử dụng email bạn đã đăng ký để bắt đầu cài đặt mật khẩu mới cho tài khoản nhé.",
+    "loading_quote2" : "TƯƠNG LAI SÁNG TẠO"
+
+
+    
 }

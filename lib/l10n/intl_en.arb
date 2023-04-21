@@ -404,7 +404,24 @@
     "return_command" : "return command",
     "return_home_page" : "Return home page",
      "info_sent_to_email" :"Your account information has been sent to your email!",
-     "title_change_password" :"Let us protect your account and important information"
+    "hint_password" : "New password",
+    "hint_re_password" : "Re-enter new password",
+    "validate_null_repassword" : "Please re-enter new password",
+    "validate_same_repassword" : "Re-entered password does not match",
+     "title_change_password" :"Let us protect your account and important information",
+     "condition_password1" : "8 -16 character",
+     "condition_password2" : "1 capital letter",
+     "condition_password3" : "1 digit",
+     "condition_password4" : "1 special character",
+     "loading_quote1" : "INTELLIGENT FINANCE",
+    "forgot_password" : "Forgot password?",
+    "validate_null_email" : "Please enter email",
+    "validate_format_email" : "Email không đúng định dạng",
+
+
+
+    "forgot_pasword_quote1" : "Don't worry, use the email you registered to start setting a new password for your account.",
+    "loading_quote2" : "CREATIVE FUTURE"
 
 
 }
