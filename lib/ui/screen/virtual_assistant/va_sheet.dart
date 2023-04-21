@@ -253,7 +253,7 @@ class _VaSheetState extends State<VaSheet> with SingleTickerProviderStateMixin {
                         onChangedOrder: (value) => Navigator.of(context)
                             .pop(ToChangeOrderCmd([stockModel, value])),
                         onCancelledOrder: (value) => Navigator.of(context)
-                            .pop(ToChangeOrderCmd([stockModel, value])),
+                            .pop(ToCancelOrderCmd([stockModel, value])),
                       ),
                       OrderOwnedStockPanel(
                         onSell: (stockCodes) async {
