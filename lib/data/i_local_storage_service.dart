@@ -54,4 +54,6 @@ abstract class ILocalStorageService {
   Future<void> cancelBiometrics();
 
   Future<void> saveInfoRegistered(String infoRegistered);
+
+  Future<void> savePinCode(String pinCode);
 }

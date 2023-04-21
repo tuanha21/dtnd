@@ -1,7 +1,6 @@
 import 'package:dtnd/=models=/index.dart';
 import 'package:dtnd/=models=/response/deep_model.dart';
 import 'package:dtnd/=models=/response/index_model.dart';
-import 'package:dtnd/=models=/response/stock_model.dart';
 import 'package:dtnd/=models=/response/stock_trading_history.dart';
 import 'package:dtnd/config/service/app_services.dart';
 import 'package:dtnd/data/i_data_center_service.dart';

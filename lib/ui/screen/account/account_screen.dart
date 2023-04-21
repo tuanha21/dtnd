@@ -55,9 +55,11 @@ class _AccountScreenState extends State<AccountScreen> {
               SingleColorTextButton(
                   onTap: () {
                     Navigator.of(context)
-                        .push<bool>(MaterialPageRoute(
-                      builder: (context) => const LoginScreen(),
-                    ))
+                        .push<bool>(
+                      MaterialPageRoute(
+                        builder: (context) => const LoginScreen(),
+                      ),
+                    )
                         .then((login) async {
                       setState(() {});
                       if ((login ?? false) &&
@@ -66,11 +68,10 @@ class _AccountScreenState extends State<AccountScreen> {
                           context: context,
                           builder: (context) {
                             return CustomDialog(
-                              textButtonAction: 'Đồng ý',
-                              textButtonExit: 'Để sau',
-                              title: 'Đăng nhập bằng sinh trắc học',
-                              content:
-                                  'Bạn chưa đăng ký đăng nhập bằng sinh trắc học\nBạn có muốn đăng ký ngay bây giờ không?',
+                              textButtonAction: S.of(context).ok,
+                              textButtonExit: S.of(context).Later,
+                              title: S.of(context).biometric_authentication,
+                              content: S.of(context).login_with_biometric,
                               action: () {
                                 Navigator.of(context).pop();
                               },
@@ -115,9 +116,8 @@ class _AccountScreenState extends State<AccountScreen> {
                 context: context,
                 builder: (context) {
                   return CustomDialog(
-                    title: 'Đăng nhập bằng sinh trắc học',
-                    content:
-                        'Bạn chưa đăng ký đăng nhập bằng sinh trắc học\nBạn có muốn đăng ký ngay bây giờ không?',
+                    title: S.of(context).biometric_authentication,
+                    content: S.of(context).login_with_biometric,
                     action: () => Navigator.of(context).pop(true),
                     type: TypeAlert.notification,
                   );

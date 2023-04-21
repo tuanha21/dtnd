@@ -11,6 +11,8 @@ import 'package:dtnd/ui/widget/overlay/custom_dialog.dart';
 import 'package:dtnd/ui/widget/overlay/login_first_dialog.dart';
 import 'package:flutter/material.dart';
 
+import '../generated/l10n.dart';
+
 class AccountUtil {
   static Type getAccountType(String accountCode) {
     final String lastCode = accountCode[accountCode.length - 1];
@@ -30,9 +32,9 @@ class AccountUtil {
       context: context,
       builder: (context) {
         return CustomDialog(
-          textButtonAction: 'Đồng ý',
-          textButtonExit: 'Để sau',
-          title: 'Xác nhận',
+          textButtonAction: S.of(context).ok,
+          textButtonExit: S.of(context).Later,
+          title: S.of(context).confirm,
           content: 'Bạn có chắc chắn muốn dùng tài khoản khác?',
           action: () => Navigator.of(context).pop(true),
           type: TypeAlert.notification,
@@ -75,11 +77,11 @@ class AccountUtil {
                   context: context,
                   builder: (context) {
                     return CustomDialog(
-                      textButtonAction: 'Đồng ý',
-                      textButtonExit: 'Để sau',
-                      title: 'Đăng nhập bằng sinh trắc học',
+                      textButtonAction: S.of(context).ok,
+                      textButtonExit: S.of(context).Later,
+                      title: S.of(context).biometric_authentication,
                       content:
-                          'Bạn chưa đăng ký đăng nhập bằng sinh trắc học\nBạn có muốn đăng ký ngay bây giờ không?',
+                      S.of(context).login_with_biometric,
                       action: () {
                         Navigator.of(context).pop();
                       },

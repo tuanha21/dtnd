@@ -6,12 +6,15 @@ import 'package:dtnd/=models=/algo/stock_filter.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:dtnd/ui/widget/app_snack_bar.dart';
 import 'package:dtnd/utilities/num_utils.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:linked_scroll_controller/linked_scroll_controller.dart';
+
 import '../../../../../data/i_network_service.dart';
 import '../../../../../data/implementations/network_service.dart';
+import '../../../../../generated/l10n.dart';
 import '../../../../theme/app_color.dart';
 import '../../../../widget/expanded_widget.dart';
 import '../../../../widget/input/app_text_field.dart';
@@ -53,7 +56,7 @@ class _ListStockFilterState extends State<ListStockFilter> {
       filterStream.sink.add(list);
       listStock = list;
     } catch (e) {
-      filterStream.sink.addError("Có lỗi xảy ra");
+      filterStream.sink.addError(S.of(context).something_went_wrong);
     }
   }
 
@@ -78,8 +81,8 @@ class _ListStockFilterState extends State<ListStockFilter> {
 
   void getListHead(Filter filter) {
     listFilterHeader = [
-      'Sàn',
-      "Ngành",
+      S.of(context).floor,
+      S.of(context).industry,
     ];
     for (var element in filter.list) {
       if (!listFilterHeader.contains(element.code)) {
@@ -200,7 +203,7 @@ class _ListStockFilterState extends State<ListStockFilter> {
                               decoration: const BoxDecoration(),
                               child: Align(
                                 alignment: Alignment.centerLeft,
-                                child: Text("Mã CK",
+                                child: Text(S.of(context).stock_code,
                                     style:
                                         Theme.of(context).textTheme.bodySmall),
                               ),
@@ -268,7 +271,7 @@ class _ListStockFilterState extends State<ListStockFilter> {
                             getFilterApi();
                           }
                         },
-                        child: const Text('Chỉnh sửa bộ lọc'),
+                        child: Text(S.of(context).edit_filter),
                       ),
                     ),
                   ),
@@ -321,7 +324,10 @@ class _BottomEditFilterState extends State<BottomEditFilter> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(widget.filter != null ? 'Chỉnh sửa bộ lọc' : "Tạo bộ lọc",
+              Text(
+                  widget.filter != null
+                      ? S.of(context).edit_filter
+                      : S.of(context).create_filter,
                   style: Theme.of(context).textTheme.bodyLarge),
               GestureDetector(
                 onTap: () {
@@ -454,7 +460,7 @@ class _BottomEditFilterState extends State<BottomEditFilter> {
                   await createFilter(context);
                 }
               },
-              child: const Text("Áp dụng"),
+              child: Text(S.of(context).apply),
             ),
           ),
         ),
@@ -489,7 +495,9 @@ class _BottomEditFilterState extends State<BottomEditFilter> {
         }
       }
     } catch (e) {
-      print('lỗi cái lồn');
+      if (kDebugMode) {
+        print(e);
+      }
     }
   }
 
@@ -518,7 +526,9 @@ class _BottomEditFilterState extends State<BottomEditFilter> {
         }
       }
     } catch (e) {
-      print('lỗi cái lồn');
+      if (kDebugMode) {
+        print(e);
+      }
     }
   }
 }
@@ -778,7 +788,7 @@ class _EditFilterDetailState extends State<EditFilterDetail> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text('Chỉ số lọc cổ phiếu',
+              Text(S.of(context).filter_stock_figure,
                   style: Theme.of(context).textTheme.bodyLarge),
               GestureDetector(
                 onTap: () {
@@ -843,7 +853,7 @@ class _EditFilterDetailState extends State<EditFilterDetail> {
                   }
                   if (minValue > maxValue) {
                     return AppSnackBar.showError(context,
-                        message: "Giá trị không hợp lệ");
+                        message: S.of(context).invalid_value);
                   }
                   var filter = FilterRange(
                       code: widget.filterRange.code,
@@ -851,7 +861,7 @@ class _EditFilterDetailState extends State<EditFilterDetail> {
                       low: minValue);
                   Navigator.pop(context, filter);
                 },
-                child: const Text('Lưu'),
+                child: Text(S.of(context).save),
               ),
             )),
         const SizedBox(height: 20),
@@ -893,7 +903,7 @@ class _EditNameSheetState extends State<EditNameSheet> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('Chỉ số lọc cổ phiếu',
+                Text(S.of(context).filter_stock_figure,
                     style: Theme.of(context).textTheme.bodyLarge),
                 GestureDetector(
                   onTap: () {
@@ -925,7 +935,7 @@ class _EditNameSheetState extends State<EditNameSheet> {
                 controller: nameController,
                 validator: (text) {
                   if (text!.isEmpty) {
-                    return "Vui lòng nhập danh mục";
+                    return S.of(context).Please_provide_a_list;
                   }
                   return null;
                 },
@@ -944,7 +954,7 @@ class _EditNameSheetState extends State<EditNameSheet> {
                       }
                       Navigator.pop(context, nameController.text);
                     },
-                    child: const Text("Lưu")),
+                    child: Text(S.of(context).save)),
               )),
           const SizedBox(height: 24),
           SizedBox(height: MediaQuery.of(context).viewInsets.bottom)

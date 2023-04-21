@@ -97,7 +97,7 @@ class UserService implements IUserService {
       getUserInfo();
       getListAccount();
       getTotalAsset();
-      localStorageService.sharedPreferences.remove('pincode');
+      localStorageService.sharedPreferences.remove('pinCode');
       // getSearchHistory();
       return true;
     } catch (e) {

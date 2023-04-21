@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'i_appbar.dart';
 
 class SimpleAppbar extends IAppbar {

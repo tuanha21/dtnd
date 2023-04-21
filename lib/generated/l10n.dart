@@ -3641,6 +3641,226 @@ class S {
       args: [],
     );
   }
+
+  /// `Confirm command edit`
+  String get confirm_command_edit {
+    return Intl.message(
+      'Confirm command edit',
+      name: 'confirm_command_edit',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Stock code`
+  String get stock_code {
+    return Intl.message(
+      'Stock code',
+      name: 'stock_code',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// ` saved pin code`
+  String get saved_pin_code {
+    return Intl.message(
+      ' saved pin code',
+      name: 'saved_pin_code',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `edit filter`
+  String get edit_filter {
+    return Intl.message(
+      'edit filter',
+      name: 'edit_filter',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `create filter`
+  String get create_filter {
+    return Intl.message(
+      'create filter',
+      name: 'create_filter',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `apply`
+  String get apply {
+    return Intl.message(
+      'apply',
+      name: 'apply',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `type`
+  String get type {
+    return Intl.message(
+      'type',
+      name: 'type',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `stock exchange`
+  String get stock_exchange {
+    return Intl.message(
+      'stock exchange',
+      name: 'stock_exchange',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please provide a list`
+  String get Please_provide_a_list {
+    return Intl.message(
+      'Please provide a list',
+      name: 'Please_provide_a_list',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Invalid value`
+  String get invalid_value {
+    return Intl.message(
+      'Invalid value',
+      name: 'invalid_value',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `A chart comparing the cash flow at the current time with the previous session, averaging one week. Data is based on a daily basis `
+  String get chart_comparing_the_cash {
+    return Intl.message(
+      'A chart comparing the cash flow at the current time with the previous session, averaging one week. Data is based on a daily basis ',
+      name: 'chart_comparing_the_cash',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Order cancellation confirmation`
+  String get order_cancellation_confirmation {
+    return Intl.message(
+      'Order cancellation confirmation',
+      name: 'order_cancellation_confirmation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Are you sure you want to cancel the order ?`
+  String get Are_you_sure_you_want_to_cancel_the_order {
+    return Intl.message(
+      'Are you sure you want to cancel the order ?',
+      name: 'Are_you_sure_you_want_to_cancel_the_order',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Value`
+  String get value {
+    return Intl.message(
+      'Value',
+      name: 'value',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Top traded stocks by sector`
+  String get top_traded_stocks_by_sector {
+    return Intl.message(
+      'Top traded stocks by sector',
+      name: 'top_traded_stocks_by_sector',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Find sector...`
+  String get find_sector {
+    return Intl.message(
+      'Find sector...',
+      name: 'find_sector',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Invalid industry`
+  String get invalid_industry {
+    return Intl.message(
+      'Invalid industry',
+      name: 'invalid_industry',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `stock_symbol`
+  String get stock_symbol {
+    return Intl.message(
+      'stock_symbol',
+      name: 'stock_symbol',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Institution`
+  String get Institution {
+    return Intl.message(
+      'Institution',
+      name: 'Institution',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Setting up Smart OTP password`
+  String get Setting_up_Smart_OTP_password {
+    return Intl.message(
+      'Setting up Smart OTP password',
+      name: 'Setting_up_Smart_OTP_password',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please remember your SmartOTP password`
+  String get Please_remember_your_SmartOTP_password {
+    return Intl.message(
+      'Please remember your SmartOTP password',
+      name: 'Please_remember_your_SmartOTP_password',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Set a password consisting of 6 digits`
+  String get Set_a_password_consisting_of_6_digits {
+    return Intl.message(
+      'Set a password consisting of 6 digits',
+      name: 'Set_a_password_consisting_of_6_digits',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

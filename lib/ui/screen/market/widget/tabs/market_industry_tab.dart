@@ -1,21 +1,22 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:dtnd/ui/theme/app_image.dart';
-import 'package:dtnd/utilities/time_utils.dart';
-
-import 'package:dtnd/=models=/algo/org_filter.dart';
 import 'package:dtnd/=models=/algo/match_type.dart';
+import 'package:dtnd/=models=/algo/org_filter.dart';
 import 'package:dtnd/=models=/index.dart';
 import 'package:dtnd/=models=/response/indContrib.dart';
 import 'package:dtnd/=models=/response/index_board.dart';
 import 'package:dtnd/=models=/response/liquidity_model.dart';
 import 'package:dtnd/data/i_data_center_service.dart';
 import 'package:dtnd/data/implementations/data_center_service.dart';
+import 'package:dtnd/ui/theme/app_image.dart';
+import 'package:dtnd/utilities/time_utils.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
+
+import '../../../../../generated/l10n.dart';
+import '../../../../theme/app_color.dart';
 import '../components/liquidity_chart.dart';
 import '../components/money_chart.dart';
 import '../components/top_index_widget.dart';
-import '../../../../theme/app_color.dart';
 
 class MarketIndustryTab extends StatefulWidget {
   const MarketIndustryTab({super.key});
@@ -67,7 +68,7 @@ class _MarketIndustryTabState extends State<MarketIndustryTab>
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  'Thanh khoản',
+                  S.of(context).liquidity,
                   style: Theme.of(context)
                       .textTheme
                       .labelMedium
@@ -87,7 +88,7 @@ class _MarketIndustryTabState extends State<MarketIndustryTab>
                             borderRadius: BorderRadius.circular(8)),
                         width: MediaQuery.of(context).size.width,
                         child: Text(
-                            'Biểu đồ so sánh dòng tiền tại dùng thời điểm với phiên trước, trung bình 1 tuần. Dữ liệu ngày ${TimeUtilities.parseDateToString(DateTime.now())}',
+                            '${S.of(context).chart_comparing_the_cash}${TimeUtilities.parseDateToString(DateTime.now())}',
                             style: Theme.of(context)
                                 .textTheme
                                 .labelMedium
@@ -120,7 +121,7 @@ class _MarketIndustryTabState extends State<MarketIndustryTab>
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   Text(
-                    'Bộ lọc',
+                    S.of(context).filter,
                     style: Theme.of(context)
                         .textTheme
                         .bodySmall
@@ -185,7 +186,7 @@ class _BottomSheetState extends State<BottomSheet> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'Bộ lọc',
+                      S.of(context).filter,
                       style: Theme.of(context)
                           .textTheme
                           .labelLarge
@@ -208,7 +209,7 @@ class _BottomSheetState extends State<BottomSheet> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: Text(
-                  "Sàn chứng khoán",
+                  S.of(context).stock_exchange,
                   style: Theme.of(context)
                       .textTheme
                       .labelLarge
@@ -234,7 +235,7 @@ class _BottomSheetState extends State<BottomSheet> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: Text(
-                  "Loại",
+                  S.of(context).type,
                   style: Theme.of(context)
                       .textTheme
                       .labelLarge
@@ -265,7 +266,7 @@ class _BottomSheetState extends State<BottomSheet> {
                       onPressed: () {
                         Navigator.pop(context, orgFiltered);
                       },
-                      child: const Text("Áp dụng")),
+                      child: Text(S.of(context).apply)),
                 ),
               ),
               const SizedBox(height: 20),

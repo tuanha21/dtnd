@@ -2,18 +2,21 @@ import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/widget/input/rounded_pinput.dart';
 import 'package:flutter/material.dart';
 
-class CreateSmartotpPinPage extends StatefulWidget {
-  const CreateSmartotpPinPage({
+import '../../../../../../generated/l10n.dart';
+
+class CreateSmartOtpPinPage extends StatefulWidget {
+  const CreateSmartOtpPinPage({
     super.key,
     required this.nextPage,
   });
+
   final VoidCallback nextPage;
 
   @override
-  State<CreateSmartotpPinPage> createState() => _CreateSmartotpPinPageState();
+  State<CreateSmartOtpPinPage> createState() => _CreateSmartOtpPinPageState();
 }
 
-class _CreateSmartotpPinPageState extends State<CreateSmartotpPinPage> {
+class _CreateSmartOtpPinPageState extends State<CreateSmartOtpPinPage> {
   final TextEditingController controller = TextEditingController();
 
   bool complete = false;
@@ -45,17 +48,17 @@ class _CreateSmartotpPinPageState extends State<CreateSmartotpPinPage> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "Cài đặt mật khẩu Smart OTP",
+            S.of(context).Setting_up_Smart_OTP_password,
             style: textTheme.headlineSmall,
           ),
           const SizedBox(height: 16),
           Text(
-            "Quý khách vui lòng ghi nhớ mật khẩu SmartOTP",
+            S.of(context).Please_remember_your_SmartOTP_password,
             style: textTheme.bodyMedium!.copyWith(color: AppColors.neutral_03),
           ),
           const SizedBox(height: 36),
           Text(
-            "Đặt mật khẩu gồm 6 chữ số",
+            S.of(context).Set_a_password_consisting_of_6_digits,
             style: textTheme.bodyLarge,
           ),
           const SizedBox(height: 16),
@@ -66,8 +69,11 @@ class _CreateSmartotpPinPageState extends State<CreateSmartotpPinPage> {
           Row(
             children: [
               Expanded(
-                  child: TextButton(
-                      onPressed: onPressed, child: const Text("Xác nhận"))),
+                child: TextButton(
+                  onPressed: onPressed,
+                  child: Text(S.of(context).confirm),
+                ),
+              ),
             ],
           )
         ],

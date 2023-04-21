@@ -25,7 +25,7 @@ class _SmartOTPRegisterState extends State<SmartOTPRegister> {
   void initState() {
     _panels = <Widget>[
       WillPopScope(
-        child: CreateSmartotpPinPage(
+        child: CreateSmartOtpPinPage(
           nextPage: nextPage,
         ),
         onWillPop: () => Future.sync(onWillPop),

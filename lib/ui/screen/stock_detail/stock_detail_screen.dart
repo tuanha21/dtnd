@@ -22,6 +22,7 @@ import 'package:dtnd/ui/widget/overlay/login_first_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
+import '../../../generated/l10n.dart';
 import '../../widget/overlay/custom_dialog.dart';
 import '../exchange_stock/stock_order/business/stock_order_flow.dart';
 import 'tab/technical_analysis.dart';
@@ -96,11 +97,11 @@ class _StockDetailScreenState extends State<StockDetailScreen> {
               context: context,
               builder: (context) {
                 return CustomDialog(
-                  textButtonAction: 'Đồng ý',
-                  textButtonExit: 'Để sau',
-                  title: 'Đăng nhập bằng sinh trắc học',
+                  textButtonAction: S.of(context).ok,
+                  textButtonExit:S.of(context).Later,
+                  title: S.of(context).biometric_authentication,
                   content:
-                      'Bạn chưa đăng ký đăng nhập bằng sinh trắc học\nBạn có muốn đăng ký ngay bây giờ không?',
+                  S.of(context).login_with_biometric,
                   action: () => Navigator.of(context).pop(true),
                   type: TypeAlert.notification,
                 );

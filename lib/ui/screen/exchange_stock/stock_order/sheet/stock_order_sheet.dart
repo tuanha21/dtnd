@@ -109,8 +109,6 @@ class _StockOrderSheetState extends State<StockOrderSheet>
         tabController.animateTo(widget.defaultTab!);
       }
     });
-    listMR = stockModel!.stockDataCore?.mr.map((mr) => mr.mr).toList();
-    _selectedItem = listMR?.first ?? '';
   }
 
   Future<void> getStockInfoCore() async {
@@ -218,6 +216,8 @@ class _StockOrderSheetState extends State<StockOrderSheet>
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
+    listMR = stockModel?.stockDataCore?.mr.map((mr) => mr.mr).toList();
+    _selectedItem = listMR?.first ?? '';
     return Form(
       key: orderKey,
       child: SafeArea(
@@ -401,7 +401,7 @@ class _StockOrderSheetState extends State<StockOrderSheet>
                                   return DropdownMenuItem(
                                     value: option,
                                     child: Text(
-                                      'Ký quỹ $option',
+                                      '${S.of(context).margin} $option',
                                       style:
                                           AppTextStyle.labelSmall_10.copyWith(
                                         color: Colors.white,
@@ -413,7 +413,7 @@ class _StockOrderSheetState extends State<StockOrderSheet>
                               ).toList(),
                             )
                           : Text(
-                              "Ký quỹ 100%",
+                              '${S.of(context).margin} 100%',
                               style: AppTextStyle.labelSmall_10.copyWith(
                                 color: Colors.white,
                                 fontWeight: FontWeight.w600,

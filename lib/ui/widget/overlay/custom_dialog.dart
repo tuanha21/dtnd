@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
+import '../../../generated/l10n.dart';
 import '../../theme/app_color.dart';
 import '../../theme/app_image.dart';
 import '../../theme/app_textstyle.dart';
@@ -146,7 +147,7 @@ class CustomDialog extends StatelessWidget {
                                                   alignment: Alignment.center,
                                                   child: Text(
                                                     textButtonAction ??
-                                                        "Xác nhận",
+                                                        S.of(context).confirm,
                                                     style: AppTextStyle
                                                         .bodyMedium_14
                                                         .copyWith(

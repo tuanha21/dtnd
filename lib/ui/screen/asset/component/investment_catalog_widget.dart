@@ -235,7 +235,7 @@ class _InvestmentCatalogWidgetState extends State<InvestmentCatalogWidget> {
                                             CrossAxisAlignment.start,
                                         children: [
                                           Text(
-                                            "Mã CK",
+                                            S.of(context).stock_code,
                                             style: AppTextStyle.labelSmall_10
                                                 .copyWith(
                                                     color:

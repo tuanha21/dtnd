@@ -88,6 +88,7 @@ class CancelStockOrderISheet extends ISheet {
         showButton: false,
       );
     }
+    return null;
   }
 
   @override

@@ -26,6 +26,7 @@ const String regBioKey = "regBioKey";
 const String usernameKey = "usernameKey";
 const String passwordKey = "passwordKey";
 const String infoRegisteredKey = "infoRegistered";
+const String pinCodeKey = 'pinCode';
 
 class LocalStorageService implements ILocalStorageService {
   LocalStorageService._internal();
@@ -244,5 +245,10 @@ class LocalStorageService implements ILocalStorageService {
   @override
   Future<void> saveInfoRegistered(String infoRegistered) async {
     sharedPreferences.setString(infoRegisteredKey, infoRegistered);
+  }
+
+  @override
+  Future<void> savePinCode(String pinCode) async {
+    sharedPreferences.setString(pinCodeKey, pinCode);
   }
 }

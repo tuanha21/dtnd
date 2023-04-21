@@ -212,8 +212,8 @@ class _Row extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final textheme = Theme.of(context).textTheme;
-    final valueTheme = textheme.bodyMedium!
+    final texTheme = Theme.of(context).textTheme;
+    final valueTheme = texTheme.bodyMedium!
         .copyWith(fontWeight: FontWeight.w600, color: valueColor);
     String valueTxt;
     if (value == null) {

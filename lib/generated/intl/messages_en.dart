@@ -43,6 +43,9 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+        "Are_you_sure_you_want_to_cancel_the_order":
+            MessageLookupByLibrary.simpleMessage(
+                "Are you sure you want to cancel the order ?"),
         "Banking": MessageLookupByLibrary.simpleMessage("Banking"),
         "Carriage": MessageLookupByLibrary.simpleMessage("Carriage"),
         "Chemistry": MessageLookupByLibrary.simpleMessage("Chemistry"),
@@ -52,10 +55,21 @@ class MessageLookup extends MessageLookupByLibrary {
         "DTNDs_virtual_assistant": MessageLookupByLibrary.simpleMessage(
             " of DTND\'s virtual assistant"),
         "Extractive": MessageLookupByLibrary.simpleMessage("Extractive"),
+        "Institution": MessageLookupByLibrary.simpleMessage("Institution"),
         "Later": MessageLookupByLibrary.simpleMessage("Later"),
         "Medicine": MessageLookupByLibrary.simpleMessage("Medicine"),
         "Metal": MessageLookupByLibrary.simpleMessage("Metal"),
+        "Please_provide_a_list":
+            MessageLookupByLibrary.simpleMessage("Please provide a list"),
+        "Please_remember_your_SmartOTP_password":
+            MessageLookupByLibrary.simpleMessage(
+                "Please remember your SmartOTP password"),
         "Retail": MessageLookupByLibrary.simpleMessage("Retail"),
+        "Set_a_password_consisting_of_6_digits":
+            MessageLookupByLibrary.simpleMessage(
+                "Set a password consisting of 6 digits"),
+        "Setting_up_Smart_OTP_password": MessageLookupByLibrary.simpleMessage(
+            "Setting up Smart OTP password"),
         "Weight_must_be_filled_in":
             MessageLookupByLibrary.simpleMessage("Weight must be filled in"),
         "account": MessageLookupByLibrary.simpleMessage("Account"),
@@ -80,6 +94,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "all": MessageLookupByLibrary.simpleMessage("All"),
         "amount_translations": MessageLookupByLibrary.simpleMessage("Amount"),
         "analysis": MessageLookupByLibrary.simpleMessage("Analysis"),
+        "apply": MessageLookupByLibrary.simpleMessage("apply"),
         "are_you_sure_to_delete_catalog": m0,
         "asset": MessageLookupByLibrary.simpleMessage("Asset"),
         "asset_distribution":
@@ -137,6 +152,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "change_password":
             MessageLookupByLibrary.simpleMessage("Change password"),
         "change_translations": MessageLookupByLibrary.simpleMessage("Change%"),
+        "chart_comparing_the_cash": MessageLookupByLibrary.simpleMessage(
+            "A chart comparing the cash flow at the current time with the previous session, averaging one week. Data is based on a daily basis "),
         "choose_stocks_you_interested": MessageLookupByLibrary.simpleMessage(
             "Select the stocks you are interested in. You can update later"),
         "close_translations": MessageLookupByLibrary.simpleMessage("Close"),
@@ -148,6 +165,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "conditional_note":
             MessageLookupByLibrary.simpleMessage("Conditional note"),
         "confirm": MessageLookupByLibrary.simpleMessage("Confirm"),
+        "confirm_command_edit":
+            MessageLookupByLibrary.simpleMessage("Confirm command edit"),
         "contact_infomation":
             MessageLookupByLibrary.simpleMessage("Contact information"),
         "copyTrade_asset":
@@ -160,6 +179,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Create account"),
         "create_catalog":
             MessageLookupByLibrary.simpleMessage("Create catalog"),
+        "create_filter": MessageLookupByLibrary.simpleMessage("create filter"),
         "create_new_order":
             MessageLookupByLibrary.simpleMessage("Create new order"),
         "create_order_failed":
@@ -189,6 +209,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "edit": MessageLookupByLibrary.simpleMessage("Edit"),
         "edit_catalog_name":
             MessageLookupByLibrary.simpleMessage("Edit catalog name"),
+        "edit_filter": MessageLookupByLibrary.simpleMessage("edit filter"),
         "effective": MessageLookupByLibrary.simpleMessage("Effective"),
         "email": MessageLookupByLibrary.simpleMessage("Email"),
         "empty_catalog":
@@ -211,6 +232,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Filter stocks figure"),
         "financial_index":
             MessageLookupByLibrary.simpleMessage("Financial index"),
+        "find_sector": MessageLookupByLibrary.simpleMessage("Find sector..."),
         "floor": MessageLookupByLibrary.simpleMessage("Floor"),
         "following_catalog":
             MessageLookupByLibrary.simpleMessage("Following catalog"),
@@ -249,6 +271,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "interface": MessageLookupByLibrary.simpleMessage("Interface"),
         "invalid_account": MessageLookupByLibrary.simpleMessage(
             "This account has not been registered or Internet trading feature is no longer available"),
+        "invalid_industry":
+            MessageLookupByLibrary.simpleMessage("Invalid industry"),
+        "invalid_value": MessageLookupByLibrary.simpleMessage("Invalid value"),
         "invalid_weight":
             MessageLookupByLibrary.simpleMessage("invalid weight"),
         "investment_value":
@@ -341,6 +366,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "ok": MessageLookupByLibrary.simpleMessage("ok"),
         "open_translations": MessageLookupByLibrary.simpleMessage("Open"),
         "order": MessageLookupByLibrary.simpleMessage("Order"),
+        "order_cancellation_confirmation": MessageLookupByLibrary.simpleMessage(
+            "Order cancellation confirmation"),
         "order_confirm": MessageLookupByLibrary.simpleMessage("Confirm order"),
         "order_history": MessageLookupByLibrary.simpleMessage("Order history"),
         "order_htr": MessageLookupByLibrary.simpleMessage("Order history"),
@@ -408,6 +435,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "safe_ratio": MessageLookupByLibrary.simpleMessage("Safe ratio"),
         "sale_value": MessageLookupByLibrary.simpleMessage("Sale value"),
         "save": MessageLookupByLibrary.simpleMessage("Save"),
+        "saved_pin_code":
+            MessageLookupByLibrary.simpleMessage(" saved pin code"),
         "search": MessageLookupByLibrary.simpleMessage("Search"),
         "search_history":
             MessageLookupByLibrary.simpleMessage("Search history"),
@@ -448,9 +477,13 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("This stock is already exist"),
         "stock_analysis":
             MessageLookupByLibrary.simpleMessage("Stock analysis"),
+        "stock_code": MessageLookupByLibrary.simpleMessage("Stock code"),
+        "stock_exchange":
+            MessageLookupByLibrary.simpleMessage("stock exchange"),
         "stock_order": MessageLookupByLibrary.simpleMessage("Create order"),
         "stock_statement":
             MessageLookupByLibrary.simpleMessage("Stock statement"),
+        "stock_symbol": MessageLookupByLibrary.simpleMessage("stock_symbol"),
         "stock_trading": MessageLookupByLibrary.simpleMessage("Stock trading"),
         "stock_value": MessageLookupByLibrary.simpleMessage("Stock value"),
         "stocks_you_interested": MessageLookupByLibrary.simpleMessage(
@@ -480,6 +513,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "top_foreign": MessageLookupByLibrary.simpleMessage("Top foreign"),
         "top_influence": MessageLookupByLibrary.simpleMessage("Top influence"),
         "top_search": MessageLookupByLibrary.simpleMessage("Top search"),
+        "top_traded_stocks_by_sector":
+            MessageLookupByLibrary.simpleMessage("Top traded stocks by sector"),
         "total_asset": MessageLookupByLibrary.simpleMessage("Total asset"),
         "total_cash": MessageLookupByLibrary.simpleMessage("Total cash"),
         "total_debt": MessageLookupByLibrary.simpleMessage("Total debt"),
@@ -497,10 +532,12 @@ class MessageLookup extends MessageLookupByLibrary {
         "try_searching_again_with_another_keyword":
             MessageLookupByLibrary.simpleMessage(
                 "Try searching again with another keyword!"),
+        "type": MessageLookupByLibrary.simpleMessage("type"),
         "unknown_error": MessageLookupByLibrary.simpleMessage("Unknown error"),
         "unknown_exception":
             MessageLookupByLibrary.simpleMessage("Unknown exception"),
         "username": MessageLookupByLibrary.simpleMessage("Username"),
+        "value": MessageLookupByLibrary.simpleMessage("Value"),
         "vietnam": MessageLookupByLibrary.simpleMessage("Vietnam"),
         "virtual_assistant":
             MessageLookupByLibrary.simpleMessage("Virtual assistant"),

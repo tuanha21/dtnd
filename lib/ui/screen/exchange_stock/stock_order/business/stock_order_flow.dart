@@ -185,8 +185,9 @@ class CancelStockOrderISheet extends IStockOrderSheet {
   @override
   Widget? nextWidget([UserCmd? cmd]) {
     if (cmd is OrderSuccessCmd) {
-      return const CancelOrderSuccessSheet(
+      return CancelOrderSuccessSheet(
         showButton: true,
+        orderData: cmd.data,
       );
     } else {
       return StockOrderFailSheet(rc: cmd!.data as int);

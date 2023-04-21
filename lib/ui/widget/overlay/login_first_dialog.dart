@@ -9,8 +9,8 @@ class LoginFirstDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CustomDialog(
-      textButtonAction: 'Đồng ý',
-      textButtonExit: 'Để sau',
+      textButtonAction: S.of(context).ok,
+      textButtonExit: S.of(context).Later,
       title: S.of(context).login_required,
       content: S.of(context).login_to_continue,
       action: () => Navigator.of(context).pop(true),

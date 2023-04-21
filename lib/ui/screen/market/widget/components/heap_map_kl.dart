@@ -98,7 +98,7 @@ class _HeapMapKLState extends State<HeapMapKL> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text("Top cổ phiếu giao dịch theo ngành"),
+              Text(S.of(context).top_traded_stocks_by_sector),
               GestureDetector(
                 onTap: () {
                   setState(() {
@@ -111,7 +111,7 @@ class _HeapMapKLState extends State<HeapMapKL> {
                   children: [
                     const Icon(Icons.arrow_drop_down,
                         color: AppColors.primary_01),
-                    Text(isVol ? "Khối lượng" : 'Giá trị',
+                    Text(isVol ? S.of(context).volumn : S.of(context).value,
                         style: Theme.of(context)
                             .textTheme
                             .titleSmall

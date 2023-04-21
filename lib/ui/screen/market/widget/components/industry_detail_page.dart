@@ -2,6 +2,7 @@ import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../../=models=/response/stock_data.dart';
+import '../../../../../generated/l10n.dart';
 
 class IndustryDetailPage extends StatefulWidget {
   final List<StockData> listStock;
@@ -55,7 +56,7 @@ class _IndustryDetailPageState extends State<IndustryDetailPage> {
                         ),
                         const SizedBox(height: 8),
                         Text(
-                          '${widget.listStock.length} mã cổ phiếu',
+                          '${widget.listStock.length} ${S.of(context).stock_symbol}',
                           style: Theme.of(context)
                               .textTheme
                               .titleSmall

@@ -65,8 +65,7 @@ class _CancelStockOrderSheetState extends State<CancelStockOrderSheet>
       )
           .then((value) {
         if (checked) {
-          localStorageService.sharedPreferences
-              .setString('pincode', pinController.text);
+          localStorageService.savePinCode(pinController.text);
         }
         return Navigator.of(context).pop(const OrderSuccessCmd());
       }).onError((error, stackTrace) {
@@ -85,7 +84,7 @@ class _CancelStockOrderSheetState extends State<CancelStockOrderSheet>
   void initState() {
     super.initState();
     pinController.text =
-        localStorageService.sharedPreferences.getString('pincode') ?? '';
+        localStorageService.sharedPreferences.getString(pinCodeKey) ?? '';
   }
 
   @override
@@ -97,15 +96,15 @@ class _CancelStockOrderSheetState extends State<CancelStockOrderSheet>
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SheetHeader(
-              title: "Xác nhận huỷ lệnh",
+            SheetHeader(
+              title: S.of(context).order_cancellation_confirmation,
               implementBackButton: true,
             ),
             const SizedBox(height: 8),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
-                Text("Bạn có chắc chắn muốn huỷ lệnh?"),
+              children: [
+                Text(S.of(context).Are_you_sure_you_want_to_cancel_the_order),
               ],
             ),
             const SizedBox(height: 8),
@@ -113,7 +112,7 @@ class _CancelStockOrderSheetState extends State<CancelStockOrderSheet>
               key: pinKey,
               autovalidateMode: AutovalidateMode.disabled,
               child: (localStorageService.sharedPreferences
-                          .getString('pincode')
+                          .getString(pinCodeKey)
                           ?.isEmpty ??
                       true)
                   ? TextFormField(
@@ -127,23 +126,25 @@ class _CancelStockOrderSheetState extends State<CancelStockOrderSheet>
                         floatingLabelBehavior: FloatingLabelBehavior.always,
                         floatingLabelAlignment: FloatingLabelAlignment.start,
                         suffixIcon: InkWell(
-                            onTap: () {
-                              checked = !checked;
-                              if (checked && pinController.text != '') {
-                                EasyLoading.showToast('Đã lưu pin code ',
-                                    maskType: EasyLoadingMaskType.clear);
-                              }
-                              setState(() {});
-                            },
-                            child: Padding(
-                              padding: const EdgeInsets.all(10),
-                              child: SvgPicture.asset(
-                                AppImages.save_pin_code_icon,
-                                color: (checked && pinController.text != '')
-                                    ? AppColors.semantic_01
-                                    : AppColors.primary_01,
-                              ),
-                            )),
+                          onTap: () {
+                            checked = !checked;
+                            if (checked && pinController.text != '') {
+                              EasyLoading.showToast(
+                                  S.of(context).saved_pin_code,
+                                  maskType: EasyLoadingMaskType.clear);
+                            }
+                            setState(() {});
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.all(10),
+                            child: SvgPicture.asset(
+                              AppImages.save_pin_code_icon,
+                              color: (checked && pinController.text != '')
+                                  ? AppColors.semantic_01
+                                  : AppColors.primary_01,
+                            ),
+                          ),
+                        ),
                       ),
                     )
                   : const SizedBox(),

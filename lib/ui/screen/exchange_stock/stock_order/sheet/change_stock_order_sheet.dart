@@ -33,7 +33,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_svg/svg.dart';
 
-
 class ChangeStockOrderSheet extends StatefulWidget {
   const ChangeStockOrderSheet({
     super.key,
@@ -54,7 +53,7 @@ class _ChangeStockOrderSheetState extends State<ChangeStockOrderSheet>
   final IDataCenterService dataCenterService = DataCenterService();
   late final Set<OrderType> listOrderTypes;
   final TextEditingController priceController = TextEditingController();
-  final TextEditingController volumnController =
+  final TextEditingController volumeController =
       TextEditingController(text: "100");
   final GlobalKey<FormState> pinKey = GlobalKey<FormState>();
 
@@ -78,7 +77,7 @@ class _ChangeStockOrderSheetState extends State<ChangeStockOrderSheet>
     super.initState();
     getData();
     pinController.text =
-        localStorageService.sharedPreferences.getString('pincode') ?? '';
+        localStorageService.sharedPreferences.getString(pinCodeKey) ?? '';
   }
 
   Future<void> getData() async {
@@ -109,17 +108,16 @@ class _ChangeStockOrderSheetState extends State<ChangeStockOrderSheet>
           .changeOrder(
         userService,
         widget.data,
-        num.tryParse(volumnController.text) ?? 0,
+        num.tryParse(volumeController.text) ?? 0,
         priceController.text,
         pinController.text,
       )
           .then(
         (value) {
           if (checked) {
-            localStorageService.sharedPreferences
-                .setString('pincode', pinController.text);
+            localStorageService.savePinCode(pinController.text);
           }
-          return Navigator.of(context).pop(OrderSuccessCmd());
+          return Navigator.of(context).pop(const OrderSuccessCmd());
         },
       ).onError((error, stackTrace) {
         logger.e(error);
@@ -142,15 +140,15 @@ class _ChangeStockOrderSheetState extends State<ChangeStockOrderSheet>
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SheetHeader(
-              title: "Xác nhận sửa lệnh",
+            SheetHeader(
+              title: S.of(context).confirm_command_edit,
               implementBackButton: true,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "Mã CK",
+                  S.of(context).stock_code,
                   style: textTheme.bodySmall,
                 ),
                 Text(
@@ -199,7 +197,7 @@ class _ChangeStockOrderSheetState extends State<ChangeStockOrderSheet>
                       const SizedBox(width: 16),
                       Expanded(
                         child: IntervalInput(
-                          controller: volumnController,
+                          controller: volumeController,
                           labelText: S.of(context).volumn,
                           interval: (value) => 100,
                           validator: volumnValidator,
@@ -210,7 +208,7 @@ class _ChangeStockOrderSheetState extends State<ChangeStockOrderSheet>
                   ),
                   const SizedBox(height: 16),
                   (localStorageService.sharedPreferences
-                              .getString('pincode')
+                              .getString(pinCodeKey)
                               ?.isEmpty ??
                           true)
                       ? TextFormField(
@@ -228,7 +226,7 @@ class _ChangeStockOrderSheetState extends State<ChangeStockOrderSheet>
                                 onTap: () {
                                   checked = !checked;
                                   if (checked && pinController.text != '') {
-                                    EasyLoading.showToast('Đã lưu pin code ',
+                                    EasyLoading.showToast(S.of(context).saved_pin_code,
                                         maskType: EasyLoadingMaskType.clear);
                                   }
                                   setState(() {});
