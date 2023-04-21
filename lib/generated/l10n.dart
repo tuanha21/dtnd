@@ -3896,6 +3896,146 @@ class S {
       args: [],
     );
   }
+
+  /// `New password`
+  String get hint_password {
+    return Intl.message(
+      'New password',
+      name: 'hint_password',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Re-enter new password`
+  String get hint_re_password {
+    return Intl.message(
+      'Re-enter new password',
+      name: 'hint_re_password',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please re-enter new password`
+  String get validate_null_repassword {
+    return Intl.message(
+      'Please re-enter new password',
+      name: 'validate_null_repassword',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Re-entered password does not match`
+  String get validate_same_repassword {
+    return Intl.message(
+      'Re-entered password does not match',
+      name: 'validate_same_repassword',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `8 -16 character`
+  String get condition_password1 {
+    return Intl.message(
+      '8 -16 character',
+      name: 'condition_password1',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `1 capital letter`
+  String get condition_password2 {
+    return Intl.message(
+      '1 capital letter',
+      name: 'condition_password2',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `1 digit`
+  String get condition_password3 {
+    return Intl.message(
+      '1 digit',
+      name: 'condition_password3',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `1 special character`
+  String get condition_password4 {
+    return Intl.message(
+      '1 special character',
+      name: 'condition_password4',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `INTELLIGENT FINANCE`
+  String get loading_quote1 {
+    return Intl.message(
+      'INTELLIGENT FINANCE',
+      name: 'loading_quote1',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Forgot password?`
+  String get forgot_password {
+    return Intl.message(
+      'Forgot password?',
+      name: 'forgot_password',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please enter email`
+  String get validate_null_email {
+    return Intl.message(
+      'Please enter email',
+      name: 'validate_null_email',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Email không đúng định dạng`
+  String get validate_format_email {
+    return Intl.message(
+      'Email không đúng định dạng',
+      name: 'validate_format_email',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Don't worry, use the email you registered to start setting a new password for your account.`
+  String get forgot_pasword_quote1 {
+    return Intl.message(
+      'Don\'t worry, use the email you registered to start setting a new password for your account.',
+      name: 'forgot_pasword_quote1',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `CREATIVE FUTURE`
+  String get loading_quote2 {
+    return Intl.message(
+      'CREATIVE FUTURE',
+      name: 'loading_quote2',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
