@@ -16,11 +16,10 @@ class ChangeStockOrderISheet extends ISheet {
 
   @override
   ISheet? next([UserCmd? cmd]) {
-    print(cmd.runtimeType);
     if (cmd is OrderSuccessCmd) {
-      print("success");
       return ChangeOrderSuccessISheet();
     }
+    return null;
   }
 
   @override
@@ -28,11 +27,10 @@ class ChangeStockOrderISheet extends ISheet {
 
   @override
   Widget? nextWidget([UserCmd? cmd]) {
-    print(cmd.runtimeType);
     if (cmd is OrderSuccessCmd) {
-      print("success");
       return const ChangeOrderSuccessSheet();
     }
+    return null;
   }
 
   @override
@@ -76,6 +74,7 @@ class CancelStockOrderISheet extends ISheet {
     if (cmd is OrderSuccessCmd) {
       return CancelOrderSuccessISheet();
     }
+    return null;
   }
 
   @override

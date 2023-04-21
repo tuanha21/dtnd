@@ -16,6 +16,7 @@ import 'package:dtnd/data/implementations/network_service.dart';
 import 'package:dtnd/data/implementations/user_service.dart';
 import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/screen/exchange_stock/order_note/screen/order_note_screen.dart';
+import 'package:dtnd/ui/screen/exchange_stock/stock_order/business/stock_order_flow.dart';
 import 'package:dtnd/ui/screen/exchange_stock/stock_order/component/order_order_note_panel.dart';
 import 'package:dtnd/ui/screen/exchange_stock/stock_order/component/order_order_panel.dart';
 import 'package:dtnd/ui/screen/exchange_stock/stock_order/component/order_owned_stock_panel.dart';
@@ -293,7 +294,12 @@ class _StockOrderSheetState extends State<StockOrderSheet>
                           });
                         },
                       ),
-                      const OrderOrderNotePanel(),
+                      OrderOrderNotePanel(
+                        onChangedOrder: (value) => Navigator.of(context)
+                            .pop(ToChangeOrderCmd([stockModel, value])),
+                        onCancelledOrder: (value) => Navigator.of(context)
+                            .pop(ToChangeOrderCmd([stockModel, value])),
+                      ),
                       OrderOwnedStockPanel(
                         onSell: (stockCodes) async {
                           final model = await dataCenterService

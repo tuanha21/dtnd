@@ -83,7 +83,7 @@ class _OrderHistoryElementState extends State<OrderHistoryElement> {
                 child: Column(
               children: [
                 Text(
-                  "Giá khớp",
+                  S.of(context).matched_price,
                   style: AppTextStyle.labelSmall_10.copyWith(
                     color: AppColors.neutral_03,
                     fontWeight: FontWeight.w500,
@@ -105,7 +105,7 @@ class _OrderHistoryElementState extends State<OrderHistoryElement> {
                 child: Column(
               children: [
                 Text(
-                  "Phí GD",
+                  S.of(context).td_fee,
                   style: AppTextStyle.labelSmall_10.copyWith(
                     color: AppColors.neutral_03,
                     fontWeight: FontWeight.w500,
@@ -127,7 +127,7 @@ class _OrderHistoryElementState extends State<OrderHistoryElement> {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Text(
-                  "KL khớp",
+                  S.of(context).match_vol,
                   style: AppTextStyle.labelSmall_10.copyWith(
                     color: AppColors.neutral_03,
                     fontWeight: FontWeight.w500,

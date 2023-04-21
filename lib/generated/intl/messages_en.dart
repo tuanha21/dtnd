@@ -165,8 +165,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "conditional_note":
             MessageLookupByLibrary.simpleMessage("Conditional note"),
         "confirm": MessageLookupByLibrary.simpleMessage("Confirm"),
-        "confirm_command_edit":
-            MessageLookupByLibrary.simpleMessage("Confirm command edit"),
+        "confirm_change_order":
+            MessageLookupByLibrary.simpleMessage("Confirm change order"),
         "contact_infomation":
             MessageLookupByLibrary.simpleMessage("Contact information"),
         "copyTrade_asset":
@@ -472,6 +472,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "status_intermission":
             MessageLookupByLibrary.simpleMessage("Intermission"),
         "status_open": MessageLookupByLibrary.simpleMessage("Opening"),
+        "stk_code": MessageLookupByLibrary.simpleMessage("Stock code"),
         "stock": MessageLookupByLibrary.simpleMessage("stock"),
         "stock_already_exist":
             MessageLookupByLibrary.simpleMessage("This stock is already exist"),
@@ -480,6 +481,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "stock_code": MessageLookupByLibrary.simpleMessage("Stock code"),
         "stock_exchange":
             MessageLookupByLibrary.simpleMessage("stock exchange"),
+        "stock_code": MessageLookupByLibrary.simpleMessage("Stock code"),
         "stock_order": MessageLookupByLibrary.simpleMessage("Create order"),
         "stock_statement":
             MessageLookupByLibrary.simpleMessage("Stock statement"),
@@ -493,6 +495,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage(
                 "Create virtual assistant successfully"),
         "tax_fee": MessageLookupByLibrary.simpleMessage("Tax fee"),
+        "td_fee": MessageLookupByLibrary.simpleMessage("Trading fee"),
         "technical_analysis":
             MessageLookupByLibrary.simpleMessage("Technical analysis"),
         "technical_trading_newbie": MessageLookupByLibrary.simpleMessage(
@@ -526,6 +529,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "total_wvalue": m9,
         "trading": MessageLookupByLibrary.simpleMessage("Trading"),
         "trading_board": MessageLookupByLibrary.simpleMessage("Trading board"),
+        "trading_fee": MessageLookupByLibrary.simpleMessage("Trading fee"),
         "trading_volatility":
             MessageLookupByLibrary.simpleMessage("TD volatility"),
         "transaction": MessageLookupByLibrary.simpleMessage("Transaction"),

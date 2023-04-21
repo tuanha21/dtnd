@@ -106,13 +106,17 @@ class ExchangeService implements IExchangeService {
       throw rc;
     }
 
+    onParseError() {
+      return null;
+    }
+
     final response = await networkService
         .requestTraditionalApiResList<ChangeOrderModel>(requestModel,
-            hasError: hasError, onError: onError);
+            hasError: hasError, onError: onError, onParseError: onParseError);
     logger.v(response);
-    if (response?.isNotEmpty ?? false) {
-      return response!.first;
-    }
+    // if (response?.isNotEmpty ?? false) {
+    //   return response!.first;
+    // }
     return null;
   }
 

@@ -59,6 +59,8 @@ class _ChangeStockOrderSheetState extends State<ChangeStockOrderSheet>
 
   final TextEditingController pinController = TextEditingController();
   final ILocalStorageService localStorageService = LocalStorageService();
+
+  bool loading = false;
   bool checked = false;
 
   Timer? onPriceStoppedTyping;
@@ -93,18 +95,15 @@ class _ChangeStockOrderSheetState extends State<ChangeStockOrderSheet>
   }
 
   void onConfirm() async {
-    // final OrderData orderData = OrderData(
-    //   stockModel: stockModel!,
-    //   side: side,
-    //   volumn: num.parse(volumnController.text),
-    //   price: priceController.text,
-    //   orderType: OrderType.LO,
-    // );
+    if (loading) {
+      return;
+    }
     setState(() {
       errorText = null;
+      loading = true;
     });
     if (pinKey.currentState?.validate() ?? false) {
-      await exchangeService
+      exchangeService
           .changeOrder(
         userService,
         widget.data,
@@ -114,12 +113,15 @@ class _ChangeStockOrderSheetState extends State<ChangeStockOrderSheet>
       )
           .then(
         (value) {
+          loading = false;
           if (checked) {
             localStorageService.savePinCode(pinController.text);
           }
           return Navigator.of(context).pop(const OrderSuccessCmd());
         },
       ).onError((error, stackTrace) {
+        loading = false;
+
         logger.e(error);
         if (error is int) {
           setState(() {
@@ -141,14 +143,14 @@ class _ChangeStockOrderSheetState extends State<ChangeStockOrderSheet>
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SheetHeader(
-              title: S.of(context).confirm_command_edit,
+              title: S.of(context).confirm_change_order,
               implementBackButton: true,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  S.of(context).stock_code,
+                  S.of(context).stk_code,
                   style: textTheme.bodySmall,
                 ),
                 Text(
