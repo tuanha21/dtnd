@@ -13,7 +13,11 @@ class ChangeOrderSuccessSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
-    return SafeArea(
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+      decoration: const BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.all(Radius.circular(12))),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
         child: Column(
@@ -24,7 +28,6 @@ class ChangeOrderSuccessSheet extends StatelessWidget {
               implementBackButton: false,
               implementDivider: false,
             ),
-            const SizedBox(height: 90),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -70,7 +73,6 @@ class ChangeOrderSuccessSheet extends StatelessWidget {
                     ],
                   )
                 : Container(),
-            const SizedBox(height: 90),
           ],
         ),
       ),
