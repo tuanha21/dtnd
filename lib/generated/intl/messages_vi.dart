@@ -7,7 +7,8 @@
 // ignore_for_file:unnecessary_brace_in_string_interps, unnecessary_new
 // ignore_for_file:prefer_single_quotes,comment_references, directives_ordering
 // ignore_for_file:annotate_overrides,prefer_generic_function_type_aliases
-// ignore_for_file:unused_import, file_names
+// ignore_for_file:unused_import, file_names, avoid_escaping_inner_quotes
+// ignore_for_file:unnecessary_string_interpolations, unnecessary_string_escapes
 
 import 'package:intl/intl.dart';
 import 'package:intl/message_lookup_by_library.dart';
@@ -19,25 +20,27 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'vi';
 
-  static m0(name) => "Bạn có chắc chắn muốn xóa danh mục “${name}” không ?";
+  static String m0(name) =>
+      "Bạn có chắc chắn muốn xóa danh mục “${name}” không ?";
 
-  static m1(days) => "${days} ngày trước";
+  static String m1(days) => "${days} ngày trước";
 
-  static m2(name) => "Danh mục theo dõi \"${name}\"";
+  static String m2(name) => "Danh mục theo dõi \"${name}\"";
 
-  static m3(value) => "Tăng ${value}";
+  static String m3(value) => "Tăng ${value}";
 
-  static m4(hours) => "${hours} giờ trước";
+  static String m4(hours) => "${hours} giờ trước";
 
-  static m5(value) => "Giảm ${value}";
+  static String m5(value) => "Giảm ${value}";
 
-  static m6(minutes) => "${minutes} phút trước";
+  static String m6(minutes) => "${minutes} phút trước";
 
-  static m7(value) => "Mã OTP đã được gửi về email ${value} của bạn. Nhập mã 6 số để tiếp tục.";
+  static String m7(value) =>
+      "Mã OTP đã được gửi về email ${value} của bạn. Nhập mã 6 số để tiếp tục.";
 
-  static m8(name) => "Sửa tên danh mục “${name}” thành";
+  static String m8(name) => "Sửa tên danh mục “${name}” thành";
 
-  static m9(value) => "Tổng ${value}";
+  static String m9(value) => "Tổng ${value}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -153,6 +156,13 @@ class MessageLookup extends MessageLookupByLibrary {
         "community": MessageLookupByLibrary.simpleMessage("Cộng đồng"),
         "condition_ordnote":
             MessageLookupByLibrary.simpleMessage("SL điều kiện"),
+        "condition_password1":
+            MessageLookupByLibrary.simpleMessage("8 -16 ký tự"),
+        "condition_password2":
+            MessageLookupByLibrary.simpleMessage("1 chữ cái viết hoa"),
+        "condition_password3": MessageLookupByLibrary.simpleMessage("1 chữ số"),
+        "condition_password4":
+            MessageLookupByLibrary.simpleMessage("1 ký tự đặc biệt"),
         "conditional_note":
             MessageLookupByLibrary.simpleMessage("SL điều kiện"),
         "confirm": MessageLookupByLibrary.simpleMessage("Xác nhận"),
@@ -226,6 +236,10 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Danh mục theo dõi"),
         "following_catalog_with": m2,
         "foreign": MessageLookupByLibrary.simpleMessage("Nước ngoài"),
+        "forgot_password":
+            MessageLookupByLibrary.simpleMessage("Quên mật khẩu?"),
+        "forgot_pasword_quote1": MessageLookupByLibrary.simpleMessage(
+            "Đừng lo lắng, sử dụng email bạn đã đăng ký để bắt đầu cài đặt mật khẩu mới cho tài khoản nhé."),
         "from_day": MessageLookupByLibrary.simpleMessage("Từ ngày"),
         "froom": MessageLookupByLibrary.simpleMessage("Room NN"),
         "fs_vol": MessageLookupByLibrary.simpleMessage("KL FS"),
@@ -243,6 +257,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "hi_you": MessageLookupByLibrary.simpleMessage("Chào bạn"),
         "high": MessageLookupByLibrary.simpleMessage("Cao"),
         "high_translations": MessageLookupByLibrary.simpleMessage("Cao"),
+        "hint_password": MessageLookupByLibrary.simpleMessage("Mật khẩu mới"),
+        "hint_re_password":
+            MessageLookupByLibrary.simpleMessage("Nhập lại mật khẩu mới"),
         "home": MessageLookupByLibrary.simpleMessage("Trang chủ"),
         "hours_ago": m4,
         "id_or_business_id_short":
@@ -274,6 +291,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "languges": MessageLookupByLibrary.simpleMessage("Ngôn ngữ"),
         "liquidity": MessageLookupByLibrary.simpleMessage("Thanh khoản"),
         "loading": MessageLookupByLibrary.simpleMessage("Đang tải..."),
+        "loading_quote1":
+            MessageLookupByLibrary.simpleMessage("TÀI CHÍNH THÔNG MINH"),
+        "loading_quote2":
+            MessageLookupByLibrary.simpleMessage("TƯƠNG LAI SÁNG TẠO"),
         "login": MessageLookupByLibrary.simpleMessage("Đăng nhập"),
         "login_exception_required_OTP": MessageLookupByLibrary.simpleMessage(
             "Hãy đăng nhập bằng mã OTP được gửi về máy của bạn"),
@@ -527,6 +548,14 @@ class MessageLookup extends MessageLookupByLibrary {
         "unknown_exception":
             MessageLookupByLibrary.simpleMessage("Lỗi không xác định"),
         "username": MessageLookupByLibrary.simpleMessage("Tên đăng nhập"),
+        "validate_format_email":
+            MessageLookupByLibrary.simpleMessage("Email không đúng định dạng"),
+        "validate_null_email":
+            MessageLookupByLibrary.simpleMessage("Vui lòng nhập email"),
+        "validate_null_repassword": MessageLookupByLibrary.simpleMessage(
+            "Vui lòng nhập lại mật khẩu mới"),
+        "validate_same_repassword": MessageLookupByLibrary.simpleMessage(
+            "Mật khẩu nhập lại không trùng khớp"),
         "value": MessageLookupByLibrary.simpleMessage("Giá trị"),
         "vietnam": MessageLookupByLibrary.simpleMessage("Việt nam"),
         "virtual_assistant": MessageLookupByLibrary.simpleMessage("Trợ lý ảo"),

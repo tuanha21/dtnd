@@ -7,7 +7,8 @@
 // ignore_for_file:unnecessary_brace_in_string_interps, unnecessary_new
 // ignore_for_file:prefer_single_quotes,comment_references, directives_ordering
 // ignore_for_file:annotate_overrides,prefer_generic_function_type_aliases
-// ignore_for_file:unused_import, file_names
+// ignore_for_file:unused_import, file_names, avoid_escaping_inner_quotes
+// ignore_for_file:unnecessary_string_interpolations, unnecessary_string_escapes
 
 import 'package:intl/intl.dart';
 import 'package:intl/message_lookup_by_library.dart';
@@ -19,25 +20,26 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'en';
 
-  static m0(name) => "Are you sure to delete the “${name}” category?";
+  static String m0(name) => "Are you sure to delete the “${name}” category?";
 
-  static m1(days) => "${days} days ago";
+  static String m1(days) => "${days} days ago";
 
-  static m2(name) => "Following catalog \"${name}\"";
+  static String m2(name) => "Following catalog \"${name}\"";
 
-  static m3(value) => "Gain ${value}";
+  static String m3(value) => "Gain ${value}";
 
-  static m4(hours) => "${hours} hours ago";
+  static String m4(hours) => "${hours} hours ago";
 
-  static m5(value) => "Loss ${value}";
+  static String m5(value) => "Loss ${value}";
 
-  static m6(minutes) => "${minutes} minutes ago";
+  static String m6(minutes) => "${minutes} minutes ago";
 
-  static m7(value) => "The OTP has been sent to your ${value} extension email. Enter the 6-digit code to continue.";
+  static String m7(value) =>
+      "The OTP has been sent to your ${value} extension email. Enter the 6-digit code to continue.";
 
-  static m8(name) => "Rename catalog “${name}” to";
+  static String m8(name) => "Rename catalog “${name}” to";
 
-  static m9(value) => "Total ${value}";
+  static String m9(value) => "Total ${value}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -49,9 +51,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "Chemistry": MessageLookupByLibrary.simpleMessage("Chemistry"),
         "Cigarette": MessageLookupByLibrary.simpleMessage("Cigarette"),
         "DTND_assistant":
-            MessageLookupByLibrary.simpleMessage("DTND assistant"),
+            MessageLookupByLibrary.simpleMessage("IFIS assistant"),
         "DTNDs_virtual_assistant": MessageLookupByLibrary.simpleMessage(
-            " of DTND\'s virtual assistant"),
+            " of IFIS\'s virtual assistant"),
         "Extractive": MessageLookupByLibrary.simpleMessage("Extractive"),
         "Institution": MessageLookupByLibrary.simpleMessage("Institution"),
         "Later": MessageLookupByLibrary.simpleMessage("Later"),
@@ -76,7 +78,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "account_managing":
             MessageLookupByLibrary.simpleMessage("Account managing"),
         "account_not_login_sentence": MessageLookupByLibrary.simpleMessage(
-            "Please log in to access more feature of DTND"),
+            "Please log in to access more feature of IFIS"),
         "account_notice":
             MessageLookupByLibrary.simpleMessage("Account notice"),
         "account_number":
@@ -160,6 +162,13 @@ class MessageLookup extends MessageLookupByLibrary {
         "community": MessageLookupByLibrary.simpleMessage("Community"),
         "condition_ordnote":
             MessageLookupByLibrary.simpleMessage("Condition ordernote"),
+        "condition_password1":
+            MessageLookupByLibrary.simpleMessage("8 -16 character"),
+        "condition_password2":
+            MessageLookupByLibrary.simpleMessage("1 capital letter"),
+        "condition_password3": MessageLookupByLibrary.simpleMessage("1 digit"),
+        "condition_password4":
+            MessageLookupByLibrary.simpleMessage("1 special character"),
         "conditional_note":
             MessageLookupByLibrary.simpleMessage("Conditional note"),
         "confirm": MessageLookupByLibrary.simpleMessage("Confirm"),
@@ -238,6 +247,10 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Following catalog"),
         "following_catalog_with": m2,
         "foreign": MessageLookupByLibrary.simpleMessage("Foreign"),
+        "forgot_password":
+            MessageLookupByLibrary.simpleMessage("Forgot password?"),
+        "forgot_pasword_quote1": MessageLookupByLibrary.simpleMessage(
+            "Don\'t worry, use the email you registered to start setting a new password for your account."),
         "from_day": MessageLookupByLibrary.simpleMessage("From date"),
         "froom": MessageLookupByLibrary.simpleMessage("Room FR"),
         "fs_vol": MessageLookupByLibrary.simpleMessage("FS vol"),
@@ -254,6 +267,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "hi_you": MessageLookupByLibrary.simpleMessage("Hi you"),
         "high": MessageLookupByLibrary.simpleMessage("High"),
         "high_translations": MessageLookupByLibrary.simpleMessage("High"),
+        "hint_password": MessageLookupByLibrary.simpleMessage("New password"),
+        "hint_re_password":
+            MessageLookupByLibrary.simpleMessage("Re-enter new password"),
         "home": MessageLookupByLibrary.simpleMessage("Home"),
         "hours_ago": m4,
         "id_or_business_id_short": MessageLookupByLibrary.simpleMessage("ID"),
@@ -283,6 +299,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "languges": MessageLookupByLibrary.simpleMessage("Languges"),
         "liquidity": MessageLookupByLibrary.simpleMessage("Liquidity"),
         "loading": MessageLookupByLibrary.simpleMessage("Loading..."),
+        "loading_quote1":
+            MessageLookupByLibrary.simpleMessage("INTELLIGENT FINANCE"),
+        "loading_quote2":
+            MessageLookupByLibrary.simpleMessage("CREATIVE FUTURE"),
         "login": MessageLookupByLibrary.simpleMessage("Login"),
         "login_exception_required_OTP": MessageLookupByLibrary.simpleMessage(
             "Login with OTP code sent to your phone"),
@@ -504,7 +524,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "term": MessageLookupByLibrary.simpleMessage("terms"),
         "the_DTND_virtual_assistant_will_help_you_with_successful_transaction":
             MessageLookupByLibrary.simpleMessage(
-                "The DTND virtual assistant will help you with successful transaction"),
+                "The IFIS virtual assistant will help you with successful transaction"),
         "thousand_short": MessageLookupByLibrary.simpleMessage("K"),
         "time": MessageLookupByLibrary.simpleMessage("Time"),
         "timeout":
@@ -540,6 +560,14 @@ class MessageLookup extends MessageLookupByLibrary {
         "unknown_exception":
             MessageLookupByLibrary.simpleMessage("Unknown exception"),
         "username": MessageLookupByLibrary.simpleMessage("Username"),
+        "validate_format_email":
+            MessageLookupByLibrary.simpleMessage("Email không đúng định dạng"),
+        "validate_null_email":
+            MessageLookupByLibrary.simpleMessage("Please enter email"),
+        "validate_null_repassword": MessageLookupByLibrary.simpleMessage(
+            "Please re-enter new password"),
+        "validate_same_repassword": MessageLookupByLibrary.simpleMessage(
+            "Re-entered password does not match"),
         "value": MessageLookupByLibrary.simpleMessage("Value"),
         "vietnam": MessageLookupByLibrary.simpleMessage("Vietnam"),
         "virtual_assistant":
