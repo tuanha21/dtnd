@@ -1800,10 +1800,10 @@ class S {
     );
   }
 
-  /// `DTND assistant`
+  /// `IFIS assistant`
   String get DTND_assistant {
     return Intl.message(
-      'DTND assistant',
+      'IFIS assistant',
       name: 'DTND_assistant',
       desc: '',
       args: [],
@@ -1860,10 +1860,10 @@ class S {
     );
   }
 
-  /// ` of DTND's virtual assistant`
+  /// ` of IFIS's virtual assistant`
   String get DTNDs_virtual_assistant {
     return Intl.message(
-      ' of DTND\'s virtual assistant',
+      ' of IFIS\'s virtual assistant',
       name: 'DTNDs_virtual_assistant',
       desc: '',
       args: [],
@@ -1890,11 +1890,11 @@ class S {
     );
   }
 
-  /// `The DTND virtual assistant will help you with successful transaction`
+  /// `The IFIS virtual assistant will help you with successful transaction`
   String
       get the_DTND_virtual_assistant_will_help_you_with_successful_transaction {
     return Intl.message(
-      'The DTND virtual assistant will help you with successful transaction',
+      'The IFIS virtual assistant will help you with successful transaction',
       name:
           'the_DTND_virtual_assistant_will_help_you_with_successful_transaction',
       desc: '',
@@ -2772,10 +2772,10 @@ class S {
     );
   }
 
-  /// `Please log in to access more feature of DTND`
+  /// `Please log in to access more feature of IFIS`
   String get account_not_login_sentence {
     return Intl.message(
-      'Please log in to access more feature of DTND',
+      'Please log in to access more feature of IFIS',
       name: 'account_not_login_sentence',
       desc: '',
       args: [],

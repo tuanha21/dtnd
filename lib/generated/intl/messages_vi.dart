@@ -51,9 +51,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "Carriage": MessageLookupByLibrary.simpleMessage("Vận tải"),
         "Chemistry": MessageLookupByLibrary.simpleMessage("Hóa chất"),
         "Cigarette": MessageLookupByLibrary.simpleMessage("Thuốc lá"),
-        "DTND_assistant": MessageLookupByLibrary.simpleMessage("Trợ lý DTND"),
+        "DTND_assistant": MessageLookupByLibrary.simpleMessage("Trợ lý IFIS"),
         "DTNDs_virtual_assistant":
-            MessageLookupByLibrary.simpleMessage(" của trợ lý ảo DTND"),
+            MessageLookupByLibrary.simpleMessage(" của trợ lý ảo IFIS"),
         "Extractive": MessageLookupByLibrary.simpleMessage("Khai khoáng"),
         "Institution": MessageLookupByLibrary.simpleMessage("Tổ chức"),
         "Later": MessageLookupByLibrary.simpleMessage("Để sau"),
@@ -76,7 +76,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "account_managing":
             MessageLookupByLibrary.simpleMessage("Quản lý tài khoản"),
         "account_not_login_sentence": MessageLookupByLibrary.simpleMessage(
-            "Bạn đăng nhập để thực hiện được nhiều tác vụ hơn với DTND nhé"),
+            "Bạn đăng nhập để thực hiện được nhiều tác vụ hơn với IFIS nhé"),
         "account_notice":
             MessageLookupByLibrary.simpleMessage("Thông báo tài khoản"),
         "account_number": MessageLookupByLibrary.simpleMessage("Số tài khoản"),
@@ -493,7 +493,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "term": MessageLookupByLibrary.simpleMessage("điều khoản"),
         "the_DTND_virtual_assistant_will_help_you_with_successful_transaction":
             MessageLookupByLibrary.simpleMessage(
-                "Trợ lý ảo DTND sẽ giúp bạn có những\ngiao dịch thành công"),
+                "Trợ lý ảo IFIS sẽ giúp bạn có những\ngiao dịch thành công"),
         "thousand_short": MessageLookupByLibrary.simpleMessage("K"),
         "time": MessageLookupByLibrary.simpleMessage("Thời gian"),
         "timeout": MessageLookupByLibrary.simpleMessage(

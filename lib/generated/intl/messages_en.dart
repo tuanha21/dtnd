@@ -51,9 +51,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "Chemistry": MessageLookupByLibrary.simpleMessage("Chemistry"),
         "Cigarette": MessageLookupByLibrary.simpleMessage("Cigarette"),
         "DTND_assistant":
-            MessageLookupByLibrary.simpleMessage("DTND assistant"),
+            MessageLookupByLibrary.simpleMessage("IFIS assistant"),
         "DTNDs_virtual_assistant": MessageLookupByLibrary.simpleMessage(
-            " of DTND\'s virtual assistant"),
+            " of IFIS\'s virtual assistant"),
         "Extractive": MessageLookupByLibrary.simpleMessage("Extractive"),
         "Institution": MessageLookupByLibrary.simpleMessage("Institution"),
         "Later": MessageLookupByLibrary.simpleMessage("Later"),
@@ -78,7 +78,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "account_managing":
             MessageLookupByLibrary.simpleMessage("Account managing"),
         "account_not_login_sentence": MessageLookupByLibrary.simpleMessage(
-            "Please log in to access more feature of DTND"),
+            "Please log in to access more feature of IFIS"),
         "account_notice":
             MessageLookupByLibrary.simpleMessage("Account notice"),
         "account_number":
@@ -506,7 +506,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "term": MessageLookupByLibrary.simpleMessage("terms"),
         "the_DTND_virtual_assistant_will_help_you_with_successful_transaction":
             MessageLookupByLibrary.simpleMessage(
-                "The DTND virtual assistant will help you with successful transaction"),
+                "The IFIS virtual assistant will help you with successful transaction"),
         "thousand_short": MessageLookupByLibrary.simpleMessage("K"),
         "time": MessageLookupByLibrary.simpleMessage("Time"),
         "timeout":

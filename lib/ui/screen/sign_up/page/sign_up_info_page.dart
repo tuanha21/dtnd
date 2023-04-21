@@ -38,7 +38,7 @@ class _SignUpInfoPageState extends State<SignUpInfoPage>
                       fontWeight: FontWeight.w500,
                       color: AppColors.neutral_04)),
               TextSpan(
-                  text: ' DTND ',
+                  text: ' IFIS ',
                   style: titleSmall?.copyWith(
                       fontWeight: FontWeight.w700,
                       color: AppColors.primary_01)),
