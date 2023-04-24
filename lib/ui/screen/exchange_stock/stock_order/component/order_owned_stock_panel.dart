@@ -136,8 +136,9 @@ class _OrderOwnedStockWidgetState extends State<OrderOwnedStockWidget> {
                       .copyWith(color: AppColors.neutral_03),
                 ),
                 Text(
-                  NumUtils.formatInteger(
-                      widget.portfolioStock.avaiableVol ?? 0),
+                  '${NumUtils.formatInteger(
+                      widget.portfolioStock.avaiableVol ?? 0)}/${NumUtils.formatInteger(
+                      widget.portfolioStock.actualVol ?? 0)}',
                   style: textTheme.labelMedium,
                 ),
               ],

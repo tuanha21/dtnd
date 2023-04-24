@@ -14,6 +14,8 @@ import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:dtnd/ui/widget/empty_list_widget.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../../generated/l10n.dart';
+
 class IndayOrderTab extends StatefulWidget {
   const IndayOrderTab({super.key});
 
@@ -77,7 +79,7 @@ class _IndayOrderTabState extends State<IndayOrderTab> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                "Loại lệnh",
+                S.of(context).order_type,
                 style: textTheme.titleSmall,
               ),
               Material(

@@ -4,11 +4,14 @@ import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/widget/input/rounded_pinput.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../../../generated/l10n.dart';
+
 class AuthenSmsotpPinPage extends StatefulWidget {
   const AuthenSmsotpPinPage({
     super.key,
     required this.nextPage,
   });
+
   final VoidCallback nextPage;
 
   @override
@@ -71,7 +74,7 @@ class _AuthenSmsotpPinPageState extends State<AuthenSmsotpPinPage> {
             children: [
               InkWell(
                 child: Text(
-                  "Gửi lại mã?",
+                  S.of(context).Send_the_code_again,
                   style: textTheme.bodySmall!
                       .copyWith(color: AppColors.primary_01),
                 ),
@@ -82,8 +85,11 @@ class _AuthenSmsotpPinPageState extends State<AuthenSmsotpPinPage> {
           Row(
             children: [
               Expanded(
-                  child: TextButton(
-                      onPressed: onPressed, child: const Text("Xác nhận"))),
+                child: TextButton(
+                  onPressed: onPressed,
+                  child: Text(S.of(context).confirm),
+                ),
+              ),
             ],
           )
         ],

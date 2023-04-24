@@ -135,8 +135,8 @@ class _RealizedProfitLossState extends State<RealizedProfitLoss> {
     final themeMode = AppService.instance.themeMode.value;
 
     return Scaffold(
-      appBar: const SimpleAppbar(
-        title: "Lãi/lỗ đã thực hiện",
+      appBar: SimpleAppbar(
+        title: S.of(context).executed_profit_and_loss,
       ),
       // appBar: MyAppBar(
       //   leading: Align(

@@ -78,7 +78,7 @@ class _OrderFilterSheetState extends State<OrderFilterSheet> {
             const SizedBox(height: 20),
             _FilterField<OrderStatus>(
               listSelect: listStatusSelect,
-              title: "Trạng thái lệnh",
+              title: S.of(context).Command_status,
               values: listStatuss,
               name: (OrderStatus? value) =>
                   value?.statusName(context) ?? S.of(context).all,

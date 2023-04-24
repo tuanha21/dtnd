@@ -73,13 +73,14 @@ class _StockOrderSheetState extends State<StockOrderSheet>
   StockCashBalanceModel? stockCashBalanceModel;
 
   String? errorText;
-  String? _selectedItem = '';
+  String? _selectedItem;
 
   @override
   void initState() {
     tabController = TabController(length: 3, vsync: this);
     stockModel = widget.stockModel;
     super.initState();
+    listMR = stockModel?.stockDataCore?.mr.map((mr) => mr.mr).toList() ?? [];
     if (stockModel == null) {
       listOrderTypes = {OrderType.LO};
       selectedOrderType = listOrderTypes.first;
@@ -212,19 +213,20 @@ class _StockOrderSheetState extends State<StockOrderSheet>
     select(selectedOrderType);
     getStockInfoCore();
     getStockCashBalance();
+    listMR = stockModel?.stockDataCore?.mr.map((mr) => mr.mr).toList();
   }
 
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
-    listMR = stockModel?.stockDataCore?.mr.map((mr) => mr.mr).toList();
-    _selectedItem = listMR?.first ?? '';
-    return Form(
-      key: orderKey,
-      child: SafeArea(
-        child: Padding(
+    return SingleChildScrollView(
+      scrollDirection: Axis.vertical,
+      child: Form(
+        key: orderKey,
+        child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
           child: Column(
+            mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SheetHeader(
@@ -396,7 +398,7 @@ class _StockOrderSheetState extends State<StockOrderSheet>
                               underline: const SizedBox.shrink(),
                               borderRadius: BorderRadius.circular(12),
                               icon: const SizedBox.shrink(),
-                              value: _selectedItem,
+                              value: _selectedItem ?? listMR?.first,
                               onChanged: (String? newValue) {
                                 setState(() {
                                   _selectedItem = newValue ?? '';
@@ -405,7 +407,7 @@ class _StockOrderSheetState extends State<StockOrderSheet>
                               items: listMR?.map<DropdownMenuItem<String>>(
                                 (String? option) {
                                   return DropdownMenuItem(
-                                    value: option,
+                                    value: option ?? '',
                                     child: Text(
                                       '${S.of(context).margin} $option',
                                       style:

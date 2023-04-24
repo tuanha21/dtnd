@@ -50,6 +50,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "Carriage": MessageLookupByLibrary.simpleMessage("Carriage"),
         "Chemistry": MessageLookupByLibrary.simpleMessage("Chemistry"),
         "Cigarette": MessageLookupByLibrary.simpleMessage("Cigarette"),
+        "Command_status":
+            MessageLookupByLibrary.simpleMessage("Command status"),
         "DTND_assistant":
             MessageLookupByLibrary.simpleMessage("IFIS assistant"),
         "DTNDs_virtual_assistant": MessageLookupByLibrary.simpleMessage(
@@ -65,6 +67,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage(
                 "Please remember your SmartOTP password"),
         "Retail": MessageLookupByLibrary.simpleMessage("Retail"),
+        "Send_the_code_again":
+            MessageLookupByLibrary.simpleMessage("Send the code again ?"),
         "Set_a_password_consisting_of_6_digits":
             MessageLookupByLibrary.simpleMessage(
                 "Set a password consisting of 6 digits"),
