@@ -1,3 +1,4 @@
+import 'package:dtnd/config/service/app_services.dart';
 import 'package:dtnd/data/i_network_service.dart';
 import 'package:dtnd/data/implementations/network_service.dart';
 import 'package:dtnd/generated/l10n.dart';
@@ -17,6 +18,7 @@ class LoadingScreen extends StatefulWidget {
 
 class _LoadingScreenState extends State<LoadingScreen>
     with SingleTickerProviderStateMixin {
+  final AppService appService = AppService();
   final INetworkService networkService = NetworkService();
   final HomeController homeController = HomeController();
   late final Stream<double> stream;
@@ -33,6 +35,7 @@ class _LoadingScreenState extends State<LoadingScreen>
     stream = homeController.initProcess;
     WidgetsBinding.instance.addPostFrameCallback(
       (timeStamp) {
+        appService.checkForUpdate(networkService);
         homeController.init();
       },
     );

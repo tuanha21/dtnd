@@ -131,6 +131,7 @@ class AppService {
         appCfg["minimum_versions"] == null) {
       throw const NoInternetException();
     } else {
+      logger.v(appCfg["current_version"] + "/n" + appCfg["minimum_versions"]);
       try {
         miniumAppVersionList = appCfg["minimum_versions"].split(".");
         storeAppVersionList = appCfg["current_version"].split(".");
