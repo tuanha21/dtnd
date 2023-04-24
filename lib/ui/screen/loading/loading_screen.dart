@@ -1,3 +1,5 @@
+import 'package:dtnd/data/i_network_service.dart';
+import 'package:dtnd/data/implementations/network_service.dart';
 import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/screen/home/home_controller.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
@@ -15,6 +17,7 @@ class LoadingScreen extends StatefulWidget {
 
 class _LoadingScreenState extends State<LoadingScreen>
     with SingleTickerProviderStateMixin {
+  final INetworkService networkService = NetworkService();
   final HomeController homeController = HomeController();
   late final Stream<double> stream;
   late final AnimationController animationController;

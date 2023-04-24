@@ -201,6 +201,23 @@ class NetworkService implements INetworkService {
   }
 
   @override
+  Future<Map<String, dynamic>> getAppConfig() async {
+    final response = await client
+        .get(url_core1("getAppConfig"))
+        .timeout(const Duration(seconds: 30));
+
+    if (response.statusCode != 200) {
+      throw const NoInternetException();
+    }
+
+    try {
+      return jsonDecode(response.body);
+    } catch (e) {
+      throw const SomethingWentWrongException();
+    }
+  }
+
+  @override
   void regSessionExpiredCallback(void Function() onSessionExpired) {
     this.onSessionExpired = onSessionExpired;
   }
