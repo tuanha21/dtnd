@@ -85,7 +85,7 @@ class _AppDrawerState extends State<AppDrawer> {
         FunctionData(
           title: 'Công cụ phân tích',
           iconPath: DrawerIconAsset.setting_3,
-          subTitle: ['Lọc cổ phiếu'],
+          subTitle: [],
         ),
         FunctionData(
             title: S.current.accumulate,

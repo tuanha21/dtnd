@@ -107,7 +107,7 @@ class StockOrderConfirmISheet extends IStockOrderSheet {
         orderData: cmd.data,
       );
     } else {
-      return StockOrderFailSheet(rc: cmd!.data as int);
+      return StockOrderFailSheet(rc: cmd!.data as int,orderData: cmd.data);
     }
   }
 
