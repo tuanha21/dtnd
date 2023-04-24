@@ -221,8 +221,6 @@ class _StockOrderSheetState extends State<StockOrderSheet>
     final textTheme = Theme.of(context).textTheme;
     return SingleChildScrollView(
       scrollDirection: Axis.vertical,
-      padding:
-          EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
       child: Form(
         key: orderKey,
         child: Container(

@@ -30,7 +30,12 @@ abstract class ISheet implements IOverlay {
           borderRadius: BorderRadius.vertical(top: Radius.circular(20))),
       builder: (BuildContext context) {
         return SingleChildScrollView(
-          child: content
+          child: Padding(
+            padding: EdgeInsets.only(
+              bottom: MediaQuery.of(context).viewInsets.bottom,
+            ),
+            child: content,
+          ),
         );
       },
     ).then((result) {

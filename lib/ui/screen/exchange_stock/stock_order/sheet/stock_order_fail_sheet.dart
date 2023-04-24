@@ -3,6 +3,7 @@ import '../../../../../=models=/ui_model/user_cmd.dart';
 import '../../../../../generated/l10n.dart';
 import '../../../../../utilities/error_definition.dart';
 import '../../../../widget/overlay/custom_dialog.dart';
+import '../data/order_data.dart';
 
 class StockOrderFailSheet extends StatefulWidget {
   const StockOrderFailSheet({
