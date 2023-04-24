@@ -231,7 +231,7 @@ class _RegisterFillOTP extends State<RegisterFillOTP> {
                     () => timeExpire.value == 0
                         ? InkWell(
                             child: Text(
-                              'Gửi lại mã?',
+                              S.of(context).Send_the_code_again,
                               style: AppTextStyle.bodyMedium_14,
                             ),
                             onTap: () => onClickResendOTP(),

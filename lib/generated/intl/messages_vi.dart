@@ -51,6 +51,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "Carriage": MessageLookupByLibrary.simpleMessage("Vận tải"),
         "Chemistry": MessageLookupByLibrary.simpleMessage("Hóa chất"),
         "Cigarette": MessageLookupByLibrary.simpleMessage("Thuốc lá"),
+        "Command_status":
+            MessageLookupByLibrary.simpleMessage("Trạng thái lệnh"),
         "DTND_assistant": MessageLookupByLibrary.simpleMessage("Trợ lý IFIS"),
         "DTNDs_virtual_assistant":
             MessageLookupByLibrary.simpleMessage(" của trợ lý ảo IFIS"),
@@ -64,6 +66,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "Please_remember_your_SmartOTP_password":
             MessageLookupByLibrary.simpleMessage("Cài đặt mật khẩu Smart OTP"),
         "Retail": MessageLookupByLibrary.simpleMessage("Bán lẻ"),
+        "Send_the_code_again":
+            MessageLookupByLibrary.simpleMessage("Gửi lại mã?"),
         "Set_a_password_consisting_of_6_digits":
             MessageLookupByLibrary.simpleMessage("Đặt mật khẩu gồm 6 chữ số"),
         "Setting_up_Smart_OTP_password":

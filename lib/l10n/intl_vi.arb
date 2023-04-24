@@ -419,11 +419,11 @@
   "validate_null_email" : "Vui lòng nhập email",
   "validate_format_email" : "Email không đúng định dạng",
 
-  
-
   "loading_quote1" : "TÀI CHÍNH THÔNG MINH",
   "forgot_password" : "Quên mật khẩu?",
   "forgot_pasword_quote1" : "Đừng lo lắng, sử dụng email bạn đã đăng ký để bắt đầu cài đặt mật khẩu mới cho tài khoản nhé.",
-  "loading_quote2" : "TƯƠNG LAI SÁNG TẠO"
+  "loading_quote2" : "TƯƠNG LAI SÁNG TẠO",
+  "Send_the_code_again" : "Gửi lại mã?",
+  "Command_status": "Trạng thái lệnh"
 
 }

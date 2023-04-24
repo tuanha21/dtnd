@@ -1,5 +1,3 @@
-import 'package:dtnd/=models=/response/account/base_margin_account_model.dart';
-import 'package:dtnd/=models=/response/account/i_account.dart';
 import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_image.dart';

@@ -175,7 +175,7 @@ class _OtpWidgetState extends State<OtpWidget> {
               InkWell(
                 onTap: resendOTP,
                 child: Text(
-                  'Gửi lại mã?',
+                  S.of(context).Send_the_code_again,
                   style: AppTextStyle.bodySmall_12.copyWith(
                     color: resendOTP != null
                         ? AppColors.primary_01

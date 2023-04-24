@@ -4041,6 +4041,26 @@ class S {
       args: [],
     );
   }
+
+  /// `Send the code again ?`
+  String get Send_the_code_again {
+    return Intl.message(
+      'Send the code again ?',
+      name: 'Send_the_code_again',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Command status`
+  String get Command_status {
+    return Intl.message(
+      'Command status',
+      name: 'Command_status',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

@@ -8,13 +8,10 @@ import 'package:dtnd/ui/screen/asset/component/asset_per_type_widget.dart';
 import 'package:dtnd/ui/screen/asset/component/total_asset_widget.dart';
 import 'package:dtnd/ui/screen/asset/logic/investment_catalog.dart';
 import 'package:dtnd/ui/screen/asset/logic/money_type.dart';
-import 'package:dtnd/ui/screen/asset/screen/base_note/tab/inday_order_panel.dart';
 import 'package:dtnd/ui/screen/virtual_assistant/va_volatolity_warning/component/asset_chart.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:dtnd/ui/widget/appbar/simple_appbar.dart';
 import 'package:flutter/material.dart';
-
-import '../../../exchange_stock/order_note/tab/order_history_tab.dart';
 
 class BaseNoteScreen extends StatefulWidget {
   const BaseNoteScreen({super.key});
