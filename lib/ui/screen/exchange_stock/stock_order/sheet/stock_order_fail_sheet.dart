@@ -8,7 +8,12 @@ class StockOrderFailSheet extends StatefulWidget {
   const StockOrderFailSheet({
     super.key,
     required this.rc,
+    this.orderData,
+
   });
+
+  final OrderData? orderData;
+
 
   final int rc;
 
@@ -25,7 +30,9 @@ class _StockOrderFailSheetState extends State<StockOrderFailSheet>
         title: S.of(context).create_order_failed,
         disableBack: false,
         action: () {
-          Navigator.of(context).pop(const BackCmd());
+          // Navigator.of(context).pop(const BackCmd());
+          Navigator.of(context).pop(NextCmd(widget.orderData));
+          
         },
         type: TypeAlert.warning,
         content: getErrorMessage(context, widget.rc),
