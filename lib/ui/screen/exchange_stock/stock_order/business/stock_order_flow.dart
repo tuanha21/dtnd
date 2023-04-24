@@ -107,7 +107,9 @@ class StockOrderConfirmISheet extends IStockOrderSheet {
         orderData: cmd.data,
       );
     } else {
-      return StockOrderFailSheet(rc: cmd!.data as int,orderData: cmd.data);
+      return StockOrderFailSheet(
+        rc: cmd!.data as int,
+      );
     }
   }
 
@@ -149,7 +151,9 @@ class ChangeStockOrderISheet extends IStockOrderSheet {
         orderData: cmd.data,
       );
     } else {
-      return StockOrderFailSheet(rc: cmd!.data as int);
+      return StockOrderFailSheet(
+        rc: cmd!.data as int,
+      );
     }
   }
 
@@ -191,7 +195,9 @@ class CancelStockOrderISheet extends IStockOrderSheet {
         orderData: cmd.data,
       );
     } else {
-      return StockOrderFailSheet(rc: cmd!.data as int);
+      return StockOrderFailSheet(
+        rc: cmd!.data as int,
+      );
     }
   }
 

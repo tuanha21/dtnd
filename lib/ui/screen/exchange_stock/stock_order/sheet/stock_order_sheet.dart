@@ -285,7 +285,7 @@ class _StockOrderSheetState extends State<StockOrderSheet>
                 height: 300,
                 child: TabBarView(
                     controller: tabController,
-                    physics: const NeverScrollableScrollPhysics(),
+                    // physics: const NeverScrollableScrollPhysics(),
                     children: [
                       OrderOrderPanel(
                         stockModel: stockModel,
