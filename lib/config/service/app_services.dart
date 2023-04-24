@@ -127,8 +127,10 @@ class AppService {
     }
 
     final Map<String, dynamic> appCfg = await networkService.getAppConfig();
+    logger.v(appCfg);
+
     if (appCfg["current_version"] == null ||
-        appCfg["minimum_versions"] == null) {
+        appCfg["minimum_version"] == null) {
       throw const NoInternetException();
     } else {
       logger.v(appCfg["current_version"] + "/n" + appCfg["minimum_versions"]);

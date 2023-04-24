@@ -205,7 +205,6 @@ class NetworkService implements INetworkService {
     final response = await client
         .get(url_core1("getAppConfig"))
         .timeout(const Duration(seconds: 30));
-
     if (response.statusCode != 200) {
       throw const NoInternetException();
     }
