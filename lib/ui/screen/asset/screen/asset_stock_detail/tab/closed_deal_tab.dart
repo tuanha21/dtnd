@@ -1,3 +1,4 @@
+import 'package:dtnd/=models=/response/share_earned_model.dart';
 import 'package:dtnd/data/i_exchange_service.dart';
 import 'package:dtnd/data/i_user_service.dart';
 import 'package:dtnd/data/implementations/exchange_service.dart';
@@ -32,8 +33,6 @@ class _ClosedDealTabState extends State<ClosedDealTab>
   late DateTime toDay;
   late DateTime firstDay;
   late DateTime lastDay;
-
-  ShareEarnedModel? datas;
 
   @override
   void initState() {
