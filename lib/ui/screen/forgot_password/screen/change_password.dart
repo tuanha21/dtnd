@@ -176,7 +176,7 @@ class _ChangePasswordState extends State<ChangePassword> {
             child: AsyncButton(
               onPressed: onChangePass,
               child: Text(
-                'Lưu mật khẩu',
+                S.of(context).save_password,
                 style: AppTextStyle.bodyMedium_14.copyWith(
                     fontWeight: FontWeight.w700, color: AppColors.neutral_07),
               ),

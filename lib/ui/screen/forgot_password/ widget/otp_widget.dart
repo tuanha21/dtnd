@@ -216,7 +216,7 @@ class _OtpWidgetState extends State<OtpWidget> {
       widget.onSuccess.call();
     } else {
       setState(() {
-        errorTxt = "Sai mã OTP";
+        errorTxt = S.of(context).wrong_otp;
       });
       return;
     }

@@ -49,9 +49,9 @@ class SuccessResetPasswordPage extends StatelessWidget {
                             Container(
                               padding:
                                   const EdgeInsets.only(left: 16, right: 16),
-                              child: const Text(
-                                'Chúc mừng quý khách đã thay đổi mật khẩu thành công!',
-                                style: TextStyle(
+                              child: Text(
+                                S.of(context).success_reset_password,
+                                style: const TextStyle(
                                     fontSize: 16,
                                     height: 1.4,
                                     fontWeight: FontWeight.w500,

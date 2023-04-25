@@ -13,14 +13,10 @@ import 'package:dtnd/ui/screen/exchange_stock/stock_order/sheet/stock_order_shee
 import 'package:dtnd/ui/screen/login/login_screen.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/widget/button/single_color_text_button.dart';
-import 'package:dtnd/ui/widget/empty_list_widget.dart';
 import 'package:dtnd/ui/widget/overlay/login_first_dialog.dart';
 import 'package:dtnd/utilities/num_utils.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 
-import '../../../../widget/calendar/day_input.dart';
 import 'component/asset_stock_detail_overview.dart';
 import 'tab/closed_deal_tab.dart';
 import 'tab/history_tab.dart';

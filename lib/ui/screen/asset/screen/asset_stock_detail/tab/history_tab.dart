@@ -13,7 +13,6 @@ import 'package:dtnd/ui/widget/picker/datetime_picker_widget.dart';
 import 'package:dtnd/utilities/num_utils.dart';
 import 'package:dtnd/utilities/time_utils.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class HistoryTab extends StatefulWidget {
   const HistoryTab({super.key, required this.stockCode});
