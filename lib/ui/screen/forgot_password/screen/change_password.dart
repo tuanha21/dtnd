@@ -205,7 +205,9 @@ class _ChangePasswordState extends State<ChangePassword> {
         return showDialog(
           context: context,
           builder: (context) {
-            return const SuccessResetPasswordPage();
+            return SuccessResetPasswordPage(
+              idResetUser: widget.accountInfo.cCARDID ?? '000001',
+            );
           },
         );
       } else {

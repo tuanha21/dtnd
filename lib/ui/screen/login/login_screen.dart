@@ -16,8 +16,10 @@ const String _userKey = "_userKey";
 String _userNameKey(String user) => "_userName${user}Key";
 
 class LoginScreen extends StatefulWidget {
-  const LoginScreen({Key? key, this.toSignup}) : super(key: key);
+  const LoginScreen({Key? key, this.toSignup, this.codeResetUser})
+      : super(key: key);
   final bool? toSignup;
+  final String? codeResetUser;
   @override
   State<LoginScreen> createState() => _LoginScreenState();
 }
@@ -47,6 +49,9 @@ class _LoginScreenState extends State<LoginScreen> {
   void initState() {
     init();
     super.initState();
+    if (widget.codeResetUser != null) {
+      userTextEditingController.text = widget.codeResetUser!;
+    }
     if (widget.toSignup ?? false) {
       WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
         Future.delayed(const Duration(milliseconds: 500), () {
