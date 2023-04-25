@@ -421,9 +421,20 @@
 
   "loading_quote1" : "TÀI CHÍNH THÔNG MINH",
   "forgot_password" : "Quên mật khẩu?",
+  "save_password" : "Lưu mật khẩu",
+  "success_reset_password" : "Chúc mừng quý khách đã thay đổi mật khẩu thành công!",
   "forgot_pasword_quote1" : "Đừng lo lắng, sử dụng email bạn đã đăng ký để bắt đầu cài đặt mật khẩu mới cho tài khoản nhé.",
   "loading_quote2" : "TƯƠNG LAI SÁNG TẠO",
   "Send_the_code_again" : "Gửi lại mã?",
   "Command_status": "Trạng thái lệnh"
+  "wrong_otp":"Sai mã OTP",
+  "eKYC_quote":"Xác thực tài khoản - eKYC",
+  "stock_trade":"Giao dịch chứng khoán",
+  "analysis_tools":"Công cụ phân tích",
+  "exercise_right":"Thực hiện quyền",
+  "transfer_stock":"Chuyển chứng khoán",
+  "account_statement":"Sao kê tài khoản",
+
+  "loading_quote2" : "TƯƠNG LAI SÁNG TẠO"
 
 }

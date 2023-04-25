@@ -28,7 +28,7 @@ class _OrderOrderNotePanelState extends State<OrderOrderNotePanel> {
 
   Future<void> getIndayOrder() async {
     listOrder = await userService.getIndayOrder(
-        accountCode: userService.token.value!.defaultAcc, recordPerPage: 3);
+        accountCode: userService.token.value!.defaultAcc, recordPerPage: 100);
     if (mounted) {
       setState(() {});
     }
@@ -46,15 +46,17 @@ class _OrderOrderNotePanelState extends State<OrderOrderNotePanel> {
         ));
       }
     }
-    return Column(
-      children: records.isNotEmpty
-          ? records
-          : [
-              const Padding(
-                padding: EdgeInsets.only(top: 50),
-                child: EmptyListWidget(),
-              )
-            ],
+    return SingleChildScrollView(
+      child: Column(
+        children: records.isNotEmpty
+            ? records
+            : [
+                const Padding(
+                  padding: EdgeInsets.only(top: 50),
+                  child: EmptyListWidget(),
+                )
+              ],
+      ),
     );
   }
 }

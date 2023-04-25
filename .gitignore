@@ -46,3 +46,7 @@ app.*.map.json
 
 #key
 ./android/key.properties
+
+#file local
+pubspec.lock
+ios/Podfile.lock
