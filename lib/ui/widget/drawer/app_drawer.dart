@@ -1,8 +1,6 @@
-import 'package:dtnd/=models=/response/user_token.dart';
 import 'package:dtnd/data/i_user_service.dart';
 import 'package:dtnd/data/implementations/user_service.dart';
 import 'package:dtnd/generated/l10n.dart';
-import 'package:dtnd/ui/screen/exchange_stock/stock_order/business/stock_order_util.dart';
 import 'package:dtnd/ui/screen/login/login_screen.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_textstyle.dart';
@@ -39,42 +37,17 @@ class _AppDrawerState extends State<AppDrawer> {
     if (userService.isLogin) {
       list = <FunctionData>[
         FunctionData(
-            title: "Xác thực tài khoản - eKYC",
+            title: S.current.eKYC_quote,
             iconPath: DrawerIconAsset.verify_account_icon,
             subTitle: []),
         FunctionData(
-          title: 'Giao dịch chứng khoán',
+          title: S.current.stock_trade,
           iconPath: DrawerIconAsset.chart_2,
-          function: () {
-            // back();
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (context) => AppDrawerSubView(
-                  title: 'Giao dịch chứng khoán',
-                  list: <FunctionData>[
-                    FunctionData(
-                        title: S.current.base_trading,
-                        iconPath: DrawerIconAsset.chart_2,
-                        function: () {
-                          // back();
-                          StockModelUtil.openSheet(context);
-                        },
-                        subTitle: []),
-                    FunctionData(
-                      title: S.current.derivative_trading,
-                      iconPath: DrawerIconAsset.chart_2,
-                      subTitle: [],
-                    ),
-                  ],
-                ),
-              ),
-            );
-          },
           subTitle: [
-            'Giao dịch cơ sở',
-            'Giao dịch phái sinh',
-            'Thực hiện quyền',
-            'Chuyển chứng khoán'
+            S.current.base_trading,
+            S.current.derivative_trading,
+            S.current.exercise_right,
+            S.current.transfer_stock,
           ],
         ),
         FunctionData(
@@ -83,7 +56,7 @@ class _AppDrawerState extends State<AppDrawer> {
           subTitle: [],
         ),
         FunctionData(
-          title: 'Công cụ phân tích',
+          title: S.current.analysis_tools,
           iconPath: DrawerIconAsset.setting_3,
           subTitle: [],
         ),
@@ -92,14 +65,13 @@ class _AppDrawerState extends State<AppDrawer> {
             iconPath: DrawerIconAsset.archive_book,
             subTitle: []),
         FunctionData(
-          title: 'Sao kê tài khoản',
+          title: S.current.account_statement,
           iconPath: DrawerIconAsset.clipboard_text,
           subTitle: [
-            'Sao kê tiền',
-            'Sao kê chứng khoán',
-            'Lịch sử lệnh',
-            'Lịch sử lãi/lỗ',
-            'Công nợ margin'
+            S.current.money_statement,
+            S.current.order_history,
+            S.current.gain_loss_history,
+            S.current.margin_debt,
           ],
         ),
         FunctionData(
@@ -110,7 +82,10 @@ class _AppDrawerState extends State<AppDrawer> {
         FunctionData(
           title: S.current.setting,
           iconPath: DrawerIconAsset.setting_2,
-          subTitle: ['Ngôn ngữ', 'Giao diện'],
+          subTitle: [
+            S.current.languges,
+            S.current.interface,
+          ],
         ),
       ];
     } else {
@@ -148,8 +123,6 @@ class _AppDrawerState extends State<AppDrawer> {
   Widget build(BuildContext context) {
     bool isLogin = userService.isLogin;
     final info = userService.userInfo.value;
-
-    UserToken userToken;
 
     return Container(
       padding: EdgeInsets.only(

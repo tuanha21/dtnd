@@ -51,3 +51,31 @@ class ThousandsSeparatorInputFormatter<T extends num>
     return newValue;
   }
 }
+
+class PricePercentageInputFormatter<T extends num>
+    extends TextInputFormatter {
+  @override
+  TextEditingValue formatEditUpdate(TextEditingValue oldValue, TextEditingValue newValue) {
+    String text = '';
+    if (newValue.text != '' &&
+        (newValue.text.substring(0, 1) == ',' ||
+            newValue.text.substring(0, 1) == '.')) {
+      text = '0.';
+    } else if (newValue.text.replaceAll(',', '.').split('.').length > 2) {
+      text = newValue.text.substring(0, newValue.text.length - 1);
+    } else {
+      text = newValue.text.replaceAll(',', '.');
+    }
+
+    if (text.split('.').length > 2) {
+      var parts = text.split('.');
+      text = '${parts[0]}.${parts[1]}';
+    }
+
+    return TextEditingValue(
+      text: text.replaceAll(',', '.').replaceAllMapped(
+          RegExp(r"(\.\d{2})\d+"), (match) => match[1].toString()),
+      selection: TextSelection.fromPosition(TextPosition(offset: text.length)),
+    );
+  }
+}

@@ -31,6 +31,9 @@ import 'package:dtnd/ui/widget/input/interval_input.dart';
 import 'package:dtnd/utilities/num_utils.dart';
 import 'package:dtnd/utilities/time_utils.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+
+import '../../../../widget/input/thousand_separator_input_formatter.dart';
 
 class StockOrderSheet extends StatefulWidget {
   const StockOrderSheet({
@@ -458,16 +461,16 @@ class _StockOrderSheetState extends State<StockOrderSheet>
                 children: [
                   Expanded(
                     child: IntervalInput(
-                      controller: priceController,
-                      labelText: S.of(context).price,
-                      interval: stockModel?.stock.postTo?.getPriceInterval ??
-                          (value) => 0.1,
-                      defaultValue: stockModel?.stockDataCore?.lastPrice ??
-                          stockModel?.stockData.r.value ??
-                          0,
-                      onChanged: onChangedPrice,
-                      onTextChanged: _onPriceChangeHandler,
-                    ),
+                        controller: priceController,
+                        labelText: S.of(context).price,
+                        interval: stockModel?.stock.postTo?.getPriceInterval ??
+                            (value) => 0.1,
+                        defaultValue: stockModel?.stockDataCore?.lastPrice ??
+                            stockModel?.stockData.r.value ??
+                            0,
+                        onChanged: onChangedPrice,
+                        onTextChanged: _onPriceChangeHandler,
+                        listFormat: [PricePercentageInputFormatter()]),
                   ),
                   const SizedBox(width: 16),
                   Expanded(
@@ -476,6 +479,10 @@ class _StockOrderSheetState extends State<StockOrderSheet>
                       labelText: S.of(context).volumn,
                       interval: (value) => 100,
                       onChanged: onChangeVol,
+                      listFormat: [
+                        FilteringTextInputFormatter.allow(RegExp(r'\d')),
+                        FilteringTextInputFormatter.digitsOnly
+                      ],
                     ),
                   ),
                 ],

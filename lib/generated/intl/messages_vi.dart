@@ -65,6 +65,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Vui lòng nhập danh mục"),
         "Please_remember_your_SmartOTP_password":
             MessageLookupByLibrary.simpleMessage("Cài đặt mật khẩu Smart OTP"),
+        "Please_select_a_stock_code":
+            MessageLookupByLibrary.simpleMessage("Vui lòng chọn mã CK"),
         "Retail": MessageLookupByLibrary.simpleMessage("Bán lẻ"),
         "Send_the_code_again":
             MessageLookupByLibrary.simpleMessage("Gửi lại mã?"),
@@ -84,6 +86,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "account_notice":
             MessageLookupByLibrary.simpleMessage("Thông báo tài khoản"),
         "account_number": MessageLookupByLibrary.simpleMessage("Số tài khoản"),
+        "account_statement":
+            MessageLookupByLibrary.simpleMessage("Sao kê tài khoản"),
         "accumulate": MessageLookupByLibrary.simpleMessage("Tích luỹ"),
         "accumulation": MessageLookupByLibrary.simpleMessage("Tích lũy"),
         "add_catalog": MessageLookupByLibrary.simpleMessage("Thêm danh mục"),
@@ -95,6 +99,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "all": MessageLookupByLibrary.simpleMessage("Tất cả"),
         "amount_translations": MessageLookupByLibrary.simpleMessage("Số lượng"),
         "analysis": MessageLookupByLibrary.simpleMessage("Phân tích"),
+        "analysis_tools":
+            MessageLookupByLibrary.simpleMessage("Công cụ phân tích"),
         "apply": MessageLookupByLibrary.simpleMessage("Áp dụng"),
         "are_you_sure_to_delete_catalog": m0,
         "asset": MessageLookupByLibrary.simpleMessage("Tài sản"),
@@ -209,6 +215,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "dividend": MessageLookupByLibrary.simpleMessage("Cổ tức"),
         "double_back_to_close_app":
             MessageLookupByLibrary.simpleMessage("Ấn thêm lần nữa để thoát"),
+        "eKYC_quote":
+            MessageLookupByLibrary.simpleMessage("Xác thực tài khoản - eKYC"),
         "edit": MessageLookupByLibrary.simpleMessage("Chỉnh sửa"),
         "edit_catalog_name":
             MessageLookupByLibrary.simpleMessage("Sửa tên danh mục"),
@@ -222,6 +230,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Tổng giao dịch"),
         "executed_profit_and_loss":
             MessageLookupByLibrary.simpleMessage("Lãi/lỗ đã thực hiện"),
+        "exercise_right":
+            MessageLookupByLibrary.simpleMessage("Thực hiện quyền"),
         "extension": MessageLookupByLibrary.simpleMessage("Mở rộng"),
         "fbuy": MessageLookupByLibrary.simpleMessage("NN mua"),
         "female": MessageLookupByLibrary.simpleMessage("Nữ"),
@@ -446,6 +456,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "safe_ratio": MessageLookupByLibrary.simpleMessage("Tỷ lệ an toàn"),
         "sale_value": MessageLookupByLibrary.simpleMessage("Giá trị bán"),
         "save": MessageLookupByLibrary.simpleMessage("Lưu"),
+        "save_password": MessageLookupByLibrary.simpleMessage("Lưu mật khẩu"),
         "saved_pin_code":
             MessageLookupByLibrary.simpleMessage("Đã lưu pin code "),
         "search": MessageLookupByLibrary.simpleMessage("Tìm kiếm"),
@@ -494,6 +505,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "stock_statement":
             MessageLookupByLibrary.simpleMessage("Sao kê chứng khoán"),
         "stock_symbol": MessageLookupByLibrary.simpleMessage("mã cổ phiếu"),
+        "stock_trade":
+            MessageLookupByLibrary.simpleMessage("Giao dịch chứng khoán"),
         "stock_trading":
             MessageLookupByLibrary.simpleMessage("Giao dịch cổ phiếu"),
         "stock_value":
@@ -501,6 +514,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "stocks_you_interested":
             MessageLookupByLibrary.simpleMessage("Các mã CK mà bạn quan tâm"),
         "subsidiaries": MessageLookupByLibrary.simpleMessage("Công ty con"),
+        "success_reset_password": MessageLookupByLibrary.simpleMessage(
+            "Chúc mừng quý khách đã thay đổi mật khẩu thành công!"),
         "successfully_create_assistant_account":
             MessageLookupByLibrary.simpleMessage(
                 "Tạo tài khoản\ntrợ lý ảo thành công"),
@@ -543,6 +558,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "trading_volatility":
             MessageLookupByLibrary.simpleMessage("Biến động GD"),
         "transaction": MessageLookupByLibrary.simpleMessage("Giao dịch"),
+        "transfer_stock":
+            MessageLookupByLibrary.simpleMessage("Chuyển chứng khoán"),
         "try_searching_again_with_another_keyword":
             MessageLookupByLibrary.simpleMessage(
                 "Bạn thử tìm kiếm lại bằng từ khoá khác nhé!"),
@@ -580,6 +597,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "withdrawable_money":
             MessageLookupByLibrary.simpleMessage("Tiền có thể rút"),
         "world": MessageLookupByLibrary.simpleMessage("Thế giới"),
+        "wrong_otp": MessageLookupByLibrary.simpleMessage("Sai mã OTP"),
         "wrong_password":
             MessageLookupByLibrary.simpleMessage("Mật khẩu không chính xác"),
         "you_are_not_account":

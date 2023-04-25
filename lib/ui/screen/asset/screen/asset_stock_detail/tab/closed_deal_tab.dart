@@ -1,5 +1,3 @@
-import 'package:dtnd/=models=/response/order_history_model.dart';
-import 'package:dtnd/=models=/response/share_earned_model.dart';
 import 'package:dtnd/data/i_exchange_service.dart';
 import 'package:dtnd/data/i_user_service.dart';
 import 'package:dtnd/data/implementations/exchange_service.dart';

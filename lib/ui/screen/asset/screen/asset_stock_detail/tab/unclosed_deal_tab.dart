@@ -6,7 +6,6 @@ import 'package:dtnd/data/implementations/user_service.dart';
 import 'package:dtnd/ui/screen/asset/screen/asset_stock_detail/component/unclosed_deal_element.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/widget/empty_list_widget.dart';
-import 'package:dtnd/utilities/logger.dart';
 import 'package:flutter/material.dart';
 
 class UnclosedDealTab extends StatefulWidget {

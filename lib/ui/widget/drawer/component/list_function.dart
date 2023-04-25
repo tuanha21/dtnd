@@ -38,9 +38,9 @@ class _ListFunctionState extends State<ListFunction> {
       case 'Giao dịch cơ sở':
         StockModelUtil.openSheet(context);
         break;
-      case 'Lọc cổ phiếu':
-        StockModelUtil.openSheet(context);
-        break;
+      // case 'Lọc cổ phiếu':
+      // StockModelUtil.openSheet(context);ßßß
+      // break;
       case 'Sao kê tiền':
         Navigator.of(context).push(MaterialPageRoute(
           builder: (context) => const MoneyStatementSheet(),
@@ -110,7 +110,7 @@ class _ListFunctionState extends State<ListFunction> {
                     overflow: TextOverflow.ellipsis,
                   ),
                 ),
-                trailing: (index == 0 || index == 2 || index == 4 || index == 6)
+                trailing: (item.subTitle!.isEmpty == true)
                     ? const SizedBox.shrink()
                     : const Icon(
                         Icons.keyboard_arrow_down,

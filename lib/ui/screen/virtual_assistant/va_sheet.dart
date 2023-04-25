@@ -55,7 +55,7 @@ class _VaSheetState extends State<VaSheet> with SingleTickerProviderStateMixin {
 
   late Set<OrderType> listOrderTypes;
   final TextEditingController priceController = TextEditingController();
-  final TextEditingController volumnController =
+  final TextEditingController volumeController =
       TextEditingController(text: "100");
   late final TabController tabController;
   Timer? onPriceStoppedTyping;
@@ -83,7 +83,7 @@ class _VaSheetState extends State<VaSheet> with SingleTickerProviderStateMixin {
       listOrderTypes = stockModel!.stock.postTo?.listOrderType ?? {};
       selectedOrderType = widget.orderData?.orderType ?? listOrderTypes.first;
       priceController.text = widget.orderData?.price ?? "0";
-      volumnController.text = widget.orderData?.volumn.toString() ?? "100";
+      volumeController.text = widget.orderData?.volumn.toString() ?? "100";
 
       // select(selectedOrderType);
     }
@@ -115,7 +115,6 @@ class _VaSheetState extends State<VaSheet> with SingleTickerProviderStateMixin {
 
   void select(OrderType orderType) {
     if (orderType.isLO && stockModel?.stockDataCore != null) {
-      print(stockModel!.stockDataCore!.lastPrice);
       final String currentPrice =
           stockModel!.stockDataCore!.lastPrice?.toStringAsFixed(2) ??
               stockModel!.stockDataCore!.r?.toString() ??
@@ -156,7 +155,7 @@ class _VaSheetState extends State<VaSheet> with SingleTickerProviderStateMixin {
         stockModel: stockModel!,
         side: side,
         orderType: selectedOrderType,
-        volumn: num.parse(volumnController.text),
+        volumn: num.parse(volumeController.text),
         price: priceController.text,
       );
       Navigator.of(context).pop(NextCmd(orderData));
@@ -343,7 +342,7 @@ class _VaSheetState extends State<VaSheet> with SingleTickerProviderStateMixin {
                           borderRadius: BorderRadius.all(Radius.circular(4)),
                           color: AppColors.primary_01),
                       child: Text(
-                        "Ký quỹ ${stockCashBalanceModel?.imCk}%",
+                        "${S.of(context).margin} ${stockCashBalanceModel?.imCk}%",
                         style: AppTextStyle.labelSmall_10.copyWith(
                           color: Colors.white,
                           fontWeight: FontWeight.w600,
@@ -361,7 +360,7 @@ class _VaSheetState extends State<VaSheet> with SingleTickerProviderStateMixin {
                   Builder(
                     builder: (context) {
                       num price;
-                      num vol = num.tryParse(volumnController.text) ?? 0;
+                      num vol = num.tryParse(volumeController.text) ?? 0;
                       switch (selectedOrderType) {
                         case OrderType.LO:
                           price = num.tryParse(priceController.text) ?? 0;
@@ -394,7 +393,7 @@ class _VaSheetState extends State<VaSheet> with SingleTickerProviderStateMixin {
                   const SizedBox(width: 16),
                   Expanded(
                     child: IntervalInput(
-                      controller: volumnController,
+                      controller: volumeController,
                       labelText: S.of(context).volumn,
                       interval: (value) => 100,
                       onChanged: onChangeVol,

@@ -1,14 +1,12 @@
 import 'dart:math' as math;
 
 import 'package:charts_flutter/flutter.dart' as charts;
-import 'package:dtnd/=models=/response/radar_chart_model.dart';
 import 'package:dtnd/=models=/response/stock_model.dart';
 import 'package:dtnd/data/i_data_center_service.dart';
 import 'package:dtnd/data/implementations/data_center_service.dart';
 import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/screen/stock_detail/widget/component/benefit_chart.dart';
 import 'package:dtnd/ui/screen/stock_detail/widget/financial_index.dart';
-import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../=models=/response/stock_financial_index_model.dart';
@@ -31,10 +29,11 @@ class _FinanceIndexTabState extends State<FinanceIndexTab> {
   final IDataCenterService dataCenterService = DataCenterService();
 
   late Future<List<StockFinancialIndex>> listFinancial;
-  late Future<RadarChartModel> dataRadar;
-  RadarChartModel? chartData;
-  int selectedDataSetIndex = -1;
-  bool relativeAngleMode = true;
+
+  // late Future<RadarChartModel> dataRadar;
+  // RadarChartModel? chartData;
+  // int selectedDataSetIndex = -1;
+  // bool relativeAngleMode = true;
 
   @override
   void initState() {
@@ -54,71 +53,71 @@ class _FinanceIndexTabState extends State<FinanceIndexTab> {
 
   String type = "Y";
 
-  List<RadarDataSet> showingDataSets() {
-    return rawDataSets().asMap().entries.map((entry) {
-      final index = entry.key;
-      final rawDataSet = entry.value;
-
-      final isSelected = index == selectedDataSetIndex
-          ? true
-          : selectedDataSetIndex == -1
-              ? true
-              : false;
-
-      return RadarDataSet(
-        fillColor: isSelected
-            ? rawDataSet.color.withOpacity(0.6)
-            : rawDataSet.color.withOpacity(0.05),
-        borderColor:
-            isSelected ? rawDataSet.color : rawDataSet.color.withOpacity(0.6),
-        entryRadius: isSelected ? 3 : 2,
-        dataEntries:
-            rawDataSet.values.map((e) => RadarEntry(value: e)).toList(),
-        borderWidth: isSelected ? 2 : 2,
-      );
-    }).toList();
-  }
-
-  List<RawDataSet> rawDataSets() {
-    return [
-      RawDataSet(
-        color: AppColors.semantic_06_1,
-        values: [
-          chartData?.secPe?.toDouble() ?? 0,
-          chartData?.secEpsGrowthQy?.toDouble() ?? 0,
-          chartData?.secRevGrowthQy?.toDouble() ?? 0,
-          chartData?.secPriceBvpst?.toDouble() ?? 0,
-          chartData?.secPs?.toDouble() ?? 0,
-          chartData?.secRoa?.toDouble() ?? 0,
-          chartData?.secRoe?.toDouble() ?? 0,
-        ],
-      ),
-      RawDataSet(
-        color: AppColors.data_2,
-        values: [
-          chartData?.indPe?.toDouble() ?? 0,
-          chartData?.indEpsGrowthQy?.toDouble() ?? 0,
-          chartData?.indRevGrowthQy?.toDouble() ?? 0,
-          chartData?.indPriceBvpst?.toDouble() ?? 0,
-          chartData?.indPs?.toDouble() ?? 0,
-          chartData?.indRoa?.toDouble() ?? 0,
-          chartData?.indRoe?.toDouble() ?? 0,
-        ],
-      ),
-      RawDataSet(
-        color: AppColors.semantic_04_1,
-        values: [
-          chartData?.mkPe?.toDouble() ?? 0,
-          chartData?.mkEpsGrowthQy?.toDouble() ?? 0,
-          chartData?.mkRevGrowthQy?.toDouble() ?? 0,
-          chartData?.mkPriceBvpst?.toDouble() ?? 0,
-          chartData?.mkPs?.toDouble() ?? 0,
-          chartData?.mkRoa?.toDouble() ?? 0,
-          chartData?.mkRoe?.toDouble() ?? 0,
-        ],
-      ),
-    ];
-  }
+  // List<RadarDataSet> showingDataSets() {
+  //   return rawDataSets().asMap().entries.map((entry) {
+  //     final index = entry.key;
+  //     final rawDataSet = entry.value;
+  //
+  //     final isSelected = index == selectedDataSetIndex
+  //         ? true
+  //         : selectedDataSetIndex == -1
+  //             ? true
+  //             : false;
+  //
+  //     return RadarDataSet(
+  //       fillColor: isSelected
+  //           ? rawDataSet.color.withOpacity(0.6)
+  //           : rawDataSet.color.withOpacity(0.05),
+  //       borderColor:
+  //           isSelected ? rawDataSet.color : rawDataSet.color.withOpacity(0.6),
+  //       entryRadius: isSelected ? 3 : 2,
+  //       dataEntries:
+  //           rawDataSet.values.map((e) => RadarEntry(value: e)).toList(),
+  //       borderWidth: isSelected ? 2 : 2,
+  //     );
+  //   }).toList();
+  // }
+  //
+  // List<RawDataSet> rawDataSets() {
+  //   return [
+  //     RawDataSet(
+  //       color: AppColors.semantic_06_1,
+  //       values: [
+  //         chartData?.secPe?.toDouble() ?? 0,
+  //         chartData?.secEpsGrowthQy?.toDouble() ?? 0,
+  //         chartData?.secRevGrowthQy?.toDouble() ?? 0,
+  //         chartData?.secPriceBvpst?.toDouble() ?? 0,
+  //         chartData?.secPs?.toDouble() ?? 0,
+  //         chartData?.secRoa?.toDouble() ?? 0,
+  //         chartData?.secRoe?.toDouble() ?? 0,
+  //       ],
+  //     ),
+  //     RawDataSet(
+  //       color: AppColors.data_2,
+  //       values: [
+  //         chartData?.indPe?.toDouble() ?? 0,
+  //         chartData?.indEpsGrowthQy?.toDouble() ?? 0,
+  //         chartData?.indRevGrowthQy?.toDouble() ?? 0,
+  //         chartData?.indPriceBvpst?.toDouble() ?? 0,
+  //         chartData?.indPs?.toDouble() ?? 0,
+  //         chartData?.indRoa?.toDouble() ?? 0,
+  //         chartData?.indRoe?.toDouble() ?? 0,
+  //       ],
+  //     ),
+  //     RawDataSet(
+  //       color: AppColors.semantic_04_1,
+  //       values: [
+  //         chartData?.mkPe?.toDouble() ?? 0,
+  //         chartData?.mkEpsGrowthQy?.toDouble() ?? 0,
+  //         chartData?.mkRevGrowthQy?.toDouble() ?? 0,
+  //         chartData?.mkPriceBvpst?.toDouble() ?? 0,
+  //         chartData?.mkPs?.toDouble() ?? 0,
+  //         chartData?.mkRoa?.toDouble() ?? 0,
+  //         chartData?.mkRoe?.toDouble() ?? 0,
+  //       ],
+  //     ),
+  //   ];
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -576,12 +575,12 @@ class DoanhThuWidget extends StatelessWidget {
   }
 }
 
-class RawDataSet {
-  RawDataSet({
-    required this.color,
-    required this.values,
-  });
-
-  final Color color;
-  final List<double> values;
-}
+// class RawDataSet {
+//   RawDataSet({
+//     required this.color,
+//     required this.values,
+//   });
+//
+//   final Color color;
+//   final List<double> values;
+// }

@@ -1,21 +1,23 @@
 import 'package:dtnd/ui/widget/input/thousand_separator_input_formatter.dart';
 import 'package:dtnd/utilities/string_util.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 typedef GetInterval = num Function(num);
 
 class IntervalInput extends StatelessWidget {
-  const IntervalInput({
-    super.key,
-    this.formKey,
-    this.validator,
-    required this.controller,
-    this.labelText,
-    required this.interval,
-    this.defaultValue = 0,
-    this.onChanged,
-    this.onTextChanged,
-  });
+  const IntervalInput(
+      {super.key,
+      this.formKey,
+      this.validator,
+      required this.controller,
+      this.labelText,
+      required this.interval,
+      this.defaultValue = 0,
+      this.onChanged,
+      this.onTextChanged,
+      this.listFormat});
+
   final Key? formKey;
   final String? Function(String?)? validator;
   final TextEditingController controller;
@@ -24,6 +26,7 @@ class IntervalInput extends StatelessWidget {
   final num defaultValue;
   final ValueChanged<num>? onChanged;
   final ValueChanged<String>? onTextChanged;
+  final List<TextInputFormatter>? listFormat;
 
   void _onMinus() {
     final oldValue = controller.text;
@@ -98,10 +101,7 @@ class IntervalInput extends StatelessWidget {
         validator: validator,
         onChanged: onTextChanged,
         keyboardType: const TextInputType.numberWithOptions(decimal: true),
-        inputFormatters: [
-          ThousandsSeparatorInputFormatter(),
-
-        ],
+        inputFormatters: listFormat ?? [ThousandsSeparatorInputFormatter()],
         decoration: InputDecoration(
           labelText: labelText,
           contentPadding: const EdgeInsets.all(0),

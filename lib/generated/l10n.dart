@@ -4002,6 +4002,16 @@ class S {
     );
   }
 
+  /// `Save password`
+  String get save_password {
+    return Intl.message(
+      'Save password',
+      name: 'save_password',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Please enter email`
   String get validate_null_email {
     return Intl.message(
@@ -4017,6 +4027,86 @@ class S {
     return Intl.message(
       'Email không đúng định dạng',
       name: 'validate_format_email',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Congratulations, you have successfully changed your password!`
+  String get success_reset_password {
+    return Intl.message(
+      'Congratulations, you have successfully changed your password!',
+      name: 'success_reset_password',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Sai mã OTP`
+  String get wrong_otp {
+    return Intl.message(
+      'Sai mã OTP',
+      name: 'wrong_otp',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Account verification - eKYC`
+  String get eKYC_quote {
+    return Intl.message(
+      'Account verification - eKYC',
+      name: 'eKYC_quote',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Analysis tools`
+  String get analysis_tools {
+    return Intl.message(
+      'Analysis tools',
+      name: 'analysis_tools',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Stock trading`
+  String get stock_trade {
+    return Intl.message(
+      'Stock trading',
+      name: 'stock_trade',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Exercise right`
+  String get exercise_right {
+    return Intl.message(
+      'Exercise right',
+      name: 'exercise_right',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Transfer stock`
+  String get transfer_stock {
+    return Intl.message(
+      'Transfer stock',
+      name: 'transfer_stock',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Account statement`
+  String get account_statement {
+    return Intl.message(
+      'Account statement',
+      name: 'account_statement',
       desc: '',
       args: [],
     );
@@ -4057,6 +4147,16 @@ class S {
     return Intl.message(
       'Command status',
       name: 'Command_status',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please select a stock code`
+  String get Please_select_a_stock_code {
+    return Intl.message(
+      'Please select a stock code',
+      name: 'Please_select_a_stock_code',
       desc: '',
       args: [],
     );

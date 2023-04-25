@@ -102,7 +102,7 @@ class _UnclosedDealElementState extends State<UnclosedDealElement> {
                 ),
                 Text(
                   widget.model.cMATCHVOL == 0.0
-                      ? '-'
+                      ? '-/${NumUtils.formatInteger((widget.model.cORDERVOLUME))}'
                       : '${NumUtils.formatInteger((widget.model.cMATCHVOL))}/${NumUtils.formatInteger((widget.model.cORDERVOLUME))}',
                   style: AppTextStyle.labelSmall_10,
                 )

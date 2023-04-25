@@ -66,6 +66,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "Please_remember_your_SmartOTP_password":
             MessageLookupByLibrary.simpleMessage(
                 "Please remember your SmartOTP password"),
+        "Please_select_a_stock_code":
+            MessageLookupByLibrary.simpleMessage("Please select a stock code"),
         "Retail": MessageLookupByLibrary.simpleMessage("Retail"),
         "Send_the_code_again":
             MessageLookupByLibrary.simpleMessage("Send the code again ?"),
@@ -87,6 +89,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Account notice"),
         "account_number":
             MessageLookupByLibrary.simpleMessage("Account number"),
+        "account_statement":
+            MessageLookupByLibrary.simpleMessage("Account statement"),
         "accumulate": MessageLookupByLibrary.simpleMessage("Accumulate"),
         "accumulation": MessageLookupByLibrary.simpleMessage("Accumulation"),
         "add_catalog": MessageLookupByLibrary.simpleMessage("Add catalog"),
@@ -98,6 +102,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "all": MessageLookupByLibrary.simpleMessage("All"),
         "amount_translations": MessageLookupByLibrary.simpleMessage("Amount"),
         "analysis": MessageLookupByLibrary.simpleMessage("Analysis"),
+        "analysis_tools":
+            MessageLookupByLibrary.simpleMessage("Analysis tools"),
         "apply": MessageLookupByLibrary.simpleMessage("apply"),
         "are_you_sure_to_delete_catalog": m0,
         "asset": MessageLookupByLibrary.simpleMessage("Asset"),
@@ -219,6 +225,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "dividend": MessageLookupByLibrary.simpleMessage("Dividend"),
         "double_back_to_close_app":
             MessageLookupByLibrary.simpleMessage("Back again to exit"),
+        "eKYC_quote":
+            MessageLookupByLibrary.simpleMessage("Account verification - eKYC"),
         "edit": MessageLookupByLibrary.simpleMessage("Edit"),
         "edit_catalog_name":
             MessageLookupByLibrary.simpleMessage("Edit catalog name"),
@@ -233,6 +241,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Exchange total"),
         "executed_profit_and_loss":
             MessageLookupByLibrary.simpleMessage("Executed profit/Loss"),
+        "exercise_right":
+            MessageLookupByLibrary.simpleMessage("Exercise right"),
         "extension": MessageLookupByLibrary.simpleMessage("Extension"),
         "fbuy": MessageLookupByLibrary.simpleMessage("FR buy"),
         "female": MessageLookupByLibrary.simpleMessage("Female"),
@@ -459,6 +469,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "safe_ratio": MessageLookupByLibrary.simpleMessage("Safe ratio"),
         "sale_value": MessageLookupByLibrary.simpleMessage("Sale value"),
         "save": MessageLookupByLibrary.simpleMessage("Save"),
+        "save_password": MessageLookupByLibrary.simpleMessage("Save password"),
         "saved_pin_code":
             MessageLookupByLibrary.simpleMessage(" saved pin code"),
         "search": MessageLookupByLibrary.simpleMessage("Search"),
@@ -509,11 +520,14 @@ class MessageLookup extends MessageLookupByLibrary {
         "stock_statement":
             MessageLookupByLibrary.simpleMessage("Stock statement"),
         "stock_symbol": MessageLookupByLibrary.simpleMessage("stock_symbol"),
+        "stock_trade": MessageLookupByLibrary.simpleMessage("Stock trading"),
         "stock_trading": MessageLookupByLibrary.simpleMessage("Stock trading"),
         "stock_value": MessageLookupByLibrary.simpleMessage("Stock value"),
         "stocks_you_interested": MessageLookupByLibrary.simpleMessage(
             "Stocks you are interested in"),
         "subsidiaries": MessageLookupByLibrary.simpleMessage("Subsidiaries"),
+        "success_reset_password": MessageLookupByLibrary.simpleMessage(
+            "Congratulations, you have successfully changed your password!"),
         "successfully_create_assistant_account":
             MessageLookupByLibrary.simpleMessage(
                 "Create virtual assistant successfully"),
@@ -556,6 +570,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "trading_volatility":
             MessageLookupByLibrary.simpleMessage("TD volatility"),
         "transaction": MessageLookupByLibrary.simpleMessage("Transaction"),
+        "transfer_stock":
+            MessageLookupByLibrary.simpleMessage("Transfer stock"),
         "try_searching_again_with_another_keyword":
             MessageLookupByLibrary.simpleMessage(
                 "Try searching again with another keyword!"),
@@ -593,6 +609,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "withdrawable_money":
             MessageLookupByLibrary.simpleMessage("Withdrawable money"),
         "world": MessageLookupByLibrary.simpleMessage("World"),
+        "wrong_otp": MessageLookupByLibrary.simpleMessage("Sai mã OTP"),
         "wrong_password":
             MessageLookupByLibrary.simpleMessage("Password is incorrect"),
         "you_are_not_account":
