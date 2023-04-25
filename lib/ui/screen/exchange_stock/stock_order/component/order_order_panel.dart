@@ -34,7 +34,7 @@ class OrderOrderPanel extends StatelessWidget {
             key: stockModelFormKey,
             validator: (value) {
               if (value == null) {
-                const String errorTxt = "Vui lòng chọn mã CK";
+                String errorTxt = S.of(context).Please_select_a_stock_code;
                 onValidate.call(errorTxt);
                 return errorTxt;
               }

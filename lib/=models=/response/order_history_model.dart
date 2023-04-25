@@ -1,5 +1,9 @@
+import 'dart:ui';
+
 import 'package:dtnd/=models=/core_response_model.dart';
 import 'package:dtnd/=models=/side.dart';
+import 'package:dtnd/ui/theme/app_color.dart';
+import 'package:dtnd/utilities/logger.dart';
 
 import 'order_model/i_order_model.dart';
 
@@ -32,7 +36,19 @@ class OrderHistoryModel implements CoreResponseModel {
   num? cMATCHEDVALUE;
   num? cTOTALRECORD;
 
+  Color get color {
+    switch (cSTATUSNAMEEN) {
+      case "Match":
+        return AppColors.semantic_01;
+      case "Cancel":
+        return AppColors.semantic_03;
+      default:
+        return AppColors.semantic_02;
+    }
+  }
+
   OrderHistoryModel.fromJson(Map<String, dynamic> json) {
+    logger.v(json);
     rOWNUM = json['ROW_NUM'];
     pKORDER = json['PK_ORDER'];
     cORDERNO = json['C_ORDER_NO'];

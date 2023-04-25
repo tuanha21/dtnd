@@ -53,8 +53,7 @@ class _ChangeStockOrderSheetState extends State<ChangeStockOrderSheet>
   final IDataCenterService dataCenterService = DataCenterService();
   late final Set<OrderType> listOrderTypes;
   final TextEditingController priceController = TextEditingController();
-  final TextEditingController volumeController =
-      TextEditingController(text: "100");
+  final TextEditingController volumeController = TextEditingController();
   final GlobalKey<FormState> pinKey = GlobalKey<FormState>();
 
   final TextEditingController pinController = TextEditingController();
@@ -87,8 +86,10 @@ class _ChangeStockOrderSheetState extends State<ChangeStockOrderSheet>
         .getStocksModelsFromStockCodes([widget.data.symbol]);
     if (stockModels?.isNotEmpty ?? false) {
       stockModel = stockModels!.first;
-      priceController.text =
-          stockModel?.stockData.lastPrice.value?.toString() ?? "";
+      // priceController.text =
+      //     stockModel?.stockData.lastPrice.value?.toString() ?? "";
+      priceController.text = widget.data.showPrice.toString();
+      volumeController.text = widget.data.volume.toString();
     } else {
       return;
     }
@@ -225,23 +226,25 @@ class _ChangeStockOrderSheetState extends State<ChangeStockOrderSheet>
                             floatingLabelAlignment:
                                 FloatingLabelAlignment.start,
                             suffixIcon: InkWell(
-                                onTap: () {
-                                  checked = !checked;
-                                  if (checked && pinController.text != '') {
-                                    EasyLoading.showToast(S.of(context).saved_pin_code,
-                                        maskType: EasyLoadingMaskType.clear);
-                                  }
-                                  setState(() {});
-                                },
-                                child: Padding(
-                                  padding: const EdgeInsets.all(10),
-                                  child: SvgPicture.asset(
-                                    AppImages.save_pin_code_icon,
-                                    color: (checked && pinController.text != '')
-                                        ? AppColors.semantic_01
-                                        : AppColors.primary_01,
-                                  ),
-                                )),
+                              onTap: () {
+                                checked = !checked;
+                                if (checked && pinController.text != '') {
+                                  EasyLoading.showToast(
+                                      S.of(context).saved_pin_code,
+                                      maskType: EasyLoadingMaskType.clear);
+                                }
+                                setState(() {});
+                              },
+                              child: Padding(
+                                padding: const EdgeInsets.all(10),
+                                child: SvgPicture.asset(
+                                  AppImages.save_pin_code_icon,
+                                  color: (checked && pinController.text != '')
+                                      ? AppColors.semantic_01
+                                      : AppColors.primary_01,
+                                ),
+                              ),
+                            ),
                           ),
                         )
                       : const SizedBox(),

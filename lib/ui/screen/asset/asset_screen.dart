@@ -14,8 +14,8 @@ import 'package:dtnd/data/implementations/user_service.dart';
 import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/screen/asset/component/account_asset_overview_widget.dart';
 import 'package:dtnd/ui/screen/asset/component/asset_distribution_chart.dart';
-import 'package:dtnd/ui/screen/asset/screen/margin_debt/margin_debt_screen.dart';
 import 'package:dtnd/ui/screen/asset/screen/executed_profit_loss/realized_profit_loss.dart';
+import 'package:dtnd/ui/screen/asset/screen/margin_debt/margin_debt_screen.dart';
 import 'package:dtnd/ui/screen/asset/sheet/extensions_sheet.dart';
 import 'package:dtnd/ui/screen/exchange_stock/order_note/screen/order_note_screen.dart';
 import 'package:dtnd/ui/screen/exchange_stock/stock_order/business/stock_order_flow.dart';
@@ -43,6 +43,7 @@ class AssetScreen extends StatefulWidget {
   const AssetScreen({
     super.key,
   });
+
   @override
   State<AssetScreen> createState() => _AssetScreenState();
 }
@@ -79,38 +80,48 @@ class _AssetScreenState extends State<AssetScreen>
           GestureDetector(
             onTap: () {
               Navigator.of(context)
-                  .push(MaterialPageRoute(
-                builder: (context) => const SearchScreen(),
-              ))
-                  .then((value) async {
-                if (value is Stock) {
-                  dataCenterService.getStocksModelsFromStockCodes(
-                      [value.stockCode]).then((stockModels) {
-                    if (stockModels != null) {
-                      return Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => StockDetailScreen(
-                          stockModel: stockModels.first,
-                        ),
-                      ));
-                    }
-                  });
-                }
-              });
+                  .push(
+                MaterialPageRoute(
+                  builder: (context) => const SearchScreen(),
+                ),
+              )
+                  .then(
+                (value) async {
+                  if (value is Stock) {
+                    dataCenterService
+                        .getStocksModelsFromStockCodes([value.stockCode]).then(
+                      (stockModels) {
+                        if (stockModels != null) {
+                          return Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => StockDetailScreen(
+                                stockModel: stockModels.first,
+                              ),
+                            ),
+                          );
+                        }
+                      },
+                    );
+                  }
+                },
+              );
             },
             child: SizedBox.square(
-                dimension: 26,
-                child: Image.asset(
-                  AppImages.home_icon_search_normal,
-                )),
+              dimension: 26,
+              child: Image.asset(
+                AppImages.home_icon_search_normal,
+              ),
+            ),
           ),
           const SizedBox(
             width: 20,
           ),
           SizedBox.square(
-              dimension: 26,
-              child: Image.asset(
-                AppImages.home_icon_notification,
-              )),
+            dimension: 26,
+            child: Image.asset(
+              AppImages.home_icon_notification,
+            ),
+          ),
           const SizedBox(
             width: 16,
           ),
@@ -128,16 +139,18 @@ class _AssetScreenState extends State<AssetScreen>
           final textTheme = Theme.of(context).textTheme;
           Widget chart;
           if (showTotalAsset) {
-            chart = Obx(() {
-              final data = userService.listAccountModel.value?.firstWhereOrNull(
-                      (element) =>
-                          element.runtimeType == BaseMarginPlusAccountModel)
-                  as BaseMarginPlusAccountModel?;
+            chart = Obx(
+              () {
+                final data = userService.listAccountModel.value
+                        ?.firstWhereOrNull((element) =>
+                            element.runtimeType == BaseMarginPlusAccountModel)
+                    as BaseMarginPlusAccountModel?;
 
-              return AssetChart(
-                datas: data?.listAssetChart,
-              );
-            });
+                return AssetChart(
+                  datas: data?.listAssetChart,
+                );
+              },
+            );
           } else {
             chart = Obx(() {
               final data = userService.listAccountModel.value?.firstWhereOrNull(

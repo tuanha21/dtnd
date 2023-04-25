@@ -76,7 +76,7 @@ class _FullExtensionsScreenState extends State<FullExtensionsScreen> {
     "Trung tâm trợ giúp": [
       AccountExtensionButton(
         icon: AccountIcon.security_user,
-        label: "Điều khoản",
+        label: S.current.term,
       ),
       AccountExtensionButton(
         icon: AccountIcon.archive_book,

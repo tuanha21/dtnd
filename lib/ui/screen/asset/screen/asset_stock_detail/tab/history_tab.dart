@@ -8,6 +8,7 @@ import 'package:dtnd/ui/screen/asset/screen/asset_stock_detail/asset_stock_detai
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:dtnd/ui/theme/app_textstyle.dart';
+import 'package:dtnd/ui/widget/calendar/day_input.dart';
 import 'package:dtnd/ui/widget/empty_list_widget.dart';
 import 'package:dtnd/ui/widget/picker/datetime_picker_widget.dart';
 import 'package:dtnd/utilities/num_utils.dart';
@@ -26,22 +27,29 @@ class _HistoryTabState extends State<HistoryTab>
   final IUserService userService = UserService();
   final IExchangeService exchangeService = ExchangeService();
   late final AssetStockDetailController assetStockDetailController;
-  late final TextEditingController fromdayController;
-  late final TextEditingController todayController;
+
+  late DateTime fromDay;
+  late DateTime toDay;
+  late DateTime firstDay;
+  late DateTime lastDay;
 
   final List<OrderHistoryModel> listDatas = [];
 
   @override
   void initState() {
+    fromDay = TimeUtilities.getPreviousDateTime(TimeUtilities.month(1));
+    toDay = DateTime.now();
+    firstDay = TimeUtilities.getPreviousDateTime(TimeUtilities.month(3));
+    lastDay = toDay;
     assetStockDetailController =
         AssetStockDetailController(stockCode: widget.stockCode);
-    fromdayController = TextEditingController(
-        text: TimeUtilities.commonTimeFormat
-            .format(DateTime.now().subtract(const Duration(days: 7))));
-    todayController = TextEditingController(
-        text: TimeUtilities.commonTimeFormat.format(DateTime.now()));
-    assetStockDetailController.getAllShareEarned(
-        fromdayController.text, todayController.text);
+    // fromdayController = TextEditingController(
+    //     text: TimeUtilities.commonTimeFormat
+    //         .format(DateTime.now().subtract(const Duration(days: 7))));
+    // todayController = TextEditingController(
+    //     text: TimeUtilities.commonTimeFormat.format(DateTime.now()));
+    // assetStockDetailController.getAllShareEarned(
+    //     fromdayController.text, todayController.text);
     super.initState();
     getData();
   }
@@ -50,13 +58,14 @@ class _HistoryTabState extends State<HistoryTab>
     final res = await exchangeService.getOrdersHistory(
       userService,
       stockCode: widget.stockCode,
-      fromDay: TimeUtilities.commonTimeFormat.parse(fromdayController.text),
-      toDay: TimeUtilities.commonTimeFormat.parse(todayController.text),
+      fromDay: fromDay,
+      toDay: toDay,
     );
     if (res.isNotEmpty) {
+      listDatas.clear();
       listDatas.addAll(res);
-      setState(() {});
     }
+    setState(() {});
   }
 
   @override
@@ -66,21 +75,54 @@ class _HistoryTabState extends State<HistoryTab>
       child: Column(
         children: [
           const SizedBox(height: 8),
+          // Row(
+          //   children: [
+          //     Expanded(
+          //         child: DateTimePickerWidget(
+          //       controller: fromdayController,
+          //       labelText: S.of(context).from_day,
+          //       onChanged: (value) => getData(),
+          //     )),
+          //     const SizedBox(width: 16),
+          //     Expanded(
+          //         child: DateTimePickerWidget(
+          //       controller: todayController,
+          //       labelText: S.of(context).to_day,
+          //       onChanged: (value) => getData(),
+          //     ))
+          //   ],
+          // ),
           Row(
             children: [
               Expanded(
-                  child: DateTimePickerWidget(
-                controller: fromdayController,
-                labelText: S.of(context).from_day,
-                onChanged: (value) => getData(),
-              )),
-              const SizedBox(width: 16),
+                child: DayInput(
+                  initialDay: fromDay,
+                  firstDay: firstDay,
+                  lastDay: lastDay,
+                  onChanged: (value) {
+                    setState(() {
+                      fromDay = value;
+                    });
+                    getData();
+                  },
+                ),
+              ),
+              const SizedBox(width: 8),
+              const Text('-'),
+              const SizedBox(width: 8),
               Expanded(
-                  child: DateTimePickerWidget(
-                controller: todayController,
-                labelText: S.of(context).to_day,
-                onChanged: (value) => getData(),
-              ))
+                child: DayInput(
+                  initialDay: toDay,
+                  firstDay: firstDay,
+                  lastDay: lastDay,
+                  onChanged: (value) {
+                    setState(() {
+                      toDay = value;
+                    });
+                    getData();
+                  },
+                ),
+              )
             ],
           ),
           //
@@ -119,8 +161,8 @@ class _HistoryTabState extends State<HistoryTab>
                             ),
                             Text(
                               listDatas.elementAt(i).cSTATUSNAME ?? "",
-                              style: AppTextStyle.bodyMedium_14
-                                  .copyWith(color: AppColors.semantic_01),
+                              style: AppTextStyle.bodyMedium_14.copyWith(
+                                  color: listDatas.elementAt(i).color),
                             ),
                           ],
                         ),
@@ -166,7 +208,7 @@ class _HistoryTabState extends State<HistoryTab>
                                 child: Column(
                               children: [
                                 Text(
-                                  "Giá khớp",
+                                  S.of(context).match_price,
                                   style: AppTextStyle.labelSmall_10.copyWith(
                                     color: AppColors.neutral_03,
                                     fontWeight: FontWeight.w500,
@@ -192,7 +234,7 @@ class _HistoryTabState extends State<HistoryTab>
                                 crossAxisAlignment: CrossAxisAlignment.end,
                                 children: [
                                   Text(
-                                    "Phí GD",
+                                    S.of(context).td_fee,
                                     style: AppTextStyle.labelSmall_10.copyWith(
                                       color: AppColors.neutral_03,
                                       fontWeight: FontWeight.w500,

@@ -1,8 +1,11 @@
+import 'package:dtnd/=models=/ui_model/exception.dart';
 import 'package:dtnd/config/helper/app_service_helper.dart';
 import 'package:dtnd/data/i_network_service.dart';
 import 'package:dtnd/generated/l10n.dart';
+import 'package:dtnd/utilities/logger.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../=models=/response/banner_model.dart';
@@ -21,6 +24,10 @@ class AppService {
   static AppService get instance => _instance;
 
   late final SharedPreferences sharedPreferencesInstance;
+
+  late final String appVersion;
+
+  late final Map<String, dynamic> appConfig;
 
   late final Rx<ThemeMode> _themeMode;
 
@@ -99,5 +106,51 @@ class AppService {
       loadingHomBanner.value = false;
       throw Exception();
     }
+  }
+
+  Future<String> _getAppVersion() async {
+    PackageInfo packageInfo = await PackageInfo.fromPlatform();
+    appVersion = packageInfo.version;
+    logger.v(appVersion);
+    return appVersion;
+  }
+
+  Future<bool?> checkForUpdate(INetworkService networkService) async {
+    final List<String> appVersionList;
+    final List<String> miniumAppVersionList;
+    final List<String> storeAppVersionList;
+
+    try {
+      appVersionList = (await _getAppVersion()).split(".");
+    } catch (e) {
+      throw const SomethingWentWrongException();
+    }
+
+    final Map<String, dynamic> appCfg = await networkService.getAppConfig();
+    logger.v(appCfg);
+
+    if (appCfg["current_version"] == null ||
+        appCfg["minimum_version"] == null) {
+      throw const NoInternetException();
+    } else {
+      logger.v(appCfg["current_version"] + "/n" + appCfg["minimum_version"]);
+      try {
+        miniumAppVersionList = appCfg["minimum_version"].split(".");
+        storeAppVersionList = appCfg["current_version"].split(".");
+      } catch (e) {
+        throw const SomethingWentWrongException();
+      }
+    }
+
+    for (var i = 0; i < 3; i++) {
+      if (int.parse(appVersionList.elementAt(i)) <
+          int.parse(miniumAppVersionList.elementAt(i))) {
+        return true;
+      } else if (int.parse(appVersionList.elementAt(i)) <
+          int.parse(storeAppVersionList.elementAt(i))) {
+        return false;
+      }
+    }
+    return null;
   }
 }

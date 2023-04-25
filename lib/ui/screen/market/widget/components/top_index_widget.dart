@@ -84,13 +84,16 @@ class _TopIndexWidgetChartState extends State<TopIndexWidgetChart> {
               if (snapshot.connectionState == ConnectionState.done) {
                 if (snapshot.data == null) return const SizedBox();
                 var list = snapshot.data!.listMapValue;
-                list.sort((a, b) {
-                  num numA = a['contribPoint'];
-                  num numB = b['contribPoint'];
-                  return numB.compareTo(numA);
-                });
+                list
+                  ..removeWhere(
+                      (element) => element['contribPoint'].abs() < 0.01)
+                  ..sort((a, b) {
+                    num numA = a['contribPoint'];
+                    num numB = b['contribPoint'];
+                    return numB.compareTo(numA);
+                  });
                 return SizedBox(
-                  height: 300,
+                  height: list.length * 30,
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16),
                     child: charts.BarChart(
@@ -108,11 +111,14 @@ class _TopIndexWidgetChartState extends State<TopIndexWidgetChart> {
                                   model['contribPoint'] > 0
                                       ? AppColors.semantic_01
                                       : AppColors.semantic_03),
+                          labelAccessorFn: (Map<String, dynamic> model, _) =>
+                              "${model['contribPoint'].toStringAsFixed(2)}",
                           data: list,
                         )..setAttribute(
                             charts.measureAxisIdKey, "secondaryMeasureAxisId")
                       ],
                       animate: true,
+                      vertical: false,
                       primaryMeasureAxis: const charts.NumericAxisSpec(
                           showAxisLine: false,
                           renderSpec: charts.NoneRenderSpec()),
@@ -120,25 +126,28 @@ class _TopIndexWidgetChartState extends State<TopIndexWidgetChart> {
                       //     showAxisLine: false,
                       //     renderSpec: charts.NoneRenderSpec()),
                       domainAxis: const charts.OrdinalAxisSpec(
+                        showAxisLine: false,
                         renderSpec: charts.SmallTickRendererSpec(
-                            labelRotation: 45,
+                            // labelRotation: 45,
+
                             minimumPaddingBetweenLabelsPx: 0,
-                            labelStyle: charts.TextStyleSpec(fontSize: 7),
+                            labelStyle: charts.TextStyleSpec(fontSize: 10),
                             lineStyle: charts.LineStyleSpec()),
                       ),
+                      barRendererDecorator: charts.BarLabelDecorator<String>(),
                       behaviors: [
                         charts.SelectNearest(
                             eventTrigger: charts.SelectionTrigger.tapAndDrag),
-                        charts.LinePointHighlighter(
-                            showHorizontalFollowLine:
-                                charts.LinePointHighlighterFollowLineType.none,
-                            showVerticalFollowLine: charts
-                                .LinePointHighlighterFollowLineType.nearest),
-                        charts.LinePointHighlighter(
-                          symbolRenderer: CustomTooltipRenderer(
-                              _TooltipData.instance,
-                              size: size),
-                        ),
+                        // charts.LinePointHighlighter(
+                        //     showHorizontalFollowLine:
+                        //         charts.LinePointHighlighterFollowLineType.nearest,
+                        //     showVerticalFollowLine: charts
+                        //         .LinePointHighlighterFollowLineType.none),
+                        // charts.LinePointHighlighter(
+                        //   symbolRenderer: CustomTooltipRenderer(
+                        //       _TooltipData.instance,
+                        //       size: size),
+                        // ),
                       ],
                       selectionModels: [
                         charts.SelectionModelConfig(
@@ -169,4 +178,84 @@ class _TopIndexWidgetChartState extends State<TopIndexWidgetChart> {
 class _TooltipData extends TooltipData {
   _TooltipData._internal();
   static final _TooltipData instance = _TooltipData._internal();
+}
+
+class _CustomTooltipRenderer<T extends TooltipData>
+    extends charts.CircleSymbolRenderer {
+  final Size size;
+  final T data;
+  final int fontSize;
+  _CustomTooltipRenderer(
+    this.data, {
+    required this.size,
+    this.fontSize = 10,
+  });
+
+  @override
+  void paint(charts.ChartCanvas canvas, Rectangle<num> bounds,
+      {List<int>? dashPattern,
+      charts.Color? fillColor,
+      charts.FillPatternType? fillPattern,
+      charts.Color? strokeColor,
+      double? strokeWidthPx}) {
+    super.paint(canvas, bounds,
+        dashPattern: dashPattern,
+        fillColor: fillColor,
+        strokeColor: strokeColor,
+        strokeWidthPx: strokeWidthPx);
+
+    chart_style.TextStyle textStyle = chart_style.TextStyle();
+
+    textStyle.color = charts.Color.white;
+    textStyle.fontSize = fontSize;
+    final listTextElement = (data.listData ?? [])
+        .map((e) => chart_text.TextElement(e, style: textStyle))
+        .toList();
+    Size maxSize = Size.zero;
+    for (chart_text.TextElement element in listTextElement) {
+      if ((element.textPainter?.size.width ?? 0) > maxSize.width) {
+        maxSize = element.textPainter!.size;
+      }
+    }
+    // print(bounds.bottom);
+    // print(bounds.top);
+
+    final rectWidth = maxSize.height + 10;
+    num rectLeft = bounds.bottom - (rectWidth / 2);
+    final rectRight = rectLeft + rectWidth;
+    if (rectLeft < 0) {
+      rectLeft = 0;
+    } else if (rectRight > size.width) {
+      rectLeft = size.width - rectWidth;
+    }
+
+    canvas.drawRect(
+      // Rectangle(
+      //   bounds.left,
+      //   bounds.top,
+      //   bounds.width,
+      //   bounds.height,
+      // ),
+      Rectangle(
+        bounds.left - rectWidth - 16,
+        0,
+        bounds.height + ((maxSize.height) * listTextElement.length),
+        size.width / 3 * 2 - 56,
+      ),
+      fill: charts.ColorUtil.fromDartColor(AppColors.neutral_03),
+    );
+    for (var i = 0; i < listTextElement.length; i++) {
+      canvas.drawText(
+        listTextElement.elementAt(i),
+        bounds.left.round() -
+            ((maxSize.height) * listTextElement.length).round() +
+            ((listTextElement.elementAt(i).textPainter?.size.height ?? 0) * i +
+                    5)
+                .round() -
+            13,
+        (size.width / 3 * 2 - 61).round(),
+        rotation: 3 * pi / 2,
+      );
+    }
+  }
 }

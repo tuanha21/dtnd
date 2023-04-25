@@ -10,7 +10,7 @@ import 'intl/messages_all.dart';
 
 // ignore_for_file: non_constant_identifier_names, lines_longer_than_80_chars
 // ignore_for_file: join_return_with_assignment, prefer_final_in_for_each
-// ignore_for_file: avoid_redundant_argument_values
+// ignore_for_file: avoid_redundant_argument_values, avoid_escaping_inner_quotes
 
 class S {
   S();
@@ -18,28 +18,31 @@ class S {
   static S? _current;
 
   static S get current {
-    assert(_current != null, 'No instance of S was loaded. Try to initialize the S delegate before accessing S.current.');
+    assert(_current != null,
+        'No instance of S was loaded. Try to initialize the S delegate before accessing S.current.');
     return _current!;
   }
 
-  static const AppLocalizationDelegate delegate =
-    AppLocalizationDelegate();
+  static const AppLocalizationDelegate delegate = AppLocalizationDelegate();
 
   static Future<S> load(Locale locale) {
-    final name = (locale.countryCode?.isEmpty ?? false) ? locale.languageCode : locale.toString();
-    final localeName = Intl.canonicalizedLocale(name); 
+    final name = (locale.countryCode?.isEmpty ?? false)
+        ? locale.languageCode
+        : locale.toString();
+    final localeName = Intl.canonicalizedLocale(name);
     return initializeMessages(localeName).then((_) {
       Intl.defaultLocale = localeName;
       final instance = S();
       S._current = instance;
- 
+
       return instance;
     });
-  } 
+  }
 
   static S of(BuildContext context) {
     final instance = S.maybeOf(context);
-    assert(instance != null, 'No instance of S present in the widget tree. Did you add S.delegate in localizationsDelegates?');
+    assert(instance != null,
+        'No instance of S present in the widget tree. Did you add S.delegate in localizationsDelegates?');
     return instance!;
   }
 
@@ -1797,10 +1800,10 @@ class S {
     );
   }
 
-  /// `DTND assistant`
+  /// `IFIS assistant`
   String get DTND_assistant {
     return Intl.message(
-      'DTND assistant',
+      'IFIS assistant',
       name: 'DTND_assistant',
       desc: '',
       args: [],
@@ -1857,10 +1860,10 @@ class S {
     );
   }
 
-  /// ` of DTND's virtual assistant`
+  /// ` of IFIS's virtual assistant`
   String get DTNDs_virtual_assistant {
     return Intl.message(
-      ' of DTND\'s virtual assistant',
+      ' of IFIS\'s virtual assistant',
       name: 'DTNDs_virtual_assistant',
       desc: '',
       args: [],
@@ -1887,11 +1890,13 @@ class S {
     );
   }
 
-  /// `The DTND virtual assistant will help you with successful transaction`
-  String get the_DTND_virtual_assistant_will_help_you_with_successful_transaction {
+  /// `The IFIS virtual assistant will help you with successful transaction`
+  String
+      get the_DTND_virtual_assistant_will_help_you_with_successful_transaction {
     return Intl.message(
-      'The DTND virtual assistant will help you with successful transaction',
-      name: 'the_DTND_virtual_assistant_will_help_you_with_successful_transaction',
+      'The IFIS virtual assistant will help you with successful transaction',
+      name:
+          'the_DTND_virtual_assistant_will_help_you_with_successful_transaction',
       desc: '',
       args: [],
     );
@@ -2767,10 +2772,10 @@ class S {
     );
   }
 
-  /// `Please log in to access more feature of DTND`
+  /// `Please log in to access more feature of IFIS`
   String get account_not_login_sentence {
     return Intl.message(
-      'Please log in to access more feature of DTND',
+      'Please log in to access more feature of IFIS',
       name: 'account_not_login_sentence',
       desc: '',
       args: [],
@@ -4122,6 +4127,36 @@ class S {
     return Intl.message(
       'CREATIVE FUTURE',
       name: 'loading_quote2',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Send the code again ?`
+  String get Send_the_code_again {
+    return Intl.message(
+      'Send the code again ?',
+      name: 'Send_the_code_again',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Command status`
+  String get Command_status {
+    return Intl.message(
+      'Command status',
+      name: 'Command_status',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please select a stock code`
+  String get Please_select_a_stock_code {
+    return Intl.message(
+      'Please select a stock code',
+      name: 'Please_select_a_stock_code',
       desc: '',
       args: [],
     );

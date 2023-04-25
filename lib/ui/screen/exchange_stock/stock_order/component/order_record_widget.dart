@@ -193,17 +193,23 @@ class _OrderRecordWidgetState extends State<OrderRecordWidget> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        S.of(context).order_price,
-                        style: AppTextStyle.labelSmall_10
-                            .copyWith(color: AppColors.neutral_04),
-                      ),
-                      const SizedBox(height: 6),
-                      Text(
-                        widget.data.showPrice ?? "-",
-                        style: AppTextStyle.labelSmall_10
-                            .copyWith(color: AppColors.neutral_01),
-                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Text(
+                            S.of(context).order_price,
+                            style: AppTextStyle.labelSmall_10
+                                .copyWith(color: AppColors.neutral_04),
+                          ),
+                          const SizedBox(height: 6),
+                          Text(
+                            widget.data.showPrice ?? "-",
+                            style: AppTextStyle.labelSmall_10
+                                .copyWith(color: AppColors.neutral_01),
+                          ),
+                        ],
+                      )
+
                     ],
                   ),
                 ),
@@ -211,17 +217,23 @@ class _OrderRecordWidgetState extends State<OrderRecordWidget> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        S.of(context).match_price,
-                        style: AppTextStyle.labelSmall_10
-                            .copyWith(color: AppColors.neutral_04),
-                      ),
-                      const SizedBox(height: 6),
-                      Text(
-                        NumUtils.formatDouble(widget.data.matchPrice, "-"),
-                        style: AppTextStyle.labelSmall_10
-                            .copyWith(color: AppColors.neutral_01),
-                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Text(
+                            S.of(context).match_price,
+                            style: AppTextStyle.labelSmall_10
+                                .copyWith(color: AppColors.neutral_04),
+                          ),
+                          const SizedBox(height: 6),
+                          Text(
+                            NumUtils.formatDouble(widget.data.matchPrice, "-"),
+                            style: AppTextStyle.labelSmall_10
+                                .copyWith(color: AppColors.neutral_01),
+                          ),
+                        ],
+                      )
+
                     ],
                   ),
                 ),
@@ -237,7 +249,7 @@ class _OrderRecordWidgetState extends State<OrderRecordWidget> {
                       const SizedBox(height: 6),
                       Text(
                         widget.data.matchVolume == 0.0
-                            ? '-/${widget.data.volume!}'
+                            ? '-/${widget.data.volume}'
                             : '${widget.data.matchVolume}/${widget.data.volume!}',
                         style: AppTextStyle.labelSmall_10
                             .copyWith(color: AppColors.neutral_01),

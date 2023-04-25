@@ -1,20 +1,13 @@
 import 'dart:ui';
 
-import 'package:dtnd/=models=/response/stock_model.dart';
 import 'package:dtnd/config/service/app_services.dart';
 import 'package:dtnd/data/i_data_center_service.dart';
 import 'package:dtnd/data/implementations/data_center_service.dart';
 import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/screen/asset/component/asset_per_type_widget.dart';
-import 'package:dtnd/ui/screen/asset/component/investment_catalog_widget.dart';
 import 'package:dtnd/ui/screen/asset/component/total_asset_widget.dart';
 import 'package:dtnd/ui/screen/asset/logic/investment_catalog.dart';
 import 'package:dtnd/ui/screen/asset/logic/money_type.dart';
-import 'package:dtnd/ui/screen/asset/screen/base_note/base_note_screen.dart';
-import 'package:dtnd/ui/screen/asset/screen/profit_and_loss/profit_loss_screen.dart';
-import 'package:dtnd/ui/screen/asset/sheet/extensions_sheet.dart';
-import 'package:dtnd/ui/screen/asset/sheet/sheet_flow.dart';
-import 'package:dtnd/ui/screen/virtual_assistant/va_volatolity_warning/component/asset_chart.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:dtnd/ui/widget/appbar/simple_appbar.dart';
@@ -181,7 +174,7 @@ class _CopytradeAssetScreenState extends State<CopytradeAssetScreen>
               controller: _tabController,
               // physics: PanelScrollPhysics(controller: panelController),
               // controller: scrollController,
-              children: <Widget>[
+              children: const <Widget>[
                 // ListView(
                 //   physics:
                 //       PanelScrollPhysics(controller: panelController),
@@ -209,7 +202,7 @@ class _CopytradeAssetScreenState extends State<CopytradeAssetScreen>
                 //       )
                 //   ],
                 // ),
-                const Center(
+                Center(
                   child: Text("Chi tiết kl"),
                 ),
               ],

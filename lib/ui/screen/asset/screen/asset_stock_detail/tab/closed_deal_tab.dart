@@ -1,3 +1,4 @@
+import 'package:dtnd/=models=/response/share_earned_model.dart';
 import 'package:dtnd/data/i_exchange_service.dart';
 import 'package:dtnd/data/i_user_service.dart';
 import 'package:dtnd/data/implementations/exchange_service.dart';
@@ -7,6 +8,7 @@ import 'package:dtnd/ui/screen/asset/screen/asset_stock_detail/asset_stock_detai
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:dtnd/ui/theme/app_textstyle.dart';
+import 'package:dtnd/ui/widget/calendar/day_input.dart';
 import 'package:dtnd/ui/widget/empty_list_widget.dart';
 import 'package:dtnd/ui/widget/picker/datetime_picker_widget.dart';
 import 'package:dtnd/utilities/num_utils.dart';
@@ -26,21 +28,30 @@ class _ClosedDealTabState extends State<ClosedDealTab>
   final IUserService userService = UserService();
   final IExchangeService exchangeService = ExchangeService();
   late final AssetStockDetailController assetStockDetailController;
-  late final TextEditingController fromdayController;
-  late final TextEditingController todayController;
+
+  late DateTime fromDay;
+  late DateTime toDay;
+  late DateTime firstDay;
+  late DateTime lastDay;
 
   @override
   void initState() {
+    fromDay = TimeUtilities.getPreviousDateTime(TimeUtilities.month(1));
+    toDay = DateTime.now();
+    firstDay = TimeUtilities.getPreviousDateTime(TimeUtilities.month(3));
+    lastDay = toDay;
     assetStockDetailController =
         AssetStockDetailController(stockCode: widget.stockCode);
-    fromdayController = TextEditingController(
-        text: TimeUtilities.commonTimeFormat
-            .format(DateTime.now().subtract(const Duration(days: 7))));
-    todayController = TextEditingController(
-        text: TimeUtilities.commonTimeFormat.format(DateTime.now()));
-    assetStockDetailController.getAllShareEarned(
-        fromdayController.text, todayController.text);
     super.initState();
+    getData();
+  }
+
+  Future<void> getData() async {
+    await assetStockDetailController.getAllShareEarned(
+      TimeUtilities.commonTimeFormat.format(fromDay),
+      TimeUtilities.commonTimeFormat.format(toDay),
+    );
+    setState(() {});
   }
 
   @override
@@ -51,25 +62,58 @@ class _ClosedDealTabState extends State<ClosedDealTab>
       child: Column(
         children: [
           const SizedBox(height: 8),
+          // Row(
+          //   children: [
+          //     Expanded(
+          //         child: DateTimePickerWidget(
+          //       controller: fromdayController,
+          //       labelText: S.of(context).from_day,
+          //       onChanged: (value) =>
+          //           assetStockDetailController.getAllShareEarned(
+          //               fromdayController.text, todayController.text),
+          //     )),
+          //     const SizedBox(width: 16),
+          //     Expanded(
+          //         child: DateTimePickerWidget(
+          //       controller: todayController,
+          //       labelText: S.of(context).to_day,
+          //       onChanged: (value) =>
+          //           assetStockDetailController.getAllShareEarned(
+          //               fromdayController.text, todayController.text),
+          //     ))
+          //   ],
+          // ),
           Row(
             children: [
               Expanded(
-                  child: DateTimePickerWidget(
-                controller: fromdayController,
-                labelText: S.of(context).from_day,
-                onChanged: (value) =>
-                    assetStockDetailController.getAllShareEarned(
-                        fromdayController.text, todayController.text),
-              )),
-              const SizedBox(width: 16),
+                child: DayInput(
+                  initialDay: fromDay,
+                  firstDay: firstDay,
+                  lastDay: lastDay,
+                  onChanged: (value) {
+                    setState(() {
+                      fromDay = value;
+                    });
+                    getData();
+                  },
+                ),
+              ),
+              const SizedBox(width: 8),
+              const Text('-'),
+              const SizedBox(width: 8),
               Expanded(
-                  child: DateTimePickerWidget(
-                controller: todayController,
-                labelText: S.of(context).to_day,
-                onChanged: (value) =>
-                    assetStockDetailController.getAllShareEarned(
-                        fromdayController.text, todayController.text),
-              ))
+                child: DayInput(
+                  initialDay: toDay,
+                  firstDay: firstDay,
+                  lastDay: lastDay,
+                  onChanged: (value) {
+                    setState(() {
+                      toDay = value;
+                    });
+                    getData();
+                  },
+                ),
+              )
             ],
           ),
           const SizedBox(height: 8),

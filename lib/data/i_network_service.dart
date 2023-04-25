@@ -62,6 +62,8 @@ abstract class INetworkService {
   //init service
   Future<void> init(Environment environment);
 
+  Future<Map<String, dynamic>> getAppConfig();
+
   void initSocket(String url);
 
   Future<void> startSocket();

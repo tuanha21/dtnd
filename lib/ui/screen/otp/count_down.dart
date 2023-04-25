@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../generated/l10n.dart';
 import '../../theme/app_color.dart';
 
 class TimeCountDown extends StatefulWidget {
@@ -82,7 +83,7 @@ class Countdown extends AnimatedWidget {
       child: RichText(
         text: TextSpan(children: [
           TextSpan(
-              text: 'Gửi lại mã? ',
+              text: S.of(context).Send_the_code_again,
               style: style?.copyWith(
                       fontWeight: FontWeight.w700,
                       color: AppColors.primary_01) ??

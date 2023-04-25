@@ -31,6 +31,9 @@ import 'package:dtnd/ui/widget/input/interval_input.dart';
 import 'package:dtnd/utilities/num_utils.dart';
 import 'package:dtnd/utilities/time_utils.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+
+import '../../../../widget/input/thousand_separator_input_formatter.dart';
 
 class StockOrderSheet extends StatefulWidget {
   const StockOrderSheet({
@@ -73,13 +76,14 @@ class _StockOrderSheetState extends State<StockOrderSheet>
   StockCashBalanceModel? stockCashBalanceModel;
 
   String? errorText;
-  String? _selectedItem = '';
+  String? _selectedItem;
 
   @override
   void initState() {
     tabController = TabController(length: 3, vsync: this);
     stockModel = widget.stockModel;
     super.initState();
+    listMR = stockModel?.stockDataCore?.mr.map((mr) => mr.mr).toList() ?? [];
     if (stockModel == null) {
       listOrderTypes = {OrderType.LO};
       selectedOrderType = listOrderTypes.first;
@@ -212,19 +216,20 @@ class _StockOrderSheetState extends State<StockOrderSheet>
     select(selectedOrderType);
     getStockInfoCore();
     getStockCashBalance();
+    listMR = stockModel?.stockDataCore?.mr.map((mr) => mr.mr).toList();
   }
 
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
-    listMR = stockModel?.stockDataCore?.mr.map((mr) => mr.mr).toList();
-    _selectedItem = listMR?.first ?? '';
-    return Form(
-      key: orderKey,
-      child: SafeArea(
-        child: Padding(
+    return SingleChildScrollView(
+      scrollDirection: Axis.vertical,
+      child: Form(
+        key: orderKey,
+        child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
           child: Column(
+            mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SheetHeader(
@@ -396,7 +401,7 @@ class _StockOrderSheetState extends State<StockOrderSheet>
                               underline: const SizedBox.shrink(),
                               borderRadius: BorderRadius.circular(12),
                               icon: const SizedBox.shrink(),
-                              value: _selectedItem,
+                              value: _selectedItem ?? listMR?.first,
                               onChanged: (String? newValue) {
                                 setState(() {
                                   _selectedItem = newValue ?? '';
@@ -405,7 +410,7 @@ class _StockOrderSheetState extends State<StockOrderSheet>
                               items: listMR?.map<DropdownMenuItem<String>>(
                                 (String? option) {
                                   return DropdownMenuItem(
-                                    value: option,
+                                    value: option ?? '',
                                     child: Text(
                                       '${S.of(context).margin} $option',
                                       style:
@@ -456,16 +461,16 @@ class _StockOrderSheetState extends State<StockOrderSheet>
                 children: [
                   Expanded(
                     child: IntervalInput(
-                      controller: priceController,
-                      labelText: S.of(context).price,
-                      interval: stockModel?.stock.postTo?.getPriceInterval ??
-                          (value) => 0.1,
-                      defaultValue: stockModel?.stockDataCore?.lastPrice ??
-                          stockModel?.stockData.r.value ??
-                          0,
-                      onChanged: onChangedPrice,
-                      onTextChanged: _onPriceChangeHandler,
-                    ),
+                        controller: priceController,
+                        labelText: S.of(context).price,
+                        interval: stockModel?.stock.postTo?.getPriceInterval ??
+                            (value) => 0.1,
+                        defaultValue: stockModel?.stockDataCore?.lastPrice ??
+                            stockModel?.stockData.r.value ??
+                            0,
+                        onChanged: onChangedPrice,
+                        onTextChanged: _onPriceChangeHandler,
+                        listFormat: [PricePercentageInputFormatter()]),
                   ),
                   const SizedBox(width: 16),
                   Expanded(
@@ -474,6 +479,10 @@ class _StockOrderSheetState extends State<StockOrderSheet>
                       labelText: S.of(context).volumn,
                       interval: (value) => 100,
                       onChanged: onChangeVol,
+                      listFormat: [
+                        FilteringTextInputFormatter.allow(RegExp(r'\d')),
+                        FilteringTextInputFormatter.digitsOnly
+                      ],
                     ),
                   ),
                 ],

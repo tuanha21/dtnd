@@ -140,8 +140,8 @@ class NetworkService implements INetworkService {
     Map<String, dynamic>? queryParameters,
   ]) {
     final unencodedPath = "algo/pbapi/api/$path";
-    print(Uri.http(algo_url, unencodedPath, queryParameters).toString());
-    return Uri.http(algo_url, unencodedPath, queryParameters);
+    print(Uri.https(algo_url_apec, unencodedPath, queryParameters).toString());
+    return Uri.https(algo_url_apec, unencodedPath, queryParameters);
   }
 
   Uri url_algo_apec(
@@ -149,8 +149,8 @@ class NetworkService implements INetworkService {
     Map<String, dynamic>? queryParameters,
   ]) {
     final unencodedPath = "algo/pbapi/api/$path";
-    print(Uri.http(algo_url, unencodedPath, queryParameters).toString());
-    return Uri.http(algo_url, unencodedPath, queryParameters);
+    print(Uri.https(algo_url_apec, unencodedPath, queryParameters).toString());
+    return Uri.https(algo_url_apec, unencodedPath, queryParameters);
   }
 
   final Utf8Codec utf8Codec = const Utf8Codec();
@@ -198,6 +198,22 @@ class NetworkService implements INetworkService {
 
     initSocket(sbboard_url);
     return;
+  }
+
+  @override
+  Future<Map<String, dynamic>> getAppConfig() async {
+    final response = await client
+        .get(url_core1("getAppConfig"))
+        .timeout(const Duration(seconds: 30));
+    if (response.statusCode != 200) {
+      throw const NoInternetException();
+    }
+
+    try {
+      return jsonDecode(response.body);
+    } catch (e) {
+      throw const SomethingWentWrongException();
+    }
   }
 
   @override
