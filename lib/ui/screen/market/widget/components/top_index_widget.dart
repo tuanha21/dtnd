@@ -111,6 +111,8 @@ class _TopIndexWidgetChartState extends State<TopIndexWidgetChart> {
                                   model['contribPoint'] > 0
                                       ? AppColors.semantic_01
                                       : AppColors.semantic_03),
+                          labelAccessorFn: (Map<String, dynamic> model, _) =>
+                              "${model['contribPoint'].toStringAsFixed(2)}",
                           data: list,
                         )..setAttribute(
                             charts.measureAxisIdKey, "secondaryMeasureAxisId")
@@ -124,12 +126,15 @@ class _TopIndexWidgetChartState extends State<TopIndexWidgetChart> {
                       //     showAxisLine: false,
                       //     renderSpec: charts.NoneRenderSpec()),
                       domainAxis: const charts.OrdinalAxisSpec(
+                        showAxisLine: false,
                         renderSpec: charts.SmallTickRendererSpec(
                             // labelRotation: 45,
+
                             minimumPaddingBetweenLabelsPx: 0,
                             labelStyle: charts.TextStyleSpec(fontSize: 10),
                             lineStyle: charts.LineStyleSpec()),
                       ),
+                      barRendererDecorator: charts.BarLabelDecorator<String>(),
                       behaviors: [
                         charts.SelectNearest(
                             eventTrigger: charts.SelectionTrigger.tapAndDrag),
