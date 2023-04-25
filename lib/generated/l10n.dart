@@ -4151,6 +4151,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Please select a stock code`
+  String get Please_select_a_stock_code {
+    return Intl.message(
+      'Please select a stock code',
+      name: 'Please_select_a_stock_code',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

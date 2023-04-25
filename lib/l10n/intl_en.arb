@@ -432,5 +432,6 @@
   "forgot_pasword_quote1" : "Don't worry, use the email you registered to start setting a new password for your account.",
   "loading_quote2" : "CREATIVE FUTURE",
   "Send_the_code_again": "Send the code again ?",
-  "Command_status" : "Command status"
+  "Command_status" : "Command status",
+  "Please_select_a_stock_code":"Please select a stock code"
 }

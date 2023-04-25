@@ -426,7 +426,7 @@
   "forgot_pasword_quote1" : "Đừng lo lắng, sử dụng email bạn đã đăng ký để bắt đầu cài đặt mật khẩu mới cho tài khoản nhé.",
   "loading_quote2" : "TƯƠNG LAI SÁNG TẠO",
   "Send_the_code_again" : "Gửi lại mã?",
-  "Command_status": "Trạng thái lệnh"
+  "Command_status": "Trạng thái lệnh",
   "wrong_otp":"Sai mã OTP",
   "eKYC_quote":"Xác thực tài khoản - eKYC",
   "stock_trade":"Giao dịch chứng khoán",
@@ -434,7 +434,8 @@
   "exercise_right":"Thực hiện quyền",
   "transfer_stock":"Chuyển chứng khoán",
   "account_statement":"Sao kê tài khoản",
+  "Please_select_a_stock_code":"Vui lòng chọn mã CK"
 
-  "loading_quote2" : "TƯƠNG LAI SÁNG TẠO"
+
 
 }

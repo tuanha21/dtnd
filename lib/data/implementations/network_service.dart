@@ -140,8 +140,8 @@ class NetworkService implements INetworkService {
     Map<String, dynamic>? queryParameters,
   ]) {
     final unencodedPath = "algo/pbapi/api/$path";
-    print(Uri.http(algo_url_apec, unencodedPath, queryParameters).toString());
-    return Uri.http(algo_url_apec, unencodedPath, queryParameters);
+    print(Uri.https(algo_url_apec, unencodedPath, queryParameters).toString());
+    return Uri.https(algo_url_apec, unencodedPath, queryParameters);
   }
 
   Uri url_algo_apec(
