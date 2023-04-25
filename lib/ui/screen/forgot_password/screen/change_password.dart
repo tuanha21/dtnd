@@ -37,12 +37,6 @@ class _ChangePasswordState extends State<ChangePassword> {
 
   Timer? _timer;
 
-  void updateIsValid() {
-    setState(() {
-      isValid = condition1 && condition2 && condition3 && condition4;
-    });
-  }
-
   void _onPasswordTyping() {
     if (_timer != null) {
       _timer!.cancel();
@@ -131,6 +125,7 @@ class _ChangePasswordState extends State<ChangePassword> {
           TextFormField(
             obscureText: _rePasswordVisible,
             controller: _rePasswordController,
+            autovalidateMode: AutovalidateMode.onUserInteraction,
             decoration: InputDecoration(
               suffixIcon: IconButton(
                 icon: Icon(
@@ -224,30 +219,36 @@ class _ChangePasswordState extends State<ChangePassword> {
 
   String? validatePassword(String? value) {
     if (value == null || value.isEmpty) {
+      condition1 = false;
+      condition2 = false;
+      condition3 = false;
+      condition4 = false;
       return '';
     }
     if (value.length < 8 || value.length > 16) {
       condition1 = false;
-      return '';
+    } else {
+      condition1 = true;
     }
-    condition1 = true;
     if (!value.contains(RegExp(r'[A-Z]'))) {
       condition2 = false;
-      return '';
+    } else {
+      condition2 = true;
     }
-    condition2 = true;
     if (!value.contains(RegExp(r'[0-9]'))) {
       condition3 = false;
-      return '';
+    } else {
+      condition3 = true;
     }
-    condition3 = true;
     if (!value.contains(RegExp(r'[!@#\$&*~]'))) {
       condition4 = false;
-      return '';
+    } else {
+      condition4 = true;
     }
-    condition4 = true;
-    isValid = true;
-    return null;
+    if (condition1 && condition2 && condition3 && condition4) {
+      return null;
+    }
+    return '';
   }
 
   Widget getIcon(bool condition) {
