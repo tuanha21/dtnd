@@ -127,6 +127,7 @@ class AppService {
     }
 
     final Map<String, dynamic> appCfg = await networkService.getAppConfig();
+    // final Map<String, dynamic> storeList = await networkService.getAppConfig();
     logger.v(appCfg);
 
     if (appCfg["current_version"] == null ||
