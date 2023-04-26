@@ -50,6 +50,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "Are_you_sure_you_want_to_cancel_the_order":
             MessageLookupByLibrary.simpleMessage(
                 "Bạn có chắc chắn muốn huỷ lệnh ?"),
+        "Are_you_sure_you_want_to_use_a_different_account":
+            MessageLookupByLibrary.simpleMessage(
+                "Bạn có chắc chắn muốn dùng tài khoản khác ?"),
         "Automated_trading":
             MessageLookupByLibrary.simpleMessage("Giao dịch tự động"),
         "Banking": MessageLookupByLibrary.simpleMessage("Ngân hàng"),
@@ -57,11 +60,13 @@ class MessageLookup extends MessageLookupByLibrary {
         "Carriage": MessageLookupByLibrary.simpleMessage("Vận tải"),
         "Chemistry": MessageLookupByLibrary.simpleMessage("Hóa chất"),
         "Cigarette": MessageLookupByLibrary.simpleMessage("Thuốc lá"),
+        "Close_command": MessageLookupByLibrary.simpleMessage("Lệnh đóng"),
         "Command_status":
             MessageLookupByLibrary.simpleMessage("Trạng thái lệnh"),
         "DTND_assistant": MessageLookupByLibrary.simpleMessage("Trợ lý IFIS"),
         "DTNDs_virtual_assistant":
             MessageLookupByLibrary.simpleMessage(" của trợ lý ảo IFIS"),
+        "Detailed_Mass": MessageLookupByLibrary.simpleMessage("Chi tiết kl"),
         "Easily_find_investment_ideas_using_stock_filters":
             MessageLookupByLibrary.simpleMessage(
                 "Dễ dàng tìm kiếm ý tưởng đầu tư bằng bộ lọc cổ phiếu"),
@@ -69,6 +74,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "Filter_name": MessageLookupByLibrary.simpleMessage("Tên bộ lọc"),
         "Foreign_investor_transaction":
             MessageLookupByLibrary.simpleMessage("Giao dịch đầu tư nước ngoài"),
+        "Foreign_net_buying_by_sector": MessageLookupByLibrary.simpleMessage(
+            "Khối ngoại mua ròng theo ngành"),
         "Foundation_Day":
             MessageLookupByLibrary.simpleMessage("Ngày thành lập"),
         "Highest_price": MessageLookupByLibrary.simpleMessage("Giá cao nhất"),
@@ -79,6 +86,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "Medicine": MessageLookupByLibrary.simpleMessage("Dược phẩm"),
         "Metal": MessageLookupByLibrary.simpleMessage("Kim loại"),
         "My_filters": MessageLookupByLibrary.simpleMessage("Bộ lọc của tôi"),
+        "Open_command": MessageLookupByLibrary.simpleMessage("Lệnh mở"),
         "Please_provide_a_list":
             MessageLookupByLibrary.simpleMessage("Vui lòng nhập danh mục"),
         "Please_remember_your_SmartOTP_password":
@@ -87,6 +95,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Vui lòng chọn mã CK"),
         "Retail": MessageLookupByLibrary.simpleMessage("Bán lẻ"),
         "Save_filter": MessageLookupByLibrary.simpleMessage("Lưu bộ lọc"),
+        "Search_by_stock_code":
+            MessageLookupByLibrary.simpleMessage("Tìm theo mã cổ phiếu"),
         "Send_the_code_again":
             MessageLookupByLibrary.simpleMessage("Gửi lại mã?"),
         "Set_a_password_consisting_of_6_digits":
@@ -99,6 +109,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Khối lượng không được bỏ trống"),
         "Your_portfolio":
             MessageLookupByLibrary.simpleMessage("Danh mục của bạn"),
+        "abort": MessageLookupByLibrary.simpleMessage("Hủy bỏ"),
         "account": MessageLookupByLibrary.simpleMessage("Tài khoản"),
         "account_infomation":
             MessageLookupByLibrary.simpleMessage("Thông tin tài khoản"),
@@ -297,6 +308,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "hint_password": MessageLookupByLibrary.simpleMessage("Mật khẩu mới"),
         "hint_re_password":
             MessageLookupByLibrary.simpleMessage("Nhập lại mật khẩu mới"),
+        "history": MessageLookupByLibrary.simpleMessage("Lịch sử"),
         "home": MessageLookupByLibrary.simpleMessage("Trang chủ"),
         "hours_ago": m4,
         "id_or_business_id_short":
@@ -443,6 +455,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "password": MessageLookupByLibrary.simpleMessage("Mật khẩu"),
         "period_of_validity":
             MessageLookupByLibrary.simpleMessage("Thời gian hiệu lực"),
+        "person": MessageLookupByLibrary.simpleMessage("Cá nhân"),
         "personal_infomation":
             MessageLookupByLibrary.simpleMessage("Thông tin cá nhân"),
         "phone_number": MessageLookupByLibrary.simpleMessage("Số điện thoại"),
@@ -583,6 +596,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "transaction": MessageLookupByLibrary.simpleMessage("Giao dịch"),
         "transfer_stock":
             MessageLookupByLibrary.simpleMessage("Chuyển chứng khoán"),
+        "try_again": MessageLookupByLibrary.simpleMessage("Thử lại"),
         "try_searching_again_with_another_keyword":
             MessageLookupByLibrary.simpleMessage(
                 "Bạn thử tìm kiếm lại bằng từ khoá khác nhé!"),

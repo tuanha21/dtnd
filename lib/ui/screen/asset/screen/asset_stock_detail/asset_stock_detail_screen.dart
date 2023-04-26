@@ -162,7 +162,7 @@ class _AssetStockDetailScreenState extends State<AssetStockDetailScreen>
                               const SizedBox(height: 2),
                               Expanded(
                                 child: AssetGridElement(element: {
-                                  "CP thưởng": NumUtils.formatInteger(
+                                  S.of(context).bonus_sh : NumUtils.formatInteger(
                                       widget.porfolioStock.rightVol)
                                 }),
                               ),
@@ -232,14 +232,14 @@ class _AssetStockDetailScreenState extends State<AssetStockDetailScreen>
                       labelStyle: textTheme.titleSmall,
                       labelPadding: const EdgeInsets.symmetric(
                           horizontal: 0, vertical: 4),
-                      tabs: const [
+                      tabs:  [
                         Text(
-                          "Lệnh mở",
+                          S.of(context).Open_command,
                         ),
                         Text(
-                          "Lệnh đóng",
+                          S.of(context).Close_command,
                         ),
-                        Text("Lịch sử"),
+                        Text(S.of(context).history),
                       ],
                     ),
                     const SizedBox(height: 16),

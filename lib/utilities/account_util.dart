@@ -35,7 +35,8 @@ class AccountUtil {
           textButtonAction: S.of(context).ok,
           textButtonExit: S.of(context).Later,
           title: S.of(context).confirm,
-          content: 'Bạn có chắc chắn muốn dùng tài khoản khác?',
+          content:
+              S.of(context).Are_you_sure_you_want_to_use_a_different_account,
           action: () => Navigator.of(context).pop(true),
           type: TypeAlert.notification,
         );
@@ -80,10 +81,9 @@ class AccountUtil {
                       textButtonAction: S.of(context).ok,
                       textButtonExit: S.of(context).Later,
                       title: S.of(context).biometric_authentication,
-                      content:
-                      S.of(context).login_with_biometric,
+                      content: S.of(context).login_with_biometric,
                       action: () {
-                        Navigator.of(context).pop();
+                        Navigator.of(context).pop(true);
                       },
                       type: TypeAlert.notification,
                     );

@@ -73,7 +73,7 @@ class _AccountScreenState extends State<AccountScreen> {
                               title: S.of(context).biometric_authentication,
                               content: S.of(context).login_with_biometric,
                               action: () {
-                                Navigator.of(context).pop();
+                                Navigator.of(context).pop(true);
                               },
                               type: TypeAlert.notification,
                             );

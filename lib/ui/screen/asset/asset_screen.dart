@@ -130,7 +130,7 @@ class _AssetScreenState extends State<AssetScreen>
       body: Obx(() {
         if (userService.token.value == null) {
           child = Center(
-            child: NotSigninCatalogWidget(
+            child: NotSignInCatalogWidget(
               afterLogin: rebuild,
               localStorageService: localStorageService,
             ),
@@ -379,7 +379,7 @@ class _AssetScreenState extends State<AssetScreen>
                     title: S.of(context).biometric_authentication,
                     content: S.of(context).login_with_biometric,
                     action: () {
-                      Navigator.of(context).pop();
+                      Navigator.of(context).pop(true);
                     },
                     type: TypeAlert.notification,
                   );

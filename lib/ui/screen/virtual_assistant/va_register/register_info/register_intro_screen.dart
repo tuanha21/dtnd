@@ -17,7 +17,7 @@ import '../register_fill_otp/button.dart';
 import '../register_fill_otp/register_fill_otp_screen.dart';
 
 class RegisterIntro extends StatefulWidget {
-  RegisterIntro({Key? key}) : super(key: key);
+  const RegisterIntro({Key? key}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => _RegisterIntro();

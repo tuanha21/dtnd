@@ -166,7 +166,7 @@ class _UserCatalogWidgetState extends State<UserCatalogWidget> {
                       ),
                       const SizedBox(width: 8),
                       Text(
-                        'Chỉnh sửa',
+                        S.of(context).edit,
                         style: Theme.of(context)
                             .textTheme
                             .labelMedium
@@ -630,7 +630,7 @@ class _BottomAddStockState extends State<BottomAddStock> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('Thêm mã',
+                Text(S.of(context).add_stock,
                     style: Theme.of(context)
                         .textTheme
                         .labelLarge
@@ -668,7 +668,7 @@ class _BottomAddStockState extends State<BottomAddStock> {
                 padding: const EdgeInsets.only(right: 20),
                 child: SvgPicture.asset(AppImages.search_appbar_icon),
               ),
-              hintText: 'Tìm theo mã cổ phiếu',
+              hintText: S.of(context).Search_by_stock_code,
             ),
             Expanded(
               child: StreamBuilder<List<Stock>>(

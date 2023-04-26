@@ -49,6 +49,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "Are_you_sure_you_want_to_cancel_the_order":
             MessageLookupByLibrary.simpleMessage(
                 "Are you sure you want to cancel the order ?"),
+        "Are_you_sure_you_want_to_use_a_different_account":
+            MessageLookupByLibrary.simpleMessage(
+                "Are you sure you want to use a different account ?"),
         "Automated_trading":
             MessageLookupByLibrary.simpleMessage("Automated trading"),
         "Banking": MessageLookupByLibrary.simpleMessage("Banking"),
@@ -56,12 +59,14 @@ class MessageLookup extends MessageLookupByLibrary {
         "Carriage": MessageLookupByLibrary.simpleMessage("Carriage"),
         "Chemistry": MessageLookupByLibrary.simpleMessage("Chemistry"),
         "Cigarette": MessageLookupByLibrary.simpleMessage("Cigarette"),
+        "Close_command": MessageLookupByLibrary.simpleMessage("Close command"),
         "Command_status":
             MessageLookupByLibrary.simpleMessage("Command status"),
         "DTND_assistant":
             MessageLookupByLibrary.simpleMessage("IFIS assistant"),
         "DTNDs_virtual_assistant": MessageLookupByLibrary.simpleMessage(
             " of IFIS\'s virtual assistant"),
+        "Detailed_Mass": MessageLookupByLibrary.simpleMessage("Detailed Mass"),
         "Easily_find_investment_ideas_using_stock_filters":
             MessageLookupByLibrary.simpleMessage(
                 "Easily find investment ideas using stock filters"),
@@ -69,6 +74,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "Filter_name": MessageLookupByLibrary.simpleMessage("Filter name"),
         "Foreign_investor_transaction": MessageLookupByLibrary.simpleMessage(
             "Foreign investor transaction"),
+        "Foreign_net_buying_by_sector": MessageLookupByLibrary.simpleMessage(
+            "Foreign net buying by sector"),
         "Foundation_Day":
             MessageLookupByLibrary.simpleMessage("Foundation Day"),
         "Highest_price": MessageLookupByLibrary.simpleMessage("Highest price"),
@@ -79,6 +86,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "Medicine": MessageLookupByLibrary.simpleMessage("Medicine"),
         "Metal": MessageLookupByLibrary.simpleMessage("Metal"),
         "My_filters": MessageLookupByLibrary.simpleMessage("My filters"),
+        "Open_command": MessageLookupByLibrary.simpleMessage("Open command"),
         "Please_provide_a_list":
             MessageLookupByLibrary.simpleMessage("Please provide a list"),
         "Please_remember_your_SmartOTP_password":
@@ -88,6 +96,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Please select a stock code"),
         "Retail": MessageLookupByLibrary.simpleMessage("Retail"),
         "Save_filter": MessageLookupByLibrary.simpleMessage("Save filter"),
+        "Search_by_stock_code":
+            MessageLookupByLibrary.simpleMessage("Search by stock code"),
         "Send_the_code_again":
             MessageLookupByLibrary.simpleMessage("Send the code again ?"),
         "Set_a_password_consisting_of_6_digits":
@@ -101,6 +111,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Weight must be filled in"),
         "Your_portfolio":
             MessageLookupByLibrary.simpleMessage("Your portfolio"),
+        "abort": MessageLookupByLibrary.simpleMessage("abort"),
         "account": MessageLookupByLibrary.simpleMessage("Account"),
         "account_infomation":
             MessageLookupByLibrary.simpleMessage("Account information"),
@@ -307,6 +318,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "hint_password": MessageLookupByLibrary.simpleMessage("New password"),
         "hint_re_password":
             MessageLookupByLibrary.simpleMessage("Re-enter new password"),
+        "history": MessageLookupByLibrary.simpleMessage("history"),
         "home": MessageLookupByLibrary.simpleMessage("Home"),
         "hours_ago": m4,
         "id_or_business_id_short": MessageLookupByLibrary.simpleMessage("ID"),
@@ -449,6 +461,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "password": MessageLookupByLibrary.simpleMessage("Password"),
         "period_of_validity":
             MessageLookupByLibrary.simpleMessage("Period of validity"),
+        "person": MessageLookupByLibrary.simpleMessage("person"),
         "personal_infomation":
             MessageLookupByLibrary.simpleMessage("Personal information"),
         "phone_number": MessageLookupByLibrary.simpleMessage("Phone number"),
@@ -595,6 +608,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "transaction": MessageLookupByLibrary.simpleMessage("Transaction"),
         "transfer_stock":
             MessageLookupByLibrary.simpleMessage("Transfer stock"),
+        "try_again": MessageLookupByLibrary.simpleMessage("Try again"),
         "try_searching_again_with_another_keyword":
             MessageLookupByLibrary.simpleMessage(
                 "Try searching again with another keyword!"),

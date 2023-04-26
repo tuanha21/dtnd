@@ -188,7 +188,7 @@ class _NotFirstLoginFormState extends State<NotFirstLoginForm> {
                   );
                 },
                 child: Text(
-                  'Quên mật khẩu ?',
+                  S.of(context).forgot_password,
                   style: titleSmall?.copyWith(
                       fontWeight: FontWeight.w500, color: AppColors.primary_01),
                 ),
@@ -229,7 +229,7 @@ class _NotFirstLoginFormState extends State<NotFirstLoginForm> {
                     textButtonAction: S.of(context).ok,
                     textButtonExit: S.of(context).Later,
                     title: S.of(context).confirm,
-                    content: 'Bạn có chắc chắn muốn dùng tài khoản khác?',
+                    content: S.of(context).Are_you_sure_you_want_to_use_a_different_account,
                     action: () => Navigator.of(context).pop(true),
                     type: TypeAlert.notification,
                   );

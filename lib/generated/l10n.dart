@@ -4321,6 +4321,106 @@ class S {
       args: [],
     );
   }
+
+  /// `Are you sure you want to use a different account ?`
+  String get Are_you_sure_you_want_to_use_a_different_account {
+    return Intl.message(
+      'Are you sure you want to use a different account ?',
+      name: 'Are_you_sure_you_want_to_use_a_different_account',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Try again`
+  String get try_again {
+    return Intl.message(
+      'Try again',
+      name: 'try_again',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Foreign net buying by sector`
+  String get Foreign_net_buying_by_sector {
+    return Intl.message(
+      'Foreign net buying by sector',
+      name: 'Foreign_net_buying_by_sector',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Search by stock code`
+  String get Search_by_stock_code {
+    return Intl.message(
+      'Search by stock code',
+      name: 'Search_by_stock_code',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `abort`
+  String get abort {
+    return Intl.message(
+      'abort',
+      name: 'abort',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `person`
+  String get person {
+    return Intl.message(
+      'person',
+      name: 'person',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `history`
+  String get history {
+    return Intl.message(
+      'history',
+      name: 'history',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Open command`
+  String get Open_command {
+    return Intl.message(
+      'Open command',
+      name: 'Open_command',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Close command`
+  String get Close_command {
+    return Intl.message(
+      'Close command',
+      name: 'Close_command',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Detailed Mass`
+  String get Detailed_Mass {
+    return Intl.message(
+      'Detailed Mass',
+      name: 'Detailed_Mass',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
