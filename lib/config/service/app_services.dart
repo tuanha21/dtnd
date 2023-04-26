@@ -133,9 +133,9 @@ class AppService {
         appCfg["minimum_version"] == null) {
       throw const NoInternetException();
     } else {
-      logger.v(appCfg["current_version"] + "/n" + appCfg["minimum_versions"]);
+      logger.v(appCfg["current_version"] + "/n" + appCfg["minimum_version"]);
       try {
-        miniumAppVersionList = appCfg["minimum_versions"].split(".");
+        miniumAppVersionList = appCfg["minimum_version"].split(".");
         storeAppVersionList = appCfg["current_version"].split(".");
       } catch (e) {
         throw const SomethingWentWrongException();

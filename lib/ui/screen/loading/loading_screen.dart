@@ -5,6 +5,7 @@ import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/screen/home/home_controller.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
+import 'package:dtnd/ui/widget/overlay/custom_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
@@ -35,8 +36,30 @@ class _LoadingScreenState extends State<LoadingScreen>
     stream = homeController.initProcess;
     WidgetsBinding.instance.addPostFrameCallback(
       (timeStamp) {
-        appService.checkForUpdate(networkService);
-        homeController.init();
+        appService.checkForUpdate(networkService).then((value) {
+          if (value == null) {
+            homeController.init();
+          } else {
+            final bool dimissable;
+            if (value) {
+              dimissable = false;
+            } else {
+              dimissable = true;
+            }
+            showDialog(
+              barrierDismissible: dimissable,
+              context: context,
+              builder: (context) {
+                return CustomDialog(
+                    title: "Đã có bản cập nhật mới",
+                    content: "",
+                    action: () {},
+                    type: TypeAlert.notification);
+              },
+            ).then((update) => homeController.init());
+          }
+          return null;
+        });
       },
     );
   }
