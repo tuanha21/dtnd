@@ -227,26 +227,22 @@ class _ChangePasswordState extends State<ChangePassword> {
       condition4 = false;
       return '';
     }
-    if (value.length < 8 || value.length > 16) {
-      condition1 = false;
-    } else {
-      condition1 = true;
-    }
-    if (!value.contains(RegExp(r'[A-Z]'))) {
-      condition2 = false;
-    } else {
-      condition2 = true;
-    }
-    if (!value.contains(RegExp(r'[0-9]'))) {
-      condition3 = false;
-    } else {
-      condition3 = true;
-    }
-    if (!value.contains(RegExp(r'[!@#\$&*~]'))) {
-      condition4 = false;
-    } else {
-      condition4 = true;
-    }
+    (value.length < 8 || value.length > 16)
+        ? condition1 = false
+        : condition1 = true;
+
+    (!value.contains(RegExp(r'[A-Z]')))
+        ? condition2 = false
+        : condition2 = true;
+
+    (!value.contains(RegExp(r'[0-9]')))
+        ? condition3 = false
+        : condition3 = true;
+
+    (!value.contains(RegExp(r'[!@#\$&*~]')))
+        ? condition4 = false
+        : condition4 = true;
+
     if (condition1 && condition2 && condition3 && condition4) {
       return null;
     }

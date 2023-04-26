@@ -153,9 +153,9 @@ class _StockOrderConfirmSheetState extends State<StockOrderConfirmSheet>
               ),
             ),
             (localStorageService.sharedPreferences
-                .getString(pinCodeKey)
-                ?.isEmpty ??
-                true)
+                        .getString(pinCodeKey)
+                        ?.isEmpty ??
+                    true)
                 ? Form(
                     key: pinKey,
                     autovalidateMode: AutovalidateMode.disabled,
@@ -170,23 +170,24 @@ class _StockOrderConfirmSheetState extends State<StockOrderConfirmSheet>
                         floatingLabelBehavior: FloatingLabelBehavior.always,
                         floatingLabelAlignment: FloatingLabelAlignment.start,
                         suffixIcon: InkWell(
-                            onTap: () {
-                              checked = !checked;
-                              if (checked && pinController.text != '') {
-                                EasyLoading.showToast(S.of(context).saved_pin_code,
-                                    maskType: EasyLoadingMaskType.clear);
-                              }
-                              setState(() {});
-                            },
-                            child: Padding(
-                              padding: const EdgeInsets.all(10),
-                              child: SvgPicture.asset(
-                                AppImages.save_pin_code_icon,
-                                color: (checked && pinController.text != '')
-                                    ? AppColors.semantic_01
-                                    : AppColors.primary_01,
-                              ),
+                          onTap: () {
+                            checked = !checked;
+                            if (checked && pinController.text != '') {
+                              EasyLoading.showToast(
+                                  S.of(context).saved_pin_code,
+                                  maskType: EasyLoadingMaskType.clear);
+                            }
+                            setState(() {});
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.all(10),
+                            child: SvgPicture.asset(
+                              AppImages.save_pin_code_icon,
+                              color: (checked && pinController.text != '')
+                                  ? AppColors.semantic_01
+                                  : AppColors.primary_01,
                             ),
+                          ),
                         ),
                       ),
                     ),

@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:crypto/crypto.dart';
@@ -6,6 +7,7 @@ import 'package:dtnd/data/implementations/user_service.dart';
 import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/screen/sign_up/business/signup_info.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
+import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:dtnd/ui/theme/app_textstyle.dart';
 import 'package:dtnd/ui/widget/app_snack_bar.dart';
 import 'package:dtnd/ui/widget/button/async_button.dart';
@@ -37,14 +39,42 @@ class _SignUpInfoFormState extends State<SignUpInfoForm> with AppValidator {
   final phoneNumber = TextEditingController();
   final email = TextEditingController();
   final idPresenter = TextEditingController();
+  final _passwordController = TextEditingController();
+  final _rePasswordController = TextEditingController();
+  bool isValid = true;
+  bool condition1 = false; //condtion length password
+  bool condition2 = false; // condition 1 letter uppercase
+  bool condition3 = false; // condition 1 number
+  bool condition4 = false; // condition special character
+  bool _passwordVisible = false;
+  bool _rePasswordVisible = false;
 
-  bool isAgree = false;
+  Timer? _timer;
 
-  bool showPass = false;
-
-  bool showRepass = false;
+  void _onPasswordTyping() {
+    if (_timer != null) {
+      _timer!.cancel();
+    }
+    _timer = Timer(const Duration(milliseconds: 50), () {
+      setState(() {
+        isValid = condition1 && condition2 && condition3 && condition4;
+      });
+    });
+  }
 
   bool registering = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _passwordController.addListener(_onPasswordTyping);
+  }
+
+  @override
+  void dispose() {
+    _passwordController.removeListener(_onPasswordTyping);
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -84,28 +114,86 @@ class _SignUpInfoFormState extends State<SignUpInfoForm> with AppValidator {
             ),
           ),
           const SizedBox(height: 5),
-          SizedBox(
-            height: 75,
-            child: AppTextFormField(
-              formKey: passwordFormKey,
-              obscureText: true,
-              labelText: S.of(context).password,
-              hintText: S.of(context).password,
-              validator: passwordValidator,
+          TextFormField(
+            obscureText: _passwordVisible,
+            decoration: InputDecoration(
+              errorStyle: const TextStyle(height: 0),
+              labelText: S.of(context).hint_password,
+              hintText: S.of(context).hint_password,
+              suffixIcon: IconButton(
+                icon: Icon(
+                  !_passwordVisible ? Icons.visibility : Icons.visibility_off,
+                  color: AppColors.text_black_1,
+                ),
+                onPressed: () {
+                  setState(() {
+                    _passwordVisible = !_passwordVisible;
+                  });
+                },
+              ),
             ),
+            controller: _passwordController,
+            autovalidateMode: AutovalidateMode.onUserInteraction,
+            validator: validatePassword,
+            onSaved: (value) {
+              // _name = value;
+            },
           ),
-          const SizedBox(height: 5),
-          SizedBox(
-            height: 75,
-            child: AppTextFormField(
-              obscureText: true,
-              labelText: "Nhập lại mật khẩu",
-              hintText: "Nhập lại mật khẩu",
-              validator: (repass) =>
-                  checkConfirmRePass(repass, passwordFormKey.currentState?.value),
+          !(isValid) ? _showCodition(context) : Container(),
+          const SizedBox(
+            height: 25,
+          ),
+          TextFormField(
+            obscureText: _rePasswordVisible,
+            controller: _rePasswordController,
+            autovalidateMode: AutovalidateMode.onUserInteraction,
+            decoration: InputDecoration(
+              suffixIcon: IconButton(
+                icon: Icon(
+                  !_rePasswordVisible ? Icons.visibility : Icons.visibility_off,
+                  color: AppColors.text_black_1,
+                ),
+                onPressed: () {
+                  setState(() {
+                    _rePasswordVisible = !_rePasswordVisible;
+                  });
+                },
+              ),
+              hintText: S.of(context).hint_re_password,
+              labelText: S.of(context).hint_re_password,
             ),
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return S.of(context).validate_null_repassword;
+              } else if (value != _passwordController.text) {
+                return S.of(context).validate_same_repassword;
+              }
+              return null;
+            },
+            onSaved: (value) {},
           ),
-          const SizedBox(height: 5),
+          // SizedBox(
+          //   height: 75,
+          //   child: AppTextFormField(
+          //     formKey: passwordFormKey,
+          //     obscureText: true,
+          //     labelText: S.of(context).password,
+          //     hintText: S.of(context).password,
+          //     validator: passwordValidator,
+          //   ),
+          // ),
+          // const SizedBox(height: 5),
+          // SizedBox(
+          //   height: 75,
+          //   child: AppTextFormField(
+          //     obscureText: true,
+          //     labelText: "Nhập lại mật khẩu",
+          //     hintText: "Nhập lại mật khẩu",
+          //     validator: (repass) =>
+          //         checkConfirmRePass(repass, passwordFormKey.currentState?.value),
+          //   ),
+          // ),
+          const SizedBox(height: 25),
           SizedBox(
             height: 75,
             child: AppTextFormField(
@@ -189,8 +277,7 @@ class _SignUpInfoFormState extends State<SignUpInfoForm> with AppValidator {
                   }
 
                   registering = false;
-                  final List<int> bytes =
-                      utf8.encode(passwordFormKey.currentState?.value ?? "");
+                  final List<int> bytes = utf8.encode(_passwordController.text);
 
                   // Generate the MD5 hash
                   final Digest digest = md5.convert(bytes);
@@ -212,6 +299,115 @@ class _SignUpInfoFormState extends State<SignUpInfoForm> with AppValidator {
           ),
         ],
       ),
+    );
+  }
+
+  String? validatePassword(String? value) {
+    if (value == null || value.isEmpty) {
+      condition1 = false;
+      condition2 = false;
+      condition3 = false;
+      condition4 = false;
+      return '';
+    }
+    (value.length < 8 || value.length > 16)
+        ? condition1 = false
+        : condition1 = true;
+
+    (!value.contains(RegExp(r'[A-Z]')))
+        ? condition2 = false
+        : condition2 = true;
+
+    (!value.contains(RegExp(r'[0-9]')))
+        ? condition3 = false
+        : condition3 = true;
+
+    (!value.contains(RegExp(r'[!@#\$&*~]')))
+        ? condition4 = false
+        : condition4 = true;
+
+    if (condition1 && condition2 && condition3 && condition4) {
+      return null;
+    }
+    return '';
+  }
+
+  Widget getIcon(bool condition) {
+    Widget child;
+    if (condition) {
+      child = Image.asset(
+        AppImages.validate_check,
+        height: 20,
+        width: 20,
+      );
+    } else {
+      child = Image.asset(
+        AppImages.validate_fail,
+        height: 20,
+        width: 20,
+      );
+    }
+    return Padding(
+      padding: const EdgeInsets.only(left: 16, right: 10),
+      child: child,
+    );
+  }
+
+  Widget _showCodition(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const SizedBox(height: 10),
+        Row(
+          children: [
+            getIcon(condition1),
+            Text(
+              S.of(context).condition_password1,
+              style: Theme.of(context)
+                  .textTheme
+                  .bodyMedium
+                  ?.copyWith(color: AppColors.neutral_03),
+            ),
+          ],
+        ),
+        const SizedBox(height: 5),
+        Row(
+          children: [
+            getIcon(condition2),
+            Text(
+              S.of(context).condition_password2,
+              style: Theme.of(context)
+                  .textTheme
+                  .bodyMedium
+                  ?.copyWith(color: AppColors.neutral_03),
+            ),
+          ],
+        ),
+        const SizedBox(height: 5),
+        Row(
+          children: [
+            getIcon(condition3),
+            Text(
+              S.of(context).condition_password3,
+              style: Theme.of(context)
+                  .textTheme
+                  .bodyMedium
+                  ?.copyWith(color: AppColors.neutral_03),
+            ),
+          ],
+        ),
+        const SizedBox(height: 5),
+        Row(
+          children: [
+            getIcon(condition4),
+            Text(S.of(context).condition_password4,
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyMedium
+                    ?.copyWith(color: AppColors.neutral_03)),
+          ],
+        ),
+      ],
     );
   }
 

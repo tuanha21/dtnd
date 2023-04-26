@@ -1,10 +1,9 @@
+import 'package:dtnd/=models=/ui_model/user_cmd.dart';
+import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/screen/exchange_stock/stock_order/business/stock_order_util.dart';
+import 'package:dtnd/ui/widget/overlay/custom_dialog.dart';
+import 'package:dtnd/utilities/error_definition.dart';
 import 'package:flutter/material.dart';
-import '../../../../../=models=/ui_model/user_cmd.dart';
-import '../../../../../generated/l10n.dart';
-import '../../../../../utilities/error_definition.dart';
-import '../../../../widget/overlay/custom_dialog.dart';
-import '../data/order_data.dart';
 
 class StockOrderFailSheet extends StatefulWidget {
   const StockOrderFailSheet({

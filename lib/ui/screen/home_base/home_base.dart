@@ -3,7 +3,6 @@ import 'package:dtnd/data/i_user_service.dart';
 import 'package:dtnd/data/implementations/network_service.dart';
 import 'package:dtnd/data/implementations/user_service.dart';
 import 'package:dtnd/generated/l10n.dart';
-import 'package:dtnd/ui/screen/account/account_screen.dart';
 import 'package:dtnd/ui/screen/asset/asset_screen.dart';
 import 'package:dtnd/ui/screen/community/community_screen.dart';
 import 'package:dtnd/ui/screen/home/home_screen.dart';
