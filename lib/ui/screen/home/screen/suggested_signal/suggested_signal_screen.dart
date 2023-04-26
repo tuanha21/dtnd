@@ -2,7 +2,6 @@ import 'package:dtnd/=models=/response/signal_type.dart';
 import 'package:dtnd/=models=/response/suggested_signal_model.dart';
 import 'package:dtnd/data/i_data_center_service.dart';
 import 'package:dtnd/data/implementations/data_center_service.dart';
-import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/screen/home/screen/signal/signal_screen.dart';
 import 'package:dtnd/ui/screen/home/screen/suggested_signal/component/suggested_signal_component.dart';
 import 'package:dtnd/ui/theme/app_color.dart';

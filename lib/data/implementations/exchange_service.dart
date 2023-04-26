@@ -194,7 +194,7 @@ class ExchangeService implements IExchangeService {
       p4: TimeUtilities.commonTimeFormat.format(toDay ?? DateTime.now()),
       p5: status ?? "",
       p7: page?.toString() ?? "1",
-      p8: recordPerPage?.toString() ?? "10",
+      p8: recordPerPage?.toString() ?? "100",
     );
 
     final RequestModel requestModel =

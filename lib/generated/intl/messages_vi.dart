@@ -7,8 +7,7 @@
 // ignore_for_file:unnecessary_brace_in_string_interps, unnecessary_new
 // ignore_for_file:prefer_single_quotes,comment_references, directives_ordering
 // ignore_for_file:annotate_overrides,prefer_generic_function_type_aliases
-// ignore_for_file:unused_import, file_names, avoid_escaping_inner_quotes
-// ignore_for_file:unnecessary_string_interpolations, unnecessary_string_escapes
+// ignore_for_file:unused_import, file_names
 
 import 'package:intl/intl.dart';
 import 'package:intl/message_lookup_by_library.dart';
@@ -20,27 +19,26 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'vi';
 
-  static String m0(name) =>
-      "Bạn có chắc chắn muốn xóa danh mục “${name}” không ?";
+  static m0(name) => "Bạn có chắc chắn muốn xóa danh mục “${name}” không ?";
 
-  static String m1(days) => "${days} ngày trước";
+  static m1(days) => "${days} ngày trước";
 
-  static String m2(name) => "Danh mục theo dõi \"${name}\"";
+  static m2(name) => "Danh mục theo dõi \"${name}\"";
 
-  static String m3(value) => "Tăng ${value}";
+  static m3(value) => "Tăng ${value}";
 
-  static String m4(hours) => "${hours} giờ trước";
+  static m4(hours) => "${hours} giờ trước";
 
-  static String m5(value) => "Giảm ${value}";
+  static m5(value) => "Giảm ${value}";
 
-  static String m6(minutes) => "${minutes} phút trước";
+  static m6(minutes) => "${minutes} phút trước";
 
-  static String m7(value) =>
+  static m7(value) =>
       "Mã OTP đã được gửi về email ${value} của bạn. Nhập mã 6 số để tiếp tục.";
 
-  static String m8(name) => "Sửa tên danh mục “${name}” thành";
+  static m8(name) => "Sửa tên danh mục “${name}” thành";
 
-  static String m9(value) => "Tổng ${value}";
+  static m9(value) => "Tổng ${value}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{

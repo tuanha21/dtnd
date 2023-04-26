@@ -7,8 +7,7 @@
 // ignore_for_file:unnecessary_brace_in_string_interps, unnecessary_new
 // ignore_for_file:prefer_single_quotes,comment_references, directives_ordering
 // ignore_for_file:annotate_overrides,prefer_generic_function_type_aliases
-// ignore_for_file:unused_import, file_names, avoid_escaping_inner_quotes
-// ignore_for_file:unnecessary_string_interpolations, unnecessary_string_escapes
+// ignore_for_file:unused_import, file_names
 
 import 'package:intl/intl.dart';
 import 'package:intl/message_lookup_by_library.dart';
@@ -20,26 +19,26 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'en';
 
-  static String m0(name) => "Are you sure to delete the “${name}” category?";
+  static m0(name) => "Are you sure to delete the “${name}” category?";
 
-  static String m1(days) => "${days} days ago";
+  static m1(days) => "${days} days ago";
 
-  static String m2(name) => "Following catalog \"${name}\"";
+  static m2(name) => "Following catalog \"${name}\"";
 
-  static String m3(value) => "Gain ${value}";
+  static m3(value) => "Gain ${value}";
 
-  static String m4(hours) => "${hours} hours ago";
+  static m4(hours) => "${hours} hours ago";
 
-  static String m5(value) => "Loss ${value}";
+  static m5(value) => "Loss ${value}";
 
-  static String m6(minutes) => "${minutes} minutes ago";
+  static m6(minutes) => "${minutes} minutes ago";
 
-  static String m7(value) =>
+  static m7(value) =>
       "The OTP has been sent to your ${value} extension email. Enter the 6-digit code to continue.";
 
-  static String m8(name) => "Rename catalog “${name}” to";
+  static m8(name) => "Rename catalog “${name}” to";
 
-  static String m9(value) => "Total ${value}";
+  static m9(value) => "Total ${value}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
