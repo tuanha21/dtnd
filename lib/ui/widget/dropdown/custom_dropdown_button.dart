@@ -73,8 +73,8 @@ class _CustomDropDownButtonState extends State<CustomDropDownButton> {
                         children: [
                           Expanded(
                             child: Container(
-                              padding: EdgeInsets.all(6),
-                              decoration: BoxDecoration(
+                              padding: const EdgeInsets.all(6),
+                              decoration: const BoxDecoration(
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(4)),
                                   color: AppColors.primary_01),

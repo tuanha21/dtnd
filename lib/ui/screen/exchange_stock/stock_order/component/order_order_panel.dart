@@ -167,7 +167,7 @@ class OrderOrderPanel extends StatelessWidget {
                                             ),
                                           ),
                                           Text(
-                                            " Tỷ",
+                                            " ${S.of(context).billion}",
                                             style: AppTextStyle.labelSmall_10
                                                 .copyWith(
                                               color: AppColors.neutral_03,
@@ -232,7 +232,7 @@ class OrderOrderPanel extends StatelessWidget {
                                         ),
                                       ),
                                       Text(
-                                        " Tỷ",
+                                        " ${S.of(context).billion}",
                                         style:
                                             AppTextStyle.labelSmall_10.copyWith(
                                           color: AppColors.neutral_03,

@@ -1,5 +1,5 @@
-import 'package:dtnd/=models=/response/stock_model.dart';
 import 'package:dtnd/=models=/local/va_portfolio_model.dart';
+import 'package:dtnd/=models=/response/stock_model.dart';
 import 'package:dtnd/config/service/app_services.dart';
 import 'package:dtnd/data/i_data_center_service.dart';
 import 'package:dtnd/data/implementations/data_center_service.dart';
@@ -11,16 +11,9 @@ import 'package:dtnd/ui/widget/icon/stock_icon.dart';
 import 'package:dtnd/utilities/num_utils.dart';
 import 'package:dtnd/utilities/validator.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
-import '../../../../../generated/l10n.dart';
-import '../../../../widget/icon/sheet_header.dart';
-import '../../../../widget/input/interval_input.dart';
-import '../../../../widget/input/thousand_separator_input_formatter.dart';
 import '../../../stock_detail/sheet/info_sheet.dart';
-import '../../../stock_detail/sheet/list_bot_sheet.dart';
-import '../../interval_input_custom2.dart';
 
 class VAPortfolioComponent extends StatefulWidget {
   const VAPortfolioComponent(

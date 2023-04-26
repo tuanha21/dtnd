@@ -44,6 +44,7 @@ class _OverviewTabState extends State<OverviewTab>
   final IDataCenterService dataCenterService = DataCenterService();
 
   List<SecEvent>? listEvent;
+
   @override
   void initState() {
     super.initState();
@@ -203,9 +204,9 @@ class _BasicIndexState extends State<BasicIndex> {
         const SizedBox(height: 16),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: const [
-            Text("Giá thấp nhất"),
-            Text("Giá cao nhất"),
+          children: [
+            Text(S.of(context).Lowest_price),
+            Text(S.of(context).Highest_price),
           ],
         ),
         const SizedBox(height: 5),
@@ -413,7 +414,7 @@ class _CompanyInfoWidgetState extends State<CompanyInfoWidget> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              "Ngày thành lập",
+                              S.of(context).Foundation_Day,
                               style: textTheme.bodyMedium!
                                   .copyWith(color: AppColors.neutral_03),
                             ),
@@ -429,7 +430,7 @@ class _CompanyInfoWidgetState extends State<CompanyInfoWidget> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              "Mã số thuế",
+                              S.of(context).Tax_code,
                               style: textTheme.bodyMedium!
                                   .copyWith(color: AppColors.neutral_03),
                             ),
@@ -452,7 +453,7 @@ class _CompanyInfoWidgetState extends State<CompanyInfoWidget> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              "Tên viết tắt",
+                              S.of(context).Abbreviated_name,
                               style: textTheme.bodyMedium!
                                   .copyWith(color: AppColors.neutral_03),
                             ),
@@ -468,7 +469,7 @@ class _CompanyInfoWidgetState extends State<CompanyInfoWidget> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              "Người đại diện",
+                              S.of(context).Agent,
                               style: textTheme.bodyMedium!
                                   .copyWith(color: AppColors.neutral_03),
                             ),
