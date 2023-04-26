@@ -3,6 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
 import '../../../../../=models=/algo/filter.dart';
+import '../../../../../generated/l10n.dart';
 import '../../../../theme/app_color.dart';
 import '../../../../theme/app_image.dart';
 import '../../../../widget/expanded_widget.dart';
@@ -12,7 +13,7 @@ class IndustryBox extends StatefulWidget {
   final Filter? filter;
   final OpTapCheckBox onChanged;
 
-  const IndustryBox({Key? key,  this.filter, required this.onChanged})
+  const IndustryBox({Key? key, this.filter, required this.onChanged})
       : super(key: key);
 
   @override
@@ -63,7 +64,8 @@ class _IndustryBoxState extends State<IndustryBox> {
             },
             child: Row(
               children: [
-                Text("Ngành", style: Theme.of(context).textTheme.titleSmall),
+                Text(S.of(context).industry,
+                    style: Theme.of(context).textTheme.titleSmall),
                 Visibility(
                     visible: count > 0,
                     child: Text(

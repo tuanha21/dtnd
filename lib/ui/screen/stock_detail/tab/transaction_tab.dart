@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../../=models=/response/stock_model.dart';
+import '../../../../generated/l10n.dart';
 import '../widget/foreign_widget.dart';
 import '../widget/tab_matched_detail.dart';
 import '../widget/tab_trading_board.dart';
@@ -33,7 +34,7 @@ class _TransactionTabState extends State<TransactionTab> {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16),
                     child: Text(
-                      "Giao dịch nhà đầu tư nước ngoài",
+                      S.of(context).Foreign_investor_transaction,
                       style: Theme.of(context)
                           .textTheme
                           .titleMedium

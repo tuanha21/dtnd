@@ -44,10 +44,16 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+        "Abbreviated_name":
+            MessageLookupByLibrary.simpleMessage("Tên viết tắt"),
+        "Agent": MessageLookupByLibrary.simpleMessage("Người đại diện"),
         "Are_you_sure_you_want_to_cancel_the_order":
             MessageLookupByLibrary.simpleMessage(
                 "Bạn có chắc chắn muốn huỷ lệnh ?"),
+        "Automated_trading":
+            MessageLookupByLibrary.simpleMessage("Giao dịch tự động"),
         "Banking": MessageLookupByLibrary.simpleMessage("Ngân hàng"),
+        "Bot_list": MessageLookupByLibrary.simpleMessage("Danh sách bot"),
         "Carriage": MessageLookupByLibrary.simpleMessage("Vận tải"),
         "Chemistry": MessageLookupByLibrary.simpleMessage("Hóa chất"),
         "Cigarette": MessageLookupByLibrary.simpleMessage("Thuốc lá"),
@@ -56,11 +62,23 @@ class MessageLookup extends MessageLookupByLibrary {
         "DTND_assistant": MessageLookupByLibrary.simpleMessage("Trợ lý IFIS"),
         "DTNDs_virtual_assistant":
             MessageLookupByLibrary.simpleMessage(" của trợ lý ảo IFIS"),
+        "Easily_find_investment_ideas_using_stock_filters":
+            MessageLookupByLibrary.simpleMessage(
+                "Dễ dàng tìm kiếm ý tưởng đầu tư bằng bộ lọc cổ phiếu"),
         "Extractive": MessageLookupByLibrary.simpleMessage("Khai khoáng"),
+        "Filter_name": MessageLookupByLibrary.simpleMessage("Tên bộ lọc"),
+        "Foreign_investor_transaction":
+            MessageLookupByLibrary.simpleMessage("Giao dịch đầu tư nước ngoài"),
+        "Foundation_Day":
+            MessageLookupByLibrary.simpleMessage("Ngày thành lập"),
+        "Highest_price": MessageLookupByLibrary.simpleMessage("Giá cao nhất"),
         "Institution": MessageLookupByLibrary.simpleMessage("Tổ chức"),
         "Later": MessageLookupByLibrary.simpleMessage("Để sau"),
+        "Lowest_price": MessageLookupByLibrary.simpleMessage("Giá thấp nhất"),
+        "Maximum_risk": MessageLookupByLibrary.simpleMessage("Rủi ro tối đa"),
         "Medicine": MessageLookupByLibrary.simpleMessage("Dược phẩm"),
         "Metal": MessageLookupByLibrary.simpleMessage("Kim loại"),
+        "My_filters": MessageLookupByLibrary.simpleMessage("Bộ lọc của tôi"),
         "Please_provide_a_list":
             MessageLookupByLibrary.simpleMessage("Vui lòng nhập danh mục"),
         "Please_remember_your_SmartOTP_password":
@@ -68,14 +86,19 @@ class MessageLookup extends MessageLookupByLibrary {
         "Please_select_a_stock_code":
             MessageLookupByLibrary.simpleMessage("Vui lòng chọn mã CK"),
         "Retail": MessageLookupByLibrary.simpleMessage("Bán lẻ"),
+        "Save_filter": MessageLookupByLibrary.simpleMessage("Lưu bộ lọc"),
         "Send_the_code_again":
             MessageLookupByLibrary.simpleMessage("Gửi lại mã?"),
         "Set_a_password_consisting_of_6_digits":
             MessageLookupByLibrary.simpleMessage("Đặt mật khẩu gồm 6 chữ số"),
         "Setting_up_Smart_OTP_password":
             MessageLookupByLibrary.simpleMessage("Cài đặt mật khẩu Smart OTP"),
+        "Start": MessageLookupByLibrary.simpleMessage("Bắt đầu"),
+        "Tax_code": MessageLookupByLibrary.simpleMessage("Mã số thuế"),
         "Weight_must_be_filled_in": MessageLookupByLibrary.simpleMessage(
             "Khối lượng không được bỏ trống"),
+        "Your_portfolio":
+            MessageLookupByLibrary.simpleMessage("Danh mục của bạn"),
         "account": MessageLookupByLibrary.simpleMessage("Tài khoản"),
         "account_infomation":
             MessageLookupByLibrary.simpleMessage("Thông tin tài khoản"),

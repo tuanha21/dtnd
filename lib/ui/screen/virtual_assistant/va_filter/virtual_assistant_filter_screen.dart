@@ -51,7 +51,7 @@ class _AssistantStockFilterScreenState
       var list = await iNetworkService.getFilterAccount();
       filterStream.sink.add(list);
     } catch (e) {
-      filterStream.sink.addError("Có lỗi xảy ra");
+      filterStream.sink.addError(S.of(context).something_went_wrong);
     }
   }
 
@@ -100,14 +100,14 @@ class _AssistantStockFilterScreenState
           // ),
           const SizedBox(height: 16),
           Text(
-            'Dễ dàng tìm kiếm ý tưởng đầu tư bằng bộ lọc cổ phiếu',
+            S.of(context).Easily_find_investment_ideas_using_stock_filters,
             // S.of(context).choose_stocks_you_interested,
             style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                 color: AppColors.neutral_03, height: 18 / 14, fontSize: 16),
           ),
           const SizedBox(height: 36),
           Text(
-            'Bộ lọc của tôi',
+            S.of(context).My_filters,
             // S.of(context).following_catalog,
             style: Theme.of(context)
                 .textTheme
@@ -137,7 +137,7 @@ class _AssistantStockFilterScreenState
                   SvgPicture.asset(AppImages.add_square),
                   const SizedBox(width: 10),
                   Text(
-                    "Thêm bộ lọc",
+                    S.of(context).create_filter,
                     style: Theme.of(context)
                         .textTheme
                         .bodyMedium
@@ -280,7 +280,7 @@ class _AddFilterSheetState extends State<AddFilterSheet> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('Lưu bộ lọc',
+                Text(S.of(context).Save_filter,
                     style: Theme.of(context).textTheme.bodyLarge),
                 Container(
                     padding: const EdgeInsets.all(4),
@@ -305,7 +305,7 @@ class _AddFilterSheetState extends State<AddFilterSheet> {
               key: nameKey,
               child: AppTextField(
                 controller: nameController,
-                labelText: 'Tên bộ lọc',
+                labelText: S.of(context).Filter_name,
                 onChanged: (name) {
                   isValidator.value = name.isNotEmpty;
                 },
@@ -343,7 +343,7 @@ class _AddFilterSheetState extends State<AddFilterSheet> {
                                   }
                                 }
                               : null,
-                          child: const Text("Lưu"));
+                          child: Text(S.of(context).save));
                     })),
           ),
           const SizedBox(height: 20),

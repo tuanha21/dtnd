@@ -4161,6 +4161,166 @@ class S {
       args: [],
     );
   }
+
+  /// `Foundation Day`
+  String get Foundation_Day {
+    return Intl.message(
+      'Foundation Day',
+      name: 'Foundation_Day',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Tax code`
+  String get Tax_code {
+    return Intl.message(
+      'Tax code',
+      name: 'Tax_code',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Abbreviated name`
+  String get Abbreviated_name {
+    return Intl.message(
+      'Abbreviated name',
+      name: 'Abbreviated_name',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Agent`
+  String get Agent {
+    return Intl.message(
+      'Agent',
+      name: 'Agent',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Lowest price`
+  String get Lowest_price {
+    return Intl.message(
+      'Lowest price',
+      name: 'Lowest_price',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Highest price`
+  String get Highest_price {
+    return Intl.message(
+      'Highest price',
+      name: 'Highest_price',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Foreign investor transaction`
+  String get Foreign_investor_transaction {
+    return Intl.message(
+      'Foreign investor transaction',
+      name: 'Foreign_investor_transaction',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Bot list`
+  String get Bot_list {
+    return Intl.message(
+      'Bot list',
+      name: 'Bot_list',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Start`
+  String get Start {
+    return Intl.message(
+      'Start',
+      name: 'Start',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Maximum risk`
+  String get Maximum_risk {
+    return Intl.message(
+      'Maximum risk',
+      name: 'Maximum_risk',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Your portfolio`
+  String get Your_portfolio {
+    return Intl.message(
+      'Your portfolio',
+      name: 'Your_portfolio',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Automated trading`
+  String get Automated_trading {
+    return Intl.message(
+      'Automated trading',
+      name: 'Automated_trading',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Save filter`
+  String get Save_filter {
+    return Intl.message(
+      'Save filter',
+      name: 'Save_filter',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Filter name`
+  String get Filter_name {
+    return Intl.message(
+      'Filter name',
+      name: 'Filter_name',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `My filters`
+  String get My_filters {
+    return Intl.message(
+      'My filters',
+      name: 'My_filters',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Easily find investment ideas using stock filters`
+  String get Easily_find_investment_ideas_using_stock_filters {
+    return Intl.message(
+      'Easily find investment ideas using stock filters',
+      name: 'Easily_find_investment_ideas_using_stock_filters',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

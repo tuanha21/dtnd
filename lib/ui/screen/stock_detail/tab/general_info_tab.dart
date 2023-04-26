@@ -1,4 +1,3 @@
-import 'package:dtnd/=models=/response/business_profile_model.dart';
 import 'package:dtnd/=models=/response/stock_model.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
@@ -11,6 +10,7 @@ import '../../../../=models=/response/company_info.dart';
 import '../../../../=models=/response/share_holder.dart';
 import '../../../../data/i_network_service.dart';
 import '../../../../data/implementations/network_service.dart';
+import '../../../../generated/l10n.dart';
 
 class GeneralInfoTab extends StatefulWidget {
   const GeneralInfoTab({
@@ -79,7 +79,7 @@ class _GeneralInfoTabState extends State<GeneralInfoTab> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    "Ngày thành lập",
+                                    S.of(context).Foundation_Day,
                                     style: textTheme.bodyMedium!
                                         .copyWith(color: AppColors.neutral_03),
                                   ),
@@ -95,7 +95,7 @@ class _GeneralInfoTabState extends State<GeneralInfoTab> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    "Mã số thuế",
+                                    S.of(context).Tax_code,
                                     style: textTheme.bodyMedium!
                                         .copyWith(color: AppColors.neutral_03),
                                   ),
@@ -118,7 +118,7 @@ class _GeneralInfoTabState extends State<GeneralInfoTab> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    "Tên viết tắt",
+                                    S.of(context).Abbreviated_name,
                                     style: textTheme.bodyMedium!
                                         .copyWith(color: AppColors.neutral_03),
                                   ),
@@ -134,7 +134,7 @@ class _GeneralInfoTabState extends State<GeneralInfoTab> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    "Người đại diện",
+                                    S.of(context).Agent,
                                     style: textTheme.bodyMedium!
                                         .copyWith(color: AppColors.neutral_03),
                                   ),

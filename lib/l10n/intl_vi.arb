@@ -434,8 +434,21 @@
   "exercise_right":"Thực hiện quyền",
   "transfer_stock":"Chuyển chứng khoán",
   "account_statement":"Sao kê tài khoản",
-  "Please_select_a_stock_code":"Vui lòng chọn mã CK"
-
-
-
+  "Please_select_a_stock_code":"Vui lòng chọn mã CK",
+  "Foundation_Day": "Ngày thành lập",
+  "Tax_code" : "Mã số thuế",
+  "Abbreviated_name" : "Tên viết tắt",
+  "Agent" : "Người đại diện",
+  "Lowest_price" : "Giá thấp nhất",
+  "Highest_price" : "Giá cao nhất",
+  "Foreign_investor_transaction": "Giao dịch đầu tư nước ngoài",
+  "Bot_list" : "Danh sách bot",
+  "Start":"Bắt đầu",
+  "Maximum_risk": "Rủi ro tối đa",
+  "Your_portfolio" : "Danh mục của bạn",
+  "Automated_trading" : "Giao dịch tự động",
+  "Save_filter" : "Lưu bộ lọc",
+  "Filter_name" : "Tên bộ lọc",
+  "My_filters" : "Bộ lọc của tôi",
+  "Easily_find_investment_ideas_using_stock_filters" : "Dễ dàng tìm kiếm ý tưởng đầu tư bằng bộ lọc cổ phiếu"
 }

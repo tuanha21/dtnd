@@ -2,7 +2,6 @@ import 'package:dtnd/=models=/response/filter_criterion.dart';
 import 'package:dtnd/config/service/app_services.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/widget/expanded_widget.dart';
-import 'package:dtnd/utilities/extension.dart';
 import 'package:flutter/material.dart';
 
 class FilterCriterionSection extends StatefulWidget {
@@ -12,6 +11,7 @@ class FilterCriterionSection extends StatefulWidget {
     this.add,
     this.remove,
   });
+
   final FilterCriterion criterion;
   final ValueChanged<FilterCriterionFigure>? add;
   final ValueChanged<FilterCriterionFigure>? remove;
@@ -22,6 +22,7 @@ class FilterCriterionSection extends StatefulWidget {
 
 class _FilterCriterionSectionState extends State<FilterCriterionSection> {
   bool expanded = true;
+
   @override
   Widget build(BuildContext context) {
     final themeMode = AppService.instance.themeMode.value;
@@ -95,6 +96,7 @@ class FilterCriterionSectionElement extends StatefulWidget {
     this.add,
     this.remove,
   });
+
   final FilterCriterionFigure criterionFigure;
   final ValueChanged<FilterCriterionFigure>? add;
   final ValueChanged<FilterCriterionFigure>? remove;
@@ -107,6 +109,7 @@ class FilterCriterionSectionElement extends StatefulWidget {
 class _FilterCriterionSectionElementState
     extends State<FilterCriterionSectionElement> {
   bool selected = false;
+
   @override
   Widget build(BuildContext context) {
     return Row(

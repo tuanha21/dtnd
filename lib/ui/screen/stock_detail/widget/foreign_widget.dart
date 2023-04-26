@@ -1,11 +1,12 @@
+import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:dtnd/=models=/response/stock_model.dart';
 import 'package:dtnd/data/i_network_service.dart';
 import 'package:dtnd/data/implementations/network_service.dart';
+import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/utilities/charts_util.dart';
 import 'package:dtnd/utilities/num_utils.dart';
-import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:flutter/material.dart';
-import 'package:charts_flutter/flutter.dart' as charts;
+
 import '../../../../=models=/response/sec_trading.dart';
 import '../../../../=models=/response/stock_board.dart';
 import '../../../../generated/l10n.dart';
@@ -63,7 +64,7 @@ class _ForeignWidgetState extends State<ForeignWidget> {
                               flex: 4,
                               child: Align(
                                 alignment: Alignment.centerRight,
-                                child: Text("Mua",
+                                child: Text(S.of(context).buy,
                                     style: title?.copyWith(
                                         fontWeight: FontWeight.w600,
                                         color: AppColors.neutral_02)),
@@ -72,7 +73,7 @@ class _ForeignWidgetState extends State<ForeignWidget> {
                               flex: 4,
                               child: Align(
                                 alignment: Alignment.centerRight,
-                                child: Text("Bán",
+                                child: Text(S.of(context).sell,
                                     style: title?.copyWith(
                                         fontWeight: FontWeight.w600,
                                         color: AppColors.neutral_02)),
@@ -163,7 +164,7 @@ class _ForeignWidgetState extends State<ForeignWidget> {
                                       width: 4,
                                     ),
                                     Text(
-                                      "tỷ",
+                                      S.of(context).billion,
                                       style: title?.copyWith(
                                           fontWeight: FontWeight.w400,
                                           color: AppColors.neutral_02),
@@ -188,7 +189,7 @@ class _ForeignWidgetState extends State<ForeignWidget> {
                                       width: 4,
                                     ),
                                     Text(
-                                      "tỷ",
+                                      S.of(context).billion,
                                       style: title?.copyWith(
                                           fontWeight: FontWeight.w400,
                                           color: AppColors.neutral_02),
@@ -215,7 +216,7 @@ class _ForeignWidgetState extends State<ForeignWidget> {
                                       width: 4,
                                     ),
                                     Text(
-                                      "tỷ",
+                                      S.of(context).billion,
                                       style: title?.copyWith(
                                           fontWeight: FontWeight.w400,
                                           color: AppColors.neutral_02),

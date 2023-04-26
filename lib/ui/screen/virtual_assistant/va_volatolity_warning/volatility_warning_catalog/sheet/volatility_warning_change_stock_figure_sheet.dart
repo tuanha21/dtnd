@@ -32,11 +32,11 @@ class _VolatilityWarningChangeStockFigureSheetState
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
+          children: const [
             SheetHeader(
               title: "widget.stock.stock",
             ),
-            const SizedBox(height: 20),
+            SizedBox(height: 20),
           ],
         ),
       ),

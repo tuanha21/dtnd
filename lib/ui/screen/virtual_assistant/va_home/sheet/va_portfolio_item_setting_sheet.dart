@@ -52,17 +52,17 @@ class _VAPortfolioItemSettingSheetState
             const SizedBox(
               height: 16,
             ),
-            const Text('Danh mục của bạn'),
+              Text(S.of(context).Your_portfolio),
             const SizedBox(
               height: 16,
             ),
-            const Text('Rủi ro tối đa'),
+              Text(S.of(context).Maximum_risk),
             const SizedBox(
               height: 16,
             ),
             IntervalInputCustom2(
               controller: riskController,
-              labelText: 'Rủi ro tối đa',
+              labelText: S.of(context).Maximum_risk,
               defaultValue: 0,
             ),
             const SizedBox(
@@ -86,12 +86,12 @@ class _VAPortfolioItemSettingSheetState
                               horizontal: 16, vertical: 20),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
-                            children: const [
+                            children:   [
                               SheetHeader(
-                                title: 'Danh sách bot',
+                                title: S.of(context).Bot_list,
                                 implementBackButton: true,
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 16,
                               ),
                             ],
@@ -151,7 +151,7 @@ class _VAPortfolioItemSettingSheetState
               ],
             ),
             const SizedBox(height: 16),
-            const Text('Khối lượng'),
+            Text(S.of(context).volumn),
             const SizedBox(height: 16),
             Row(
               children: [

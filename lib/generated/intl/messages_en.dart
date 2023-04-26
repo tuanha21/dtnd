@@ -43,10 +43,16 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+        "Abbreviated_name":
+            MessageLookupByLibrary.simpleMessage("Abbreviated name"),
+        "Agent": MessageLookupByLibrary.simpleMessage("Agent"),
         "Are_you_sure_you_want_to_cancel_the_order":
             MessageLookupByLibrary.simpleMessage(
                 "Are you sure you want to cancel the order ?"),
+        "Automated_trading":
+            MessageLookupByLibrary.simpleMessage("Automated trading"),
         "Banking": MessageLookupByLibrary.simpleMessage("Banking"),
+        "Bot_list": MessageLookupByLibrary.simpleMessage("Bot list"),
         "Carriage": MessageLookupByLibrary.simpleMessage("Carriage"),
         "Chemistry": MessageLookupByLibrary.simpleMessage("Chemistry"),
         "Cigarette": MessageLookupByLibrary.simpleMessage("Cigarette"),
@@ -56,11 +62,23 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("IFIS assistant"),
         "DTNDs_virtual_assistant": MessageLookupByLibrary.simpleMessage(
             " of IFIS\'s virtual assistant"),
+        "Easily_find_investment_ideas_using_stock_filters":
+            MessageLookupByLibrary.simpleMessage(
+                "Easily find investment ideas using stock filters"),
         "Extractive": MessageLookupByLibrary.simpleMessage("Extractive"),
+        "Filter_name": MessageLookupByLibrary.simpleMessage("Filter name"),
+        "Foreign_investor_transaction": MessageLookupByLibrary.simpleMessage(
+            "Foreign investor transaction"),
+        "Foundation_Day":
+            MessageLookupByLibrary.simpleMessage("Foundation Day"),
+        "Highest_price": MessageLookupByLibrary.simpleMessage("Highest price"),
         "Institution": MessageLookupByLibrary.simpleMessage("Institution"),
         "Later": MessageLookupByLibrary.simpleMessage("Later"),
+        "Lowest_price": MessageLookupByLibrary.simpleMessage("Lowest price"),
+        "Maximum_risk": MessageLookupByLibrary.simpleMessage("Maximum risk"),
         "Medicine": MessageLookupByLibrary.simpleMessage("Medicine"),
         "Metal": MessageLookupByLibrary.simpleMessage("Metal"),
+        "My_filters": MessageLookupByLibrary.simpleMessage("My filters"),
         "Please_provide_a_list":
             MessageLookupByLibrary.simpleMessage("Please provide a list"),
         "Please_remember_your_SmartOTP_password":
@@ -69,6 +87,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "Please_select_a_stock_code":
             MessageLookupByLibrary.simpleMessage("Please select a stock code"),
         "Retail": MessageLookupByLibrary.simpleMessage("Retail"),
+        "Save_filter": MessageLookupByLibrary.simpleMessage("Save filter"),
         "Send_the_code_again":
             MessageLookupByLibrary.simpleMessage("Send the code again ?"),
         "Set_a_password_consisting_of_6_digits":
@@ -76,8 +95,12 @@ class MessageLookup extends MessageLookupByLibrary {
                 "Set a password consisting of 6 digits"),
         "Setting_up_Smart_OTP_password": MessageLookupByLibrary.simpleMessage(
             "Setting up Smart OTP password"),
+        "Start": MessageLookupByLibrary.simpleMessage("Start"),
+        "Tax_code": MessageLookupByLibrary.simpleMessage("Tax code"),
         "Weight_must_be_filled_in":
             MessageLookupByLibrary.simpleMessage("Weight must be filled in"),
+        "Your_portfolio":
+            MessageLookupByLibrary.simpleMessage("Your portfolio"),
         "account": MessageLookupByLibrary.simpleMessage("Account"),
         "account_infomation":
             MessageLookupByLibrary.simpleMessage("Account information"),
