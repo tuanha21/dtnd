@@ -459,5 +459,18 @@
   "history" : "history",
   "Open_command" : "Open command",
   "Close_command" : "Close command",
-  "Detailed_Mass" : "Detailed Mass"
+  "Detailed_Mass" : "Detailed Mass",
+  "closed": "Closed",
+  "Total": "Total",
+  "Interest_rate": "Interest rate",
+  "Expiration_date": "Expiration date",
+  "Profit": "Profit",
+  "Loan_date": "Loan date",
+  "Interest_calculation_date": "Interest calculation date",
+  "Loan_duration": "Loan duration",
+  "Principal_balance": "Principal balance",
+  "Repaid" : "Repaid",
+  "Outstanding_debt": "Outstanding debt",
+  "Total_remaining_debt" : "Total remaining debt",
+  "Total_interest": "Total interest"
 }

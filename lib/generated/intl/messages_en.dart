@@ -7,7 +7,8 @@
 // ignore_for_file:unnecessary_brace_in_string_interps, unnecessary_new
 // ignore_for_file:prefer_single_quotes,comment_references, directives_ordering
 // ignore_for_file:annotate_overrides,prefer_generic_function_type_aliases
-// ignore_for_file:unused_import, file_names
+// ignore_for_file:unused_import, file_names, avoid_escaping_inner_quotes
+// ignore_for_file:unnecessary_string_interpolations, unnecessary_string_escapes
 
 import 'package:intl/intl.dart';
 import 'package:intl/message_lookup_by_library.dart';
@@ -19,26 +20,26 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'en';
 
-  static m0(name) => "Are you sure to delete the “${name}” category?";
+  static String m0(name) => "Are you sure to delete the “${name}” category?";
 
-  static m1(days) => "${days} days ago";
+  static String m1(days) => "${days} days ago";
 
-  static m2(name) => "Following catalog \"${name}\"";
+  static String m2(name) => "Following catalog \"${name}\"";
 
-  static m3(value) => "Gain ${value}";
+  static String m3(value) => "Gain ${value}";
 
-  static m4(hours) => "${hours} hours ago";
+  static String m4(hours) => "${hours} hours ago";
 
-  static m5(value) => "Loss ${value}";
+  static String m5(value) => "Loss ${value}";
 
-  static m6(minutes) => "${minutes} minutes ago";
+  static String m6(minutes) => "${minutes} minutes ago";
 
-  static m7(value) =>
+  static String m7(value) =>
       "The OTP has been sent to your ${value} extension email. Enter the 6-digit code to continue.";
 
-  static m8(name) => "Rename catalog “${name}” to";
+  static String m8(name) => "Rename catalog “${name}” to";
 
-  static m9(value) => "Total ${value}";
+  static String m9(value) => "Total ${value}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -69,6 +70,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "Easily_find_investment_ideas_using_stock_filters":
             MessageLookupByLibrary.simpleMessage(
                 "Easily find investment ideas using stock filters"),
+        "Expiration_date":
+            MessageLookupByLibrary.simpleMessage("Expiration date"),
         "Extractive": MessageLookupByLibrary.simpleMessage("Extractive"),
         "Filter_name": MessageLookupByLibrary.simpleMessage("Filter name"),
         "Foreign_investor_transaction": MessageLookupByLibrary.simpleMessage(
@@ -79,13 +82,20 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Foundation Day"),
         "Highest_price": MessageLookupByLibrary.simpleMessage("Highest price"),
         "Institution": MessageLookupByLibrary.simpleMessage("Institution"),
+        "Interest_calculation_date":
+            MessageLookupByLibrary.simpleMessage("Interest calculation date"),
+        "Interest_rate": MessageLookupByLibrary.simpleMessage("Interest rate"),
         "Later": MessageLookupByLibrary.simpleMessage("Later"),
+        "Loan_date": MessageLookupByLibrary.simpleMessage("Loan date"),
+        "Loan_duration": MessageLookupByLibrary.simpleMessage("Loan duration"),
         "Lowest_price": MessageLookupByLibrary.simpleMessage("Lowest price"),
         "Maximum_risk": MessageLookupByLibrary.simpleMessage("Maximum risk"),
         "Medicine": MessageLookupByLibrary.simpleMessage("Medicine"),
         "Metal": MessageLookupByLibrary.simpleMessage("Metal"),
         "My_filters": MessageLookupByLibrary.simpleMessage("My filters"),
         "Open_command": MessageLookupByLibrary.simpleMessage("Open command"),
+        "Outstanding_debt":
+            MessageLookupByLibrary.simpleMessage("Outstanding debt"),
         "Please_provide_a_list":
             MessageLookupByLibrary.simpleMessage("Please provide a list"),
         "Please_remember_your_SmartOTP_password":
@@ -93,6 +103,10 @@ class MessageLookup extends MessageLookupByLibrary {
                 "Please remember your SmartOTP password"),
         "Please_select_a_stock_code":
             MessageLookupByLibrary.simpleMessage("Please select a stock code"),
+        "Principal_balance":
+            MessageLookupByLibrary.simpleMessage("Principal balance"),
+        "Profit": MessageLookupByLibrary.simpleMessage("Profit"),
+        "Repaid": MessageLookupByLibrary.simpleMessage("Repaid"),
         "Retail": MessageLookupByLibrary.simpleMessage("Retail"),
         "Save_filter": MessageLookupByLibrary.simpleMessage("Save filter"),
         "Search_by_stock_code":
@@ -106,6 +120,11 @@ class MessageLookup extends MessageLookupByLibrary {
             "Setting up Smart OTP password"),
         "Start": MessageLookupByLibrary.simpleMessage("Start"),
         "Tax_code": MessageLookupByLibrary.simpleMessage("Tax code"),
+        "Total": MessageLookupByLibrary.simpleMessage("Total"),
+        "Total_interest":
+            MessageLookupByLibrary.simpleMessage("Total interest"),
+        "Total_remaining_debt":
+            MessageLookupByLibrary.simpleMessage("Total remaining debt"),
         "Weight_must_be_filled_in":
             MessageLookupByLibrary.simpleMessage("Weight must be filled in"),
         "Your_portfolio":
@@ -200,6 +219,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "choose_stocks_you_interested": MessageLookupByLibrary.simpleMessage(
             "Select the stocks you are interested in. You can update later"),
         "close_translations": MessageLookupByLibrary.simpleMessage("Close"),
+        "closed": MessageLookupByLibrary.simpleMessage("Closed"),
         "command_type": MessageLookupByLibrary.simpleMessage("command type"),
         "commodities": MessageLookupByLibrary.simpleMessage("Commodities"),
         "community": MessageLookupByLibrary.simpleMessage("Community"),

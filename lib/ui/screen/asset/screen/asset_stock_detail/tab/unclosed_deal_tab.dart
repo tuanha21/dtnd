@@ -43,6 +43,7 @@ class _UnclosedDealTabState extends State<UnclosedDealTab>
   Widget build(BuildContext context) {
     super.build(context);
     final textTheme = Theme.of(context).textTheme;
+
     return SingleChildScrollView(
       child: Column(
         children: [
@@ -87,12 +88,14 @@ class _UnclosedDealTabState extends State<UnclosedDealTab>
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      "Lãi/lỗ chưa đóng",
+                      "Tổng lãi/lỗ chưa đóng",
                       style: textTheme.labelMedium
                           ?.copyWith(fontWeight: FontWeight.w600),
                     ),
                     Text(
-                      widget.stockCode,
+                      '${userService.defaultAccount.value?.portfolioStatus
+                              ?.gainLossValue} đ' ??
+                          '',
                       style: textTheme.labelMedium,
                     ),
                   ],

@@ -7,7 +7,8 @@
 // ignore_for_file:unnecessary_brace_in_string_interps, unnecessary_new
 // ignore_for_file:prefer_single_quotes,comment_references, directives_ordering
 // ignore_for_file:annotate_overrides,prefer_generic_function_type_aliases
-// ignore_for_file:unused_import, file_names
+// ignore_for_file:unused_import, file_names, avoid_escaping_inner_quotes
+// ignore_for_file:unnecessary_string_interpolations, unnecessary_string_escapes
 
 import 'package:intl/intl.dart';
 import 'package:intl/message_lookup_by_library.dart';
@@ -19,26 +20,27 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'vi';
 
-  static m0(name) => "Bạn có chắc chắn muốn xóa danh mục “${name}” không ?";
+  static String m0(name) =>
+      "Bạn có chắc chắn muốn xóa danh mục “${name}” không ?";
 
-  static m1(days) => "${days} ngày trước";
+  static String m1(days) => "${days} ngày trước";
 
-  static m2(name) => "Danh mục theo dõi \"${name}\"";
+  static String m2(name) => "Danh mục theo dõi \"${name}\"";
 
-  static m3(value) => "Tăng ${value}";
+  static String m3(value) => "Tăng ${value}";
 
-  static m4(hours) => "${hours} giờ trước";
+  static String m4(hours) => "${hours} giờ trước";
 
-  static m5(value) => "Giảm ${value}";
+  static String m5(value) => "Giảm ${value}";
 
-  static m6(minutes) => "${minutes} phút trước";
+  static String m6(minutes) => "${minutes} phút trước";
 
-  static m7(value) =>
+  static String m7(value) =>
       "Mã OTP đã được gửi về email ${value} của bạn. Nhập mã 6 số để tiếp tục.";
 
-  static m8(name) => "Sửa tên danh mục “${name}” thành";
+  static String m8(name) => "Sửa tên danh mục “${name}” thành";
 
-  static m9(value) => "Tổng ${value}";
+  static String m9(value) => "Tổng ${value}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -68,6 +70,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "Easily_find_investment_ideas_using_stock_filters":
             MessageLookupByLibrary.simpleMessage(
                 "Dễ dàng tìm kiếm ý tưởng đầu tư bằng bộ lọc cổ phiếu"),
+        "Expiration_date": MessageLookupByLibrary.simpleMessage("Ngày hết hạn"),
         "Extractive": MessageLookupByLibrary.simpleMessage("Khai khoáng"),
         "Filter_name": MessageLookupByLibrary.simpleMessage("Tên bộ lọc"),
         "Foreign_investor_transaction":
@@ -78,19 +81,28 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Ngày thành lập"),
         "Highest_price": MessageLookupByLibrary.simpleMessage("Giá cao nhất"),
         "Institution": MessageLookupByLibrary.simpleMessage("Tổ chức"),
+        "Interest_calculation_date":
+            MessageLookupByLibrary.simpleMessage("Ngày tính lãi"),
+        "Interest_rate": MessageLookupByLibrary.simpleMessage("Lãi suất"),
         "Later": MessageLookupByLibrary.simpleMessage("Để sau"),
+        "Loan_date": MessageLookupByLibrary.simpleMessage("Ngày vay"),
+        "Loan_duration": MessageLookupByLibrary.simpleMessage("Số ngày vay"),
         "Lowest_price": MessageLookupByLibrary.simpleMessage("Giá thấp nhất"),
         "Maximum_risk": MessageLookupByLibrary.simpleMessage("Rủi ro tối đa"),
         "Medicine": MessageLookupByLibrary.simpleMessage("Dược phẩm"),
         "Metal": MessageLookupByLibrary.simpleMessage("Kim loại"),
         "My_filters": MessageLookupByLibrary.simpleMessage("Bộ lọc của tôi"),
         "Open_command": MessageLookupByLibrary.simpleMessage("Lệnh mở"),
+        "Outstanding_debt": MessageLookupByLibrary.simpleMessage("Nợ còn lại"),
         "Please_provide_a_list":
             MessageLookupByLibrary.simpleMessage("Vui lòng nhập danh mục"),
         "Please_remember_your_SmartOTP_password":
             MessageLookupByLibrary.simpleMessage("Cài đặt mật khẩu Smart OTP"),
         "Please_select_a_stock_code":
             MessageLookupByLibrary.simpleMessage("Vui lòng chọn mã CK"),
+        "Principal_balance": MessageLookupByLibrary.simpleMessage("Dư nợ gốc"),
+        "Profit": MessageLookupByLibrary.simpleMessage("Lãi"),
+        "Repaid": MessageLookupByLibrary.simpleMessage("Đã trả"),
         "Retail": MessageLookupByLibrary.simpleMessage("Bán lẻ"),
         "Save_filter": MessageLookupByLibrary.simpleMessage("Lưu bộ lọc"),
         "Search_by_stock_code":
@@ -103,6 +115,10 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Cài đặt mật khẩu Smart OTP"),
         "Start": MessageLookupByLibrary.simpleMessage("Bắt đầu"),
         "Tax_code": MessageLookupByLibrary.simpleMessage("Mã số thuế"),
+        "Total": MessageLookupByLibrary.simpleMessage("Tổng cộng"),
+        "Total_interest": MessageLookupByLibrary.simpleMessage("Tổng lãi"),
+        "Total_remaining_debt":
+            MessageLookupByLibrary.simpleMessage("Tổng nợ còn lại"),
         "Weight_must_be_filled_in": MessageLookupByLibrary.simpleMessage(
             "Khối lượng không được bỏ trống"),
         "Your_portfolio":
@@ -193,6 +209,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Chọn các mã CK mà bạn đang quan tâm. Bạn có thể cập nhật thêm các mã CK sau"),
         "close_translations":
             MessageLookupByLibrary.simpleMessage("Giá đóng cửa"),
+        "closed": MessageLookupByLibrary.simpleMessage("Đã đóng"),
         "command_type": MessageLookupByLibrary.simpleMessage("Lệnh"),
         "commodities": MessageLookupByLibrary.simpleMessage("Hàng hoá"),
         "community": MessageLookupByLibrary.simpleMessage("Cộng đồng"),
@@ -553,7 +570,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "successfully_create_assistant_account":
             MessageLookupByLibrary.simpleMessage(
                 "Tạo tài khoản\ntrợ lý ảo thành công"),
-        "tax_fee": MessageLookupByLibrary.simpleMessage("Phí thuê"),
+        "tax_fee": MessageLookupByLibrary.simpleMessage("Phí thuế"),
         "td_fee": MessageLookupByLibrary.simpleMessage("Phí GD"),
         "technical_analysis":
             MessageLookupByLibrary.simpleMessage("Phân tích kỹ thuật"),

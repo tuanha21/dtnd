@@ -378,7 +378,7 @@
   "total_transaction": "Tổng giao dịch",
   "Weight_must_be_filled_in": "Khối lượng không được bỏ trống",
   "invalid_weight": "Khối lượng không hợp lệ",
-  "tax_fee": "Phí thuê",
+  "tax_fee": "Phí thuế",
   "sale_value": "Giá trị bán",
   "cost_price": "Giá vốn",
   "cost_value": "Giá trị vốn",
@@ -460,5 +460,19 @@
   "history" : "Lịch sử",
   "Open_command" : "Lệnh mở",
   "Close_command" : "Lệnh đóng",
-  "Detailed_Mass" : "Chi tiết kl"
+  "Detailed_Mass" : "Chi tiết kl",
+  "closed": "Đã đóng",
+  "Total" : "Tổng cộng",
+  "Interest_rate": "Lãi suất",
+  "Expiration_date": "Ngày hết hạn",
+  "Profit": "Lãi",
+  "Loan_date": "Ngày vay",
+  "Interest_calculation_date":"Ngày tính lãi",
+  "Loan_duration": "Số ngày vay",
+  "Principal_balance" : "Dư nợ gốc",
+  "Repaid": "Đã trả",
+  "Outstanding_debt": "Nợ còn lại",
+  "Total_remaining_debt" :"Tổng nợ còn lại",
+  "Total_interest": "Tổng lãi"
+
 }

@@ -26,7 +26,6 @@ class _AccountAssetOverviewWidgetState
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
-
     return Column(
       children: [
         Container(
@@ -217,8 +216,9 @@ class _AccountAssetOverviewWidgetState
                                                   fontWeight: FontWeight.w500),
                                         ),
                                         Text(
-                                            NumUtils.formatInteger(
-                                                widget.data?.marginRatio ?? 0),
+                                            widget.data?.marginRatio
+                                                    .toString() ??
+                                                '',
                                             style: textTheme.labelMedium!
                                                 .copyWith(
                                                     fontWeight:

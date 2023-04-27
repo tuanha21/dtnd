@@ -194,7 +194,7 @@ class _ClosedDealTabState extends State<ClosedDealTab>
                               ],
                             ),
                             Text(
-                              S.of(context).matched,
+                              S.of(context).closed,
                               style: AppTextStyle.bodyMedium_14
                                   .copyWith(color: AppColors.semantic_01),
                             ),

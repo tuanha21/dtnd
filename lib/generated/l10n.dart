@@ -10,7 +10,7 @@ import 'intl/messages_all.dart';
 
 // ignore_for_file: non_constant_identifier_names, lines_longer_than_80_chars
 // ignore_for_file: join_return_with_assignment, prefer_final_in_for_each
-// ignore_for_file: avoid_redundant_argument_values
+// ignore_for_file: avoid_redundant_argument_values, avoid_escaping_inner_quotes
 
 class S {
   S();
@@ -18,28 +18,31 @@ class S {
   static S? _current;
 
   static S get current {
-    assert(_current != null, 'No instance of S was loaded. Try to initialize the S delegate before accessing S.current.');
+    assert(_current != null,
+        'No instance of S was loaded. Try to initialize the S delegate before accessing S.current.');
     return _current!;
   }
 
-  static const AppLocalizationDelegate delegate =
-    AppLocalizationDelegate();
+  static const AppLocalizationDelegate delegate = AppLocalizationDelegate();
 
   static Future<S> load(Locale locale) {
-    final name = (locale.countryCode?.isEmpty ?? false) ? locale.languageCode : locale.toString();
-    final localeName = Intl.canonicalizedLocale(name); 
+    final name = (locale.countryCode?.isEmpty ?? false)
+        ? locale.languageCode
+        : locale.toString();
+    final localeName = Intl.canonicalizedLocale(name);
     return initializeMessages(localeName).then((_) {
       Intl.defaultLocale = localeName;
       final instance = S();
       S._current = instance;
- 
+
       return instance;
     });
-  } 
+  }
 
   static S of(BuildContext context) {
     final instance = S.maybeOf(context);
-    assert(instance != null, 'No instance of S present in the widget tree. Did you add S.delegate in localizationsDelegates?');
+    assert(instance != null,
+        'No instance of S present in the widget tree. Did you add S.delegate in localizationsDelegates?');
     return instance!;
   }
 
@@ -1888,10 +1891,12 @@ class S {
   }
 
   /// `The IFIS virtual assistant will help you with successful transaction`
-  String get the_DTND_virtual_assistant_will_help_you_with_successful_transaction {
+  String
+      get the_DTND_virtual_assistant_will_help_you_with_successful_transaction {
     return Intl.message(
       'The IFIS virtual assistant will help you with successful transaction',
-      name: 'the_DTND_virtual_assistant_will_help_you_with_successful_transaction',
+      name:
+          'the_DTND_virtual_assistant_will_help_you_with_successful_transaction',
       desc: '',
       args: [],
     );
@@ -4412,6 +4417,136 @@ class S {
     return Intl.message(
       'Detailed Mass',
       name: 'Detailed_Mass',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Closed`
+  String get closed {
+    return Intl.message(
+      'Closed',
+      name: 'closed',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Total`
+  String get Total {
+    return Intl.message(
+      'Total',
+      name: 'Total',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Interest rate`
+  String get Interest_rate {
+    return Intl.message(
+      'Interest rate',
+      name: 'Interest_rate',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Expiration date`
+  String get Expiration_date {
+    return Intl.message(
+      'Expiration date',
+      name: 'Expiration_date',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Profit`
+  String get Profit {
+    return Intl.message(
+      'Profit',
+      name: 'Profit',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Loan date`
+  String get Loan_date {
+    return Intl.message(
+      'Loan date',
+      name: 'Loan_date',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Interest calculation date`
+  String get Interest_calculation_date {
+    return Intl.message(
+      'Interest calculation date',
+      name: 'Interest_calculation_date',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Loan duration`
+  String get Loan_duration {
+    return Intl.message(
+      'Loan duration',
+      name: 'Loan_duration',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Principal balance`
+  String get Principal_balance {
+    return Intl.message(
+      'Principal balance',
+      name: 'Principal_balance',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Repaid`
+  String get Repaid {
+    return Intl.message(
+      'Repaid',
+      name: 'Repaid',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Outstanding debt`
+  String get Outstanding_debt {
+    return Intl.message(
+      'Outstanding debt',
+      name: 'Outstanding_debt',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Total remaining debt`
+  String get Total_remaining_debt {
+    return Intl.message(
+      'Total remaining debt',
+      name: 'Total_remaining_debt',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Total interest`
+  String get Total_interest {
+    return Intl.message(
+      'Total interest',
+      name: 'Total_interest',
       desc: '',
       args: [],
     );
