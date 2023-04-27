@@ -1,3 +1,4 @@
+import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/screen/account/sheet/money_statement_sheet.dart';
 import 'package:dtnd/ui/screen/account/sheet/share_statement_sheet.dart';
 import 'package:dtnd/ui/screen/asset/screen/margin_debt/margin_debt_screen.dart';
@@ -6,6 +7,8 @@ import 'package:dtnd/ui/screen/exchange_stock/order_note/screen/order_note_scree
 import 'package:dtnd/ui/screen/exchange_stock/stock_order/business/stock_order_util.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/widget/drawer/logic/function_data.dart';
+import 'package:flash/flash.dart';
+import 'package:flash/flash_helper.dart';
 import 'package:flutter/material.dart';
 
 class ListFunction extends StatefulWidget {
@@ -24,13 +27,28 @@ class _ListFunctionState extends State<ListFunction> {
     super.initState();
   }
 
-  void onRouteBigTitle(String title, BuildContext context) {
-    switch (title) {
-      case 'Xác thực tài khoản - eKYC':
-        break;
-      default:
-        break;
+  void onRouteBigTitle(FunctionData item, BuildContext context) {
+    if (item.subTitle!.isEmpty == true) {
+      onDeveloping(context);
+      return;
     }
+  }
+
+  void onDeveloping(BuildContext context) {
+    context.showFlash<bool>(
+      duration: const Duration(milliseconds: 1400),
+      builder: (context, controller) => FlashBar(
+        controller: controller,
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+        ),
+        clipBehavior: Clip.hardEdge,
+        content: Text(
+          S.of(context).developing_feature,
+          textAlign: TextAlign.center,
+        ),
+      ),
+    );
   }
 
   void onRouteSubTitle(String title, BuildContext context) {
@@ -38,22 +56,33 @@ class _ListFunctionState extends State<ListFunction> {
       case 'Giao dịch cơ sở':
         StockModelUtil.openSheet(context);
         break;
-      // case 'Lọc cổ phiếu':
-      // StockModelUtil.openSheet(context);ßßß
-      // break;
+      case 'Giao dịch phái sinh':
+        onDeveloping(context);
+        break;
+      case 'Thực hiện quyền':
+        onDeveloping(context);
+        break;
+      case 'Chuyển chứng khoán':
+        onDeveloping(context);
+        break;
+      case 'Lọc cổ phiếu':
+        onDeveloping(context);
+        break;
+      case 'Ngôn ngữ':
+        onDeveloping(context);
+        break;
+      case 'Giao diện':
+        onDeveloping(context);
+        break;
       case 'Sao kê tiền':
         Navigator.of(context).push(MaterialPageRoute(
           builder: (context) => const MoneyStatementSheet(),
         ));
-        // const MoneyStatementISheet()
-        //     .show(context, const MoneyStatementSheet(), wrap: false);
         break;
       case 'Sao kê chứng khoán':
         Navigator.of(context).push(MaterialPageRoute(
           builder: (context) => const ShareStatementSheet(),
         ));
-        // const ShareStatementISheet()
-        //     .show(context, const ShareStatementSheet(), wrap: false);
         break;
       case 'Lịch sử lệnh':
         Navigator.of(context).push(MaterialPageRoute(
@@ -77,6 +106,7 @@ class _ListFunctionState extends State<ListFunction> {
           builder: (context) => const MarginDebtScreen(),
         ));
         break;
+
       default:
         break;
     }
@@ -92,6 +122,8 @@ class _ListFunctionState extends State<ListFunction> {
           return Theme(
             data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
             child: ExpansionTile(
+                onExpansionChanged: (bool isExpanded) =>
+                    onRouteBigTitle(item, context),
                 iconColor: AppColors.text_black_1,
                 tilePadding: const EdgeInsets.only(left: 4),
                 leading: Image.asset(

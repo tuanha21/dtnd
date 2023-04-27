@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../=models=/response/subsidiaries_model.dart';
 import '../../../../data/implementations/data_center_service.dart';
-import '../../../../utilities/logger.dart';
+import '../../../../generated/l10n.dart';
 
 class SubsidiariesInfoTab extends StatefulWidget {
   const SubsidiariesInfoTab({
@@ -28,7 +28,6 @@ class _SubsidiariesInfoTabState extends State<SubsidiariesInfoTab> {
 
   late Future<List<SubsidiariesModel>?> other;
 
-
   @override
   void initState() {
     listSubsidiaries =
@@ -37,8 +36,8 @@ class _SubsidiariesInfoTabState extends State<SubsidiariesInfoTab> {
     associatedCompany = iDataCenterService
         .getAssociatedCompany(widget.stockModel.stock.stockCode);
 
-    other = iDataCenterService
-        .getOtherCompany(widget.stockModel.stock.stockCode);
+    other =
+        iDataCenterService.getOtherCompany(widget.stockModel.stock.stockCode);
     super.initState();
   }
 
@@ -50,7 +49,7 @@ class _SubsidiariesInfoTabState extends State<SubsidiariesInfoTab> {
         Row(
           children: [
             Text(
-              "Công ty con",
+              S.of(context).subsidiaries,
               style:
                   textTheme.titleMedium!.copyWith(fontWeight: FontWeight.w700),
             ),
@@ -85,8 +84,9 @@ class _SubsidiariesInfoTabState extends State<SubsidiariesInfoTab> {
                             Expanded(
                               child: Text(
                                 index.relatedCompanyName ?? "-",
-                                style: textTheme.labelMedium!
-                                    .copyWith(fontWeight: FontWeight.w600,height: 24/16),
+                                style: textTheme.labelMedium!.copyWith(
+                                    fontWeight: FontWeight.w600,
+                                    height: 24 / 16),
                               ),
                             ),
                             Expanded(child: LayoutBuilder(
@@ -95,7 +95,7 @@ class _SubsidiariesInfoTabState extends State<SubsidiariesInfoTab> {
                                   crossAxisAlignment: CrossAxisAlignment.end,
                                   children: [
                                     Text(
-                                      "${index.charterCapital?.toString() ?? "-"} tỷ",
+                                      "${index.charterCapital?.toString() ?? "-"} ${S.of(context).billion_lowercase}",
                                       style: textTheme.labelMedium!.copyWith(
                                           fontWeight: FontWeight.w600),
                                     ),
@@ -141,7 +141,7 @@ class _SubsidiariesInfoTabState extends State<SubsidiariesInfoTab> {
         Row(
           children: [
             Text(
-              "Công ty liên kết",
+              S.of(context).associated_company,
               style:
                   textTheme.titleMedium!.copyWith(fontWeight: FontWeight.w700),
             ),
@@ -176,8 +176,9 @@ class _SubsidiariesInfoTabState extends State<SubsidiariesInfoTab> {
                             Expanded(
                               child: Text(
                                 index.relatedCompanyName ?? "-",
-                                style: textTheme.labelMedium!
-                                    .copyWith(fontWeight: FontWeight.w600,height: 24/16),
+                                style: textTheme.labelMedium!.copyWith(
+                                    fontWeight: FontWeight.w600,
+                                    height: 24 / 16),
                               ),
                             ),
                             Expanded(child: LayoutBuilder(
@@ -186,7 +187,7 @@ class _SubsidiariesInfoTabState extends State<SubsidiariesInfoTab> {
                                   crossAxisAlignment: CrossAxisAlignment.end,
                                   children: [
                                     Text(
-                                      "${index.charterCapital?.toString() ?? "-"} tỷ",
+                                      "${index.charterCapital?.toString() ?? "-"} ${S.of(context).billion_lowercase}",
                                       style: textTheme.labelMedium!.copyWith(
                                           fontWeight: FontWeight.w600),
                                     ),
@@ -209,7 +210,7 @@ class _SubsidiariesInfoTabState extends State<SubsidiariesInfoTab> {
                                           "${index.ownerShip?.toStringAsFixed(2) ?? "-"}%",
                                           style: textTheme.labelMedium!
                                               .copyWith(
-                                              fontWeight: FontWeight.w600),
+                                                  fontWeight: FontWeight.w600),
                                         ),
                                       ],
                                     ),
@@ -232,9 +233,9 @@ class _SubsidiariesInfoTabState extends State<SubsidiariesInfoTab> {
         Row(
           children: [
             Text(
-              "Khác",
+              S.of(context).other,
               style:
-              textTheme.titleMedium!.copyWith(fontWeight: FontWeight.w700),
+                  textTheme.titleMedium!.copyWith(fontWeight: FontWeight.w700),
             ),
           ],
         ),
@@ -267,8 +268,9 @@ class _SubsidiariesInfoTabState extends State<SubsidiariesInfoTab> {
                             Expanded(
                               child: Text(
                                 index.relatedCompanyName ?? "-",
-                                style: textTheme.labelMedium!
-                                    .copyWith(fontWeight: FontWeight.w600,height: 24/16),
+                                style: textTheme.labelMedium!.copyWith(
+                                    fontWeight: FontWeight.w600,
+                                    height: 24 / 16),
                               ),
                             ),
                             Expanded(child: LayoutBuilder(
@@ -277,7 +279,7 @@ class _SubsidiariesInfoTabState extends State<SubsidiariesInfoTab> {
                                   crossAxisAlignment: CrossAxisAlignment.end,
                                   children: [
                                     Text(
-                                      "${index.charterCapital?.toString() ?? "-"} tỷ",
+                                      "${index.charterCapital?.toString() ?? "-"} ${S.of(context).billion_lowercase}",
                                       style: textTheme.labelMedium!.copyWith(
                                           fontWeight: FontWeight.w600),
                                     ),
@@ -300,7 +302,7 @@ class _SubsidiariesInfoTabState extends State<SubsidiariesInfoTab> {
                                           "${index.ownerShip?.toStringAsFixed(2) ?? "-"}%",
                                           style: textTheme.labelMedium!
                                               .copyWith(
-                                              fontWeight: FontWeight.w600),
+                                                  fontWeight: FontWeight.w600),
                                         ),
                                       ],
                                     ),
@@ -320,8 +322,6 @@ class _SubsidiariesInfoTabState extends State<SubsidiariesInfoTab> {
               return const SizedBox();
             }),
         const SizedBox(height: 16),
-
-
       ],
     );
   }

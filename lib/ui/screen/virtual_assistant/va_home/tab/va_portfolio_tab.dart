@@ -7,7 +7,6 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
 import '../../../../../=models=/response/stock_model.dart';
-import '../../../../../=models=/local/va_portfolio_model.dart';
 import '../../../../../data/i_data_center_service.dart';
 import '../../../../../data/i_network_service.dart';
 import '../../../../../data/i_user_service.dart';
@@ -70,8 +69,8 @@ class _VAPortfolioTabState extends State<VAPortfolioTab> with AppValidator {
                   children: [
                     Text(
                       !initialized.value
-                          ? "Danh mục theo dõi (0/15)"
-                          : "Danh mục theo dõi (${controller.vaPortfolio.value.listStocks.length}/15)",
+                          ? "${S.of(context).following_catalog} (0/15)"
+                          : "${S.of(context).following_catalog} (${controller.vaPortfolio.value.listStocks.length}/15)",
                       style: AppTextStyle.titleMedium_16
                           .copyWith(color: AppColors.neu_01),
                     ),
@@ -123,7 +122,7 @@ class _VAPortfolioTabState extends State<VAPortfolioTab> with AppValidator {
                               ),
                               const SizedBox(width: 8),
                               Text(
-                                'Thêm mã',
+                                S.of(context).add_stock,
                                 style: Theme.of(context)
                                     .textTheme
                                     .labelMedium
@@ -151,9 +150,9 @@ class _VAPortfolioTabState extends State<VAPortfolioTab> with AppValidator {
                             style: TextStyle(fontSize: 15),
                           ),
                           InkWell(
-                            child: const Text(
-                              'Lọc cổ phiếu',
-                              style: TextStyle(
+                            child: Text(
+                              S.of(context).filter_stock,
+                              style: const TextStyle(
                                   color: AppColors.semantic_01, fontSize: 15),
                             ),
                             onTap: () {
@@ -182,9 +181,9 @@ class _VAPortfolioTabState extends State<VAPortfolioTab> with AppValidator {
                             style: TextStyle(fontSize: 15),
                           ),
                           InkWell(
-                            child: const Text(
-                              'Lọc cổ phiếu',
-                              style: TextStyle(
+                            child: Text(
+                              S.of(context).filter_stock,
+                              style: const TextStyle(
                                   color: AppColors.semantic_01, fontSize: 15),
                             ),
                             onTap: () {
@@ -212,7 +211,6 @@ class _VAPortfolioTabState extends State<VAPortfolioTab> with AppValidator {
                               vertical: 8, horizontal: 16),
                           child: SizedBox(
                             height: 72,
-
                             child: Obx(() {
                               final StockModel? stockModel;
                               if (i >
@@ -228,7 +226,6 @@ class _VAPortfolioTabState extends State<VAPortfolioTab> with AppValidator {
                                     .elementAt(i),
                               );
                             }),
-
                           ),
                         ),
                     ],
@@ -249,7 +246,7 @@ class _VAPortfolioTabState extends State<VAPortfolioTab> with AppValidator {
           child: AsyncButton(
               onPressed: userService.createBot,
               child: Text(
-                'Bắt đầu',
+                S.of(context).Start,
                 style: AppTextStyle.textButtonTextStyle
                     .copyWith(color: AppColors.neutral_05),
               )),
@@ -274,17 +271,17 @@ class _VAPortfolioTabState extends State<VAPortfolioTab> with AppValidator {
               const SizedBox(
                 height: 16,
               ),
-              const Text('Danh mục của bạn'),
+              Text(S.of(context).Your_portfolio),
               const SizedBox(
                 height: 16,
               ),
-              const Text('Rủi ro tối đa'),
+              Text(S.of(context).Maximum_risk),
               const SizedBox(
                 height: 16,
               ),
               IntervalInputCustom2(
                 controller: priceController,
-                labelText: 'Rủi ro tối đa',
+                labelText: S.of(context).Maximum_risk,
                 defaultValue: 0,
               ),
               const SizedBox(
@@ -308,12 +305,12 @@ class _VAPortfolioTabState extends State<VAPortfolioTab> with AppValidator {
                                 horizontal: 16, vertical: 20),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
-                              children: const [
+                              children: [
                                 SheetHeader(
-                                  title: 'Danh sách bot',
+                                  title: S.of(context).Bot_list,
                                   implementBackButton: true,
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   height: 16,
                                 ),
                               ],
@@ -373,7 +370,7 @@ class _VAPortfolioTabState extends State<VAPortfolioTab> with AppValidator {
                 ],
               ),
               const SizedBox(height: 16),
-              Text('Khối lượng'),
+              Text(S.of(context).volumn),
               const SizedBox(height: 16),
               Row(
                 children: [

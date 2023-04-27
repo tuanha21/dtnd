@@ -10,7 +10,7 @@ import 'intl/messages_all.dart';
 
 // ignore_for_file: non_constant_identifier_names, lines_longer_than_80_chars
 // ignore_for_file: join_return_with_assignment, prefer_final_in_for_each
-// ignore_for_file: avoid_redundant_argument_values, avoid_escaping_inner_quotes
+// ignore_for_file: avoid_redundant_argument_values
 
 class S {
   S();
@@ -18,31 +18,28 @@ class S {
   static S? _current;
 
   static S get current {
-    assert(_current != null,
-        'No instance of S was loaded. Try to initialize the S delegate before accessing S.current.');
+    assert(_current != null, 'No instance of S was loaded. Try to initialize the S delegate before accessing S.current.');
     return _current!;
   }
 
-  static const AppLocalizationDelegate delegate = AppLocalizationDelegate();
+  static const AppLocalizationDelegate delegate =
+    AppLocalizationDelegate();
 
   static Future<S> load(Locale locale) {
-    final name = (locale.countryCode?.isEmpty ?? false)
-        ? locale.languageCode
-        : locale.toString();
-    final localeName = Intl.canonicalizedLocale(name);
+    final name = (locale.countryCode?.isEmpty ?? false) ? locale.languageCode : locale.toString();
+    final localeName = Intl.canonicalizedLocale(name); 
     return initializeMessages(localeName).then((_) {
       Intl.defaultLocale = localeName;
       final instance = S();
       S._current = instance;
-
+ 
       return instance;
     });
-  }
+  } 
 
   static S of(BuildContext context) {
     final instance = S.maybeOf(context);
-    assert(instance != null,
-        'No instance of S present in the widget tree. Did you add S.delegate in localizationsDelegates?');
+    assert(instance != null, 'No instance of S present in the widget tree. Did you add S.delegate in localizationsDelegates?');
     return instance!;
   }
 
@@ -1891,12 +1888,10 @@ class S {
   }
 
   /// `The IFIS virtual assistant will help you with successful transaction`
-  String
-      get the_DTND_virtual_assistant_will_help_you_with_successful_transaction {
+  String get the_DTND_virtual_assistant_will_help_you_with_successful_transaction {
     return Intl.message(
       'The IFIS virtual assistant will help you with successful transaction',
-      name:
-          'the_DTND_virtual_assistant_will_help_you_with_successful_transaction',
+      name: 'the_DTND_virtual_assistant_will_help_you_with_successful_transaction',
       desc: '',
       args: [],
     );
@@ -4157,6 +4152,176 @@ class S {
     return Intl.message(
       'Please select a stock code',
       name: 'Please_select_a_stock_code',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Foundation Day`
+  String get Foundation_Day {
+    return Intl.message(
+      'Foundation Day',
+      name: 'Foundation_Day',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Tax code`
+  String get Tax_code {
+    return Intl.message(
+      'Tax code',
+      name: 'Tax_code',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Abbreviated name`
+  String get Abbreviated_name {
+    return Intl.message(
+      'Abbreviated name',
+      name: 'Abbreviated_name',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Agent`
+  String get Agent {
+    return Intl.message(
+      'Agent',
+      name: 'Agent',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Lowest price`
+  String get Lowest_price {
+    return Intl.message(
+      'Lowest price',
+      name: 'Lowest_price',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Highest price`
+  String get Highest_price {
+    return Intl.message(
+      'Highest price',
+      name: 'Highest_price',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Foreign investor transaction`
+  String get Foreign_investor_transaction {
+    return Intl.message(
+      'Foreign investor transaction',
+      name: 'Foreign_investor_transaction',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Bot list`
+  String get Bot_list {
+    return Intl.message(
+      'Bot list',
+      name: 'Bot_list',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Start`
+  String get Start {
+    return Intl.message(
+      'Start',
+      name: 'Start',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Maximum risk`
+  String get Maximum_risk {
+    return Intl.message(
+      'Maximum risk',
+      name: 'Maximum_risk',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Your portfolio`
+  String get Your_portfolio {
+    return Intl.message(
+      'Your portfolio',
+      name: 'Your_portfolio',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Automated trading`
+  String get Automated_trading {
+    return Intl.message(
+      'Automated trading',
+      name: 'Automated_trading',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Save filter`
+  String get Save_filter {
+    return Intl.message(
+      'Save filter',
+      name: 'Save_filter',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Filter name`
+  String get Filter_name {
+    return Intl.message(
+      'Filter name',
+      name: 'Filter_name',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `My filters`
+  String get My_filters {
+    return Intl.message(
+      'My filters',
+      name: 'My_filters',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Developing feature`
+  String get developing_feature {
+    return Intl.message(
+      'Developing feature',
+      name: 'developing_feature',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Easily find investment ideas using stock filters`
+  String get Easily_find_investment_ideas_using_stock_filters {
+    return Intl.message(
+      'Easily find investment ideas using stock filters',
+      name: 'Easily_find_investment_ideas_using_stock_filters',
       desc: '',
       args: [],
     );

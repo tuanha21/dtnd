@@ -1,6 +1,8 @@
 import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:flutter/material.dart';
 
+import '../../generated/l10n.dart';
+
 class EmptyListWidget extends StatelessWidget {
   const EmptyListWidget({super.key, this.title});
   final String? title;
@@ -17,7 +19,7 @@ class EmptyListWidget extends StatelessWidget {
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: [Text(title ?? "Danh sách rỗng")],
+          children: [Text(title ?? S.of(context).empty_catalog)],
         )
       ],
     );

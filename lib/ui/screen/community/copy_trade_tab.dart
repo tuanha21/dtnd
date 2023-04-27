@@ -1,3 +1,4 @@
+import 'package:dtnd/ui/widget/developing_feature/developing_features.dart';
 import 'package:flutter/material.dart';
 
 class CopyTradeTab extends StatefulWidget {
@@ -10,6 +11,6 @@ class CopyTradeTab extends StatefulWidget {
 class _CopyTradeTabState extends State<CopyTradeTab> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return const DevelopingFeature();
   }
 }

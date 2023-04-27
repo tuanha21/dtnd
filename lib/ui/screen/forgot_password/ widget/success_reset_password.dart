@@ -1,3 +1,5 @@
+import 'package:dtnd/data/i_local_storage_service.dart';
+import 'package:dtnd/data/implementations/local_storage_service.dart';
 import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/screen/login/login_screen.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
@@ -5,8 +7,22 @@ import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:dtnd/ui/theme/app_textstyle.dart';
 import 'package:flutter/material.dart';
 
-class SuccessResetPasswordPage extends StatelessWidget {
-  const SuccessResetPasswordPage({Key? key}) : super(key: key);
+const String _userKey = "_userKey";
+String _userNameKey(String user) => "_userName${user}Key";
+
+class SuccessResetPasswordPage extends StatefulWidget {
+  const SuccessResetPasswordPage({Key? key, required this.idResetUser})
+      : super(key: key);
+
+  final String idResetUser;
+
+  @override
+  State<SuccessResetPasswordPage> createState() =>
+      _SuccessResetPasswordPageState();
+}
+
+class _SuccessResetPasswordPageState extends State<SuccessResetPasswordPage> {
+  final ILocalStorageService localStorageService = LocalStorageService();
 
   @override
   Widget build(BuildContext context) {
@@ -91,12 +107,22 @@ class SuccessResetPasswordPage extends StatelessWidget {
                                   const SizedBox(width: 20),
                                   Expanded(
                                     child: InkWell(
-                                      onTap: () {
+                                      onTap: () async {
+                                        await localStorageService
+                                            .sharedPreferences
+                                            .remove(_userNameKey(_userKey));
+                                        await localStorageService
+                                            .sharedPreferences
+                                            .remove(_userKey);
+                                        if (!mounted) return;
                                         Navigator.pushAndRemoveUntil(
                                             context,
                                             MaterialPageRoute(
                                                 builder: (context) =>
-                                                    const LoginScreen()),
+                                                    LoginScreen(
+                                                      codeResetUser:
+                                                          widget.idResetUser,
+                                                    )),
                                             (r) => r.isFirst);
                                       },
                                       child: Container(

@@ -1,10 +1,10 @@
 import 'package:dtnd/config/service/app_services.dart';
 import 'package:dtnd/ui/screen/virtual_assistant/va_home/va_screen.dart';
-import 'package:dtnd/ui/screen/virtual_assistant/va_util.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+import '../../../generated/l10n.dart';
 import '../../theme/app_image.dart';
 
 enum VaQuickAccessElementTheme {
@@ -17,7 +17,6 @@ enum VaAccess {
   myDirectory,
   autoTrading,
   volatilityAlert,
-
 }
 
 extension QuickAccessX on VaAccess {
@@ -35,11 +34,11 @@ extension QuickAccessX on VaAccess {
   String name(BuildContext context) {
     switch (this) {
       case VaAccess.myDirectory:
-        return 'Danh mục của bạn';
+        return S.of(context).Your_portfolio;
       case VaAccess.autoTrading:
-        return 'Giao dịch tự động';
+        return S.of(context).Automated_trading;
       case VaAccess.volatilityAlert:
-        return 'Cảnh báo biến động';
+        return S.of(context).volatility_warning;
     }
   }
 
@@ -50,8 +49,8 @@ extension QuickAccessX on VaAccess {
           print("myDirectory");
           VAFeature.values[0].onPressed(context);
         };
-        //
-        case VaAccess.autoTrading:
+      //
+      case VaAccess.autoTrading:
         return () {
           print("autoTrading");
           VAFeature.values[1].onPressed(context);
@@ -59,7 +58,7 @@ extension QuickAccessX on VaAccess {
       case VaAccess.volatilityAlert:
         return () {
           print("volatilityAlert");
-        }; VAUtil.toVirtualAssistantScreen(context);
+        };
       default:
         return () {};
     }
@@ -104,7 +103,7 @@ class VaAccessElement extends StatelessWidget {
     return Container(
       height: 56,
       margin: const EdgeInsets.symmetric(horizontal: 2),
-      width: MediaQuery.of(context).size.width/3 - 4,
+      width: MediaQuery.of(context).size.width / 3 - 4,
       decoration: const BoxDecoration(
         borderRadius: BorderRadius.all(Radius.circular(8)),
         color: AppColors.neutral_07,
@@ -128,8 +127,10 @@ class VaAccessElement extends StatelessWidget {
               ),
               Text(
                 value.name(context),
-                style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                    fontWeight: FontWeight.w500, fontSize: 10),
+                style: Theme.of(context)
+                    .textTheme
+                    .labelMedium
+                    ?.copyWith(fontWeight: FontWeight.w500, fontSize: 10),
                 overflow: TextOverflow.ellipsis,
                 textAlign: TextAlign.center,
               ),

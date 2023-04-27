@@ -66,6 +66,12 @@ class _OtpWidgetState extends State<OtpWidget> {
           : "00:0${timeLeft.value}";
 
   @override
+  void dispose() {
+    timer!.cancel();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context).textTheme;
     return Padding(

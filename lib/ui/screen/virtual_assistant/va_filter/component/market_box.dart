@@ -3,6 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
 import '../../../../../=models=/algo/filter.dart';
+import '../../../../../generated/l10n.dart';
 import '../../../../theme/app_color.dart';
 import '../../../../theme/app_image.dart';
 import '../../../../widget/expanded_widget.dart';
@@ -61,7 +62,7 @@ class _MarketBoxState extends State<MarketBox> {
             },
             child: Row(
               children: [
-                Text("Sàn", style: Theme.of(context).textTheme.titleSmall),
+                Text(S.of(context).floor, style: Theme.of(context).textTheme.titleSmall),
                 Visibility(
                     visible: count > 0,
                     child: Text(
