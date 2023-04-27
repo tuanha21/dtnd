@@ -220,7 +220,7 @@ class _HistoryTabState extends State<HistoryTab>
                                         style: AppTextStyle.labelSmall_10,
                                       )
                                     : Text(
-                                        NumUtils.formatInteger((listDatas
+                                        NumUtils.formatDouble((listDatas
                                                     .elementAt(i)
                                                     .cMATCHPRICE ??
                                                 0) /
