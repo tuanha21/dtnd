@@ -7,9 +7,8 @@ import 'package:dtnd/ui/screen/exchange_stock/order_note/screen/order_note_scree
 import 'package:dtnd/ui/screen/exchange_stock/stock_order/business/stock_order_util.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/widget/drawer/logic/function_data.dart';
-import 'package:flash/flash.dart';
-import 'package:flash/flash_helper.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class ListFunction extends StatefulWidget {
   const ListFunction({super.key, required this.list});
@@ -27,52 +26,46 @@ class _ListFunctionState extends State<ListFunction> {
     super.initState();
   }
 
-  void onRouteBigTitle(FunctionData item, BuildContext context) {
+  void _onTapBigTitle(FunctionData item) {
     if (item.subTitle!.isEmpty == true) {
-      onDeveloping(context);
+      onDeveloping();
       return;
     }
   }
 
-  void onDeveloping(BuildContext context) {
-    context.showFlash<bool>(
-      duration: const Duration(milliseconds: 1400),
-      builder: (context, controller) => FlashBar(
-        controller: controller,
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
-        ),
-        clipBehavior: Clip.hardEdge,
-        content: Text(
-          S.of(context).developing_feature,
-          textAlign: TextAlign.center,
-        ),
-      ),
+  void onDeveloping() {
+    Fluttertoast.showToast(
+      msg: S.of(context).developing_feature,
+      toastLength: Toast.LENGTH_LONG,
+      gravity: ToastGravity.CENTER,
+      timeInSecForIosWeb: 1,
+      backgroundColor: Colors.black,
+      textColor: Colors.white,
     );
   }
 
-  void onRouteSubTitle(String title, BuildContext context) {
+  void _onTapSubTitle(String title, BuildContext context) {
     switch (title) {
       case 'Giao dịch cơ sở':
         StockModelUtil.openSheet(context);
         break;
       case 'Giao dịch phái sinh':
-        onDeveloping(context);
+        onDeveloping();
         break;
       case 'Thực hiện quyền':
-        onDeveloping(context);
+        onDeveloping();
         break;
       case 'Chuyển chứng khoán':
-        onDeveloping(context);
+        onDeveloping();
         break;
       case 'Lọc cổ phiếu':
-        onDeveloping(context);
+        onDeveloping();
         break;
       case 'Ngôn ngữ':
-        onDeveloping(context);
+        onDeveloping();
         break;
       case 'Giao diện':
-        onDeveloping(context);
+        onDeveloping();
         break;
       case 'Sao kê tiền':
         Navigator.of(context).push(MaterialPageRoute(
@@ -106,7 +99,6 @@ class _ListFunctionState extends State<ListFunction> {
           builder: (context) => const MarginDebtScreen(),
         ));
         break;
-
       default:
         break;
     }
@@ -122,8 +114,7 @@ class _ListFunctionState extends State<ListFunction> {
           return Theme(
             data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
             child: ExpansionTile(
-                onExpansionChanged: (bool isExpanded) =>
-                    onRouteBigTitle(item, context),
+                onExpansionChanged: (bool isExpanded) => _onTapBigTitle(item),
                 iconColor: AppColors.text_black_1,
                 tilePadding: const EdgeInsets.only(left: 4),
                 leading: Image.asset(
@@ -161,7 +152,7 @@ class _ListFunctionState extends State<ListFunction> {
                               itemCount: item.subTitle?.length,
                               itemBuilder: (BuildContext context, int index) {
                                 return GestureDetector(
-                                  onTap: () => onRouteSubTitle(
+                                  onTap: () => _onTapSubTitle(
                                       item.subTitle![index], context),
                                   child: Container(
                                       padding: const EdgeInsets.only(
