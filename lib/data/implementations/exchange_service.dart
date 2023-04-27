@@ -256,7 +256,7 @@ class ExchangeService implements IExchangeService {
           fromDay ?? TimeUtilities.getPreviousDateTime(TimeUtilities.month(1))),
       p4: TimeUtilities.commonTimeFormat.format(toDay ?? DateTime.now()),
       p5: page?.toString() ?? "1",
-      p6: recordPerPage?.toString() ?? "10",
+      p6: recordPerPage?.toString() ?? "100",
     );
 
     final RequestModel requestModel =
@@ -302,7 +302,7 @@ class ExchangeService implements IExchangeService {
       p4: TimeUtilities.commonTimeFormat.format(toDay ?? DateTime.now()),
       p5: "0",
       p6: page?.toString() ?? "1",
-      p7: recordPerPage?.toString() ?? "10",
+      p7: recordPerPage?.toString() ?? "100", // tạm thời để hiển thị ntn
     );
 
     final RequestModel requestModel =

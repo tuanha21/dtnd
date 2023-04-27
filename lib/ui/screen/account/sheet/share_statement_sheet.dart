@@ -78,7 +78,7 @@ class _ShareStatementSheetState extends State<ShareStatementSheet> {
                       getData();
                     },
                   ),
-                  Text("-"),
+                  const Text("-"),
                   DayInput(
                     initialDay: toDay,
                     firstDay: firstDay,
