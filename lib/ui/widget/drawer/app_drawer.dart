@@ -58,7 +58,9 @@ class _AppDrawerState extends State<AppDrawer> {
         FunctionData(
           title: S.current.analysis_tools,
           iconPath: DrawerIconAsset.setting_3,
-          subTitle: [],
+          subTitle: [
+            S.current.filter_stock,
+          ],
         ),
         FunctionData(
             title: S.current.accumulate,
@@ -69,6 +71,7 @@ class _AppDrawerState extends State<AppDrawer> {
           iconPath: DrawerIconAsset.clipboard_text,
           subTitle: [
             S.current.money_statement,
+            S.current.stock_statement,
             S.current.order_history,
             S.current.gain_loss_history,
             S.current.margin_debt,

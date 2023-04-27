@@ -4307,6 +4307,16 @@ class S {
     );
   }
 
+  /// `Developing feature`
+  String get developing_feature {
+    return Intl.message(
+      'Developing feature',
+      name: 'developing_feature',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Easily find investment ideas using stock filters`
   String get Easily_find_investment_ideas_using_stock_filters {
     return Intl.message(
