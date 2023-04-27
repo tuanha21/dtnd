@@ -6,8 +6,8 @@ import 'package:flutter/material.dart';
 
 import '../../../../widget/overlay/custom_dialog.dart';
 
-class NotSigninCatalogWidget extends StatelessWidget {
-  const NotSigninCatalogWidget({
+class NotSignInCatalogWidget extends StatelessWidget {
+  const NotSignInCatalogWidget({
     super.key,
     this.afterLogin,
     required this.localStorageService,

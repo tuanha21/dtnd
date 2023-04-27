@@ -174,7 +174,7 @@ class _CopytradeAssetScreenState extends State<CopytradeAssetScreen>
               controller: _tabController,
               // physics: PanelScrollPhysics(controller: panelController),
               // controller: scrollController,
-              children: const <Widget>[
+              children: <Widget>[
                 // ListView(
                 //   physics:
                 //       PanelScrollPhysics(controller: panelController),
@@ -203,7 +203,7 @@ class _CopytradeAssetScreenState extends State<CopytradeAssetScreen>
                 //   ],
                 // ),
                 Center(
-                  child: Text("Chi tiết kl"),
+                  child: Text(S.of(context).Detailed_Mass),
                 ),
               ],
             ),

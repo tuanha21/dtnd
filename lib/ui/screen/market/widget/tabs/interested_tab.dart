@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../../../generated/l10n.dart';
 import '../components/user_catalog_widget.dart';
 
 class InterestedTab extends StatefulWidget {
@@ -20,7 +21,7 @@ class _InterestedTabState extends State<InterestedTab> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: Text(
-              "Danh mục theo dõi",
+              S.of(context).following_catalog,
               style: Theme.of(context).textTheme.bodyLarge,
             ),
           ),

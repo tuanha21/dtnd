@@ -56,7 +56,7 @@ class _RegisterFillOTP extends State<RegisterFillOTP> {
       );
     } else {
       CustomDialog(
-        title: 'Đã có lỗi xảy ra',
+        title: S.of(context).something_went_wrong,
         content: 'hãy kiểm tra lại OTP và đường truyền tín hiệu',
         action: () => Navigator.of(context).pop(),
         textButtonExit: 'Thoát',

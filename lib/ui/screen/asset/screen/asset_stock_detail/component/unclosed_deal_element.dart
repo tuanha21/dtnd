@@ -55,7 +55,7 @@ class _UnclosedDealElementState extends State<UnclosedDealElement> {
                 child: Column(
               children: [
                 Text(
-                  "Giá khớp",
+                  S.of(context).matched_price,
                   style: AppTextStyle.labelSmall_10.copyWith(
                     color: AppColors.neutral_03,
                     fontWeight: FontWeight.w500,
@@ -77,7 +77,7 @@ class _UnclosedDealElementState extends State<UnclosedDealElement> {
                 child: Column(
               children: [
                 Text(
-                  "Phí GD",
+                  S.of(context).td_fee,
                   style: AppTextStyle.labelSmall_10.copyWith(
                     color: AppColors.neutral_03,
                     fontWeight: FontWeight.w500,
@@ -94,7 +94,7 @@ class _UnclosedDealElementState extends State<UnclosedDealElement> {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Text(
-                  "KL khớp",
+                  S.of(context).matched_vol,
                   style: AppTextStyle.labelSmall_10.copyWith(
                     color: AppColors.neutral_03,
                     fontWeight: FontWeight.w500,

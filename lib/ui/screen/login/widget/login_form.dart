@@ -256,7 +256,7 @@ class _LoginFormState extends State<LoginForm> {
                 );
               },
               child: Text(
-                'Quên mật khẩu ?',
+                S.of(context).forgot_password,
                 style: titleSmall?.copyWith(
                     fontWeight: FontWeight.w500, color: AppColors.primary_01),
               ),
@@ -366,8 +366,8 @@ class _LoginFormState extends State<LoginForm> {
                     ),
                   );
                 },
-                textButtonAction: 'Quên mật khẩu',
-                textButtonExit: 'Thử lại',
+                textButtonAction: S.of(context).forgot_password,
+                textButtonExit: S.of(context).try_again,
                 type: TypeAlert.notification,
               );
             },

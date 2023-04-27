@@ -9,7 +9,6 @@ import 'package:dtnd/ui/theme/app_textstyle.dart';
 import 'package:dtnd/ui/widget/expanded_widget.dart';
 import 'package:dtnd/utilities/num_utils.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 import '../../../../../=models=/response/stock.dart';
 import '../../../../../=models=/response/stock_model.dart';

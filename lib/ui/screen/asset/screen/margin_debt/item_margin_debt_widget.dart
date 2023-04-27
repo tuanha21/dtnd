@@ -12,6 +12,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../../../=models=/response/get_bedt_model.dart';
 import '../../../../../=models=/response/stock_model.dart';
+import '../../../../../generated/l10n.dart';
 import '../../component/asset_grid_element.dart';
 
 class ItemMarginDebtWidget extends StatefulWidget {
@@ -98,7 +99,7 @@ class _ItemRealizedState extends State<ItemMarginDebtWidget> {
                           children: [
                             Flexible(
                               child: Text(
-                                'Lãi suất ${NumUtils.formatDouble(widget.detail?.cINTERESTRATE)}%',
+                                '${S.of(context).Interest_rate} ${NumUtils.formatDouble(widget.detail?.cINTERESTRATE)}%',
                                 overflow: TextOverflow.ellipsis,
                                 style: AppTextStyle.labelMedium_12
                                     .copyWith(color: AppColors.semantic_04),
@@ -119,7 +120,7 @@ class _ItemRealizedState extends State<ItemMarginDebtWidget> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Ngày hết hạn',
+                          S.of(context).Expiration_date,
                           style: AppTextStyle.labelMedium_12
                               .copyWith(color: AppColors.neutral_04),
                         ),
@@ -137,7 +138,7 @@ class _ItemRealizedState extends State<ItemMarginDebtWidget> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Text(
-                          'Nợ còn lại',
+                          S.of(context).Outstanding_debt,
                           style: AppTextStyle.labelMedium_12
                               .copyWith(color: AppColors.neutral_04),
                         ),
@@ -155,7 +156,7 @@ class _ItemRealizedState extends State<ItemMarginDebtWidget> {
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
                         Text(
-                          "Lãi",
+                          S.of(context).Profit,
                           style: AppTextStyle.labelMedium_12
                               .copyWith(color: AppColors.neutral_04),
                         ),
@@ -189,7 +190,8 @@ class _ItemRealizedState extends State<ItemMarginDebtWidget> {
                               child: AssetGridElement(
                                   contentPadding: const EdgeInsets.all(5),
                                   element: {
-                                    "Ngày vay": widget.detail?.cDELIVERDATE,
+                                    S.of(context).Loan_date:
+                                        widget.detail?.cDELIVERDATE,
                                   }),
                             ),
                             const SizedBox(width: 2),
@@ -197,7 +199,8 @@ class _ItemRealizedState extends State<ItemMarginDebtWidget> {
                               child: AssetGridElement(
                                 contentPadding: const EdgeInsets.all(5),
                                 element: {
-                                  "Ngày tính lãi": widget.detail?.interestDate,
+                                  S.of(context).Interest_calculation_date:
+                                      widget.detail?.interestDate,
                                 },
                               ),
                             ),
@@ -206,8 +209,9 @@ class _ItemRealizedState extends State<ItemMarginDebtWidget> {
                               child: AssetGridElement(
                                   contentPadding: const EdgeInsets.all(5),
                                   element: {
-                                    "Số ngày vay": NumUtils.formatDouble(
-                                        widget.detail?.cCOUNTDAY),
+                                    S.of(context).Loan_duration:
+                                        NumUtils.formatDouble(
+                                            widget.detail?.cCOUNTDAY),
                                   }),
                             ),
                           ],
@@ -221,8 +225,9 @@ class _ItemRealizedState extends State<ItemMarginDebtWidget> {
                               child: AssetGridElement(
                                 contentPadding: const EdgeInsets.all(5),
                                 element: {
-                                  "Dư nợ gốc": NumUtils.formatDouble(
-                                      widget.detail?.cLOANIN)
+                                  S.of(context).Principal_balance:
+                                      NumUtils.formatDouble(
+                                          widget.detail?.cLOANIN)
                                 },
                               ),
                             ),
@@ -231,7 +236,7 @@ class _ItemRealizedState extends State<ItemMarginDebtWidget> {
                               child: AssetGridElement(
                                 contentPadding: const EdgeInsets.all(5),
                                 element: {
-                                  "Đã trả": NumUtils.formatDouble(
+                                  S.of(context).Repaid: NumUtils.formatDouble(
                                       widget.detail?.cLOANOUT)
                                 },
                               ),

@@ -104,7 +104,7 @@ class _DeleteCatalogDialogState extends State<DeleteCatalogDialog> {
                                                 color: AppColors.neutral_06,
                                               ),
                                               alignment: Alignment.center,
-                                              child: Text('Hủy bỏ',
+                                              child: Text(S.of(context).abort,
                                                   style: AppTextStyle
                                                       .bodyMedium_14
                                                       .copyWith(

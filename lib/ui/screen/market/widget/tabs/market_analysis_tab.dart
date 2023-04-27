@@ -84,7 +84,7 @@ class _MarketAnalysisTabState extends State<MarketAnalysisTab>
                                       color: AppColors.primary_02),
                                   child: Center(
                                     child: Text(
-                                      "Cá nhân",
+                                      S.of(context).person,
                                       style: Theme.of(context)
                                           .textTheme
                                           .bodySmall
