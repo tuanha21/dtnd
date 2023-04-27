@@ -8,6 +8,8 @@ import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/widget/empty_list_widget.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../../../utilities/num_utils.dart';
+
 class UnclosedDealTab extends StatefulWidget {
   const UnclosedDealTab({super.key, required this.stockCode});
   final String stockCode;
@@ -83,8 +85,8 @@ class _UnclosedDealTabState extends State<UnclosedDealTab>
                 //     ),
                 //   ],
                 // ),
-                const SizedBox(height: 8),
                 Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
@@ -92,10 +94,8 @@ class _UnclosedDealTabState extends State<UnclosedDealTab>
                       style: textTheme.labelMedium
                           ?.copyWith(fontWeight: FontWeight.w600),
                     ),
-                    Text(
-                      '${userService.defaultAccount.value?.portfolioStatus
-                              ?.gainLossValue} đ' ??
-                          '',
+                    Text('${NumUtils.formatDouble(userService.defaultAccount.value?.portfolioStatus
+                        ?.gainLossValue)}đ',
                       style: textTheme.labelMedium,
                     ),
                   ],
