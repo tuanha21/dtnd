@@ -19,7 +19,7 @@ class FillOTPPage extends StatefulWidget {
       required this.createAccount,
       required this.resendOTP,
       required this.email});
-  final VoidCallback onSuccess;
+  final ValueChanged<SignUpSuccessDataModel> onSuccess;
   final VoidCallback resendOTP;
   final Future<bool> Function(String) verifyOTP;
   final Future<SignUpSuccessDataModel?> Function() createAccount;
@@ -237,8 +237,9 @@ class _FillOTPPageState extends State<FillOTPPage> {
     });
     final verified = await widget.verifyOTP.call(controller.text);
     if (verified) {
+      final SignUpSuccessDataModel? result;
       try {
-        await widget.createAccount.call();
+        result = await widget.createAccount.call();
       } catch (e) {
         if (mounted) {
           return AppSnackBar.showInfo(context, message: e.toString());
@@ -246,7 +247,9 @@ class _FillOTPPageState extends State<FillOTPPage> {
           return;
         }
       }
-      widget.onSuccess.call();
+      if (result != null) {
+        widget.onSuccess.call(result);
+      }
     } else {
       setState(() {
         errorTxt = "Sai mã OTP";

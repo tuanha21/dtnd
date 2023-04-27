@@ -106,7 +106,7 @@ class _StockOrderConfirmSheetState extends State<StockOrderConfirmSheet>
                         : AppColors.accent_light_03,
                   ),
                   child: Text(
-                    widget.orderData.side.name(context).toUpperCase(),
+                    widget.orderData.side.toName(context).toUpperCase(),
                     style: AppTextStyle.titleSmall_14.copyWith(
                       color: widget.orderData.side.isBuy
                           ? AppColors.semantic_01
@@ -160,11 +160,11 @@ class _StockOrderConfirmSheetState extends State<StockOrderConfirmSheet>
                     key: pinKey,
                     autovalidateMode: AutovalidateMode.disabled,
                     child: TextFormField(
+                      key: pinFormKey,
                       controller: pinController,
                       onChanged: (value) =>
                           pinFormKey.currentState?.didChange(value),
                       validator: pinValidator,
-                      initialValue: pinController.text,
                       autovalidateMode: AutovalidateMode.disabled,
                       decoration: InputDecoration(
                         labelText: S.of(context).pin_code,

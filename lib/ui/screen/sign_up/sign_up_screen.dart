@@ -8,6 +8,7 @@ import 'package:dtnd/ui/screen/sign_up/page/success_sign_up_page.dart';
 import 'package:flutter/material.dart';
 
 import '../../../utilities/validator.dart';
+import 'business/signup_cmd.dart';
 
 class SignUpView extends StatefulWidget {
   const SignUpView({super.key});
@@ -34,26 +35,33 @@ class _SignUpViewState extends State<SignUpView> with AppValidator {
         duration: const Duration(milliseconds: 500), curve: Curves.easeInCubic);
   }
 
+  void onSignUpSuccess(SignUpSuccessDataModel result) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return const SuccessSignUpPage();
+      },
+    ).then((value) {
+      if (value is GoHomeCmd) {
+        Navigator.of(context).pop();
+        Navigator.of(context).pop();
+      } else if (value is ToSignInCmd) {
+        Navigator.of(context).pop(result);
+      } else {
+        Navigator.of(context).pop();
+      }
+    });
+    // controller.nextPage(
+    //     duration: const Duration(milliseconds: 500), curve: Curves.easeInCubic);
+  }
+
   Future<bool> verifyRegisterInfo(String mobile, String mail) {
     return userService.verifyRegisterInfo(mobile, mail);
   }
 
   Future<SignUpSuccessDataModel?> createAccount() {
-    return userService
-        .createAccount(info!.name, info!.phone, info!.email, info!.password)
-        .then(
-      (value) {
-        if (value != null) {
-          return showDialog(
-            context: context,
-            builder: (context) {
-              return const SuccessSignUpPage();
-            },
-          );
-        }
-        return null;
-      },
-    );
+    return userService.createAccount(
+        info!.name, info!.phone, info!.email, info!.password);
   }
 
   Future<bool> verifyOTP(SignUpInfo info) {
@@ -88,7 +96,7 @@ class _SignUpViewState extends State<SignUpView> with AppValidator {
           ),
           FillOTPPage(
             email: info?.email,
-            onSuccess: onSuccess,
+            onSuccess: onSignUpSuccess,
             resendOTP: () => verifyRegisterInfo(info!.phone, info!.email),
             verifyOTP: (otp) =>
                 userService.verifyRegisterOTP(info!.phone, info!.email, otp),

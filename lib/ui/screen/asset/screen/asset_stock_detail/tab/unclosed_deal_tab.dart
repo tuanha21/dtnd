@@ -94,8 +94,7 @@ class _UnclosedDealTabState extends State<UnclosedDealTab>
                     ),
                     Text(
                       '${userService.defaultAccount.value?.portfolioStatus
-                              ?.gainLossValue} đ' ??
-                          '',
+                              ?.gainLossValue ?? ''} đ',
                       style: textTheme.labelMedium,
                     ),
                   ],

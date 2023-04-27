@@ -36,17 +36,6 @@ class OrderHistoryModel implements CoreResponseModel {
   num? cMATCHEDVALUE;
   num? cTOTALRECORD;
 
-  Color get color {
-    switch (cSTATUSNAMEEN) {
-      case "Match":
-        return AppColors.semantic_01;
-      case "Cancel":
-        return AppColors.semantic_03;
-      default:
-        return AppColors.semantic_02;
-    }
-  }
-
   OrderHistoryModel.fromJson(Map<String, dynamic> json) {
     logger.v(json);
     rOWNUM = json['ROW_NUM'];

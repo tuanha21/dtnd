@@ -123,7 +123,7 @@ class ThreePriceHeader extends StatelessWidget {
       rowChildren = [
         Text(S.of(context).volumn, style: bodySmall),
         Text(
-          side.name(context),
+          side.toName(context),
           style: bodySmall?.copyWith(
               color: const Color.fromRGBO(105, 224, 199, 1)),
         )
@@ -132,7 +132,7 @@ class ThreePriceHeader extends StatelessWidget {
     } else {
       rowChildren = [
         Text(
-          side.name(context),
+          side.toName(context),
           style:
               bodySmall?.copyWith(color: const Color.fromRGBO(255, 117, 76, 1)),
         ),

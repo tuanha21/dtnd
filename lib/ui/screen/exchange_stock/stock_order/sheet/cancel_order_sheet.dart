@@ -85,6 +85,10 @@ class _CancelStockOrderSheetState extends State<CancelStockOrderSheet>
         }
         return;
       });
+    } else {
+      setState(() {
+        loading = false;
+      });
     }
   }
 

@@ -9,12 +9,13 @@ mixin AppValidator {
   static final RegExp _phoneNumberRegex =
       RegExp(r'^(\+)?(\d{1,3})?([-.\s]?\d{2,4}[-.\s]?){2,5}\d{2,4}$');
   String? pinValidator(String? pin) {
-    if (pin?.isEmpty ?? true) {
-      return "Không được bỏ trống";
-    }
-    if (pin!.length < 6) {
-      return "Pin quá ngắn";
-    }
+    // TODO : uncomment
+    // if (pin?.isEmpty ?? true) {
+    //   return "Không được bỏ trống";
+    // }
+    // if (pin!.length < 6) {
+    //   return "Pin quá ngắn";
+    // }
     return null;
   }
 

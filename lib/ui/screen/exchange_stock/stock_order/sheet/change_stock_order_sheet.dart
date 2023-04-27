@@ -55,6 +55,8 @@ class _ChangeStockOrderSheetState extends State<ChangeStockOrderSheet>
   final TextEditingController priceController = TextEditingController();
   final TextEditingController volumeController = TextEditingController();
   final GlobalKey<FormState> pinKey = GlobalKey<FormState>();
+  final GlobalKey<FormFieldState<String?>> pinFormKey =
+      GlobalKey<FormFieldState<String?>>();
 
   final TextEditingController pinController = TextEditingController();
   final ILocalStorageService localStorageService = LocalStorageService();
@@ -103,6 +105,7 @@ class _ChangeStockOrderSheetState extends State<ChangeStockOrderSheet>
       errorText = null;
       loading = true;
     });
+    print("pinKey.currentState == null ? ${pinKey.currentState == null}");
     if (pinKey.currentState?.validate() ?? false) {
       exchangeService
           .changeOrder(
@@ -130,6 +133,10 @@ class _ChangeStockOrderSheetState extends State<ChangeStockOrderSheet>
           });
         }
         return;
+      });
+    } else {
+      setState(() {
+        loading = false;
       });
     }
   }
@@ -169,7 +176,7 @@ class _ChangeStockOrderSheetState extends State<ChangeStockOrderSheet>
                   style: textTheme.bodySmall,
                 ),
                 Text(
-                  widget.data.side.name(context),
+                  widget.data.side.toName(context),
                   style: textTheme.bodyMedium
                       ?.copyWith(color: widget.data.side.kColor),
                 ),
@@ -210,44 +217,49 @@ class _ChangeStockOrderSheetState extends State<ChangeStockOrderSheet>
                     ],
                   ),
                   const SizedBox(height: 16),
-                  (localStorageService.sharedPreferences
-                              .getString(pinCodeKey)
-                              ?.isEmpty ??
-                          true)
-                      ? TextFormField(
-                          controller: pinController,
-                          // onChanged: (value) => pinFormKey.currentState?.didChange(value),
-                          validator: pinValidator,
-                          autovalidateMode: AutovalidateMode.disabled,
-                          decoration: InputDecoration(
-                            labelText: S.of(context).pin_code,
-                            // contentPadding: const EdgeInsets.all(0),
-                            floatingLabelBehavior: FloatingLabelBehavior.always,
-                            floatingLabelAlignment:
-                                FloatingLabelAlignment.start,
-                            suffixIcon: InkWell(
-                              onTap: () {
-                                checked = !checked;
-                                if (checked && pinController.text != '') {
-                                  EasyLoading.showToast(
-                                      S.of(context).saved_pin_code,
-                                      maskType: EasyLoadingMaskType.clear);
-                                }
-                                setState(() {});
-                              },
-                              child: Padding(
-                                padding: const EdgeInsets.all(10),
-                                child: SvgPicture.asset(
-                                  AppImages.save_pin_code_icon,
-                                  color: (checked && pinController.text != '')
-                                      ? AppColors.semantic_01
-                                      : AppColors.primary_01,
-                                ),
-                              ),
+                  if (localStorageService.sharedPreferences
+                          .getString(pinCodeKey)
+                          ?.isEmpty ??
+                      true)
+                    TextFormField(
+                      key: pinFormKey,
+                      controller: pinController,
+                      onChanged: (value) {
+                        print(pinFormKey.currentState == null);
+                        pinFormKey.currentState?.didChange(value);
+                        print(pinFormKey.currentState?.value);
+                      },
+                      validator: pinValidator,
+                      autovalidateMode: AutovalidateMode.disabled,
+                      decoration: InputDecoration(
+                        labelText: S.of(context).pin_code,
+                        // contentPadding: const EdgeInsets.all(0),
+                        floatingLabelBehavior: FloatingLabelBehavior.always,
+                        floatingLabelAlignment: FloatingLabelAlignment.start,
+                        suffixIcon: InkWell(
+                          onTap: () {
+                            checked = !checked;
+                            if (checked && pinController.text != '') {
+                              EasyLoading.showToast(
+                                  S.of(context).saved_pin_code,
+                                  maskType: EasyLoadingMaskType.clear);
+                            }
+                            setState(() {});
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.all(10),
+                            child: SvgPicture.asset(
+                              AppImages.save_pin_code_icon,
+                              color: (checked && pinController.text != '')
+                                  ? AppColors.semantic_01
+                                  : AppColors.primary_01,
                             ),
                           ),
-                        )
-                      : const SizedBox(),
+                        ),
+                      ),
+                    )
+                  else
+                    const SizedBox(),
                 ],
               ),
             ),
