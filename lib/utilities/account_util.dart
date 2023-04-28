@@ -9,6 +9,7 @@ import 'package:dtnd/ui/screen/home_base/widget/home_base_nav.dart';
 import 'package:dtnd/ui/screen/login/login_screen.dart';
 import 'package:dtnd/ui/widget/overlay/custom_dialog.dart';
 import 'package:dtnd/ui/widget/overlay/login_first_dialog.dart';
+import 'package:flash/flash_helper.dart';
 import 'package:flutter/material.dart';
 
 import '../generated/l10n.dart';
@@ -107,5 +108,51 @@ class AccountUtil {
     } else {
       return nextFunction?.call();
     }
+  }
+
+  static void deleteAccount(BuildContext context,
+      {VoidCallback? afterDeletion}) {
+    final IUserService userService = UserService();
+    showDialog<bool>(
+      context: context,
+      builder: (context) {
+        return CustomDialog(
+          textButtonAction: S.of(context).ok,
+          textButtonExit: S.of(context).cancel,
+          title: S.of(context).confirm,
+          content: S.of(context).are_you_sure_to_delete_this_account,
+          action: () => Navigator.of(context).pop(true),
+          type: TypeAlert.notification,
+        );
+      },
+    ).then((change) async {
+      if (change ?? false) {
+        try {
+          await userService.deleteAccount();
+          userService.deleteToken();
+          Navigator.of(homeBaseKey.currentContext!)
+              .push<bool>(MaterialPageRoute(
+            builder: (context) => const LoginScreen(),
+          ));
+          afterDeletion?.call();
+          return;
+        } catch (e) {
+          showDialog<bool>(
+            context: context,
+            builder: (context) {
+              return CustomDialog(
+                textButtonAction: S.of(context).ok,
+                textButtonExit: S.of(context).cancel,
+                title: S.of(context).confirm,
+                content: e.toString(),
+                action: () => Navigator.of(context).pop(true),
+                type: TypeAlert.delete,
+              );
+            },
+          );
+        }
+      }
+    });
+    return;
   }
 }

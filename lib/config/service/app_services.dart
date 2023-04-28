@@ -27,7 +27,7 @@ class AppService {
 
   late final String appVersion;
 
-  late final Map<String, dynamic> appConfig;
+  late final RxMap<String, dynamic> appConfig;
 
   late final Rx<ThemeMode> _themeMode;
 
@@ -134,6 +134,7 @@ class AppService {
         appCfg["minimum_version"] == null) {
       throw const NoInternetException();
     } else {
+      appConfig = RxMap<String, dynamic>(appCfg);
       logger.v(appCfg["current_version"] + "/n" + appCfg["minimum_version"]);
       try {
         miniumAppVersionList = appCfg["minimum_version"].split(".");

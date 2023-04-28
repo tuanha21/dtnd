@@ -151,6 +151,9 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Công cụ phân tích"),
         "apply": MessageLookupByLibrary.simpleMessage("Áp dụng"),
         "are_you_sure_to_delete_catalog": m0,
+        "are_you_sure_to_delete_this_account":
+            MessageLookupByLibrary.simpleMessage(
+                "Bạn có chắc chắn muốn xoá tài khoản này?"),
         "asset": MessageLookupByLibrary.simpleMessage("Tài sản"),
         "asset_distribution":
             MessageLookupByLibrary.simpleMessage("Phân bố tài sản"),

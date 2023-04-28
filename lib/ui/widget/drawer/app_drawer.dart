@@ -1,3 +1,4 @@
+import 'package:dtnd/config/service/app_services.dart';
 import 'package:dtnd/data/i_user_service.dart';
 import 'package:dtnd/data/implementations/user_service.dart';
 import 'package:dtnd/generated/l10n.dart';
@@ -24,6 +25,7 @@ class AppDrawer extends StatefulWidget {
 }
 
 class _AppDrawerState extends State<AppDrawer> {
+  final AppService appService = AppService();
   final IUserService userService = UserService();
 
   late final List<FunctionData> list;
@@ -80,7 +82,9 @@ class _AppDrawerState extends State<AppDrawer> {
         FunctionData(
           title: S.current.security,
           iconPath: DrawerIconAsset.shield_security,
-          subTitle: [],
+          subTitle: [
+            "${S.current.delete} ${S.current.account}",
+          ],
         ),
         FunctionData(
           title: S.current.setting,
@@ -238,6 +242,31 @@ class _AppDrawerState extends State<AppDrawer> {
             textStyle: AppTextStyle.titleSmall_14
                 .copyWith(color: isLogin ? AppColors.primary_01 : Colors.white),
           ),
+          const SizedBox(
+            height: 16,
+          ),
+          if (isLogin &&
+              (appService.appConfig["in_appstore_review"] ?? false) == true)
+            SingleColorTextButton(
+              onTap: () {
+                back();
+                if (isLogin) {
+                  return AccountUtil.deleteAccount(context,
+                      afterDeletion: widget.onLogout);
+                } else {
+                  Navigator.of(context).push<bool>(
+                    MaterialPageRoute(
+                      builder: (context) => const LoginScreen(),
+                    ),
+                  );
+                }
+              },
+              text: "${S.of(context).delete} ${S.of(context).account}",
+              color: AppColors.neutral_05,
+              textStyle: AppTextStyle.titleSmall_14.copyWith(
+                color: AppColors.semantic_03,
+              ),
+            ),
           const SizedBox(
             height: 40,
           )
