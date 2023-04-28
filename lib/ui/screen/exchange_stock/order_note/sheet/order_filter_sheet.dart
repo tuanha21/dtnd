@@ -73,7 +73,8 @@ class _OrderFilterSheetState extends State<OrderFilterSheet> {
               listSelect: listSideSelect,
               title: S.of(context).order_type,
               values: listSides,
-              name: (Side? value) => value?.name(context) ?? S.of(context).all,
+              name: (Side? value) =>
+                  value?.toName(context) ?? S.of(context).all,
             ),
             const SizedBox(height: 20),
             _FilterField<OrderStatus>(

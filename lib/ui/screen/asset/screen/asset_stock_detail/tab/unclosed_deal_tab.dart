@@ -85,6 +85,7 @@ class _UnclosedDealTabState extends State<UnclosedDealTab>
                 //     ),
                 //   ],
                 // ),
+                const SizedBox(height: 8),
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,

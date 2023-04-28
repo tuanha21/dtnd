@@ -97,6 +97,7 @@ dependencies:
   carousel_slider: ^4.2.1
   package_info_plus: ^3.1.0
   flash: ^3.0.3+4
+  upgrader: ^6.2.0
 
 dev_dependencies:
   flutter_test:

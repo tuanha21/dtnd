@@ -20,7 +20,7 @@ extension SideX on Side {
     }
   }
 
-  String name(BuildContext context) {
+  String toName(BuildContext context) {
     switch (this) {
       case Side.sell:
         return S.of(context).sell;

@@ -1,9 +1,11 @@
+import 'package:dtnd/=models=/ui_model/user_cmd.dart';
 import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:flutter/material.dart';
 
 import '../../../theme/app_image.dart';
 import '../../../theme/app_textstyle.dart';
+import '../business/signup_cmd.dart';
 
 class SuccessSignUpPage extends StatelessWidget {
   const SuccessSignUpPage({Key? key}) : super(key: key);
@@ -82,35 +84,15 @@ class SuccessSignUpPage extends StatelessWidget {
                                                     color:
                                                         AppColors.linear_01)),
                                       ),
-                                      onTap: () {
-                                        Navigator.of(context).pop();
-                                        Navigator.of(context).pop();
-                                        Navigator.of(context).pop();
-                                        // GoRoute(
-                                        //   path: '/Home',
-                                        //   name: "home",
-                                        //   builder: (BuildContext context,
-                                        //       GoRouterState state) {
-                                        //     return const HomeBase();
-                                        //   },
-                                        // );
-                                      },
+                                      onTap: () => Navigator.of(context)
+                                          .pop(const GoHomeCmd()),
                                     ),
                                   ),
                                   const SizedBox(width: 20),
                                   Expanded(
                                     child: InkWell(
-                                      onTap: () {
-                                        Navigator.of(context).pop();
-                                        Navigator.of(context).pop();
-                                        // GoRoute(
-                                        //   path: '/SignIn',
-                                        //   builder: (BuildContext context,
-                                        //       GoRouterState state) {
-                                        //     return const LoginScreen();
-                                        //   },
-                                        // );
-                                      },
+                                      onTap: () => Navigator.of(context)
+                                          .pop(const ToSignInCmd()),
                                       child: Container(
                                         height: 40,
                                         decoration: const BoxDecoration(
