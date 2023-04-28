@@ -77,53 +77,60 @@ class _AssetStockDetailScreenState extends State<AssetStockDetailScreen>
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: SizedBox(
-        height: 48,
-        child: Row(
+        height: 78,
+        child: Column(
           children: [
-            Builder(
-              builder: (context) {
-                if ((widget.porfolioStock.avaiableVol ?? 0) > 0) {
-                  return Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
-                      child: SingleColorTextButton(
-                          onTap: () async {
-                            if (!UserService().isLogin) {
-                              final toLogin = await showDialog<bool>(
-                                context: context,
-                                builder: (context) {
-                                  return const LoginFirstDialog();
-                                },
-                              );
-                              if (toLogin ?? false) {
-                                if (!mounted) return;
-                                await Navigator.of(context)
-                                    .push(MaterialPageRoute(
-                                  builder: (context) => const LoginScreen(),
-                                ));
-                              }
-                            } else {
-                              final model = await dataCenterService
-                                  .getStocksModelsFromStockCodes(
-                                      [widget.stockCode]);
-                              if ((model?.isNotEmpty ?? false) && mounted) {
-                                StockOrderISheet(model!.first).show(
-                                    context,
-                                    StockOrderSheet(
-                                      stockModel: model.first,
-                                      orderData: null,
+            Row(
+              children: [
+                Builder(
+                  builder: (context) {
+                    if ((widget.porfolioStock.avaiableVol ?? 0) > 0) {
+                      return Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 16),
+                          child: SingleColorTextButton(
+                              onTap: () async {
+                                if (!UserService().isLogin) {
+                                  final toLogin = await showDialog<bool>(
+                                    context: context,
+                                    builder: (context) {
+                                      return const LoginFirstDialog();
+                                    },
+                                  );
+                                  if (toLogin ?? false) {
+                                    if (!mounted) return;
+                                    await Navigator.of(context)
+                                        .push(MaterialPageRoute(
+                                      builder: (context) => const LoginScreen(),
                                     ));
-                              }
-                            }
-                          },
-                          text: S.of(context).sell,
-                          color: AppColors.semantic_03),
-                    ),
-                  );
-                }
-                return Container();
-              },
+                                  }
+                                } else {
+                                  final model = await dataCenterService
+                                      .getStocksModelsFromStockCodes(
+                                          [widget.stockCode]);
+                                  if ((model?.isNotEmpty ?? false) && mounted) {
+                                    StockOrderISheet(model!.first).show(
+                                        context,
+                                        StockOrderSheet(
+                                          stockModel: model.first,
+                                          orderData: null,
+                                        ));
+                                  }
+                                }
+                              },
+                              text: S.of(context).sell,
+                              color: AppColors.semantic_03),
+                        ),
+                      );
+                    }
+                    return Container();
+                  },
+                ),
+              ],
             ),
+            const SizedBox(
+              height: 30,
+            )
           ],
         ),
       ),
@@ -268,7 +275,7 @@ class _AssetStockDetailScreenState extends State<AssetStockDetailScreen>
                 ),
               ),
             ),
-          )
+          ),
         ],
       ),
     );
