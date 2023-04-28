@@ -4342,6 +4342,16 @@ class S {
     );
   }
 
+  /// `Are you sure about deleting this account?`
+  String get are_you_sure_to_delete_this_account {
+    return Intl.message(
+      'Are you sure about deleting this account?',
+      name: 'are_you_sure_to_delete_this_account',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Try again`
   String get try_again {
     return Intl.message(

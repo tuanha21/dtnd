@@ -296,34 +296,39 @@ class _LoginFormState extends State<LoginForm> {
           // socialButton(AppImages.facebook, S.of(context).login_with_facebook),
           const SizedBox(height: 50),
           RichText(
-              text: TextSpan(children: [
-            TextSpan(
-                text: '${S.of(context).you_are_not_account} ',
-                style: titleSmall?.copyWith(
-                    fontWeight: FontWeight.w500, color: AppColors.neutral_04)),
-            TextSpan(
-                text: S.of(context).sign_up,
-                style: titleSmall?.copyWith(
-                    fontWeight: FontWeight.w500, color: AppColors.primary_01),
-                recognizer: TapGestureRecognizer()
-                  ..onTap = () {
-                    Navigator.of(context)
-                        .push(MaterialPageRoute(
-                      builder: (context) => const SignUpView(),
-                    ))
-                        .then((value) {
-                      if (value is SignUpSuccessDataModel) {
-                        print(value.cACCOUNTCODE);
-                        final username = value.cACCOUNTCODE?.substring(
-                                0, (value.cACCOUNTCODE?.length ?? 1) - 1) ??
-                            "";
-                        usernameFormKey.currentState?.didChange(username);
-                        _userController.text = username;
-                      }
-                    });
-                    // GoRouter.of(context).push('/SignUp');
-                  })
-          ]))
+            text: TextSpan(
+              children: [
+                TextSpan(
+                    text: '${S.of(context).you_are_not_account} ',
+                    style: titleSmall?.copyWith(
+                        fontWeight: FontWeight.w500,
+                        color: AppColors.neutral_04)),
+                TextSpan(
+                    text: S.of(context).sign_up,
+                    style: titleSmall?.copyWith(
+                        fontWeight: FontWeight.w500,
+                        color: AppColors.primary_01),
+                    recognizer: TapGestureRecognizer()
+                      ..onTap = () {
+                        Navigator.of(context)
+                            .push(MaterialPageRoute(
+                          builder: (context) => const SignUpView(),
+                        ))
+                            .then((value) {
+                          if (value is SignUpSuccessDataModel) {
+                            // print(value.cACCOUNTCODE);
+                            final username = value.cACCOUNTCODE?.substring(
+                                    0, (value.cACCOUNTCODE?.length ?? 1) - 1) ??
+                                "";
+                            usernameFormKey.currentState?.didChange(username);
+                            _userController.text = username;
+                          }
+                        });
+                        // GoRouter.of(context).push('/SignUp');
+                      })
+              ],
+            ),
+          )
         ],
       ),
     );

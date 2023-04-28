@@ -158,6 +158,9 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Analysis tools"),
         "apply": MessageLookupByLibrary.simpleMessage("apply"),
         "are_you_sure_to_delete_catalog": m0,
+        "are_you_sure_to_delete_this_account":
+            MessageLookupByLibrary.simpleMessage(
+                "Are you sure about deleting this account?"),
         "asset": MessageLookupByLibrary.simpleMessage("Asset"),
         "asset_distribution":
             MessageLookupByLibrary.simpleMessage("Asset distribution"),
