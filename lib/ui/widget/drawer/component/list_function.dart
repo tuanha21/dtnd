@@ -19,8 +19,6 @@ class ListFunction extends StatefulWidget {
 }
 
 class _ListFunctionState extends State<ListFunction> {
-  int? currentIndex;
-
   @override
   void initState() {
     super.initState();
@@ -89,11 +87,6 @@ class _ListFunctionState extends State<ListFunction> {
           ),
         );
         break;
-      case 'Lịch sử lãi lỗ':
-        Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => const RealizedProfitLoss(),
-        ));
-        break;
       case 'Công nợ margin':
         Navigator.of(context).push(MaterialPageRoute(
           builder: (context) => const MarginDebtScreen(),
@@ -124,7 +117,7 @@ class _ListFunctionState extends State<ListFunction> {
                   fit: BoxFit.cover,
                 ),
                 title: Container(
-                  padding: EdgeInsets.zero, //
+                  padding: EdgeInsets.zero,
                   child: Text(
                     item.title,
                     textAlign: TextAlign.left,
