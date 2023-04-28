@@ -475,6 +475,7 @@
   "Repaid": "Đã trả",
   "Outstanding_debt": "Nợ còn lại",
   "Total_remaining_debt": "Tổng nợ còn lại",
-  "Total_interest": "Tổng lãi"
+  "Total_interest": "Tổng lãi",
+  "avg_value": "Giá trị TB"
 
 }

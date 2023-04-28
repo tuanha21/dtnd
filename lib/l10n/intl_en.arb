@@ -474,5 +474,6 @@
   "Repaid": "Repaid",
   "Outstanding_debt": "Outstanding debt",
   "Total_remaining_debt": "Total remaining debt",
-  "Total_interest": "Total interest"
+  "Total_interest": "Total interest",
+  "avg_value": "Avg value"
 }

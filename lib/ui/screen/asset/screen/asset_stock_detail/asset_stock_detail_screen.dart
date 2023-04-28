@@ -190,8 +190,8 @@ class _AssetStockDetailScreenState extends State<AssetStockDetailScreen>
                               const SizedBox(height: 2),
                               Expanded(
                                 child: AssetGridElement(element: {
-                                  S.of(context).mk_value: NumUtils.formatDouble(
-                                      widget.porfolioStock.marketValue)
+                                  S.of(context).avg_price: NumUtils.formatDouble(
+                                      widget.porfolioStock.avgPrice)
                                 }),
                               ),
                             ],

@@ -238,7 +238,7 @@ class _ClosedDealTabState extends State<ClosedDealTab>
                                   ),
                                 ),
                                 Text(
-                                  NumUtils.formatInteger(
+                                  NumUtils.formatDouble(
                                       (assetStockDetailController
                                                   .shareEarnedModel
                                                   .value!
@@ -262,7 +262,7 @@ class _ClosedDealTabState extends State<ClosedDealTab>
                                   ),
                                 ),
                                 Text(
-                                  NumUtils.formatInteger(
+                                  NumUtils.formatDouble(
                                       (assetStockDetailController
                                                   .shareEarnedModel
                                                   .value!
