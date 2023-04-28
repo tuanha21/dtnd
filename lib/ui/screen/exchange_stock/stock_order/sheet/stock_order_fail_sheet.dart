@@ -5,6 +5,7 @@ import 'package:dtnd/ui/widget/overlay/custom_dialog.dart';
 import 'package:dtnd/utilities/error_definition.dart';
 import 'package:flutter/material.dart';
 
+
 class StockOrderFailSheet extends StatefulWidget {
   const StockOrderFailSheet({
     super.key,
@@ -31,6 +32,10 @@ class _StockOrderFailSheetState extends State<StockOrderFailSheet>
         },
         type: TypeAlert.warning,
         content: getErrorMessage(context, widget.rc),
+        clickAble: (){
+          Navigator.of(context).pop(const BackCmd());
+          StockModelUtil.openSheet(context);
+        },
       ),
     );
   }
