@@ -1,4 +1,3 @@
-import 'package:dtnd/=models=/response/share_earned_model.dart';
 import 'package:dtnd/data/i_exchange_service.dart';
 import 'package:dtnd/data/i_user_service.dart';
 import 'package:dtnd/data/implementations/exchange_service.dart';
@@ -10,7 +9,6 @@ import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:dtnd/ui/theme/app_textstyle.dart';
 import 'package:dtnd/ui/widget/calendar/day_input.dart';
 import 'package:dtnd/ui/widget/empty_list_widget.dart';
-import 'package:dtnd/ui/widget/picker/datetime_picker_widget.dart';
 import 'package:dtnd/utilities/num_utils.dart';
 import 'package:dtnd/utilities/time_utils.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +16,9 @@ import 'package:get/get.dart';
 
 class ClosedDealTab extends StatefulWidget {
   const ClosedDealTab({super.key, required this.stockCode});
+
   final String stockCode;
+
   @override
   State<ClosedDealTab> createState() => _ClosedDealTabState();
 }
@@ -194,7 +194,7 @@ class _ClosedDealTabState extends State<ClosedDealTab>
                               ],
                             ),
                             Text(
-                              "Đã khớp",
+                              S.of(context).closed,
                               style: AppTextStyle.bodyMedium_14
                                   .copyWith(color: AppColors.semantic_01),
                             ),
@@ -231,7 +231,7 @@ class _ClosedDealTabState extends State<ClosedDealTab>
                                 child: Column(
                               children: [
                                 Text(
-                                  "Giá bán",
+                                  S.of(context).selling_price,
                                   style: AppTextStyle.labelSmall_10.copyWith(
                                     color: AppColors.neutral_03,
                                     fontWeight: FontWeight.w500,
@@ -255,7 +255,7 @@ class _ClosedDealTabState extends State<ClosedDealTab>
                                 child: Column(
                               children: [
                                 Text(
-                                  "Giá vốn",
+                                  S.of(context).cost_price,
                                   style: AppTextStyle.labelSmall_10.copyWith(
                                     color: AppColors.neutral_03,
                                     fontWeight: FontWeight.w500,
@@ -280,7 +280,7 @@ class _ClosedDealTabState extends State<ClosedDealTab>
                                 crossAxisAlignment: CrossAxisAlignment.end,
                                 children: [
                                   Text(
-                                    "Lãi/lỗ",
+                                    S.of(context).profit_and_loss,
                                     style: AppTextStyle.labelSmall_10.copyWith(
                                       color: AppColors.neutral_03,
                                       fontWeight: FontWeight.w500,

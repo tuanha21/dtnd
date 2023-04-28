@@ -1,9 +1,11 @@
 import 'dart:async';
 
 import 'package:dtnd/=models=/response/user_token.dart';
+import 'package:dtnd/=models=/sign_up_success_data_model.dart';
 import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/screen/forgot_password/forgot_password.dart';
 import 'package:dtnd/ui/screen/login/login_controller.dart';
+import 'package:dtnd/ui/screen/sign_up/sign_up_screen.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/widget/button/async_button.dart';
 import 'package:dtnd/utilities/logger.dart';
@@ -256,7 +258,7 @@ class _LoginFormState extends State<LoginForm> {
                 );
               },
               child: Text(
-                'Quên mật khẩu ?',
+                S.of(context).forgot_password,
                 style: titleSmall?.copyWith(
                     fontWeight: FontWeight.w500, color: AppColors.primary_01),
               ),
@@ -294,20 +296,39 @@ class _LoginFormState extends State<LoginForm> {
           // socialButton(AppImages.facebook, S.of(context).login_with_facebook),
           const SizedBox(height: 50),
           RichText(
-              text: TextSpan(children: [
-            TextSpan(
-                text: '${S.of(context).you_are_not_account} ',
-                style: titleSmall?.copyWith(
-                    fontWeight: FontWeight.w500, color: AppColors.neutral_04)),
-            TextSpan(
-                text: S.of(context).sign_up,
-                style: titleSmall?.copyWith(
-                    fontWeight: FontWeight.w500, color: AppColors.primary_01),
-                recognizer: TapGestureRecognizer()
-                  ..onTap = () {
-                    GoRouter.of(context).push('/SignUp');
-                  })
-          ]))
+            text: TextSpan(
+              children: [
+                TextSpan(
+                    text: '${S.of(context).you_are_not_account} ',
+                    style: titleSmall?.copyWith(
+                        fontWeight: FontWeight.w500,
+                        color: AppColors.neutral_04)),
+                TextSpan(
+                    text: S.of(context).sign_up,
+                    style: titleSmall?.copyWith(
+                        fontWeight: FontWeight.w500,
+                        color: AppColors.primary_01),
+                    recognizer: TapGestureRecognizer()
+                      ..onTap = () {
+                        Navigator.of(context)
+                            .push(MaterialPageRoute(
+                          builder: (context) => const SignUpView(),
+                        ))
+                            .then((value) {
+                          if (value is SignUpSuccessDataModel) {
+                            // print(value.cACCOUNTCODE);
+                            final username = value.cACCOUNTCODE?.substring(
+                                    0, (value.cACCOUNTCODE?.length ?? 1) - 1) ??
+                                "";
+                            usernameFormKey.currentState?.didChange(username);
+                            _userController.text = username;
+                          }
+                        });
+                        // GoRouter.of(context).push('/SignUp');
+                      })
+              ],
+            ),
+          )
         ],
       ),
     );
@@ -366,8 +387,8 @@ class _LoginFormState extends State<LoginForm> {
                     ),
                   );
                 },
-                textButtonAction: 'Quên mật khẩu',
-                textButtonExit: 'Thử lại',
+                textButtonAction: S.of(context).forgot_password,
+                textButtonExit: S.of(context).try_again,
                 type: TypeAlert.notification,
               );
             },

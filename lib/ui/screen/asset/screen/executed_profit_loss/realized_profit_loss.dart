@@ -239,7 +239,7 @@ class _RealizedProfitLossState extends State<RealizedProfitLoss> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text("Tổng cộng", style: AppTextStyle.labelMedium_12),
+                    Text(S.of(context).Total, style: AppTextStyle.labelMedium_12),
                     Text(
                       "${NumUtils.formatDouble(controller.shareEarnedModel.value?.cEARNEDVALUE ?? 0)} (${NumUtils.formatDouble(controller.shareEarnedModel.value?.cEARNEDRATE)}%)",
                       style: AppTextStyle.labelMedium_12.copyWith(

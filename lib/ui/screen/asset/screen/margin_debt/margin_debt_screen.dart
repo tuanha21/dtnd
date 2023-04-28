@@ -15,7 +15,6 @@ import '../../../../../utilities/time_utils.dart';
 import '../../../../theme/app_image.dart';
 import '../../../../theme/app_textstyle.dart';
 import '../../../../widget/calendar/day_input.dart';
-import '../../../../widget/my_appbar.dart';
 import '../../../exchange_stock/stock_order/business/stock_order_flow.dart';
 import '../../../exchange_stock/stock_order/sheet/stock_order_sheet.dart';
 import 'item_margin_debt_widget.dart';
@@ -127,7 +126,7 @@ class _MarginDebtScreenState extends State<MarginDebtScreen> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          'Tổng nợ còn lại',
+                          S.of(context).Total_remaining_debt,
                           style: AppTextStyle.bodyMedium_14.copyWith(
                             color: AppColors.neutral_03,
                           ),
@@ -147,7 +146,7 @@ class _MarginDebtScreenState extends State<MarginDebtScreen> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          'Tổng lãi',
+                          S.of(context).Total_interest,
                           style: AppTextStyle.bodyMedium_14.copyWith(
                             color: AppColors.neutral_03,
                           ),

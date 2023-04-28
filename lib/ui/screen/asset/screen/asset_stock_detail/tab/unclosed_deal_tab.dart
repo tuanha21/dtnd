@@ -43,6 +43,7 @@ class _UnclosedDealTabState extends State<UnclosedDealTab>
   Widget build(BuildContext context) {
     super.build(context);
     final textTheme = Theme.of(context).textTheme;
+
     return SingleChildScrollView(
       child: Column(
         children: [
@@ -53,46 +54,47 @@ class _UnclosedDealTabState extends State<UnclosedDealTab>
                 color: AppColors.neutral_06),
             child: Column(
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      "Deal chưa khớp",
-                      style: textTheme.labelMedium
-                          ?.copyWith(fontWeight: FontWeight.w600),
-                    ),
-                    Text(
-                      "0",
-                      style: textTheme.labelMedium,
-                    ),
-                  ],
-                ),
+                // Row(
+                //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //   children: [
+                //     Text(
+                //       "Deal chưa khớp",
+                //       style: textTheme.labelMedium
+                //           ?.copyWith(fontWeight: FontWeight.w600),
+                //     ),
+                //     Text(
+                //       "0",
+                //       style: textTheme.labelMedium,
+                //     ),
+                //   ],
+                // ),
+                // const SizedBox(height: 8),
+                // Row(
+                //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //   children: [
+                //     Text(
+                //       "Tổng giá vốn",
+                //       style: textTheme.labelMedium
+                //           ?.copyWith(fontWeight: FontWeight.w600),
+                //     ),
+                //     Text(
+                //       "0",
+                //       style: textTheme.labelMedium,
+                //     ),
+                //   ],
+                // ),
                 const SizedBox(height: 8),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      "Tổng giá vốn",
+                      "Tổng lãi/lỗ chưa đóng",
                       style: textTheme.labelMedium
                           ?.copyWith(fontWeight: FontWeight.w600),
                     ),
                     Text(
-                      "0",
-                      style: textTheme.labelMedium,
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 8),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      "Lãi/lỗ chưa đóng",
-                      style: textTheme.labelMedium
-                          ?.copyWith(fontWeight: FontWeight.w600),
-                    ),
-                    Text(
-                      "0",
+                      '${userService.defaultAccount.value?.portfolioStatus
+                              ?.gainLossValue ?? ''} đ',
                       style: textTheme.labelMedium,
                     ),
                   ],

@@ -1,5 +1,4 @@
 import 'package:dtnd/ui/widget/input/thousand_separator_input_formatter.dart';
-import 'package:dtnd/utilities/string_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 

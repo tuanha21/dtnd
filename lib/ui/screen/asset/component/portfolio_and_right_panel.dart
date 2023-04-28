@@ -1,4 +1,3 @@
-import 'package:dtnd/=models=/response/account/base_margin_account_model.dart';
 import 'package:dtnd/=models=/response/account/i_account.dart';
 import 'package:dtnd/data/implementations/network_service.dart';
 import 'package:dtnd/generated/l10n.dart';
@@ -20,7 +19,9 @@ import 'buy_right_widget.dart';
 
 class PortfolioAndRightPanel extends StatefulWidget {
   const PortfolioAndRightPanel({super.key, this.account});
+
   final IAccountModel? account;
+
   @override
   State<PortfolioAndRightPanel> createState() => _PortfolioAndRightPanelState();
 }
@@ -92,7 +93,7 @@ class _PortfolioAndRightPanelState extends State<PortfolioAndRightPanel>
                       Row(
                         children: [
                           Text(
-                            "Lãi/lỗ chưa đóng",
+                            "Tổng lãi/lỗ chưa đóng",
                             style: AppTextStyle.labelMedium_12.copyWith(
                               color: AppColors.neutral_03,
                             ),

@@ -1,4 +1,5 @@
 import 'package:dtnd/=models=/response/order_history_model.dart';
+import 'package:dtnd/=models=/side.dart';
 import 'package:dtnd/data/i_exchange_service.dart';
 import 'package:dtnd/data/i_user_service.dart';
 import 'package:dtnd/data/implementations/exchange_service.dart';
@@ -159,9 +160,9 @@ class _HistoryTabState extends State<HistoryTab>
                               ],
                             ),
                             Text(
-                              listDatas.elementAt(i).cSTATUSNAME ?? "",
+                              listDatas.elementAt(i).side.toName(context),
                               style: AppTextStyle.bodyMedium_14.copyWith(
-                                  color: listDatas.elementAt(i).color),
+                                  color: listDatas.elementAt(i).side.kColor),
                             ),
                           ],
                         ),
@@ -219,7 +220,7 @@ class _HistoryTabState extends State<HistoryTab>
                                         style: AppTextStyle.labelSmall_10,
                                       )
                                     : Text(
-                                        NumUtils.formatInteger((listDatas
+                                        NumUtils.formatDouble((listDatas
                                                     .elementAt(i)
                                                     .cMATCHPRICE ??
                                                 0) /

@@ -4326,6 +4326,246 @@ class S {
       args: [],
     );
   }
+
+  /// `Are you sure you want to use a different account ?`
+  String get Are_you_sure_you_want_to_use_a_different_account {
+    return Intl.message(
+      'Are you sure you want to use a different account ?',
+      name: 'Are_you_sure_you_want_to_use_a_different_account',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Are you sure about deleting this account?`
+  String get are_you_sure_to_delete_this_account {
+    return Intl.message(
+      'Are you sure about deleting this account?',
+      name: 'are_you_sure_to_delete_this_account',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Try again`
+  String get try_again {
+    return Intl.message(
+      'Try again',
+      name: 'try_again',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Foreign net buying by sector`
+  String get Foreign_net_buying_by_sector {
+    return Intl.message(
+      'Foreign net buying by sector',
+      name: 'Foreign_net_buying_by_sector',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Search by stock code`
+  String get Search_by_stock_code {
+    return Intl.message(
+      'Search by stock code',
+      name: 'Search_by_stock_code',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `abort`
+  String get abort {
+    return Intl.message(
+      'abort',
+      name: 'abort',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `person`
+  String get person {
+    return Intl.message(
+      'person',
+      name: 'person',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `history`
+  String get history {
+    return Intl.message(
+      'history',
+      name: 'history',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Open command`
+  String get Open_command {
+    return Intl.message(
+      'Open command',
+      name: 'Open_command',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Close command`
+  String get Close_command {
+    return Intl.message(
+      'Close command',
+      name: 'Close_command',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Detailed Mass`
+  String get Detailed_Mass {
+    return Intl.message(
+      'Detailed Mass',
+      name: 'Detailed_Mass',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Closed`
+  String get closed {
+    return Intl.message(
+      'Closed',
+      name: 'closed',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Total`
+  String get Total {
+    return Intl.message(
+      'Total',
+      name: 'Total',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Interest rate`
+  String get Interest_rate {
+    return Intl.message(
+      'Interest rate',
+      name: 'Interest_rate',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Expiration date`
+  String get Expiration_date {
+    return Intl.message(
+      'Expiration date',
+      name: 'Expiration_date',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Profit`
+  String get Profit {
+    return Intl.message(
+      'Profit',
+      name: 'Profit',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Loan date`
+  String get Loan_date {
+    return Intl.message(
+      'Loan date',
+      name: 'Loan_date',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Interest calculation date`
+  String get Interest_calculation_date {
+    return Intl.message(
+      'Interest calculation date',
+      name: 'Interest_calculation_date',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Loan duration`
+  String get Loan_duration {
+    return Intl.message(
+      'Loan duration',
+      name: 'Loan_duration',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Principal balance`
+  String get Principal_balance {
+    return Intl.message(
+      'Principal balance',
+      name: 'Principal_balance',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Repaid`
+  String get Repaid {
+    return Intl.message(
+      'Repaid',
+      name: 'Repaid',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Outstanding debt`
+  String get Outstanding_debt {
+    return Intl.message(
+      'Outstanding debt',
+      name: 'Outstanding_debt',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Total remaining debt`
+  String get Total_remaining_debt {
+    return Intl.message(
+      'Total remaining debt',
+      name: 'Total_remaining_debt',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Total interest`
+  String get Total_interest {
+    return Intl.message(
+      'Total interest',
+      name: 'Total_interest',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

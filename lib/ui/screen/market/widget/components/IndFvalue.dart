@@ -30,7 +30,7 @@ class _IndFvalueState extends State<IndFvalue> {
           child: Row(
             children: [
               Text(
-                'Khối ngoại mua ròng theo ngành',
+                S.of(context).Foreign_net_buying_by_sector,
                 style: Theme.of(context)
                     .textTheme
                     .labelMedium

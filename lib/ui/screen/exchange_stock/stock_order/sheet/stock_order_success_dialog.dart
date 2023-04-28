@@ -82,9 +82,12 @@ class _StockOrderSuccessSheetState extends State<StockOrderSuccessSheet> {
                         ),
                         Text(
                           widget.orderData?.stockModel.stock.postTo!.name ?? '',
-                          style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                              color: AppColors.neutral_03,
-                              fontWeight: FontWeight.w600),
+                          style: Theme.of(context)
+                              .textTheme
+                              .titleSmall!
+                              .copyWith(
+                                  color: AppColors.neutral_03,
+                                  fontWeight: FontWeight.w600),
                         ),
                       ],
                     ),
@@ -100,7 +103,7 @@ class _StockOrderSuccessSheetState extends State<StockOrderSuccessSheet> {
                         : AppColors.accent_light_03,
                   ),
                   child: Text(
-                    widget.orderData?.side.name(context).toUpperCase() ?? '',
+                    widget.orderData?.side.toName(context).toUpperCase() ?? '',
                     style: AppTextStyle.titleSmall_14.copyWith(
                       color: widget.orderData?.side.isBuy ?? true
                           ? AppColors.semantic_01
@@ -138,7 +141,8 @@ class _StockOrderSuccessSheetState extends State<StockOrderSuccessSheet> {
                   const SizedBox(height: 8),
                   _Row(
                     label: S.of(context).time,
-                    value: TimeUtilities.commonTimeFormat.format(DateTime.now()),
+                    value:
+                        TimeUtilities.commonTimeFormat.format(DateTime.now()),
                   ),
                   const SizedBox(height: 8),
                   _Row(
@@ -186,7 +190,9 @@ class _StockOrderSuccessSheetState extends State<StockOrderSuccessSheet> {
                     child: Text(
                       S.of(context).create_new_order,
                       style: const TextStyle(
-                          fontSize: 14, fontWeight: FontWeight.w700, height: 1.4),
+                          fontSize: 14,
+                          fontWeight: FontWeight.w700,
+                          height: 1.4),
                     ),
                   ),
                 ),
