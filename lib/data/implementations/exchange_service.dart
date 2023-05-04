@@ -302,7 +302,7 @@ class ExchangeService implements IExchangeService {
       p4: TimeUtilities.commonTimeFormat.format(toDay ?? DateTime.now()),
       p5: "0",
       p6: page?.toString() ?? "1",
-      p7: recordPerPage?.toString() ?? "100", // tạm thời để hiển thị ntn
+      p7: recordPerPage?.toString() ?? "10",// hiển thị 10 item
     );
 
     final RequestModel requestModel =
