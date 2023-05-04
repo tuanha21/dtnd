@@ -6,6 +6,7 @@ import 'package:dtnd/ui/screen/market/widget/tabs/market_industry_tab.dart';
 import 'package:dtnd/ui/screen/market/widget/tabs/market_overview_tab.dart';
 import 'package:dtnd/ui/widget/my_appbar.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import '../../../=models=/response/stock.dart';
 import '../../../data/i_data_center_service.dart';
 import '../../../data/implementations/data_center_service.dart';
@@ -78,11 +79,22 @@ class _MarketScreenState extends State<MarketScreen>
           const SizedBox(
             width: 20,
           ),
-          SizedBox.square(
-            dimension: 26,
-            child: Image.asset(
-              AppImages.home_icon_notification,
-            ),
+          InkWell(
+            child: SizedBox.square(
+                dimension: 26,
+                child: Image.asset(
+                  AppImages.home_icon_notification,
+                )),
+            onTap: (){
+              Fluttertoast.showToast(
+                msg: S.of(context).developing_feature,
+                toastLength: Toast.LENGTH_LONG,
+                gravity: ToastGravity.CENTER,
+                timeInSecForIosWeb: 1,
+                backgroundColor: Colors.black,
+                textColor: Colors.white,
+              );
+            },
           ),
           const SizedBox(
             width: 16,

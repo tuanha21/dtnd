@@ -33,6 +33,7 @@ import 'package:dtnd/ui/widget/my_appbar.dart';
 import 'package:dtnd/ui/widget/overlay/login_first_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 
 import '../../widget/overlay/custom_dialog.dart';
@@ -116,11 +117,22 @@ class _AssetScreenState extends State<AssetScreen>
           const SizedBox(
             width: 20,
           ),
-          SizedBox.square(
-            dimension: 26,
-            child: Image.asset(
-              AppImages.home_icon_notification,
-            ),
+          InkWell(
+            child: SizedBox.square(
+                dimension: 26,
+                child: Image.asset(
+                  AppImages.home_icon_notification,
+                )),
+            onTap: (){
+              Fluttertoast.showToast(
+                msg: S.of(context).developing_feature,
+                toastLength: Toast.LENGTH_LONG,
+                gravity: ToastGravity.CENTER,
+                timeInSecForIosWeb: 1,
+                backgroundColor: Colors.black,
+                textColor: Colors.white,
+              );
+            },
           ),
           const SizedBox(
             width: 16,

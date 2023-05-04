@@ -4,6 +4,7 @@ import 'package:dtnd/data/implementations/data_center_service.dart';
 import 'package:dtnd/ui/screen/search/search_screen.dart';
 import 'package:dtnd/ui/screen/stock_detail/stock_detail_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import '../../../generated/l10n.dart';
 
 import '../../theme/app_image.dart';
@@ -64,11 +65,23 @@ class _CommunityScreenState extends State<CommunityScreen>
           const SizedBox(
             width: 20,
           ),
-          SizedBox.square(
-              dimension: 26,
-              child: Image.asset(
-                AppImages.home_icon_notification,
-              )),
+          InkWell(
+            child: SizedBox.square(
+                dimension: 26,
+                child: Image.asset(
+                  AppImages.home_icon_notification,
+                )),
+            onTap: (){
+              Fluttertoast.showToast(
+                msg: S.of(context).developing_feature,
+                toastLength: Toast.LENGTH_LONG,
+                gravity: ToastGravity.CENTER,
+                timeInSecForIosWeb: 1,
+                backgroundColor: Colors.black,
+                textColor: Colors.white,
+              );
+            },
+          ),
           const SizedBox(
             width: 16,
           ),
