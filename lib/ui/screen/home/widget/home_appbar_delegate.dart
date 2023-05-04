@@ -14,6 +14,7 @@ import 'package:dtnd/ui/screen/stock_detail/stock_detail_screen.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 
 const imageHeight = 280.0;
@@ -179,11 +180,23 @@ class HomeAppbarDelegate extends SliverPersistentHeaderDelegate {
                   const SizedBox(
                     width: 20,
                   ),
-                  SizedBox.square(
-                      dimension: 26,
-                      child: Image.asset(
-                        AppImages.home_icon_notification,
-                      )),
+                  InkWell(
+                    child: SizedBox.square(
+                        dimension: 26,
+                        child: Image.asset(
+                          AppImages.home_icon_notification,
+                        )),
+                    onTap: (){
+                      Fluttertoast.showToast(
+                        msg: S.of(context).developing_feature,
+                        toastLength: Toast.LENGTH_LONG,
+                        gravity: ToastGravity.CENTER,
+                        timeInSecForIosWeb: 1,
+                        backgroundColor: Colors.black,
+                        textColor: Colors.white,
+                      );
+                    },
+                  ),
                   const SizedBox(
                     width: 16,
                   ),
