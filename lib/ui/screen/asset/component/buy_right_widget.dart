@@ -104,8 +104,8 @@ class _BuyRightWidgetState extends State<BuyRightWidget> {
                             ),
                             Text(
                               (widget.data?.canRegistered ?? false)
-                                  ? "Có thể đăng ký"
-                                  : "Không thể đăng ký",
+                                  ? S.of(context).you_can_register
+                                  : S.of(context).you_cannot_register,
                               style: textTheme.bodySmall!.copyWith(
                                   color: (widget.data?.canRegistered ?? false)
                                       ? AppColors.semantic_01

@@ -1,20 +1,22 @@
+import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/widget/input/rounded_pinput.dart';
 import 'package:flutter/material.dart';
 
-class RecreateSmartotpPinPage extends StatefulWidget {
-  const RecreateSmartotpPinPage({
+class RecreateSmartOtpPinPage extends StatefulWidget {
+  const RecreateSmartOtpPinPage({
     super.key,
     required this.nextPage,
   });
+
   final VoidCallback nextPage;
 
   @override
-  State<RecreateSmartotpPinPage> createState() =>
-      _RecreateSmartotpPinPageState();
+  State<RecreateSmartOtpPinPage> createState() =>
+      _RecreateSmartOtpPinPageState();
 }
 
-class _RecreateSmartotpPinPageState extends State<RecreateSmartotpPinPage> {
+class _RecreateSmartOtpPinPageState extends State<RecreateSmartOtpPinPage> {
   final TextEditingController controller = TextEditingController();
 
   bool complete = false;
@@ -46,17 +48,17 @@ class _RecreateSmartotpPinPageState extends State<RecreateSmartotpPinPage> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "Nhập lại mật khẩu SmartOTP",
+            S.of(context).re_enter_smartOTP_password,
             style: textTheme.headlineSmall,
           ),
           const SizedBox(height: 16),
           Text(
-            "Quý khách vui lòng ghi nhớ mật khẩu SmartOTP",
+            S.of(context).please_remember_your_smartOTP_password,
             style: textTheme.bodyMedium!.copyWith(color: AppColors.neutral_03),
           ),
           const SizedBox(height: 36),
           Text(
-            "Nhập lại mật khẩu 6 chữ số",
+            S.of(context).re_enter_6_digit_password,
             style: textTheme.bodyLarge,
           ),
           const SizedBox(height: 16),
@@ -68,7 +70,8 @@ class _RecreateSmartotpPinPageState extends State<RecreateSmartotpPinPage> {
             children: [
               Expanded(
                   child: TextButton(
-                      onPressed: onPressed, child: const Text("Xác nhận"))),
+                      onPressed: onPressed,
+                      child: Text(S.of(context).confirm))),
             ],
           )
         ],

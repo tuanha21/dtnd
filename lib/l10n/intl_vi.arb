@@ -476,6 +476,23 @@
   "Outstanding_debt": "Nợ còn lại",
   "Total_remaining_debt": "Tổng nợ còn lại",
   "Total_interest": "Tổng lãi",
-  "avg_value": "Giá trị TB"
+  "avg_value": "Giá trị TB",
+  "increase_decrease_occurred" : "Phát sinh tăng/giảm",
+  "success":"Thành công",
+  "successful_registration_for_smart_otp_generation" : "Đăng ký sinh Smart OTP thành công.",
+  "verification_of_installation":"Xác thực cài đặt",
+  "re_enter_smartOTP_password":"Nhập lại mật khẩu SmartOTP",
+  "re_enter_6_digit_password":" Nhập lại mật khẩu 6 chữ số",
+  "please_remember_your_smartOTP_password":"Quý khách vui lòng ghi nhớ mật khẩu SmartOTP",
+  "setting_up_smartOTP":"Thiết lập SmartOTP",
+  "registering_for_smartOTP":"Đăng ký SmartOTP",
+  "opening_balance":"Số dư đầu kỳ",
+  "closing_balance": "Số dư cuối kỳ",
+  "loan_amount":"Giá trị vay",
+  "loan_interest": "Lãi vay",
+  "portfolio_value": "Giá trị danh mục",
+  "held_funds": "Tiền tạm giữ",
+  "you_can_register":"Có thể đăng ký",
+  "you_cannot_register" : "Không thể đăng ký"
 
 }

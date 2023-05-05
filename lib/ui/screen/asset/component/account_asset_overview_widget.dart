@@ -172,7 +172,7 @@ class _AccountAssetOverviewWidgetState
                                           MainAxisAlignment.spaceBetween,
                                       children: [
                                         Text(
-                                          "Giá trị vay",
+                                          S.of(context).loan_amount,
                                           style: AppTextStyle.labelSmall_10
                                               .copyWith(
                                                   fontWeight: FontWeight.w500),
@@ -191,7 +191,7 @@ class _AccountAssetOverviewWidgetState
                                           MainAxisAlignment.spaceBetween,
                                       children: [
                                         Text(
-                                          "Lãi vay",
+                                          S.of(context).loan_interest,
                                           style: AppTextStyle.labelSmall_10
                                               .copyWith(
                                                   fontWeight: FontWeight.w500),
@@ -210,7 +210,7 @@ class _AccountAssetOverviewWidgetState
                                           MainAxisAlignment.spaceBetween,
                                       children: [
                                         Text(
-                                          "Tỷ lệ an toàn",
+                                          S.of(context).safe_ratio,
                                           style: AppTextStyle.labelSmall_10
                                               .copyWith(
                                                   fontWeight: FontWeight.w500),
@@ -234,7 +234,7 @@ class _AccountAssetOverviewWidgetState
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                "Giá trị danh mục",
+                                S.of(context).portfolio_value,
                                 style: AppTextStyle.labelSmall_10,
                               ),
                               Text(
@@ -321,7 +321,7 @@ class _AccountAssetOverviewWidgetState
                                           MainAxisAlignment.spaceBetween,
                                       children: [
                                         Text(
-                                          "Tiền tạm giữ",
+                                          S.of(context).held_funds,
                                           style: AppTextStyle.labelSmall_10
                                               .copyWith(
                                                   fontWeight: FontWeight.w500),

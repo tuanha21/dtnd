@@ -59,7 +59,7 @@ class _AccountExtensionsWidgetState extends State<AccountExtensionsWidget> {
     ),
     AccountExtensionButton(
       icon: AccountIcon.bank,
-      label: "Sao kê tiền",
+      label: S.current.money_statement,
     ),
     AccountExtensionButton(
         icon: AccountIcon.scan,

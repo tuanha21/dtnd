@@ -31,7 +31,7 @@ class _SmartOTPRegisterState extends State<SmartOTPRegister> {
         onWillPop: () => Future.sync(onWillPop),
       ),
       WillPopScope(
-        child: RecreateSmartotpPinPage(
+        child: RecreateSmartOtpPinPage(
           nextPage: nextPage,
         ),
         onWillPop: () => Future.sync(onWillPop),

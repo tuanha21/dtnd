@@ -1,3 +1,4 @@
+import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/screen/account/icon/account_icon.dart';
 import 'package:flutter/material.dart';
 
@@ -6,7 +7,9 @@ class SmartotpRegistedCatalog extends StatefulWidget {
     super.key,
     required this.onClose,
   });
+
   final VoidCallback onClose;
+
   @override
   State<SmartotpRegistedCatalog> createState() =>
       _SmartotpRegistedCatalogState();
@@ -26,19 +29,20 @@ class _SmartotpRegistedCatalogState extends State<SmartotpRegistedCatalog> {
         ),
         const SizedBox(height: 16),
         Text(
-          "Thành công",
+          S.of(context).success,
           style: textTheme.labelLarge,
         ),
         const SizedBox(height: 16),
         Text(
-          "Đăng ký sinh Smart OTP thành công.",
+          S.of(context).successful_registration_for_smart_otp_generation,
           style: textTheme.titleSmall,
         ),
         const SizedBox(height: 16),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            TextButton(onPressed: widget.onClose, child: const Text("Xác nhận"))
+            TextButton(
+                onPressed: widget.onClose, child: Text(S.of(context).confirm))
           ],
         )
       ],

@@ -4581,6 +4581,176 @@ class S {
       args: [],
     );
   }
+
+  /// `Increase/Decrease occurred`
+  String get increase_decrease_occurred {
+    return Intl.message(
+      'Increase/Decrease occurred',
+      name: 'increase_decrease_occurred',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `success`
+  String get success {
+    return Intl.message(
+      'success',
+      name: 'success',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Successful registration for Smart OTP generation.`
+  String get successful_registration_for_smart_otp_generation {
+    return Intl.message(
+      'Successful registration for Smart OTP generation.',
+      name: 'successful_registration_for_smart_otp_generation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Verification of installation`
+  String get verification_of_installation {
+    return Intl.message(
+      'Verification of installation',
+      name: 'verification_of_installation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Re-enter SmartOTP password`
+  String get re_enter_smartOTP_password {
+    return Intl.message(
+      'Re-enter SmartOTP password',
+      name: 're_enter_smartOTP_password',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Re-enter 6-digit password`
+  String get re_enter_6_digit_password {
+    return Intl.message(
+      'Re-enter 6-digit password',
+      name: 're_enter_6_digit_password',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please remember your SmartOTP password`
+  String get please_remember_your_smartOTP_password {
+    return Intl.message(
+      'Please remember your SmartOTP password',
+      name: 'please_remember_your_smartOTP_password',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Setting up SmartOTP`
+  String get setting_up_smartOTP {
+    return Intl.message(
+      'Setting up SmartOTP',
+      name: 'setting_up_smartOTP',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Registering for SmartOTP`
+  String get registering_for_smartOTP {
+    return Intl.message(
+      'Registering for SmartOTP',
+      name: 'registering_for_smartOTP',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Opening balance`
+  String get opening_balance {
+    return Intl.message(
+      'Opening balance',
+      name: 'opening_balance',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Closing balance`
+  String get closing_balance {
+    return Intl.message(
+      'Closing balance',
+      name: 'closing_balance',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Loan amount`
+  String get loan_amount {
+    return Intl.message(
+      'Loan amount',
+      name: 'loan_amount',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Loan interest`
+  String get loan_interest {
+    return Intl.message(
+      'Loan interest',
+      name: 'loan_interest',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Portfolio value`
+  String get portfolio_value {
+    return Intl.message(
+      'Portfolio value',
+      name: 'portfolio_value',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Held funds`
+  String get held_funds {
+    return Intl.message(
+      'Held funds',
+      name: 'held_funds',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You can register`
+  String get you_can_register {
+    return Intl.message(
+      'You can register',
+      name: 'you_can_register',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You cannot register`
+  String get you_cannot_register {
+    return Intl.message(
+      'You cannot register',
+      name: 'you_cannot_register',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

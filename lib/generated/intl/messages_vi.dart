@@ -214,6 +214,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "close_translations":
             MessageLookupByLibrary.simpleMessage("Giá đóng cửa"),
         "closed": MessageLookupByLibrary.simpleMessage("Đã đóng"),
+        "closing_balance":
+            MessageLookupByLibrary.simpleMessage("Số dư cuối kỳ"),
         "command_type": MessageLookupByLibrary.simpleMessage("Lệnh"),
         "commodities": MessageLookupByLibrary.simpleMessage("Hàng hoá"),
         "community": MessageLookupByLibrary.simpleMessage("Cộng đồng"),
@@ -319,6 +321,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "gain_wvalue": m3,
         "general_information":
             MessageLookupByLibrary.simpleMessage("Thông tin chung"),
+        "held_funds": MessageLookupByLibrary.simpleMessage("Tiền tạm giữ"),
         "hello": MessageLookupByLibrary.simpleMessage("Chào bạn"),
         "help_center":
             MessageLookupByLibrary.simpleMessage("Trung tâm trợ giúp"),
@@ -334,6 +337,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "hours_ago": m4,
         "id_or_business_id_short":
             MessageLookupByLibrary.simpleMessage("CMND/ĐKKD"),
+        "increase_decrease_occurred":
+            MessageLookupByLibrary.simpleMessage("Phát sinh tăng/giảm"),
         "inday_note": MessageLookupByLibrary.simpleMessage("SL trong ngày"),
         "inday_ordnote": MessageLookupByLibrary.simpleMessage("SL trong ngày"),
         "index": MessageLookupByLibrary.simpleMessage("Chỉ số"),
@@ -365,6 +370,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("TÀI CHÍNH THÔNG MINH"),
         "loading_quote2":
             MessageLookupByLibrary.simpleMessage("TƯƠNG LAI SÁNG TẠO"),
+        "loan_amount": MessageLookupByLibrary.simpleMessage("Giá trị vay"),
+        "loan_interest": MessageLookupByLibrary.simpleMessage("Lãi vay"),
         "login": MessageLookupByLibrary.simpleMessage("Đăng nhập"),
         "login_exception_required_OTP": MessageLookupByLibrary.simpleMessage(
             "Hãy đăng nhập bằng mã OTP được gửi về máy của bạn"),
@@ -449,6 +456,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Tên đăng nhập cần tối thiểu 6 ký tự"),
         "ok": MessageLookupByLibrary.simpleMessage("Đồng ý"),
         "open_translations": MessageLookupByLibrary.simpleMessage("Giá mở cửa"),
+        "opening_balance": MessageLookupByLibrary.simpleMessage("Số dư đầu kỳ"),
         "order": MessageLookupByLibrary.simpleMessage("Đặt lệnh"),
         "order_cancellation_confirmation":
             MessageLookupByLibrary.simpleMessage("Xác nhận hủy lệnh"),
@@ -483,6 +491,11 @@ class MessageLookup extends MessageLookupByLibrary {
         "pin_code": MessageLookupByLibrary.simpleMessage("Mã pin"),
         "please_input_password":
             MessageLookupByLibrary.simpleMessage("Nhập password"),
+        "please_remember_your_smartOTP_password":
+            MessageLookupByLibrary.simpleMessage(
+                "Quý khách vui lòng ghi nhớ mật khẩu SmartOTP"),
+        "portfolio_value":
+            MessageLookupByLibrary.simpleMessage("Giá trị danh mục"),
         "price": MessageLookupByLibrary.simpleMessage("Giá"),
         "price_alert": MessageLookupByLibrary.simpleMessage("Cảnh báo giá"),
         "price_decrease": MessageLookupByLibrary.simpleMessage("Giảm giá"),
@@ -497,12 +510,18 @@ class MessageLookup extends MessageLookupByLibrary {
         "qa_money": MessageLookupByLibrary.simpleMessage("Tiền gửi"),
         "qa_pack_enrol": MessageLookupByLibrary.simpleMessage("ĐK gói"),
         "ratio": MessageLookupByLibrary.simpleMessage("Tỷ lệ"),
+        "re_enter_6_digit_password":
+            MessageLookupByLibrary.simpleMessage(" Nhập lại mật khẩu 6 chữ số"),
+        "re_enter_smartOTP_password":
+            MessageLookupByLibrary.simpleMessage("Nhập lại mật khẩu SmartOTP"),
         "ref": MessageLookupByLibrary.simpleMessage("TC"),
         "register_right_failed": MessageLookupByLibrary.simpleMessage(
             "Đăng ký quyền không thành công"),
         "register_right_successfully":
             MessageLookupByLibrary.simpleMessage("Đăng ký quyền thành công"),
         "register_to_buy": MessageLookupByLibrary.simpleMessage("Đăng ký mua"),
+        "registering_for_smartOTP":
+            MessageLookupByLibrary.simpleMessage("Đăng ký SmartOTP"),
         "rename_catalog_to": m8,
         "return_command": MessageLookupByLibrary.simpleMessage("Về sổ lệnh"),
         "return_home_page":
@@ -534,6 +553,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "setting": MessageLookupByLibrary.simpleMessage("Cài đặt"),
         "setting_and_secutiry":
             MessageLookupByLibrary.simpleMessage("Cài đặt và bảo mật"),
+        "setting_up_smartOTP":
+            MessageLookupByLibrary.simpleMessage("Thiết lập SmartOTP"),
         "sex": MessageLookupByLibrary.simpleMessage("Giới tính"),
         "sign_up": MessageLookupByLibrary.simpleMessage("Đăng ký"),
         "signal_type": MessageLookupByLibrary.simpleMessage("Loại tín hiệu"),
@@ -571,8 +592,12 @@ class MessageLookup extends MessageLookupByLibrary {
         "stocks_you_interested":
             MessageLookupByLibrary.simpleMessage("Các mã CK mà bạn quan tâm"),
         "subsidiaries": MessageLookupByLibrary.simpleMessage("Công ty con"),
+        "success": MessageLookupByLibrary.simpleMessage("Thành công"),
         "success_reset_password": MessageLookupByLibrary.simpleMessage(
             "Chúc mừng quý khách đã thay đổi mật khẩu thành công!"),
+        "successful_registration_for_smart_otp_generation":
+            MessageLookupByLibrary.simpleMessage(
+                "Đăng ký sinh Smart OTP thành công."),
         "successfully_create_assistant_account":
             MessageLookupByLibrary.simpleMessage(
                 "Tạo tài khoản\ntrợ lý ảo thành công"),
@@ -636,6 +661,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "validate_same_repassword": MessageLookupByLibrary.simpleMessage(
             "Mật khẩu nhập lại không trùng khớp"),
         "value": MessageLookupByLibrary.simpleMessage("Giá trị"),
+        "verification_of_installation":
+            MessageLookupByLibrary.simpleMessage("Xác thực cài đặt"),
         "vietnam": MessageLookupByLibrary.simpleMessage("Việt nam"),
         "virtual_assistant": MessageLookupByLibrary.simpleMessage("Trợ lý ảo"),
         "virtual_assistant_available":
@@ -661,6 +688,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "you_are_not_account":
             MessageLookupByLibrary.simpleMessage("Bạn chưa có tài khoản?"),
         "you_are_not_logged_in":
-            MessageLookupByLibrary.simpleMessage("Bạn chưa đăng nhập")
+            MessageLookupByLibrary.simpleMessage("Bạn chưa đăng nhập"),
+        "you_can_register":
+            MessageLookupByLibrary.simpleMessage("Có thể đăng ký"),
+        "you_cannot_register":
+            MessageLookupByLibrary.simpleMessage("Không thể đăng ký")
       };
 }

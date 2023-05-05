@@ -9,7 +9,6 @@ import 'package:dtnd/ui/theme/app_textstyle.dart';
 import 'package:dtnd/ui/widget/appbar/simple_appbar.dart';
 import 'package:dtnd/ui/widget/calendar/day_input.dart';
 import 'package:dtnd/ui/widget/empty_list_widget.dart';
-import 'package:dtnd/ui/widget/icon/sheet_header.dart';
 import 'package:dtnd/utilities/num_utils.dart';
 import 'package:dtnd/utilities/time_utils.dart';
 import 'package:flutter/material.dart';
@@ -131,7 +130,7 @@ class _MoneyStatementSheetState extends State<MoneyStatementSheet> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    "Số dư đầu kỳ",
+                                    S.of(context).opening_balance,
                                     style: AppTextStyle.labelMedium_12.copyWith(
                                       color: AppColors.neutral_03,
                                     ),
@@ -149,7 +148,7 @@ class _MoneyStatementSheetState extends State<MoneyStatementSheet> {
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
                               Text(
-                                "Số dư cuối kỳ",
+                                S.of(context).closing_balance,
                                 style: AppTextStyle.labelMedium_12.copyWith(
                                   color: AppColors.neutral_03,
                                 ),

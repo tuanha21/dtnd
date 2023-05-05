@@ -224,6 +224,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "Select the stocks you are interested in. You can update later"),
         "close_translations": MessageLookupByLibrary.simpleMessage("Close"),
         "closed": MessageLookupByLibrary.simpleMessage("Closed"),
+        "closing_balance":
+            MessageLookupByLibrary.simpleMessage("Closing balance"),
         "command_type": MessageLookupByLibrary.simpleMessage("command type"),
         "commodities": MessageLookupByLibrary.simpleMessage("Commodities"),
         "community": MessageLookupByLibrary.simpleMessage("Community"),
@@ -334,6 +336,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "gain_wvalue": m3,
         "general_information":
             MessageLookupByLibrary.simpleMessage("General information"),
+        "held_funds": MessageLookupByLibrary.simpleMessage("Held funds"),
         "hello": MessageLookupByLibrary.simpleMessage("Hello"),
         "help_center": MessageLookupByLibrary.simpleMessage("Help center"),
         "hi": MessageLookupByLibrary.simpleMessage("Hi"),
@@ -347,6 +350,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "home": MessageLookupByLibrary.simpleMessage("Home"),
         "hours_ago": m4,
         "id_or_business_id_short": MessageLookupByLibrary.simpleMessage("ID"),
+        "increase_decrease_occurred":
+            MessageLookupByLibrary.simpleMessage("Increase/Decrease occurred"),
         "inday_note": MessageLookupByLibrary.simpleMessage("Inday note"),
         "inday_ordnote":
             MessageLookupByLibrary.simpleMessage("Inday ordernote"),
@@ -377,6 +382,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("INTELLIGENT FINANCE"),
         "loading_quote2":
             MessageLookupByLibrary.simpleMessage("CREATIVE FUTURE"),
+        "loan_amount": MessageLookupByLibrary.simpleMessage("Loan amount"),
+        "loan_interest": MessageLookupByLibrary.simpleMessage("Loan interest"),
         "login": MessageLookupByLibrary.simpleMessage("Login"),
         "login_exception_required_OTP": MessageLookupByLibrary.simpleMessage(
             "Login with OTP code sent to your phone"),
@@ -459,6 +466,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "Username requires at least 6 characters"),
         "ok": MessageLookupByLibrary.simpleMessage("ok"),
         "open_translations": MessageLookupByLibrary.simpleMessage("Open"),
+        "opening_balance":
+            MessageLookupByLibrary.simpleMessage("Opening balance"),
         "order": MessageLookupByLibrary.simpleMessage("Order"),
         "order_cancellation_confirmation": MessageLookupByLibrary.simpleMessage(
             "Order cancellation confirmation"),
@@ -493,6 +502,11 @@ class MessageLookup extends MessageLookupByLibrary {
         "pin_code": MessageLookupByLibrary.simpleMessage("Pin code"),
         "please_input_password":
             MessageLookupByLibrary.simpleMessage("Input password"),
+        "please_remember_your_smartOTP_password":
+            MessageLookupByLibrary.simpleMessage(
+                "Please remember your SmartOTP password"),
+        "portfolio_value":
+            MessageLookupByLibrary.simpleMessage("Portfolio value"),
         "price": MessageLookupByLibrary.simpleMessage("Price"),
         "price_alert": MessageLookupByLibrary.simpleMessage("Price alert"),
         "price_decrease":
@@ -511,6 +525,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "qa_pack_enrol":
             MessageLookupByLibrary.simpleMessage("Pack enrollment"),
         "ratio": MessageLookupByLibrary.simpleMessage("Ratio"),
+        "re_enter_6_digit_password":
+            MessageLookupByLibrary.simpleMessage("Re-enter 6-digit password"),
+        "re_enter_smartOTP_password":
+            MessageLookupByLibrary.simpleMessage("Re-enter SmartOTP password"),
         "ref": MessageLookupByLibrary.simpleMessage("Ref"),
         "register_right_failed":
             MessageLookupByLibrary.simpleMessage("Register right failed"),
@@ -518,6 +536,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Register right successfully"),
         "register_to_buy":
             MessageLookupByLibrary.simpleMessage("Register to buy"),
+        "registering_for_smartOTP":
+            MessageLookupByLibrary.simpleMessage("Registering for SmartOTP"),
         "rename_catalog_to": m8,
         "return_command":
             MessageLookupByLibrary.simpleMessage("return command"),
@@ -551,6 +571,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "setting": MessageLookupByLibrary.simpleMessage("Setting"),
         "setting_and_secutiry":
             MessageLookupByLibrary.simpleMessage("Setting and secutiry"),
+        "setting_up_smartOTP":
+            MessageLookupByLibrary.simpleMessage("Setting up SmartOTP"),
         "sex": MessageLookupByLibrary.simpleMessage("Sex"),
         "sign_up": MessageLookupByLibrary.simpleMessage("Sign up"),
         "signal_type": MessageLookupByLibrary.simpleMessage("Signal type"),
@@ -587,8 +609,12 @@ class MessageLookup extends MessageLookupByLibrary {
         "stocks_you_interested": MessageLookupByLibrary.simpleMessage(
             "Stocks you are interested in"),
         "subsidiaries": MessageLookupByLibrary.simpleMessage("Subsidiaries"),
+        "success": MessageLookupByLibrary.simpleMessage("success"),
         "success_reset_password": MessageLookupByLibrary.simpleMessage(
             "Congratulations, you have successfully changed your password!"),
+        "successful_registration_for_smart_otp_generation":
+            MessageLookupByLibrary.simpleMessage(
+                "Successful registration for Smart OTP generation."),
         "successfully_create_assistant_account":
             MessageLookupByLibrary.simpleMessage(
                 "Create virtual assistant successfully"),
@@ -651,6 +677,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "validate_same_repassword": MessageLookupByLibrary.simpleMessage(
             "Re-entered password does not match"),
         "value": MessageLookupByLibrary.simpleMessage("Value"),
+        "verification_of_installation": MessageLookupByLibrary.simpleMessage(
+            "Verification of installation"),
         "vietnam": MessageLookupByLibrary.simpleMessage("Vietnam"),
         "virtual_assistant":
             MessageLookupByLibrary.simpleMessage("Virtual assistant"),
@@ -677,6 +705,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "you_are_not_account":
             MessageLookupByLibrary.simpleMessage("You are not account?"),
         "you_are_not_logged_in":
-            MessageLookupByLibrary.simpleMessage("You are not yet logged in")
+            MessageLookupByLibrary.simpleMessage("You are not yet logged in"),
+        "you_can_register":
+            MessageLookupByLibrary.simpleMessage("You can register"),
+        "you_cannot_register":
+            MessageLookupByLibrary.simpleMessage("You cannot register")
       };
 }

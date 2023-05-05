@@ -51,7 +51,7 @@ class _CashTransactionComponentState extends State<CashTransactionComponent> {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   Text(
-                    "Phát sinh tăng/giảm",
+                    S.of(context).increase_decrease_occurred,
                     style: AppTextStyle.bodySmall_8.copyWith(
                       color: AppColors.neutral_04,
                       fontWeight: FontWeight.w600,
@@ -75,7 +75,7 @@ class _CashTransactionComponentState extends State<CashTransactionComponent> {
                       overflow: TextOverflow.ellipsis,
                       text: TextSpan(children: [
                         TextSpan(
-                            text: "Chi tiết: ",
+                            text: "${S.of(context).detail}: ",
                             style: AppTextStyle.labelSmall_10
                                 .copyWith(color: AppColors.neutral_01)),
                         TextSpan(

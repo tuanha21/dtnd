@@ -475,5 +475,23 @@
   "Outstanding_debt": "Outstanding debt",
   "Total_remaining_debt": "Total remaining debt",
   "Total_interest": "Total interest",
-  "avg_value": "Avg value"
+  "avg_value": "Avg value",
+  "increase_decrease_occurred" : "Increase/Decrease occurred",
+  "success" : "success",
+  "successful_registration_for_smart_otp_generation": "Successful registration for Smart OTP generation.",
+  "verification_of_installation": "Verification of installation",
+  "re_enter_smartOTP_password": "Re-enter SmartOTP password",
+  "re_enter_6_digit_password": "Re-enter 6-digit password",
+  "please_remember_your_smartOTP_password": "Please remember your SmartOTP password",
+  "setting_up_smartOTP":"Setting up SmartOTP",
+  "registering_for_smartOTP":"Registering for SmartOTP",
+  "opening_balance": "Opening balance",
+  "closing_balance":"Closing balance",
+  "loan_amount":"Loan amount",
+  "loan_interest":"Loan interest",
+  "portfolio_value":"Portfolio value",
+  "held_funds":"Held funds",
+  "you_can_register":"You can register",
+  "you_cannot_register":"You cannot register"
+
 }

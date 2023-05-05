@@ -56,7 +56,7 @@ class _AuthenSmsotpPinPageState extends State<AuthenSmsotpPinPage> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "Xác thực cài đặt",
+            S.of(context).verification_of_installation,
             style: textTheme.headlineSmall,
           ),
           const SizedBox(height: 16),
