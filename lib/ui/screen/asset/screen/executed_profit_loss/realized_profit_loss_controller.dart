@@ -41,8 +41,8 @@ class RealizedProfitLossController {
   final Rx<ShareEarnedModel?> listSearch = Rxn();
   final INetworkService networkService = NetworkService();
 
-  Future<ShareEarnedModel?> getAllShareEarned(
-      DateTime? fromDay, DateTime? toDay, String? maCP) async {
+  Future<ShareEarnedModel?> getAllShareEarned(DateTime? fromDay,
+      DateTime? toDay, String? maCP, int? recordPerPage) async {
     if (!userService.isLogin) {
       return null;
     }
@@ -57,7 +57,7 @@ class RealizedProfitLossController {
               TimeUtilities.getPreviousDateTime(TimeUtilities.month(1))),
           p4: TimeUtilities.commonTimeFormat.format(toDay ?? DateTime.now()),
           p5: "1",
-          p6: "20"),
+          p6: recordPerPage != null ? recordPerPage.toString() : '10'),
     );
     logger.v(requestModel.toJson());
     final listDetail = await networkService

@@ -194,7 +194,7 @@ class ExchangeService implements IExchangeService {
       p4: TimeUtilities.commonTimeFormat.format(toDay ?? DateTime.now()),
       p5: status ?? "",
       p7: page?.toString() ?? "1",
-      p8: recordPerPage?.toString() ?? "100",
+      p8: recordPerPage?.toString() ?? "15",
     );
 
     final RequestModel requestModel =
@@ -302,7 +302,7 @@ class ExchangeService implements IExchangeService {
       p4: TimeUtilities.commonTimeFormat.format(toDay ?? DateTime.now()),
       p5: "0",
       p6: page?.toString() ?? "1",
-      p7: recordPerPage?.toString() ?? "10",// hiển thị 10 item
+      p7: recordPerPage?.toString() ?? "10", // hiển thị 10 item
     );
 
     final RequestModel requestModel =
