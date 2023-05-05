@@ -30,6 +30,8 @@ class _MoneyStatementSheetState extends State<MoneyStatementSheet> {
   late DateTime toDay;
   late DateTime firstDay;
   late DateTime lastDay;
+  bool isLoading = false;
+  final ScrollController _scrollController = ScrollController();
 
   @override
   void initState() {
@@ -37,11 +39,16 @@ class _MoneyStatementSheetState extends State<MoneyStatementSheet> {
     toDay = DateTime.now();
     firstDay = TimeUtilities.getPreviousDateTime(TimeUtilities.month(3));
     lastDay = toDay;
+    _scrollController.addListener(_scrollListener); // L
     super.initState();
     getData();
   }
 
-  Future<void> getData() async {
+  Future<void> getData({int? recordPerPage}) async {
+    setState(() {
+      isLoading = true; // Đánh dấu đang tải dữ liệu
+    });
+    await Future.delayed(const Duration(seconds: 1));
     final res = await exchangeService.getCashTransactions(
       fromDay: fromDay,
       toDay: toDay,
@@ -49,7 +56,27 @@ class _MoneyStatementSheetState extends State<MoneyStatementSheet> {
     list.clear();
     total = res.total;
     list.addAll(res.listHistory.reversed);
-    setState(() {});
+    setState(() {
+      isLoading = false;
+    });
+  }
+
+  @override
+  void dispose() {
+    _scrollController.removeListener(
+        _scrollListener); // Hủy lắng nghe sự kiện cuộn khi dispose
+    super.dispose();
+  }
+
+  void _scrollListener() {
+    if (_scrollController.offset >=
+            _scrollController.position.maxScrollExtent &&
+        !_scrollController.position.outOfRange) {
+      // Đã cuộn xuống dưới cùng
+      getData(
+          recordPerPage: list.length +
+              5); // Gọi hàm getData với recordPerPage tăng thêm 5 đơn vị
+    }
   }
 
   @override
@@ -64,11 +91,6 @@ class _MoneyStatementSheetState extends State<MoneyStatementSheet> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // const SheetHeader(
-            //   title: "Sao kê tiền",
-            //   backData: null,
-            // ),
-            // const Divider().paddingZero,
             const Divider(height: 1).paddingZero,
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -165,19 +187,22 @@ class _MoneyStatementSheetState extends State<MoneyStatementSheet> {
                     ),
                     Expanded(
                       child: ListView.builder(
+                        controller: _scrollController,
                         shrinkWrap: true,
-                        itemCount: list.length,
+                        itemCount: list.length + 1,
                         itemBuilder: (context, index) {
-                          return CashTransactionComponent(
-                            data: list.elementAt(index),
-                          );
+                          if (index < list.length) {
+                            return CashTransactionComponent(
+                              data: list.elementAt(index),
+                            );
+                          } else if (index == list.length && isLoading) {
+                            return _buildLoader();
+                          } else {
+                            return const SizedBox.shrink();
+                          }
                         },
                       ),
                     ),
-                    // for (var item in list)
-                    //   CashTransactionComponent(
-                    //     data: item,
-                    //   )
                   ],
                 );
               }
@@ -187,4 +212,12 @@ class _MoneyStatementSheetState extends State<MoneyStatementSheet> {
       ),
     );
   }
+}
+
+Widget _buildLoader() {
+  return Container(
+    alignment: Alignment.center,
+    padding: const EdgeInsets.symmetric(vertical: 16.0),
+    child: const CircularProgressIndicator(),
+  );
 }

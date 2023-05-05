@@ -83,10 +83,6 @@ class _ShareStatementSheetState extends State<ShareStatementSheet> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const Divider(height: 1).paddingZero,
-            // const SheetHeader(
-            //   title: "Sao kê chứng khoán",
-            //   backData: null,
-            // ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Row(
