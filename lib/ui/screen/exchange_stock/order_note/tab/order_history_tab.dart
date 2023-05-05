@@ -36,22 +36,34 @@ class _OrderHistoryTabState extends State<OrderHistoryTab> {
   List<OrderHistoryModel>? listOrderShow;
   OrderFilterData? orderFilterData;
 
+  bool isLoading = false;
+  final ScrollController _scrollController = ScrollController();
+
   @override
   void initState() {
     fromDay = TimeUtilities.getPreviousDateTime(TimeUtilities.month(1));
     toDay = DateTime.now();
     firstDay = TimeUtilities.getPreviousDateTime(TimeUtilities.month(3));
     lastDay = toDay;
+    _scrollController.addListener(_scrollListener);
     super.initState();
     getData();
   }
 
-  Future<void> getData({DateTime? fromDay, DateTime? toDay}) async {
+  Future<void> getData(
+      {DateTime? fromDay, DateTime? toDay, int? recordPerPage}) async {
+    setState(() {
+      isLoading = true;
+    });
+    await Future.delayed(const Duration(seconds: 1));
+
     listOrder = await exchangeService.getOrdersHistory(userService,
-        fromDay: fromDay, toDay: toDay);
+        fromDay: fromDay, toDay: toDay, recordPerPage: recordPerPage);
     listOrderShow = List<OrderHistoryModel>.from(listOrder ?? []);
     if (mounted) {
-      setState(() {});
+      setState(() {
+        isLoading = false;
+      });
     }
   }
 
@@ -81,6 +93,20 @@ class _OrderHistoryTabState extends State<OrderHistoryTab> {
   }
 
   @override
+  void dispose() {
+    _scrollController.removeListener(_scrollListener);
+    super.dispose();
+  }
+
+  void _scrollListener() {
+    if (_scrollController.offset >=
+            _scrollController.position.maxScrollExtent &&
+        !_scrollController.position.outOfRange) {
+      getData(recordPerPage: listOrderShow!.length + 5);
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
     return Padding(
@@ -101,7 +127,10 @@ class _OrderHistoryTabState extends State<OrderHistoryTab> {
                     });
                     getData();
                   }),
-              const SizedBox(width: 16,child: Text('-'),),
+              const SizedBox(
+                width: 16,
+                child: Text('-'),
+              ),
               DayInput(
                 initialDay: toDay,
                 firstDay: firstDay,
@@ -157,45 +186,40 @@ class _OrderHistoryTabState extends State<OrderHistoryTab> {
           const SizedBox(height: 8),
           Expanded(child: Builder(
             builder: (context) {
-              // final List<Widget> records = [];
-              // if (listOrderShow?.isNotEmpty ?? false) {
-              //   for (OrderHistoryModel record in listOrderShow!) {
-              //     records.add(OrderRecordWidget(
-              //       data: record,
-              //     ));
-              //   }
-              // }
               if (listOrderShow?.isEmpty ?? true) {
                 return const Padding(
                   padding: EdgeInsets.symmetric(vertical: 16),
                   child: EmptyListWidget(),
                 );
               }
-              return ListView(
-                children: [
-                  Container(
-                    padding: const EdgeInsets.all(16),
-                    decoration: const BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.all(Radius.circular(12))),
-                    child: Column(
-                      children: [
-                        for (int i = 0; i < (listOrderShow?.length ?? 0); i++)
-                          Column(
-                            children: [
-                              i != 0 ? const Divider(height: 1) : Container(),
-                              Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 4),
-                                child: OrderHistoryElement(
-                                    model: listOrderShow!.elementAt(i)),
-                              ),
-                            ],
-                          )
-                      ],
-                    ),
-                  ),
-                ],
+              return Container(
+                padding: const EdgeInsets.all(16),
+                decoration: const BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.all(Radius.circular(12))),
+                child: ListView.builder(
+                  shrinkWrap: true,
+                  controller: _scrollController,
+                  itemCount: listOrderShow!.length + 1,
+                  itemBuilder: (BuildContext context, int index) {
+                    if (index < listOrderShow!.length) {
+                      return Column(
+                        children: [
+                          index != 0 ? const Divider(height: 1) : Container(),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 4),
+                            child: OrderHistoryElement(
+                                model: listOrderShow!.elementAt(index)),
+                          ),
+                        ],
+                      );
+                    } else if (index == listOrderShow!.length && isLoading) {
+                      return _buildLoader();
+                    } else {
+                      return const SizedBox.shrink();
+                    }
+                  },
+                ),
               );
             },
           ))
@@ -203,4 +227,12 @@ class _OrderHistoryTabState extends State<OrderHistoryTab> {
       ),
     );
   }
+}
+
+Widget _buildLoader() {
+  return Container(
+    alignment: Alignment.center,
+    padding: const EdgeInsets.symmetric(vertical: 16.0),
+    child: const CircularProgressIndicator(),
+  );
 }

@@ -125,6 +125,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "available_vol" : MessageLookupByLibrary.simpleMessage("KL khả dụng"),
     "average" : MessageLookupByLibrary.simpleMessage("Trung bình"),
     "avg_price" : MessageLookupByLibrary.simpleMessage("Giá TB"),
+    "avg_value" : MessageLookupByLibrary.simpleMessage("Giá trị TB"),
     "bank" : MessageLookupByLibrary.simpleMessage("Ngân hàng"),
     "base" : MessageLookupByLibrary.simpleMessage("Cơ sở"),
     "base_asset" : MessageLookupByLibrary.simpleMessage("Tài sản cơ sở"),

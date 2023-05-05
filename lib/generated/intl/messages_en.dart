@@ -125,6 +125,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "available_vol" : MessageLookupByLibrary.simpleMessage("Available vol"),
     "average" : MessageLookupByLibrary.simpleMessage("Average"),
     "avg_price" : MessageLookupByLibrary.simpleMessage("Avg price"),
+    "avg_value" : MessageLookupByLibrary.simpleMessage("Avg value"),
     "bank" : MessageLookupByLibrary.simpleMessage("Bank"),
     "base" : MessageLookupByLibrary.simpleMessage("Base"),
     "base_asset" : MessageLookupByLibrary.simpleMessage("Base asset"),

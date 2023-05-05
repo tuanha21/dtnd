@@ -28,18 +28,30 @@ class _IndayOrderTabState extends State<IndayOrderTab> {
   List<BaseOrderModel>? listOrder;
   List<BaseOrderModel>? listOrderShow;
   OrderFilterData? orderFilterData;
+  bool isLoading = false;
+  final ScrollController _scrollController = ScrollController();
+
   @override
   void initState() {
+    _scrollController.addListener(_scrollListener);
     super.initState();
     getIndayOrder();
   }
 
-  Future<void> getIndayOrder() async {
+  Future<void> getIndayOrder({int? recordPerPage}) async {
+    setState(() {
+      isLoading = true;
+    });
+    await Future.delayed(const Duration(seconds: 1));
+
     listOrder = await userService.getIndayOrder(
-        accountCode: "${userService.token.value!.user}9", recordPerPage: 10);
+        accountCode: "${userService.token.value!.user}9",
+        recordPerPage: recordPerPage);
     listOrderShow = List<BaseOrderModel>.from(listOrder ?? []);
     if (mounted) {
-      setState(() {});
+      setState(() {
+        isLoading = false;
+      });
     }
   }
 
@@ -66,6 +78,21 @@ class _IndayOrderTabState extends State<IndayOrderTab> {
       listOrderShow!.removeWhere((e) => toRemove.contains(e));
     }
     setState(() {});
+  }
+
+  @override
+  void dispose() {
+    _scrollController.removeListener(_scrollListener);
+    super.dispose();
+  }
+
+  void _scrollListener() {
+    if (_scrollController.offset >=
+            _scrollController.position.maxScrollExtent &&
+        !_scrollController.position.outOfRange) {
+      // Đã cuộn xuống dưới cùng
+      getIndayOrder(recordPerPage: listOrderShow!.length + 5);
+    }
   }
 
   @override
@@ -117,53 +144,54 @@ class _IndayOrderTabState extends State<IndayOrderTab> {
           listOrderShow?.isEmpty == false
               ? Expanded(child: Builder(
                   builder: (context) {
-                    return ListView(
-                      children: [
-                        Container(
-                          padding: const EdgeInsets.all(16),
-                          decoration: const BoxDecoration(
-                              color: Colors.white,
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(12))),
-                          child: Column(
-                            children: [
-                              for (int i = 0;
-                                  i < (listOrderShow?.length ?? 0);
-                                  i++)
-                                Column(
-                                  children: [
-                                    i != 0
-                                        ? const Divider(height: 1)
-                                        : Container(),
-                                    OrderRecordWidget(
-                                      data: listOrderShow!.elementAt(i),
-                                      onChange: () async {
-                                        ChangeStockOrderISheet(
-                                                listOrderShow!.elementAt(i))
-                                            .show(
-                                                context,
-                                                ChangeStockOrderSheet(
-                                                    data: listOrderShow!
-                                                        .elementAt(i)))
-                                            .then((value) => getIndayOrder());
-                                      },
-                                      onCancel: () async {
-                                        CancelStockOrderISheet(
-                                                listOrderShow!.elementAt(i))
-                                            .show(
-                                                context,
-                                                CancelStockOrderSheet(
-                                                    data: listOrderShow!
-                                                        .elementAt(i)))
-                                            .then((value) => getIndayOrder());
-                                      },
-                                    )
-                                  ],
-                                )
-                            ],
-                          ),
-                        ),
-                      ],
+                    return Container(
+                      padding: const EdgeInsets.all(16),
+                      decoration: const BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.all(Radius.circular(12))),
+                      child: ListView.builder(
+                          shrinkWrap: true,
+                          controller: _scrollController,
+                          itemCount: listOrderShow!.length + 1,
+                          itemBuilder: (BuildContext context, int index) {
+                            if (index < listOrderShow!.length) {
+                              return Column(
+                                children: [
+                                  index != 0
+                                      ? const Divider(height: 1)
+                                      : Container(),
+                                  OrderRecordWidget(
+                                    data: listOrderShow!.elementAt(index),
+                                    onChange: () async {
+                                      ChangeStockOrderISheet(
+                                              listOrderShow!.elementAt(index))
+                                          .show(
+                                              context,
+                                              ChangeStockOrderSheet(
+                                                  data: listOrderShow!
+                                                      .elementAt(index)))
+                                          .then((value) => getIndayOrder());
+                                    },
+                                    onCancel: () async {
+                                      CancelStockOrderISheet(
+                                              listOrderShow!.elementAt(index))
+                                          .show(
+                                              context,
+                                              CancelStockOrderSheet(
+                                                  data: listOrderShow!
+                                                      .elementAt(index)))
+                                          .then((value) => getIndayOrder());
+                                    },
+                                  )
+                                ],
+                              );
+                            } else if (index == listOrderShow!.length &&
+                                isLoading) {
+                              return _buildLoader();
+                            } else {
+                              return const SizedBox.shrink();
+                            }
+                          }),
                     );
                   },
                 ))
@@ -175,4 +203,12 @@ class _IndayOrderTabState extends State<IndayOrderTab> {
       ),
     );
   }
+}
+
+Widget _buildLoader() {
+  return Container(
+    alignment: Alignment.center,
+    padding: const EdgeInsets.symmetric(vertical: 16.0),
+    child: const CircularProgressIndicator(),
+  );
 }
