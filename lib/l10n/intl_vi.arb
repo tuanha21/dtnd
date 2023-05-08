@@ -493,6 +493,11 @@
   "portfolio_value": "Giá trị danh mục",
   "held_funds": "Tiền tạm giữ",
   "you_can_register":"Có thể đăng ký",
-  "you_cannot_register" : "Không thể đăng ký"
+  "automatic_accumulation" : "Tích lũy tự động",
+  "short_term_accumulation" : "Tích lũy ngắn hạn",
+  "accumulation_quote1" : "Gói tích lũy tự động cập nhật dựa trên số dư tiền đạt hạn mức sản phẩm vào cuối ngày giao dịch.",
+  "accumulation_quote2" : "Số dư tiền bao gồm tiền mặt và tiền bán trong ngày chờ về.",
+  "accumulation_quote3" : "Số dư tích lũy được tự động tính vào sức mua.",
+  "accumulation_quote4" : "Tiền tích lũy đã sử dụng cho giao dịch cổ phiếu được tất toán với lãi suất trước hạn."
 
 }

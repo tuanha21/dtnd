@@ -106,6 +106,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "account_statement" : MessageLookupByLibrary.simpleMessage("Sao kê tài khoản"),
     "accumulate" : MessageLookupByLibrary.simpleMessage("Tích luỹ"),
     "accumulation" : MessageLookupByLibrary.simpleMessage("Tích lũy"),
+    "accumulation_quote1" : MessageLookupByLibrary.simpleMessage("Gói tích lũy tự động cập nhật dựa trên số dư tiền đạt hạn mức sản phẩm vào cuối ngày giao dịch."),
+    "accumulation_quote2" : MessageLookupByLibrary.simpleMessage("Số dư tiền bao gồm tiền mặt và tiền bán trong ngày chờ về."),
+    "accumulation_quote3" : MessageLookupByLibrary.simpleMessage("Số dư tích lũy được tự động tính vào sức mua."),
+    "accumulation_quote4" : MessageLookupByLibrary.simpleMessage("Tiền tích lũy đã sử dụng cho giao dịch cổ phiếu được tất toán với lãi suất trước hạn."),
     "add_catalog" : MessageLookupByLibrary.simpleMessage("Thêm danh mục"),
     "add_following_stock" : MessageLookupByLibrary.simpleMessage("Thêm mã theo dõi"),
     "add_stock" : MessageLookupByLibrary.simpleMessage("Thêm mã"),
@@ -121,6 +125,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "asset" : MessageLookupByLibrary.simpleMessage("Tài sản"),
     "asset_distribution" : MessageLookupByLibrary.simpleMessage("Phân bố tài sản"),
     "associated_company" : MessageLookupByLibrary.simpleMessage("Công ty liên kết"),
+    "automatic_accumulation" : MessageLookupByLibrary.simpleMessage("Tích lũy tự động"),
     "available_balanc" : MessageLookupByLibrary.simpleMessage("SD khả dụng"),
     "available_vol" : MessageLookupByLibrary.simpleMessage("KL khả dụng"),
     "average" : MessageLookupByLibrary.simpleMessage("Trung bình"),
@@ -415,6 +420,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "setting_and_secutiry" : MessageLookupByLibrary.simpleMessage("Cài đặt và bảo mật"),
     "setting_up_smartOTP" : MessageLookupByLibrary.simpleMessage("Thiết lập SmartOTP"),
     "sex" : MessageLookupByLibrary.simpleMessage("Giới tính"),
+    "short_term_accumulation" : MessageLookupByLibrary.simpleMessage("Tích lũy ngắn hạn"),
     "sign_up" : MessageLookupByLibrary.simpleMessage("Đăng ký"),
     "signal_type" : MessageLookupByLibrary.simpleMessage("Loại tín hiệu"),
     "sold_returning" : MessageLookupByLibrary.simpleMessage("Bán chờ về"),
@@ -502,7 +508,6 @@ class MessageLookup extends MessageLookupByLibrary {
     "wrong_password" : MessageLookupByLibrary.simpleMessage("Mật khẩu không chính xác"),
     "you_are_not_account" : MessageLookupByLibrary.simpleMessage("Bạn chưa có tài khoản?"),
     "you_are_not_logged_in" : MessageLookupByLibrary.simpleMessage("Bạn chưa đăng nhập"),
-    "you_can_register" : MessageLookupByLibrary.simpleMessage("Có thể đăng ký"),
-    "you_cannot_register" : MessageLookupByLibrary.simpleMessage("Không thể đăng ký")
+    "you_can_register" : MessageLookupByLibrary.simpleMessage("Có thể đăng ký")
   };
 }

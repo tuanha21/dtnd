@@ -228,4 +228,7 @@ class AppImages {
   static const String arrowDown = "assets/svg/arrow-down.svg";
 
   static const String infoCircle = "assets/svg/info-circle.svg";
+
+  static const String walletBackground = "assets/images/wallet_background.png";
+  static const String light = "assets/images/light.png";
 }

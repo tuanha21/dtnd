@@ -492,6 +492,13 @@
   "portfolio_value":"Portfolio value",
   "held_funds":"Held funds",
   "you_can_register":"You can register",
-  "you_cannot_register":"You cannot register"
+  "you_cannot_register":"You cannot register",
+  "short_term_accumulation" : "Short term accumulation",
+  "automatic_accumulation" : "Automatic accumulation",
+  "accumulation_quote1" : "Accumulation package is automatically updated based on the product limit balance at the end of the trading day.",
+  "accumulation_quote2" : "Cash balance includes cash and sales on the day of arrival.",
+  "accumulation_quote3" : "The accumulated balance is automatically counted towards purchasing power.",
+  "accumulation_quote4" : "Accumulated money used for stock trading is settled with early interest rate."
+
 
 }
