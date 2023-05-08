@@ -4781,6 +4781,66 @@ class S {
       args: [],
     );
   }
+
+  /// `Short term accumulation`
+  String get short_term_accumulation {
+    return Intl.message(
+      'Short term accumulation',
+      name: 'short_term_accumulation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Automatic accumulation`
+  String get automatic_accumulation {
+    return Intl.message(
+      'Automatic accumulation',
+      name: 'automatic_accumulation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Accumulation package is automatically updated based on the product limit balance at the end of the trading day.`
+  String get accumulation_quote1 {
+    return Intl.message(
+      'Accumulation package is automatically updated based on the product limit balance at the end of the trading day.',
+      name: 'accumulation_quote1',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Cash balance includes cash and sales on the day of arrival.`
+  String get accumulation_quote2 {
+    return Intl.message(
+      'Cash balance includes cash and sales on the day of arrival.',
+      name: 'accumulation_quote2',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `The accumulated balance is automatically counted towards purchasing power.`
+  String get accumulation_quote3 {
+    return Intl.message(
+      'The accumulated balance is automatically counted towards purchasing power.',
+      name: 'accumulation_quote3',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Accumulated money used for stock trading is settled with early interest rate.`
+  String get accumulation_quote4 {
+    return Intl.message(
+      'Accumulated money used for stock trading is settled with early interest rate.',
+      name: 'accumulation_quote4',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

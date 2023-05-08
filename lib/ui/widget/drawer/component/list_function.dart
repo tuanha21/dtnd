@@ -1,6 +1,7 @@
 import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/screen/account/sheet/money_statement_sheet.dart';
 import 'package:dtnd/ui/screen/account/sheet/share_statement_sheet.dart';
+import 'package:dtnd/ui/screen/accumulation/accumulation.dart';
 import 'package:dtnd/ui/screen/asset/screen/margin_debt/margin_debt_screen.dart';
 import 'package:dtnd/ui/screen/asset/screen/executed_profit_loss/realized_profit_loss.dart';
 import 'package:dtnd/ui/screen/exchange_stock/order_note/screen/order_note_screen.dart';
@@ -27,7 +28,12 @@ class _ListFunctionState extends State<ListFunction> {
   }
 
   void _onTapBigTitle(FunctionData item) {
-    if (item.subTitle!.isEmpty == true) {
+    if (item.title == 'Tích luỹ') {
+      Navigator.of(context).push(MaterialPageRoute(
+        builder: (context) => const Accumlation(),
+      ));
+      return;
+    } else if (item.subTitle!.isEmpty == true) {
       onDeveloping();
       return;
     }
