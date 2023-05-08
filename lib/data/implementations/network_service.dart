@@ -184,6 +184,44 @@ class NetworkService implements INetworkService {
   }
 
   @override
+  Future<http.Response> get(
+    Uri url, {
+    Map<String, String>? headers,
+  }) {
+    return client.get(url, headers: headers);
+  }
+
+  @override
+  Future<http.Response> post(
+    Uri url, {
+    Map<String, String>? headers,
+    Object? body,
+    Encoding? encoding,
+  }) {
+    return client.post(url, headers: headers, body: body, encoding: encoding);
+  }
+
+  @override
+  Future<http.Response> put(
+    Uri url, {
+    Map<String, String>? headers,
+    Object? body,
+    Encoding? encoding,
+  }) {
+    return client.put(url, headers: headers, body: body, encoding: encoding);
+  }
+
+  @override
+  Future<http.Response> delete(
+    Uri url, {
+    Map<String, String>? headers,
+    Object? body,
+    Encoding? encoding,
+  }) {
+    return client.delete(url, headers: headers, body: body, encoding: encoding);
+  }
+
+  @override
   Future<void> init(Environment environment) async {
     this.environment = environment;
     await dotenv.load(fileName: environment.envFileName);
