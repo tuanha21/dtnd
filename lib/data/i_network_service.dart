@@ -1,5 +1,7 @@
 // ignore_for_file: library_prefixes
 
+import 'dart:convert';
+
 import 'package:dtnd/=models=/check_account_success_data_model.dart';
 import 'package:dtnd/=models=/core_response_model.dart';
 import 'package:dtnd/=models=/index.dart';
@@ -55,9 +57,22 @@ import '../=models=/response/stock_derivative_model.dart';
 import '../=models=/response/stock_his.dart';
 import '../=models=/response/stock_industry.dart';
 import '../=models=/response/stock_vol.dart';
+import 'package:http/http.dart' as http;
 
 abstract class INetworkService {
   late final IO.Socket socket;
+
+  /// GET POST PUT DELETE
+  Future<http.Response> get(Uri url, {Map<String, String>? headers});
+
+  Future<http.Response> post(Uri url,
+      {Map<String, String>? headers, Object? body, Encoding? encoding});
+
+  Future<http.Response> put(Uri url,
+      {Map<String, String>? headers, Object? body, Encoding? encoding});
+
+  Future<http.Response> delete(Uri url,
+      {Map<String, String>? headers, Object? body, Encoding? encoding});
 
   //init service
   Future<void> init(Environment environment);
