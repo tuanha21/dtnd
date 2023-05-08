@@ -492,6 +492,9 @@
   "portfolio_value":"Portfolio value",
   "held_funds":"Held funds",
   "you_can_register":"You can register",
-  "you_cannot_register":"You cannot register"
+  "you_cannot_register":"You cannot register",
+  "permission_information":"Permission information",
+  "register_the_right_to_buy":"register the right to buy",
+  "purchase_rights_history":"purchase rights history"
 
 }

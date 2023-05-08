@@ -5,7 +5,6 @@ import 'package:dtnd/data/i_network_service.dart';
 import 'package:dtnd/data/i_user_service.dart';
 import 'package:dtnd/utilities/logger.dart';
 import 'package:dtnd/utilities/time_utils.dart';
-import 'package:get/get.dart';
 
 import 'asset_chart_element.dart';
 import 'base_margin_account_model.dart';
@@ -18,6 +17,7 @@ abstract class IAccountModel implements CoreResponseModel {
   PortfolioStatus? portfolioStatus;
   List<AssetChartElementModel>? listAssetChart;
   List<UnexecutedRightModel>? listUnexecutedRight;
+  List<UnexecutedRightModel>? listRightBuild;
 
   IAccountModel({required this.accCode});
 
@@ -113,6 +113,29 @@ abstract class IAccountModel implements CoreResponseModel {
       },
     );
     listUnexecutedRight = res ?? [];
+    return res ?? [];
+  }
+
+  Future<List<UnexecutedRightModel>> getListRightBuy(
+      IUserService userService, INetworkService networkService) async {
+    final requestModel = RequestModel(
+      userService,
+      group: "B",
+      data: RequestDataModel.cursorType(
+          cmd: "ListRightBuy", p1: accCode, p2: "", p5: "1", p6: "20"),
+    );
+    final res =
+        await networkService.requestTraditionalApiResList<UnexecutedRightModel>(
+      requestModel,
+      hasError: (p0) {
+        if (p0["data"].runtimeType is List && p0["data"].isNotEmpty) {
+          return p0["data"].first["DUMMY"] != null;
+        }
+        return false;
+      },
+    );
+    print('res$res');
+    listRightBuild = res ?? [];
     return res ?? [];
   }
 

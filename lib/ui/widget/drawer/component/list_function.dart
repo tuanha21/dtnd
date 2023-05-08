@@ -10,6 +10,8 @@ import 'package:dtnd/ui/widget/drawer/logic/function_data.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
+import '../../../screen/exercise_right/exercise_right_screen.dart';
+
 class ListFunction extends StatefulWidget {
   const ListFunction({super.key, required this.list});
   final List<FunctionData> list;
@@ -51,7 +53,9 @@ class _ListFunctionState extends State<ListFunction> {
         onDeveloping();
         break;
       case 'Thực hiện quyền':
-        onDeveloping();
+        Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => const ExerciseRightScreen(),
+        ));
         break;
       case 'Chuyển chứng khoán':
         onDeveloping();

@@ -493,6 +493,9 @@
   "portfolio_value": "Giá trị danh mục",
   "held_funds": "Tiền tạm giữ",
   "you_can_register":"Có thể đăng ký",
-  "you_cannot_register" : "Không thể đăng ký"
+  "you_cannot_register" : "Không thể đăng ký",
+  "permission_information": "Thông tin quyền",
+  "register_the_right_to_buy":"Đăng ký quyền mua",
+  "purchase_rights_history":"Lịch sử quyền mua"
 
 }

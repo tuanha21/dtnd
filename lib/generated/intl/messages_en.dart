@@ -495,6 +495,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "password": MessageLookupByLibrary.simpleMessage("Password"),
         "period_of_validity":
             MessageLookupByLibrary.simpleMessage("Period of validity"),
+        "permission_information":
+            MessageLookupByLibrary.simpleMessage("Permission information"),
         "person": MessageLookupByLibrary.simpleMessage("person"),
         "personal_infomation":
             MessageLookupByLibrary.simpleMessage("Personal information"),
@@ -514,6 +516,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "price_increase":
             MessageLookupByLibrary.simpleMessage("Price increase"),
         "profit_and_loss": MessageLookupByLibrary.simpleMessage("Profit/Loss"),
+        "purchase_rights_history":
+            MessageLookupByLibrary.simpleMessage("purchase rights history"),
         "purchasing_ability":
             MessageLookupByLibrary.simpleMessage("Purchasing ability"),
         "qa_base": MessageLookupByLibrary.simpleMessage("Base"),
@@ -534,6 +538,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Register right failed"),
         "register_right_successfully":
             MessageLookupByLibrary.simpleMessage("Register right successfully"),
+        "register_the_right_to_buy":
+            MessageLookupByLibrary.simpleMessage("register the right to buy"),
         "register_to_buy":
             MessageLookupByLibrary.simpleMessage("Register to buy"),
         "registering_for_smartOTP":

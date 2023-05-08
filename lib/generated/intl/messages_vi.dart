@@ -484,6 +484,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "password": MessageLookupByLibrary.simpleMessage("Mật khẩu"),
         "period_of_validity":
             MessageLookupByLibrary.simpleMessage("Thời gian hiệu lực"),
+        "permission_information":
+            MessageLookupByLibrary.simpleMessage("Thông tin quyền"),
         "person": MessageLookupByLibrary.simpleMessage("Cá nhân"),
         "personal_infomation":
             MessageLookupByLibrary.simpleMessage("Thông tin cá nhân"),
@@ -501,6 +503,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "price_decrease": MessageLookupByLibrary.simpleMessage("Giảm giá"),
         "price_increase": MessageLookupByLibrary.simpleMessage("Tăng giá"),
         "profit_and_loss": MessageLookupByLibrary.simpleMessage("Lãi/lỗ"),
+        "purchase_rights_history":
+            MessageLookupByLibrary.simpleMessage("Lịch sử quyền mua"),
         "purchasing_ability": MessageLookupByLibrary.simpleMessage("Sức mua"),
         "qa_base": MessageLookupByLibrary.simpleMessage("Cơ sở"),
         "qa_bond": MessageLookupByLibrary.simpleMessage("Trái phiếu"),
@@ -519,6 +523,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "Đăng ký quyền không thành công"),
         "register_right_successfully":
             MessageLookupByLibrary.simpleMessage("Đăng ký quyền thành công"),
+        "register_the_right_to_buy":
+            MessageLookupByLibrary.simpleMessage("Đăng ký quyền mua"),
         "register_to_buy": MessageLookupByLibrary.simpleMessage("Đăng ký mua"),
         "registering_for_smartOTP":
             MessageLookupByLibrary.simpleMessage("Đăng ký SmartOTP"),
