@@ -1,3 +1,5 @@
+import 'package:dtnd/generated/l10n.dart';
+import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 extension DateTimeX on DateTime {
@@ -31,6 +33,7 @@ class TimeUtilities {
   static final DateFormat dateMonthTimeFormat = DateFormat("dd/MM");
   static final DateFormat onlyHourFormat = DateFormat("HH:mm");
   static final DateFormat monthYearTimeFormat = DateFormat("MM/yy");
+  static final DateFormat isoFormat = DateFormat("yyyy-MM-ddTHH:mm:ssZ");
 
   static bool isLeapYear(DateTime dateTime) {
     if (dateTime.year % 4 == 0) {
@@ -119,6 +122,24 @@ class TimeUtilities {
   static String parseDateToString(DateTime dateTime) {
     String date = commonTimeFormat.format(dateTime);
     return date;
+  }
+
+  static String getTimeAgo(BuildContext context, DateTime? from) {
+    final Duration duration;
+    if (from == null) {
+      duration = Duration.zero;
+    } else {
+      duration = DateTime.now().difference(from);
+    }
+    final String ago;
+    if (duration.inHours > 23) {
+      ago = S.of(context).days_ago(duration.inDays);
+    } else if (duration.inHours > 0) {
+      ago = S.of(context).hours_ago(duration.inHours);
+    } else {
+      ago = S.of(context).minutes_ago(duration.inMinutes);
+    }
+    return ago;
   }
 }
 

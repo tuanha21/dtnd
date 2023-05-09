@@ -1,5 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:dtnd/=models=/response/community/post_model.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
+import 'package:dtnd/utilities/num_utils.dart';
+import 'package:dtnd/utilities/time_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -7,9 +10,11 @@ import '../../../theme/app_color.dart';
 import 'post_detail_page.dart';
 
 class PostWidget extends StatelessWidget {
-  final Widget? chart;
-
-  const PostWidget({Key? key, this.chart}) : super(key: key);
+  final PostModel post;
+  const PostWidget({
+    Key? key,
+    required this.post,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +22,9 @@ class PostWidget extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         Navigator.push(context, MaterialPageRoute(builder: (context) {
-          return const CommentDetailPage();
+          return CommentDetailPage(
+            post: post,
+          );
         }));
       },
       child: Container(
@@ -61,7 +68,7 @@ class PostWidget extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Stryker',
+                        post.user,
                         style:
                             bodySmall_12?.copyWith(fontWeight: FontWeight.w700),
                       ),
@@ -72,19 +79,20 @@ class PostWidget extends StatelessWidget {
                           const SizedBox(width: 4),
                           Flexible(
                             child: Text(
-                              'Stryker',
+                              TimeUtilities.getTimeAgo(
+                                  context, post.createTime),
                               style: bodySmall_12?.copyWith(
                                   fontSize: 10, color: AppColors.neutral_03),
                             ),
                           ),
                           const SizedBox(width: 19),
-                          SvgPicture.asset(AppImages.eyes),
-                          const SizedBox(width: 5),
-                          Text(
-                            '104',
-                            style: bodySmall_12?.copyWith(
-                                fontSize: 10, color: AppColors.neutral_03),
-                          )
+                          // SvgPicture.asset(AppImages.eyes),
+                          // const SizedBox(width: 5),
+                          // Text(
+                          //   NumUtils.formatInteger(post.viewCount),
+                          //   style: bodySmall_12?.copyWith(
+                          //       fontSize: 10, color: AppColors.neutral_03),
+                          // )
                         ],
                       ),
                     ],
@@ -94,95 +102,99 @@ class PostWidget extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 10),
-            Text(
-              '#HPG 🔥',
-              style: bodySmall_12?.copyWith(
-                  fontSize: 12, color: AppColors.text_blue),
-            ),
-            const SizedBox(height: 4),
-            RichText(
-                text: TextSpan(children: [
-              TextSpan(
-                text: '#HPG 🔥 ',
-                style: bodySmall_12?.copyWith(
-                    fontSize: 12, color: AppColors.text_blue),
-              ),
-              TextSpan(
-                text: '#HPG đang tăng 8% 🔥',
-                style: bodySmall_12?.copyWith(fontSize: 12),
-              ),
-            ])),
-            const SizedBox(height: 8),
-            chart ?? const SizedBox(),
             Row(
               children: [
-                Text(
-                  'Giá vào',
-                  style: bodySmall_12?.copyWith(
-                      fontSize: 12, color: AppColors.neutral_03),
-                ),
-                const SizedBox(width: 4),
-                Text(
-                  '1.000.000',
-                  style: bodySmall_12?.copyWith(
-                      fontSize: 12, fontWeight: FontWeight.w600),
-                ),
-                const SizedBox(width: 46),
-                Text(
-                  'Lãi/Lỗ',
-                  style: bodySmall_12?.copyWith(
-                      fontSize: 12, color: AppColors.neutral_03),
-                ),
-                const SizedBox(width: 4),
-                SvgPicture.asset(AppImages.arrowUp),
-                Text(
-                  '16.3%',
-                  style: bodySmall_12?.copyWith(
-                      fontSize: 12,
-                      color: AppColors.semantic_01,
-                      fontWeight: FontWeight.w600),
+                Expanded(
+                  child: Text(
+                    post.content,
+                    style: bodySmall_12?.copyWith(fontSize: 12),
+                  ),
                 )
               ],
             ),
+
+            // const SizedBox(height: 8),
+            // Row(
+            //   children: [
+            //     Text(
+            //       'Giá vào',
+            //       style: bodySmall_12?.copyWith(
+            //           fontSize: 12, color: AppColors.neutral_03),
+            //     ),
+            //     const SizedBox(width: 4),
+            //     Text(
+            //       '1.000.000',
+            //       style: bodySmall_12?.copyWith(
+            //           fontSize: 12, fontWeight: FontWeight.w600),
+            //     ),
+            //     const SizedBox(width: 46),
+            //     Text(
+            //       'Lãi/Lỗ',
+            //       style: bodySmall_12?.copyWith(
+            //           fontSize: 12, color: AppColors.neutral_03),
+            //     ),
+            //     const SizedBox(width: 4),
+            //     SvgPicture.asset(AppImages.arrowUp),
+            //     Text(
+            //       '16.3%',
+            //       style: bodySmall_12?.copyWith(
+            //           fontSize: 12,
+            //           color: AppColors.semantic_01,
+            //           fontWeight: FontWeight.w600),
+            //     )
+            //   ],
+            // ),
             const SizedBox(height: 16),
             Row(
               children: [
                 Expanded(
                     child: Row(
                   children: [
+                    SvgPicture.asset(AppImages.eyes),
+                    const SizedBox(width: 4),
+                    Text(
+                      NumUtils.formatInteger(post.viewCount),
+                      style: bodySmall_12?.copyWith(
+                          fontSize: 12, color: AppColors.neutral_03),
+                    )
+                  ],
+                )),
+                Expanded(
+                    child: Row(
+                  children: [
                     SvgPicture.asset(AppImages.message2),
                     const SizedBox(width: 4),
                     Text(
-                      '10',
+                      NumUtils.formatInteger(post.commentCount),
                       style: bodySmall_12?.copyWith(
                           fontSize: 12, color: AppColors.neutral_03),
                     )
                   ],
                 )),
-                Expanded(
-                    child: Row(
-                  children: [
-                    SvgPicture.asset(AppImages.share),
-                    const SizedBox(width: 4),
-                    Text(
-                      '4',
-                      style: bodySmall_12?.copyWith(
-                          fontSize: 12, color: AppColors.neutral_03),
-                    )
-                  ],
-                )),
-                Expanded(
-                    child: Row(
-                  children: [
-                    SvgPicture.asset(AppImages.heart),
-                    const SizedBox(width: 4),
-                    Text(
-                      '50.5K',
-                      style: bodySmall_12?.copyWith(
-                          fontSize: 12, color: AppColors.neutral_03),
-                    )
-                  ],
-                )),
+                // Expanded(
+                //     child: Row(
+                //   children: [
+                //     SvgPicture.asset(AppImages.share),
+                //     const SizedBox(width: 4),
+                //     Text(
+                //       NumUtils.formatInteger(post.viewCount),
+                //       style: bodySmall_12?.copyWith(
+                //           fontSize: 12, color: AppColors.neutral_03),
+                //     )
+                //   ],
+                // )),
+                // Expanded(
+                //     child: Row(
+                //   children: [
+                //     SvgPicture.asset(AppImages.heart),
+                //     const SizedBox(width: 4),
+                //     Text(
+                //       '50.5K',
+                //       style: bodySmall_12?.copyWith(
+                //           fontSize: 12, color: AppColors.neutral_03),
+                //     )
+                //   ],
+                // )),
                 SvgPicture.asset(AppImages.more),
               ],
             )
