@@ -1,3 +1,8 @@
+import 'package:dtnd/data/i_local_storage_service.dart';
+import 'package:dtnd/data/i_user_service.dart';
+import 'package:dtnd/data/implementations/local_storage_service.dart';
+import 'package:dtnd/data/implementations/user_service.dart';
+import 'package:dtnd/ui/screen/market/widget/components/not_signin_catalog_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -14,6 +19,8 @@ class CommunityTab extends StatefulWidget {
 class _CommunityTabState extends State<CommunityTab>
     with AutomaticKeepAliveClientMixin {
   final CommunityController controller = CommunityController();
+  final ILocalStorageService localStorageService = LocalStorageService();
+  final IUserService userService = UserService();
   @override
   void initState() {
     controller.init();
@@ -26,6 +33,14 @@ class _CommunityTabState extends State<CommunityTab>
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: Obx(() {
+        if (userService.token.value == null) {
+          return Center(
+            child: NotSignInCatalogWidget(
+              afterLogin: controller.init,
+              localStorageService: localStorageService,
+            ),
+          );
+        }
         if (controller.loadingPosts.value) {
           return const Center(
             child: CircularProgressIndicator(),
