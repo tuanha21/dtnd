@@ -1,12 +1,14 @@
-import 'package:dtnd/ui/screen/community/widget/post_widget.dart';
+import 'package:dtnd/=models=/response/community/post_model.dart';
+import 'package:dtnd/ui/screen/community/community_controller.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:flutter/material.dart';
 import '../../../widget/my_appbar.dart';
 import 'list_comment_tab.dart';
+import 'post_widget.dart';
 
 class CommentDetailPage extends StatefulWidget {
-  const CommentDetailPage({Key? key}) : super(key: key);
-
+  const CommentDetailPage({Key? key, required this.post}) : super(key: key);
+  final PostModel post;
   @override
   State<CommentDetailPage> createState() => _CommentDetailPageState();
 }
@@ -14,11 +16,22 @@ class CommentDetailPage extends StatefulWidget {
 class _CommentDetailPageState extends State<CommentDetailPage>
     with SingleTickerProviderStateMixin {
   late final TabController _tabController;
+  final CommunityController controller = CommunityController();
 
   @override
   void initState() {
+    widget.post.viewCount++;
+    controller.getPostDetail(widget.post);
+    widget.post.loadComments(controller.networkService, controller.userService,
+        controller.communityService);
     _tabController = TabController(length: 2, vsync: this);
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    controller.refresh();
+    super.dispose();
   }
 
   @override
@@ -29,7 +42,9 @@ class _CommentDetailPageState extends State<CommentDetailPage>
       ),
       body: Column(
         children: [
-          const PostWidget(),
+          PostWidget(
+            post: widget.post,
+          ),
           Container(
             margin: const EdgeInsets.symmetric(horizontal: 20),
             padding: const EdgeInsets.all(4),
@@ -60,9 +75,12 @@ class _CommentDetailPageState extends State<CommentDetailPage>
           ),
           const SizedBox(height: 8),
           Expanded(
-            child: TabBarView(
-                controller: _tabController,
-                children: const [ListCommentTab(), ListCommentTab()]),
+            child: TabBarView(controller: _tabController, children: [
+              ListCommentTab(
+                post: widget.post,
+              ),
+              Container()
+            ]),
           )
         ],
       ),

@@ -1,5 +1,8 @@
-import 'package:dtnd/ui/widget/developing_feature/developing_features.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
+import 'community_controller.dart';
+import 'widget/post_widget.dart';
 
 class CommunityTab extends StatefulWidget {
   const CommunityTab({Key? key}) : super(key: key);
@@ -10,10 +13,40 @@ class CommunityTab extends StatefulWidget {
 
 class _CommunityTabState extends State<CommunityTab>
     with AutomaticKeepAliveClientMixin {
+  final CommunityController controller = CommunityController();
+  @override
+  void initState() {
+    controller.init();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    return const DevelopingFeature();
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      child: Obx(() {
+        if (controller.loadingPosts.value) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+
+        return ListView.separated(
+          itemCount: controller.posts.length,
+          itemBuilder: (BuildContext context, int index) {
+            return PostWidget(
+              post: controller.posts.elementAt(index),
+            );
+          },
+          separatorBuilder: (BuildContext context, int index) {
+            return const SizedBox(
+              height: 16,
+            );
+          },
+        );
+      }),
+    );
   }
 
   // @override
@@ -68,6 +101,5 @@ class _CommunityTabState extends State<CommunityTab>
   // }
 
   @override
-  // TODO: implement wantKeepAlive
   bool get wantKeepAlive => true;
 }

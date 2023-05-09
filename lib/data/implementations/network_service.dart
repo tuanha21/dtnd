@@ -98,6 +98,7 @@ class NetworkService implements INetworkService {
   late final String algo_url;
   late final String algo_url_apec;
 
+  @override
   Uri url_core(
     String unencodedPath, [
     Map<String, dynamic>? queryParameters,
@@ -105,6 +106,7 @@ class NetworkService implements INetworkService {
     return Uri.http(core_url, unencodedPath, queryParameters);
   }
 
+  @override
   Uri url_core1(
     String unencodedPath, [
     Map<String, dynamic>? queryParameters,
@@ -113,28 +115,34 @@ class NetworkService implements INetworkService {
     return Uri.http(core_url1, unencodedPath, queryParameters);
   }
 
+  @override
   Uri get url_core_endpoint {
     print(Uri.http(core_url, core_endpoint).toString());
     return Uri.http(core_url, core_endpoint);
   }
 
+  @override
   Uri url_board(String path) => Uri.https(board_url, path);
 
+  @override
   Uri url_board_sbsi(String path) {
     print(Uri.https(sbboard_url, path));
     return Uri.https(sbboard_url, path);
   }
 
+  @override
   Uri url_board_data_feed(Map<String, dynamic> queryParameters) {
     print(Uri.https(sbboard_url, "datafeed/history", queryParameters));
     return Uri.https(sbboard_url, "datafeed/history", queryParameters);
   }
 
+  @override
   Uri url_info_sbsi(String path, [Map<String, dynamic>? queryParameters]) {
     print(Uri.https(info_sbsi_url, path, queryParameters).toString());
     return Uri.https(info_sbsi_url, path, queryParameters);
   }
 
+  @override
   Uri url_algo(
     String path, [
     Map<String, dynamic>? queryParameters,
@@ -144,6 +152,7 @@ class NetworkService implements INetworkService {
     return Uri.https(algo_url_apec, unencodedPath, queryParameters);
   }
 
+  @override
   Uri url_algo_apec(
     String path, [
     Map<String, dynamic>? queryParameters,
@@ -158,6 +167,7 @@ class NetworkService implements INetworkService {
   @override
   late Socket socket;
 
+  @override
   dynamic decode(dynamic data) {
     try {
       dynamic decoded;

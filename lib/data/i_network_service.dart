@@ -1,4 +1,4 @@
-// ignore_for_file: library_prefixes
+// ignore_for_file: library_prefixes, non_constant_identifier_names
 
 import 'dart:convert';
 
@@ -62,6 +62,30 @@ import 'package:http/http.dart' as http;
 abstract class INetworkService {
   late final IO.Socket socket;
 
+  Uri url_core(
+    String unencodedPath, [
+    Map<String, dynamic>? queryParameters,
+  ]);
+
+  Uri url_core1(
+    String unencodedPath, [
+    Map<String, dynamic>? queryParameters,
+  ]);
+
+  Uri get url_core_endpoint;
+
+  Uri url_board(String path);
+
+  Uri url_board_sbsi(String path);
+
+  Uri url_board_data_feed(Map<String, dynamic> queryParameters);
+
+  Uri url_info_sbsi(String path, [Map<String, dynamic>? queryParameters]);
+
+  Uri url_algo(String path, [Map<String, dynamic>? queryParameters]);
+
+  Uri url_algo_apec(String path, [Map<String, dynamic>? queryParameters]);
+
   /// GET POST PUT DELETE
   Future<http.Response> get(Uri url, {Map<String, String>? headers});
 
@@ -73,6 +97,8 @@ abstract class INetworkService {
 
   Future<http.Response> delete(Uri url,
       {Map<String, String>? headers, Object? body, Encoding? encoding});
+
+  dynamic decode(dynamic data);
 
   //init service
   Future<void> init(Environment environment);
