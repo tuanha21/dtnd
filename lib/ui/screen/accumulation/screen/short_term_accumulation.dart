@@ -5,6 +5,9 @@ import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:dtnd/ui/widget/appbar/simple_appbar.dart';
 import 'package:flutter/material.dart';
 
+import '../widget/row_information.dart';
+import 'accumulation_register.dart';
+
 class ShortTermAccumulation extends StatelessWidget {
   const ShortTermAccumulation({super.key});
 
@@ -76,7 +79,7 @@ class ShortTermAccumulation extends StatelessWidget {
                           color: AppColors.neutral_06,
                           borderRadius: BorderRadius.circular(8)),
                       child: Column(
-                        children: const [
+                        children: [
                           RowInfomation(
                               leftText: 'Lãi suất', rightText: '5.5%/năm'),
                           RowInfomation(
@@ -115,7 +118,13 @@ class ShortTermAccumulation extends StatelessWidget {
               backgroundColor:
                   MaterialStateProperty.all<Color>(AppColors.text_blue),
             ),
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const AccumulationRegister()),
+              );
+            },
             child: const Text('Đăng ký'),
           ),
         ),
@@ -153,37 +162,6 @@ class RowQuote extends StatelessWidget {
             width: 5,
           ),
           Flexible(child: Text(quote, style: textTheme.bodySmall)),
-        ],
-      ),
-    );
-  }
-}
-
-class RowInfomation extends StatelessWidget {
-  const RowInfomation({
-    super.key,
-    required this.leftText,
-    required this.rightText,
-  });
-
-  final String leftText;
-  final String rightText;
-
-  @override
-  Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
-    return Container(
-      margin: const EdgeInsets.only(bottom: 16),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(
-            leftText,
-            style: textTheme.bodyMedium?.copyWith(color: AppColors.neutral_02),
-          ),
-          Text(rightText,
-              style:
-                  textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.bold)),
         ],
       ),
     );

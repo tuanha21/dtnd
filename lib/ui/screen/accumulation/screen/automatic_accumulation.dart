@@ -1,4 +1,5 @@
 import 'package:dtnd/generated/l10n.dart';
+import 'package:dtnd/ui/screen/accumulation/screen/accumulation_register.dart';
 import 'package:dtnd/ui/screen/accumulation/widget/accumulator_header.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
@@ -108,6 +109,7 @@ class AutomaticAccumulation extends StatelessWidget {
               RowQuote(quote: S.of(context).accumulation_quote2),
               RowQuote(quote: S.of(context).accumulation_quote3),
               RowQuote(quote: S.of(context).accumulation_quote4),
+              const SizedBox(height: 70),
             ],
           ),
         ),
@@ -123,7 +125,13 @@ class AutomaticAccumulation extends StatelessWidget {
               backgroundColor:
                   MaterialStateProperty.all<Color>(AppColors.text_blue),
             ),
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const AccumulationRegister()),
+              );
+            },
             child: const Text('Đăng ký'),
           ),
         ),
