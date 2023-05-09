@@ -18,6 +18,7 @@ abstract class IAccountModel implements CoreResponseModel {
   List<AssetChartElementModel>? listAssetChart;
   List<UnexecutedRightModel>? listUnexecutedRight;
   List<UnexecutedRightModel>? listRightBuild;
+  List<UnexecutedRightModel>? listHistoryRightBuild;
 
   IAccountModel({required this.accCode});
 
@@ -136,6 +137,35 @@ abstract class IAccountModel implements CoreResponseModel {
     );
     print('res$res');
     listRightBuild = res ?? [];
+    return res ?? [];
+  }
+
+  Future<List<UnexecutedRightModel>> getListHistoryBuy(
+      IUserService userService, INetworkService networkService) async {
+    final requestModel = RequestModel(
+      userService,
+      group: "B",
+      data: RequestDataModel.cursorType(
+          cmd: "ListRightHistory",
+          p1: accCode,
+          p2: "",
+          p3: '',
+          p4: '',
+          p5: "1",
+          p6: "20"),
+    );
+    final res =
+        await networkService.requestTraditionalApiResList<UnexecutedRightModel>(
+      requestModel,
+      hasError: (p0) {
+        if (p0["data"].runtimeType is List && p0["data"].isNotEmpty) {
+          return p0["data"].first["DUMMY"] != null;
+        }
+        return false;
+      },
+    );
+    print('res$res');
+    listHistoryRightBuild = res ?? [];
     return res ?? [];
   }
 

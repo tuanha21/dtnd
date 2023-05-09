@@ -29,22 +29,32 @@ class _RightsInfoWidgetState extends State<RightsInfoWidget> {
           borderRadius: BorderRadius.all(Radius.circular(12))),
       child: Column(
         children: [
-          const SizedBox(height: 16),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text('Loại quyền', style: AppTextStyle.labelMedium_12),
-              Text(widget.data?.cRIGHTTYPENAME.toString() ?? '')
+              Text(S.of(context).rights_type,
+                  style: AppTextStyle.labelMedium_12),
+              Text(widget.data?.cRIGHTTYPENAME.toString() ?? '',
+                  style: const TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w600,
+                      height: 1.1,
+                      color: AppColors.text_black_1))
             ],
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: 16),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text('Mã CK',
                   style: AppTextStyle.labelMedium_12
                       .copyWith(color: AppColors.neutral_03)),
-              Text(widget.data?.cSHARECODE.toString() ?? '')
+              Text(widget.data?.cSHARECODE.toString() ?? '',
+                  style: const TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w600,
+                      height: 1.1,
+                      color: AppColors.text_black_1))
             ],
           ),
           const SizedBox(height: 8),
@@ -54,17 +64,27 @@ class _RightsInfoWidgetState extends State<RightsInfoWidget> {
               Text('Số CP được hưởng',
                   style: AppTextStyle.labelMedium_12
                       .copyWith(color: AppColors.neutral_03)),
-              Text(widget.data?.cRIGHTVOLUME.toString() ?? '')
+              Text(widget.data?.cRIGHTVOLUME.toString() ?? '',
+                  style: const TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w600,
+                      height: 1.1,
+                      color: AppColors.text_black_1))
             ],
           ),
           const SizedBox(height: 8),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text('Tỷ lệ',
+              Text(S.of(context).ratio,
                   style: AppTextStyle.labelMedium_12
                       .copyWith(color: AppColors.neutral_03)),
-              Text(widget.data?.cRIGHTRATE.toString() ?? '')
+              Text(widget.data?.cRIGHTRATE.toString() ?? '',
+                  style: const TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w600,
+                      height: 1.1,
+                      color: AppColors.text_black_1))
             ],
           ),
           const SizedBox(height: 8),
@@ -74,7 +94,12 @@ class _RightsInfoWidgetState extends State<RightsInfoWidget> {
               Text('Mã CP được mua',
                   style: AppTextStyle.labelMedium_12
                       .copyWith(color: AppColors.neutral_03)),
-              Text(widget.data?.cRECEIVESHARECODE.toString() ?? '')
+              Text(widget.data?.cRECEIVESHARECODE.toString() ?? '',
+                  style: const TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w600,
+                      height: 1.1,
+                      color: AppColors.text_black_1))
             ],
           ),
           const SizedBox(height: 8),
@@ -84,30 +109,48 @@ class _RightsInfoWidgetState extends State<RightsInfoWidget> {
               Text('Số CP còn được mua',
                   style: AppTextStyle.labelMedium_12
                       .copyWith(color: AppColors.neutral_03)),
-              Text(((NumUtils.formatDouble(widget.data?.cSHARERIGHT ??
-                  0 -
-                      (widget.data?.cSHAREBUY ?? 0) /
-                          (widget.data?.cSHARERIGHT ?? 0)))))
+              Text(
+                  ((NumUtils.formatDouble(widget.data?.cSHARERIGHT ??
+                      0 -
+                          (widget.data?.cSHAREBUY ?? 0) /
+                              (widget.data?.cSHARERIGHT ?? 0)))),
+                  style: const TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w600,
+                      height: 1.1,
+                      color: AppColors.text_black_1))
             ],
           ),
           const SizedBox(height: 8),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text('Giá mua',
+              Text(S.of(context).purchase_price,
                   style: AppTextStyle.labelMedium_12
                       .copyWith(color: AppColors.neutral_03)),
-              Text("${NumUtils.formatInteger(widget.data?.cBUYPRICE ?? 0)} đ"),
+              Text("${NumUtils.formatInteger(widget.data?.cBUYPRICE ?? 0)} đ",
+                  style: const TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w600,
+                      height: 1.1,
+                      color: AppColors.text_black_1)),
             ],
           ),
           const SizedBox(height: 8),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text('Số tiền được nhận',
+              Text(S.of(context).amount_received,
                   style: AppTextStyle.labelMedium_12
                       .copyWith(color: AppColors.neutral_03)),
-              Text(widget.data?.cCASHVOLUME.toString() ?? '')
+              Text(
+                widget.data?.cCASHVOLUME.toString() ?? '',
+                style: const TextStyle(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w600,
+                    height: 1.1,
+                    color: AppColors.text_black_1),
+              )
             ],
           ),
           const SizedBox(height: 8),
@@ -117,7 +160,12 @@ class _RightsInfoWidgetState extends State<RightsInfoWidget> {
               Text('Số CP được nhận',
                   style: AppTextStyle.labelMedium_12
                       .copyWith(color: AppColors.neutral_03)),
-              Text(widget.data?.cSHARERIGHT.toString() ?? '')
+              Text(widget.data?.cSHARERIGHT.toString() ?? '',
+                  style: const TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w600,
+                      height: 1.1,
+                      color: AppColors.text_black_1))
             ],
           ),
           const SizedBox(height: 8),
@@ -127,7 +175,12 @@ class _RightsInfoWidgetState extends State<RightsInfoWidget> {
               Text('Mã CP được nhận',
                   style: AppTextStyle.labelMedium_12
                       .copyWith(color: AppColors.neutral_03)),
-              Text(widget.data?.cRECEIVESHARECODE.toString() ?? '')
+              Text(widget.data?.cRECEIVESHARECODE ?? '',
+                  style: const TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w600,
+                      height: 1.1,
+                      color: AppColors.text_black_1))
             ],
           ),
           const SizedBox(height: 8),
@@ -137,7 +190,12 @@ class _RightsInfoWidgetState extends State<RightsInfoWidget> {
               Text('Số quyền được nhận',
                   style: AppTextStyle.labelMedium_12
                       .copyWith(color: AppColors.neutral_03)),
-              Text(widget.data?.cSHARERIGHT.toString() ?? '')
+              Text(widget.data?.cSHARERIGHT.toString() ?? '',
+                  style: const TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w600,
+                      height: 1.1,
+                      color: AppColors.text_black_1))
             ],
           ),
           const SizedBox(height: 8),
@@ -147,7 +205,12 @@ class _RightsInfoWidgetState extends State<RightsInfoWidget> {
               Text('Ngày chốt đăng ký',
                   style: AppTextStyle.labelMedium_12
                       .copyWith(color: AppColors.neutral_03)),
-              Text(widget.data?.cREGISTERTODATE.toString() ?? '')
+              Text(widget.data?.cREGISTERTODATE ?? '',
+                  style: const TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w600,
+                      height: 1.1,
+                      color: AppColors.text_black_1))
             ],
           ),
           const SizedBox(height: 8),
@@ -157,7 +220,12 @@ class _RightsInfoWidgetState extends State<RightsInfoWidget> {
               Text('Ngày thực hiện dự định',
                   style: AppTextStyle.labelMedium_12
                       .copyWith(color: AppColors.neutral_03)),
-              Text(widget.data?.cEXECUTEDATE.toString() ?? '')
+              Text(widget.data?.cEXECUTEDATE ?? '',
+                  style: const TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w600,
+                      height: 1.1,
+                      color: AppColors.text_black_1))
             ],
           ),
           const SizedBox(height: 16),

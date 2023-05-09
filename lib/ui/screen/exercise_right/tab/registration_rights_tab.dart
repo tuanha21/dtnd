@@ -6,7 +6,6 @@ import '../../../../=models=/response/account/unexecuted_right_model.dart';
 import '../../../../data/i_user_service.dart';
 import '../../../../data/implementations/user_service.dart';
 import '../../../widget/empty_list_widget.dart';
-import '../../exchange_stock/order_note/data/order_filter_data.dart';
 import '../widget/registration_rights_widget.dart';
 
 class RegisterTheRightToBuyTab extends StatefulWidget {
@@ -19,38 +18,50 @@ class RegisterTheRightToBuyTab extends StatefulWidget {
 class _RegisterTheRightToBuyTabState extends State<RegisterTheRightToBuyTab> {
   final IUserService userService = UserService();
   List<UnexecutedRightModel>? listOrderShow;
-  OrderFilterData? orderFilterData;
-  @override
-  void initState() {
-    super.initState();
+
+  Future<List<UnexecutedRightModel>?> _getData() async {
+    final account =
+        userService.defaultAccount.value as BaseMarginPlusAccountModel?;
+    listOrderShow =
+        await account?.getListRightBuy(userService, NetworkService());
+    return listOrderShow;
   }
 
   @override
   Widget build(BuildContext context) {
-    final account =
-    userService.defaultAccount.value as BaseMarginPlusAccountModel?;
-    account?.getListRightBuy(userService, NetworkService());
-    return Column(
-      children: [
-        account?.listUnexecutedRightBuild.isEmpty == false
-            ? Expanded(child: Builder(
-          builder: (context) {
-            return ListView.builder(
-                shrinkWrap: true,
-                itemCount: account?.listUnexecutedRightBuild.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return RegistrationRightsWidget(
-                    data:
-                    account?.listUnexecutedRightBuild.elementAt(index),
-                  );
-                });
-          },
-        ))
-            : const Padding(
-          padding: EdgeInsets.only(top: 100),
-          child: EmptyListWidget(),
-        )
-      ],
+    return FutureBuilder<List<UnexecutedRightModel>?>(
+      future: _getData(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(child: CircularProgressIndicator());
+        } else if (snapshot.hasError) {
+          return const Padding(
+            padding: EdgeInsets.only(top: 100),
+            child: EmptyListWidget(),
+          );
+        } else {
+          return Column(
+            children: [
+              listOrderShow?.isEmpty == false
+                  ? Expanded(
+                      child: ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: listOrderShow?.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return RegistrationRightsWidget(
+                            data: listOrderShow?.elementAt(index),
+                          );
+                        },
+                      ),
+                    )
+                  : const Padding(
+                      padding: EdgeInsets.only(top: 100),
+                      child: EmptyListWidget(),
+                    )
+            ],
+          );
+        }
+      },
     );
   }
 }

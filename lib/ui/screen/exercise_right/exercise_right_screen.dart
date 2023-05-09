@@ -31,15 +31,11 @@ class _ExerciseRightScreenState extends State<ExerciseRightScreen>
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = Theme
-        .of(context)
-        .textTheme;
+    final textTheme = Theme.of(context).textTheme;
     return Scaffold(
       backgroundColor: AppColors.light_bg,
       appBar: SimpleAppbar(
-        title: S
-            .of(context)
-            .exercise_right,
+        title: S.of(context).exercise_right,
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -54,26 +50,20 @@ class _ExerciseRightScreenState extends State<ExerciseRightScreen>
               isScrollable: true,
               labelStyle: textTheme.titleSmall,
               labelPadding:
-              const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
               tabs: [
                 Text(
-                  S
-                      .of(context)
-                      .permission_information,
+                  S.of(context).permission_information,
                   style: AppTextStyle.titleSmall_14.copyWith(height: 1.5),
                   textAlign: TextAlign.center,
                 ),
                 Text(
-                  S
-                      .of(context)
-                      .register_the_right_to_buy,
+                  S.of(context).register_the_right_to_buy,
                   style: AppTextStyle.titleSmall_14.copyWith(height: 1.5),
                   textAlign: TextAlign.center,
                 ),
                 Text(
-                  S
-                      .of(context)
-                      .purchase_rights_history,
+                  S.of(context).purchase_rights_history,
                   style: AppTextStyle.titleSmall_14.copyWith(height: 1.5),
                   textAlign: TextAlign.center,
                 ),
@@ -84,15 +74,14 @@ class _ExerciseRightScreenState extends State<ExerciseRightScreen>
             ),
             Expanded(
                 child: TabBarView(
-                  physics: const NeverScrollableScrollPhysics(),
-                  controller: tabController,
-                  children: const [
-                    RightsInfoTab(),
-                    RegisterTheRightToBuyTab(),
-                    PurchaseRightsHistoryTab(),
-
-                  ],
-                ))
+              physics: const NeverScrollableScrollPhysics(),
+              controller: tabController,
+              children: const [
+                RightsInfoTab(),
+                RegisterTheRightToBuyTab(),
+                PurchaseRightsHistoryTab(),
+              ],
+            ))
           ],
         ),
       ),

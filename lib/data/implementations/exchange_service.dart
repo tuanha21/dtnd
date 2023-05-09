@@ -212,20 +212,19 @@ class ExchangeService implements IExchangeService {
   @override
   Future<void> registerRight(
       {required IAccountModel accountModel,
-      required UnexecutedRightModel right,
+      required UnexecutedRightModel? right,
       required String volumn,
       required String pin}) {
     final RequestDataModel requestDataModel = RequestDataModel.stringType(
       cmd: "UpdateRightRegister",
       p1: accountModel.accCode,
-      p2: right.pKRIGHTSTOCKINFO,
+      p2: right?.pKRIGHTSTOCKINFO,
       p3: volumn,
       p4: accountModel.accCode,
       p6: pin,
     );
 
     bool hasError(dynamic json) => true;
-
     onError(dynamic json) {
       if (json["rc"] <= 0) {
         throw json["rs"];

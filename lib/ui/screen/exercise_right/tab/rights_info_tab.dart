@@ -3,12 +3,10 @@ import 'package:dtnd/ui/screen/exercise_right/sheet/registration_rights_sheet.da
 import 'package:flutter/material.dart';
 
 import '../../../../=models=/response/account/base_margin_plus_account_model.dart';
-import '../../../../=models=/response/account/unexecuted_right_model.dart';
 import '../../../../data/i_user_service.dart';
 import '../../../../data/implementations/network_service.dart';
 import '../../../../data/implementations/user_service.dart';
 import '../../../widget/empty_list_widget.dart';
-import '../../exchange_stock/order_note/data/order_filter_data.dart';
 import '../widget/rights_Info_widget.dart';
 
 class RightsInfoTab extends StatefulWidget {
@@ -20,8 +18,6 @@ class RightsInfoTab extends StatefulWidget {
 
 class _RightsInfoTabState extends State<RightsInfoTab> {
   final IUserService userService = UserService();
-  List<UnexecutedRightModel>? listOrderShow;
-  OrderFilterData? orderFilterData;
 
   @override
   void initState() {
@@ -46,12 +42,16 @@ class _RightsInfoTabState extends State<RightsInfoTab> {
                         return RightsInfoWidget(
                           data:
                               account?.listUnexecutedBuyRight.elementAt(index),
-                          onChange: () async {
+                          onChange: () {
                             RegistrationRightsFLowSheet().show(
                                 context,
                                 RegistrationRightsSheet(
-                                  data: account?.listUnexecutedBuyRight
+                                  data: account!.listUnexecutedBuyRight
                                       .elementAt(index),
+                                  accountModel: account,
+                                  onSuccessExecute: () =>
+                                      account.getListUnexecutedRight(
+                                          userService, NetworkService()),
                                 ));
                           },
                         );

@@ -4752,36 +4752,6 @@ class S {
     );
   }
 
-  /// `Permission information`
-  String get permission_information {
-    return Intl.message(
-      'Permission information',
-      name: 'permission_information',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `register the right to buy`
-  String get register_the_right_to_buy {
-    return Intl.message(
-      'register the right to buy',
-      name: 'register_the_right_to_buy',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `purchase rights history`
-  String get purchase_rights_history {
-    return Intl.message(
-      'purchase rights history',
-      name: 'purchase_rights_history',
-      desc: '',
-      args: [],
-    );
-  }
-
   /// `Short term accumulation`
   String get short_term_accumulation {
     return Intl.message(
@@ -4837,6 +4807,76 @@ class S {
     return Intl.message(
       'Accumulated money used for stock trading is settled with early interest rate.',
       name: 'accumulation_quote4',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Permission information`
+  String get permission_information {
+    return Intl.message(
+      'Permission information',
+      name: 'permission_information',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Register the right to buy`
+  String get register_the_right_to_buy {
+    return Intl.message(
+      'Register the right to buy',
+      name: 'register_the_right_to_buy',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Purchase rights history`
+  String get purchase_rights_history {
+    return Intl.message(
+      'Purchase rights history',
+      name: 'purchase_rights_history',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Status`
+  String get status {
+    return Intl.message(
+      'Status',
+      name: 'status',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Purchase price`
+  String get purchase_price {
+    return Intl.message(
+      'Purchase price',
+      name: 'purchase_price',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Amount received`
+  String get amount_received {
+    return Intl.message(
+      'Amount received',
+      name: 'amount_received',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Rights type`
+  String get rights_type {
+    return Intl.message(
+      'Rights type',
+      name: 'rights_type',
       desc: '',
       args: [],
     );

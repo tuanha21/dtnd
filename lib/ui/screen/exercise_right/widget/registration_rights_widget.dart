@@ -1,4 +1,5 @@
 import 'package:dtnd/=models=/response/account/unexecuted_right_model.dart';
+import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/utilities/num_utils.dart';
 import 'package:flutter/material.dart';
 
@@ -26,29 +27,47 @@ class _RegistrationRightsWidgetState extends State<RegistrationRightsWidget> {
           borderRadius: BorderRadius.all(Radius.circular(12))),
       child: Column(
         children: [
-          const SizedBox(height: 16),
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
-            children: [Text(widget.data?.cSHARECODE.toString() ?? '')],
+            children: [
+              Text(
+                widget.data?.cSHARECODE.toString() ?? '',
+                style: const TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600,
+                    height: 1.3,
+                    color: AppColors.text_black_1),
+              )
+            ],
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: 16),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text('Trạng thái',
+              Text(S.of(context).status,
                   style: AppTextStyle.labelMedium_12
                       .copyWith(color: AppColors.neutral_03)),
-              Text(widget.data?.cSTATUSNAME.toString() ?? '')
+              Text(widget.data?.cSTATUSNAME.toString() ?? '',
+                  style: const TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w600,
+                      height: 1.1,
+                      color: AppColors.text_black_1))
             ],
           ),
           const SizedBox(height: 8),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text('Giá mua',
+              Text(S.of(context).purchase_price,
                   style: AppTextStyle.labelMedium_12
                       .copyWith(color: AppColors.neutral_03)),
-              Text("${NumUtils.formatInteger(widget.data?.cBUYPRICE ?? 0)} đ"),
+              Text("${NumUtils.formatInteger(widget.data?.cBUYPRICE ?? 0)} đ",
+                  style: const TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w600,
+                      height: 1.1,
+                      color: AppColors.text_black_1)),
             ],
           ),
           const SizedBox(height: 8),
@@ -58,17 +77,27 @@ class _RegistrationRightsWidgetState extends State<RegistrationRightsWidget> {
               Text('Số CP được hưởng',
                   style: AppTextStyle.labelMedium_12
                       .copyWith(color: AppColors.neutral_03)),
-              Text(widget.data?.cRIGHTVOLUME.toString() ?? '')
+              Text(widget.data?.cRIGHTVOLUME.toString() ?? '',
+                  style: const TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w600,
+                      height: 1.1,
+                      color: AppColors.text_black_1))
             ],
           ),
           const SizedBox(height: 8),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text('Tỷ lệ',
+              Text(S.of(context).ratio,
                   style: AppTextStyle.labelMedium_12
                       .copyWith(color: AppColors.neutral_03)),
-              Text(widget.data?.cRIGHTRATE.toString() ?? '')
+              Text(widget.data?.cRIGHTRATE.toString() ?? '',
+                  style: const TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w600,
+                      height: 1.1,
+                      color: AppColors.text_black_1))
             ],
           ),
           const SizedBox(height: 8),
@@ -78,7 +107,12 @@ class _RegistrationRightsWidgetState extends State<RegistrationRightsWidget> {
               Text('Mã CP được mua',
                   style: AppTextStyle.labelMedium_12
                       .copyWith(color: AppColors.neutral_03)),
-              Text(widget.data?.cRECEIVESHARECODE.toString() ?? '')
+              Text(widget.data?.cRECEIVESHARECODE.toString() ?? '',
+                  style: const TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w600,
+                      height: 1.1,
+                      color: AppColors.text_black_1))
             ],
           ),
           const SizedBox(height: 8),
@@ -88,10 +122,16 @@ class _RegistrationRightsWidgetState extends State<RegistrationRightsWidget> {
               Text('Số CP còn được mua',
                   style: AppTextStyle.labelMedium_12
                       .copyWith(color: AppColors.neutral_03)),
-              Text(((NumUtils.formatDouble(widget.data?.cSHARERIGHT ??
-                  0 -
-                      (widget.data?.cSHAREBUY ?? 0) /
-                          (widget.data?.cSHARERIGHT ?? 0)))))
+              Text(
+                  ((NumUtils.formatDouble(widget.data?.cSHARERIGHT ??
+                      0 -
+                          (widget.data?.cSHAREBUY ?? 0) /
+                              (widget.data?.cSHARERIGHT ?? 0)))),
+                  style: const TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w600,
+                      height: 1.1,
+                      color: AppColors.text_black_1))
             ],
           ),
           const SizedBox(height: 8),

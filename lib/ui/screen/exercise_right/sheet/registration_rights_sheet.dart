@@ -1,23 +1,36 @@
 import 'package:dtnd/=models=/response/account/unexecuted_right_model.dart';
 import 'package:dtnd/generated/l10n.dart';
+import 'package:dtnd/ui/screen/exercise_right/exercise_right_screen.dart';
 import 'package:dtnd/ui/widget/icon/sheet_header.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_svg/svg.dart';
 
+import '../../../../=models=/response/account/i_account.dart';
+import '../../../../data/i_exchange_service.dart';
 import '../../../../data/i_local_storage_service.dart';
+import '../../../../data/implementations/exchange_service.dart';
 import '../../../../data/implementations/local_storage_service.dart';
+import '../../../../utilities/logger.dart';
 import '../../../../utilities/num_utils.dart';
 import '../../../../utilities/validator.dart';
 import '../../../theme/app_color.dart';
 import '../../../theme/app_image.dart';
 import '../../../theme/app_textstyle.dart';
 import '../../../widget/input/interval_input.dart';
+import '../../../widget/overlay/dialog_utilities.dart';
 
 class RegistrationRightsSheet extends StatefulWidget {
-  const RegistrationRightsSheet({super.key, required this.data});
+  const RegistrationRightsSheet({
+    super.key,
+    required this.data,
+    required this.accountModel,
+    required this.onSuccessExecute,
+  });
 
   final UnexecutedRightModel? data;
+  final IAccountModel accountModel;
+  final VoidCallback onSuccessExecute;
 
   @override
   State<RegistrationRightsSheet> createState() =>
@@ -32,6 +45,7 @@ class _RegistrationRightsSheetState extends State<RegistrationRightsSheet>
   final GlobalKey<FormState> pinKey = GlobalKey<FormState>();
   final TextEditingController pinController = TextEditingController();
   final ILocalStorageService localStorageService = LocalStorageService();
+  final IExchangeService exchangeService = ExchangeService();
 
   bool loading = false;
   bool checked = false;
@@ -41,6 +55,40 @@ class _RegistrationRightsSheetState extends State<RegistrationRightsSheet>
     super.initState();
     pinController.text =
         localStorageService.sharedPreferences.getString(pinCodeKey) ?? '';
+  }
+
+  void registerRight() async {
+    if (!(pinKey.currentState?.validate() ?? false)) {
+      return;
+    }
+    try {
+      await exchangeService.registerRight(
+          accountModel: widget.accountModel,
+          right: widget.data,
+          volumn: volumeController.text,
+          pin: pinController.text);
+      widget.onSuccessExecute.call();
+      if (mounted) {
+        await DialogUtilities.showErrorDialog(
+            context: context,
+            title: S.of(context).register_right_successfully,
+            content: S.of(context).register_right_successfully);
+      }
+      if (mounted) {
+        Navigator.of(context).pop();
+        Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => const ExerciseRightScreen(
+            defaultTab: 1,
+          ),
+        ));
+      }
+    } catch (e) {
+      logger.e(e);
+      await DialogUtilities.showErrorDialog(
+          context: context,
+          title: S.of(context).register_right_failed,
+          content: e.toString());
+    }
   }
 
   @override
@@ -108,7 +156,8 @@ class _RegistrationRightsSheetState extends State<RegistrationRightsSheet>
                       Text('Số tiền phải nộp',
                           style: AppTextStyle.labelMedium_12
                               .copyWith(color: AppColors.neutral_03)),
-                      const Text('1000000')
+                      Text(
+                          "${NumUtils.formatInteger(widget.data?.cCASHBUY ?? 0)} đ"),
                     ],
                   ),
                 ],
@@ -180,7 +229,9 @@ class _RegistrationRightsSheetState extends State<RegistrationRightsSheet>
               height: 16,
             ),
             InkWell(
-              onTap: () {},
+              onTap: () {
+                registerRight();
+              },
               child: Container(
                 padding: const EdgeInsets.symmetric(vertical: 16),
                 alignment: Alignment.center,
