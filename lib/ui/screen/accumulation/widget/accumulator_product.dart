@@ -26,7 +26,7 @@ class _AccumulatorProductState extends State<AccumulatorProduct> {
     return Column(children: [
       Expanded(
         child: ListView.builder(
-          padding: const EdgeInsets.all(8),
+          padding: const EdgeInsets.symmetric(vertical: 8),
           itemCount: title.length,
           itemBuilder: (BuildContext context, int index) {
             return ItemBuilder(
