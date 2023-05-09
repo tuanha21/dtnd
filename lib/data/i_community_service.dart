@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:dtnd/=models=/response/community/post_comment_model.dart';
 import 'package:dtnd/=models=/response/community/post_model.dart';
 import 'package:dtnd/data/i_network_service.dart';
@@ -20,6 +22,6 @@ abstract class ICommunityService {
   Future<PostModel?> loadPostDetail(
       INetworkService networkService, IUserService userService, PostModel post);
 
-  Future<PostModel> postPost(
-      INetworkService networkService, IUserService userService, PostModel post);
+  Future<bool> postPosts(INetworkService networkService,
+      IUserService userService, String status);
 }

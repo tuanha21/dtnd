@@ -1,14 +1,16 @@
 import 'package:dtnd/=models=/response/community/post_model.dart';
 import 'package:dtnd/ui/screen/community/community_controller.dart';
+import 'package:dtnd/ui/screen/community/widget/post_detail_widget.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:flutter/material.dart';
+
 import '../../../widget/my_appbar.dart';
 import 'list_comment_tab.dart';
-import 'post_widget.dart';
 
 class CommentDetailPage extends StatefulWidget {
   const CommentDetailPage({Key? key, required this.post}) : super(key: key);
   final PostModel post;
+
   @override
   State<CommentDetailPage> createState() => _CommentDetailPageState();
 }
@@ -42,7 +44,7 @@ class _CommentDetailPageState extends State<CommentDetailPage>
       ),
       body: Column(
         children: [
-          PostWidget(
+          PostDetailWidget(
             post: widget.post,
           ),
           Container(

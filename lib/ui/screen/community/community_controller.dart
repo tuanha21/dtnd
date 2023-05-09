@@ -57,6 +57,17 @@ class CommunityController {
     }
   }
 
+  Future<bool> postPosts(String status) async {
+    try {
+      final postDetail = await communityService.postPosts(
+          networkService, userService, status);
+      return postDetail;
+    } catch (e) {
+      logger.v(e);
+      rethrow;
+    }
+  }
+
   final RxBool loadingPosts = false.obs;
 
   final RxList<PostModel> posts = <PostModel>[].obs;
