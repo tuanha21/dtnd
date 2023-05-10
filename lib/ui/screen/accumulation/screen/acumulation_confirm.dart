@@ -1,4 +1,4 @@
-import 'package:dtnd/ui/screen/accumulation/accumulation.dart';
+import 'package:dtnd/ui/screen/accumulation/widget/accumulation_dialog.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/widget/appbar/simple_appbar.dart';
 import 'package:flutter/material.dart';
@@ -43,10 +43,8 @@ class _AccumulationConfirmState extends State<AccumulationConfirm> {
                   MaterialStateProperty.all<Color>(AppColors.text_blue),
             ),
             onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const Accumlation()),
-              );
+              showDialog(
+                  context: context, builder: (_) => const AccumulationDialog());
             },
             child: const Text('Xác nhận'),
           ),
