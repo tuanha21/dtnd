@@ -1,4 +1,5 @@
 import 'package:dtnd/=models=/response/community/post_model.dart';
+import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/screen/community/community_controller.dart';
 import 'package:dtnd/ui/screen/community/widget/post_detail_widget.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
@@ -32,15 +33,15 @@ class _CommentDetailPageState extends State<CommentDetailPage>
 
   @override
   void dispose() {
-    controller.refresh();
+    // controller.refresh();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const MyAppBar(
-        title: 'Chi tiết bài viết',
+      appBar: MyAppBar(
+        title: S.of(context).article_details,
       ),
       body: Column(
         children: [

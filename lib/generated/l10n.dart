@@ -4881,6 +4881,86 @@ class S {
       args: [],
     );
   }
+
+  /// `Share your thoughts or ask a question to the community`
+  String get share_your_thoughts {
+    return Intl.message(
+      'Share your thoughts or ask a question to the community',
+      name: 'share_your_thoughts',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Post`
+  String get post {
+    return Intl.message(
+      'Post',
+      name: 'post',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please enter the content of the post`
+  String get please_enter_the_content_of_the_post {
+    return Intl.message(
+      'Please enter the content of the post',
+      name: 'please_enter_the_content_of_the_post',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Create a post`
+  String get create_a_post {
+    return Intl.message(
+      'Create a post',
+      name: 'create_a_post',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Post created successfully`
+  String get post_created_successfully {
+    return Intl.message(
+      'Post created successfully',
+      name: 'post_created_successfully',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Post creation failed, please try again`
+  String get post_creation_failed {
+    return Intl.message(
+      'Post creation failed, please try again',
+      name: 'post_creation_failed',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Choose the topic of the post`
+  String get choose_the_topic {
+    return Intl.message(
+      'Choose the topic of the post',
+      name: 'choose_the_topic',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Article details`
+  String get article_details {
+    return Intl.message(
+      'Article details',
+      name: 'article_details',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

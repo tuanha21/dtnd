@@ -30,8 +30,15 @@ class _CommunityTabState extends State<CommunityTab>
 
   @override
   void initState() {
+    controller.scrollController.addListener(controller.scrollListener);
     controller.init();
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    controller.scrollController.removeListener(controller.scrollListener);
+    super.dispose();
   }
 
   @override
@@ -41,24 +48,34 @@ class _CommunityTabState extends State<CommunityTab>
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: Obx(() {
-            if (controller.loadingPosts.value) {
+            if (controller.posts.isEmpty && controller.loadingPosts.value) {
               return const Center(
                 child: CircularProgressIndicator(),
               );
             }
-
-            return ListView.separated(
-              itemCount: controller.posts.length,
-              itemBuilder: (BuildContext context, int index) {
-                return PostWidget(
-                  post: controller.posts.elementAt(index),
-                );
-              },
-              separatorBuilder: (BuildContext context, int index) {
-                return const SizedBox(
-                  height: 16,
-                );
-              },
+            return Container(
+              margin: const EdgeInsets.only(bottom: 80),
+              child: ListView.separated(
+                controller: controller.scrollController,
+                shrinkWrap: true,
+                itemCount: controller.posts.length,
+                itemBuilder: (BuildContext context, int index) {
+                  if(index < controller.posts.length){
+                    return PostWidget(
+                      post: controller.posts.elementAt(index),
+                    );
+                  }else if(index == controller.posts.length && controller.loadingPosts.value){
+                    return _buildLoader();
+                  }else{
+                    return const SizedBox.shrink();
+                  }
+                },
+                separatorBuilder: (BuildContext context, int index) {
+                  return const SizedBox(
+                    height: 16,
+                  );
+                },
+              ),
             );
           }),
         ),
@@ -94,7 +111,9 @@ class _CommunityTabState extends State<CommunityTab>
     CommunityPostsISheet()
         .show(context, const CommunityPostsSheet())
         .then((value) {
-      controller.getPosts();
+      if (value?.data != '') {
+        controller.getPosts();
+      }
     });
   }
 
@@ -151,4 +170,12 @@ class _CommunityTabState extends State<CommunityTab>
 
   @override
   bool get wantKeepAlive => true;
+}
+
+Widget _buildLoader() {
+  return Container(
+    alignment: Alignment.center,
+    padding: const EdgeInsets.symmetric(vertical: 16.0),
+    child: const CircularProgressIndicator(),
+  );
 }

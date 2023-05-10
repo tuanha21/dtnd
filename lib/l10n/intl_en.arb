@@ -502,8 +502,16 @@
   "permission_information": "Permission information",
   "register_the_right_to_buy": "Register the right to buy",
   "purchase_rights_history": "Purchase rights history",
-  "status" : "Status",
-  "purchase_price":"Purchase price",
-  "amount_received":"Amount received",
-  "rights_type": "Rights type"
+  "status": "Status",
+  "purchase_price": "Purchase price",
+  "amount_received": "Amount received",
+  "rights_type": "Rights type",
+  "share_your_thoughts": "Share your thoughts or ask a question to the community",
+  "post": "Post",
+  "please_enter_the_content_of_the_post": "Please enter the content of the post",
+  "create_a_post": "Create a post",
+  "post_created_successfully": "Post created successfully",
+  "post_creation_failed": "Post creation failed, please try again",
+  "choose_the_topic": "Choose the topic of the post",
+  "article_details": "Article details"
 }

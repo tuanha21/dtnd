@@ -164,6 +164,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "are_you_sure_to_delete_this_account":
             MessageLookupByLibrary.simpleMessage(
                 "Bạn có chắc chắn muốn xoá tài khoản này?"),
+        "article_details":
+            MessageLookupByLibrary.simpleMessage("Chi tiết bài viết"),
         "asset": MessageLookupByLibrary.simpleMessage("Tài sản"),
         "asset_distribution":
             MessageLookupByLibrary.simpleMessage("Phân bố tài sản"),
@@ -223,6 +225,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("% Thay đổi"),
         "choose_stocks_you_interested": MessageLookupByLibrary.simpleMessage(
             "Chọn các mã CK mà bạn đang quan tâm. Bạn có thể cập nhật thêm các mã CK sau"),
+        "choose_the_topic":
+            MessageLookupByLibrary.simpleMessage("Chọn chủ đề bài đăng"),
         "close_translations":
             MessageLookupByLibrary.simpleMessage("Giá đóng cửa"),
         "closed": MessageLookupByLibrary.simpleMessage("Đã đóng"),
@@ -255,6 +259,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "cost_price": MessageLookupByLibrary.simpleMessage("Giá vốn"),
         "cost_value": MessageLookupByLibrary.simpleMessage("Giá trị vốn"),
         "create": MessageLookupByLibrary.simpleMessage("Tạo"),
+        "create_a_post": MessageLookupByLibrary.simpleMessage("Tạo bài viết"),
         "create_account": MessageLookupByLibrary.simpleMessage("Tạo tài khoản"),
         "create_catalog": MessageLookupByLibrary.simpleMessage("Tạo danh mục"),
         "create_filter": MessageLookupByLibrary.simpleMessage("Tạo bộ lọc"),
@@ -503,6 +508,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Thông tin cá nhân"),
         "phone_number": MessageLookupByLibrary.simpleMessage("Số điện thoại"),
         "pin_code": MessageLookupByLibrary.simpleMessage("Mã pin"),
+        "please_enter_the_content_of_the_post":
+            MessageLookupByLibrary.simpleMessage("Hãy nhập nội dung bài đăng"),
         "please_input_password":
             MessageLookupByLibrary.simpleMessage("Nhập password"),
         "please_remember_your_smartOTP_password":
@@ -510,6 +517,9 @@ class MessageLookup extends MessageLookupByLibrary {
                 "Quý khách vui lòng ghi nhớ mật khẩu SmartOTP"),
         "portfolio_value":
             MessageLookupByLibrary.simpleMessage("Giá trị danh mục"),
+        "post": MessageLookupByLibrary.simpleMessage("Đăng"),
+        "post_created_successfully":
+            MessageLookupByLibrary.simpleMessage("Tạo bài viết thành công"),
         "price": MessageLookupByLibrary.simpleMessage("Giá"),
         "price_alert": MessageLookupByLibrary.simpleMessage("Cảnh báo giá"),
         "price_decrease": MessageLookupByLibrary.simpleMessage("Giảm giá"),
@@ -576,6 +586,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "setting_up_smartOTP":
             MessageLookupByLibrary.simpleMessage("Thiết lập SmartOTP"),
         "sex": MessageLookupByLibrary.simpleMessage("Giới tính"),
+        "share_your_thoughts": MessageLookupByLibrary.simpleMessage(
+            "Chia sẻ suy nghĩ của bạn hoặc đặt câu hỏi cho cộng đồng"),
         "short_term_accumulation":
             MessageLookupByLibrary.simpleMessage("Tích lũy ngắn hạn"),
         "sign_up": MessageLookupByLibrary.simpleMessage("Đăng ký"),

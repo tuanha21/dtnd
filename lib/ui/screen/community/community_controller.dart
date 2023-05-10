@@ -5,6 +5,7 @@ import 'package:dtnd/data/i_user_service.dart';
 import 'package:dtnd/data/implementations/network_service.dart';
 import 'package:dtnd/data/implementations/user_service.dart';
 import 'package:dtnd/utilities/logger.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
 class CommunityController {
@@ -15,6 +16,8 @@ class CommunityController {
   final IUserService userService = UserService();
 
   final ICommunityService communityService = ICommunityService();
+
+  final ScrollController scrollController = ScrollController();
 
   CommunityController._intern();
 
@@ -29,7 +32,7 @@ class CommunityController {
     await getPosts();
   }
 
-  Future<void> getPosts() async {
+  Future<void> getPosts({int? recordPerPage}) async {
     if (loadingPosts.value) {
       return;
     }
@@ -37,7 +40,7 @@ class CommunityController {
       loadingPosts.value = true;
 
       final posts =
-          await communityService.loadPosts(networkService, userService);
+          await communityService.loadPosts(networkService, userService,records: recordPerPage);
       this.posts.value = posts;
       loadingPosts.value = false;
     } catch (e) {
@@ -71,4 +74,13 @@ class CommunityController {
   final RxBool loadingPosts = false.obs;
 
   final RxList<PostModel> posts = <PostModel>[].obs;
+
+  void scrollListener() {
+    if (scrollController.offset >=
+        scrollController.position.maxScrollExtent &&
+        !scrollController.position.outOfRange) {
+       getPosts(
+          recordPerPage: posts.length + 5);
+    }
+  }
 }

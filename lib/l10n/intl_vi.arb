@@ -505,5 +505,13 @@
   "status": "Trạng thái",
   "purchase_price": "Giá mua",
   "amount_received": "Số tiền được nhận",
-  "rights_type": "Loại quyền"
+  "rights_type": "Loại quyền",
+  "share_your_thoughts" : "Chia sẻ suy nghĩ của bạn hoặc đặt câu hỏi cho cộng đồng",
+  "post" : "Đăng",
+  "please_enter_the_content_of_the_post" : "Hãy nhập nội dung bài đăng",
+  "create_a_post":"Tạo bài viết",
+  "post_created_successfully":"Tạo bài viết thành công",
+  "Post_creation_failed":"Tạo bài viết thất bại, hãy thử lại",
+  "choose_the_topic":"Chọn chủ đề bài đăng",
+  "article_details" : "Chi tiết bài viết"
 }

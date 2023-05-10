@@ -171,6 +171,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "are_you_sure_to_delete_this_account":
             MessageLookupByLibrary.simpleMessage(
                 "Are you sure about deleting this account?"),
+        "article_details":
+            MessageLookupByLibrary.simpleMessage("Article details"),
         "asset": MessageLookupByLibrary.simpleMessage("Asset"),
         "asset_distribution":
             MessageLookupByLibrary.simpleMessage("Asset distribution"),
@@ -234,6 +236,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "A chart comparing the cash flow at the current time with the previous session, averaging one week. Data is based on a daily basis "),
         "choose_stocks_you_interested": MessageLookupByLibrary.simpleMessage(
             "Select the stocks you are interested in. You can update later"),
+        "choose_the_topic": MessageLookupByLibrary.simpleMessage(
+            "Choose the topic of the post"),
         "close_translations": MessageLookupByLibrary.simpleMessage("Close"),
         "closed": MessageLookupByLibrary.simpleMessage("Closed"),
         "closing_balance":
@@ -265,6 +269,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "cost_price": MessageLookupByLibrary.simpleMessage("Cost price"),
         "cost_value": MessageLookupByLibrary.simpleMessage("Cost value"),
         "create": MessageLookupByLibrary.simpleMessage("Create"),
+        "create_a_post": MessageLookupByLibrary.simpleMessage("Create a post"),
         "create_account":
             MessageLookupByLibrary.simpleMessage("Create account"),
         "create_catalog":
@@ -514,6 +519,9 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Personal information"),
         "phone_number": MessageLookupByLibrary.simpleMessage("Phone number"),
         "pin_code": MessageLookupByLibrary.simpleMessage("Pin code"),
+        "please_enter_the_content_of_the_post":
+            MessageLookupByLibrary.simpleMessage(
+                "Please enter the content of the post"),
         "please_input_password":
             MessageLookupByLibrary.simpleMessage("Input password"),
         "please_remember_your_smartOTP_password":
@@ -521,6 +529,11 @@ class MessageLookup extends MessageLookupByLibrary {
                 "Please remember your SmartOTP password"),
         "portfolio_value":
             MessageLookupByLibrary.simpleMessage("Portfolio value"),
+        "post": MessageLookupByLibrary.simpleMessage("Post"),
+        "post_created_successfully":
+            MessageLookupByLibrary.simpleMessage("Post created successfully"),
+        "post_creation_failed": MessageLookupByLibrary.simpleMessage(
+            "Post creation failed, please try again"),
         "price": MessageLookupByLibrary.simpleMessage("Price"),
         "price_alert": MessageLookupByLibrary.simpleMessage("Price alert"),
         "price_decrease":
@@ -595,6 +608,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "setting_up_smartOTP":
             MessageLookupByLibrary.simpleMessage("Setting up SmartOTP"),
         "sex": MessageLookupByLibrary.simpleMessage("Sex"),
+        "share_your_thoughts": MessageLookupByLibrary.simpleMessage(
+            "Share your thoughts or ask a question to the community"),
         "short_term_accumulation":
             MessageLookupByLibrary.simpleMessage("Short term accumulation"),
         "sign_up": MessageLookupByLibrary.simpleMessage("Sign up"),

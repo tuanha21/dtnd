@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/screen/community/community_controller.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
@@ -49,7 +50,6 @@ class _CommunityPostsSheetState extends State<CommunityPostsSheet>
 
   @override
   Widget build(BuildContext context) {
-
     Widget title = Obx(() {
       String textTitle;
       String subTitle;
@@ -117,9 +117,9 @@ class _CommunityPostsSheetState extends State<CommunityPostsSheet>
       );
     });
 
-    return SingleChildScrollView(
-        child: Padding(
-      padding: const EdgeInsets.all(16),
+    return Container(
+      height: MediaQuery.of(context).size.height,
+      padding: const EdgeInsets.only(top: 25, right: 16, left: 16, bottom: 8),
       child: Column(
         children: [
           Row(
@@ -132,7 +132,7 @@ class _CommunityPostsSheetState extends State<CommunityPostsSheet>
                 onTap: () => Navigator.of(context).pop(),
               ),
               Text(
-                'Tạo bài viết',
+                S.of(context).create_a_post,
                 style: Theme.of(context).textTheme.labelLarge?.copyWith(
                       fontSize: 20,
                       fontWeight: FontWeight.w700,
@@ -144,18 +144,20 @@ class _CommunityPostsSheetState extends State<CommunityPostsSheet>
                     if (postsController.text != '') {
                       controller.postPosts(postsController.text).then((value) {
                         if (value) {
-                          EasyLoading.showToast('Tạo bài viết thành công');
+                          EasyLoading.showToast(
+                              S.of(context).post_created_successfully);
                           Navigator.of(context).pop();
                         } else {
                           EasyLoading.showToast(
-                              'Tạo bài viết thất bại, hãy thử lại');
+                              S.of(context).post_creation_failed);
                         }
                       });
                     } else {
-                      EasyLoading.showToast('Hãy nhập nội dung bài đăng');
+                      EasyLoading.showToast(
+                          S.of(context).please_enter_the_content_of_the_post);
                     }
                   },
-                  child: const Text('Đăng'))
+                  child: Text(S.of(context).post))
             ],
           ),
           const Divider(),
@@ -179,36 +181,36 @@ class _CommunityPostsSheetState extends State<CommunityPostsSheet>
           const SizedBox(
             height: 8,
           ),
-          SizedBox(
-            height: MediaQuery.of(context).size.height / 3,
-            child: TextField(
-              maxLengthEnforcement: MaxLengthEnforcement.none,
-              maxLength: 1000,
-              controller: postsController,
-              decoration: const InputDecoration(
-                counterText: '',
-                contentPadding: EdgeInsets.zero,
-                border: InputBorder.none,
-                enabledBorder: InputBorder.none,
-                disabledBorder: InputBorder.none,
-                focusedBorder: InputBorder.none,
-                hintText:
-                    'Chia sẻ suy nghĩ của bạn hoặc đặt câu hỏi cho cộng đồng',
+          Expanded(
+            child: SizedBox(
+              child: TextField(
+                maxLengthEnforcement: MaxLengthEnforcement.none,
+                maxLength: 1000,
+                controller: postsController,
+                decoration: InputDecoration(
+                  counterText: '',
+                  contentPadding: EdgeInsets.zero,
+                  border: InputBorder.none,
+                  enabledBorder: InputBorder.none,
+                  disabledBorder: InputBorder.none,
+                  focusedBorder: InputBorder.none,
+                  hintText: S.of(context).share_your_thoughts,
+                ),
+                maxLines: null,
               ),
-              maxLines: null,
             ),
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
-            children: const [
+            children: [
               Text(
-                'Chọn chủ đề bài đăng (0/3)',
+                '${S.of(context).choose_the_topic}(0/3)',
                 textAlign: TextAlign.start,
               ),
             ],
           )
         ],
       ),
-    ));
+    );
   }
 }
