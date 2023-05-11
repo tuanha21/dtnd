@@ -243,6 +243,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "closing_balance":
             MessageLookupByLibrary.simpleMessage("Closing balance"),
         "command_type": MessageLookupByLibrary.simpleMessage("command type"),
+        "comment": MessageLookupByLibrary.simpleMessage("Comment"),
         "commodities": MessageLookupByLibrary.simpleMessage("Commodities"),
         "community": MessageLookupByLibrary.simpleMessage("Community"),
         "condition_ordnote":
@@ -608,6 +609,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "setting_up_smartOTP":
             MessageLookupByLibrary.simpleMessage("Setting up SmartOTP"),
         "sex": MessageLookupByLibrary.simpleMessage("Sex"),
+        "share": MessageLookupByLibrary.simpleMessage("Share"),
         "share_your_thoughts": MessageLookupByLibrary.simpleMessage(
             "Share your thoughts or ask a question to the community"),
         "short_term_accumulation":

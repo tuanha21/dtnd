@@ -73,7 +73,7 @@ class _CommentDetailPageState extends State<CommentDetailPage>
               labelPadding: const EdgeInsets.symmetric(vertical: 4),
               labelColor: AppColors.light_bg,
               unselectedLabelColor: AppColors.text_black,
-              tabs: const [Text("Bình luận"), Text("Chia sẻ")],
+              tabs: [Text(S.of(context).comment), Text(S.of(context).share)],
             ),
           ),
           const SizedBox(height: 8),

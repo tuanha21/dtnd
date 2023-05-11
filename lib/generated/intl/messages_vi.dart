@@ -233,6 +233,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "closing_balance":
             MessageLookupByLibrary.simpleMessage("Số dư cuối kỳ"),
         "command_type": MessageLookupByLibrary.simpleMessage("Lệnh"),
+        "comment": MessageLookupByLibrary.simpleMessage("Bình luận"),
         "commodities": MessageLookupByLibrary.simpleMessage("Hàng hoá"),
         "community": MessageLookupByLibrary.simpleMessage("Cộng đồng"),
         "condition_ordnote":
@@ -586,6 +587,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "setting_up_smartOTP":
             MessageLookupByLibrary.simpleMessage("Thiết lập SmartOTP"),
         "sex": MessageLookupByLibrary.simpleMessage("Giới tính"),
+        "share": MessageLookupByLibrary.simpleMessage("Chia sẻ"),
         "share_your_thoughts": MessageLookupByLibrary.simpleMessage(
             "Chia sẻ suy nghĩ của bạn hoặc đặt câu hỏi cho cộng đồng"),
         "short_term_accumulation":

@@ -513,5 +513,7 @@
   "post_created_successfully": "Post created successfully",
   "post_creation_failed": "Post creation failed, please try again",
   "choose_the_topic": "Choose the topic of the post",
-  "article_details": "Article details"
+  "article_details": "Article details",
+  "comment" : "Comment",
+  "share": "Share"
 }

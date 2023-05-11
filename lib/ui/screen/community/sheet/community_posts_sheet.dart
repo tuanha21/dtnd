@@ -50,72 +50,74 @@ class _CommunityPostsSheetState extends State<CommunityPostsSheet>
 
   @override
   Widget build(BuildContext context) {
-    Widget title = Obx(() {
-      String textTitle;
-      String subTitle;
-      Widget avatar;
-      if (userService.userInfo.value != null) {
-        textTitle = userService.userInfo.value!.customerName ?? "Kien Nguyen";
-        subTitle = userService.userInfo.value!.custEmail ?? "ifis@gmail.com";
-        if (userService.userInfo.value!.faceImg != null) {
-          avatar = Container(
-            width: 36,
-            height: 36,
-            decoration: const BoxDecoration(shape: BoxShape.circle),
-            child: CachedNetworkImage(
-              imageUrl: "${userService.userInfo.value!.faceImg}",
-              fit: BoxFit.fill,
-            ),
-          );
+    Widget title = Obx(
+      () {
+        String textTitle;
+        String subTitle;
+        Widget avatar;
+        if (userService.userInfo.value != null) {
+          textTitle = userService.userInfo.value!.customerName ?? "Kien Nguyen";
+          subTitle = userService.userInfo.value!.custEmail ?? "ifis@gmail.com";
+          if (userService.userInfo.value!.faceImg != null) {
+            avatar = Container(
+              width: 36,
+              height: 36,
+              decoration: const BoxDecoration(shape: BoxShape.circle),
+              child: CachedNetworkImage(
+                imageUrl: "${userService.userInfo.value!.faceImg}",
+                fit: BoxFit.fill,
+              ),
+            );
+          } else {
+            avatar = ClipOval(
+              child: Image.asset(
+                AppImages.home_avatar_default,
+                width: 36, // adjust the width as needed
+                height: 36, // adjust the height as needed
+                fit: BoxFit.cover,
+              ),
+            );
+          }
         } else {
-          avatar = ClipOval(
-            child: Image.asset(
-              AppImages.home_avatar_default,
-              width: 36, // adjust the width as needed
-              height: 36, // adjust the height as needed
-              fit: BoxFit.cover,
-            ),
+          textTitle = "IFIS";
+          subTitle = "ifis@gmail.com";
+          avatar = Image.asset(
+            AppImages.logo_account_default,
+            width: 22,
+            height: 22,
+            fit: BoxFit.fill,
           );
         }
-      } else {
-        textTitle = "IFIS";
-        subTitle = "ifis@gmail.com";
-        avatar = Image.asset(
-          AppImages.logo_account_default,
-          width: 22,
-          height: 22,
-          fit: BoxFit.fill,
+        if (userService.userInfo.value != null) {}
+        return Row(
+          children: [
+            avatar,
+            const SizedBox(width: 8),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  textTitle,
+                  style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w700,
+                        color: AppColors.text_black_1,
+                      ),
+                ),
+                Text(
+                  subTitle,
+                  style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                        fontSize: 12,
+                        fontWeight: FontWeight.w700,
+                        color: AppColors.graph_5,
+                      ),
+                ),
+              ],
+            ),
+          ],
         );
-      }
-      if (userService.userInfo.value != null) {}
-      return Row(
-        children: [
-          avatar,
-          const SizedBox(width: 8),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                textTitle,
-                style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w700,
-                      color: AppColors.text_black_1,
-                    ),
-              ),
-              Text(
-                subTitle,
-                style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                      fontSize: 12,
-                      fontWeight: FontWeight.w700,
-                      color: AppColors.graph_5,
-                    ),
-              ),
-            ],
-          ),
-        ],
-      );
-    });
+      },
+    );
 
     return Container(
       height: MediaQuery.of(context).size.height,

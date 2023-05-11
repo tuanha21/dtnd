@@ -513,5 +513,7 @@
   "post_created_successfully":"Tạo bài viết thành công",
   "Post_creation_failed":"Tạo bài viết thất bại, hãy thử lại",
   "choose_the_topic":"Chọn chủ đề bài đăng",
-  "article_details" : "Chi tiết bài viết"
+  "article_details" : "Chi tiết bài viết",
+  "comment" : "Bình luận",
+  "share" : "Chia sẻ"
 }
