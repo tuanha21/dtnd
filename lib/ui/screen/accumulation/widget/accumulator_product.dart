@@ -1,3 +1,4 @@
+import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/screen/accumulation/screen/automatic_accumulation.dart';
 import 'package:dtnd/ui/screen/accumulation/screen/short_term_accumulation.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
@@ -152,11 +153,11 @@ class ItemBuilder extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            'Kỳ hạn',
+                            S.of(context).period,
                             style: textTheme.bodySmall
                                 ?.copyWith(color: AppColors.neutral_04),
                           ),
-                          Text('Lãi suất',
+                          Text(S.of(context).profit,
                               style: textTheme.bodySmall
                                   ?.copyWith(color: AppColors.neutral_04)),
                         ],

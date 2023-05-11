@@ -1,3 +1,4 @@
+import 'package:dtnd/ui/widget/empty_list_widget.dart';
 import 'package:flutter/material.dart';
 
 class AccumulatorHistory extends StatefulWidget {
@@ -10,6 +11,8 @@ class AccumulatorHistory extends StatefulWidget {
 class _AccumulatorHistoryState extends State<AccumulatorHistory> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: const [EmptyListWidget()]);
   }
 }

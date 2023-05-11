@@ -1,3 +1,4 @@
+import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:flutter/material.dart';
@@ -22,7 +23,7 @@ class AccumulatorHeader extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('Tổng tích luỹ',
+              Text(S.of(context).total_accumulation,
                   style:
                       textTheme.headlineSmall?.copyWith(color: Colors.white)),
               const SizedBox(
@@ -38,7 +39,7 @@ class AccumulatorHeader extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Text('Tích lũy hôm nay',
+                  Text(S.of(context).accumulate_today,
                       style:
                           textTheme.bodyLarge?.copyWith(color: Colors.white)),
                   const SizedBox(

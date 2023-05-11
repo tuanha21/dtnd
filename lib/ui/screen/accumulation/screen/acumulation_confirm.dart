@@ -44,7 +44,9 @@ class _AccumulationConfirmState extends State<AccumulationConfirm> {
             ),
             onPressed: () {
               showDialog(
-                  context: context, builder: (_) => const AccumulationDialog());
+                  barrierDismissible: false,
+                  context: context,
+                  builder: (_) => const AccumulationDialog());
             },
             child: const Text('Xác nhận'),
           ),
