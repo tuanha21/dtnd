@@ -525,5 +525,7 @@
   "maximum_limit" : "Maximum limit",
   "early_interest_rate" : "Early interest rate",
   "renewal_method" : "Renewal method",
-  "product":"Product"
+  "product":"Product",
+  "comment" : "Comment",
+  "share": "Share"
 }

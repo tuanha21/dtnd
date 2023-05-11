@@ -96,9 +96,16 @@ class PostModel {
       {int? page, int? records}) async {
     try {
       final newComments = await communityService.loadComments(
-          networkService, userService, this);
-      comments.addAll(_removeDuplicateComments(newComments));
-      return comments;
+          networkService, userService, this,
+          page: page ?? 1, records: records ?? 10);
+      if (comments.isNotEmpty) {
+        comments.clear();
+        comments.addAll(_removeDuplicateComments(newComments));
+        return comments;
+      } else {
+        comments.addAll(_removeDuplicateComments(newComments));
+        return comments;
+      }
     } catch (e) {
       logger.e(e);
       rethrow;

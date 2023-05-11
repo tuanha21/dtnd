@@ -525,6 +525,7 @@
   "maximum_limit" : "Hạn mức tối đa",
   "early_interest_rate" : "Lãi suất trước hạn",
   "renewal_method" : "Phương thức gia hạn",
-  "product":"Sản phẩm"
-
+  "product":"Sản phẩm",
+  "comment" : "Bình luận",
+  "share" : "Chia sẻ"
 }
