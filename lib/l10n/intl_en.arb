@@ -513,5 +513,17 @@
   "post_created_successfully": "Post created successfully",
   "post_creation_failed": "Post creation failed, please try again",
   "choose_the_topic": "Choose the topic of the post",
-  "article_details": "Article details"
+  "article_details": "Article details",
+  "accumulator_book" : "Accumulator book",
+  "end_date" : "End date",
+  "total_accumulation" : "Total accumulation",
+  "accumulate_today" : "Accumulate today",
+  "period" : "Period",
+  "profit" : "Profit",
+  "accumulate_current_packages" : "Current cumulative packages",
+  "minimum_limit" : "Minimum limit",
+  "maximum_limit" : "Maximum limit",
+  "early_interest_rate" : "Early interest rate",
+  "renewal_method" : "Renewal method",
+  "product":"Product"
 }

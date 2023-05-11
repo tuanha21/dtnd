@@ -45,15 +45,15 @@ class _AccumlationState extends State<Accumlation>
               labelStyle: textTheme.titleSmall,
               labelPadding:
                   const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-              tabs: const [
+              tabs: [
                 Text(
-                  'Sản phẩm',
+                  S.of(context).product,
                 ),
                 Text(
-                  'Sổ tích luỹ',
+                  S.of(context).accumulator_book,
                 ),
                 Text(
-                  'Lịch sử',
+                  S.of(context).history,
                 ),
               ],
             ),

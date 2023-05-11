@@ -1,3 +1,4 @@
+import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/screen/accumulation/screen/accumulator_book_detail.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
@@ -36,12 +37,11 @@ class _AccumulatorBookState extends State<AccumulatorBook> {
 
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       const SizedBox(height: 16),
-      Text(' Các gói tích luỹ hiện tại',
+      Text(' ${S.of(context).accumulate_current_packages}',
           style: textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w700)),
       const SizedBox(height: 4),
       Expanded(
         child: ListView.builder(
-          // padding: const EdgeInsets.all(8),
           itemCount: title.length,
           itemBuilder: (BuildContext context, int index) {
             return ItemBuilder(
@@ -163,7 +163,7 @@ class ItemBuilder extends StatelessWidget {
         const SizedBox(height: 16),
         Row(
           children: [
-            Text('Ngày kết thúc: ',
+            Text('${S.of(context).end_date}: ',
                 style:
                     textTheme.bodySmall?.copyWith(color: AppColors.neutral_03)),
             Text(dateEnd[index],

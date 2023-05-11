@@ -5,6 +5,7 @@ import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:dtnd/ui/widget/appbar/simple_appbar.dart';
 import 'package:flutter/material.dart';
+import '../widget/row_information.dart';
 
 class AutomaticAccumulation extends StatelessWidget {
   const AutomaticAccumulation({super.key});
@@ -77,22 +78,24 @@ class AutomaticAccumulation extends StatelessWidget {
                           color: AppColors.neutral_06,
                           borderRadius: BorderRadius.circular(8)),
                       child: Column(
-                        children: const [
+                        children: [
                           RowInfomation(
-                              leftText: 'Lãi suất', rightText: '3.5%/năm'),
+                              leftText: S.of(context).profit,
+                              rightText: '3.5%/năm'),
                           RowInfomation(
-                              leftText: 'Kỳ hạn', rightText: '1 tuần'),
+                              leftText: S.of(context).period,
+                              rightText: '1 tuần'),
                           RowInfomation(
-                              leftText: 'Hạn mức tối thiểu',
+                              leftText: S.of(context).minimum_limit,
                               rightText: '1,000,000'),
                           RowInfomation(
-                              leftText: 'Hạn mức tối đa',
+                              leftText: S.of(context).maximum_limit,
                               rightText: 'Không giới hạn'),
                           RowInfomation(
-                              leftText: 'Lãi suất trước hạn',
+                              leftText: S.of(context).early_interest_rate,
                               rightText: '1.2%'),
                           RowInfomation(
-                              leftText: 'Phương thức gia hạn',
+                              leftText: S.of(context).renewal_method,
                               rightText: 'Linh hoạt'),
                         ],
                       ),
@@ -132,7 +135,7 @@ class AutomaticAccumulation extends StatelessWidget {
                     builder: (context) => const AccumulationRegister()),
               );
             },
-            child: const Text('Đăng ký'),
+            child: Text(S.of(context).sign_up),
           ),
         ),
       ),
@@ -151,7 +154,6 @@ class RowQuote extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
-
     return Container(
       margin: const EdgeInsets.only(bottom: 8),
       child: Row(
@@ -169,37 +171,6 @@ class RowQuote extends StatelessWidget {
             width: 5,
           ),
           Flexible(child: Text(quote, style: textTheme.bodySmall)),
-        ],
-      ),
-    );
-  }
-}
-
-class RowInfomation extends StatelessWidget {
-  const RowInfomation({
-    super.key,
-    required this.leftText,
-    required this.rightText,
-  });
-
-  final String leftText;
-  final String rightText;
-
-  @override
-  Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
-    return Container(
-      margin: const EdgeInsets.only(bottom: 16),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(
-            leftText,
-            style: textTheme.bodyMedium?.copyWith(color: AppColors.neutral_02),
-          ),
-          Text(rightText,
-              style:
-                  textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.bold)),
         ],
       ),
     );

@@ -1,3 +1,4 @@
+import 'package:dtnd/ui/screen/accumulation/widget/settlement_dialog.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/widget/appbar/simple_appbar.dart';
 import 'package:flutter/material.dart';
@@ -40,7 +41,14 @@ class _AccumulatorBookDetailState extends State<AccumulatorBookDetail> {
               backgroundColor:
                   MaterialStateProperty.all<Color>(AppColors.text_blue),
             ),
-            onPressed: () {},
+            onPressed: () {
+              showDialog(
+                  context: context,
+                  barrierDismissible: false,
+                  builder: (BuildContext context) {
+                    return const SettlementDialog();
+                  });
+            },
             child: const Text('Tất toán'),
           ),
         ),
