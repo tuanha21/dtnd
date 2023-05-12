@@ -515,8 +515,7 @@
   "choose_the_topic":"Chọn chủ đề bài đăng",
   "article_details" : "Chi tiết bài viết",
   "comment" : "Bình luận",
-  "share" : "Chia sẻ"
-  "article_details" : "Chi tiết bài viết",
+  "share" : "Chia sẻ",
   "accumulator_book" : "Sổ tích luỹ",
   "end_date" : "Ngày kết thúc",
   "total_accumulation" : "Tổng tích luỹ",
@@ -529,5 +528,4 @@
   "early_interest_rate" : "Lãi suất trước hạn",
   "renewal_method" : "Phương thức gia hạn",
   "product":"Sản phẩm"
-
 }
