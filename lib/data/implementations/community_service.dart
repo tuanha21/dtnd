@@ -100,8 +100,34 @@ class CommunityService implements ICommunityService {
   }
 
   @override
-  Future<PostModel> postPost(INetworkService networkService,
-      IUserService userService, PostModel post) {
-    throw post;
+  Future<bool> postPosts(INetworkService networkService,
+      IUserService userService, String status) async {
+    if (!userService.isLogin) {
+      return false;
+    }
+    final Map<String, dynamic> body = {
+      "user": userService.token.value!.user,
+      "session": userService.token.value!.sid,
+      "status": status,
+      "imageUrl": ""
+    };
+    final response = await networkService.post(
+        networkService.url_core1("community/postStatus"),
+        body: jsonEncode(body));
+
+    final result = networkService.decode(response.bodyBytes);
+
+    if (result["rc"] == 1) {
+      return true;
+    } else {
+      return false;
+    }
+
+    //
+    // if (result is! Map || result["rc"] != 1) {
+    //   throw result;
+    // }
+    // final PostModel postReturn = PostModel.fromJson(result["data"]);
+    // return postReturn;
   }
 }

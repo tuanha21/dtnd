@@ -16,4 +16,9 @@ class PostCommentModel {
     createTime = TimeUtilities.isoFormat.parse(json["timeCreate"]);
     checkState = json["checkState"];
   }
+
+  @override
+  String toString() {
+    return 'PostCommentModel{id: $id, communityId: $communityId, user: $user, comment: $comment, createTime: $createTime, checkState: $checkState}';
+  }
 }

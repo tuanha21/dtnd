@@ -194,7 +194,7 @@ class ExchangeService implements IExchangeService {
       p4: TimeUtilities.commonTimeFormat.format(toDay ?? DateTime.now()),
       p5: status ?? "",
       p7: page?.toString() ?? "1",
-      p8: recordPerPage?.toString() ?? "100",
+      p8: recordPerPage?.toString() ?? "15",
     );
 
     final RequestModel requestModel =
@@ -212,20 +212,19 @@ class ExchangeService implements IExchangeService {
   @override
   Future<void> registerRight(
       {required IAccountModel accountModel,
-      required UnexecutedRightModel right,
+      required UnexecutedRightModel? right,
       required String volumn,
       required String pin}) {
     final RequestDataModel requestDataModel = RequestDataModel.stringType(
       cmd: "UpdateRightRegister",
       p1: accountModel.accCode,
-      p2: right.pKRIGHTSTOCKINFO,
+      p2: right?.pKRIGHTSTOCKINFO,
       p3: volumn,
       p4: accountModel.accCode,
       p6: pin,
     );
 
     bool hasError(dynamic json) => true;
-
     onError(dynamic json) {
       if (json["rc"] <= 0) {
         throw json["rs"];
@@ -302,7 +301,7 @@ class ExchangeService implements IExchangeService {
       p4: TimeUtilities.commonTimeFormat.format(toDay ?? DateTime.now()),
       p5: "0",
       p6: page?.toString() ?? "1",
-      p7: recordPerPage?.toString() ?? "100", // tạm thời để hiển thị ntn
+      p7: recordPerPage?.toString() ?? "10", // hiển thị 10 item
     );
 
     final RequestModel requestModel =

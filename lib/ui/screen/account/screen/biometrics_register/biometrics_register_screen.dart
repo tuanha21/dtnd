@@ -2,7 +2,6 @@ import 'package:dtnd/data/i_local_storage_service.dart';
 import 'package:dtnd/data/implementations/local_storage_service.dart';
 import 'package:dtnd/ui/widget/appbar/simple_appbar.dart';
 import 'package:flutter/material.dart';
-import 'package:local_auth/local_auth.dart';
 
 class BiometricsRegisterScreen extends StatefulWidget {
   const BiometricsRegisterScreen({super.key});
@@ -77,7 +76,7 @@ class _BiometricsRegisterScreenState extends State<BiometricsRegisterScreen> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text("Face/Touch ID"),
+                      const Text("Face/Touch ID"),
                       Switch.adaptive(value: reg, onChanged: onChanged)
                     ],
                   ),

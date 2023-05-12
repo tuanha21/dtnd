@@ -168,6 +168,12 @@ class UserService implements IUserService {
         await listAccount
             .elementAt(i)
             .getListUnexecutedRight(this, networkService);
+        await listAccount
+            .elementAt(i)
+            .getListRightBuy(this, networkService);
+        await listAccount
+            .elementAt(i)
+            .getListHistoryBuy(this, networkService);
         if (listAccount.elementAt(i) is BaseMarginPlusAccountModel) {
           defaultAccount.value = listAccount.elementAt(i);
         }

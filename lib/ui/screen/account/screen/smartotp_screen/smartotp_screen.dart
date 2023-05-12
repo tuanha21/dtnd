@@ -1,5 +1,6 @@
 import 'package:dtnd/data/i_user_service.dart';
 import 'package:dtnd/data/implementations/user_service.dart';
+import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/screen/account/screen/smartotp_register/smartotp_register.dart';
 import 'package:dtnd/ui/widget/appbar/simple_appbar.dart';
 import 'package:flutter/material.dart';
@@ -44,7 +45,7 @@ class _SmartotpScreenState extends State<SmartotpScreen> {
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
     return Scaffold(
-      appBar: SimpleAppbar(title: "Thiết lập SmartOTP"),
+      appBar: SimpleAppbar(title: S.of(context).setting_up_smartOTP),
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: ListView(
@@ -53,7 +54,7 @@ class _SmartotpScreenState extends State<SmartotpScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "Đăng ký SmartOTP",
+                  S.of(context).registering_for_smartOTP,
                   style: textTheme.titleSmall,
                 ),
                 Switch.adaptive(value: reg, onChanged: onChanged)

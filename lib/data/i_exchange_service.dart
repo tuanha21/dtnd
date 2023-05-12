@@ -34,7 +34,7 @@ abstract class IExchangeService {
 
   Future<void> registerRight(
       {required IAccountModel accountModel,
-      required UnexecutedRightModel right,
+      required UnexecutedRightModel? right,
       required String volumn,
       required String pin});
 

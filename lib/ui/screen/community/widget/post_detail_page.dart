@@ -1,14 +1,17 @@
 import 'package:dtnd/=models=/response/community/post_model.dart';
+import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/screen/community/community_controller.dart';
+import 'package:dtnd/ui/screen/community/widget/post_detail_widget.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:flutter/material.dart';
+
 import '../../../widget/my_appbar.dart';
 import 'list_comment_tab.dart';
-import 'post_widget.dart';
 
 class CommentDetailPage extends StatefulWidget {
   const CommentDetailPage({Key? key, required this.post}) : super(key: key);
   final PostModel post;
+
   @override
   State<CommentDetailPage> createState() => _CommentDetailPageState();
 }
@@ -30,19 +33,19 @@ class _CommentDetailPageState extends State<CommentDetailPage>
 
   @override
   void dispose() {
-    controller.refresh();
+    // controller.refresh();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const MyAppBar(
-        title: 'Chi tiết bài viết',
+      appBar: MyAppBar(
+        title: S.of(context).article_details,
       ),
       body: Column(
         children: [
-          PostWidget(
+          PostDetailWidget(
             post: widget.post,
           ),
           Container(
@@ -70,7 +73,7 @@ class _CommentDetailPageState extends State<CommentDetailPage>
               labelPadding: const EdgeInsets.symmetric(vertical: 4),
               labelColor: AppColors.light_bg,
               unselectedLabelColor: AppColors.text_black,
-              tabs: const [Text("Bình luận"), Text("Chia sẻ")],
+              tabs: [Text(S.of(context).comment), Text(S.of(context).share)],
             ),
           ),
           const SizedBox(height: 8),

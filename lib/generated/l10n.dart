@@ -4581,6 +4581,526 @@ class S {
       args: [],
     );
   }
+
+  /// `Increase/Decrease occurred`
+  String get increase_decrease_occurred {
+    return Intl.message(
+      'Increase/Decrease occurred',
+      name: 'increase_decrease_occurred',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `success`
+  String get success {
+    return Intl.message(
+      'success',
+      name: 'success',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Successful registration for Smart OTP generation.`
+  String get successful_registration_for_smart_otp_generation {
+    return Intl.message(
+      'Successful registration for Smart OTP generation.',
+      name: 'successful_registration_for_smart_otp_generation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Verification of installation`
+  String get verification_of_installation {
+    return Intl.message(
+      'Verification of installation',
+      name: 'verification_of_installation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Re-enter SmartOTP password`
+  String get re_enter_smartOTP_password {
+    return Intl.message(
+      'Re-enter SmartOTP password',
+      name: 're_enter_smartOTP_password',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Re-enter 6-digit password`
+  String get re_enter_6_digit_password {
+    return Intl.message(
+      'Re-enter 6-digit password',
+      name: 're_enter_6_digit_password',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please remember your SmartOTP password`
+  String get please_remember_your_smartOTP_password {
+    return Intl.message(
+      'Please remember your SmartOTP password',
+      name: 'please_remember_your_smartOTP_password',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Setting up SmartOTP`
+  String get setting_up_smartOTP {
+    return Intl.message(
+      'Setting up SmartOTP',
+      name: 'setting_up_smartOTP',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Registering for SmartOTP`
+  String get registering_for_smartOTP {
+    return Intl.message(
+      'Registering for SmartOTP',
+      name: 'registering_for_smartOTP',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Opening balance`
+  String get opening_balance {
+    return Intl.message(
+      'Opening balance',
+      name: 'opening_balance',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Closing balance`
+  String get closing_balance {
+    return Intl.message(
+      'Closing balance',
+      name: 'closing_balance',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Loan amount`
+  String get loan_amount {
+    return Intl.message(
+      'Loan amount',
+      name: 'loan_amount',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Loan interest`
+  String get loan_interest {
+    return Intl.message(
+      'Loan interest',
+      name: 'loan_interest',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Portfolio value`
+  String get portfolio_value {
+    return Intl.message(
+      'Portfolio value',
+      name: 'portfolio_value',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Held funds`
+  String get held_funds {
+    return Intl.message(
+      'Held funds',
+      name: 'held_funds',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You can register`
+  String get you_can_register {
+    return Intl.message(
+      'You can register',
+      name: 'you_can_register',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You cannot register`
+  String get you_cannot_register {
+    return Intl.message(
+      'You cannot register',
+      name: 'you_cannot_register',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Short term accumulation`
+  String get short_term_accumulation {
+    return Intl.message(
+      'Short term accumulation',
+      name: 'short_term_accumulation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Automatic accumulation`
+  String get automatic_accumulation {
+    return Intl.message(
+      'Automatic accumulation',
+      name: 'automatic_accumulation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Accumulation package is automatically updated based on the product limit balance at the end of the trading day.`
+  String get accumulation_quote1 {
+    return Intl.message(
+      'Accumulation package is automatically updated based on the product limit balance at the end of the trading day.',
+      name: 'accumulation_quote1',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Cash balance includes cash and sales on the day of arrival.`
+  String get accumulation_quote2 {
+    return Intl.message(
+      'Cash balance includes cash and sales on the day of arrival.',
+      name: 'accumulation_quote2',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `The accumulated balance is automatically counted towards purchasing power.`
+  String get accumulation_quote3 {
+    return Intl.message(
+      'The accumulated balance is automatically counted towards purchasing power.',
+      name: 'accumulation_quote3',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Accumulated money used for stock trading is settled with early interest rate.`
+  String get accumulation_quote4 {
+    return Intl.message(
+      'Accumulated money used for stock trading is settled with early interest rate.',
+      name: 'accumulation_quote4',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Permission information`
+  String get permission_information {
+    return Intl.message(
+      'Permission information',
+      name: 'permission_information',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Register the right to buy`
+  String get register_the_right_to_buy {
+    return Intl.message(
+      'Register the right to buy',
+      name: 'register_the_right_to_buy',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Purchase rights history`
+  String get purchase_rights_history {
+    return Intl.message(
+      'Purchase rights history',
+      name: 'purchase_rights_history',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Status`
+  String get status {
+    return Intl.message(
+      'Status',
+      name: 'status',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Purchase price`
+  String get purchase_price {
+    return Intl.message(
+      'Purchase price',
+      name: 'purchase_price',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Amount received`
+  String get amount_received {
+    return Intl.message(
+      'Amount received',
+      name: 'amount_received',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Rights type`
+  String get rights_type {
+    return Intl.message(
+      'Rights type',
+      name: 'rights_type',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Share your thoughts or ask a question to the community`
+  String get share_your_thoughts {
+    return Intl.message(
+      'Share your thoughts or ask a question to the community',
+      name: 'share_your_thoughts',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Post`
+  String get post {
+    return Intl.message(
+      'Post',
+      name: 'post',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please enter the content of the post`
+  String get please_enter_the_content_of_the_post {
+    return Intl.message(
+      'Please enter the content of the post',
+      name: 'please_enter_the_content_of_the_post',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Create a post`
+  String get create_a_post {
+    return Intl.message(
+      'Create a post',
+      name: 'create_a_post',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Post created successfully`
+  String get post_created_successfully {
+    return Intl.message(
+      'Post created successfully',
+      name: 'post_created_successfully',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Post creation failed, please try again`
+  String get post_creation_failed {
+    return Intl.message(
+      'Post creation failed, please try again',
+      name: 'post_creation_failed',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Choose the topic of the post`
+  String get choose_the_topic {
+    return Intl.message(
+      'Choose the topic of the post',
+      name: 'choose_the_topic',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Article details`
+  String get article_details {
+    return Intl.message(
+      'Article details',
+      name: 'article_details',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Comment`
+  String get comment {
+    return Intl.message(
+      'Comment',
+      name: 'comment',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Share`
+  String get share {
+    return Intl.message(
+      'Share',
+      name: 'share',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Accumulator book`
+  String get accumulator_book {
+    return Intl.message(
+      'Accumulator book',
+      name: 'accumulator_book',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `End date`
+  String get end_date {
+    return Intl.message(
+      'End date',
+      name: 'end_date',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Total accumulation`
+  String get total_accumulation {
+    return Intl.message(
+      'Total accumulation',
+      name: 'total_accumulation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Accumulate today`
+  String get accumulate_today {
+    return Intl.message(
+      'Accumulate today',
+      name: 'accumulate_today',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Period`
+  String get period {
+    return Intl.message(
+      'Period',
+      name: 'period',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Profit`
+  String get profit {
+    return Intl.message(
+      'Profit',
+      name: 'profit',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Current cumulative packages`
+  String get accumulate_current_packages {
+    return Intl.message(
+      'Current cumulative packages',
+      name: 'accumulate_current_packages',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Minimum limit`
+  String get minimum_limit {
+    return Intl.message(
+      'Minimum limit',
+      name: 'minimum_limit',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Maximum limit`
+  String get maximum_limit {
+    return Intl.message(
+      'Maximum limit',
+      name: 'maximum_limit',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Early interest rate`
+  String get early_interest_rate {
+    return Intl.message(
+      'Early interest rate',
+      name: 'early_interest_rate',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Renewal method`
+  String get renewal_method {
+    return Intl.message(
+      'Renewal method',
+      name: 'renewal_method',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Product`
+  String get product {
+    return Intl.message(
+      'Product',
+      name: 'product',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

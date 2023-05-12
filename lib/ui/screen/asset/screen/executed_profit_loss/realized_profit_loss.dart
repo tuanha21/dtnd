@@ -11,7 +11,6 @@ import 'package:get/get.dart';
 
 import '../../../../../=models=/response/share_earned_model.dart';
 import '../../../../../=models=/response/stock_model.dart';
-import '../../../../../config/service/app_services.dart';
 import '../../../../../data/i_data_center_service.dart';
 import '../../../../../data/implementations/data_center_service.dart';
 import '../../../../../generated/l10n.dart';
@@ -44,6 +43,9 @@ class _RealizedProfitLossState extends State<RealizedProfitLoss> {
   late DateTime firstDay;
   late DateTime lastDay;
   StockModel? stockModel;
+  bool isLoading = false;
+
+  final ScrollController _scrollController = ScrollController();
 
   final IDataCenterService dataCenterService = DataCenterService();
 
@@ -114,58 +116,54 @@ class _RealizedProfitLossState extends State<RealizedProfitLoss> {
     toDay = DateTime.now();
     firstDay = TimeUtilities.getPreviousDateTime(TimeUtilities.month(3));
     lastDay = toDay;
+    _scrollController.addListener(_scrollListener);
     super.initState();
     EasyLoading.show();
     controller
-        .getAllShareEarned(fromDay, toDay, '')
+        .getAllShareEarned(fromDay, toDay, '', 10)
         .whenComplete(() => EasyLoading.dismiss());
   }
 
-  Future<void> getData() async {
+  Future<void> getData({int? recordPerPage}) async {
+    setState(() {
+      isLoading = true;
+    });
+    await Future.delayed(const Duration(seconds: 1));
     controller.shareEarnedModel.value?.listDetail.clear();
     EasyLoading.show();
     await controller
-        .getAllShareEarned(fromDay, toDay, '')
+        .getAllShareEarned(fromDay, toDay, '', recordPerPage)
         .whenComplete(() => EasyLoading.dismiss());
-    setState(() {});
+    setState(() {
+      isLoading = false;
+    });
+  }
+
+  void _scrollListener() {
+    if (_scrollController.offset >=
+            _scrollController.position.maxScrollExtent &&
+        !_scrollController.position.outOfRange) {
+      if (controller.shareEarnedModel.value!.listDetail.isNotEmpty) {
+        getData(
+            recordPerPage:
+                controller.shareEarnedModel.value!.listDetail.length + 5);
+      }
+    }
+  }
+
+  @override
+  void dispose() {
+    _scrollController.removeListener(_scrollListener);
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    final themeMode = AppService.instance.themeMode.value;
-
     return Scaffold(
       appBar: SimpleAppbar(
         title: S.of(context).executed_profit_and_loss,
       ),
-      // appBar: MyAppBar(
-      //   leading: Align(
-      //     alignment: Alignment.centerRight,
-      //     child: SizedBox.square(
-      //       dimension: 32,
-      //       child: InkWell(
-      //         onTap: () => Navigator.of(context).pop(false),
-      //         borderRadius: const BorderRadius.all(Radius.circular(6)),
-      //         child: Ink(
-      //           padding: const EdgeInsets.all(8),
-      //           decoration: BoxDecoration(
-      //             borderRadius: const BorderRadius.all(Radius.circular(6)),
-      //             color: themeMode.isLight
-      //                 ? AppColors.neutral_05
-      //                 : AppColors.neutral_01,
-      //           ),
-      //           child: const Icon(
-      //             Icons.arrow_back_ios_new,
-      //             color: AppColors.primary_01,
-      //             size: 10,
-      //           ),
-      //         ),
-      //       ),
-      //     ),
-      //   ),
-      //   title: 'Lãi/lỗ đã thực hiện',
-      // ),
-      body: SingleChildScrollView(
+      body: Padding(
         padding: const EdgeInsets.only(top: 5, right: 16, left: 16, bottom: 16),
         child: Column(
           children: [
@@ -239,7 +237,8 @@ class _RealizedProfitLossState extends State<RealizedProfitLoss> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(S.of(context).Total, style: AppTextStyle.labelMedium_12),
+                    Text(S.of(context).Total,
+                        style: AppTextStyle.labelMedium_12),
                     Text(
                       "${NumUtils.formatDouble(controller.shareEarnedModel.value?.cEARNEDVALUE ?? 0)} (${NumUtils.formatDouble(controller.shareEarnedModel.value?.cEARNEDRATE)}%)",
                       style: AppTextStyle.labelMedium_12.copyWith(
@@ -253,51 +252,73 @@ class _RealizedProfitLossState extends State<RealizedProfitLoss> {
             Container(
               height: 16,
             ),
-            Obx(
-              () {
-                if (controller.shareEarnedModel.value?.listDetail.isEmpty ??
-                    true) {
-                  return const Padding(
-                      padding: EdgeInsets.only(top: 100),
-                      child: EmptyListWidget());
-                }
-                if (!controller.searching) {
-                  return Container(
-                    padding: const EdgeInsets.all(16),
-                    decoration: BoxDecoration(
-                        color: AppColors.light_bg,
-                        borderRadius: BorderRadius.circular(12)),
-                    child: Column(
-                      children: [
-                        for (ShareEarnedDetailModel detail
-                            in controller.shareEarnedModel.value?.listDetail ??
-                                [])
-                          Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 4),
-                            child: ItemRealizedWidget(detail: detail),
-                          )
-                      ],
-                    ),
-                  );
-                } else {
-                  return Container(
-                    padding: const EdgeInsets.all(16),
-                    decoration: BoxDecoration(
-                        color: AppColors.light_bg,
-                        borderRadius: BorderRadius.circular(12)),
-                    child: Column(
-                      children: [
-                        for (ShareEarnedDetailModel detail
-                            in controller.listSearch.value?.listDetail ?? [])
-                          Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 4),
-                            child: ItemRealizedWidget(detail: detail),
-                          )
-                      ],
-                    ),
-                  );
-                } /////
-              },
+            Expanded(
+              child: Obx(
+                () {
+                  if (controller.shareEarnedModel.value?.listDetail.isEmpty ??
+                      true) {
+                    return const Padding(
+                        padding: EdgeInsets.only(top: 100),
+                        child: EmptyListWidget());
+                  }
+                  if (!controller.searching) {
+                    return Container(
+                      padding: const EdgeInsets.all(16),
+                      decoration: BoxDecoration(
+                          color: AppColors.light_bg,
+                          borderRadius: BorderRadius.circular(12)),
+                      child: ListView.builder(
+                        shrinkWrap: true,
+                        controller: _scrollController,
+                        itemCount: controller
+                                .shareEarnedModel.value!.listDetail.length +
+                            1,
+                        itemBuilder: (BuildContext context, int index) {
+                          if (index <
+                              controller
+                                  .shareEarnedModel.value!.listDetail.length) {
+                            return Column(
+                              children: [
+                                Padding(
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 4),
+                                  child: ItemRealizedWidget(
+                                      detail: controller.shareEarnedModel.value!
+                                          .listDetail[index]),
+                                )
+                              ],
+                            );
+                          } else if (index ==
+                                  controller.shareEarnedModel.value!.listDetail
+                                      .length &&
+                              isLoading) {
+                            return _buildLoader();
+                          } else {
+                            return const SizedBox.shrink();
+                          }
+                        },
+                      ),
+                    );
+                  } else {
+                    return Container(
+                      padding: const EdgeInsets.all(16),
+                      decoration: BoxDecoration(
+                          color: AppColors.light_bg,
+                          borderRadius: BorderRadius.circular(12)),
+                      child: Column(
+                        children: [
+                          for (ShareEarnedDetailModel detail
+                              in controller.listSearch.value?.listDetail ?? [])
+                            Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 4),
+                              child: ItemRealizedWidget(detail: detail),
+                            )
+                        ],
+                      ),
+                    );
+                  } /////
+                },
+              ),
             )
           ],
         ),
@@ -426,4 +447,15 @@ class UpperCaseTextFormatter extends TextInputFormatter {
       selection: newValue.selection,
     );
   }
+}
+
+// padding: const EdgeInsets.only(top: 5, right: 16, left: 16, bottom: 16),
+//
+
+Widget _buildLoader() {
+  return Container(
+    alignment: Alignment.center,
+    padding: const EdgeInsets.symmetric(vertical: 16.0),
+    child: const CircularProgressIndicator(),
+  );
 }
