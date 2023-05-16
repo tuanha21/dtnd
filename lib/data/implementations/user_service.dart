@@ -168,12 +168,8 @@ class UserService implements IUserService {
         await listAccount
             .elementAt(i)
             .getListUnexecutedRight(this, networkService);
-        await listAccount
-            .elementAt(i)
-            .getListRightBuy(this, networkService);
-        await listAccount
-            .elementAt(i)
-            .getListHistoryBuy(this, networkService);
+        await listAccount.elementAt(i).getListRightBuy(this, networkService);
+        await listAccount.elementAt(i).getListHistoryBuy(this, networkService);
         if (listAccount.elementAt(i) is BaseMarginPlusAccountModel) {
           defaultAccount.value = listAccount.elementAt(i);
         }
@@ -314,9 +310,6 @@ class UserService implements IUserService {
         "CUST_EMAIL": mail,
       }
     };
-    // "CUSTOMER_NAME": name,
-    // "CUSTOMER_MOBILE": mobile,
-    // "CUSTOMER_PASS": pass,
 
     return networkService.checkAccountInfo(jsonEncode(body));
   }
@@ -436,5 +429,16 @@ class UserService implements IUserService {
       logger.e(e);
       throw e.runtimeType.toString();
     }
+  }
+
+  @override
+  Future<void> getAllFreeRate() {
+    Map<String, dynamic> body = {
+      "group": "B",
+      "user": token.value?.user ?? '',
+      "session": token.value?.sid ?? '',
+      "data": {"cmd": "MM_GetAllFeeRate", "type": "object", "p1": {}}
+    };
+    return networkService.resetPassword(jsonEncode(body));
   }
 }

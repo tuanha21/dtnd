@@ -82,4 +82,6 @@ abstract class IUserService {
       String id, String phone, String mail, String password);
 
   Future<void> deleteAccount();
+
+  Future<void> getAllFreeRate();
 }

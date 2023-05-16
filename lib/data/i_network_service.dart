@@ -296,4 +296,6 @@ abstract class INetworkService {
   Future<void> createBot(String body);
 
   Future<void> deleteBot(String body);
+
+  Future<void> getAllFreeRate(String body);
 }

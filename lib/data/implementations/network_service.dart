@@ -8,6 +8,7 @@ import 'package:dtnd/=models=/check_account_success_data_model.dart';
 import 'package:dtnd/=models=/core_response_model.dart';
 import 'package:dtnd/=models=/index.dart';
 import 'package:dtnd/=models=/request/request_model.dart';
+import 'package:dtnd/=models=/response/accumulation/fee_rate_model.dart';
 import 'package:dtnd/=models=/response/business_profile_model.dart';
 import 'package:dtnd/=models=/response/commodity_model.dart';
 import 'package:dtnd/=models=/response/company_info.dart';
@@ -1754,5 +1755,25 @@ class NetworkService implements INetworkService {
     } else {
       return true;
     }
+  }
+
+  @override
+  Future<List<FeeRateModel>> getAllFreeRate(String body) async {
+    List<FeeRateModel> feeRateModel = [];
+    var response = await client.post(url_core_endpoint, body: body);
+    if (response.statusCode != 200) {
+      throw response;
+    }
+    var res = decode(response.bodyBytes);
+    if (res["status"] != 200) {
+      throw res["message"];
+    }
+    var data = decode(res["data"]);
+    if (data.isEmpty) throw Exception();
+
+    for (var element in data) {
+      feeRateModel.add(FeeRateModel.fromJson(element));
+    }
+    return feeRateModel;
   }
 }
