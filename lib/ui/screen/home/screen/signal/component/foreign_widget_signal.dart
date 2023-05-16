@@ -1,6 +1,7 @@
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:dtnd/data/i_data_center_service.dart';
 import 'package:dtnd/data/implementations/data_center_service.dart';
+import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/utilities/charts_util.dart';
 import 'package:dtnd/utilities/num_utils.dart';
@@ -47,7 +48,6 @@ class _ForeignWidgetState extends State<ForeignWidgetSignal> {
 
   @override
   Widget build(BuildContext context) {
-    print(listMonth.toString());
     final size = MediaQuery.of(context).size;
     listMonth?.sort((a, b) => a.cMONTH.compareTo(b.cMONTH));
     return listMonth?.isNotEmpty == true
@@ -125,7 +125,7 @@ class _ForeignWidgetState extends State<ForeignWidgetSignal> {
                         if (model.hasDatumSelection) {
                           final selectedDatum = model.selectedDatum.first.datum;
                           final datas = <String>[
-                            "Hiệu quả : ${selectedDatum.cPC}%"
+                            "${S.of(context).effective} : ${selectedDatum.cPC}%"
                           ];
                           _TooltipData.instance.setData(datas);
                         }
@@ -136,7 +136,7 @@ class _ForeignWidgetState extends State<ForeignWidgetSignal> {
               )
             ],
           )
-        : SizedBox();
+        : const SizedBox();
   }
 
   String parseEmpty(num? value) {
@@ -150,5 +150,6 @@ class _ForeignWidgetState extends State<ForeignWidgetSignal> {
 
 class _TooltipData extends TooltipData {
   _TooltipData._internal();
+
   static final _TooltipData instance = _TooltipData._internal();
 }

@@ -74,7 +74,7 @@ class _RegistrationRightsWidgetState extends State<RegistrationRightsWidget> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text('Số CP được hưởng',
+              Text(S.of(context).number_of_shares_entitled,
                   style: AppTextStyle.labelMedium_12
                       .copyWith(color: AppColors.neutral_03)),
               Text(widget.data?.cRIGHTVOLUME.toString() ?? '',
@@ -104,7 +104,7 @@ class _RegistrationRightsWidgetState extends State<RegistrationRightsWidget> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text('Mã CP được mua',
+              Text(S.of(context).purchased_stock_code,
                   style: AppTextStyle.labelMedium_12
                       .copyWith(color: AppColors.neutral_03)),
               Text(widget.data?.cRECEIVESHARECODE.toString() ?? '',
@@ -119,7 +119,7 @@ class _RegistrationRightsWidgetState extends State<RegistrationRightsWidget> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text('Số CP còn được mua',
+              Text(S.of(context).remaining_shares_available_for_purchase,
                   style: AppTextStyle.labelMedium_12
                       .copyWith(color: AppColors.neutral_03)),
               Text(

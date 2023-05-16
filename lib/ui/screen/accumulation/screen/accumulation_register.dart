@@ -1,9 +1,11 @@
+import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/screen/accumulation/screen/acumulation_confirm.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/widget/appbar/simple_appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
+
 import '../widget/row_information.dart';
 
 class AccumulationRegister extends StatefulWidget {
@@ -18,6 +20,7 @@ class AccumulationRegister extends StatefulWidget {
 class _AccumulationRegisterState extends State<AccumulationRegister> {
   final _moneyController = TextEditingController();
   static const _locale = 'en';
+
   String _formatNumber(String s) =>
       NumberFormat.decimalPattern(_locale).format(int.parse(s));
   final List<bool> _selectedMethod = <bool>[false, false, false];
@@ -26,13 +29,14 @@ class _AccumulationRegisterState extends State<AccumulationRegister> {
     '5,000,000',
     '50,000,000'
   ];
+
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
 
     return Scaffold(
-      appBar: const SimpleAppbar(
-        title: 'Đăng ký tích lũy',
+      appBar: SimpleAppbar(
+        title: S.of(context).registration_for_accumulation,
       ),
       body: SingleChildScrollView(
         child: bodyWidget(textTheme, context),
@@ -55,7 +59,7 @@ class _AccumulationRegisterState extends State<AccumulationRegister> {
                     builder: (context) => const AccumulationConfirm()),
               );
             },
-            child: const Text('Tiếp tục'),
+            child: Text(S.of(context).next),
           ),
         ),
       ),
@@ -81,8 +85,8 @@ class _AccumulationRegisterState extends State<AccumulationRegister> {
                 selection: TextSelection.collapsed(offset: string.length),
               );
             },
-            decoration: const InputDecoration(
-              labelText: 'Số tiền gốc',
+            decoration: InputDecoration(
+              labelText: S.of(context).the_principal_amount,
               suffixText: 'đ',
               suffixStyle: TextStyle(color: Colors.grey),
             ),
@@ -102,7 +106,7 @@ class _AccumulationRegisterState extends State<AccumulationRegister> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'Lãi suất',
+                      S.of(context).profit,
                       style: textTheme.bodyMedium
                           ?.copyWith(color: AppColors.text_black),
                     ),
@@ -125,12 +129,13 @@ class _AccumulationRegisterState extends State<AccumulationRegister> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         RowInfomation(
-                          leftText: 'Lãi dự tính',
+                          leftText: S.of(context).expected_profit,
                           rightText: '+45,205đ',
                           differentColor: true,
                         ),
                         RowInfomation(
-                            leftText: 'Tổng tiền gốc và lãi',
+                            leftText:
+                                S.of(context).total_principal_and_interest,
                             rightText: '10,045,205đ'),
                       ]),
                 ),
@@ -139,7 +144,7 @@ class _AccumulationRegisterState extends State<AccumulationRegister> {
             ),
           ),
           const SizedBox(height: 24),
-          Text('Cộng đồng IFIS thường hay chọn',
+          Text(S.of(context).the_IFIS_community_often_prefers,
               style: textTheme.bodySmall?.copyWith(
                 fontWeight: FontWeight.bold,
               )),
