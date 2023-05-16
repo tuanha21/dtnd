@@ -30,6 +30,8 @@ class _RightsInfoTabState extends State<RightsInfoTab> {
         userService.defaultAccount.value as BaseMarginPlusAccountModel?;
     account?.getListUnexecutedRight(userService, NetworkService());
 
+    print('dks${account?.listUnexecutedBuyRight}');
+
     return Column(
       children: [
         account?.listUnexecutedBuyRight.isEmpty == false

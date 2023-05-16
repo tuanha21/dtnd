@@ -46,7 +46,7 @@ class _RightsInfoWidgetState extends State<RightsInfoWidget> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text('Mã CK',
+              Text(S.of(context).stk_code,
                   style: AppTextStyle.labelMedium_12
                       .copyWith(color: AppColors.neutral_03)),
               Text(widget.data?.cSHARECODE.toString() ?? '',
@@ -61,7 +61,7 @@ class _RightsInfoWidgetState extends State<RightsInfoWidget> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text('Số CP được hưởng',
+              Text(S.of(context).number_of_shares_entitled,
                   style: AppTextStyle.labelMedium_12
                       .copyWith(color: AppColors.neutral_03)),
               Text(widget.data?.cRIGHTVOLUME.toString() ?? '',
@@ -94,7 +94,7 @@ class _RightsInfoWidgetState extends State<RightsInfoWidget> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text('Mã CP được mua',
+                        Text(S.of(context).purchased_stock_code,
                             style: AppTextStyle.labelMedium_12
                                 .copyWith(color: AppColors.neutral_03)),
                         Text(widget.data?.cRECEIVESHARECODE.toString() ?? '',
@@ -115,7 +115,7 @@ class _RightsInfoWidgetState extends State<RightsInfoWidget> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text('Số CP còn được mua',
+                        Text(S.of(context).remaining_shares_available_for_purchase,
                             style: AppTextStyle.labelMedium_12
                                 .copyWith(color: AppColors.neutral_03)),
                         Text(
@@ -176,7 +176,7 @@ class _RightsInfoWidgetState extends State<RightsInfoWidget> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text('Số CP được nhận',
+              Text(S.of(context).number_of_shares_received,
                   style: AppTextStyle.labelMedium_12
                       .copyWith(color: AppColors.neutral_03)),
               Text(widget.data?.cSHARERIGHT.toString() ?? '',
@@ -191,7 +191,7 @@ class _RightsInfoWidgetState extends State<RightsInfoWidget> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text('Mã CP được nhận',
+              Text(S.of(context).received_stock_code,
                   style: AppTextStyle.labelMedium_12
                       .copyWith(color: AppColors.neutral_03)),
               Text(widget.data?.cRECEIVESHARECODE ?? '',
@@ -206,7 +206,7 @@ class _RightsInfoWidgetState extends State<RightsInfoWidget> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text('Số quyền được nhận',
+              Text(S.of(context).quantity_of_rights_received,
                   style: AppTextStyle.labelMedium_12
                       .copyWith(color: AppColors.neutral_03)),
               Text(widget.data?.cSHARERIGHT.toString() ?? '',
@@ -224,7 +224,7 @@ class _RightsInfoWidgetState extends State<RightsInfoWidget> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text('Ngày chốt đăng ký',
+                        Text(S.of(context).registration_closing_date,
                             style: AppTextStyle.labelMedium_12
                                 .copyWith(color: AppColors.neutral_03)),
                         Text(widget.data?.cREGISTERTODATE ?? '',
@@ -242,7 +242,7 @@ class _RightsInfoWidgetState extends State<RightsInfoWidget> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text('Ngày thực hiện dự định',
+              Text(S.of(context).planned_execution_date,
                   style: AppTextStyle.labelMedium_12
                       .copyWith(color: AppColors.neutral_03)),
               Text(widget.data?.cEXECUTEDATE ?? '',

@@ -5096,6 +5096,196 @@ class S {
       args: [],
     );
   }
+
+  /// `Expected profit`
+  String get expected_profit {
+    return Intl.message(
+      'Expected profit',
+      name: 'expected_profit',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Total principal and interest`
+  String get total_principal_and_interest {
+    return Intl.message(
+      'Total principal and interest',
+      name: 'total_principal_and_interest',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `The IFIS community often prefers`
+  String get the_IFIS_community_often_prefers {
+    return Intl.message(
+      'The IFIS community often prefers',
+      name: 'the_IFIS_community_often_prefers',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `The principal amount`
+  String get the_principal_amount {
+    return Intl.message(
+      'The principal amount',
+      name: 'the_principal_amount',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Registration for accumulation`
+  String get registration_for_accumulation {
+    return Intl.message(
+      'Registration for accumulation',
+      name: 'registration_for_accumulation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Final settlement`
+  String get final_settlement {
+    return Intl.message(
+      'Final settlement',
+      name: 'final_settlement',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Accumulation code`
+  String get accumulation_code {
+    return Intl.message(
+      'Accumulation code',
+      name: 'accumulation_code',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Start_date`
+  String get start_date {
+    return Intl.message(
+      'Start_date',
+      name: 'start_date',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Quantity of rights received`
+  String get quantity_of_rights_received {
+    return Intl.message(
+      'Quantity of rights received',
+      name: 'quantity_of_rights_received',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Registration closing date`
+  String get registration_closing_date {
+    return Intl.message(
+      'Registration closing date',
+      name: 'registration_closing_date',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Planned execution date`
+  String get planned_execution_date {
+    return Intl.message(
+      'Planned execution date',
+      name: 'planned_execution_date',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Number of shares received`
+  String get number_of_shares_received {
+    return Intl.message(
+      'Number of shares received',
+      name: 'number_of_shares_received',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Received stock code`
+  String get received_stock_code {
+    return Intl.message(
+      'Received stock code',
+      name: 'received_stock_code',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Remaining shares available for purchase`
+  String get remaining_shares_available_for_purchase {
+    return Intl.message(
+      'Remaining shares available for purchase',
+      name: 'remaining_shares_available_for_purchase',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Purchased stock code`
+  String get purchased_stock_code {
+    return Intl.message(
+      'Purchased stock code',
+      name: 'purchased_stock_code',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Number of shares entitled`
+  String get number_of_shares_entitled {
+    return Intl.message(
+      'Number of shares entitled',
+      name: 'number_of_shares_entitled',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Register the right`
+  String get register_the_right {
+    return Intl.message(
+      'Register the right',
+      name: 'register_the_right',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Amount to be paid`
+  String get amount_to_be_paid {
+    return Intl.message(
+      'Amount to be paid',
+      name: 'amount_to_be_paid',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Reset password`
+  String get reset_password {
+    return Intl.message(
+      'Reset password',
+      name: 'reset_password',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

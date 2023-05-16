@@ -15,6 +15,7 @@ import 'package:flutter/material.dart';
 
 class ChangePassword extends StatefulWidget {
   const ChangePassword({super.key, required this.accountInfo});
+
   final CheckAccountSuccessDataModel accountInfo;
 
   @override
@@ -69,7 +70,7 @@ class _ChangePasswordState extends State<ChangePassword> {
           child:
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             Text(
-              "Đặt lại mật khẩu",
+              S.of(context).reset_password,
               style: AppTextStyle.headlineSmall_24
                   .copyWith(fontWeight: FontWeight.w700),
             ),

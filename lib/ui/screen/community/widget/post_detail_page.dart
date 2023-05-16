@@ -3,9 +3,9 @@ import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/screen/community/community_controller.dart';
 import 'package:dtnd/ui/screen/community/widget/post_detail_widget.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
+import 'package:dtnd/ui/widget/appbar/simple_appbar.dart';
 import 'package:flutter/material.dart';
 
-import '../../../widget/my_appbar.dart';
 import 'list_comment_tab.dart';
 
 class CommentDetailPage extends StatefulWidget {
@@ -40,9 +40,12 @@ class _CommentDetailPageState extends State<CommentDetailPage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: MyAppBar(
+      appBar: SimpleAppbar(
         title: S.of(context).article_details,
       ),
+      // MyAppBar(
+      //   title: S.of(context).article_details,
+      // ),
       body: Column(
         children: [
           PostDetailWidget(

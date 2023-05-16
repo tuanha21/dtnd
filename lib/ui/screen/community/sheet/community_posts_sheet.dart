@@ -119,99 +119,101 @@ class _CommunityPostsSheetState extends State<CommunityPostsSheet>
       },
     );
 
-    return Container(
-      height: MediaQuery.of(context).size.height,
-      padding: const EdgeInsets.only(top: 25, right: 16, left: 16, bottom: 8),
-      child: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              InkWell(
-                child: SvgPicture.asset(
-                  AppImages.back_draw_icon,
+    return SafeArea(
+      child: Container(
+        height: MediaQuery.of(context).size.height,
+        padding: const EdgeInsets.only(top: 25, right: 16, left: 16, bottom: 8),
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                InkWell(
+                  child: SvgPicture.asset(
+                    AppImages.back_draw_icon,
+                  ),
+                  onTap: () => Navigator.of(context).pop(),
                 ),
-                onTap: () => Navigator.of(context).pop(),
-              ),
-              Text(
-                S.of(context).create_a_post,
-                style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                      fontSize: 20,
-                      fontWeight: FontWeight.w700,
-                      color: AppColors.text_black_1,
-                    ),
-              ),
-              TextButton(
-                  onPressed: () {
-                    if (postsController.text != '') {
-                      controller.postPosts(postsController.text).then((value) {
-                        if (value) {
-                          EasyLoading.showToast(
-                              S.of(context).post_created_successfully);
-                          Navigator.of(context).pop();
-                        } else {
-                          EasyLoading.showToast(
-                              S.of(context).post_creation_failed);
-                        }
-                      });
-                    } else {
-                      EasyLoading.showToast(
-                          S.of(context).please_enter_the_content_of_the_post);
-                    }
-                  },
-                  child: Text(S.of(context).post))
-            ],
-          ),
-          const Divider(),
-          const SizedBox(
-            height: 8,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              title,
-              Text(
-                '$postLength/1000',
-                style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w700,
-                      color: AppColors.graph_5,
-                    ),
-              )
-            ],
-          ),
-          const SizedBox(
-            height: 8,
-          ),
-          Expanded(
-            child: SizedBox(
-              child: TextField(
-                maxLengthEnforcement: MaxLengthEnforcement.none,
-                maxLength: 1000,
-                controller: postsController,
-                decoration: InputDecoration(
-                  counterText: '',
-                  contentPadding: EdgeInsets.zero,
-                  border: InputBorder.none,
-                  enabledBorder: InputBorder.none,
-                  disabledBorder: InputBorder.none,
-                  focusedBorder: InputBorder.none,
-                  hintText: S.of(context).share_your_thoughts,
+                Text(
+                  S.of(context).create_a_post,
+                  style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w700,
+                        color: AppColors.text_black_1,
+                      ),
                 ),
-                maxLines: null,
+                TextButton(
+                    onPressed: () {
+                      if (postsController.text != '') {
+                        controller.postPosts(postsController.text).then((value) {
+                          if (value) {
+                            EasyLoading.showToast(
+                                S.of(context).post_created_successfully);
+                            Navigator.of(context).pop();
+                          } else {
+                            EasyLoading.showToast(
+                                S.of(context).post_creation_failed);
+                          }
+                        });
+                      } else {
+                        EasyLoading.showToast(
+                            S.of(context).please_enter_the_content_of_the_post);
+                      }
+                    },
+                    child: Text(S.of(context).post))
+              ],
+            ),
+            const Divider(),
+            const SizedBox(
+              height: 8,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                title,
+                Text(
+                  '$postLength/1000',
+                  style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w700,
+                        color: AppColors.graph_5,
+                      ),
+                )
+              ],
+            ),
+            const SizedBox(
+              height: 8,
+            ),
+            Expanded(
+              child: SizedBox(
+                child: TextField(
+                  maxLengthEnforcement: MaxLengthEnforcement.none,
+                  maxLength: 1000,
+                  controller: postsController,
+                  decoration: InputDecoration(
+                    counterText: '',
+                    contentPadding: EdgeInsets.zero,
+                    border: InputBorder.none,
+                    enabledBorder: InputBorder.none,
+                    disabledBorder: InputBorder.none,
+                    focusedBorder: InputBorder.none,
+                    hintText: S.of(context).share_your_thoughts,
+                  ),
+                  maxLines: null,
+                ),
               ),
             ),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Text(
-                '${S.of(context).choose_the_topic}(0/3)',
-                textAlign: TextAlign.start,
-              ),
-            ],
-          )
-        ],
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Text(
+                  '${S.of(context).choose_the_topic}(0/3)',
+                  textAlign: TextAlign.start,
+                ),
+              ],
+            )
+          ],
+        ),
       ),
     );
   }

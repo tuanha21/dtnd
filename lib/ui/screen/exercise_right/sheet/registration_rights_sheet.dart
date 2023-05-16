@@ -99,7 +99,7 @@ class _RegistrationRightsSheetState extends State<RegistrationRightsSheet>
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SheetHeader(title: 'Đăng ký quyền'),
+            SheetHeader(title: S.of(context).register_the_right),
             const SizedBox(
               height: 8,
             ),
@@ -125,7 +125,8 @@ class _RegistrationRightsSheetState extends State<RegistrationRightsSheet>
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text('Số CP còn được mua',
+                      Text(
+                          S.of(context).remaining_shares_available_for_purchase,
                           style: AppTextStyle.labelMedium_12
                               .copyWith(color: AppColors.neutral_03)),
                       Text(((NumUtils.formatDouble(widget.data?.cSHARERIGHT ??
@@ -140,7 +141,7 @@ class _RegistrationRightsSheetState extends State<RegistrationRightsSheet>
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text('Giá mua',
+                      Text(S.of(context).purchase_price,
                           style: AppTextStyle.labelMedium_12
                               .copyWith(color: AppColors.neutral_03)),
                       Text(
@@ -153,7 +154,7 @@ class _RegistrationRightsSheetState extends State<RegistrationRightsSheet>
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text('Số tiền phải nộp',
+                      Text(S.of(context).amount_to_be_paid,
                           style: AppTextStyle.labelMedium_12
                               .copyWith(color: AppColors.neutral_03)),
                       Text(
