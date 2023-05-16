@@ -88,55 +88,74 @@ class _RightsInfoWidgetState extends State<RightsInfoWidget> {
             ],
           ),
           const SizedBox(height: 8),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text('Mã CP được mua',
-                  style: AppTextStyle.labelMedium_12
-                      .copyWith(color: AppColors.neutral_03)),
-              Text(widget.data?.cRECEIVESHARECODE.toString() ?? '',
-                  style: const TextStyle(
-                      fontSize: 12,
-                      fontWeight: FontWeight.w600,
-                      height: 1.1,
-                      color: AppColors.text_black_1))
-            ],
-          ),
-          const SizedBox(height: 8),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text('Số CP còn được mua',
-                  style: AppTextStyle.labelMedium_12
-                      .copyWith(color: AppColors.neutral_03)),
-              Text(
-                  ((NumUtils.formatDouble(widget.data?.cSHARERIGHT ??
-                      0 -
-                          (widget.data?.cSHAREBUY ?? 0) /
-                              (widget.data?.cSHARERIGHT ?? 0)))),
-                  style: const TextStyle(
-                      fontSize: 12,
-                      fontWeight: FontWeight.w600,
-                      height: 1.1,
-                      color: AppColors.text_black_1))
-            ],
-          ),
-          const SizedBox(height: 8),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(S.of(context).purchase_price,
-                  style: AppTextStyle.labelMedium_12
-                      .copyWith(color: AppColors.neutral_03)),
-              Text("${NumUtils.formatInteger(widget.data?.cBUYPRICE ?? 0)} đ",
-                  style: const TextStyle(
-                      fontSize: 12,
-                      fontWeight: FontWeight.w600,
-                      height: 1.1,
-                      color: AppColors.text_black_1)),
-            ],
-          ),
-          const SizedBox(height: 8),
+          widget.data?.cRIGHTTYPENAME.toString() == "Quyền mua cổ phiếu/TP"
+              ? Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text('Mã CP được mua',
+                            style: AppTextStyle.labelMedium_12
+                                .copyWith(color: AppColors.neutral_03)),
+                        Text(widget.data?.cRECEIVESHARECODE.toString() ?? '',
+                            style: const TextStyle(
+                                fontSize: 12,
+                                fontWeight: FontWeight.w600,
+                                height: 1.1,
+                                color: AppColors.text_black_1))
+                      ],
+                    ),
+                    const SizedBox(height: 8),
+                  ],
+                )
+              : const SizedBox(),
+          widget.data?.cRIGHTTYPENAME.toString() == "Quyền mua cổ phiếu/TP"
+              ? Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text('Số CP còn được mua',
+                            style: AppTextStyle.labelMedium_12
+                                .copyWith(color: AppColors.neutral_03)),
+                        Text(
+                            ((NumUtils.formatDouble(widget.data?.cSHARERIGHT ??
+                                0 -
+                                    (widget.data?.cSHAREBUY ?? 0) /
+                                        (widget.data?.cSHARERIGHT ?? 0)))),
+                            style: const TextStyle(
+                                fontSize: 12,
+                                fontWeight: FontWeight.w600,
+                                height: 1.1,
+                                color: AppColors.text_black_1))
+                      ],
+                    ),
+                    const SizedBox(height: 8),
+                  ],
+                )
+              : const SizedBox(),
+          widget.data?.cRIGHTTYPENAME.toString() == "Quyền mua cổ phiếu/TP"
+              ? Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(S.of(context).purchase_price,
+                            style: AppTextStyle.labelMedium_12
+                                .copyWith(color: AppColors.neutral_03)),
+                        Text(
+                            "${NumUtils.formatInteger(widget.data?.cBUYPRICE ?? 0)} đ",
+                            style: const TextStyle(
+                                fontSize: 12,
+                                fontWeight: FontWeight.w600,
+                                height: 1.1,
+                                color: AppColors.text_black_1)),
+                      ],
+                    ),
+                    const SizedBox(height: 8),
+                  ],
+                )
+              : const SizedBox(),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -199,21 +218,27 @@ class _RightsInfoWidgetState extends State<RightsInfoWidget> {
             ],
           ),
           const SizedBox(height: 8),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text('Ngày chốt đăng ký',
-                  style: AppTextStyle.labelMedium_12
-                      .copyWith(color: AppColors.neutral_03)),
-              Text(widget.data?.cREGISTERTODATE ?? '',
-                  style: const TextStyle(
-                      fontSize: 12,
-                      fontWeight: FontWeight.w600,
-                      height: 1.1,
-                      color: AppColors.text_black_1))
-            ],
-          ),
-          const SizedBox(height: 8),
+          widget.data?.cRIGHTTYPENAME.toString() == "Quyền mua cổ phiếu/TP"
+              ? Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text('Ngày chốt đăng ký',
+                            style: AppTextStyle.labelMedium_12
+                                .copyWith(color: AppColors.neutral_03)),
+                        Text(widget.data?.cREGISTERTODATE ?? '',
+                            style: const TextStyle(
+                                fontSize: 12,
+                                fontWeight: FontWeight.w600,
+                                height: 1.1,
+                                color: AppColors.text_black_1))
+                      ],
+                    ),
+                    const SizedBox(height: 8),
+                  ],
+                )
+              : const SizedBox(),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
