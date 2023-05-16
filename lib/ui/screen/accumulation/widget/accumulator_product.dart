@@ -1,9 +1,11 @@
 import 'package:dtnd/generated/l10n.dart';
-import 'package:dtnd/ui/screen/accumulation/screen/automatic_accumulation.dart';
-import 'package:dtnd/ui/screen/accumulation/screen/short_term_accumulation.dart';
+import 'package:dtnd/ui/screen/accumulation/controller/accumulation_controller.dart';
+import 'package:dtnd/ui/screen/accumulation/screen/accumulation_product_detail.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
+import 'package:dtnd/ui/widget/empty_list_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class AccumulatorProduct extends StatefulWidget {
   const AccumulatorProduct({super.key});
@@ -13,33 +15,37 @@ class AccumulatorProduct extends StatefulWidget {
 }
 
 class _AccumulatorProductState extends State<AccumulatorProduct> {
-  final List<String> title = <String>[
-    'Tích lũy tự động',
-    'Tích lũy ngắn hạn',
-    'Tích lũy trung hạn'
-  ];
-  final List<String> period = <String>['1 tuần', '1 tháng', '3 tháng'];
-  final List<String> rate = <String>['3.5 %', '5.5 %', '6.5%'];
+  final AccumulationController controller = AccumulationController();
+
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
 
-    return Column(children: [
-      Expanded(
-        child: ListView.builder(
-          padding: const EdgeInsets.symmetric(vertical: 8),
-          itemCount: title.length,
-          itemBuilder: (BuildContext context, int index) {
-            return ItemBuilder(
-              title: title,
-              textTheme: textTheme,
-              period: period,
-              rate: rate,
-              index: index,
-            );
-          },
-        ),
-      )
+    return Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+      ObxValue<Rx<bool>>((initialized) {
+        if (!initialized.value) {
+          return const EmptyListWidget();
+        } else {
+          if (controller.listFeeRate.value == []) {
+            return const EmptyListWidget();
+          }
+          return Expanded(
+            child: ListView.builder(
+              padding: const EdgeInsets.symmetric(vertical: 8),
+              itemCount: controller.listFeeRate.value!.length,
+              itemBuilder: (BuildContext context, int index) {
+                return ItemBuilder(
+                  title: controller.listFeeRate.value![index].productName ?? '',
+                  textTheme: textTheme,
+                  period: controller.listFeeRate.value![index].termName ?? '',
+                  rate: controller.listFeeRate.value![index].feeRate.toString(),
+                  id: controller.listFeeRate.value![index].id.toString(),
+                );
+              },
+            ),
+          );
+        }
+      }, controller.accumulationInitialized),
     ]);
   }
 }
@@ -51,32 +57,23 @@ class ItemBuilder extends StatelessWidget {
     required this.textTheme,
     required this.period,
     required this.rate,
-    required this.index,
+    required this.id,
   });
 
-  final List<String> title;
+  final String title;
   final TextTheme textTheme;
-  final List<String> period;
-  final List<String> rate;
-  final int index;
+  final String period;
+  final String rate;
+  final String id;
 
-  void _onTap(BuildContext context, String name) {
-    switch (name) {
-      case 'Tích lũy tự động':
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => const AutomaticAccumulation()),
-        );
-        break;
-      case 'Tích lũy ngắn hạn':
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => const ShortTermAccumulation()),
-        );
-        break;
-    }
+  void _onTap(BuildContext context, String id) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+          builder: (context) => AccumulationProductDetail(
+                id: id,
+              )),
+    );
   }
 
   @override
@@ -92,7 +89,7 @@ class ItemBuilder extends StatelessWidget {
       child: Column(children: [
         GestureDetector(
           onTap: () {
-            _onTap(context, title[index]);
+            _onTap(context, id);
           },
           child: Row(children: [
             CircleAvatar(
@@ -105,7 +102,7 @@ class ItemBuilder extends StatelessWidget {
             ),
             const SizedBox(width: 15),
             Text(
-              title[index],
+              title,
               style: const TextStyle(fontWeight: FontWeight.bold),
             ),
             const Spacer(),
@@ -168,10 +165,10 @@ class ItemBuilder extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(period[index],
+                          Text(period,
                               style:
                                   const TextStyle(fontWeight: FontWeight.bold)),
-                          Text(rate[index],
+                          Text('$rate%',
                               style:
                                   const TextStyle(fontWeight: FontWeight.bold)),
                         ],

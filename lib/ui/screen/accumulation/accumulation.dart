@@ -1,4 +1,5 @@
 import 'package:dtnd/generated/l10n.dart';
+import 'package:dtnd/ui/screen/accumulation/controller/accumulation_controller.dart';
 import 'package:dtnd/ui/screen/accumulation/widget/accumulator_book.dart';
 import 'package:dtnd/ui/screen/accumulation/widget/accumulator_header.dart';
 import 'package:dtnd/ui/screen/accumulation/widget/accumulator_history.dart';
@@ -17,10 +18,12 @@ class Accumlation extends StatefulWidget {
 class _AccumlationState extends State<Accumlation>
     with SingleTickerProviderStateMixin {
   late final TabController tabController;
+  final AccumulationController controller = AccumulationController();
   @override
   void initState() {
     tabController = TabController(length: 3, vsync: this);
     super.initState();
+    controller.init();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       tabController.animateTo(widget.defaultab);
     });

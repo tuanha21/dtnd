@@ -1,6 +1,7 @@
 import 'package:dtnd/=models=/check_account_success_data_model.dart';
 import 'package:dtnd/=models=/response/account/i_account.dart';
 import 'package:dtnd/=models=/response/account_info_model.dart';
+import 'package:dtnd/=models=/response/accumulation/fee_rate_model.dart';
 import 'package:dtnd/=models=/response/order_model/base_order_model.dart';
 import 'package:dtnd/=models=/response/total_asset_model.dart';
 import 'package:dtnd/=models=/response/user_token.dart';
@@ -83,5 +84,8 @@ abstract class IUserService {
 
   Future<void> deleteAccount();
 
-  Future<void> getAllFreeRate();
+  // Fee Rate
+  Future<List<FeeRateModel>?> getAllFreeRate();
+  Future<bool> updateContract(
+      String accountCode, String termCode, num capital, String extentType);
 }

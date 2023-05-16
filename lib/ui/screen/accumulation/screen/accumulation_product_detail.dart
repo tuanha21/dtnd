@@ -1,22 +1,35 @@
+import 'package:dtnd/=models=/response/accumulation/fee_rate_model.dart';
 import 'package:dtnd/generated/l10n.dart';
+import 'package:dtnd/ui/screen/accumulation/controller/accumulation_controller.dart';
 import 'package:dtnd/ui/screen/accumulation/screen/accumulation_register.dart';
 import 'package:dtnd/ui/screen/accumulation/widget/accumulator_header.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:dtnd/ui/widget/appbar/simple_appbar.dart';
+import 'package:dtnd/utilities/num_utils.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import '../widget/row_information.dart';
 
-class AutomaticAccumulation extends StatelessWidget {
-  const AutomaticAccumulation({super.key});
+class AccumulationProductDetail extends StatefulWidget {
+  const AccumulationProductDetail({super.key, required this.id});
+  final String id;
 
+  @override
+  State<AccumulationProductDetail> createState() =>
+      _AccumulationProductDetailState();
+}
+
+class _AccumulationProductDetailState extends State<AccumulationProductDetail> {
+  final AccumulationController _controller = Get.put(AccumulationController());
+  late FeeRateModel feeRate = _controller.getItemFeeRate(widget.id);
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
 
     return Scaffold(
       appBar: SimpleAppbar(
-        title: S.of(context).automatic_accumulation,
+        title: feeRate.productName.toString(),
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -28,9 +41,10 @@ class AutomaticAccumulation extends StatelessWidget {
               const SizedBox(height: 20),
               Row(
                 children: [
-                  Text('Tích luỹ 1 tuần', style: textTheme.bodyLarge),
+                  Text('Tích luỹ ${feeRate.termName.toString()}',
+                      style: textTheme.bodyLarge),
                   const Spacer(),
-                  Text('3.5%/năm',
+                  Text('${feeRate.feeRate.toString()}%/năm',
                       style: textTheme.bodyLarge
                           ?.copyWith(color: AppColors.semantic_01)),
                 ],
@@ -81,19 +95,21 @@ class AutomaticAccumulation extends StatelessWidget {
                         children: [
                           RowInfomation(
                               leftText: S.of(context).profit,
-                              rightText: '3.5%/năm'),
+                              rightText: '${feeRate.feeRate.toString()}%/năm'),
                           RowInfomation(
                               leftText: S.of(context).period,
-                              rightText: '1 tuần'),
+                              rightText: feeRate.termName.toString()),
                           RowInfomation(
                               leftText: S.of(context).minimum_limit,
-                              rightText: '1,000,000'),
+                              rightText:
+                                  NumUtils.formatInteger(feeRate.capMin)),
                           RowInfomation(
                               leftText: S.of(context).maximum_limit,
-                              rightText: 'Không giới hạn'),
+                              rightText:
+                                  NumUtils.formatInteger(feeRate.capMax)),
                           RowInfomation(
                               leftText: S.of(context).early_interest_rate,
-                              rightText: '1.2%'),
+                              rightText: feeRate.liquidRate.toString()),
                           RowInfomation(
                               leftText: S.of(context).renewal_method,
                               rightText: 'Linh hoạt'),
@@ -104,14 +120,20 @@ class AutomaticAccumulation extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 26),
-              Text('CHÚ THÍCH (*)',
-                  style: textTheme.bodyMedium
-                      ?.copyWith(fontWeight: FontWeight.bold)),
-              const SizedBox(height: 10),
-              RowQuote(quote: S.of(context).accumulation_quote1),
-              RowQuote(quote: S.of(context).accumulation_quote2),
-              RowQuote(quote: S.of(context).accumulation_quote3),
-              RowQuote(quote: S.of(context).accumulation_quote4),
+              if (feeRate.productName == 'Sản phẩm tích lũy tự động')
+                (Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text('CHÚ THÍCH (*)',
+                        style: textTheme.bodyMedium
+                            ?.copyWith(fontWeight: FontWeight.bold)),
+                    const SizedBox(height: 10),
+                    RowQuote(quote: S.of(context).accumulation_quote1),
+                    RowQuote(quote: S.of(context).accumulation_quote2),
+                    RowQuote(quote: S.of(context).accumulation_quote3),
+                    RowQuote(quote: S.of(context).accumulation_quote4),
+                  ],
+                )),
               const SizedBox(height: 70),
             ],
           ),
@@ -132,7 +154,9 @@ class AutomaticAccumulation extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => const AccumulationRegister()),
+                    builder: (context) => AccumulationRegister(
+                          id: widget.id,
+                        )),
               );
             },
             child: Text(S.of(context).sign_up),

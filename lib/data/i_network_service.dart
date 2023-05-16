@@ -6,6 +6,7 @@ import 'package:dtnd/=models=/check_account_success_data_model.dart';
 import 'package:dtnd/=models=/core_response_model.dart';
 import 'package:dtnd/=models=/index.dart';
 import 'package:dtnd/=models=/local/va_portfolio_model.dart';
+import 'package:dtnd/=models=/response/accumulation/fee_rate_model.dart';
 import 'package:dtnd/=models=/response/business_profile_model.dart';
 import 'package:dtnd/=models=/response/commodity_model.dart';
 import 'package:dtnd/=models=/response/deep_model.dart';
@@ -297,5 +298,6 @@ abstract class INetworkService {
 
   Future<void> deleteBot(String body);
 
-  Future<void> getAllFreeRate(String body);
+  Future<List<FeeRateModel>?> getAllFreeRate(String body);
+  Future<bool> updateContract(String body);
 }

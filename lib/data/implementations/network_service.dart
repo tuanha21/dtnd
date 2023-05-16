@@ -1758,22 +1758,26 @@ class NetworkService implements INetworkService {
   }
 
   @override
-  Future<List<FeeRateModel>> getAllFreeRate(String body) async {
+  Future<List<FeeRateModel>?> getAllFreeRate(String body) async {
     List<FeeRateModel> feeRateModel = [];
     var response = await client.post(url_core_endpoint, body: body);
     if (response.statusCode != 200) {
       throw response;
     }
     var res = decode(response.bodyBytes);
-    if (res["status"] != 200) {
-      throw res["message"];
-    }
-    var data = decode(res["data"]);
-    if (data.isEmpty) throw Exception();
-
+    final data = res["data"];
     for (var element in data) {
       feeRateModel.add(FeeRateModel.fromJson(element));
     }
     return feeRateModel;
+  }
+
+  @override
+  Future<bool> updateContract(String body) async {
+    var response = await client.post(url_core_endpoint, body: body);
+    if (response.statusCode != 200) {
+      return false;
+    }
+    return true;
   }
 }

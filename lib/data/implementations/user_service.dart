@@ -6,6 +6,7 @@ import 'package:dtnd/=models=/request/request_model.dart';
 import 'package:dtnd/=models=/response/account/base_margin_plus_account_model.dart';
 import 'package:dtnd/=models=/response/account/i_account.dart';
 import 'package:dtnd/=models=/response/account_info_model.dart';
+import 'package:dtnd/=models=/response/accumulation/fee_rate_model.dart';
 import 'package:dtnd/=models=/response/order_model/base_order_model.dart';
 import 'package:dtnd/=models=/response/total_asset_model.dart';
 import 'package:dtnd/=models=/response/user_token.dart';
@@ -432,13 +433,36 @@ class UserService implements IUserService {
   }
 
   @override
-  Future<void> getAllFreeRate() {
+  Future<List<FeeRateModel>?> getAllFreeRate() {
     Map<String, dynamic> body = {
       "group": "B",
       "user": token.value?.user ?? '',
       "session": token.value?.sid ?? '',
       "data": {"cmd": "MM_GetAllFeeRate", "type": "object", "p1": {}}
     };
-    return networkService.resetPassword(jsonEncode(body));
+    return networkService.getAllFreeRate(jsonEncode(body));
+  }
+
+  @override
+  Future<bool> updateContract(
+      String accountCode, String termCode, num capital, String extentType) {
+    Map<String, dynamic> body = {
+      "group": "B",
+      "user": token.value?.user ?? '',
+      "session": token.value?.sid ?? '',
+      "data": {
+        "cmd": "MM_UpdateContract",
+        "type": "object",
+        "p1": {
+          "ACCOUNT_CODE": accountCode,
+          "TERM": termCode,
+          "CAPITAL": capital,
+          "EXTENT_TYPE": extentType,
+          "CHANNEL": "I",
+          "CONTENT": ""
+        }
+      }
+    };
+    return networkService.updateContract(jsonEncode(body));
   }
 }

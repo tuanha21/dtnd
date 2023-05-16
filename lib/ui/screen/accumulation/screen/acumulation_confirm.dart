@@ -1,26 +1,66 @@
+import 'package:dtnd/=models=/response/account_info_model.dart';
+import 'package:dtnd/=models=/response/accumulation/fee_rate_model.dart';
+import 'package:dtnd/data/i_user_service.dart';
+import 'package:dtnd/data/implementations/user_service.dart';
+import 'package:dtnd/ui/screen/accumulation/controller/accumulation_controller.dart';
 import 'package:dtnd/ui/screen/accumulation/widget/accumulation_dialog.dart';
+import 'package:dtnd/ui/screen/accumulation/widget/error_register_dialog.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/widget/appbar/simple_appbar.dart';
+import 'package:dtnd/utilities/num_utils.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import '../widget/row_information.dart';
 
 class AccumulationConfirm extends StatefulWidget {
   const AccumulationConfirm({
     super.key,
+    required this.id,
+    required this.money,
   });
+
+  final String id;
+  final num money;
 
   @override
   State<AccumulationConfirm> createState() => _AccumulationConfirmState();
 }
 
 class _AccumulationConfirmState extends State<AccumulationConfirm> {
+  final AccumulationController _controller = Get.put(AccumulationController());
+  late FeeRateModel feeRate = _controller.getItemFeeRate(widget.id);
   final List<bool> _selectedMethod = <bool>[true, false, false];
+  final IUserService userService = UserService();
+  late UserInfo userInfo;
+
   final List<String> _textMethod = <String>[
-    'Tự động gia hạn gốc và lãi',
+    'Tự động gia hạn gốc + lãi',
     'Tự động gia hạn gốc',
     'Không tự động gia hạn'
   ];
-  late String _method = 'Tự động gia hạn gốc và lãi';
+  late String _method = _textMethod.first;
+  final DateTime nowDate = DateTime.now();
+
+  String getFutureDay() {
+    DateTime futureDate =
+        nowDate.add(Duration(days: int.parse(feeRate.termCode ?? '1')));
+    return DateFormat('dd/MM/yyyy').format(futureDate);
+  }
+
+  String getToDay() {
+    return DateFormat('dd/MM/yyyy').format(nowDate);
+  }
+
+  String getExtendType() {
+    if (_method == _textMethod.first) {
+      return 'LAI_NHAP_GOC';
+    } else if (_method == _textMethod[1]) {
+      return 'NGUYEN_GOC';
+    }
+    return 'KHONG_GIA_HAN';
+  }
+
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
@@ -42,11 +82,25 @@ class _AccumulationConfirmState extends State<AccumulationConfirm> {
               backgroundColor:
                   MaterialStateProperty.all<Color>(AppColors.text_blue),
             ),
-            onPressed: () {
-              showDialog(
-                  barrierDismissible: false,
-                  context: context,
-                  builder: (_) => const AccumulationDialog());
+            onPressed: () async {
+              var updateSuccess = await userService.updateContract(
+                  userService.userInfo.value!.customerCode!,
+                  feeRate.termCode!,
+                  widget.money,
+                  getExtendType());
+              if (updateSuccess) {
+                if (!mounted) return;
+                showDialog(
+                    barrierDismissible: false,
+                    context: context,
+                    builder: (_) => const AccumulationDialog());
+              } else {
+                if (!mounted) return;
+                showDialog(
+                    barrierDismissible: false,
+                    context: context,
+                    builder: (_) => const ErrorRegisterDialog());
+              }
             },
             child: const Text('Xác nhận'),
           ),
@@ -72,13 +126,17 @@ class _AccumulationConfirmState extends State<AccumulationConfirm> {
             child: Column(
               children: [
                 RowInfomation(
-                    leftText: 'Sản phẩm', rightText: 'Tích lũy ngắn hạn'),
-                RowInfomation(leftText: 'Lãi suất', rightText: '5.5%/năm'),
-                RowInfomation(leftText: 'Kỳ hạn', rightText: '1 tháng'),
+                    leftText: 'Sản phẩm',
+                    rightText: feeRate.productName.toString()),
                 RowInfomation(
-                    leftText: 'Ngày bắt đầu ', rightText: '05/05/2023'),
+                  leftText: 'Lãi suất',
+                  rightText: '${feeRate.feeRate.toString()}%/năm',
+                ),
                 RowInfomation(
-                    leftText: 'Ngày kết thúc', rightText: '04/06/2023'),
+                    leftText: 'Kỳ hạn', rightText: feeRate.termName.toString()),
+                RowInfomation(leftText: 'Ngày bắt đầu ', rightText: getToDay()),
+                RowInfomation(
+                    leftText: 'Ngày kết thúc', rightText: getFutureDay()),
                 const SizedBox(height: 16),
               ],
             ),
@@ -139,7 +197,8 @@ class _AccumulationConfirmState extends State<AccumulationConfirm> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   RowInfomation(
-                      leftText: 'Tổng số tiền', rightText: '10,000,000đ'),
+                      leftText: 'Tổng số tiền',
+                      rightText: '${NumUtils.formatInteger(widget.money)}đ'),
                   const SizedBox(height: 4),
                   Container(
                     height: 60,
@@ -157,7 +216,7 @@ class _AccumulationConfirmState extends State<AccumulationConfirm> {
                           style: textTheme.bodyMedium
                               ?.copyWith(color: AppColors.neutral_02),
                         ),
-                        Text('10,000,000đ',
+                        Text('${NumUtils.formatInteger(widget.money)}đ',
                             style: textTheme.bodyLarge?.copyWith(
                                 fontWeight: FontWeight.bold,
                                 color: AppColors.text_black)),

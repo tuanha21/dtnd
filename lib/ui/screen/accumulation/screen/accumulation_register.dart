@@ -1,22 +1,38 @@
+import 'dart:async';
+
+import 'package:dtnd/=models=/response/accumulation/fee_rate_model.dart';
+import 'package:dtnd/ui/screen/accumulation/controller/accumulation_controller.dart';
 import 'package:dtnd/ui/screen/accumulation/screen/acumulation_confirm.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/widget/appbar/simple_appbar.dart';
+import 'package:dtnd/utilities/num_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import '../widget/row_information.dart';
 
 class AccumulationRegister extends StatefulWidget {
   const AccumulationRegister({
     super.key,
+    required this.id,
   });
+
+  final String id;
 
   @override
   State<AccumulationRegister> createState() => _AccumulationRegisterState();
 }
 
 class _AccumulationRegisterState extends State<AccumulationRegister> {
-  final _moneyController = TextEditingController();
+  Timer? _timer;
+
+  final AccumulationController _controller = Get.put(AccumulationController());
+  late FeeRateModel feeRate = _controller.getItemFeeRate(widget.id);
+  final _moneyController = TextEditingController(text: '0');
+  late num profit = 0;
+  late num sum = 0;
+  late num coppyMoney = 0;
   static const _locale = 'en';
   String _formatNumber(String s) =>
       NumberFormat.decimalPattern(_locale).format(int.parse(s));
@@ -26,6 +42,32 @@ class _AccumulationRegisterState extends State<AccumulationRegister> {
     '5,000,000',
     '50,000,000'
   ];
+
+  void _onPasswordTyping() {
+    if (_timer != null) {
+      _timer!.cancel();
+    }
+    _timer = Timer(const Duration(milliseconds: 50), () {
+      setState(() {
+        profit = (num.parse(_moneyController.text.replaceAll(',', '')) *
+            (feeRate.feeRate! / 100));
+        sum = num.parse(_moneyController.text.replaceAll(',', '')) + profit;
+      });
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _moneyController.addListener(_onPasswordTyping);
+  }
+
+  @override
+  void dispose() {
+    _moneyController.removeListener(_onPasswordTyping);
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
@@ -50,10 +92,14 @@ class _AccumulationRegisterState extends State<AccumulationRegister> {
             ),
             onPressed: () {
               Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => const AccumulationConfirm()),
-              );
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => AccumulationConfirm(
+                        id: widget.id,
+                        money: num.parse(
+                          _moneyController.text.replaceAll(',', ''),
+                        )),
+                  ));
             },
             child: const Text('Tiếp tục'),
           ),
@@ -106,7 +152,7 @@ class _AccumulationRegisterState extends State<AccumulationRegister> {
                       style: textTheme.bodyMedium
                           ?.copyWith(color: AppColors.text_black),
                     ),
-                    Text('5.5%/năm',
+                    Text('${feeRate.feeRate.toString()}%/năm',
                         style: textTheme.bodyMedium?.copyWith(
                             fontWeight: FontWeight.bold,
                             color: AppColors.text_blue)),
@@ -126,12 +172,12 @@ class _AccumulationRegisterState extends State<AccumulationRegister> {
                       children: [
                         RowInfomation(
                           leftText: 'Lãi dự tính',
-                          rightText: '+45,205đ',
+                          rightText: NumUtils.formatInteger(profit),
                           differentColor: true,
                         ),
                         RowInfomation(
                             leftText: 'Tổng tiền gốc và lãi',
-                            rightText: '10,045,205đ'),
+                            rightText: NumUtils.formatInteger(sum)),
                       ]),
                 ),
                 const SizedBox(height: 16),
