@@ -211,7 +211,8 @@ class _CommunityPostsSheetState extends State<CommunityPostsSheet>
                   textAlign: TextAlign.start,
                 ),
               ],
-            )
+            ),
+            const SizedBox(height: 10,)
           ],
         ),
       ),

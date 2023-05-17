@@ -49,8 +49,8 @@ class _ExerciseRightScreenState extends State<ExerciseRightScreen>
               controller: tabController,
               isScrollable: true,
               labelStyle: textTheme.titleSmall,
-              labelPadding:
-                  const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+              // labelPadding:
+              //     const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
               tabs: [
                 Text(
                   S.of(context).permission_information,

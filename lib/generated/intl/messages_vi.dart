@@ -7,7 +7,8 @@
 // ignore_for_file:unnecessary_brace_in_string_interps, unnecessary_new
 // ignore_for_file:prefer_single_quotes,comment_references, directives_ordering
 // ignore_for_file:annotate_overrides,prefer_generic_function_type_aliases
-// ignore_for_file:unused_import, file_names
+// ignore_for_file:unused_import, file_names, avoid_escaping_inner_quotes
+// ignore_for_file:unnecessary_string_interpolations, unnecessary_string_escapes
 
 import 'package:intl/intl.dart';
 import 'package:intl/message_lookup_by_library.dart';
@@ -19,26 +20,27 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'vi';
 
-  static m0(name) => "Bạn có chắc chắn muốn xóa danh mục “${name}” không ?";
+  static String m0(name) =>
+      "Bạn có chắc chắn muốn xóa danh mục “${name}” không ?";
 
-  static m1(days) => "${days} ngày trước";
+  static String m1(days) => "${days} ngày trước";
 
-  static m2(name) => "Danh mục theo dõi \"${name}\"";
+  static String m2(name) => "Danh mục theo dõi \"${name}\"";
 
-  static m3(value) => "Tăng ${value}";
+  static String m3(value) => "Tăng ${value}";
 
-  static m4(hours) => "${hours} giờ trước";
+  static String m4(hours) => "${hours} giờ trước";
 
-  static m5(value) => "Giảm ${value}";
+  static String m5(value) => "Giảm ${value}";
 
-  static m6(minutes) => "${minutes} phút trước";
+  static String m6(minutes) => "${minutes} phút trước";
 
-  static m7(value) =>
+  static String m7(value) =>
       "Mã OTP đã được gửi về email ${value} của bạn. Nhập mã 6 số để tiếp tục.";
 
-  static m8(name) => "Sửa tên danh mục “${name}” thành";
+  static String m8(name) => "Sửa tên danh mục “${name}” thành";
 
-  static m9(value) => "Tổng ${value}";
+  static String m9(value) => "Tổng ${value}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -538,6 +540,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "please_remember_your_smartOTP_password":
             MessageLookupByLibrary.simpleMessage(
                 "Quý khách vui lòng ghi nhớ mật khẩu SmartOTP"),
+        "popular": MessageLookupByLibrary.simpleMessage("Phổ biến"),
         "portfolio_value":
             MessageLookupByLibrary.simpleMessage("Giá trị danh mục"),
         "post": MessageLookupByLibrary.simpleMessage("Đăng"),
@@ -550,6 +553,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "product": MessageLookupByLibrary.simpleMessage("Sản phẩm"),
         "profit": MessageLookupByLibrary.simpleMessage("Lãi suất"),
         "profit_and_loss": MessageLookupByLibrary.simpleMessage("Lãi/lỗ"),
+        "profit_value": MessageLookupByLibrary.simpleMessage("Lợi nhuận"),
         "purchase_price": MessageLookupByLibrary.simpleMessage("Giá mua"),
         "purchase_rights_history":
             MessageLookupByLibrary.simpleMessage("Lịch sử quyền mua"),
@@ -602,6 +606,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "revenue": MessageLookupByLibrary.simpleMessage("Doanh thu"),
         "right": MessageLookupByLibrary.simpleMessage("Quyền"),
         "rights_type": MessageLookupByLibrary.simpleMessage("Loại quyền"),
+        "risk": MessageLookupByLibrary.simpleMessage("Rủi ro"),
         "safe_ratio": MessageLookupByLibrary.simpleMessage("Tỷ lệ an toàn"),
         "sale_value": MessageLookupByLibrary.simpleMessage("Giá trị bán"),
         "save": MessageLookupByLibrary.simpleMessage("Lưu"),
@@ -705,11 +710,13 @@ class MessageLookup extends MessageLookupByLibrary {
         "title_change_password": MessageLookupByLibrary.simpleMessage(
             "Để chúng tôi bảo vệ tài khoản và các thông tin quan trọng của bạn"),
         "to_day": MessageLookupByLibrary.simpleMessage("Tới ngày"),
+        "top_changes": MessageLookupByLibrary.simpleMessage("Top biến động"),
         "top_foreign": MessageLookupByLibrary.simpleMessage("Top nước ngoài"),
         "top_influence": MessageLookupByLibrary.simpleMessage("Top ảnh hưởng"),
         "top_search": MessageLookupByLibrary.simpleMessage("Top tìm kiếm"),
         "top_traded_stocks_by_sector": MessageLookupByLibrary.simpleMessage(
             "Top cổ phiếu giao dịch theo ngành"),
+        "top_volume": MessageLookupByLibrary.simpleMessage("Top khối lượng"),
         "total_accumulation":
             MessageLookupByLibrary.simpleMessage("Tổng tích luỹ"),
         "total_asset": MessageLookupByLibrary.simpleMessage("Tổng tài sản"),

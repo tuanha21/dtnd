@@ -7,7 +7,8 @@
 // ignore_for_file:unnecessary_brace_in_string_interps, unnecessary_new
 // ignore_for_file:prefer_single_quotes,comment_references, directives_ordering
 // ignore_for_file:annotate_overrides,prefer_generic_function_type_aliases
-// ignore_for_file:unused_import, file_names
+// ignore_for_file:unused_import, file_names, avoid_escaping_inner_quotes
+// ignore_for_file:unnecessary_string_interpolations, unnecessary_string_escapes
 
 import 'package:intl/intl.dart';
 import 'package:intl/message_lookup_by_library.dart';
@@ -19,26 +20,26 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'en';
 
-  static m0(name) => "Are you sure to delete the “${name}” category?";
+  static String m0(name) => "Are you sure to delete the “${name}” category?";
 
-  static m1(days) => "${days} days ago";
+  static String m1(days) => "${days} days ago";
 
-  static m2(name) => "Following catalog \"${name}\"";
+  static String m2(name) => "Following catalog \"${name}\"";
 
-  static m3(value) => "Gain ${value}";
+  static String m3(value) => "Gain ${value}";
 
-  static m4(hours) => "${hours} hours ago";
+  static String m4(hours) => "${hours} hours ago";
 
-  static m5(value) => "Loss ${value}";
+  static String m5(value) => "Loss ${value}";
 
-  static m6(minutes) => "${minutes} minutes ago";
+  static String m6(minutes) => "${minutes} minutes ago";
 
-  static m7(value) =>
+  static String m7(value) =>
       "The OTP has been sent to your ${value} extension email. Enter the 6-digit code to continue.";
 
-  static m8(name) => "Rename catalog “${name}” to";
+  static String m8(name) => "Rename catalog “${name}” to";
 
-  static m9(value) => "Total ${value}";
+  static String m9(value) => "Total ${value}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -553,6 +554,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "please_remember_your_smartOTP_password":
             MessageLookupByLibrary.simpleMessage(
                 "Please remember your SmartOTP password"),
+        "popular": MessageLookupByLibrary.simpleMessage("Popular"),
         "portfolio_value":
             MessageLookupByLibrary.simpleMessage("Portfolio value"),
         "post": MessageLookupByLibrary.simpleMessage("Post"),
@@ -569,6 +571,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "product": MessageLookupByLibrary.simpleMessage("Product"),
         "profit": MessageLookupByLibrary.simpleMessage("Profit"),
         "profit_and_loss": MessageLookupByLibrary.simpleMessage("Profit/Loss"),
+        "profit_value": MessageLookupByLibrary.simpleMessage("Profit"),
         "purchase_price":
             MessageLookupByLibrary.simpleMessage("Purchase price"),
         "purchase_rights_history":
@@ -628,6 +631,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "revenue": MessageLookupByLibrary.simpleMessage("Revenue"),
         "right": MessageLookupByLibrary.simpleMessage("Right"),
         "rights_type": MessageLookupByLibrary.simpleMessage("Rights type"),
+        "risk": MessageLookupByLibrary.simpleMessage("Risk"),
         "safe_ratio": MessageLookupByLibrary.simpleMessage("Safe ratio"),
         "sale_value": MessageLookupByLibrary.simpleMessage("Sale value"),
         "save": MessageLookupByLibrary.simpleMessage("Save"),
@@ -730,11 +734,13 @@ class MessageLookup extends MessageLookupByLibrary {
         "title_change_password": MessageLookupByLibrary.simpleMessage(
             "Let us protect your account and important information"),
         "to_day": MessageLookupByLibrary.simpleMessage("To date"),
+        "top_changes": MessageLookupByLibrary.simpleMessage("Top changes"),
         "top_foreign": MessageLookupByLibrary.simpleMessage("Top foreign"),
         "top_influence": MessageLookupByLibrary.simpleMessage("Top influence"),
         "top_search": MessageLookupByLibrary.simpleMessage("Top search"),
         "top_traded_stocks_by_sector":
             MessageLookupByLibrary.simpleMessage("Top traded stocks by sector"),
+        "top_volume": MessageLookupByLibrary.simpleMessage("Top volume"),
         "total_accumulation":
             MessageLookupByLibrary.simpleMessage("Total accumulation"),
         "total_asset": MessageLookupByLibrary.simpleMessage("Total asset"),

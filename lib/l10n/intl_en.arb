@@ -70,6 +70,7 @@
   "price": "Price",
   "net_assets": "Net assets",
   "net_profit": "Net profit",
+  "profit_value": "Profit",
   "total_cash": "Total cash",
   "revenue": "Revenue",
   "investment_value": "Investment value",
@@ -546,5 +547,9 @@
   "number_of_shares_entitled":"Number of shares entitled",
   "register_the_right": "Register the right",
   "amount_to_be_paid":"Amount to be paid",
-  "reset_password":"Reset password"
+  "reset_password":"Reset password",
+  "risk" : "Risk",
+  "popular" : "Popular",
+  "top_changes" : "Top changes",
+  "top_volume":"Top volume"
 }

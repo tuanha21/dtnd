@@ -2,11 +2,13 @@ import 'package:dtnd/=models=/response/trash_model.dart';
 import 'package:dtnd/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
 import '../home_controller.dart';
 import 'trash_component.dart';
 
 class HomeMarketOverview extends StatefulWidget {
   const HomeMarketOverview({super.key});
+
   @override
   State<HomeMarketOverview> createState() => _HomeMarketOverviewState();
 }
@@ -99,14 +101,14 @@ class _HomeMarketOverviewState extends State<HomeMarketOverview>
                 },
                 tabs: <Widget>[
                   // const Text("🔥HOT"),
-                  const Text("Phổ biến"),
+                  Text(S.of(context).popular),
                   Row(
                     children: [
-                      const Text("Top biến động"),
+                      Text(S.of(context).top_changes),
                       sortArrow,
                     ],
                   ),
-                  const Text("Top khối lượng"),
+                  Text(S.of(context).top_volume),
                 ],
               ),
             ),

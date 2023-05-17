@@ -71,6 +71,7 @@
   "price": "Giá",
   "net_assets": "Tài sản ròng",
   "net_profit": "Lợi nhuận ròng",
+  "profit_value": "Lợi nhuận",
   "total_cash": "Tổng tiền",
   "revenue": "Doanh thu",
   "investment_value": "Tổng giá trị đầu tư",
@@ -546,5 +547,9 @@
   "number_of_shares_entitled": "Số CP được hưởng",
   "register_the_right": "Đăng ký quyền",
   "amount_to_be_paid":"Số tiền phải nộp",
-  "reset_password":"Đặt lại mật khẩu"
+  "reset_password":"Đặt lại mật khẩu",
+  "risk": "Rủi ro",
+  "popular" : "Phổ biến",
+  "top_changes" : "Top biến động",
+  "top_volume": "Top khối lượng"
 }

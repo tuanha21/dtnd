@@ -4,9 +4,9 @@ import 'package:dtnd/=models=/response/top_signal_stock_model.dart';
 import 'package:dtnd/config/service/app_services.dart';
 import 'package:dtnd/data/implementations/data_center_service.dart';
 import 'package:dtnd/generated/l10n.dart';
+import 'package:dtnd/ui/screen/home/screen/signal/signal_screen.dart';
 import 'package:dtnd/ui/screen/home/screen/suggested_signal/suggested_signal_screen.dart';
 import 'package:dtnd/ui/screen/home/widget/home_simple_line_chart.dart';
-import 'package:dtnd/ui/screen/home/screen/signal/signal_screen.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:dtnd/ui/theme/app_textstyle.dart';
@@ -65,7 +65,6 @@ class _HomeTopSignalStocksState extends State<HomeTopSignalStocks> {
                               text: "Có top mã cổ phiếu dành cho bạn",
                               recognizer: TapGestureRecognizer()
                                 ..onTap = () {
-                                  print("tapped");
                                   Navigator.of(context).push(MaterialPageRoute(
                                     builder: (context) =>
                                         const SuggestedSignalScreen(),
