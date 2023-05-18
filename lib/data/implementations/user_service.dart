@@ -465,4 +465,21 @@ class UserService implements IUserService {
     };
     return networkService.updateContract(jsonEncode(body));
   }
+
+  @override
+  Future<void> getAllContract(String accountCode) {
+    Map<String, dynamic> body = {
+      "group": "B",
+      "user": token.value?.user ?? '',
+      "session": token.value?.sid ?? '',
+      "data": {
+        "cmd": "MM_GetAllContract",
+        "type": "object",
+        "p1": {
+          "ACCOUNT_CODE": accountCode,
+        }
+      }
+    };
+    return networkService.getAllContract(jsonEncode(body));
+  }
 }
