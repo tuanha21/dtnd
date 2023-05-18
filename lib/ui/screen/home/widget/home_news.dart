@@ -1,17 +1,15 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dtnd/=models=/response/news_model.dart';
 import 'package:dtnd/data/i_network_service.dart';
 import 'package:dtnd/data/implementations/network_service.dart';
+import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/screen/home/home_controller.dart';
 import 'package:dtnd/ui/screen/news_detail/new_detail_screen.dart';
-import 'package:dtnd/ui/theme/app_image.dart';
-import 'package:dtnd/utilities/logger.dart';
-import 'package:flutter/material.dart';
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
+import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:dtnd/ui/theme/app_textstyle.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 
 class HomeNews extends StatefulWidget {
@@ -24,6 +22,7 @@ class HomeNews extends StatefulWidget {
 class _HomeNewsState extends State<HomeNews> {
   final INetworkService networkService = NetworkService();
   final HomeController controller = HomeController();
+
   @override
   void initState() {
     super.initState();
@@ -80,9 +79,11 @@ class HomeNewsCard extends StatelessWidget {
     this.onDetail,
     required this.dataFunct,
   });
+
   final NewsModel stockNews;
   final Future<String> Function(int id) dataFunct;
   final VoidCallback? onDetail;
+
   @override
   Widget build(BuildContext context) {
     return Material(

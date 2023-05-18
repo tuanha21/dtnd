@@ -1,3 +1,4 @@
+import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:dtnd/ui/theme/app_textstyle.dart';
@@ -41,7 +42,7 @@ class _SignalEffectiveState extends State<SignalEffective> {
                     dimension: 36, child: Image.asset(AppImages.signal_icon)),
                 const SizedBox(width: 12),
                 Text(
-                  "Hiệu quả",
+                  S.of(context).effective,
                   style: AppTextStyle.titleSmall_14
                       .copyWith(color: AppColors.primary_01),
                 )

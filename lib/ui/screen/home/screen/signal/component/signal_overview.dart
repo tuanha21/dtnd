@@ -1,6 +1,4 @@
-import 'package:dtnd/=models=/response/stock_model.dart';
 import 'package:dtnd/=models=/response/top_signal_detail_model.dart';
-import 'package:dtnd/=models=/response/top_signal_stock_model.dart';
 import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_textstyle.dart';
@@ -9,7 +7,9 @@ import 'package:flutter/material.dart';
 
 class SignalOverview extends StatelessWidget {
   const SignalOverview({super.key, this.detail});
+
   final TopSignalDetailModel? detail;
+
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
@@ -66,7 +66,7 @@ class SignalOverview extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
-                    "Loại tín hiệu",
+                    S.of(context).signal_type,
                     style: AppTextStyle.labelSmall_10.copyWith(
                         color: AppColors.neutral_03,
                         fontWeight: FontWeight.w500),
@@ -89,7 +89,7 @@ class SignalOverview extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 _Column(
-                  "Giá mua",
+                  S.of(context).purchase_price,
                   detail?.cBUYPRICE.toString() ?? "-",
                   textStyle: textTheme.titleSmall,
                 ),
@@ -98,7 +98,7 @@ class SignalOverview extends StatelessWidget {
                   width: 1,
                 ),
                 _Column(
-                  "Lợi nhuận",
+                  S.of(context).profit_value,
                   "${detail?.cPC ?? "-"}%",
                   textStyle: textTheme.titleSmall,
                 ),
@@ -107,7 +107,7 @@ class SignalOverview extends StatelessWidget {
                   width: 1,
                 ),
                 _Column(
-                  "Rủi ro",
+                  S.of(context).risk,
                   "${detail?.rUIRO ?? "-"}%",
                   textStyle: textTheme.titleSmall,
                 ),
@@ -122,9 +122,11 @@ class SignalOverview extends StatelessWidget {
 
 class _Column extends StatelessWidget {
   const _Column(this.label, this.value, {this.textStyle});
+
   final String label;
   final String value;
   final TextStyle? textStyle;
+
   @override
   Widget build(BuildContext context) {
     return Column(

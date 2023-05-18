@@ -170,7 +170,7 @@ class SignalTradingHistoryElement extends StatelessWidget {
             Row(
               children: [
                 Text(
-                  "Lợi nhuận",
+                  S.of(context).profit_value,
                   style: AppTextStyle.labelSmall_10.copyWith(
                       color: AppColors.neutral_04, fontWeight: FontWeight.w500),
                 ),
@@ -240,7 +240,7 @@ class SignalTradingHistoryElement extends StatelessWidget {
             Column(
               children: [
                 Text(
-                  "Rủi ro",
+                  S.of(context).risk,
                   style: AppTextStyle.labelSmall_10.copyWith(
                       color: AppColors.neutral_04, fontWeight: FontWeight.w500),
                 ),

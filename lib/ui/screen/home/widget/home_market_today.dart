@@ -327,8 +327,7 @@ class HomeIndexItem extends StatelessWidget {
     VoidCallback? onTap;
     if (onSelected != null) {
       onTap = () {
-        print(data.index);
-        onSelected?.call(data.index);
+         onSelected?.call(data.index);
       };
     }
     return Material(
