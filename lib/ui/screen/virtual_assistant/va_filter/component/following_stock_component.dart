@@ -2,7 +2,6 @@ import 'package:dtnd/=models=/response/stock_model.dart';
 import 'package:dtnd/config/service/app_services.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_textstyle.dart';
-import 'package:dtnd/utilities/extension.dart';
 import 'package:dtnd/utilities/num_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

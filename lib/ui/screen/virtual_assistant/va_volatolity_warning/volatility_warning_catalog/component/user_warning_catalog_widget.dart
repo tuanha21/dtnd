@@ -5,7 +5,6 @@ import 'package:dtnd/=models=/response/stock_model.dart';
 import 'package:dtnd/data/i_data_center_service.dart';
 import 'package:dtnd/data/implementations/data_center_service.dart';
 import 'package:dtnd/generated/l10n.dart';
-import 'package:dtnd/ui/screen/home/widget/home_market_overview.dart';
 import 'package:dtnd/ui/screen/virtual_assistant/va_volatolity_warning/volatility_warning_catalog/logic/add_catalog_process.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
@@ -17,7 +16,9 @@ class UserWarningCatalogWidget extends StatefulWidget {
     super.key,
     required this.savedCatalog,
   });
+
   final SavedCatalog savedCatalog;
+
   @override
   State<UserWarningCatalogWidget> createState() =>
       _UserWarningCatalogWidgetState();
@@ -31,6 +32,7 @@ class _UserWarningCatalogWidgetState extends State<UserWarningCatalogWidget> {
   List<StockModel>? listStocks;
   bool showInput = false;
   bool initialized = false;
+
   @override
   void initState() {
     super.initState();

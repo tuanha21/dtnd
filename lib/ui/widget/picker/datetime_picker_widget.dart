@@ -96,7 +96,7 @@ class _DateTimePickerWidgetState extends State<DateTimePickerWidget> {
               ),
             ),
           ),
-          contentPadding: EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+          contentPadding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
           suffixIconConstraints: const BoxConstraints(maxWidth: 28),
         ),
       ),

@@ -5,7 +5,6 @@ import 'package:go_router/go_router.dart';
 
 import '../../../theme/app_color.dart';
 import '../../../theme/app_image.dart';
-import '../ekyc_state.dart';
 
 class EkycIntroducePage extends StatelessWidget {
   const EkycIntroducePage({Key? key}) : super(key: key);

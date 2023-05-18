@@ -1,4 +1,3 @@
-import 'package:dtnd/utilities/typedef.dart';
 import 'package:flutter/material.dart';
 
 class AsyncButton extends StatefulWidget {
@@ -10,17 +9,20 @@ class AsyncButton extends StatefulWidget {
     this.padding,
     this.style,
   });
+
   final BorderRadius? borderRadius;
   final EdgeInsetsGeometry? padding;
   final Widget child;
   final Future<void> Function()? onPressed;
   final ButtonStyle? style;
+
   @override
   State<AsyncButton> createState() => _AsyncButtonState();
 }
 
 class _AsyncButtonState extends State<AsyncButton> {
   bool loading = false;
+
   @override
   Widget build(BuildContext context) {
     Widget button = TextButton(

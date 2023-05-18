@@ -1,5 +1,4 @@
 import 'package:dtnd/=models=/core_response_model.dart';
-import 'package:dtnd/utilities/logger.dart';
 import 'package:dtnd/utilities/num_utils.dart';
 
 class StockCashBalanceModel implements CoreResponseModel {

@@ -299,7 +299,7 @@ class _GeneralInfoTabState extends State<GeneralInfoTab> {
                                     ?.copyWith(color: AppColors.primary_01),
                               )),
                         )
-                      : SizedBox(),
+                      : const SizedBox(),
                   const SizedBox(height: 24),
                   // Align(
                   //   alignment: Alignment.centerLeft,
@@ -383,7 +383,7 @@ class _GeneralInfoTabState extends State<GeneralInfoTab> {
                           if (snapshot.data == null) return const SizedBox();
                           var list = snapshot.data!;
 
-                          if (list.length == 0) {
+                          if (list.isEmpty) {
                             return Container(
                                 padding: const EdgeInsets.all(10),
                                 decoration:
@@ -396,13 +396,16 @@ class _GeneralInfoTabState extends State<GeneralInfoTab> {
                           }
 
                           num sum = 0;
-                          list.forEach(
-                              (element) => {sum = (sum + element.heldPct!)});
+                          for (var element in list) {
+                            {
+                              sum = (sum + element.heldPct!);
+                            }
+                          }
 
                           if (sum < 100) {
                             list.add(ShareHolders(
                               heldPct: 100 - sum,
-                              name: "Khác",
+                              name: S.of(context).other,
                             ));
                           }
 

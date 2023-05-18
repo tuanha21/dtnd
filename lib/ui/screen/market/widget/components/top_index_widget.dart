@@ -1,17 +1,16 @@
 import 'dart:math';
 
+import 'package:charts_flutter/flutter.dart' as charts;
+import 'package:charts_flutter/src/text_element.dart' as chart_text;
+import 'package:charts_flutter/src/text_style.dart' as chart_style;
 import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:dtnd/utilities/charts_util.dart';
-import 'package:dtnd/utilities/logger.dart';
 import 'package:dtnd/utilities/time_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+
 import '../../../../../=models=/response/indContrib.dart';
 import '../../../../../generated/l10n.dart';
-import 'package:charts_flutter/flutter.dart' as charts;
-
-import 'package:charts_flutter/src/text_element.dart' as chart_text;
-import 'package:charts_flutter/src/text_style.dart' as chart_style;
 import '../../../../theme/app_color.dart';
 
 class TopIndexWidgetChart extends StatefulWidget {
@@ -27,7 +26,7 @@ class TopIndexWidgetChart extends StatefulWidget {
 class _TopIndexWidgetChartState extends State<TopIndexWidgetChart> {
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
+    // final size = MediaQuery.of(context).size;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -177,6 +176,7 @@ class _TopIndexWidgetChartState extends State<TopIndexWidgetChart> {
 
 class _TooltipData extends TooltipData {
   _TooltipData._internal();
+
   static final _TooltipData instance = _TooltipData._internal();
 }
 
@@ -185,6 +185,7 @@ class _CustomTooltipRenderer<T extends TooltipData>
   final Size size;
   final T data;
   final int fontSize;
+
   _CustomTooltipRenderer(
     this.data, {
     required this.size,

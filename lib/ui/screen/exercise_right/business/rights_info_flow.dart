@@ -30,7 +30,7 @@ class RegistrationRightsFLowSheet extends IRegistrationRightsSheet {
   Future<void>? onResultNext([dynamic cmd]) => null;
 
   @override
-  IOverlay? next([UserCmd? cmd]) {}
+  IOverlay? next([UserCmd? cmd]) => null;
 
   @override
   Widget? backWidget([UserCmd? cmd]) => null;

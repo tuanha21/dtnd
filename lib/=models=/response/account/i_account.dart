@@ -135,7 +135,6 @@ abstract class IAccountModel implements CoreResponseModel {
         return false;
       },
     );
-    print('res$res');
     listRightBuild = res ?? [];
     return res ?? [];
   }
@@ -164,7 +163,6 @@ abstract class IAccountModel implements CoreResponseModel {
         return false;
       },
     );
-    print('res$res');
     listHistoryRightBuild = res ?? [];
     return res ?? [];
   }

@@ -4,10 +4,11 @@ import 'package:dtnd/utilities/string_util.dart';
 import '../generated/l10n.dart';
 
 mixin AppValidator {
-  static final RegExp _emailRegex =
-      RegExp(r'^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$');
+  // static final RegExp _emailRegex =
+  //     RegExp(r'^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$');
   static final RegExp _phoneNumberRegex =
       RegExp(r'^(\+)?(\d{1,3})?([-.\s]?\d{2,4}[-.\s]?){2,5}\d{2,4}$');
+
   String? pinValidator(String? pin) {
     // TODO : uncomment
     // if (pin?.isEmpty ?? true) {
@@ -20,7 +21,6 @@ mixin AppValidator {
   }
 
   String? phoneNumberValidator(String? phone) {
-    print(phone);
     if (phone?.isEmpty ?? true) {
       return "Không được bỏ trống";
     }

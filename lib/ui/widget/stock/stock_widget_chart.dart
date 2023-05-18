@@ -1,7 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dtnd/ui/widget/stock/stock_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../theme/app_color.dart';
 import '../../theme/app_image.dart';

@@ -72,7 +72,7 @@ class _HomeAssetCardState extends State<HomeAssetCard> {
                       const SizedBox(
                         width: 16,
                       ),
-                      showAsset ? Text("0 VND") : Text("********"),
+                      showAsset ? const Text("0 VND") : const Text("********"),
                     ],
                   ),
                 ],

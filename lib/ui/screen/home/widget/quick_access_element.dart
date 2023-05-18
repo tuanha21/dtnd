@@ -1,7 +1,6 @@
 import 'package:dtnd/config/service/app_services.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 
 import 'home_quick_access.dart';
 
@@ -45,7 +44,9 @@ class HomeQuickAccessElement extends StatelessWidget {
     super.key,
     required this.value,
   });
+
   final QuickAccess value;
+
   @override
   Widget build(BuildContext context) {
     final themeMode = AppService.instance.themeMode.value;

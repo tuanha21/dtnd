@@ -6,12 +6,11 @@ import 'package:dtnd/data/implementations/data_center_service.dart';
 import 'package:dtnd/data/implementations/network_service.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:flutter/material.dart';
-import '../../../../=models=/response/introduct_company.dart';
-import '../../../../generated/l10n.dart';
-import '../../../widget/icon/stock_icon.dart';
-import '../../home/widget/home_section.dart';
 import 'package:html/parser.dart' show parse;
 
+import '../../../../=models=/response/introduct_company.dart';
+import '../../../../generated/l10n.dart';
+import '../../home/widget/home_section.dart';
 import '../tab/general_info_tab.dart';
 import '../tab/subsidiaries_info_tab.dart';
 
