@@ -36,13 +36,13 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m7(value) =>
       "The OTP has been sent to your ${value} extension email. Enter the 6-digit code to continue.";
-  static m7(value) => "The OTP has been sent to your ${value} extension email. Enter the 6-digit code to continue.";
 
   static String m8(name) => "Rename catalog “${name}” to";
 
   static String m9(value) => "Total ${value}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
+
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "Abbreviated_name":
             MessageLookupByLibrary.simpleMessage("Abbreviated name"),

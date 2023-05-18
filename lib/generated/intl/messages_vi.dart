@@ -37,13 +37,13 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m7(value) =>
       "Mã OTP đã được gửi về email ${value} của bạn. Nhập mã 6 số để tiếp tục.";
-  static m7(value) => "Mã OTP đã được gửi về email ${value} của bạn. Nhập mã 6 số để tiếp tục.";
 
   static String m8(name) => "Sửa tên danh mục “${name}” thành";
 
   static String m9(value) => "Tổng ${value}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
+
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "Abbreviated_name":
             MessageLookupByLibrary.simpleMessage("Tên viết tắt"),
