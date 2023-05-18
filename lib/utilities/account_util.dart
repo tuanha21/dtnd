@@ -9,7 +9,6 @@ import 'package:dtnd/ui/screen/home_base/widget/home_base_nav.dart';
 import 'package:dtnd/ui/screen/login/login_screen.dart';
 import 'package:dtnd/ui/widget/overlay/custom_dialog.dart';
 import 'package:dtnd/ui/widget/overlay/login_first_dialog.dart';
-import 'package:flash/flash_helper.dart';
 import 'package:flutter/material.dart';
 
 import '../generated/l10n.dart';
