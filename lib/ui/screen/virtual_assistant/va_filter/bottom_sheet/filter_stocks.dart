@@ -1,5 +1,4 @@
 import 'package:dtnd/=models=/response/filter_criterion.dart';
-import 'package:dtnd/=models=/response/stock.dart';
 import 'package:dtnd/config/service/app_services.dart';
 import 'package:dtnd/data/i_data_center_service.dart';
 import 'package:dtnd/data/implementations/data_center_service.dart';
@@ -8,7 +7,6 @@ import 'package:dtnd/ui/screen/virtual_assistant/va_filter/component/filter_crit
 import 'package:dtnd/ui/screen/virtual_assistant/va_filter/logic/bottom_sheet_cmd.dart';
 import 'package:dtnd/ui/screen/virtual_assistant/va_filter/virtual_assistant_filter_controller.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
-import 'package:dtnd/utilities/extension.dart';
 import 'package:flutter/material.dart';
 
 class FilterStocks extends StatefulWidget {

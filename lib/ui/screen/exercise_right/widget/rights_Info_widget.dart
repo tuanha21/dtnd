@@ -1,7 +1,7 @@
-import 'package:dtnd/=models=/response/account/unexecuted_right_model.dart';
 import 'package:dtnd/utilities/num_utils.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../=models=/response/account/unexecuted_right_model.dart';
 import '../../../../generated/l10n.dart';
 import '../../../theme/app_color.dart';
 import '../../../theme/app_textstyle.dart';
@@ -115,7 +115,10 @@ class _RightsInfoWidgetState extends State<RightsInfoWidget> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(S.of(context).remaining_shares_available_for_purchase,
+                        Text(
+                            S
+                                .of(context)
+                                .remaining_shares_available_for_purchase,
                             style: AppTextStyle.labelMedium_12
                                 .copyWith(color: AppColors.neutral_03)),
                         Text(

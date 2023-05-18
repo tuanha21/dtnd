@@ -4,7 +4,6 @@ import 'package:dtnd/config/service/app_services.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:dtnd/ui/theme/app_textstyle.dart';
-import 'package:dtnd/utilities/extension.dart';
 import 'package:flutter/material.dart';
 
 class StockComponent extends StatelessWidget {
@@ -13,8 +12,10 @@ class StockComponent extends StatelessWidget {
     required this.model,
     this.onSelected,
   });
+
   final StockModel model;
   final ValueChanged<Stock>? onSelected;
+
   @override
   Widget build(BuildContext context) {
     final themeMode = AppService.instance.themeMode.value;

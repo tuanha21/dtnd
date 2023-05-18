@@ -556,7 +556,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "profit_value": MessageLookupByLibrary.simpleMessage("Lợi nhuận"),
         "purchase_price": MessageLookupByLibrary.simpleMessage("Giá mua"),
         "purchase_rights_history":
-            MessageLookupByLibrary.simpleMessage("Lịch sử quyền mua"),
+            MessageLookupByLibrary.simpleMessage("Lịch sử quyền"),
         "purchased_stock_code":
             MessageLookupByLibrary.simpleMessage("Mã CP được mua"),
         "purchasing_ability": MessageLookupByLibrary.simpleMessage("Sức mua"),

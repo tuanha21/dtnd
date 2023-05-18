@@ -2,20 +2,15 @@ import 'package:dtnd/config/service/app_services.dart';
 import 'package:dtnd/data/i_user_service.dart';
 import 'package:dtnd/data/implementations/user_service.dart';
 import 'package:dtnd/generated/l10n.dart';
-import 'package:dtnd/ui/screen/home/widget/quick_access_element.dart';
 import 'package:dtnd/ui/screen/login/login_screen.dart';
 import 'package:dtnd/ui/screen/virtual_assistant/va_util.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:dtnd/ui/theme/app_textstyle.dart';
-import 'package:dtnd/ui/widget/seperator.dart';
 import 'package:dtnd/utilities/num_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../../data/i_local_storage_service.dart';
-import '../../../../data/implementations/local_storage_service.dart';
-import '../../../widget/overlay/custom_dialog.dart';
 import '../../home_base/widget/home_base_nav.dart';
 
 enum QuickAccess {
@@ -85,6 +80,7 @@ extension QuickAccessX on QuickAccess {
 class HomeQuickAccess extends StatefulWidget {
   const HomeQuickAccess(
       {super.key, required this.hasUser, required this.navigateTab});
+
   final bool hasUser;
   final ValueChanged<HomeNav> navigateTab;
 
@@ -201,6 +197,7 @@ class _HomeQuickAccessState extends State<HomeQuickAccess> {
 
 class _AssetRow extends StatefulWidget {
   const _AssetRow(this.navigateTab);
+
   final ValueChanged<HomeNav> navigateTab;
 
   @override

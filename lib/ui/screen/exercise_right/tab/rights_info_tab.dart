@@ -29,6 +29,7 @@ class _RightsInfoTabState extends State<RightsInfoTab> {
     final account =
         userService.defaultAccount.value as BaseMarginPlusAccountModel?;
     account?.getListUnexecutedRight(userService, NetworkService());
+    print('tiennh${account?.listUnexecutedBuyRight}');
 
     return Column(
       children: [

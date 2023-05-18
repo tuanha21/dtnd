@@ -1,8 +1,5 @@
-import 'dart:ui';
-
 import 'package:dtnd/=models=/core_response_model.dart';
 import 'package:dtnd/=models=/side.dart';
-import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/utilities/logger.dart';
 
 import 'order_model/i_order_model.dart';

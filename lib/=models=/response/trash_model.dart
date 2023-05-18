@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:dtnd/=models=/stock_status.dart';
 
 class TrashModel extends StockStatus {

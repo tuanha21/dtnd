@@ -140,7 +140,7 @@ class _TabMatchedDetailState extends State<TabMatchedDetail> {
               maxVolumn = widget.stockModel.maxVolumnMatchedOrder;
 
               return  ListView.builder(
-                padding: EdgeInsets.only(bottom: 60),
+                padding: const EdgeInsets.only(bottom: 60),
                 shrinkWrap: true,
                 itemCount: list.length,
                 itemBuilder: (BuildContext context, int index) {
@@ -178,7 +178,7 @@ class _TabMatchedDetailState extends State<TabMatchedDetail> {
               }
 
               return ListView.builder(
-                padding: EdgeInsets.only(bottom: 60),
+                padding: const EdgeInsets.only(bottom: 60),
                 shrinkWrap: true,
                 itemCount: list.length,
                 itemBuilder: (BuildContext context, int index) {

@@ -1,5 +1,5 @@
+import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:dtnd/=models=/response/stock_model.dart';
-import 'package:dtnd/=models=/response/stock_trading_history.dart';
 import 'package:dtnd/=models=/response/top_signal_detail_model.dart';
 import 'package:dtnd/data/i_data_center_service.dart';
 import 'package:dtnd/data/implementations/data_center_service.dart';
@@ -10,15 +10,15 @@ import 'package:dtnd/utilities/charts_util.dart';
 import 'package:dtnd/utilities/logger.dart';
 import 'package:dtnd/utilities/time_utils.dart';
 import 'package:flutter/material.dart';
-import 'package:charts_flutter/flutter.dart' as charts;
-import 'dart:math' as math;
 
 const List<String> _label = ["1M", "3M", "6M", "1Y"];
 
 class SignalChart extends StatefulWidget {
   const SignalChart({super.key, required this.stockModel, required this.data});
+
   final StockModel? stockModel;
   final TopSignalDetailModel? data;
+
   @override
   State<SignalChart> createState() => _SignalChartState();
 }

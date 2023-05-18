@@ -1,4 +1,3 @@
-import 'package:dtnd/=models=/response/stock_model.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -12,6 +11,7 @@ import '../../../theme/app_textstyle.dart';
 
 class StockEvent extends StatefulWidget {
   final List<SecEvent>? listEvent;
+
   const StockEvent({Key? key, required this.listEvent}) : super(key: key);
 
   @override

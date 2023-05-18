@@ -57,7 +57,7 @@ class SecTrading {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     data['P_PRICE_1D'] = pPRICE1D;
     data['TOT_PT_VOLUME'] = tOTPTVOLUME;
     data['TOT_PT_VALUE'] = tOTPTVALUE;

@@ -77,7 +77,7 @@ class RegisterRegistered extends StatelessWidget {
               child: TextButton(
                 onPressed: () { Navigator.of(context).push<void>(
                   MaterialPageRoute(
-                      builder: (context) => VaScreen()),
+                      builder: (context) => const VaScreen()),
                 );},
                 style: const ButtonStyle(
                     padding: MaterialStatePropertyAll(EdgeInsets.all(14))),

@@ -1,6 +1,5 @@
 import 'package:dtnd/=models=/local/i_local_catalog.dart';
 import 'package:dtnd/=models=/local/saved_catalog.dart';
-import 'package:dtnd/=models=/ui_model/user_cmd.dart';
 import 'package:dtnd/config/service/app_services.dart';
 import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/screen/market/logic/cmd.dart';
@@ -49,8 +48,10 @@ class CatalogOptionsSheet extends StatefulWidget {
     required this.savedCatalog,
     required this.catalog,
   });
+
   final SavedCatalog savedCatalog;
   final LocalCatalog catalog;
+
   @override
   State<CatalogOptionsSheet> createState() => _CatalogOptionsSheetState();
 }
@@ -117,6 +118,7 @@ class _RowButton extends StatelessWidget {
   final ThemeMode themeMode;
   final String icon;
   final VoidCallback? onTap;
+
   @override
   Widget build(BuildContext context) {
     return Material(

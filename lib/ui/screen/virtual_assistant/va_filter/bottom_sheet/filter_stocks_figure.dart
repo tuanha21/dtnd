@@ -3,13 +3,11 @@ import 'package:dtnd/config/service/app_services.dart';
 import 'package:dtnd/data/i_data_center_service.dart';
 import 'package:dtnd/data/implementations/data_center_service.dart';
 import 'package:dtnd/generated/l10n.dart';
-import 'package:dtnd/ui/screen/virtual_assistant/va_filter/component/filter_criterion_section.dart';
 import 'package:dtnd/ui/screen/virtual_assistant/va_filter/logic/bottom_sheet_cmd.dart';
 import 'package:dtnd/ui/screen/virtual_assistant/va_filter/virtual_assistant_filter_controller.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_textstyle.dart';
 import 'package:dtnd/ui/widget/input/thousand_separator_input_formatter.dart';
-import 'package:dtnd/utilities/extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -18,7 +16,9 @@ class FilterStocksFigure extends StatefulWidget {
     super.key,
     required this.listCriterionFigure,
   });
+
   final Set<FilterCriterionFigure> listCriterionFigure;
+
   @override
   State<FilterStocksFigure> createState() => _FilterStocksFigureState();
 }
@@ -149,6 +149,7 @@ class FilterStocksFigureRow extends StatelessWidget {
     super.key,
     required this.criterionFigure,
   });
+
   final FilterCriterionFigure criterionFigure;
 
   @override
@@ -186,7 +187,9 @@ class FilterStocksFigureRow extends StatelessWidget {
 
 class _RowTextField extends StatelessWidget {
   const _RowTextField(this.criterionFigure);
+
   final FilterCriterionFigure criterionFigure;
+
   @override
   Widget build(BuildContext context) {
     return Expanded(
