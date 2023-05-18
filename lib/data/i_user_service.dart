@@ -88,4 +88,6 @@ abstract class IUserService {
   Future<List<FeeRateModel>?> getAllFreeRate();
   Future<bool> updateContract(
       String accountCode, String termCode, num capital, String extentType);
+
+  Future<void> getAllContract(String accountCode);
 }

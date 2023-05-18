@@ -1780,4 +1780,13 @@ class NetworkService implements INetworkService {
     }
     return true;
   }
+
+  @override
+  Future<void> getAllContract(String body) async {
+    var response = await client.post(url_core_endpoint, body: body);
+    if (response.statusCode != 200) {
+      return;
+    }
+    return;
+  }
 }

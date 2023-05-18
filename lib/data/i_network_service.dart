@@ -299,5 +299,8 @@ abstract class INetworkService {
   Future<void> deleteBot(String body);
 
   Future<List<FeeRateModel>?> getAllFreeRate(String body);
+
   Future<bool> updateContract(String body);
+
+  Future<void> getAllContract(String body);
 }
