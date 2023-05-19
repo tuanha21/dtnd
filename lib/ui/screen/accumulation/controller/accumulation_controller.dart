@@ -1,3 +1,4 @@
+import 'package:dtnd/=models=/response/accumulation/contract_model.dart';
 import 'package:dtnd/=models=/response/accumulation/fee_rate_model.dart';
 import 'package:dtnd/data/i_data_center_service.dart';
 import 'package:dtnd/data/i_user_service.dart';
@@ -18,10 +19,12 @@ class AccumulationController {
   final IUserService userService = UserService();
   final IDataCenterService dataCenterService = DataCenterService();
   final Rx<List<FeeRateModel>?> listFeeRate = Rx(<FeeRateModel>[]);
+  final Rx<List<ContractModel>?> listAllContract = Rx(<ContractModel>[]);
   final Rx<bool> accumulationInitialized = false.obs;
 
   Future<void> init() async {
     await getFeeRate();
+    await getAllContract();
     accumulationInitialized.value = true;
   }
 
@@ -39,6 +42,23 @@ class AccumulationController {
   FeeRateModel getItemFeeRate(String id) {
     FeeRateModel itemWithId;
     itemWithId = listFeeRate.value!.firstWhere((item) => item.id == id);
+    return itemWithId;
+  }
+
+  Future<void> getAllContract() async {
+    final allContract = await userService.getAllContract();
+    if ((allContract?.isEmpty ?? true) || allContract == null) {
+      throw Exception();
+    } else {
+      listAllContract.value!.clear();
+      listAllContract.value!.addAll(allContract);
+      listAllContract.refresh();
+    }
+  }
+
+  ContractModel getItemContract(String id) {
+    ContractModel itemWithId;
+    itemWithId = listAllContract.value!.firstWhere((item) => item.id == id);
     return itemWithId;
   }
 }

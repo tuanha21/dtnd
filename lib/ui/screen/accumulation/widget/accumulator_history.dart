@@ -34,7 +34,6 @@ class _AccumulatorHistoryState extends State<AccumulatorHistory> {
     toDay = DateTime.now();
     firstDay = TimeUtilities.getPreviousDateTime(TimeUtilities.month(3));
     lastDay = toDay;
-    // _scrollController.addListener(_scrollListener); // L
     super.initState();
   }
 
