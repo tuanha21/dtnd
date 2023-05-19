@@ -490,7 +490,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "null_username": MessageLookupByLibrary.simpleMessage(
             "Tên đăng nhập cần tối thiểu 6 ký tự"),
         "number_of_shares_entitled":
-            MessageLookupByLibrary.simpleMessage("Số CP được hưởng"),
+            MessageLookupByLibrary.simpleMessage("Số CP hưởng quyền"),
         "number_of_shares_received":
             MessageLookupByLibrary.simpleMessage("Số CP được nhận"),
         "ok": MessageLookupByLibrary.simpleMessage("Đồng ý"),
@@ -532,7 +532,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "phone_number": MessageLookupByLibrary.simpleMessage("Số điện thoại"),
         "pin_code": MessageLookupByLibrary.simpleMessage("Mã pin"),
         "planned_execution_date":
-            MessageLookupByLibrary.simpleMessage("Ngày thực hiện dự định"),
+            MessageLookupByLibrary.simpleMessage("Ngày thực hiện dự kiến"),
         "please_enter_the_content_of_the_post":
             MessageLookupByLibrary.simpleMessage("Hãy nhập nội dung bài đăng"),
         "please_input_password":

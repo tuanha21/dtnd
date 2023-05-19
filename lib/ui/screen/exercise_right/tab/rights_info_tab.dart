@@ -29,36 +29,37 @@ class _RightsInfoTabState extends State<RightsInfoTab> {
     final account =
         userService.defaultAccount.value as BaseMarginPlusAccountModel?;
     account?.getListUnexecutedRight(userService, NetworkService());
-    print('tiennh${account?.listUnexecutedBuyRight}');
 
     return Column(
       children: [
-        account?.listUnexecutedBuyRight.isEmpty == false
-            ? Expanded(child: Builder(
-                builder: (context) {
-                  return ListView.builder(
+        account?.getListRight.isEmpty == false
+            ? Expanded(
+                child: Builder(
+                  builder: (context) {
+                    return ListView.builder(
                       shrinkWrap: true,
-                      itemCount: account?.listUnexecutedBuyRight.length,
+                      itemCount: account?.getListRight.length,
                       itemBuilder: (BuildContext context, int index) {
                         return RightsInfoWidget(
-                          data:
-                              account?.listUnexecutedBuyRight.elementAt(index),
+                          data: account?.getListRight.elementAt(index),
                           onChange: () {
                             RegistrationRightsFLowSheet().show(
-                                context,
-                                RegistrationRightsSheet(
-                                  data: account!.listUnexecutedBuyRight
-                                      .elementAt(index),
-                                  accountModel: account,
-                                  onSuccessExecute: () =>
-                                      account.getListUnexecutedRight(
-                                          userService, NetworkService()),
-                                ));
+                              context,
+                              RegistrationRightsSheet(
+                                data: account!.getListRight.elementAt(index),
+                                accountModel: account,
+                                onSuccessExecute: () =>
+                                    account.getListUnexecutedRight(
+                                        userService, NetworkService()),
+                              ),
+                            );
                           },
                         );
-                      });
-                },
-              ))
+                      },
+                    );
+                  },
+                ),
+              )
             : const Padding(
                 padding: EdgeInsets.only(top: 100),
                 child: EmptyListWidget(),

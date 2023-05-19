@@ -101,6 +101,17 @@ class BaseMarginPlusAccountModel extends IAccountModel {
     return result;
   }
 
+  List<UnexecutedRightModel> get getListRight {
+    if (listUnexecutedRight?.isEmpty ?? true) {
+      return [];
+    }
+    final List<UnexecutedRightModel> result = [];
+    for (var right in listUnexecutedRight!) {
+        result.add(right);
+    }
+    return result;
+  }
+
   BaseMarginPlusAccountModel.fromJson(Map<String, dynamic> json)
       : super(accCode: json['accCode']) {
     accName = json['accName'];
