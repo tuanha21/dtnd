@@ -1,6 +1,9 @@
-import 'package:dtnd/ui/theme/app_color.dart';
-import 'package:dtnd/ui/theme/app_image.dart';
+import 'package:dtnd/=models=/response/cash_transaction_model.dart';
+import 'package:dtnd/data/i_user_service.dart';
+import 'package:dtnd/data/implementations/user_service.dart';
+import 'package:dtnd/ui/screen/account/component/cash_transaction_component.dart';
 import 'package:dtnd/ui/widget/calendar/day_input.dart';
+import 'package:dtnd/ui/widget/empty_list_widget.dart';
 import 'package:dtnd/utilities/time_utils.dart';
 import 'package:flutter/material.dart';
 
@@ -12,21 +15,15 @@ class AccumulatorHistory extends StatefulWidget {
 }
 
 class _AccumulatorHistoryState extends State<AccumulatorHistory> {
+  final IUserService userService = UserService();
+
+  final List<CashTransactionHistoryModel> list = [];
   late DateTime fromDay;
   late DateTime toDay;
   late DateTime firstDay;
   late DateTime lastDay;
-
-  final List<String> title = <String>[
-    'Tích lũy ngắn hạn',
-    'Tích lũy ngắn hạn',
-    'Tích lũy tự động'
-  ];
-  final List<String> moneyChange = <String>[
-    '+10,000,000đ',
-    '-10,006,904đ',
-    '+1,763,050đ'
-  ];
+  bool isLoading = false;
+  final ScrollController _scrollController = ScrollController();
 
   @override
   void initState() {
@@ -34,13 +31,48 @@ class _AccumulatorHistoryState extends State<AccumulatorHistory> {
     toDay = DateTime.now();
     firstDay = TimeUtilities.getPreviousDateTime(TimeUtilities.month(3));
     lastDay = toDay;
+    _scrollController.addListener(_scrollListener);
     super.initState();
+    getData();
+  }
+
+  Future<void> getData({int? recordPerPage}) async {
+    setState(() {
+      isLoading = true; // Đánh dấu đang tải dữ liệu
+    });
+    await Future.delayed(const Duration(seconds: 1));
+    final res = await userService.getHistoryContract(
+        fromDay: fromDay, toDay: toDay, recordPerPage: recordPerPage);
+
+    if ((res?.isEmpty ?? true) || res == null) {
+      throw Exception();
+    } else {
+      list.clear();
+      list.addAll(res);
+    }
+    setState(() {
+      isLoading = false;
+    });
+  }
+
+  @override
+  void dispose() {
+    _scrollController.removeListener(
+        _scrollListener); // Hủy lắng nghe sự kiện cuộn khi dispose
+    super.dispose();
+  }
+
+  void _scrollListener() {
+    if (_scrollController.offset >=
+            _scrollController.position.maxScrollExtent &&
+        !_scrollController.position.outOfRange) {
+      // Đã cuộn xuống dưới cùng
+      getData(recordPerPage: list.length + 5);
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
-
     return Column(mainAxisAlignment: MainAxisAlignment.start, children: [
       const SizedBox(height: 16),
       Padding(
@@ -59,6 +91,7 @@ class _AccumulatorHistoryState extends State<AccumulatorHistory> {
                   setState(() {
                     fromDay = value;
                   });
+                  getData();
                 },
               ),
             ),
@@ -74,74 +107,55 @@ class _AccumulatorHistoryState extends State<AccumulatorHistory> {
                   setState(() {
                     toDay = value;
                   });
+                  getData();
                 },
               ),
             )
           ],
         ),
       ),
-      const SizedBox(height: 20),
-      Expanded(
-        child: ListView.builder(
-            shrinkWrap: true,
-            padding: const EdgeInsets.all(8),
-            itemCount: title.length,
-            itemBuilder: (BuildContext context, int index) {
-              return Container(
-                margin: const EdgeInsets.only(bottom: 8),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(12),
+      const SizedBox(height: 16),
+      Expanded(child: Builder(builder: (context) {
+        if (list.isEmpty) {
+          return Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: const [
+              EmptyListWidget(),
+            ],
+          );
+        } else {
+          return Column(
+            children: [
+              Expanded(
+                child: ListView.builder(
+                  controller: _scrollController,
+                  shrinkWrap: true,
+                  itemCount: list.length + 1,
+                  itemBuilder: (context, index) {
+                    if (index < list.length) {
+                      return CashTransactionComponent(
+                        data: list.elementAt(index),
+                      );
+                    } else if (index == list.length && isLoading) {
+                      return _buildLoader();
+                    } else {
+                      return const SizedBox.shrink();
+                    }
+                  },
                 ),
-                padding: const EdgeInsets.all(16),
-                height: 70,
-                child: Row(children: [
-                  SizedBox(
-                    height: 40,
-                    width: 40,
-                    child: Image.asset(
-                      (index.isEven)
-                          ? AppImages.settlement_plus
-                          : AppImages.settlement_minus,
-                      fit: BoxFit.fitHeight,
-                    ),
-                  ),
-                  const SizedBox(width: 8),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          title[index],
-                          style: textTheme.bodyMedium
-                              ?.copyWith(color: AppColors.text_black),
-                        ),
-                        const SizedBox(height: 4),
-                        Row(
-                          children: [
-                            Text(
-                              '01/11/2022',
-                              style: textTheme.bodySmall
-                                  ?.copyWith(color: AppColors.neutral_02),
-                            ),
-                            const Spacer(),
-                            Text(
-                              moneyChange[index],
-                              style: textTheme.bodyMedium?.copyWith(
-                                  color: index.isEven
-                                      ? AppColors.semantic_04_1
-                                      : AppColors.semantic_03),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  )
-                ]),
-              );
-            }),
-      )
+              ),
+            ],
+          );
+        }
+      }))
     ]);
   }
+}
+
+Widget _buildLoader() {
+  return Container(
+    alignment: Alignment.center,
+    padding: const EdgeInsets.symmetric(vertical: 16.0),
+    child: const CircularProgressIndicator(),
+  );
 }

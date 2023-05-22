@@ -3,6 +3,7 @@ import 'package:dtnd/=models=/response/account/i_account.dart';
 import 'package:dtnd/=models=/response/account_info_model.dart';
 import 'package:dtnd/=models=/response/accumulation/contract_model.dart';
 import 'package:dtnd/=models=/response/accumulation/fee_rate_model.dart';
+import 'package:dtnd/=models=/response/cash_transaction_model.dart';
 import 'package:dtnd/=models=/response/order_model/base_order_model.dart';
 import 'package:dtnd/=models=/response/total_asset_model.dart';
 import 'package:dtnd/=models=/response/user_token.dart';
@@ -85,10 +86,16 @@ abstract class IUserService {
 
   Future<void> deleteAccount();
 
-  // Fee Rate
+  // Fee Rate, Contract
   Future<List<FeeRateModel>?> getAllFreeRate();
 
   Future<bool> updateContract(String termCode, num capital, String extentType);
 
   Future<List<ContractModel>?> getAllContract();
+
+  Future<List<CashTransactionHistoryModel>?> getHistoryContract({
+    DateTime? fromDay,
+    DateTime? toDay,
+    int? recordPerPage,
+  });
 }

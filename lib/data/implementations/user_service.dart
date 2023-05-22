@@ -8,6 +8,7 @@ import 'package:dtnd/=models=/response/account/i_account.dart';
 import 'package:dtnd/=models=/response/account_info_model.dart';
 import 'package:dtnd/=models=/response/accumulation/contract_model.dart';
 import 'package:dtnd/=models=/response/accumulation/fee_rate_model.dart';
+import 'package:dtnd/=models=/response/cash_transaction_model.dart';
 import 'package:dtnd/=models=/response/order_model/base_order_model.dart';
 import 'package:dtnd/=models=/response/total_asset_model.dart';
 import 'package:dtnd/=models=/response/user_token.dart';
@@ -20,6 +21,7 @@ import 'package:dtnd/data/i_user_service.dart';
 import 'package:dtnd/data/implementations/local_storage_service.dart';
 import 'package:dtnd/data/implementations/network_service.dart';
 import 'package:dtnd/utilities/logger.dart';
+import 'package:dtnd/utilities/time_utils.dart';
 import 'package:get/get.dart';
 
 class UserService implements IUserService {
@@ -481,5 +483,30 @@ class UserService implements IUserService {
       }
     };
     return networkService.getAllContract(jsonEncode(body));
+  }
+
+  @override
+  Future<List<CashTransactionHistoryModel>?> getHistoryContract(
+      {DateTime? fromDay, DateTime? toDay, int? recordPerPage}) {
+    Map<String, dynamic> body = {
+      "group": "B",
+      "user": token.value?.user ?? '',
+      "session": token.value?.sid ?? '',
+      "data": {
+        "cmd": "CashTransaction",
+        "type": "object",
+        "p1": {
+          "BUSINESS_CODE": "CASH_CAPITAL_HTKD",
+          "ACCOUNT_CODE": '${token.value?.user}9',
+          "FROM_DATE": TimeUtilities.commonTimeFormat.format(fromDay ??
+              TimeUtilities.getPreviousDateTime(TimeUtilities.month(1))),
+          "TO_DATE":
+              TimeUtilities.commonTimeFormat.format(toDay ?? DateTime.now()),
+          "PAGE": 1,
+          "RECORD_PER_PAGE": recordPerPage ?? 10
+        }
+      }
+    };
+    return networkService.getHistoryContract(jsonEncode(body));
   }
 }
