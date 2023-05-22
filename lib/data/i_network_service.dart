@@ -9,6 +9,7 @@ import 'package:dtnd/=models=/local/va_portfolio_model.dart';
 import 'package:dtnd/=models=/response/accumulation/contract_model.dart';
 import 'package:dtnd/=models=/response/accumulation/fee_rate_model.dart';
 import 'package:dtnd/=models=/response/business_profile_model.dart';
+import 'package:dtnd/=models=/response/cash_transaction_model.dart';
 import 'package:dtnd/=models=/response/commodity_model.dart';
 import 'package:dtnd/=models=/response/deep_model.dart';
 import 'package:dtnd/=models=/response/inday_matched_order.dart';
@@ -304,4 +305,6 @@ abstract class INetworkService {
   Future<bool> updateContract(String body);
 
   Future<List<ContractModel>?> getAllContract(String body);
+
+  Future<List<CashTransactionHistoryModel>?> getHistoryContract(String body);
 }

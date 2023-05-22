@@ -34,49 +34,59 @@ class _AccumulatorBookState extends State<AccumulatorBook> {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
-    return ObxValue<Rx<bool>>((initialized) {
-      if (!initialized.value) {
-        return const EmptyListWidget();
-      } else {
-        if (controller.listAllContract.value == []) {
-          return const EmptyListWidget();
-        }
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const SizedBox(height: 16),
-            Text(' ${S.of(context).accumulate_current_packages}',
-                style: textTheme.bodyMedium
-                    ?.copyWith(fontWeight: FontWeight.w700)),
-            const SizedBox(height: 4),
-            Expanded(
-              child: ListView.builder(
-                shrinkWrap: true,
-                itemCount: controller.listAllContract.value!.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return ItemBuilder(
-                    title: getTitle(controller
-                        .listAllContract.value![index].termCode
-                        .toString()),
-                    textTheme: textTheme,
-                    dateEnd: controller
-                        .listAllContract.value![index].expiredDate
-                        .toString(),
-                    rate: controller.listAllContract.value![index].feeRate
-                        .toString(),
-                    id: controller.listAllContract.value![index].id.toString(),
-                    profit: controller.listAllContract.value![index].liquid
-                        .toString(),
-                    money: controller.listAllContract.value![index].capital
-                        .toString(),
-                  );
-                },
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        ObxValue<Rx<bool>>((initialized) {
+          if (!initialized.value) {
+            return const EmptyListWidget();
+          } else {
+            if (controller.listAllContract.value == []) {
+              return const EmptyListWidget();
+            }
+            return Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(height: 16),
+                  Text(' ${S.of(context).accumulate_current_packages}',
+                      style: textTheme.bodyMedium
+                          ?.copyWith(fontWeight: FontWeight.w700)),
+                  const SizedBox(height: 4),
+                  Expanded(
+                    child: ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: controller.listAllContract.value!.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return ItemBuilder(
+                          title: getTitle(controller
+                              .listAllContract.value![index].termCode
+                              .toString()),
+                          textTheme: textTheme,
+                          dateEnd: controller
+                              .listAllContract.value![index].expiredDate
+                              .toString(),
+                          rate: controller.listAllContract.value![index].feeRate
+                              .toString(),
+                          id: controller.listAllContract.value![index].id
+                              .toString(),
+                          profit: controller
+                              .listAllContract.value![index].liquid
+                              .toString(),
+                          money: controller
+                              .listAllContract.value![index].capital
+                              .toString(),
+                        );
+                      },
+                    ),
+                  )
+                ],
               ),
-            )
-          ],
-        );
-      }
-    }, controller.accumulationInitialized);
+            );
+          }
+        }, controller.accumulationInitialized),
+      ],
+    );
   }
 }
 
@@ -104,10 +114,7 @@ class ItemBuilder extends StatelessWidget {
     Navigator.push(
       context,
       MaterialPageRoute(
-          builder: (context) => AccumulatorBookDetail(
-                name: name,
-                id: id,
-              )),
+          builder: (context) => AccumulatorBookDetail(name: name, id: id)),
     );
   }
 

@@ -118,7 +118,8 @@ class _AccumulatorBookDetailState extends State<AccumulatorBookDetail> {
                 ),
                 RowInfomation(
                   leftText: 'Tổng tiền gốc và lãi',
-                  rightText: '${NumUtils.formatInteger(contract.liquid)}đ',
+                  rightText:
+                      '${NumUtils.formatInteger(contract.currentValue)}đ',
                 ),
                 RowInfomation(
                     leftText: 'Kỳ hạn',

@@ -11,6 +11,7 @@ import 'package:dtnd/=models=/request/request_model.dart';
 import 'package:dtnd/=models=/response/accumulation/contract_model.dart';
 import 'package:dtnd/=models=/response/accumulation/fee_rate_model.dart';
 import 'package:dtnd/=models=/response/business_profile_model.dart';
+import 'package:dtnd/=models=/response/cash_transaction_model.dart';
 import 'package:dtnd/=models=/response/commodity_model.dart';
 import 'package:dtnd/=models=/response/company_info.dart';
 import 'package:dtnd/=models=/response/deep_model.dart';
@@ -1801,5 +1802,21 @@ class NetworkService implements INetworkService {
       feeRateModel.add(ContractModel.fromJson(element));
     }
     return feeRateModel;
+  }
+
+  @override
+  Future<List<CashTransactionHistoryModel>?> getHistoryContract(
+      String body) async {
+    List<CashTransactionHistoryModel> historyContract = [];
+    var response = await client.post(url_core_endpoint, body: body);
+    if (response.statusCode != 200) {
+      throw response;
+    }
+    var res = decode(response.bodyBytes);
+    final data = res["data"];
+    for (var element in data) {
+      historyContract.add(CashTransactionHistoryModel.fromJson(element));
+    }
+    return historyContract;
   }
 }
