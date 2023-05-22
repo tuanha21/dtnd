@@ -217,6 +217,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Huỷ lệnh thành công"),
         "capital_value": MessageLookupByLibrary.simpleMessage("Giá trị vốn"),
         "cash": MessageLookupByLibrary.simpleMessage("Tiền mặt"),
+        "cash_dividend": MessageLookupByLibrary.simpleMessage("Cổ tức tiền"),
         "cash_dividends":
             MessageLookupByLibrary.simpleMessage("Cổ tức bằng tiền"),
         "cash_flow": MessageLookupByLibrary.simpleMessage("Dòng tiền"),
@@ -297,6 +298,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "developing_feature":
             MessageLookupByLibrary.simpleMessage("Tính năng đang phát triển"),
         "dividend": MessageLookupByLibrary.simpleMessage("Cổ tức"),
+        "dividends_value":
+            MessageLookupByLibrary.simpleMessage("Cổ tức bằng CP/CP thưởng"),
         "double_back_to_close_app":
             MessageLookupByLibrary.simpleMessage("Ấn thêm lần nữa để thoát"),
         "eKYC_quote":
@@ -605,6 +608,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "returning_money": MessageLookupByLibrary.simpleMessage("Tiền chờ về"),
         "revenue": MessageLookupByLibrary.simpleMessage("Doanh thu"),
         "right": MessageLookupByLibrary.simpleMessage("Quyền"),
+        "right_to_buy": MessageLookupByLibrary.simpleMessage("Quyền mua"),
         "rights_type": MessageLookupByLibrary.simpleMessage("Loại quyền"),
         "risk": MessageLookupByLibrary.simpleMessage("Rủi ro"),
         "safe_ratio": MessageLookupByLibrary.simpleMessage("Tỷ lệ an toàn"),

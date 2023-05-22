@@ -227,6 +227,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Cancel order successfully"),
         "capital_value": MessageLookupByLibrary.simpleMessage("Capital value"),
         "cash": MessageLookupByLibrary.simpleMessage("Cash"),
+        "cash_dividend": MessageLookupByLibrary.simpleMessage("Cash dividend"),
         "cash_dividends":
             MessageLookupByLibrary.simpleMessage("Cash dividends"),
         "cash_flow": MessageLookupByLibrary.simpleMessage("Cash flow"),
@@ -312,6 +313,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "developing_feature":
             MessageLookupByLibrary.simpleMessage("Developing feature"),
         "dividend": MessageLookupByLibrary.simpleMessage("Dividend"),
+        "dividends_value": MessageLookupByLibrary.simpleMessage(
+            "Dividends in shares/bonus shares"),
         "double_back_to_close_app":
             MessageLookupByLibrary.simpleMessage("Back again to exit"),
         "eKYC_quote":
@@ -630,6 +633,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Returning money"),
         "revenue": MessageLookupByLibrary.simpleMessage("Revenue"),
         "right": MessageLookupByLibrary.simpleMessage("Right"),
+        "right_to_buy": MessageLookupByLibrary.simpleMessage("Right to buy"),
         "rights_type": MessageLookupByLibrary.simpleMessage("Rights type"),
         "risk": MessageLookupByLibrary.simpleMessage("Risk"),
         "safe_ratio": MessageLookupByLibrary.simpleMessage("Safe ratio"),
