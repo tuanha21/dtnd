@@ -4,7 +4,8 @@ import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:flutter/material.dart';
 
 class ErrorRegisterDialog extends StatelessWidget {
-  const ErrorRegisterDialog({super.key});
+  const ErrorRegisterDialog({super.key, required this.error});
+  final String error;
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +28,7 @@ class ErrorRegisterDialog extends StatelessWidget {
               child: Image.asset(AppImages.illust06),
             ),
             const SizedBox(height: 30),
-            Text('Đăng ký không thành công!',
+            Text(error,
                 style: textTheme.labelLarge?.copyWith(
                     color: AppColors.text_black, fontWeight: FontWeight.bold)),
             const SizedBox(height: 20),
@@ -65,16 +66,10 @@ class ErrorRegisterDialog extends StatelessWidget {
                       backgroundColor: AppColors.color_primary_1, // Text Color
                     ),
                     onPressed: () {
-                      Navigator.pushAndRemoveUntil(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const Accumlation(
-                                    defaultab: 1,
-                                  )),
-                          (r) => r.isFirst);
+                      Navigator.pop(context);
                     },
                     child: const Text(
-                      'Sổ tích lũy',
+                      'Quay lại',
                       style: TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w700,

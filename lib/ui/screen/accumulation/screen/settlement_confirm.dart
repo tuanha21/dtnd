@@ -7,7 +7,10 @@ import '../widget/row_information.dart';
 class SettlementConfirm extends StatefulWidget {
   const SettlementConfirm({
     super.key,
+    required this.id,
   });
+
+  final String id;
 
   @override
   State<SettlementConfirm> createState() => _SettlementConfirmState();

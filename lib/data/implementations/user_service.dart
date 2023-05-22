@@ -6,6 +6,7 @@ import 'package:dtnd/=models=/request/request_model.dart';
 import 'package:dtnd/=models=/response/account/base_margin_plus_account_model.dart';
 import 'package:dtnd/=models=/response/account/i_account.dart';
 import 'package:dtnd/=models=/response/account_info_model.dart';
+import 'package:dtnd/=models=/response/accumulation/contract_model.dart';
 import 'package:dtnd/=models=/response/accumulation/fee_rate_model.dart';
 import 'package:dtnd/=models=/response/order_model/base_order_model.dart';
 import 'package:dtnd/=models=/response/total_asset_model.dart';
@@ -444,8 +445,7 @@ class UserService implements IUserService {
   }
 
   @override
-  Future<bool> updateContract(
-      String accountCode, String termCode, num capital, String extentType) {
+  Future<bool> updateContract(String termCode, num capital, String extentType) {
     Map<String, dynamic> body = {
       "group": "B",
       "user": token.value?.user ?? '',
@@ -454,11 +454,11 @@ class UserService implements IUserService {
         "cmd": "MM_UpdateContract",
         "type": "object",
         "p1": {
-          "ACCOUNT_CODE": accountCode,
+          "ACCOUNT_CODE": '${token.value?.user}9',
           "TERM": termCode,
           "CAPITAL": capital,
           "EXTENT_TYPE": extentType,
-          "CHANNEL": "I",
+          "CHANNEL": "M",
           "CONTENT": ""
         }
       }
@@ -467,7 +467,7 @@ class UserService implements IUserService {
   }
 
   @override
-  Future<void> getAllContract(String accountCode) {
+  Future<List<ContractModel>?> getAllContract() {
     Map<String, dynamic> body = {
       "group": "B",
       "user": token.value?.user ?? '',
@@ -476,7 +476,7 @@ class UserService implements IUserService {
         "cmd": "MM_GetAllContract",
         "type": "object",
         "p1": {
-          "ACCOUNT_CODE": accountCode,
+          "ACCOUNT_CODE": '${token.value?.user}9',
         }
       }
     };

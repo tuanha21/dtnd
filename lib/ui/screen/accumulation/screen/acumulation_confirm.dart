@@ -83,24 +83,38 @@ class _AccumulationConfirmState extends State<AccumulationConfirm> {
                   MaterialStateProperty.all<Color>(AppColors.text_blue),
             ),
             onPressed: () async {
-              var updateSuccess = await userService.updateContract(
-                  userService.userInfo.value!.customerCode!,
-                  feeRate.termCode!,
-                  widget.money,
-                  getExtendType());
-              if (updateSuccess) {
+              // var updateSuccess = await userService.updateContract(
+              //     feeRate.termCode!, widget.money, getExtendType());
+
+              try {
+                await userService.updateContract(
+                    feeRate.termCode!, widget.money, getExtendType());
                 if (!mounted) return;
                 showDialog(
                     barrierDismissible: false,
                     context: context,
                     builder: (_) => const AccumulationDialog());
-              } else {
-                if (!mounted) return;
+              } catch (e) {
                 showDialog(
                     barrierDismissible: false,
                     context: context,
-                    builder: (_) => const ErrorRegisterDialog());
+                    builder: (_) => ErrorRegisterDialog(
+                          error: e.toString(),
+                        ));
               }
+              // if (updateSuccess) {
+              //   if (!mounted) return;
+              //   showDialog(
+              //       barrierDismissible: false,
+              //       context: context,
+              //       builder: (_) => const AccumulationDialog());
+              // } else {
+              //   if (!mounted) return;
+              //   showDialog(
+              //       barrierDismissible: false,
+              //       context: context,
+              //       builder: (_) => const ErrorRegisterDialog());
+              // }
             },
             child: const Text('Xác nhận'),
           ),

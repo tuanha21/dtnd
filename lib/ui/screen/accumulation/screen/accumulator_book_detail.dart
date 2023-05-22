@@ -1,12 +1,19 @@
+import 'package:dtnd/=models=/response/accumulation/contract_model.dart';
+import 'package:dtnd/=models=/response/accumulation/fee_rate_model.dart';
+import 'package:dtnd/ui/screen/accumulation/controller/accumulation_controller.dart';
 import 'package:dtnd/ui/screen/accumulation/widget/settlement_dialog.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/widget/appbar/simple_appbar.dart';
+import 'package:dtnd/utilities/num_utils.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import '../widget/row_information.dart';
 
 class AccumulatorBookDetail extends StatefulWidget {
-  const AccumulatorBookDetail({super.key, required this.name});
+  const AccumulatorBookDetail(
+      {super.key, required this.name, required this.id});
   final String name;
+  final String id;
 
   @override
   State<AccumulatorBookDetail> createState() => _AccumulatorBookDetailState();
@@ -20,6 +27,8 @@ class _AccumulatorBookDetailState extends State<AccumulatorBookDetail> {
     'Không tự động gia hạn'
   ];
   late String _method = 'Tự động gia hạn gốc và lãi';
+  final AccumulationController _controller = Get.put(AccumulationController());
+  late ContractModel contract = _controller.getItemContract(widget.id);
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
@@ -46,7 +55,7 @@ class _AccumulatorBookDetailState extends State<AccumulatorBookDetail> {
                   context: context,
                   barrierDismissible: false,
                   builder: (BuildContext context) {
-                    return const SettlementDialog();
+                    return SettlementDialog(id: widget.id);
                   });
             },
             child: const Text('Tất toán'),
@@ -73,18 +82,47 @@ class _AccumulatorBookDetailState extends State<AccumulatorBookDetail> {
                 const EdgeInsets.only(left: 12, right: 12, bottom: 0, top: 16),
             child: Column(
               children: [
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Flexible(
+                      flex: 1,
+                      child: Text(
+                        'Mã tích luỹ',
+                        style: textTheme.bodyMedium
+                            ?.copyWith(color: AppColors.neutral_02),
+                      ),
+                    ),
+                    Flexible(
+                      flex: 1,
+                      child: Text(contract.id.toString(),
+                          textAlign: TextAlign.right,
+                          softWrap: true,
+                          style: textTheme.bodyMedium?.copyWith(
+                            fontWeight: FontWeight.bold,
+                          )),
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                  height: 16,
+                ),
                 RowInfomation(
-                    leftText: 'Mã tích lũy ',
-                    rightText: '04FC711301F3C784D6695'),
-                RowInfomation(leftText: 'Lãi suất', rightText: '5.5%/năm'),
+                    leftText: 'Lãi suất',
+                    rightText: '${contract.feeRate}%/năm'),
                 RowInfomation(
                   leftText: 'Lãi dự tính',
-                  rightText: '+45,205đ',
+                  rightText: NumUtils.formatInteger(contract.liquid),
                   differentColor: true,
                 ),
                 RowInfomation(
-                    leftText: 'Tổng tiền gốc và lãi', rightText: '10,045,205đ'),
-                RowInfomation(leftText: 'Kỳ hạn', rightText: '1 tháng'),
+                  leftText: 'Tổng tiền gốc và lãi',
+                  rightText: '${NumUtils.formatInteger(contract.liquid)}đ',
+                ),
+                RowInfomation(
+                    leftText: 'Kỳ hạn',
+                    rightText: contract.termName.toString()),
                 Container(
                   height: 60,
                   padding: const EdgeInsets.symmetric(horizontal: 8),
@@ -111,11 +149,13 @@ class _AccumulatorBookDetailState extends State<AccumulatorBookDetail> {
                         const SizedBox(height: 10),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: const [
-                            Text('05/05/2023',
-                                style: TextStyle(fontWeight: FontWeight.bold)),
-                            Text('04/06/2023',
-                                style: TextStyle(fontWeight: FontWeight.bold)),
+                          children: [
+                            Text(contract.openDate.toString(),
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.bold)),
+                            Text(contract.expiredDate.toString(),
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.bold)),
                           ],
                         )
                       ]),
@@ -204,9 +244,9 @@ class _AccumulatorBookDetailState extends State<AccumulatorBookDetail> {
                 children: [
                   RowInfomation(
                       leftText: 'Lãi hiện tại trước hạn',
-                      rightText: '1.2%/năm'),
+                      rightText: '${contract.otherFeeRate}%/năm'),
                   const SizedBox(height: 4),
-                  Text('789đ',
+                  Text('${contract.currentFee}đ',
                       style: textTheme.bodyLarge?.copyWith(
                           fontWeight: FontWeight.w600,
                           color: AppColors.semantic_01)),

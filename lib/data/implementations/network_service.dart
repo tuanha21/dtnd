@@ -8,6 +8,7 @@ import 'package:dtnd/=models=/check_account_success_data_model.dart';
 import 'package:dtnd/=models=/core_response_model.dart';
 import 'package:dtnd/=models=/index.dart';
 import 'package:dtnd/=models=/request/request_model.dart';
+import 'package:dtnd/=models=/response/accumulation/contract_model.dart';
 import 'package:dtnd/=models=/response/accumulation/fee_rate_model.dart';
 import 'package:dtnd/=models=/response/business_profile_model.dart';
 import 'package:dtnd/=models=/response/commodity_model.dart';
@@ -1776,17 +1777,29 @@ class NetworkService implements INetworkService {
   Future<bool> updateContract(String body) async {
     var response = await client.post(url_core_endpoint, body: body);
     if (response.statusCode != 200) {
-      return false;
+      throw response;
     }
-    return true;
+    var res = decode(response.bodyBytes);
+
+    if (res["rc"] == 1) {
+      return true;
+    } else {
+      throw res["rs"];
+    }
   }
 
   @override
-  Future<void> getAllContract(String body) async {
+  Future<List<ContractModel>?> getAllContract(String body) async {
+    List<ContractModel> feeRateModel = [];
     var response = await client.post(url_core_endpoint, body: body);
     if (response.statusCode != 200) {
-      return;
+      throw response;
     }
-    return;
+    var res = decode(response.bodyBytes);
+    final data = res["data"];
+    for (var element in data) {
+      feeRateModel.add(ContractModel.fromJson(element));
+    }
+    return feeRateModel;
   }
 }

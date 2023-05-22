@@ -1,8 +1,12 @@
 import 'package:dtnd/generated/l10n.dart';
+import 'package:dtnd/ui/screen/accumulation/controller/accumulation_controller.dart';
 import 'package:dtnd/ui/screen/accumulation/screen/accumulator_book_detail.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
+import 'package:dtnd/ui/widget/empty_list_widget.dart';
+import 'package:dtnd/utilities/num_utils.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class AccumulatorBook extends StatefulWidget {
   const AccumulatorBook({super.key});
@@ -12,51 +16,67 @@ class AccumulatorBook extends StatefulWidget {
 }
 
 class _AccumulatorBookState extends State<AccumulatorBook> {
-  final List<String> title = <String>[
-    'Tích lũy ngắn hạn',
-    'Tích lũy tự động',
-  ];
-  final List<String> dateEnd = <String>['04/06/2023', '16/06/2023'];
-  final List<String> rate = <String>[
-    '5.5%/năm',
-    '3.5%/năm',
-  ];
-  final List<String> money = <String>[
-    '10,000,000đ',
-    '12,000,000đ',
-  ];
+  final AccumulationController controller = AccumulationController();
 
-  final List<String> profit = <String>[
-    '+45,205đ',
-    '+8,054đ',
-  ];
+  String getTitle(String termCode) {
+    switch (termCode) {
+      case '30':
+        return 'Tích lũy ngắn hạn';
+      case '90':
+        return 'Tích lũy trung hạn';
+      case '180':
+        return 'Tích lũy dài hạn';
+      default:
+        return 'Sản phẩm tích lũy tự động';
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
-
-    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      const SizedBox(height: 16),
-      Text(' ${S.of(context).accumulate_current_packages}',
-          style: textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w700)),
-      const SizedBox(height: 4),
-      Expanded(
-        child: ListView.builder(
-          itemCount: title.length,
-          itemBuilder: (BuildContext context, int index) {
-            return ItemBuilder(
-              title: title,
-              textTheme: textTheme,
-              dateEnd: dateEnd,
-              rate: rate,
-              index: index,
-              profit: profit,
-              money: money,
-            );
-          },
-        ),
-      )
-    ]);
+    return ObxValue<Rx<bool>>((initialized) {
+      if (!initialized.value) {
+        return const EmptyListWidget();
+      } else {
+        if (controller.listAllContract.value == []) {
+          return const EmptyListWidget();
+        }
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const SizedBox(height: 16),
+            Text(' ${S.of(context).accumulate_current_packages}',
+                style: textTheme.bodyMedium
+                    ?.copyWith(fontWeight: FontWeight.w700)),
+            const SizedBox(height: 4),
+            Expanded(
+              child: ListView.builder(
+                shrinkWrap: true,
+                itemCount: controller.listAllContract.value!.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return ItemBuilder(
+                    title: getTitle(controller
+                        .listAllContract.value![index].termCode
+                        .toString()),
+                    textTheme: textTheme,
+                    dateEnd: controller
+                        .listAllContract.value![index].expiredDate
+                        .toString(),
+                    rate: controller.listAllContract.value![index].feeRate
+                        .toString(),
+                    id: controller.listAllContract.value![index].id.toString(),
+                    profit: controller.listAllContract.value![index].liquid
+                        .toString(),
+                    money: controller.listAllContract.value![index].capital
+                        .toString(),
+                  );
+                },
+              ),
+            )
+          ],
+        );
+      }
+    }, controller.accumulationInitialized);
   }
 }
 
@@ -67,24 +87,27 @@ class ItemBuilder extends StatelessWidget {
     required this.textTheme,
     required this.dateEnd,
     required this.rate,
-    required this.index,
+    required this.id,
     required this.profit,
     required this.money,
   });
 
-  final List<String> title;
+  final String title;
   final TextTheme textTheme;
-  final List<String> dateEnd;
-  final List<String> rate;
-  final List<String> profit;
-  final List<String> money;
-  final int index;
+  final String dateEnd;
+  final String rate;
+  final String profit;
+  final String money;
+  final String id;
 
-  void _onTap(BuildContext context, String name) {
+  void _onTap(BuildContext context, String name, String id) {
     Navigator.push(
       context,
       MaterialPageRoute(
-          builder: (context) => AccumulatorBookDetail(name: name)),
+          builder: (context) => AccumulatorBookDetail(
+                name: name,
+                id: id,
+              )),
     );
   }
 
@@ -101,7 +124,7 @@ class ItemBuilder extends StatelessWidget {
       child: Column(children: [
         GestureDetector(
           onTap: () {
-            _onTap(context, title[index]);
+            _onTap(context, title, id);
           },
           child: Row(children: [
             CircleAvatar(
@@ -117,13 +140,13 @@ class ItemBuilder extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  title[index],
+                  title,
                   style: textTheme.bodySmall
                       ?.copyWith(color: AppColors.neutral_02),
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  money[index],
+                  '${NumUtils.formatIntegerString(money)}đ',
                   style: const TextStyle(fontWeight: FontWeight.bold),
                 ),
               ],
@@ -149,11 +172,11 @@ class ItemBuilder extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(rate[index],
+              Text('$rate%/năm',
                   style: textTheme.bodyMedium?.copyWith(
                       fontWeight: FontWeight.bold,
                       color: AppColors.neutral_02)),
-              Text(profit[index],
+              Text('${NumUtils.formatDoubleString(profit)}đ',
                   style: textTheme.bodyMedium?.copyWith(
                       fontWeight: FontWeight.bold,
                       color: AppColors.semantic_01)),
@@ -166,7 +189,7 @@ class ItemBuilder extends StatelessWidget {
             Text('${S.of(context).end_date}: ',
                 style:
                     textTheme.bodySmall?.copyWith(color: AppColors.neutral_03)),
-            Text(dateEnd[index],
+            Text(dateEnd,
                 style:
                     textTheme.bodySmall?.copyWith(fontWeight: FontWeight.bold)),
           ],
