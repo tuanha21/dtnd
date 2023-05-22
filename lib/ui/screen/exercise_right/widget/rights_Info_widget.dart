@@ -32,39 +32,39 @@ class _RightsInfoWidgetState extends State<RightsInfoWidget> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(S.of(context).rights_type,
-                  style: AppTextStyle.labelMedium_12),
-              Text(widget.data?.cRIGHTTYPENAME.toString() ?? '',
-                  style: const TextStyle(
-                      fontSize: 12,
-                      fontWeight: FontWeight.w600,
-                      height: 1.1,
-                      color: AppColors.text_black_1))
+              Text(widget.data?.cSHARECODE.toString() ?? '',
+                  style: AppTextStyle.bodyMedium_14),
+              (widget.data?.cFLAG == 1 &&
+                      ((widget.data?.cSHAREBUY ?? 0) <
+                          (widget.data?.cSHARERIGHT ?? 0)))
+                  ? InkWell(
+                      onTap: widget.onChange,
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 8, horizontal: 20),
+                        alignment: Alignment.center,
+                        decoration: const BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(8)),
+                          color: AppColors.color_primary_1,
+                        ),
+                        child: Text(
+                          S.of(context).sign_up,
+                          style: const TextStyle(
+                              fontSize: 12, color: AppColors.light_bg),
+                        ),
+                      ),
+                    )
+                  : const SizedBox(),
             ],
           ),
           const SizedBox(height: 16),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(S.of(context).stk_code,
-                  style: AppTextStyle.labelMedium_12
-                      .copyWith(color: AppColors.neutral_03)),
-              Text(widget.data?.cSHARECODE.toString() ?? '',
-                  style: const TextStyle(
-                      fontSize: 12,
-                      fontWeight: FontWeight.w600,
-                      height: 1.1,
-                      color: AppColors.text_black_1))
-            ],
-          ),
-          const SizedBox(height: 8),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
               Text(S.of(context).number_of_shares_entitled,
                   style: AppTextStyle.labelMedium_12
                       .copyWith(color: AppColors.neutral_03)),
-              Text(widget.data?.cRIGHTVOLUME.toString() ?? '',
+              Text(NumUtils.formatInteger(widget.data?.cRIGHTVOLUME ?? 0),
                   style: const TextStyle(
                       fontSize: 12,
                       fontWeight: FontWeight.w600,
@@ -73,22 +73,29 @@ class _RightsInfoWidgetState extends State<RightsInfoWidget> {
             ],
           ),
           const SizedBox(height: 8),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          Column(
             children: [
-              Text(S.of(context).ratio,
-                  style: AppTextStyle.labelMedium_12
-                      .copyWith(color: AppColors.neutral_03)),
-              Text(widget.data?.cRIGHTRATE.toString() ?? '',
-                  style: const TextStyle(
-                      fontSize: 12,
-                      fontWeight: FontWeight.w600,
-                      height: 1.1,
-                      color: AppColors.text_black_1))
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(S.of(context).ratio,
+                      style: AppTextStyle.labelMedium_12
+                          .copyWith(color: AppColors.neutral_03)),
+                  Text(
+                      widget.data?.cBUSINESSCODE == "RIGHT_DIVIDEND"
+                          ? "${NumUtils.formatInteger(widget.data?.cCASHRECEIVERATE ?? 0)}%"
+                          : widget.data?.cRIGHTRATE ?? '',
+                      style: const TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w600,
+                          height: 1.1,
+                          color: AppColors.text_black_1)),
+                ],
+              ),
+              const SizedBox(height: 8),
             ],
           ),
-          const SizedBox(height: 8),
-          widget.data?.cRIGHTTYPENAME.toString() == "Quyền mua cổ phiếu/TP"
+          widget.data?.cBUSINESSCODE == "RIGHT_BUY"
               ? Column(
                   children: [
                     Row(
@@ -109,7 +116,7 @@ class _RightsInfoWidgetState extends State<RightsInfoWidget> {
                   ],
                 )
               : const SizedBox(),
-          widget.data?.cRIGHTTYPENAME.toString() == "Quyền mua cổ phiếu/TP"
+          widget.data?.cBUSINESSCODE == "RIGHT_BUY"
               ? Column(
                   children: [
                     Row(
@@ -122,10 +129,7 @@ class _RightsInfoWidgetState extends State<RightsInfoWidget> {
                             style: AppTextStyle.labelMedium_12
                                 .copyWith(color: AppColors.neutral_03)),
                         Text(
-                            ((NumUtils.formatDouble(widget.data?.cSHARERIGHT ??
-                                0 -
-                                    (widget.data?.cSHAREBUY ?? 0) /
-                                        (widget.data?.cSHARERIGHT ?? 0)))),
+                            "${NumUtils.formatDouble(widget.data?.cSHARERIGHT ?? 0 - (widget.data?.cSHAREBUY ?? 0))}/${NumUtils.formatDouble(widget.data?.cSHARERIGHT ?? 0)}",
                             style: const TextStyle(
                                 fontSize: 12,
                                 fontWeight: FontWeight.w600,
@@ -137,7 +141,7 @@ class _RightsInfoWidgetState extends State<RightsInfoWidget> {
                   ],
                 )
               : const SizedBox(),
-          widget.data?.cRIGHTTYPENAME.toString() == "Quyền mua cổ phiếu/TP"
+          widget.data?.cBUSINESSCODE == "RIGHT_BUY"
               ? Column(
                   children: [
                     Row(
@@ -159,69 +163,102 @@ class _RightsInfoWidgetState extends State<RightsInfoWidget> {
                   ],
                 )
               : const SizedBox(),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(S.of(context).amount_received,
-                  style: AppTextStyle.labelMedium_12
-                      .copyWith(color: AppColors.neutral_03)),
-              Text(
-                widget.data?.cCASHVOLUME.toString() ?? '',
-                style: const TextStyle(
-                    fontSize: 12,
-                    fontWeight: FontWeight.w600,
-                    height: 1.1,
-                    color: AppColors.text_black_1),
-              )
-            ],
-          ),
-          const SizedBox(height: 8),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(S.of(context).number_of_shares_received,
-                  style: AppTextStyle.labelMedium_12
-                      .copyWith(color: AppColors.neutral_03)),
-              Text(widget.data?.cSHARERIGHT.toString() ?? '',
-                  style: const TextStyle(
-                      fontSize: 12,
-                      fontWeight: FontWeight.w600,
-                      height: 1.1,
-                      color: AppColors.text_black_1))
-            ],
-          ),
-          const SizedBox(height: 8),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(S.of(context).received_stock_code,
-                  style: AppTextStyle.labelMedium_12
-                      .copyWith(color: AppColors.neutral_03)),
-              Text(widget.data?.cRECEIVESHARECODE ?? '',
-                  style: const TextStyle(
-                      fontSize: 12,
-                      fontWeight: FontWeight.w600,
-                      height: 1.1,
-                      color: AppColors.text_black_1))
-            ],
-          ),
-          const SizedBox(height: 8),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(S.of(context).quantity_of_rights_received,
-                  style: AppTextStyle.labelMedium_12
-                      .copyWith(color: AppColors.neutral_03)),
-              Text(widget.data?.cSHARERIGHT.toString() ?? '',
-                  style: const TextStyle(
-                      fontSize: 12,
-                      fontWeight: FontWeight.w600,
-                      height: 1.1,
-                      color: AppColors.text_black_1))
-            ],
-          ),
-          const SizedBox(height: 8),
-          widget.data?.cRIGHTTYPENAME.toString() == "Quyền mua cổ phiếu/TP"
+          widget.data?.cBUSINESSCODE == "RIGHT_DIVIDEND"
+              ? Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(S.of(context).amount_received,
+                            style: AppTextStyle.labelMedium_12
+                                .copyWith(color: AppColors.neutral_03)),
+                        Text(
+                          NumUtils.formatInteger(widget.data?.cCASHVOLUME ?? 0),
+                          style: const TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w600,
+                              height: 1.1,
+                              color: AppColors.text_black_1),
+                        )
+                      ],
+                    ),
+                    const SizedBox(height: 8),
+                  ],
+                )
+              : const SizedBox(),
+          widget.data?.cBUSINESSCODE == "RIGHT_STOCK_DIV"
+              ? Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(S.of(context).number_of_shares_received,
+                            style: AppTextStyle.labelMedium_12
+                                .copyWith(color: AppColors.neutral_03)),
+                        Text(
+                            NumUtils.formatInteger(
+                                widget.data?.cSHAREDIVIDENT ?? 0),
+                            style: const TextStyle(
+                                fontSize: 12,
+                                fontWeight: FontWeight.w600,
+                                height: 1.1,
+                                color: AppColors.text_black_1))
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 8,
+                    ),
+                  ],
+                )
+              : const SizedBox(),
+          widget.data?.cBUSINESSCODE != "RIGHT_VOTE"
+              ? Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(S.of(context).received_stock_code,
+                            style: AppTextStyle.labelMedium_12
+                                .copyWith(color: AppColors.neutral_03)),
+                        Text(
+                            widget.data?.cRECEIVESHARECODE == "null"
+                                ? '-'
+                                : widget.data?.cRECEIVESHARECODE ?? '-',
+                            style: const TextStyle(
+                                fontSize: 12,
+                                fontWeight: FontWeight.w600,
+                                height: 1.1,
+                                color: AppColors.text_black_1))
+                      ],
+                    ),
+                    const SizedBox(height: 8),
+                  ],
+                )
+              : const SizedBox(),
+          widget.data?.cBUSINESSCODE == "RIGHT_VOTE"
+              ? Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(S.of(context).quantity_of_rights_received,
+                            style: AppTextStyle.labelMedium_12
+                                .copyWith(color: AppColors.neutral_03)),
+                        Text(
+                            NumUtils.formatInteger(
+                                widget.data?.cSHARERIGHT ?? 0),
+                            style: const TextStyle(
+                                fontSize: 12,
+                                fontWeight: FontWeight.w600,
+                                height: 1.1,
+                                color: AppColors.text_black_1))
+                      ],
+                    ),
+                    const SizedBox(height: 8),
+                  ],
+                )
+              : const SizedBox(),
+          widget.data?.cBUSINESSCODE == "RIGHT_BUY"
               ? Column(
                   children: [
                     Row(
@@ -248,7 +285,10 @@ class _RightsInfoWidgetState extends State<RightsInfoWidget> {
               Text(S.of(context).planned_execution_date,
                   style: AppTextStyle.labelMedium_12
                       .copyWith(color: AppColors.neutral_03)),
-              Text(widget.data?.cEXECUTEDATE ?? '',
+              Text(
+                  widget.data?.cEXECUTEDATE == "null"
+                      ? '-'
+                      : widget.data?.cEXECUTEDATE ?? '-',
                   style: const TextStyle(
                       fontSize: 12,
                       fontWeight: FontWeight.w600,
@@ -256,33 +296,6 @@ class _RightsInfoWidgetState extends State<RightsInfoWidget> {
                       color: AppColors.text_black_1))
             ],
           ),
-          const SizedBox(height: 16),
-          (widget.data?.cFLAG == 1 &&
-                  ((widget.data?.cSHAREBUY ?? 0) <
-                      (widget.data?.cSHARERIGHT ?? 0)))
-              ? Row(
-                  children: [
-                    Expanded(
-                      child: InkWell(
-                        onTap: widget.onChange,
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(vertical: 8),
-                          alignment: Alignment.center,
-                          decoration: const BoxDecoration(
-                            borderRadius: BorderRadius.all(Radius.circular(8)),
-                            color: AppColors.color_primary_1,
-                          ),
-                          child: Text(
-                            S.of(context).sign_up,
-                            style: const TextStyle(
-                                fontSize: 12, color: AppColors.light_bg),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                )
-              : const SizedBox(),
         ],
       ),
     );

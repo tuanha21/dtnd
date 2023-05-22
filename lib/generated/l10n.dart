@@ -5336,6 +5336,36 @@ class S {
       args: [],
     );
   }
+
+  /// `Right to buy`
+  String get right_to_buy {
+    return Intl.message(
+      'Right to buy',
+      name: 'right_to_buy',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Cash dividend`
+  String get cash_dividend {
+    return Intl.message(
+      'Cash dividend',
+      name: 'cash_dividend',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Dividends in shares/bonus shares`
+  String get dividends_value {
+    return Intl.message(
+      'Dividends in shares/bonus shares',
+      name: 'dividends_value',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
