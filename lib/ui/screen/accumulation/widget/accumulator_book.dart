@@ -38,12 +38,9 @@ class _AccumulatorBookState extends State<AccumulatorBook> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         ObxValue<Rx<bool>>((initialized) {
-          if (!initialized.value) {
+          if (!initialized.value || controller.listAllContract.value!.isEmpty) {
             return const EmptyListWidget();
           } else {
-            if (controller.listAllContract.value == []) {
-              return const EmptyListWidget();
-            }
             return Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,

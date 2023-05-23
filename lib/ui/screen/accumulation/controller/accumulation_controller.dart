@@ -31,7 +31,8 @@ class AccumulationController {
   Future<void> getFeeRate() async {
     final allFeeRate = await userService.getAllFreeRate();
     if ((allFeeRate?.isEmpty ?? true) || allFeeRate == null) {
-      throw Exception();
+      listFeeRate.value!.clear();
+      listFeeRate.refresh();
     } else {
       listFeeRate.value!.clear();
       listFeeRate.value!.addAll(allFeeRate);
@@ -48,7 +49,9 @@ class AccumulationController {
   Future<void> getAllContract() async {
     final allContract = await userService.getAllContract();
     if ((allContract?.isEmpty ?? true) || allContract == null) {
-      throw Exception();
+      listAllContract.value!.clear();
+      listAllContract.refresh();
+      return;
     } else {
       listAllContract.value!.clear();
       listAllContract.value!.addAll(allContract);
