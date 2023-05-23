@@ -38,14 +38,14 @@ class _AccumulatorHistoryState extends State<AccumulatorHistory> {
 
   Future<void> getData({int? recordPerPage}) async {
     setState(() {
-      isLoading = true; // Đánh dấu đang tải dữ liệu
+      isLoading = true;
     });
     await Future.delayed(const Duration(seconds: 1));
     final res = await userService.getHistoryContract(
         fromDay: fromDay, toDay: toDay, recordPerPage: recordPerPage);
 
     if ((res?.isEmpty ?? true) || res == null) {
-      throw Exception();
+      throw Exception('Empty history contract');
     } else {
       list.clear();
       list.addAll(res);
@@ -57,8 +57,7 @@ class _AccumulatorHistoryState extends State<AccumulatorHistory> {
 
   @override
   void dispose() {
-    _scrollController.removeListener(
-        _scrollListener); // Hủy lắng nghe sự kiện cuộn khi dispose
+    _scrollController.removeListener(_scrollListener);
     super.dispose();
   }
 
@@ -66,7 +65,6 @@ class _AccumulatorHistoryState extends State<AccumulatorHistory> {
     if (_scrollController.offset >=
             _scrollController.position.maxScrollExtent &&
         !_scrollController.position.outOfRange) {
-      // Đã cuộn xuống dưới cùng
       getData(recordPerPage: list.length + 5);
     }
   }
