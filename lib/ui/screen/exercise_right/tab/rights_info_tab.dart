@@ -9,7 +9,9 @@ import '../../../../=models=/response/account/unexecuted_right_model.dart';
 import '../../../../data/i_user_service.dart';
 import '../../../../data/implementations/network_service.dart';
 import '../../../../data/implementations/user_service.dart';
+import '../../../theme/app_image.dart';
 import '../../../widget/empty_list_widget.dart';
+import '../../../widget/expanded_widget.dart';
 import '../widget/rights_Info_widget.dart';
 
 class RightsInfoTab extends StatefulWidget {
@@ -71,9 +73,9 @@ class _RightsInfoTabState extends State<RightsInfoTab> {
                       S.of(context).right_to_buy),
                   itemGroup(listRightDividend, account as IAccountModel,
                       S.of(context).cash_dividend),
-                  itemGroup(listRightVote, account as IAccountModel,
-                      S.of(context).dividends_value),
                   itemGroup(listRightStockDiv, account as IAccountModel,
+                      S.of(context).dividends_value),
+                  itemGroup(listRightVote, account as IAccountModel,
                       S.of(context).other),
                 ],
               ),
@@ -94,44 +96,113 @@ class _RightsInfoTabState extends State<RightsInfoTab> {
         ? Column(
             children: [
               const SizedBox(height: 12),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Text(
-                    title!,
-                    style: const TextStyle(
-                        fontSize: 14, height: 1.5, fontWeight: FontWeight.w600),
-                  ),
-                ],
-              ),
-              ListView.builder(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                itemCount: listData.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return Column(
-                    children: [
-                      RightsInfoWidget(
-                        data: listData[index],
-                        onChange: () {
-                          RegistrationRightsFLowSheet().show(
-                            context,
-                            RegistrationRightsSheet(
-                              data: listData[index],
-                              accountModel: account,
-                              onSuccessExecute: () =>
-                                  account.getListUnexecutedRight(
-                                      userService, NetworkService()),
-                            ),
-                          );
-                        },
-                      ),
-                    ],
-                  );
-                },
+              _ExpandableRow(
+                text: S.of(context).all,
+                title: title ?? '',
+                child: ListView.builder(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemCount: listData.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return Column(
+                      children: [
+                        RightsInfoWidget(
+                          data: listData[index],
+                          onChange: () {
+                            RegistrationRightsFLowSheet().show(
+                              context,
+                              RegistrationRightsSheet(
+                                data: listData[index],
+                                accountModel: account,
+                                onSuccessExecute: () =>
+                                    account.getListUnexecutedRight(
+                                        userService, NetworkService()),
+                              ),
+                            );
+                          },
+                        ),
+                      ],
+                    );
+                  },
+                ),
               ),
             ],
           )
         : const SizedBox();
+  }
+}
+
+class _ExpandableRow extends StatefulWidget {
+  const _ExpandableRow({
+    required this.text,
+    required this.title,
+    this.child,
+  });
+
+  final String text;
+  final String title;
+  final Widget? child;
+
+  @override
+  State<_ExpandableRow> createState() => __ExpandableRowState();
+}
+
+class __ExpandableRowState extends State<_ExpandableRow> {
+  bool expanded = true;
+
+  @override
+  Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
+
+    return Column(
+      children: [
+        Material(
+          color: Colors.transparent,
+          child: InkWell(
+            onTap: () {
+              setState(() {
+                expanded = !expanded;
+              });
+            },
+            child: Ink(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    widget.title,
+                    style: const TextStyle(
+                        fontSize: 14, height: 1.5, fontWeight: FontWeight.w600),
+                  ),
+                  Row(
+                    children: [
+                      Text(
+                        widget.text,
+                        style: textTheme.labelMedium!
+                            .copyWith(fontWeight: FontWeight.w600),
+                      ),
+                      const SizedBox(width: 8),
+                      Center(
+                        child: AnimatedRotation(
+                          turns: expanded ? -0.5 : 0,
+                          duration: const Duration(milliseconds: 500),
+                          child: SizedBox.square(
+                            dimension: 10,
+                            child: Image.asset(
+                              AppImages.arrow_drop_down_rounded,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  )
+                ],
+              ),
+            ),
+          ),
+        ),
+        if (widget.child != null)
+          ExpandedSection(expand: expanded, child: widget.child!),
+      ],
+    );
   }
 }
