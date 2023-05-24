@@ -45,8 +45,7 @@ class EkycIntroducePage extends StatelessWidget {
                   TextSpan(
                       text: "eKYC",
                       style: titleSmall?.copyWith(
-                          fontWeight: FontWeight.w700,
-                          color: AppColors.bg_2)),
+                          fontWeight: FontWeight.w700, color: AppColors.bg_2)),
                   TextSpan(
                       text:
                           ' là điều kiện bắt buộc khi giao dịch các sản phẩm đầu tư',
@@ -61,6 +60,7 @@ class EkycIntroducePage extends StatelessWidget {
                   child: ElevatedButton(
                       onPressed: () {
                         Get.find<EkycLogic>().nextStep();
+                        // Get.put(EkycLogic());
                       },
                       child: const Text("Xác minh ngay"))),
               const SizedBox(height: 16),

@@ -4,6 +4,8 @@ import 'package:dtnd/ui/screen/account/sheet/share_statement_sheet.dart';
 import 'package:dtnd/ui/screen/accumulation/accumulation.dart';
 import 'package:dtnd/ui/screen/asset/screen/margin_debt/margin_debt_screen.dart';
 import 'package:dtnd/ui/screen/asset/screen/executed_profit_loss/realized_profit_loss.dart';
+import 'package:dtnd/ui/screen/ekyc/ekyc_logic.dart';
+import 'package:dtnd/ui/screen/ekyc/ekyc_view.dart';
 import 'package:dtnd/ui/screen/ekyc/page/ekyc_introduce_page.dart';
 import 'package:dtnd/ui/screen/exchange_stock/order_note/screen/order_note_screen.dart';
 import 'package:dtnd/ui/screen/exchange_stock/stock_order/business/stock_order_util.dart';
@@ -11,6 +13,7 @@ import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/widget/drawer/logic/function_data.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:get/get.dart';
 
 import '../../../screen/exercise_right/exercise_right_screen.dart';
 
@@ -36,7 +39,7 @@ class _ListFunctionState extends State<ListFunction> {
       return;
     } else if (item.title == 'Xác thực tài khoản - eKYC') {
       Navigator.of(context).push(MaterialPageRoute(
-        builder: (context) => const EkycIntroducePage(),
+        builder: (context) => const EkycPage(),
       ));
       return;
     } else if (item.subTitle!.isEmpty == true) {
