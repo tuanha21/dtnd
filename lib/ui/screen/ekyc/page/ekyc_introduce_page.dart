@@ -46,7 +46,7 @@ class EkycIntroducePage extends StatelessWidget {
                       text: "eKYC",
                       style: titleSmall?.copyWith(
                           fontWeight: FontWeight.w700,
-                          color: AppColors.light_bg)),
+                          color: AppColors.bg_2)),
                   TextSpan(
                       text:
                           ' là điều kiện bắt buộc khi giao dịch các sản phẩm đầu tư',
@@ -71,7 +71,7 @@ class EkycIntroducePage extends StatelessWidget {
                 child: Center(
                     child: Text(
                   'Để sau',
-                  style: titleSmall,
+                  style: titleSmall?.copyWith(color: AppColors.neutral_03),
                 )),
               ),
               const SizedBox(height: 30),
