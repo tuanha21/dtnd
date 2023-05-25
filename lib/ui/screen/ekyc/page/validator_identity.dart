@@ -1,10 +1,10 @@
 import 'dart:io';
 
+import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:go_router/go_router.dart';
 
 import '../../../../utilities/media_permission.dart';
 import '../../../theme/app_color.dart';
@@ -75,8 +75,7 @@ class _ValidatorIdentityState extends State<ValidatorIdentity> {
                   TextSpan(
                       text: "2 mặt CMND/CCCD",
                       style: titleSmall?.copyWith(
-                          fontWeight: FontWeight.w700,
-                          color: AppColors.light_bg)),
+                          fontWeight: FontWeight.w700, color: AppColors.bg_2)),
                   TextSpan(
                       text: ' để xác minh tài khoản',
                       style: titleSmall?.copyWith(
@@ -109,16 +108,18 @@ class _ValidatorIdentityState extends State<ValidatorIdentity> {
                 valueListenable: isContinue,
                 builder: (BuildContext context, isContinue, Widget? child) {
                   return SizedBox(
-                      width: MediaQuery.of(context).size.width,
-                      child: ElevatedButton(
-                          onPressed: isContinue
-                              ? () {
-                                  state.identityFront = identityFront;
-                                  state.identityBack = identityBack;
-                                  logic.nextStep();
-                                }
-                              : null,
-                          child: const Text('Tiếp tục')));
+                    width: MediaQuery.of(context).size.width,
+                    child: ElevatedButton(
+                      onPressed: isContinue
+                          ? () {
+                              state.identityFront = identityFront;
+                              state.identityBack = identityBack;
+                              logic.nextStep();
+                            }
+                          : null,
+                      child: Text(S.of(context).next),
+                    ),
+                  );
                 },
               ),
               const SizedBox(height: 30),
@@ -169,13 +170,20 @@ class _CardIdentityPickState extends State<CardIdentityPick> {
         children: [
           Row(
             children: [
-              SvgPicture.asset(widget.icon),
+              SvgPicture.asset(widget.icon, color: AppColors.bg_2),
               const SizedBox(width: 10),
               Expanded(child: Text(widget.title)),
               Visibility(
-                  visible: image != null,
-                  child: GestureDetector(
-                      onTap: () {}, child: SvgPicture.asset(AppImages.edit2)))
+                visible: image != null,
+                child: GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      image = null;
+                    });
+                  },
+                  child: SvgPicture.asset(AppImages.edit2),
+                ),
+              )
             ],
           ),
           const SizedBox(height: 18),
@@ -199,12 +207,15 @@ class _CardIdentityPickState extends State<CardIdentityPick> {
                       padding: const EdgeInsets.symmetric(horizontal: 10),
                       alignment: Alignment.centerLeft,
                       decoration: BoxDecoration(
-                        color: AppColors.text_black,
+                        color: AppColors.neutral_06,
                         borderRadius: BorderRadius.circular(8),
                       ),
                       child: Row(
                         children: [
-                          SvgPicture.asset(AppImages.image),
+                          SvgPicture.asset(
+                            AppImages.image,
+                            color: AppColors.neutral_03,
+                          ),
                           const SizedBox(width: 10),
                           Text(
                             'Tải ảnh lên',
@@ -219,20 +230,30 @@ class _CardIdentityPickState extends State<CardIdentityPick> {
                 const SizedBox(width: 16),
                 Expanded(
                   child: GestureDetector(
-                    onTap: () {
-                      context.pushNamed('camera');
+                    onTap: () async {
+                      image = await MediaPermission.checkPermissionAndPickImage(
+                          context, "camera");
+                      if (image != null) {
+                        setState(() {
+                          widget.onChanged.call(image);
+                        });
+                      }
+                      // context.pushNamed('camera');
                     },
                     child: Container(
                       height: 48,
                       padding: const EdgeInsets.symmetric(horizontal: 10),
                       alignment: Alignment.centerLeft,
                       decoration: BoxDecoration(
-                        color: AppColors.text_black,
+                        color: AppColors.neutral_06,
                         borderRadius: BorderRadius.circular(8),
                       ),
                       child: Row(
                         children: [
-                          SvgPicture.asset(AppImages.camera),
+                          SvgPicture.asset(
+                            AppImages.camera,
+                            color: AppColors.neutral_03,
+                          ),
                           const SizedBox(width: 10),
                           Text(
                             'Chụp ảnh',
@@ -252,9 +273,10 @@ class _CardIdentityPickState extends State<CardIdentityPick> {
                   height: 195,
                   width: MediaQuery.of(context).size.width,
                   decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(6),
-                      image: DecorationImage(
-                          image: FileImage(image!), fit: BoxFit.fill)),
+                    borderRadius: BorderRadius.circular(6),
+                    image: DecorationImage(
+                        image: FileImage(image!), fit: BoxFit.fill),
+                  ),
                 )
               : const SizedBox()
         ],
