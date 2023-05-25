@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:dtnd/ui/screen/ekyc/page/indentity_face.dart';
+import 'package:dtnd/ui/screen/ekyc/page/indentity_sign.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -24,6 +26,8 @@ enum EkycPageStep {
   selectType(EkycSelectType()),
   validator(ValidatorIdentity()),
   identityInform(IdentityInform()),
+  identityFace(IdentityFace()),
+  identitySign(IdentitySign()),
   success(SizedBox());
 
   const EkycPageStep(this.widget);

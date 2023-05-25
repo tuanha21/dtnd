@@ -65,7 +65,7 @@ class EkycIntroducePage extends StatelessWidget {
               const SizedBox(height: 16),
               GestureDetector(
                 onTap: () {
-                  context.goNamed('home');
+                  Navigator.pop(context);
                 },
                 child: Center(
                     child: Text(

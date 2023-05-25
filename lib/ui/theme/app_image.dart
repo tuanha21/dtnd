@@ -234,4 +234,11 @@ class AppImages {
   static const String tick_confirm = "assets/images/tick_confirm.png";
   static const String settlement_plus = "assets/images/settlement_plus.png";
   static const String settlement_minus = "assets/images/settlement_minus.png";
+  static const String true_checkbox = "assets/images/true_checkbox.png";
+  static const String false_checkbox = "assets/images/false_checkbox.png";
+  static const String personal_card = "assets/images/personal_card.png";
+  static const String edit_sign = "assets/images/edit_sign.png";
+  static const String ekyc_success = "assets/images/ekyc_success.png";
+  static const String tick_vertification =
+      "assets/images/tick_vertification.png";
 }
