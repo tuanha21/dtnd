@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:dtnd/ui/widget/drawer/app_drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

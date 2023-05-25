@@ -60,7 +60,6 @@ class EkycIntroducePage extends StatelessWidget {
                   child: ElevatedButton(
                       onPressed: () {
                         Get.find<EkycLogic>().nextStep();
-                        // Get.put(EkycLogic());
                       },
                       child: const Text("Xác minh ngay"))),
               const SizedBox(height: 16),
