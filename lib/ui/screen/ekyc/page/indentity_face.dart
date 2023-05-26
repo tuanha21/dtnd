@@ -39,7 +39,7 @@ class _IdentityFaceState extends State<IdentityFace> {
         } else {
           timer.cancel();
           isIdentity = true;
-          Future.delayed(const Duration(seconds: 4), () {
+          Future.delayed(const Duration(seconds: 3), () {
             logic.nextStep();
           });
         }

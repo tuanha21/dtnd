@@ -307,4 +307,8 @@ abstract class INetworkService {
   Future<List<ContractModel>?> getAllContract(String body);
 
   Future<List<CashTransactionHistoryModel>?> getHistoryContract(String body);
+
+  Future<bool> checkContractBase(String body);
+
+  Future<void> changeContractBase(String body);
 }

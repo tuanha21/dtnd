@@ -162,6 +162,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "by" : MessageLookupByLibrary.simpleMessage("bằng"),
     "cancel" : MessageLookupByLibrary.simpleMessage("Huỷ"),
     "cancel_order_successfully" : MessageLookupByLibrary.simpleMessage("Huỷ lệnh thành công"),
+    "cancel_registration" : MessageLookupByLibrary.simpleMessage("Hủy đăng ký"),
     "capital_value" : MessageLookupByLibrary.simpleMessage("Giá trị vốn"),
     "cash" : MessageLookupByLibrary.simpleMessage("Tiền mặt"),
     "cash_dividend" : MessageLookupByLibrary.simpleMessage("Cổ tức tiền"),

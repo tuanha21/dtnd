@@ -1819,4 +1819,29 @@ class NetworkService implements INetworkService {
     }
     return historyContract;
   }
+
+  @override
+  Future<bool> checkContractBase(String body) async {
+    var response = await client.post(url_core_endpoint, body: body);
+    if (response.statusCode != 200) {
+      return false;
+    }
+    var res = decode(response.bodyBytes);
+    final flag = res["data"].first['C_AUTO_FLAG'];
+    return flag == 1.0;
+  }
+
+  @override
+  Future<void> changeContractBase(String body) async {
+    var response = await client.post(url_core_endpoint, body: body);
+    if (response.statusCode != 200) {
+      throw false;
+    }
+    var res = decode(response.bodyBytes);
+    if (res["rc"] == 1) {
+      return res;
+    } else {
+      throw res["rs"];
+    }
+  }
 }

@@ -162,6 +162,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "by" : MessageLookupByLibrary.simpleMessage("by"),
     "cancel" : MessageLookupByLibrary.simpleMessage("Cancel"),
     "cancel_order_successfully" : MessageLookupByLibrary.simpleMessage("Cancel order successfully"),
+    "cancel_registration" : MessageLookupByLibrary.simpleMessage("Cancel registration"),
     "capital_value" : MessageLookupByLibrary.simpleMessage("Capital value"),
     "cash" : MessageLookupByLibrary.simpleMessage("Cash"),
     "cash_dividend" : MessageLookupByLibrary.simpleMessage("Cash dividend"),
