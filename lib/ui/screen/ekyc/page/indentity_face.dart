@@ -55,7 +55,8 @@ class _IdentityFaceState extends State<IdentityFace> {
       appBar: AppBar(
         leading: BackButton(
           onPressed: () {
-            logic.backStep();
+            // logic.backStep();
+            Navigator.of(context).pop();
           },
         ),
       ),

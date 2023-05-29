@@ -7,6 +7,7 @@ import 'package:intl/intl.dart';
 
 import '../ekyc_logic.dart';
 import '../ekyc_state.dart';
+import 'indentity_face.dart';
 
 class IdentityInform extends StatefulWidget {
   const IdentityInform({Key? key}) : super(key: key);
@@ -17,6 +18,7 @@ class IdentityInform extends StatefulWidget {
 
 class _IdentityInformState extends State<IdentityInform> {
   final _formKey = GlobalKey<FormState>();
+
   EkycState get state => logic.state;
 
   ValueNotifier<bool> isContinue = ValueNotifier<bool>(true);
@@ -78,7 +80,8 @@ class _IdentityInformState extends State<IdentityInform> {
       appBar: AppBar(
         leading: BackButton(
           onPressed: () {
-            logic.backStep();
+            // logic.backStep();
+            Navigator.of(context).pop();
           },
         ),
       ),
@@ -347,7 +350,13 @@ class _IdentityInformState extends State<IdentityInform> {
                           child: ElevatedButton(
                             onPressed: isContinue
                                 ? () {
-                                    logic.nextStep();
+                                    // logic.nextStep();
+                                    Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                            builder:
+                                                (context) => const IdentityFace()
+                                        )
+                                    );
                                   }
                                 : null,
                             child: Text(S.of(context).next),
