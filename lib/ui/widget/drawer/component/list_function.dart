@@ -39,7 +39,7 @@ class _ListFunctionState extends State<ListFunction> {
       return;
     } else if (item.title == 'Xác thực tài khoản - eKYC') {
       Navigator.of(context).push(MaterialPageRoute(
-        builder: (context) => const EkycPage(),
+        builder: (context) => const EkycIntroducePage(),
       ));
       return;
     } else if (item.subTitle!.isEmpty == true) {

@@ -31,7 +31,6 @@ class _AccummulationAutoContractState extends State<AccummulationAutoContract> {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
-    print(isRegister);
 
     return Scaffold(
       appBar: SimpleAppbar(
