@@ -66,6 +66,7 @@ class AccumulationController {
   ContractModel getItemContract(String id) {
     ContractModel itemWithId;
     itemWithId = listAllContract.value!.firstWhere((item) => item.id == id);
+    // itemWithId = listAllContract.value!.firstWhere((item) => item.id == id);
     return itemWithId;
   }
 
