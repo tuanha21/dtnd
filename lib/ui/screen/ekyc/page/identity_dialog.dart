@@ -1,6 +1,3 @@
-import 'package:dtnd/ui/screen/accumulation/accumulation.dart';
-import 'package:dtnd/ui/screen/home/widget/asset_card.dart';
-import 'package:dtnd/ui/screen/home_base/home_base.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:flutter/material.dart';

@@ -1,3 +1,4 @@
+import 'package:dtnd/ui/screen/ekyc/page/validator_identity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -65,18 +66,45 @@ class _EkycSelectTypeState extends State<EkycSelectType> {
               icon: AppImages.personalCard,
               title: 'CMND/CCCD',
               onTap: () {
-                Get.find<EkycLogic>().nextStep();
+                // Get.find<EkycLogic>().nextStep();
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => const ValidatorIdentity(
+                      style: 1,
+                    ),
+                  ),
+                );
               },
             ),
             const SizedBox(height: 16),
-            const CardTitle(
+            CardTitle(
               icon: AppImages.documentCopy,
               title: 'Hộ chiếu',
+              onTap: () {
+                // Get.find<EkycLogic>().nextStep();
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => const ValidatorIdentity(
+                      style: 2,
+                    ),
+                  ),
+                );
+              },
             ),
             const SizedBox(height: 16),
-            const CardTitle(
+            CardTitle(
               icon: AppImages.personalCard,
               title: 'Bằng lái xe',
+              onTap: () {
+                // Get.find<EkycLogic>().nextStep();
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => const ValidatorIdentity(
+                      style: 3,
+                    ),
+                  ),
+                );
+              },
             )
           ],
         ),

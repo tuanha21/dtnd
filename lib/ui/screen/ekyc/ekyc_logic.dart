@@ -5,6 +5,7 @@ import 'ekyc_state.dart';
 class EkycLogic extends GetxController {
   final EkycState state = EkycState();
 
+
   Future<bool> backStep() {
     int index = EkycPageStep.values
         .indexWhere((element) => element == state.step.value);
@@ -15,7 +16,7 @@ class EkycLogic extends GetxController {
     return Future.value(false);
   }
 
-  void nextStep() {
+  void nextStep({int? page}) {
     int index = EkycPageStep.values
         .indexWhere((element) => element == state.step.value);
     if (index > EkycPageStep.values.length) {

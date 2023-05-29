@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:dtnd/generated/l10n.dart';
+import 'package:dtnd/ui/screen/ekyc/page/indentity_inform.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -12,7 +13,9 @@ import '../ekyc_logic.dart';
 import '../ekyc_state.dart';
 
 class ValidatorIdentity extends StatefulWidget {
-  const ValidatorIdentity({Key? key}) : super(key: key);
+  const ValidatorIdentity({super.key, required this.style});
+
+  final int style;
 
   @override
   State<ValidatorIdentity> createState() => _ValidatorIdentityState();
@@ -48,7 +51,10 @@ class _ValidatorIdentityState extends State<ValidatorIdentity> {
       appBar: AppBar(
         leading: BackButton(
           onPressed: () {
-            logic.backStep();
+            // logic.backStep();
+            state.identityFront = null;
+            state.identityBack = null;
+            Navigator.of(context).pop();
           },
         ),
       ),
@@ -114,7 +120,10 @@ class _ValidatorIdentityState extends State<ValidatorIdentity> {
                           ? () {
                               state.identityFront = identityFront;
                               state.identityBack = identityBack;
-                              logic.nextStep();
+                              // logic.nextStep();
+                              Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => const IdentityInform(),
+                              ));
                             }
                           : null,
                       child: Text(S.of(context).next),
