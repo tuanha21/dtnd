@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:dtnd/ui/screen/ekyc/page/indentity_sign.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
@@ -33,7 +32,7 @@ class _IdentityFaceState extends State<IdentityFace> {
         } else {
           timer.cancel();
           isIdentity = true;
-          Future.delayed(const Duration(seconds: 3), () {
+          Future.delayed(const Duration(seconds: 2), () {
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => const IdentitySign()),
@@ -52,7 +51,6 @@ class _IdentityFaceState extends State<IdentityFace> {
       appBar: AppBar(
         leading: BackButton(
           onPressed: () {
-            // logic.backStep();
             Navigator.of(context).pop();
           },
         ),

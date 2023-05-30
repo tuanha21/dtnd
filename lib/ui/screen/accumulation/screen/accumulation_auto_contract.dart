@@ -3,6 +3,7 @@ import 'package:dtnd/data/i_user_service.dart';
 import 'package:dtnd/data/implementations/user_service.dart';
 import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/screen/accumulation/controller/accumulation_controller.dart';
+import 'package:dtnd/ui/screen/accumulation/screen/accumulation_auto_register_dialog.dart';
 import 'package:dtnd/ui/screen/accumulation/widget/accumulation_dialog.dart';
 import 'package:dtnd/ui/screen/accumulation/widget/accumulator_header.dart';
 import 'package:dtnd/ui/screen/accumulation/widget/error_register_dialog.dart';
@@ -62,25 +63,50 @@ class _AccummulationAutoContractState extends State<AccummulationAutoContract> {
                     borderRadius: BorderRadius.circular(8)),
                 child: Column(
                   children: [
-                    Row(
-                      children: [
-                        CircleAvatar(
-                          backgroundColor: AppColors.accent_light_04,
-                          child: Image.asset(
-                            isRegister
-                                ? AppImages.validate_check
-                                : AppImages.validate_fail,
-                            height: 40,
-                            fit: BoxFit.fitHeight,
+                    !isRegister
+                        ? Row(
+                            children: [
+                              CircleAvatar(
+                                backgroundColor: AppColors.accent_light_04,
+                                child: Image.asset(
+                                  AppImages.light,
+                                  height: 40,
+                                  fit: BoxFit.fitHeight,
+                                ),
+                              ),
+                              const SizedBox(width: 15),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text('Bạn có thể bắt đầu bất cứ lúc nào 💯',
+                                      style: textTheme.bodyMedium?.copyWith(
+                                          color: AppColors.text_blue)),
+                                  const SizedBox(height: 4),
+                                  Text('Đăng ký ngay đừng bỏ lỡ',
+                                      style: textTheme.bodySmall?.copyWith(
+                                          color: AppColors.neutral_03)),
+                                ],
+                              ),
+                            ],
+                          )
+                        : Row(
+                            children: [
+                              CircleAvatar(
+                                backgroundColor: AppColors.accent_light_04,
+                                child: Image.asset(
+                                  AppImages.check_auto_contract,
+                                  height: 40,
+                                  fit: BoxFit.fitHeight,
+                                ),
+                              ),
+                              const SizedBox(width: 15),
+                              Text(
+                                isRegister ? 'Đã đăng ký' : 'Chưa đăng kí',
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ],
                           ),
-                        ),
-                        const SizedBox(width: 15),
-                        Text(
-                          isRegister ? 'Đã đăng ký' : 'Chưa đăng kí',
-                          style: const TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                      ],
-                    ),
                     const SizedBox(height: 12),
                     Container(
                       padding:
@@ -142,28 +168,12 @@ class _AccummulationAutoContractState extends State<AccummulationAutoContract> {
                   MaterialStateProperty.all<Color>(AppColors.text_blue),
             ),
             onPressed: () async {
-              try {
-                await userService.changeContractBase(isRegister ? 0 : 1);
-                if (!mounted) return;
-                showDialog(
-                    barrierDismissible: false,
-                    context: context,
-                    builder: (_) => AccumulationDialog(
-                          content: isRegister
-                              ? 'Bạn đã huỷ đăng ký tích lũy tự động thành công'
-                              : 'Bạn đã hoàn thành đăng ký tích lũy tự động',
-                          title: isRegister
-                              ? 'Huỷ đăng ký thành công!'
-                              : 'Đăng ký thành công!',
-                        ));
-              } catch (e) {
-                showDialog(
-                    barrierDismissible: false,
-                    context: context,
-                    builder: (_) => const ErrorRegisterDialog(
-                          error: 'Có lỗi xảy ra',
-                        ));
-              }
+              showDialog(
+                barrierDismissible: false,
+                context: context,
+                builder: (_) =>
+                    AccumulationAutoRegisterDialog(isRegister: isRegister),
+              );
             },
             child: Text(_controller.baseContract.value
                 ? S.of(context).cancel_registration

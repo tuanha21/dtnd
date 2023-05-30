@@ -3,6 +3,7 @@ import 'package:dtnd/data/i_user_service.dart';
 import 'package:dtnd/data/implementations/user_service.dart';
 import 'package:dtnd/ui/screen/account/component/cash_transaction_component.dart';
 import 'package:dtnd/ui/widget/calendar/day_input.dart';
+// import 'package:dtnd/ui/widget/calendar/day_input.dart';
 import 'package:dtnd/ui/widget/empty_list_widget.dart';
 import 'package:dtnd/utilities/time_utils.dart';
 import 'package:flutter/material.dart';
@@ -74,40 +75,34 @@ class _AccumulatorHistoryState extends State<AccumulatorHistory> {
     return Column(mainAxisAlignment: MainAxisAlignment.start, children: [
       const SizedBox(height: 16),
       Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+        padding: const EdgeInsets.symmetric(horizontal: 6.0),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          // mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Expanded(
-              flex: 1,
-              child: DayInput(
-                color: Colors.white,
-                initialDay: fromDay,
-                firstDay: firstDay,
-                lastDay: lastDay,
-                onChanged: (value) {
-                  setState(() {
-                    fromDay = value;
-                  });
-                  getData();
-                },
-              ),
+            DayInput(
+              color: Colors.white,
+              initialDay: fromDay,
+              firstDay: firstDay,
+              lastDay: lastDay,
+              onChanged: (value) {
+                setState(() {
+                  fromDay = value;
+                });
+                getData();
+              },
             ),
-            const Text("    -    "),
-            Expanded(
-              flex: 1,
-              child: DayInput(
-                color: Colors.white,
-                initialDay: toDay,
-                firstDay: firstDay,
-                lastDay: lastDay,
-                onChanged: (value) {
-                  setState(() {
-                    toDay = value;
-                  });
-                  getData();
-                },
-              ),
+            const Text("  -  "),
+            DayInput(
+              color: Colors.white,
+              initialDay: toDay,
+              firstDay: firstDay,
+              lastDay: lastDay,
+              onChanged: (value) {
+                setState(() {
+                  toDay = value;
+                });
+                getData();
+              },
             )
           ],
         ),
