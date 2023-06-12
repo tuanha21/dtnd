@@ -1,3 +1,4 @@
+import 'package:dtnd/ui/screen/ekyc/page/validator_identity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -65,18 +66,45 @@ class _EkycSelectTypeState extends State<EkycSelectType> {
               icon: AppImages.personalCard,
               title: 'CMND/CCCD',
               onTap: () {
-                Get.find<EkycLogic>().nextStep();
+                // Get.find<EkycLogic>().nextStep();
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => const ValidatorIdentity(
+                      style: 1,
+                    ),
+                  ),
+                );
               },
             ),
             const SizedBox(height: 16),
-            const CardTitle(
+            CardTitle(
               icon: AppImages.documentCopy,
               title: 'Hộ chiếu',
+              onTap: () {
+                // Get.find<EkycLogic>().nextStep();
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => const ValidatorIdentity(
+                      style: 2,
+                    ),
+                  ),
+                );
+              },
             ),
             const SizedBox(height: 16),
-            const CardTitle(
+            CardTitle(
               icon: AppImages.personalCard,
               title: 'Bằng lái xe',
+              onTap: () {
+                // Get.find<EkycLogic>().nextStep();
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => const ValidatorIdentity(
+                      style: 3,
+                    ),
+                  ),
+                );
+              },
             )
           ],
         ),
@@ -98,15 +126,18 @@ class CardTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       onTap: onTap,
-      tileColor: AppColors.neu_01,
+      tileColor: AppColors.neutral_06,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
       leading: Container(
         height: 40,
         width: 40,
         alignment: Alignment.center,
         decoration: const BoxDecoration(
-            shape: BoxShape.circle, color: AppColors.text_black),
-        child: SvgPicture.asset(icon),
+            shape: BoxShape.circle, color: AppColors.light_tabBar_bg),
+        child: SvgPicture.asset(
+          icon,
+          color: AppColors.color_primary_1,
+        ),
       ),
       title: Text(title),
       trailing:

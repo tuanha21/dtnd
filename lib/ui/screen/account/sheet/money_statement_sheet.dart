@@ -39,14 +39,14 @@ class _MoneyStatementSheetState extends State<MoneyStatementSheet> {
     toDay = DateTime.now();
     firstDay = TimeUtilities.getPreviousDateTime(TimeUtilities.month(3));
     lastDay = toDay;
-    _scrollController.addListener(_scrollListener); // L
+    _scrollController.addListener(_scrollListener);
     super.initState();
     getData();
   }
 
   Future<void> getData({int? recordPerPage}) async {
     setState(() {
-      isLoading = true; // Đánh dấu đang tải dữ liệu
+      isLoading = true;
     });
     await Future.delayed(const Duration(seconds: 1));
     final res = await exchangeService.getCashTransactions(

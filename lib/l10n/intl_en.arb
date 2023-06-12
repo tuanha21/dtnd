@@ -551,5 +551,9 @@
   "risk" : "Risk",
   "popular" : "Popular",
   "top_changes" : "Top changes",
-  "top_volume":"Top volume"
+  "top_volume":"Top volume",
+  "right_to_buy":"Right to buy",
+  "cash_dividend":"Cash dividend",
+  "dividends_value":"Dividends in shares/bonus shares"
+
 }

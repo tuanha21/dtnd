@@ -29,19 +29,48 @@ class _RightsInfoWidgetState extends State<RightsInfoWidget> {
           borderRadius: BorderRadius.all(Radius.circular(12))),
       child: Column(
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(widget.data?.cSHARECODE.toString() ?? '',
-                  style: AppTextStyle.bodyMedium_14),
-              Text(widget.data?.cBUSINESSNAME ?? '',
-                  style: const TextStyle(
-                      fontSize: 12,
-                      fontWeight: FontWeight.w600,
-                      height: 1.1,
-                      color: AppColors.text_black_1))
-            ],
-          ),
+          widget.data?.cBUSINESSNAME == "Quyền mua cổ phiếu/TP"
+              ? Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(widget.data?.cSHARECODE.toString() ?? '',
+                        style: AppTextStyle.bodyMedium_14),
+                    (widget.data?.cFLAG == 1 &&
+                            ((widget.data?.cSHAREBUY ?? 0) <
+                                (widget.data?.cSHARERIGHT ?? 0)))
+                        ? InkWell(
+                            onTap: widget.onChange,
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 8, horizontal: 20),
+                              alignment: Alignment.center,
+                              decoration: const BoxDecoration(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(8)),
+                                color: AppColors.color_primary_1,
+                              ),
+                              child: Text(
+                                S.of(context).sign_up,
+                                style: const TextStyle(
+                                    fontSize: 12, color: AppColors.light_bg),
+                              ),
+                            ),
+                          )
+                        : const SizedBox(),
+                  ],
+                )
+              : const SizedBox(),
+          widget.data?.cBUSINESSNAME != "Quyền mua cổ phiếu/TP"
+              ? Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(widget.data?.cSHARECODE.toString() ?? '',
+                        style: AppTextStyle.bodyMedium_14),
+                    Text(widget.data?.cBUSINESSNAME.toString() ?? '',
+                        style: AppTextStyle.bodyMedium_14),
+                  ],
+                )
+              : const SizedBox(),
           const SizedBox(height: 16),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -49,7 +78,7 @@ class _RightsInfoWidgetState extends State<RightsInfoWidget> {
               Text(S.of(context).number_of_shares_entitled,
                   style: AppTextStyle.labelMedium_12
                       .copyWith(color: AppColors.neutral_03)),
-              Text(NumUtils.formatInteger(widget.data?.cRIGHTVOLUME ?? 0),
+              Text(NumUtils.formatInteger(widget.data?.cSHAREVOLUME ?? 0),
                   style: const TextStyle(
                       fontSize: 12,
                       fontWeight: FontWeight.w600,
@@ -231,7 +260,7 @@ class _RightsInfoWidgetState extends State<RightsInfoWidget> {
                                 .copyWith(color: AppColors.neutral_03)),
                         Text(
                             NumUtils.formatInteger(
-                                widget.data?.cSHARERIGHT ?? 0),
+                                widget.data?.cRIGHTVOLUME ?? 0),
                             style: const TextStyle(
                                 fontSize: 12,
                                 fontWeight: FontWeight.w600,
@@ -281,33 +310,6 @@ class _RightsInfoWidgetState extends State<RightsInfoWidget> {
                       color: AppColors.text_black_1))
             ],
           ),
-          const SizedBox(height: 16),
-          (widget.data?.cFLAG == 1 &&
-                  ((widget.data?.cSHAREBUY ?? 0) <
-                      (widget.data?.cSHARERIGHT ?? 0)))
-              ? Row(
-                  children: [
-                    Expanded(
-                      child: InkWell(
-                        onTap: widget.onChange,
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(vertical: 8),
-                          alignment: Alignment.center,
-                          decoration: const BoxDecoration(
-                            borderRadius: BorderRadius.all(Radius.circular(8)),
-                            color: AppColors.color_primary_1,
-                          ),
-                          child: Text(
-                            S.of(context).sign_up,
-                            style: const TextStyle(
-                                fontSize: 12, color: AppColors.light_bg),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                )
-              : const SizedBox(),
         ],
       ),
     );

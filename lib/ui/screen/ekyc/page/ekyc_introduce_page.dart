@@ -45,8 +45,7 @@ class EkycIntroducePage extends StatelessWidget {
                   TextSpan(
                       text: "eKYC",
                       style: titleSmall?.copyWith(
-                          fontWeight: FontWeight.w700,
-                          color: AppColors.light_bg)),
+                          fontWeight: FontWeight.w700, color: AppColors.bg_2)),
                   TextSpan(
                       text:
                           ' là điều kiện bắt buộc khi giao dịch các sản phẩm đầu tư',
@@ -66,12 +65,12 @@ class EkycIntroducePage extends StatelessWidget {
               const SizedBox(height: 16),
               GestureDetector(
                 onTap: () {
-                  context.goNamed('home');
+                  Navigator.pop(context);
                 },
                 child: Center(
                     child: Text(
                   'Để sau',
-                  style: titleSmall,
+                  style: titleSmall?.copyWith(color: AppColors.neutral_03),
                 )),
               ),
               const SizedBox(height: 30),
