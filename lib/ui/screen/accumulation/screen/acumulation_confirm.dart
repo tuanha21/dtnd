@@ -83,9 +83,6 @@ class _AccumulationConfirmState extends State<AccumulationConfirm> {
                   MaterialStateProperty.all<Color>(AppColors.text_blue),
             ),
             onPressed: () async {
-              // var updateSuccess = await userService.updateContract(
-              //     feeRate.termCode!, widget.money, getExtendType());
-
               try {
                 await userService.updateContract(
                     feeRate.termCode!, widget.money, getExtendType());
@@ -93,7 +90,10 @@ class _AccumulationConfirmState extends State<AccumulationConfirm> {
                 showDialog(
                     barrierDismissible: false,
                     context: context,
-                    builder: (_) => const AccumulationDialog());
+                    builder: (_) => const AccumulationDialog(
+                          content: 'Bạn đã hoàn thành đăng ký tích lũy',
+                          title: 'Đăng ký thành công!',
+                        ));
               } catch (e) {
                 showDialog(
                     barrierDismissible: false,

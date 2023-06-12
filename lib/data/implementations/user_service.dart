@@ -509,4 +509,30 @@ class UserService implements IUserService {
     };
     return networkService.getHistoryContract(jsonEncode(body));
   }
+
+  @override
+  Future<bool> checkContractBase() {
+    Map<String, dynamic> body = {
+      "group": "B",
+      "user": token.value?.user ?? '',
+      "session": token.value?.sid ?? '',
+      "data": {"cmd": "MM_CheckContractBase", "type": "object", "p1": {}}
+    };
+    return networkService.checkContractBase(jsonEncode(body));
+  }
+
+  @override
+  Future<void> changeContractBase(int codeFlag) {
+    Map<String, dynamic> body = {
+      "group": "B",
+      "user": token.value?.user ?? '',
+      "session": token.value?.sid ?? '',
+      "data": {
+        "cmd": "MM_UpdateContractBase",
+        "type": "object",
+        "p1": {"AUTO_FLAG": codeFlag, "CHANNEL": "", "CONTENT": ""}
+      }
+    };
+    return networkService.changeContractBase(jsonEncode(body));
+  }
 }

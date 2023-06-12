@@ -1,12 +1,9 @@
 import 'package:dtnd/ui/screen/ekyc/page/validator_identity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:get/get.dart';
 
 import '../../../theme/app_color.dart';
 import '../../../theme/app_image.dart';
-import '../ekyc_logic.dart';
-import '../ekyc_state.dart';
 
 class EkycSelectType extends StatefulWidget {
   const EkycSelectType({Key? key}) : super(key: key);
@@ -16,10 +13,6 @@ class EkycSelectType extends StatefulWidget {
 }
 
 class _EkycSelectTypeState extends State<EkycSelectType> {
-  final logic = Get.find<EkycLogic>();
-
-  EkycState get state => logic.state;
-
   @override
   Widget build(BuildContext context) {
     final headlineSmall = Theme.of(context).textTheme.headlineSmall;
@@ -28,7 +21,7 @@ class _EkycSelectTypeState extends State<EkycSelectType> {
       appBar: AppBar(
         leading: BackButton(
           onPressed: () {
-            logic.backStep();
+            Navigator.pop(context);
           },
         ),
       ),

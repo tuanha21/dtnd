@@ -98,4 +98,8 @@ abstract class IUserService {
     DateTime? toDay,
     int? recordPerPage,
   });
+
+  Future<bool> checkContractBase();
+
+  Future<void> changeContractBase(int codeFlag);
 }

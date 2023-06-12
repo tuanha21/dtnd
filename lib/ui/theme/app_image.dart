@@ -239,6 +239,8 @@ class AppImages {
   static const String personal_card = "assets/images/personal_card.png";
   static const String edit_sign = "assets/images/edit_sign.png";
   static const String ekyc_success = "assets/images/ekyc_success.png";
+  static const String check_auto_contract =
+      "assets/images/check_auto_contract.png";
   static const String tick_vertification =
       "assets/images/tick_vertification.png";
 }

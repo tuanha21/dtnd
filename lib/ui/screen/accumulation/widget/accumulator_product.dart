@@ -1,5 +1,6 @@
 import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/screen/accumulation/controller/accumulation_controller.dart';
+import 'package:dtnd/ui/screen/accumulation/screen/accumulation_auto_contract.dart';
 import 'package:dtnd/ui/screen/accumulation/screen/accumulation_product_detail.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
@@ -22,8 +23,10 @@ class _AccumulatorProductState extends State<AccumulatorProduct> {
     final textTheme = Theme.of(context).textTheme;
 
     return Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-      ObxValue<Rx<bool>>((initialized) {
-        if (!initialized.value) {
+      Obx(() {
+        final initialized = controller.accumulationInitialized.value;
+        final flag = controller.baseContract.value;
+        if (!initialized) {
           return const EmptyListWidget();
         } else {
           if (controller.listFeeRate.value == []) {
@@ -40,12 +43,13 @@ class _AccumulatorProductState extends State<AccumulatorProduct> {
                   period: controller.listFeeRate.value![index].termName ?? '',
                   rate: controller.listFeeRate.value![index].feeRate.toString(),
                   id: controller.listFeeRate.value![index].id.toString(),
+                  autoFlag: flag,
                 );
               },
             ),
           );
         }
-      }, controller.accumulationInitialized),
+      }),
     ]);
   }
 }
@@ -58,6 +62,7 @@ class ItemBuilder extends StatelessWidget {
     required this.period,
     required this.rate,
     required this.id,
+    required this.autoFlag,
   });
 
   final String title;
@@ -65,15 +70,26 @@ class ItemBuilder extends StatelessWidget {
   final String period;
   final String rate;
   final String id;
+  final bool autoFlag;
 
-  void _onTap(BuildContext context, String id) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-          builder: (context) => AccumulationProductDetail(
-                id: id,
-              )),
-    );
+  void _onTap(BuildContext context, String id, String termName) {
+    if (termName == '1 tuần') {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => AccummulationAutoContract(
+                  id: id,
+                )),
+      );
+    } else {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => AccumulationProductDetail(
+                  id: id,
+                )),
+      );
+    }
   }
 
   @override
@@ -89,7 +105,7 @@ class ItemBuilder extends StatelessWidget {
       child: Column(children: [
         GestureDetector(
           onTap: () {
-            _onTap(context, id);
+            _onTap(context, id, period);
           },
           child: Row(children: [
             CircleAvatar(
@@ -101,10 +117,23 @@ class ItemBuilder extends StatelessWidget {
               ),
             ),
             const SizedBox(width: 15),
-            Text(
-              title,
-              style: const TextStyle(fontWeight: FontWeight.bold),
-            ),
+            (period == '1 tuần')
+                ? Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        title,
+                        style: const TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      const SizedBox(height: 3),
+                      Text(
+                        autoFlag ? 'Đã đăng ký' : 'Chưa đăng kí',
+                        style: const TextStyle(color: AppColors.semantic_01),
+                      ),
+                    ],
+                  )
+                : Text(title,
+                    style: const TextStyle(fontWeight: FontWeight.bold)),
             const Spacer(),
             const SizedBox(
               child: Icon(

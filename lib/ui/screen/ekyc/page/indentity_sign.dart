@@ -18,10 +18,7 @@ class IdentitySign extends StatefulWidget {
 }
 
 class _IdentitySignState extends State<IdentitySign> {
-  EkycState get state => logic.state;
-
   ValueNotifier<bool> isContinue = ValueNotifier<bool>(true);
-  final logic = Get.find<EkycLogic>();
 
   @override
   void initState() {
@@ -37,7 +34,7 @@ class _IdentitySignState extends State<IdentitySign> {
       appBar: AppBar(
         leading: BackButton(
           onPressed: () {
-            logic.backStep();
+            Navigator.pop(context);
           },
         ),
       ),
