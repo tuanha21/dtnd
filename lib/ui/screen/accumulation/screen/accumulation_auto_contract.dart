@@ -101,7 +101,7 @@ class _AccummulationAutoContractState extends State<AccummulationAutoContract> {
                               ),
                               const SizedBox(width: 15),
                               Text(
-                                isRegister ? 'Đã đăng ký' : 'Chưa đăng kí',
+                                isRegister ? 'Đã đăng ký' : 'Chưa đăng ký',
                                 style: const TextStyle(
                                     fontWeight: FontWeight.bold),
                               ),

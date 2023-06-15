@@ -10,6 +10,7 @@ import 'package:dtnd/=models=/index.dart';
 import 'package:dtnd/=models=/request/request_model.dart';
 import 'package:dtnd/=models=/response/accumulation/contract_model.dart';
 import 'package:dtnd/=models=/response/accumulation/fee_rate_model.dart';
+import 'package:dtnd/=models=/response/accumulation/single_contract.dart';
 import 'package:dtnd/=models=/response/business_profile_model.dart';
 import 'package:dtnd/=models=/response/cash_transaction_model.dart';
 import 'package:dtnd/=models=/response/commodity_model.dart';
@@ -1856,6 +1857,36 @@ class NetworkService implements INetworkService {
     if (res["rc"] == 1) {
       final data = res["data"];
       return ContractFee.fromJson(data.first);
+    } else {
+      throw res["sRs"];
+    }
+  }
+
+  @override
+  Future<SingleContract?> getSingleContract(String itemId) async {
+    var response = await client.post(url_core_endpoint, body: itemId);
+    if (response.statusCode != 200) {
+      throw response;
+    }
+    var res = decode(response.bodyBytes);
+    if (res["rc"] == 1) {
+      final data = res["data"];
+      return SingleContract.fromJson(data.first);
+    } else {
+      throw res["sRs"];
+    }
+  }
+
+  @override
+  Future<SingleContract?> liquidAll(String contractId) async {
+    var response = await client.post(url_core_endpoint, body: contractId);
+    if (response.statusCode != 200) {
+      throw response;
+    }
+    var res = decode(response.bodyBytes);
+    if (res["rc"] == 1) {
+      final data = res["data"];
+      return SingleContract.fromJson(data.first);
     } else {
       throw res["sRs"];
     }

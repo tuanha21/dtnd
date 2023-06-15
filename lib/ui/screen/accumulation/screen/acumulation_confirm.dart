@@ -18,10 +18,14 @@ class AccumulationConfirm extends StatefulWidget {
     super.key,
     required this.id,
     required this.money,
+    required this.openDay,
+    required this.endDay,
   });
 
   final String id;
   final num money;
+  final String openDay;
+  final String endDay;
 
   @override
   State<AccumulationConfirm> createState() => _AccumulationConfirmState();
@@ -148,9 +152,10 @@ class _AccumulationConfirmState extends State<AccumulationConfirm> {
                 ),
                 RowInfomation(
                     leftText: 'Kỳ hạn', rightText: feeRate.termName.toString()),
-                RowInfomation(leftText: 'Ngày bắt đầu ', rightText: getToDay()),
                 RowInfomation(
-                    leftText: 'Ngày kết thúc', rightText: getFutureDay()),
+                    leftText: 'Ngày bắt đầu ', rightText: widget.openDay),
+                RowInfomation(
+                    leftText: 'Ngày kết thúc', rightText: widget.endDay),
                 const SizedBox(height: 16),
               ],
             ),

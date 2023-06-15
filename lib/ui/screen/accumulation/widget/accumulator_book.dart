@@ -68,7 +68,7 @@ class _AccumulatorBookState extends State<AccumulatorBook> {
                           id: controller.listAllContract.value![index].id
                               .toString(),
                           profit: controller
-                              .listAllContract.value![index].liquid
+                              .listAllContract.value![index].fee
                               .toString(),
                           money: controller
                               .listAllContract.value![index].capital

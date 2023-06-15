@@ -15,11 +15,10 @@ import 'package:intl/intl.dart';
 import '../widget/row_information.dart';
 
 class AccumulationRegister extends StatefulWidget {
-  const AccumulationRegister(
-      {super.key,
-      required this.id,
-      required this.capMin,
-      required this.capMax});
+  const AccumulationRegister({super.key,
+    required this.id,
+    required this.capMin,
+    required this.capMax});
 
   final String id;
   final num capMax;
@@ -79,11 +78,15 @@ class _AccumulationRegisterState extends State<AccumulationRegister> {
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
+    final textTheme = Theme
+        .of(context)
+        .textTheme;
 
     return Scaffold(
       appBar: SimpleAppbar(
-        title: S.of(context).registration_for_accumulation,
+        title: S
+            .of(context)
+            .registration_for_accumulation,
       ),
       body: SingleChildScrollView(
         child: bodyWidget(textTheme, context),
@@ -97,20 +100,26 @@ class _AccumulationRegisterState extends State<AccumulationRegister> {
           child: TextButton(
             style: ButtonStyle(
               backgroundColor:
-                  MaterialStateProperty.all<Color>(AppColors.text_blue),
+              MaterialStateProperty.all<Color>(AppColors.text_blue),
             ),
             onPressed: () {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => AccumulationConfirm(
-                        id: widget.id,
-                        money: num.parse(
-                          _moneyController.text.replaceAll(',', ''),
-                        )),
+                    builder: (context) =>
+                        AccumulationConfirm(
+                          id: widget.id,
+                          money: num.parse(
+                            _moneyController.text.replaceAll(',', ''),
+                          ),
+                          openDay: _controller.openDay.value,
+                          endDay: _controller.endDay.value,
+                        ),
                   ));
             },
-            child: Text(S.of(context).next),
+            child: Text(S
+                .of(context)
+                .next),
           ),
         ),
       ),
@@ -120,7 +129,7 @@ class _AccumulationRegisterState extends State<AccumulationRegister> {
   Widget bodyWidget(TextTheme textTheme, BuildContext context) {
     return Padding(
       padding:
-          const EdgeInsets.only(left: 16.0, right: 16.0, top: 5, bottom: 100.0),
+      const EdgeInsets.only(left: 16.0, right: 16.0, top: 5, bottom: 100.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -139,12 +148,16 @@ class _AccumulationRegisterState extends State<AccumulationRegister> {
                   return 'Không để trống ô này';
                 } else {
                   double? parsedValue =
-                      double.tryParse(value.replaceAll(',', ''));
+                  double.tryParse(value.replaceAll(',', ''));
                   if (parsedValue == null) {
-                    return 'Nhập từ ${NumUtils.formatInteger(widget.capMin)} đến ${NumUtils.formatInteger(widget.capMax)}';
+                    return 'Nhập từ ${NumUtils.formatInteger(
+                        widget.capMin)} đến ${NumUtils.formatInteger(
+                        widget.capMax)}';
                   } else if (parsedValue < widget.capMin ||
                       parsedValue > widget.capMax) {
-                    return 'Nhập từ ${NumUtils.formatInteger(widget.capMin)} đến ${NumUtils.formatInteger(widget.capMax)}';
+                    return 'Nhập từ ${NumUtils.formatInteger(
+                        widget.capMin)} đến ${NumUtils.formatInteger(
+                        widget.capMax)}';
                   }
                 }
                 return null;
@@ -160,7 +173,9 @@ class _AccumulationRegisterState extends State<AccumulationRegister> {
                 }
               },
               decoration: InputDecoration(
-                labelText: S.of(context).the_principal_amount,
+                labelText: S
+                    .of(context)
+                    .the_principal_amount,
                 suffixText: 'đ',
                 suffixStyle: const TextStyle(color: Colors.grey),
               ),
@@ -177,14 +192,16 @@ class _AccumulationRegisterState extends State<AccumulationRegister> {
               borderRadius: BorderRadius.circular(12),
             ),
             padding:
-                const EdgeInsets.only(left: 12, right: 12, bottom: 0, top: 12),
+            const EdgeInsets.only(left: 12, right: 12, bottom: 0, top: 12),
             child: Column(
               children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      S.of(context).profit,
+                      S
+                          .of(context)
+                          .profit,
                       style: textTheme.bodyMedium
                           ?.copyWith(color: AppColors.text_black),
                     ),
@@ -203,7 +220,7 @@ class _AccumulationRegisterState extends State<AccumulationRegister> {
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Obx(
-                    () {
+                        () {
                       return Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -211,13 +228,16 @@ class _AccumulationRegisterState extends State<AccumulationRegister> {
                           RowInfomation(
                             leftText: 'Lãi dự tính',
                             rightText:
-                                "+${NumUtils.formatInteger(_controller.feeValue.value)}đ",
+                            "+${NumUtils.formatInteger(
+                                _controller.feeValue.value)}đ",
                             differentColor: true,
                           ),
                           RowInfomation(
                               leftText: 'Tổng tiền gốc và lãi',
                               rightText:
-                                  "${NumUtils.formatInteger(_controller.cashValue.value + _controller.feeValue.value)}đ"),
+                              "${NumUtils.formatInteger(
+                                  _controller.cashValue.value +
+                                      _controller.feeValue.value)}đ"),
                         ],
                       );
                     },
@@ -228,7 +248,9 @@ class _AccumulationRegisterState extends State<AccumulationRegister> {
             ),
           ),
           const SizedBox(height: 24),
-          Text(S.of(context).the_IFIS_community_often_prefers,
+          Text(S
+              .of(context)
+              .the_IFIS_community_often_prefers,
               style: textTheme.bodySmall?.copyWith(
                 fontWeight: FontWeight.bold,
               )),
@@ -263,7 +285,10 @@ class _AccumulationRegisterState extends State<AccumulationRegister> {
                           });
                         },
                         child: Container(
-                            width: MediaQuery.of(context).size.width / 375 * 95,
+                            width: MediaQuery
+                                .of(context)
+                                .size
+                                .width / 375 * 95,
                             alignment: Alignment.center,
                             decoration: BoxDecoration(
                                 color: Colors.white,
