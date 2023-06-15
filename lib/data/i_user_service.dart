@@ -12,6 +12,8 @@ import 'package:dtnd/=models=/side.dart';
 import 'package:dtnd/=models=/sign_up_success_data_model.dart';
 import 'package:get/get.dart';
 
+import '../=models=/response/accumulation/contract_fee_model.dart';
+
 abstract class IUserService {
   bool get isLogin;
 
@@ -98,4 +100,6 @@ abstract class IUserService {
     DateTime? toDay,
     int? recordPerPage,
   });
+
+  Future<ContractFee?> getProvisionalFee(String term, String capital);
 }

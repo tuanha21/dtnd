@@ -63,6 +63,7 @@ import 'package:intl/intl.dart';
 import 'package:socket_io_client/socket_io_client.dart';
 
 import '../../=models=/local/va_portfolio_model.dart';
+import '../../=models=/response/accumulation/contract_fee_model.dart';
 import '../../=models=/response/banner_model.dart';
 import '../../=models=/response/basic_company.dart';
 import '../../=models=/response/indContrib.dart';
@@ -1818,5 +1819,20 @@ class NetworkService implements INetworkService {
       historyContract.add(CashTransactionHistoryModel.fromJson(element));
     }
     return historyContract;
+  }
+
+  @override
+  Future<ContractFee?> getProvisionalFee(String body) async {
+    var response = await client.post(url_core_endpoint, body: body);
+    if (response.statusCode != 200) {
+      throw response;
+    }
+    var res = decode(response.bodyBytes);
+    if (res["rc"] == 1) {
+      final data = res["data"];
+      return ContractFee.fromJson(data.first);
+    } else {
+      throw res["sRs"];
+    }
   }
 }

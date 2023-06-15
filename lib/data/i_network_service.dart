@@ -45,6 +45,7 @@ import 'package:socket_io_client/socket_io_client.dart' as IO;
 import '../=models=/algo/filter.dart';
 import '../=models=/algo/stock_filter.dart';
 import '../=models=/request/request_model.dart';
+import '../=models=/response/accumulation/contract_fee_model.dart';
 import '../=models=/response/banner_model.dart';
 import '../=models=/response/basic_company.dart';
 import '../=models=/response/company_info.dart';
@@ -307,4 +308,6 @@ abstract class INetworkService {
   Future<List<ContractModel>?> getAllContract(String body);
 
   Future<List<CashTransactionHistoryModel>?> getHistoryContract(String body);
+
+  Future<ContractFee?> getProvisionalFee(String body);
 }

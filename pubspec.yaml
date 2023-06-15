@@ -40,7 +40,7 @@ dependencies:
   socket_io_client: ^1.0.2
   # flutter_riverpod: ^2.0.2
   # riverpod_annotation: ^1.0.4
-  intl: ^0.17.0
+  intl: ^0.18.0
   equatable: ^2.0.5
   shared_preferences: ^2.0.15
   hive: ^2.2.3
@@ -98,6 +98,7 @@ dependencies:
   package_info_plus: ^3.1.0
   flash: ^3.0.3+4
   upgrader: ^6.2.0
+  chewie: ^1.5.0
 
 dev_dependencies:
   flutter_test:

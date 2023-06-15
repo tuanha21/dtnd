@@ -6,14 +6,18 @@ import 'package:dtnd/data/implementations/data_center_service.dart';
 import 'package:dtnd/data/implementations/user_service.dart';
 import 'package:get/get.dart';
 
+import '../../../../=models=/response/accumulation/contract_fee_model.dart';
+
 class AccumulationController {
   static final AccumulationController _instance =
       AccumulationController._intern();
+
   static AccumulationController get instance => _instance;
 
   AccumulationController._intern();
 
   factory AccumulationController() => _instance;
+  ContractFee? contractFee;
 
   // State
   final IUserService userService = UserService();
@@ -21,6 +25,8 @@ class AccumulationController {
   final Rx<List<FeeRateModel>?> listFeeRate = Rx(<FeeRateModel>[]);
   final Rx<List<ContractModel>?> listAllContract = Rx(<ContractModel>[]);
   final Rx<bool> accumulationInitialized = false.obs;
+  final RxDouble cashValue = 0.0.obs;
+  final RxDouble feeValue = 0.0.obs;
 
   Future<void> init() async {
     await getFeeRate();
@@ -63,5 +69,14 @@ class AccumulationController {
     ContractModel itemWithId;
     itemWithId = listAllContract.value!.firstWhere((item) => item.id == id);
     return itemWithId;
+  }
+
+  Future<ContractFee?> getProvisionalFee(String term, String capital) async {
+    contractFee = await userService.getProvisionalFee(term, capital);
+    if (contractFee != null) {
+      cashValue.value = double.tryParse(contractFee!.cCASHVALUE.toString()) ?? 0;
+      feeValue.value = double.tryParse(contractFee!.cFEEVALUE.toString()) ?? 0;
+    }
+    return contractFee;
   }
 }

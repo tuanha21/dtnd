@@ -39,6 +39,7 @@ class _SettlementConfirmState extends State<SettlementConfirm> {
                   MaterialStateProperty.all<Color>(AppColors.text_blue),
             ),
             onPressed: () {
+              // Đoạn này call api tất toán
               showDialog(
                   barrierDismissible: false,
                   context: context,
@@ -90,9 +91,9 @@ class _SettlementConfirmState extends State<SettlementConfirm> {
                 ],
               ),
               const SizedBox(height: 10),
-              Row(
+              const Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: const [
+                children: [
                   Text('05/05/2023',
                       style: TextStyle(fontWeight: FontWeight.bold)),
                   Text('04/06/2023',

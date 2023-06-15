@@ -15,12 +15,15 @@ import 'package:intl/intl.dart';
 import '../widget/row_information.dart';
 
 class AccumulationRegister extends StatefulWidget {
-  const AccumulationRegister({
-    super.key,
-    required this.id,
-  });
+  const AccumulationRegister(
+      {super.key,
+      required this.id,
+      required this.capMin,
+      required this.capMax});
 
   final String id;
+  final num capMax;
+  final num capMin;
 
   @override
   State<AccumulationRegister> createState() => _AccumulationRegisterState();
@@ -34,7 +37,7 @@ class _AccumulationRegisterState extends State<AccumulationRegister> {
   final _moneyController = TextEditingController(text: '0');
   late num profit = 0;
   late num sum = 0;
-  late num coppyMoney = 0;
+  late num copyMoney = 0;
   static const _locale = 'en';
 
   String _formatNumber(String s) =>
@@ -50,13 +53,16 @@ class _AccumulationRegisterState extends State<AccumulationRegister> {
     if (_timer != null) {
       _timer!.cancel();
     }
-    _timer = Timer(const Duration(milliseconds: 50), () {
-      setState(() {
-        profit = (num.parse(_moneyController.text.replaceAll(',', '')) *
-            (feeRate.feeRate! / 100));
-        sum = num.parse(_moneyController.text.replaceAll(',', '')) + profit;
+
+    if (_moneyController.text.isNotEmpty) {
+      _timer = Timer(const Duration(milliseconds: 50), () {
+        setState(() {
+          profit = (num.parse(_moneyController.text.replaceAll(',', '')) *
+              (feeRate.feeRate! / 100));
+          sum = num.parse(_moneyController.text.replaceAll(',', '')) + profit;
+        });
       });
-    });
+    }
   }
 
   @override
@@ -119,23 +125,50 @@ class _AccumulationRegisterState extends State<AccumulationRegister> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const SizedBox(height: 16),
-          TextFormField(
-            controller: _moneyController,
-            keyboardType: TextInputType.number,
-            inputFormatters: [LengthLimitingTextInputFormatter(15)],
-            onChanged: (string) {
-              string = _formatNumber(string.replaceAll(',', ''));
-              _moneyController.value = TextEditingValue(
-                text: string,
-                selection: TextSelection.collapsed(offset: string.length),
-              );
-            },
-            decoration: InputDecoration(
-              labelText: S.of(context).the_principal_amount,
-              suffixText: 'đ',
-              suffixStyle: const TextStyle(color: Colors.grey),
+          Form(
+            autovalidateMode: AutovalidateMode.onUserInteraction,
+            child: TextFormField(
+              onTapOutside: (value) {
+                _controller.getProvisionalFee(feeRate.termCode ?? '',
+                    _moneyController.text.replaceAll(',', ''));
+              },
+              controller: _moneyController,
+              keyboardType: TextInputType.number,
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Không để trống ô này';
+                } else {
+                  double? parsedValue =
+                      double.tryParse(value.replaceAll(',', ''));
+                  if (parsedValue == null) {
+                    return 'Nhập từ ${NumUtils.formatInteger(widget.capMin)} đến ${NumUtils.formatInteger(widget.capMax)}';
+                  } else if (parsedValue < widget.capMin ||
+                      parsedValue > widget.capMax) {
+                    return 'Nhập từ ${NumUtils.formatInteger(widget.capMin)} đến ${NumUtils.formatInteger(widget.capMax)}';
+                  }
+                }
+                return null;
+              },
+              inputFormatters: [LengthLimitingTextInputFormatter(15)],
+              onChanged: (value) {
+                if (value.isNotEmpty) {
+                  value = _formatNumber(value.replaceAll(',', ''));
+                  _moneyController.value = TextEditingValue(
+                    text: value,
+                    selection: TextSelection.collapsed(offset: value.length),
+                  );
+                }
+              },
+              decoration: InputDecoration(
+                labelText: S.of(context).the_principal_amount,
+                suffixText: 'đ',
+                suffixStyle: const TextStyle(color: Colors.grey),
+              ),
+              onFieldSubmitted: (value) {
+                _controller.getProvisionalFee(feeRate.termCode ?? '',
+                    _moneyController.text.replaceAll(',', ''));
+              },
             ),
-            onSaved: (value) {},
           ),
           Container(
             margin: const EdgeInsets.only(top: 20),
@@ -169,19 +202,26 @@ class _AccumulationRegisterState extends State<AccumulationRegister> {
                     color: AppColors.neutral_06,
                     borderRadius: BorderRadius.circular(12),
                   ),
-                  child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        RowInfomation(
-                          leftText: 'Lãi dự tính',
-                          rightText: NumUtils.formatInteger(profit),
-                          differentColor: true,
-                        ),
-                        RowInfomation(
-                            leftText: 'Tổng tiền gốc và lãi',
-                            rightText: NumUtils.formatInteger(sum)),
-                      ]),
+                  child: Obx(
+                    () {
+                      return Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          RowInfomation(
+                            leftText: 'Lãi dự tính',
+                            rightText:
+                                "+${NumUtils.formatInteger(_controller.feeValue.value)}đ",
+                            differentColor: true,
+                          ),
+                          RowInfomation(
+                              leftText: 'Tổng tiền gốc và lãi',
+                              rightText:
+                                  "${NumUtils.formatInteger(_controller.cashValue.value + _controller.feeValue.value)}đ"),
+                        ],
+                      );
+                    },
+                  ),
                 ),
                 const SizedBox(height: 16),
               ],
@@ -213,6 +253,9 @@ class _AccumulationRegisterState extends State<AccumulationRegister> {
                               if (i == index) {
                                 _selectedMethod[i] = true;
                                 _moneyController.text = _textMethod[i];
+                                _controller.getProvisionalFee(
+                                    feeRate.termCode ?? '',
+                                    _moneyController.text.replaceAll(',', ''));
                               } else {
                                 _selectedMethod[i] = false;
                               }

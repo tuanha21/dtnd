@@ -13,6 +13,7 @@ import '../widget/row_information.dart';
 
 class AccumulationProductDetail extends StatefulWidget {
   const AccumulationProductDetail({super.key, required this.id});
+
   final String id;
 
   @override
@@ -23,6 +24,7 @@ class AccumulationProductDetail extends StatefulWidget {
 class _AccumulationProductDetailState extends State<AccumulationProductDetail> {
   final AccumulationController _controller = Get.put(AccumulationController());
   late FeeRateModel feeRate = _controller.getItemFeeRate(widget.id);
+
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
@@ -109,7 +111,7 @@ class _AccumulationProductDetailState extends State<AccumulationProductDetail> {
                                   NumUtils.formatInteger(feeRate.capMax)),
                           RowInfomation(
                               leftText: S.of(context).early_interest_rate,
-                              rightText: feeRate.liquidRate.toString()),
+                              rightText: "${feeRate.liquidRate}%"),
                           RowInfomation(
                               leftText: S.of(context).renewal_method,
                               rightText: 'Linh hoạt'),
@@ -155,8 +157,9 @@ class _AccumulationProductDetailState extends State<AccumulationProductDetail> {
                 context,
                 MaterialPageRoute(
                     builder: (context) => AccumulationRegister(
-                          id: widget.id,
-                        )),
+                        id: widget.id,
+                        capMax: feeRate.capMax ?? 0,
+                        capMin: feeRate.capMin ?? 0)),
               );
             },
             child: Text(S.of(context).sign_up),

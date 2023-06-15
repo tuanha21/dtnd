@@ -108,6 +108,7 @@ class ItemBuilder extends StatelessWidget {
   final String id;
 
   void _onTap(BuildContext context, String name, String id) {
+    // phần này click vào detail các item
     Navigator.push(
       context,
       MaterialPageRoute(

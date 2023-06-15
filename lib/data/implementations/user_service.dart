@@ -24,6 +24,8 @@ import 'package:dtnd/utilities/logger.dart';
 import 'package:dtnd/utilities/time_utils.dart';
 import 'package:get/get.dart';
 
+import '../../=models=/response/accumulation/contract_fee_model.dart';
+
 class UserService implements IUserService {
   final ILocalStorageService localStorageService = LocalStorageService();
   final INetworkService networkService = NetworkService();
@@ -508,5 +510,23 @@ class UserService implements IUserService {
       }
     };
     return networkService.getHistoryContract(jsonEncode(body));
+  }
+
+  @override
+  Future<ContractFee?> getProvisionalFee(String term, String capital) {
+    Map<String, dynamic> body = {
+      "group": "B",
+      "user": token.value?.user ?? '',
+      "session": token.value?.sid ?? '',
+      "data": {
+        "type": "object",
+        "cmd": "MM_GetExpireDate",
+        "p1": {
+          "TERM": term,
+          "CAPITAL": capital,
+        }
+      }
+    };
+    return networkService.getProvisionalFee(jsonEncode(body));
   }
 }
