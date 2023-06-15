@@ -8,6 +8,7 @@ import 'package:dtnd/=models=/response/account/i_account.dart';
 import 'package:dtnd/=models=/response/account_info_model.dart';
 import 'package:dtnd/=models=/response/accumulation/contract_model.dart';
 import 'package:dtnd/=models=/response/accumulation/fee_rate_model.dart';
+import 'package:dtnd/=models=/response/accumulation/single_contract.dart';
 import 'package:dtnd/=models=/response/cash_transaction_model.dart';
 import 'package:dtnd/=models=/response/order_model/base_order_model.dart';
 import 'package:dtnd/=models=/response/total_asset_model.dart';
@@ -23,6 +24,8 @@ import 'package:dtnd/data/implementations/network_service.dart';
 import 'package:dtnd/utilities/logger.dart';
 import 'package:dtnd/utilities/time_utils.dart';
 import 'package:get/get.dart';
+
+import '../../=models=/response/accumulation/contract_fee_model.dart';
 
 class UserService implements IUserService {
   final ILocalStorageService localStorageService = LocalStorageService();
@@ -534,5 +537,60 @@ class UserService implements IUserService {
       }
     };
     return networkService.changeContractBase(jsonEncode(body));
+  }
+
+  @override
+  Future<ContractFee?> getProvisionalFee(String term, String capital) {
+    Map<String, dynamic> body = {
+      "group": "B",
+      "user": token.value?.user ?? '',
+      "session": token.value?.sid ?? '',
+      "data": {
+        "type": "object",
+        "cmd": "MM_GetExpireDate",
+        "p1": {
+          "TERM": term,
+          "CAPITAL": capital,
+        }
+      }
+    };
+    return networkService.getProvisionalFee(jsonEncode(body));
+  }
+
+  @override
+  Future<SingleContract?> getSingleContract(
+    String itemID,
+  ) {
+    Map<String, dynamic> body = {
+      "group": "B",
+      "user": token.value?.user ?? '',
+      "session": token.value?.sid ?? '',
+      "data": {
+        "type": "object",
+        "cmd": "MM_GetSingleContract",
+        "p1": {
+          "ITEM_ID": itemID,
+        }
+      }
+    };
+    return networkService.getSingleContract(jsonEncode(body));
+  }
+
+  @override
+  Future<SingleContract?> liquidAll(String contractId) {
+    Map<String, dynamic> body = {
+      "group": "B",
+      "user": token.value?.user ?? '',
+      "session": token.value?.sid ?? '',
+      "data": {
+        "type": "object",
+        "cmd": "MM_LiquidContract",
+        "p1": {
+          "CONTRACT_ID": contractId,
+          "CHANNEL": "M"
+        }
+      }
+    };
+    return networkService.getSingleContract(jsonEncode(body));
   }
 }

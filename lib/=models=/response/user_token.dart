@@ -73,7 +73,7 @@ class UserToken implements CoreResponseModel {
     sid = json['sid'];
     address = json['address'];
     defaultAcc = json['defaultAcc'];
-    user = defaultAcc.substring(0, 6);
+    user = json['user'];
     iFlag = json['iFlag'];
     countLoginFail = json['CountLoginFail'];
     authenType = json['AuthenType'];

@@ -1,19 +1,24 @@
 import 'package:dtnd/=models=/response/accumulation/contract_model.dart';
 import 'package:dtnd/=models=/response/accumulation/fee_rate_model.dart';
+import 'package:dtnd/=models=/response/accumulation/single_contract.dart';
 import 'package:dtnd/data/i_data_center_service.dart';
 import 'package:dtnd/data/i_user_service.dart';
 import 'package:dtnd/data/implementations/data_center_service.dart';
 import 'package:dtnd/data/implementations/user_service.dart';
 import 'package:get/get.dart';
 
+import '../../../../=models=/response/accumulation/contract_fee_model.dart';
+
 class AccumulationController {
   static final AccumulationController _instance =
       AccumulationController._intern();
+
   static AccumulationController get instance => _instance;
 
   AccumulationController._intern();
 
   factory AccumulationController() => _instance;
+  ContractFee? contractFee;
 
   // State
   final IUserService userService = UserService();
@@ -22,8 +27,13 @@ class AccumulationController {
   final Rx<List<ContractModel>?> listAllContract = Rx(<ContractModel>[]);
   final Rx<bool> accumulationInitialized = false.obs;
   final Rx<bool> baseContract = false.obs;
+  final RxString openDay = ''.obs;
+  final RxString endDay = ''.obs;
+  SingleContract? singleContract;
 
   get flagContract => baseContract.value;
+  final RxDouble cashValue = 0.0.obs;
+  final RxDouble feeValue = 0.0.obs;
 
   Future<void> init() async {
     await getFeeRate();
@@ -63,6 +73,11 @@ class AccumulationController {
     }
   }
 
+  Future<SingleContract?> getSingleContract(String itemId) async {
+    singleContract = await userService.getSingleContract(itemId);
+    return singleContract;
+  }
+
   ContractModel getItemContract(String id) {
     ContractModel itemWithId;
     itemWithId = listAllContract.value!.firstWhere((item) => item.id == id);
@@ -72,5 +87,22 @@ class AccumulationController {
   Future<void> checkContractBase() async {
     baseContract.value = await userService.checkContractBase();
     baseContract.refresh();
+  }
+
+  Future<ContractFee?> getProvisionalFee(String term, String capital) async {
+    contractFee = await userService.getProvisionalFee(term, capital);
+    if (contractFee != null) {
+      cashValue.value =
+          double.tryParse(contractFee!.cCASHVALUE.toString()) ?? 0;
+      feeValue.value = double.tryParse(contractFee!.cFEEVALUE.toString()) ?? 0;
+      openDay.value = contractFee?.cOPENDATE.toString() ?? '';
+      endDay.value = contractFee?.cEXPIREDATE.toString() ?? '';
+    }
+    return contractFee;
+  }
+
+  Future<void> liquidAll(String contractId) async {
+    var liquidAll = await userService.liquidAll(contractId);
+
   }
 }

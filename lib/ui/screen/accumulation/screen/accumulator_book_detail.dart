@@ -12,6 +12,7 @@ import '../widget/row_information.dart';
 class AccumulatorBookDetail extends StatefulWidget {
   const AccumulatorBookDetail(
       {super.key, required this.name, required this.id});
+
   final String name;
   final String id;
 
@@ -29,6 +30,13 @@ class _AccumulatorBookDetailState extends State<AccumulatorBookDetail> {
   late String _method = 'Tự động gia hạn gốc và lãi';
   final AccumulationController _controller = Get.put(AccumulationController());
   late ContractModel contract = _controller.getItemContract(widget.id);
+
+  @override
+  void initState() {
+    super.initState();
+    _controller.getSingleContract(widget.id);
+  }
+
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
@@ -96,7 +104,7 @@ class _AccumulatorBookDetailState extends State<AccumulatorBookDetail> {
                     ),
                     Flexible(
                       flex: 1,
-                      child: Text(contract.id.toString(),
+                      child: Text(contract.contractCode.toString(),
                           textAlign: TextAlign.right,
                           softWrap: true,
                           style: textTheme.bodyMedium?.copyWith(
@@ -113,7 +121,7 @@ class _AccumulatorBookDetailState extends State<AccumulatorBookDetail> {
                     rightText: '${contract.feeRate}%/năm'),
                 RowInfomation(
                   leftText: 'Lãi dự tính',
-                  rightText: NumUtils.formatInteger(contract.liquid),
+                  rightText: "${NumUtils.formatInteger(contract.fee)}đ",
                   differentColor: true,
                 ),
                 RowInfomation(
@@ -165,28 +173,28 @@ class _AccumulatorBookDetailState extends State<AccumulatorBookDetail> {
               ],
             ),
           ),
-          Container(
-              height: 40,
-              decoration: const BoxDecoration(
-                color: AppColors.primary_03,
-                borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(12),
-                    bottomRight: Radius.circular(12)),
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text('Xem lịch sử giao dịch',
-                      style: textTheme.bodySmall?.copyWith(
-                          color: AppColors.primary_04,
-                          fontWeight: FontWeight.w600)),
-                  const Icon(
-                    Icons.arrow_right,
-                    color: AppColors.primary_01,
-                    size: 24.0,
-                  ),
-                ],
-              )),
+          // Container(
+          //     height: 40,
+          //     decoration: const BoxDecoration(
+          //       color: AppColors.primary_03,
+          //       borderRadius: BorderRadius.only(
+          //           bottomLeft: Radius.circular(12),
+          //           bottomRight: Radius.circular(12)),
+          //     ),
+          //     child: Row(
+          //       mainAxisAlignment: MainAxisAlignment.center,
+          //       children: [
+          //         Text('Xem lịch sử giao dịch',
+          //             style: textTheme.bodySmall?.copyWith(
+          //                 color: AppColors.primary_04,
+          //                 fontWeight: FontWeight.w600)),
+          //         const Icon(
+          //           Icons.arrow_right,
+          //           color: AppColors.primary_01,
+          //           size: 24.0,
+          //         ),
+          //       ],
+          //     )),
           const SizedBox(height: 24),
           Container(
               height: 90,
@@ -245,9 +253,10 @@ class _AccumulatorBookDetailState extends State<AccumulatorBookDetail> {
                 children: [
                   RowInfomation(
                       leftText: 'Lãi hiện tại trước hạn',
-                      rightText: '${contract.otherFeeRate}%/năm'),
+                      rightText:
+                          '${_controller.singleContract?.cLIQUIDRATE}%/năm'),
                   const SizedBox(height: 4),
-                  Text('${contract.currentFee}đ',
+                  Text('${_controller.singleContract?.cLIQUIDFEE}đ',
                       style: textTheme.bodyLarge?.copyWith(
                           fontWeight: FontWeight.w600,
                           color: AppColors.semantic_01)),

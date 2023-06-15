@@ -77,7 +77,7 @@ class _AccumulatorHistoryState extends State<AccumulatorHistory> {
       Padding(
         padding: const EdgeInsets.symmetric(horizontal: 6.0),
         child: Row(
-          // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             DayInput(
               color: Colors.white,

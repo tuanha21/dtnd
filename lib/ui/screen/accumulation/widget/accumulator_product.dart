@@ -127,7 +127,7 @@ class ItemBuilder extends StatelessWidget {
                       ),
                       const SizedBox(height: 3),
                       Text(
-                        autoFlag ? 'Đã đăng ký' : 'Chưa đăng kí',
+                        autoFlag ? 'Đã đăng ký' : 'Chưa đăng ký',
                         style: const TextStyle(color: AppColors.semantic_01),
                       ),
                     ],

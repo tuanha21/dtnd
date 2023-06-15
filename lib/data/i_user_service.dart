@@ -12,6 +12,9 @@ import 'package:dtnd/=models=/side.dart';
 import 'package:dtnd/=models=/sign_up_success_data_model.dart';
 import 'package:get/get.dart';
 
+import '../=models=/response/accumulation/contract_fee_model.dart';
+import '../=models=/response/accumulation/single_contract.dart';
+
 abstract class IUserService {
   bool get isLogin;
 
@@ -102,4 +105,10 @@ abstract class IUserService {
   Future<bool> checkContractBase();
 
   Future<void> changeContractBase(int codeFlag);
+
+  Future<ContractFee?> getProvisionalFee(String term, String capital);
+
+  Future<SingleContract?> getSingleContract(String itemId);
+
+  Future<SingleContract?> liquidAll(String contactId);
 }
