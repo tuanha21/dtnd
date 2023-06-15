@@ -1,7 +1,5 @@
-import 'package:dtnd/ui/screen/ekyc/ekyc_logic.dart';
+import 'package:dtnd/ui/screen/ekyc/page/ekyc_select_type.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:go_router/go_router.dart';
 
 import '../../../theme/app_color.dart';
 import '../../../theme/app_image.dart';
@@ -59,7 +57,11 @@ class EkycIntroducePage extends StatelessWidget {
                   width: MediaQuery.of(context).size.width,
                   child: ElevatedButton(
                       onPressed: () {
-                        Get.find<EkycLogic>().nextStep();
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const EkycSelectType()),
+                        );
                       },
                       child: const Text("Xác minh ngay"))),
               const SizedBox(height: 16),

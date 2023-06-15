@@ -554,5 +554,7 @@
   "top_volume": "Top khối lượng",
   "right_to_buy" : "Quyền mua",
   "cash_dividend":"Cổ tức tiền",
-  "dividends_value":"Cổ tức bằng CP/CP thưởng"
+  "dividends_value":"Cổ tức bằng CP/CP thưởng",
+  "cancel_registration":"Hủy đăng ký"
+
 }

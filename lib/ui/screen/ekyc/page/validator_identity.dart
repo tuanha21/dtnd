@@ -1,16 +1,13 @@
 import 'dart:io';
-
 import 'package:dtnd/generated/l10n.dart';
+import 'package:dtnd/ui/screen/ekyc/ekyc_controller.dart';
 import 'package:dtnd/ui/screen/ekyc/page/indentity_inform.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-
 import '../../../../utilities/media_permission.dart';
 import '../../../theme/app_color.dart';
-import '../ekyc_logic.dart';
-import '../ekyc_state.dart';
 
 class ValidatorIdentity extends StatefulWidget {
   const ValidatorIdentity({super.key, required this.style});
@@ -22,10 +19,7 @@ class ValidatorIdentity extends StatefulWidget {
 }
 
 class _ValidatorIdentityState extends State<ValidatorIdentity> {
-  final logic = Get.find<EkycLogic>();
-
-  EkycState get state => logic.state;
-
+  final EkycController myController = Get.put(EkycController());
   File? identityFront;
   File? identityBack;
 
@@ -37,8 +31,6 @@ class _ValidatorIdentityState extends State<ValidatorIdentity> {
 
   @override
   void initState() {
-    identityFront = state.identityFront;
-    identityBack = state.identityBack;
     isContinue.value = isContinueStep;
     super.initState();
   }
@@ -52,8 +44,8 @@ class _ValidatorIdentityState extends State<ValidatorIdentity> {
         leading: BackButton(
           onPressed: () {
             // logic.backStep();
-            state.identityFront = null;
-            state.identityBack = null;
+            // state.identityFront = null;
+            // state.identityBack = null;
             Navigator.of(context).pop();
           },
         ),
@@ -118,9 +110,8 @@ class _ValidatorIdentityState extends State<ValidatorIdentity> {
                     child: ElevatedButton(
                       onPressed: isContinue
                           ? () {
-                              state.identityFront = identityFront;
-                              state.identityBack = identityBack;
-                              // logic.nextStep();
+                              myController.updateFrontFile(identityFront!);
+                              myController.updateBackFile(identityBack!);
                               Navigator.of(context).push(MaterialPageRoute(
                                 builder: (context) => const IdentityInform(),
                               ));

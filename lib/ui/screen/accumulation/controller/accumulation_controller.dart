@@ -25,12 +25,16 @@ class AccumulationController {
   final Rx<List<FeeRateModel>?> listFeeRate = Rx(<FeeRateModel>[]);
   final Rx<List<ContractModel>?> listAllContract = Rx(<ContractModel>[]);
   final Rx<bool> accumulationInitialized = false.obs;
+  final Rx<bool> baseContract = false.obs;
+
+  get flagContract => baseContract.value;
   final RxDouble cashValue = 0.0.obs;
   final RxDouble feeValue = 0.0.obs;
 
   Future<void> init() async {
     await getFeeRate();
     await getAllContract();
+    await checkContractBase();
     accumulationInitialized.value = true;
   }
 
@@ -69,6 +73,11 @@ class AccumulationController {
     ContractModel itemWithId;
     itemWithId = listAllContract.value!.firstWhere((item) => item.id == id);
     return itemWithId;
+  }
+
+  Future<void> checkContractBase() async {
+    baseContract.value = await userService.checkContractBase();
+    baseContract.refresh();
   }
 
   Future<ContractFee?> getProvisionalFee(String term, String capital) async {

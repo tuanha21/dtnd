@@ -2,11 +2,8 @@ import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
-import '../ekyc_logic.dart';
-import '../ekyc_state.dart';
 import 'indentity_face.dart';
 
 class IdentityInform extends StatefulWidget {
@@ -19,10 +16,10 @@ class IdentityInform extends StatefulWidget {
 class _IdentityInformState extends State<IdentityInform> {
   final _formKey = GlobalKey<FormState>();
 
-  EkycState get state => logic.state;
+  // EkycState get state => logic.state;
 
   ValueNotifier<bool> isContinue = ValueNotifier<bool>(true);
-  final logic = Get.find<EkycLogic>();
+  // final logic = Get.find<EkycLogic>();
   late TextEditingController birthDateCtl =
       TextEditingController(text: '1/1/1999');
   late TextEditingController rangeDateCtl = TextEditingController(
@@ -353,10 +350,8 @@ class _IdentityInformState extends State<IdentityInform> {
                                     // logic.nextStep();
                                     Navigator.of(context).push(
                                         MaterialPageRoute(
-                                            builder:
-                                                (context) => const IdentityFace()
-                                        )
-                                    );
+                                            builder: (context) =>
+                                                const IdentityFace()));
                                   }
                                 : null,
                             child: Text(S.of(context).next),

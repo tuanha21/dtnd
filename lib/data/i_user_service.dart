@@ -101,5 +101,9 @@ abstract class IUserService {
     int? recordPerPage,
   });
 
+  Future<bool> checkContractBase();
+
+  Future<void> changeContractBase(int codeFlag);
+
   Future<ContractFee?> getProvisionalFee(String term, String capital);
 }

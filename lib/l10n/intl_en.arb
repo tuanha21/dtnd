@@ -554,6 +554,8 @@
   "top_volume":"Top volume",
   "right_to_buy":"Right to buy",
   "cash_dividend":"Cash dividend",
-  "dividends_value":"Dividends in shares/bonus shares"
+  "dividends_value":"Dividends in shares/bonus shares",
+  "cancel_registration":"Cancel registration"
+
 
 }

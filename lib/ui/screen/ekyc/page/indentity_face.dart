@@ -1,12 +1,8 @@
 import 'dart:async';
-
+import 'package:dtnd/ui/screen/ekyc/page/indentity_sign.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-
-import '../ekyc_logic.dart';
-import '../ekyc_state.dart';
 
 class IdentityFace extends StatefulWidget {
   const IdentityFace({Key? key}) : super(key: key);
@@ -16,10 +12,7 @@ class IdentityFace extends StatefulWidget {
 }
 
 class _IdentityFaceState extends State<IdentityFace> {
-  EkycState get state => logic.state;
-
   ValueNotifier<bool> isContinue = ValueNotifier<bool>(true);
-  final logic = Get.find<EkycLogic>();
 
   int countdownSeconds = 2;
   Timer? timer;
@@ -39,8 +32,11 @@ class _IdentityFaceState extends State<IdentityFace> {
         } else {
           timer.cancel();
           isIdentity = true;
-          Future.delayed(const Duration(seconds: 4), () {
-            logic.nextStep();
+          Future.delayed(const Duration(seconds: 2), () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const IdentitySign()),
+            );
           });
         }
       });
@@ -55,7 +51,6 @@ class _IdentityFaceState extends State<IdentityFace> {
       appBar: AppBar(
         leading: BackButton(
           onPressed: () {
-            // logic.backStep();
             Navigator.of(context).pop();
           },
         ),

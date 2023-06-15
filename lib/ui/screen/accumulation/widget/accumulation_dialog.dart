@@ -4,7 +4,11 @@ import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:flutter/material.dart';
 
 class AccumulationDialog extends StatelessWidget {
-  const AccumulationDialog({super.key});
+  const AccumulationDialog(
+      {super.key, required this.title, required this.content});
+
+  final String title;
+  final String content;
 
   @override
   Widget build(BuildContext context) {
@@ -27,15 +31,17 @@ class AccumulationDialog extends StatelessWidget {
               child: Image.asset(AppImages.illust06),
             ),
             const SizedBox(height: 30),
-            Text('Đăng ký thành công!',
+            Text(title,
+                textAlign: TextAlign.center,
                 style: textTheme.labelLarge?.copyWith(
                     color: AppColors.text_black, fontWeight: FontWeight.bold)),
             const SizedBox(height: 20),
-            Text('Bạn đã hoàn thành đăng ký tích lũy',
+            Text(content,
+                textAlign: TextAlign.center,
                 style: textTheme.bodyLarge?.copyWith(
                   color: AppColors.neutral_02,
                 )),
-            const SizedBox(height: 24),
+            const SizedBox(height: 20),
             Row(
               children: [
                 Expanded(
