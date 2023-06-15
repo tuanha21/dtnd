@@ -160,7 +160,6 @@ class AppDialog extends AlertDialog {
     }
 
     if (actions != null) {
-      final double spacing = (buttonPadding?.horizontal ?? 16) / 2;
       actionsWidget = Container(
         height: 40,
         decoration: const BoxDecoration(

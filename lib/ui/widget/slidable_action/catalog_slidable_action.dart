@@ -91,12 +91,6 @@ class _CustomSlidableAction extends CustomSlidableAction {
 
   @override
   Widget build(BuildContext context) {
-    final effectiveForegroundColor = foregroundColor ??
-        (ThemeData.estimateBrightnessForColor(backgroundColor) ==
-                Brightness.light
-            ? Colors.black
-            : Colors.white);
-
     return Expanded(
       flex: flex,
       child: SizedBox.expand(

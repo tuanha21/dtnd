@@ -1,5 +1,5 @@
 class LanguageUtil {
-  static final _vietnamese = 'aAeEoOuUiIdDyY';
+  static const _vietnamese = 'aAeEoOuUiIdDyY';
   static final _vietnameseRegex = <RegExp>[
     RegExp(r'à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ'),
     RegExp(r'À|Á|Ạ|Ả|Ã|Â|Ầ|Ấ|Ậ|Ẩ|Ẫ|Ă|Ằ|Ắ|Ặ|Ẳ|Ẵ'),
@@ -18,7 +18,7 @@ class LanguageUtil {
   ];
 
   static String toUnsigned(String text) {
-    if (text == null || text.isEmpty) {
+    if (text.isEmpty) {
       return text;
     }
     var result = text;
