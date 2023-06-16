@@ -300,11 +300,6 @@ class _Tile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final MediaQueryData data = MediaQuery.of(context);
-    double bgWidth;
-    bgWidth = Tween<double>(
-      begin: 0,
-      end: 1,
-    ).evaluate(animation);
     if (data.orientation == Orientation.landscape &&
         layout == BottomNavigationBarLandscapeLayout.linear) {
       return Align(
@@ -750,7 +745,6 @@ class _FloatingBottomNavigationBarState
     assert(debugCheckHasDirectionality(context));
     assert(debugCheckHasMaterialLocalizations(context));
     assert(debugCheckHasMediaQuery(context));
-    assert(Overlay.of(context, debugRequiredFor: widget) != null);
 
     final BottomNavigationBarThemeData bottomTheme =
         BottomNavigationBarTheme.of(context);
