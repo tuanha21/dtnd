@@ -83,7 +83,6 @@ class _StockOrderSheetState extends State<StockOrderSheet>
     tabController = TabController(length: 3, vsync: this);
     stockModel = widget.stockModel;
     super.initState();
-    listMR = stockModel?.stockDataCore?.mr.map((mr) => mr.mr).toList() ?? [];
     if (stockModel == null) {
       listOrderTypes = {OrderType.LO};
       selectedOrderType = listOrderTypes.first;
@@ -114,6 +113,12 @@ class _StockOrderSheetState extends State<StockOrderSheet>
         tabController.animateTo(widget.defaultTab!);
       }
     });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    listMR?.clear();
   }
 
   Future<void> getStockInfoCore() async {
@@ -222,6 +227,7 @@ class _StockOrderSheetState extends State<StockOrderSheet>
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
+    listMR = stockModel?.stockDataCore?.mr.map((mr) => mr.mr).toList() ?? [];
     return SingleChildScrollView(
       scrollDirection: Axis.vertical,
       child: Form(
