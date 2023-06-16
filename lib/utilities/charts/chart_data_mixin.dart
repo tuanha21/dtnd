@@ -34,6 +34,7 @@ class OhlcHistoryItem {
   late final num low;
   late final num close;
   late final num volumn;
+  late final num percent;
 
   OhlcHistoryItem({
     required this.time,
@@ -42,5 +43,7 @@ class OhlcHistoryItem {
     required this.low,
     required this.close,
     required this.volumn,
-  });
+  }) {
+    percent = (close - open) / 100;
+  }
 }

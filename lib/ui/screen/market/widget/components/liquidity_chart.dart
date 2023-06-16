@@ -40,17 +40,23 @@ class _LiquidityChartState extends State<LiquidityChart> {
                   height: 300,
                   child: charts.OrdinalComboChart(
                     [
-                      charts.Series<num, String>(
+                      charts.Series<num?, String>(
                         id: 'Hiện tại',
                         colorFn: (_, __) => charts.ColorUtil.fromDartColor(
                             AppColors.semantic_01),
-                        domainFn: (num val, index) =>
+                        domainFn: (num? val, index) =>
                             liquidityModel.time.elementAt(index ?? 0),
-                        measureFn: (num val, index) {
+                        measureFn: (num? val, index) {
                           // print(liquidityModel.time.elementAt(index ?? 0));
                           // print(val);
+                          if (val == 0) {
+                            return null;
+                          }
                           return val;
                         },
+                        areaColorFn: (datum, index) =>
+                            charts.ColorUtil.fromDartColor(
+                                AppColors.semantic_01.withOpacity(0.5)),
                         data: liquidityModel.currVal,
                       )..setAttribute(
                           charts.measureAxisIdKey, "secondaryMeasureAxisId"),
@@ -62,32 +68,29 @@ class _LiquidityChartState extends State<LiquidityChart> {
                             liquidityModel.time.elementAt(index ?? 0),
                         measureFn: (num val, _) => val,
                         data: liquidityModel.prevVal,
-                      )
-                        ..setAttribute(charts.rendererIdKey, 'customLine')
-                        ..setAttribute(
-                            charts.measureAxisIdKey, "secondaryMeasureAxisId"),
-                      charts.Series<num, String>(
-                        id: '1 tuần',
-                        colorFn: (_, __) => charts.ColorUtil.fromDartColor(
-                            AppColors.semantic_05),
-                        domainFn: (num val, index) =>
-                            liquidityModel.time.elementAt(index ?? 0),
-                        measureFn: (num val, _) => val,
-                        data: liquidityModel.week1Val,
-                      )
-                        ..setAttribute(charts.rendererIdKey, 'customLine')
-                        ..setAttribute(
-                            charts.measureAxisIdKey, "secondaryMeasureAxisId"),
+                      )..setAttribute(
+                          charts.measureAxisIdKey, "secondaryMeasureAxisId"),
+                      // charts.Series<num, String>(
+                      //   id: '1 tuần',
+                      //   colorFn: (_, __) => charts.ColorUtil.fromDartColor(
+                      //       AppColors.semantic_05),
+                      //   domainFn: (num val, index) =>
+                      //       liquidityModel.time.elementAt(index ?? 0),
+                      //   measureFn: (num val, _) => val,
+                      //   data: liquidityModel.week1Val,
+                      // )..setAttribute(
+                      //     charts.measureAxisIdKey, "secondaryMeasureAxisId"),
                     ],
                     animate: true,
-                    defaultRenderer: charts.BarRendererConfig(
+                    defaultRenderer: charts.LineRendererConfig(
                       // groupingType: charts.BarGroupingType.grouped,
 
                       // By default, bar renderer will draw rounded bars with a constant
                       // radius of 100.
                       // To not have any rounded corners, use [NoCornerStrategy]
                       // To change the radius of the bars, use [ConstCornerStrategy]
-                      cornerStrategy: const charts.ConstCornerStrategy(2),
+                      includeArea: true,
+                      stacked: false,
                     ),
                     customSeriesRenderers: [
                       charts.LineRendererConfig(customRendererId: 'customLine'),
@@ -145,19 +148,16 @@ class _LiquidityChartState extends State<LiquidityChart> {
                         updatedListener: (charts.SelectionModel model) {
                           if (model.hasDatumSelection) {
                             final selectedDatum = model.selectedDatum;
-                            // if (liquidityModel.time.elementAt(
-                            //         selectedDatum.elementAt(1).index ?? 0) !=
-                            //     liquidityModel.time.elementAt(
-                            //         selectedDatum.first.index ?? 0)) {}
-                            // print(selectedDatum.first.index);
-                            // print(selectedDatum.elementAt(1).index);
                             final datas = [
                               liquidityModel.time.elementAt(
                                   selectedDatum.elementAt(1).index ?? 0),
-                              if (selectedDatum.first.datum != 0)
-                                "Hiện tại : ${NumUtils.formatDouble(selectedDatum.first.datum)} tỷ",
-                              "Phiên trước : ${NumUtils.formatDouble(selectedDatum.elementAt(1).datum)} tỷ",
-                              "Tuần trước : ${NumUtils.formatDouble(selectedDatum.elementAt(2).datum)} tỷ",
+                              if (selectedDatum.elementAt(1).datum != 0) ...[
+                                "Hiện tại : ${NumUtils.formatDouble(selectedDatum.elementAt(1).datum)} tỷ",
+                                "Phiên trước : ${NumUtils.formatDouble(selectedDatum.elementAt(0).datum)} tỷ",
+                                // "Tuần trước : ${NumUtils.formatDouble(selectedDatum.elementAt(2).datum)} tỷ",
+                              ] else ...[
+                                "Phiên trước : ${NumUtils.formatDouble(selectedDatum.elementAt(0).datum)} tỷ",
+                              ]
                             ];
                             _TooltipData.instance.setData(datas);
                           }

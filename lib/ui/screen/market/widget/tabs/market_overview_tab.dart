@@ -36,50 +36,50 @@ class _MarketOverviewTabState extends State<MarketOverviewTab> {
 
   Future<void> _reloadData() async {}
 
-  List<charts.Series<DeepModel, String>> _generateData(List<DeepModel> datas) {
-    datas.removeWhere((element) => element.tYPE == "Total");
-    return [
-      charts.Series<DeepModel, String>(
-        id: "MarketDeep",
-        data: datas,
-        domainFn: (data, _) => data.tYPE,
-        measureFn: (data, _) => data.sL,
-        colorFn: (data, _) {
-          if (data.tYPE == "0%") {
-            return charts.ColorUtil.fromDartColor(AppColors.semantic_02);
-          }
-          if (_spaceTypeRegex.hasMatch(data.tYPE) ||
-              _upTypeRegex.hasMatch(data.tYPE)) {
-            return charts.ColorUtil.fromDartColor(AppColors.semantic_01);
-          }
-          return charts.ColorUtil.fromDartColor(AppColors.semantic_03);
-        },
-        labelAccessorFn: (data, _) => '${data.sL}',
-        outsideLabelStyleAccessorFn: (data, _) {
-          charts.Color textColor;
-          final int size;
-          if (data.sL > 100) {
-            size = 10;
-          } else {
-            size = 12;
-          }
-          if (data.tYPE == "0%") {
-            textColor = charts.ColorUtil.fromDartColor(AppColors.semantic_02);
-          } else if (_spaceTypeRegex.hasMatch(data.tYPE) ||
-              _upTypeRegex.hasMatch(data.tYPE)) {
-            textColor = charts.ColorUtil.fromDartColor(AppColors.semantic_01);
-          } else {
-            textColor = charts.ColorUtil.fromDartColor(AppColors.semantic_03);
-          }
-          return charts.TextStyleSpec(
-            fontSize: size,
-            fontWeight: "600",
-            color: textColor,
-          );
-        },
-      ),
-    ];
-  }
+  // List<charts.Series<DeepModel, String>> _generateData(List<DeepModel> datas) {
+  //   datas.removeWhere((element) => element.tYPE == "Total");
+  //   return [
+  //     charts.Series<DeepModel, String>(
+  //       id: "MarketDeep",
+  //       data: datas,
+  //       domainFn: (data, _) => data.tYPE,
+  //       measureFn: (data, _) => data.sL,
+  //       colorFn: (data, _) {
+  //         if (data.tYPE == "0%") {
+  //           return charts.ColorUtil.fromDartColor(AppColors.semantic_02);
+  //         }
+  //         if (_spaceTypeRegex.hasMatch(data.tYPE) ||
+  //             _upTypeRegex.hasMatch(data.tYPE)) {
+  //           return charts.ColorUtil.fromDartColor(AppColors.semantic_01);
+  //         }
+  //         return charts.ColorUtil.fromDartColor(AppColors.semantic_03);
+  //       },
+  //       labelAccessorFn: (data, _) => '${data.sL}',
+  //       outsideLabelStyleAccessorFn: (data, _) {
+  //         charts.Color textColor;
+  //         final int size;
+  //         if (data.sL > 100) {
+  //           size = 10;
+  //         } else {
+  //           size = 12;
+  //         }
+  //         if (data.tYPE == "0%") {
+  //           textColor = charts.ColorUtil.fromDartColor(AppColors.semantic_02);
+  //         } else if (_spaceTypeRegex.hasMatch(data.tYPE) ||
+  //             _upTypeRegex.hasMatch(data.tYPE)) {
+  //           textColor = charts.ColorUtil.fromDartColor(AppColors.semantic_01);
+  //         } else {
+  //           textColor = charts.ColorUtil.fromDartColor(AppColors.semantic_03);
+  //         }
+  //         return charts.TextStyleSpec(
+  //           fontSize: size,
+  //           fontWeight: "600",
+  //           color: textColor,
+  //         );
+  //       },
+  //     ),
+  //   ];
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -108,6 +108,3 @@ class _MarketOverviewTabState extends State<MarketOverviewTab> {
     );
   }
 }
-
-final RegExp _spaceTypeRegex = RegExp(r'^(\d)(?=-)-(\d%)$');
-final RegExp _upTypeRegex = RegExp(r'^>=(\d%)$');

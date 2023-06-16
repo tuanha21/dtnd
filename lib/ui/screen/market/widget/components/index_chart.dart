@@ -91,44 +91,48 @@ class _IndexChartState extends State<IndexChart> {
             }),
           ),
         ),
-        ObxValue<Rx<bool>>((initialized) {
-          if (!initialized.value) {
-            return Center(
-              child: Text(S.of(context).loading),
-            );
-          }
-          return Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: SizedBox.fromSize(
-              size: Size(MediaQuery.of(context).size.width, 80),
-              child: ScrollConfiguration(
-                behavior: ScrollConfiguration.of(context).copyWith(
-                  dragDevices: {
-                    PointerDeviceKind.touch,
-                    PointerDeviceKind.mouse,
-                  },
-                ),
-                child: ListView.separated(
-                  scrollDirection: Axis.horizontal,
-                  physics: const AlwaysScrollableScrollPhysics(),
-                  itemCount: marketController.listIndexs.length,
-                  itemBuilder: (context, index) =>
-                      ObxValue<Rx<IndexModel?>>((currentIndexModel) {
-                    return MarketIndexItem(
-                      data: marketController.listIndexs.elementAt(index).first,
-                      selectedIndex: currentIndexModel.value?.index,
-                      onSelected: changeIndex,
-                    );
-                  }, marketController.currentIndexModel),
-                  separatorBuilder: (BuildContext context, int index) =>
-                      const SizedBox(
-                    width: 8,
+        ObxValue<Rx<bool>>(
+          (initialized) {
+            if (!initialized.value) {
+              return Center(
+                child: Text(S.of(context).loading),
+              );
+            }
+            return Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: SizedBox.fromSize(
+                size: Size(MediaQuery.of(context).size.width, 80),
+                child: ScrollConfiguration(
+                  behavior: ScrollConfiguration.of(context).copyWith(
+                    dragDevices: {
+                      PointerDeviceKind.touch,
+                      PointerDeviceKind.mouse,
+                    },
+                  ),
+                  child: ListView.separated(
+                    scrollDirection: Axis.horizontal,
+                    physics: const AlwaysScrollableScrollPhysics(),
+                    itemCount: marketController.listIndexs.length,
+                    itemBuilder: (context, index) =>
+                        ObxValue<Rx<IndexModel?>>((currentIndexModel) {
+                      return MarketIndexItem(
+                        data:
+                            marketController.listIndexs.elementAt(index).first,
+                        selectedIndex: currentIndexModel.value?.index,
+                        onSelected: changeIndex,
+                      );
+                    }, marketController.currentIndexModel),
+                    separatorBuilder: (BuildContext context, int index) =>
+                        const SizedBox(
+                      width: 8,
+                    ),
                   ),
                 ),
               ),
-            ),
-          );
-        }, marketController.initialized),
+            );
+          },
+          marketController.initialized,
+        ),
       ],
     );
   }
