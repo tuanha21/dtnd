@@ -12,6 +12,7 @@ import 'package:dtnd/data/implementations/local_storage_service.dart';
 import 'package:dtnd/data/implementations/network_service.dart';
 import 'package:dtnd/data/implementations/user_service.dart';
 import 'package:dtnd/generated/l10n.dart';
+import 'package:dtnd/ui/screen/asset/asset_controller.dart';
 import 'package:dtnd/ui/screen/asset/component/account_asset_overview_widget.dart';
 import 'package:dtnd/ui/screen/asset/component/asset_distribution_chart.dart';
 import 'package:dtnd/ui/screen/asset/screen/executed_profit_loss/realized_profit_loss.dart';
@@ -37,8 +38,39 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 
 import '../../widget/overlay/custom_dialog.dart';
+import 'component/asset_effective_chart.dart';
 import 'component/portfolio_and_right_panel.dart';
 import 'sheet/sheet_flow.dart';
+
+enum AssetChartType { asset, effective, assetDistribution }
+
+extension AssetChartTypeX on AssetChartType {
+  AssetChartType get next {
+    switch (this) {
+      case AssetChartType.asset:
+        return AssetChartType.effective;
+      case AssetChartType.effective:
+        return AssetChartType.assetDistribution;
+      case AssetChartType.assetDistribution:
+        return AssetChartType.asset;
+    }
+  }
+
+  bool get isAsset => this == AssetChartType.asset;
+  bool get isEffective => this == AssetChartType.effective;
+  bool get isAssetDistribution => this == AssetChartType.assetDistribution;
+
+  String get title {
+    switch (this) {
+      case AssetChartType.asset:
+        return S.current.total_asset;
+      case AssetChartType.effective:
+        return S.current.effective;
+      case AssetChartType.assetDistribution:
+        return S.current.asset_distribution;
+    }
+  }
+}
 
 class AssetScreen extends StatefulWidget {
   const AssetScreen({
@@ -55,21 +87,22 @@ class _AssetScreenState extends State<AssetScreen>
   final IDataCenterService dataCenterService = DataCenterService();
   final INetworkService networkService = NetworkService();
   final ILocalStorageService localStorageService = LocalStorageService();
-
+  final AssetController controller = AssetController();
   void rebuild() => setState(() {});
 
   void changeChart() {
     setState(() {
-      showTotalAsset = !showTotalAsset;
+      chartType = chartType.next;
     });
   }
 
-  bool showTotalAsset = true;
+  AssetChartType chartType = AssetChartType.asset;
 
-  // @override
-  // void initState() {
-  //   super.initState();
-  // }
+  @override
+  void initState() {
+    controller.init();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -123,7 +156,7 @@ class _AssetScreenState extends State<AssetScreen>
                 child: Image.asset(
                   AppImages.home_icon_notification,
                 )),
-            onTap: (){
+            onTap: () {
               Fluttertoast.showToast(
                 msg: S.of(context).developing_feature,
                 toastLength: Toast.LENGTH_LONG,
@@ -150,7 +183,7 @@ class _AssetScreenState extends State<AssetScreen>
         } else {
           final textTheme = Theme.of(context).textTheme;
           Widget chart;
-          if (showTotalAsset) {
+          if (chartType.isAsset) {
             chart = Obx(
               () {
                 final data = userService.listAccountModel.value
@@ -160,6 +193,20 @@ class _AssetScreenState extends State<AssetScreen>
 
                 return AssetChart(
                   datas: data?.listAssetChart,
+                );
+              },
+            );
+          } else if (chartType.isEffective) {
+            chart = Obx(
+              () {
+                final data = userService.listAccountModel.value
+                        ?.firstWhereOrNull((element) =>
+                            element.runtimeType == BaseMarginPlusAccountModel)
+                    as BaseMarginPlusAccountModel?;
+
+                return AssetEffectiveChart(
+                  datas: data?.listAssetChart,
+                  indexDatas: controller.currentChartData.value,
                 );
               },
             );
@@ -214,9 +261,7 @@ class _AssetScreenState extends State<AssetScreen>
                             ),
                             const SizedBox(width: 10),
                             Text(
-                              showTotalAsset
-                                  ? S.of(context).total_asset
-                                  : S.of(context).asset_distribution,
+                              chartType.title,
                               style: textTheme.bodyMedium!.copyWith(
                                 color: AppColors.primary_01,
                                 fontWeight: FontWeight.w600,

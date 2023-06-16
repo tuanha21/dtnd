@@ -1,5 +1,4 @@
 import 'package:dtnd/=models=/response/stock_trading_history.dart';
-import 'package:dtnd/config/service/app_services.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:flutter/material.dart';
 import 'package:k_chart/chart_translations.dart';
@@ -97,7 +96,6 @@ class _KChartState extends State<KChart> {
 
   @override
   Widget build(BuildContext context) {
-    final themeMode = AppService.instance.themeMode.value;
     final bgColor = <Color>[
       Colors.transparent,
       Colors.transparent,

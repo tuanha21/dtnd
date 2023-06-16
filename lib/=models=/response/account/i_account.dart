@@ -85,7 +85,7 @@ abstract class IAccountModel implements CoreResponseModel {
           cmd: "ListAssetChart",
           p1: accCode,
           p2: TimeUtilities.commonTimeFormat.format(fromTime ??
-              TimeUtilities.getPreviousDateTime(TimeUtilities.month(3))),
+              TimeUtilities.getPreviousDateTime(TimeUtilities.month(1))),
           p3: TimeUtilities.commonTimeFormat.format(toTime ?? DateTime.now())),
     );
     listAssetChart = await networkService
