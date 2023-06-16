@@ -142,7 +142,7 @@ class _SettlementConfirmState extends State<SettlementConfirm> {
               leftText: 'Số ngày gửi',
               rightText:
                   "${NumUtils.formatInteger(_controller.singleContract?.cCURRENTDAY)} ngày"),
-          RowInfomation(leftText: 'Ngày bắt đầu ', rightText: getToDay()),
+          RowInfomation(leftText: 'Ngày tất toán ', rightText: getToDay()),
           RowInfomation(
               leftText:
                   'Lãi tất toán trước hạn (${_controller.singleContract?.cLIQUIDRATE}%/năm)',

@@ -34,7 +34,7 @@ class _AccumulationRegisterState extends State<AccumulationRegister> {
 
   final AccumulationController _controller = Get.put(AccumulationController());
   late FeeRateModel feeRate = _controller.getItemFeeRate(widget.id);
-  final _moneyController = TextEditingController(text: '0');
+  final _moneyController = TextEditingController();
   late num profit = 0;
   late num sum = 0;
   late num copyMoney = 0;
@@ -170,6 +170,7 @@ class _AccumulationRegisterState extends State<AccumulationRegister> {
                 labelText: S.of(context).the_principal_amount,
                 suffixText: 'đ',
                 suffixStyle: const TextStyle(color: Colors.grey),
+                hintText: "Nhập số tiền"
               ),
               onFieldSubmitted: (value) {
                 _controller.getProvisionalFee(feeRate.termCode ?? '',

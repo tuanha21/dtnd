@@ -134,7 +134,7 @@ class _AccumulationAutoContractState extends State<AccumulationAutoContract> {
                                   NumUtils.formatInteger(feeRate.capMax)),
                           RowInfomation(
                               leftText: S.of(context).early_interest_rate,
-                              rightText: feeRate.liquidRate.toString()),
+                              rightText: "${feeRate.liquidRate}%"),
                           RowInfomation(
                               leftText: S.of(context).renewal_method,
                               rightText: 'Linh hoạt'),
