@@ -4,31 +4,32 @@ import 'package:dtnd/data/implementations/user_service.dart';
 import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/screen/accumulation/controller/accumulation_controller.dart';
 import 'package:dtnd/ui/screen/accumulation/screen/accumulation_auto_register_dialog.dart';
-import 'package:dtnd/ui/screen/accumulation/widget/accumulation_dialog.dart';
 import 'package:dtnd/ui/screen/accumulation/widget/accumulator_header.dart';
-import 'package:dtnd/ui/screen/accumulation/widget/error_register_dialog.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:dtnd/ui/widget/appbar/simple_appbar.dart';
 import 'package:dtnd/utilities/num_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
 import '../widget/row_information.dart';
 
-class AccummulationAutoContract extends StatefulWidget {
-  const AccummulationAutoContract({super.key, required this.id});
+class AccumulationAutoContract extends StatefulWidget {
+  const AccumulationAutoContract({super.key, required this.id});
+
   final String id;
 
   @override
-  State<AccummulationAutoContract> createState() =>
-      _AccummulationAutoContractState();
+  State<AccumulationAutoContract> createState() =>
+      _AccumulationAutoContractState();
 }
 
-class _AccummulationAutoContractState extends State<AccummulationAutoContract> {
+class _AccumulationAutoContractState extends State<AccumulationAutoContract> {
   final AccumulationController _controller = Get.put(AccumulationController());
   late FeeRateModel feeRate = _controller.getItemFeeRate(widget.id);
   late bool isRegister = _controller.baseContract.value;
   final IUserService userService = UserService();
+
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
@@ -47,7 +48,8 @@ class _AccummulationAutoContractState extends State<AccummulationAutoContract> {
               const SizedBox(height: 20),
               Row(
                 children: [
-                  Text('Tích luỹ ${feeRate.termName.toString()}',
+                  Text(
+                      '${S.of(context).accumulate} ${feeRate.termName.toString()}',
                       style: textTheme.bodyLarge),
                   const Spacer(),
                   Text('${feeRate.feeRate.toString()}%/năm',

@@ -18,7 +18,6 @@ class AccumulationController {
   AccumulationController._intern();
 
   factory AccumulationController() => _instance;
-  ContractFee? contractFee;
 
   // State
   final IUserService userService = UserService();
@@ -29,7 +28,10 @@ class AccumulationController {
   final Rx<bool> baseContract = false.obs;
   final RxString openDay = ''.obs;
   final RxString endDay = ''.obs;
+  final RxString liquidRate = ''.obs;
+  final RxString liquidFee = ''.obs;
   SingleContract? singleContract;
+  ContractFee? contractFee;
 
   get flagContract => baseContract.value;
   final RxDouble cashValue = 0.0.obs;
@@ -75,6 +77,8 @@ class AccumulationController {
 
   Future<SingleContract?> getSingleContract(String itemId) async {
     singleContract = await userService.getSingleContract(itemId);
+    liquidRate.value = singleContract?.cLIQUIDRATE.toString() ?? '';
+    liquidFee.value = singleContract?.cLIQUIDFEE.toString() ?? '';
     return singleContract;
   }
 
@@ -102,7 +106,6 @@ class AccumulationController {
   }
 
   Future<void> liquidAll(String contractId) async {
-    var liquidAll = await userService.liquidAll(contractId);
-
+    await userService.liquidAll(contractId);
   }
 }

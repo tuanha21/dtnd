@@ -1,5 +1,5 @@
 import 'package:dtnd/=models=/response/accumulation/contract_model.dart';
-import 'package:dtnd/=models=/response/accumulation/fee_rate_model.dart';
+import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/screen/accumulation/controller/accumulation_controller.dart';
 import 'package:dtnd/ui/screen/accumulation/widget/settlement_dialog.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
@@ -7,6 +7,7 @@ import 'package:dtnd/ui/widget/appbar/simple_appbar.dart';
 import 'package:dtnd/utilities/num_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
 import '../widget/row_information.dart';
 
 class AccumulatorBookDetail extends StatefulWidget {
@@ -117,10 +118,10 @@ class _AccumulatorBookDetailState extends State<AccumulatorBookDetail> {
                   height: 16,
                 ),
                 RowInfomation(
-                    leftText: 'Lãi suất',
+                    leftText: S.of(context).profit,
                     rightText: '${contract.feeRate}%/năm'),
                 RowInfomation(
-                  leftText: 'Lãi dự tính',
+                  leftText: S.of(context).expected_profit,
                   rightText: "${NumUtils.formatInteger(contract.fee)}đ",
                   differentColor: true,
                 ),
@@ -130,7 +131,7 @@ class _AccumulatorBookDetailState extends State<AccumulatorBookDetail> {
                       '${NumUtils.formatInteger(contract.currentValue)}đ',
                 ),
                 RowInfomation(
-                    leftText: 'Kỳ hạn',
+                    leftText: S.of(context).period,
                     rightText: contract.termName.toString()),
                 Container(
                   height: 60,
@@ -146,11 +147,11 @@ class _AccumulatorBookDetailState extends State<AccumulatorBookDetail> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              'Ngày bắt đầu',
+                              S.of(context).start_date,
                               style: textTheme.bodySmall
                                   ?.copyWith(color: AppColors.neutral_04),
                             ),
-                            Text('Ngày kết thúc',
+                            Text(S.of(context).end_date,
                                 style: textTheme.bodySmall
                                     ?.copyWith(color: AppColors.neutral_04)),
                           ],
@@ -241,27 +242,31 @@ class _AccumulatorBookDetailState extends State<AccumulatorBookDetail> {
               )),
           const SizedBox(height: 24),
           Container(
-              height: 80,
-              padding: const EdgeInsets.all(12),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  RowInfomation(
-                      leftText: 'Lãi hiện tại trước hạn',
-                      rightText:
-                          '${_controller.singleContract?.cLIQUIDRATE}%/năm'),
-                  const SizedBox(height: 4),
-                  Text('${_controller.singleContract?.cLIQUIDFEE}đ',
-                      style: textTheme.bodyLarge?.copyWith(
-                          fontWeight: FontWeight.w600,
-                          color: AppColors.semantic_01)),
-                ],
-              )),
+            height: 80,
+            padding: const EdgeInsets.all(12),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: Obx(
+              () {
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    RowInfomation(
+                        leftText: 'Lãi hiện tại trước hạn',
+                        rightText: '${_controller.liquidRate.value}%/năm'),
+                    const SizedBox(height: 4),
+                    Text('${_controller.liquidFee.value}đ',
+                        style: textTheme.bodyLarge?.copyWith(
+                            fontWeight: FontWeight.w600,
+                            color: AppColors.semantic_01)),
+                  ],
+                );
+              },
+            ),
+          ),
         ],
       ),
     );
@@ -289,42 +294,46 @@ class _AccumulatorBookDetailState extends State<AccumulatorBookDetail> {
                 const SizedBox(height: 12),
                 Expanded(
                   child: ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: _selectedMethod.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        return GestureDetector(
-                          onTap: () {
-                            setStateSheet(() {
-                              for (int i = 0; i < _selectedMethod.length; i++) {
-                                if (i == index) {
-                                  _selectedMethod[i] = true;
-                                } else {
-                                  _selectedMethod[i] = false;
-                                }
+                    shrinkWrap: true,
+                    itemCount: _selectedMethod.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return GestureDetector(
+                        onTap: () {
+                          setStateSheet(() {
+                            for (int i = 0; i < _selectedMethod.length; i++) {
+                              if (i == index) {
+                                _selectedMethod[i] = true;
+                              } else {
+                                _selectedMethod[i] = false;
                               }
-                            });
-                          },
-                          child: Container(
-                              height: 40,
-                              width: double.infinity,
-                              alignment: Alignment.centerLeft,
-                              padding: const EdgeInsets.only(left: 20),
-                              margin: const EdgeInsets.only(bottom: 16),
-                              decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(12),
-                                  border: Border.all(
-                                      color: _selectedMethod[index] == true
-                                          ? AppColors.primary_01
-                                          : Colors.transparent)),
-                              child: Text(_textMethod[index],
-                                  style: textTheme.bodyMedium?.copyWith(
-                                    fontWeight: _selectedMethod[index] == true
-                                        ? FontWeight.w700
-                                        : FontWeight.w400,
-                                  ))),
-                        );
-                      }),
+                            }
+                          });
+                        },
+                        child: Container(
+                          height: 40,
+                          width: double.infinity,
+                          alignment: Alignment.centerLeft,
+                          padding: const EdgeInsets.only(left: 20),
+                          margin: const EdgeInsets.only(bottom: 16),
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(12),
+                              border: Border.all(
+                                  color: _selectedMethod[index] == true
+                                      ? AppColors.primary_01
+                                      : Colors.transparent)),
+                          child: Text(
+                            _textMethod[index],
+                            style: textTheme.bodyMedium?.copyWith(
+                              fontWeight: _selectedMethod[index] == true
+                                  ? FontWeight.w700
+                                  : FontWeight.w400,
+                            ),
+                          ),
+                        ),
+                      );
+                    },
+                  ),
                 ),
               ],
             ),
