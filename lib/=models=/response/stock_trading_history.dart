@@ -36,7 +36,6 @@ class StockTradingHistory {
     lastUpdatedTime = DateTime.now();
     t.addAll(json['t'].cast<num>());
     if (t.isNotEmpty) {
-      final List<DateTime> list = [];
       for (num militime in t) {
         final int epoc = militime.toInt() * 1000;
         final datetime = DateTime.fromMillisecondsSinceEpoch(epoc);

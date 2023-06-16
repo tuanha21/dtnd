@@ -1,4 +1,3 @@
-import 'package:dtnd/config/service/app_services.dart';
 import 'package:dtnd/ui/screen/virtual_assistant/va_home/va_screen.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:flutter/material.dart';
@@ -99,7 +98,6 @@ class VaAccessElement extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final themeMode = AppService.instance.themeMode.value;
     return Container(
       height: 56,
       margin: const EdgeInsets.symmetric(horizontal: 2),
