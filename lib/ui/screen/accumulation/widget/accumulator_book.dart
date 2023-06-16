@@ -181,7 +181,7 @@ class ItemBuilder extends StatelessWidget {
                   style: textTheme.bodyMedium?.copyWith(
                       fontWeight: FontWeight.bold,
                       color: AppColors.neutral_02)),
-              Text('${NumUtils.formatDoubleString(profit)}đ',
+              Text('+${NumUtils.formatDoubleString(profit)}đ',
                   style: textTheme.bodyMedium?.copyWith(
                       fontWeight: FontWeight.bold,
                       color: AppColors.semantic_01)),

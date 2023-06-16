@@ -1,6 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dtnd/=models=/response/news_model.dart';
-import 'package:dtnd/config/service/app_services.dart';
 import 'package:dtnd/data/i_data_center_service.dart';
 import 'package:dtnd/data/i_network_service.dart';
 import 'package:dtnd/data/implementations/data_center_service.dart';
@@ -39,7 +38,6 @@ class _ListNewsSheetState extends State<ListNewsSheet> {
 
   @override
   Widget build(BuildContext context) {
-    final ThemeMode themeMode = AppService.instance.themeMode.value;
     Widget list;
     if (listNews?.isEmpty ?? true) {
       list = Container();

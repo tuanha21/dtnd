@@ -77,7 +77,7 @@ class ItemBuilder extends StatelessWidget {
       Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (context) => AccummulationAutoContract(
+            builder: (context) => AccumulationAutoContract(
                   id: id,
                 )),
       );

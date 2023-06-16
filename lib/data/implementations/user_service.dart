@@ -438,6 +438,9 @@ class UserService implements IUserService {
     }
   }
 
+
+  // Danh sách sản phẩm tích lũy
+
   @override
   Future<List<FeeRateModel>?> getAllFreeRate() {
     Map<String, dynamic> body = {
@@ -449,6 +452,7 @@ class UserService implements IUserService {
     return networkService.getAllFreeRate(jsonEncode(body));
   }
 
+  // Đăng ký tích lũy
   @override
   Future<bool> updateContract(String termCode, num capital, String extentType) {
     Map<String, dynamic> body = {
@@ -471,6 +475,7 @@ class UserService implements IUserService {
     return networkService.updateContract(jsonEncode(body));
   }
 
+  // Danh sách tích lũy
   @override
   Future<List<ContractModel>?> getAllContract() {
     Map<String, dynamic> body = {
@@ -513,6 +518,7 @@ class UserService implements IUserService {
     return networkService.getHistoryContract(jsonEncode(body));
   }
 
+  // Check HD khung : check trạng thái của TK đã đăng ký tích lũy tự động hay chưa
   @override
   Future<bool> checkContractBase() {
     Map<String, dynamic> body = {
@@ -524,6 +530,7 @@ class UserService implements IUserService {
     return networkService.checkContractBase(jsonEncode(body));
   }
 
+  // Đăng ký tích lũy tự động
   @override
   Future<void> changeContractBase(int codeFlag) {
     Map<String, dynamic> body = {
@@ -539,6 +546,7 @@ class UserService implements IUserService {
     return networkService.changeContractBase(jsonEncode(body));
   }
 
+  // Check ngày hết hạn, phí tạm tính
   @override
   Future<ContractFee?> getProvisionalFee(String term, String capital) {
     Map<String, dynamic> body = {
@@ -557,6 +565,7 @@ class UserService implements IUserService {
     return networkService.getProvisionalFee(jsonEncode(body));
   }
 
+  // Chi tiết tích lũy
   @override
   Future<SingleContract?> getSingleContract(
     String itemID,
@@ -576,6 +585,7 @@ class UserService implements IUserService {
     return networkService.getSingleContract(jsonEncode(body));
   }
 
+  // Tất toán tích lũy
   @override
   Future<SingleContract?> liquidAll(String contractId) {
     Map<String, dynamic> body = {
@@ -591,6 +601,6 @@ class UserService implements IUserService {
         }
       }
     };
-    return networkService.getSingleContract(jsonEncode(body));
+    return networkService.liquidAll(jsonEncode(body));
   }
 }

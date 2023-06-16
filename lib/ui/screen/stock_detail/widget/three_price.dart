@@ -116,9 +116,7 @@ class ThreePriceHeader extends StatelessWidget {
         // color: const Color.fromRGBO(136, 148, 170, 1),
         color: AppColors.neutral_02,
         fontWeight: FontWeight.w600);
-    const Radius radius = Radius.circular(4);
     List<Widget> rowChildren;
-    BorderRadius borderRadius;
     if (side.isBuy) {
       rowChildren = [
         Text(S.of(context).volumn, style: bodySmall),
@@ -128,7 +126,6 @@ class ThreePriceHeader extends StatelessWidget {
               color: const Color.fromRGBO(105, 224, 199, 1)),
         )
       ];
-      borderRadius = const BorderRadius.only(topLeft: radius);
     } else {
       rowChildren = [
         Text(
@@ -141,9 +138,6 @@ class ThreePriceHeader extends StatelessWidget {
           style: bodySmall,
         )
       ];
-      borderRadius = const BorderRadius.only(
-        topRight: radius,
-      );
     }
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
