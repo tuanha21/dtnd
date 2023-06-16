@@ -24,6 +24,10 @@ extension DateTimeX on DateTime {
   DateTime get firstDayOfMonth {
     return DateTime(year, month, 1);
   }
+
+  bool isSameDay(DateTime other) {
+    return year == other.year && month == other.month && day == other.day;
+  }
 }
 
 class TimeUtilities {

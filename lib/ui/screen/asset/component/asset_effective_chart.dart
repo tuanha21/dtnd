@@ -30,6 +30,8 @@ class _AssetEffectiveChartState extends State<AssetEffectiveChart>
   static const secondaryMeasureAxisId = 'secondaryMeasureAxisId';
 
   late List<AssetChartElementModel> datas;
+  late List<num> assetPercents;
+  late List<num> indexPercents;
   late List<OhlcHistoryItem>? indexDatas;
   late List<charts.Series<dynamic, DateTime>> assetSeriesList;
   DateTime start = DateTime.now().subtract(const Duration(days: 1));
@@ -37,7 +39,6 @@ class _AssetEffectiveChartState extends State<AssetEffectiveChart>
   @override
   void initState() {
     super.initState();
-    datas = widget.datas ?? [];
     _generateChartData();
   }
 
@@ -54,13 +55,17 @@ class _AssetEffectiveChartState extends State<AssetEffectiveChart>
         if (datas.isNotEmpty) {
           start = datas.first.cTRADINGDATE;
           end = datas.last.cTRADINGDATE;
+          assetPercents = [datas.first.cDAYPROFITRATE];
+          for (var element in datas) {
+            assetPercents.add(assetPercents.last + element.cDAYPROFITRATE);
+          }
         }
         assetSeriesList = [
           charts.Series(
             id: "Tài sản",
             data: datas,
             domainFn: (data, _) => data.cTRADINGDATE,
-            measureFn: (data, _) => data.cDAYPROFITRATE,
+            measureFn: (_, index) => assetPercents.elementAt(index!),
             seriesColor: charts.ColorUtil.fromDartColor(AppColors.semantic_03),
           )..setAttribute(charts.measureAxisIdKey, secondaryMeasureAxisId),
           // charts.Series(
@@ -88,12 +93,36 @@ class _AssetEffectiveChartState extends State<AssetEffectiveChart>
       });
       if (widget.indexDatas != null) {
         indexDatas = historyToChartItem(widget.indexDatas!);
+        print(indexDatas!.first.time.beginningOfDay.toString());
+        print(datas.first.cTRADINGDATE.toString());
+        print(indexDatas!.first.time.beginningOfDay
+            .isSameDay(datas.first.cTRADINGDATE));
+        if (indexDatas!.first.time.beginningOfDay
+            .isSameDay(datas.first.cTRADINGDATE)) {
+          indexPercents = [indexDatas!.first.percent];
+        } else {
+          final index = indexDatas!.indexWhere((element) =>
+              element.time.beginningOfDay.isSameDay(datas.first.cTRADINGDATE));
+          print(index);
+          if (index > 0) {
+            indexDatas!.removeRange(0, index);
+            print(indexDatas!.first.time.beginningOfDay.toString());
+            indexPercents = [indexDatas!.first.percent];
+          } else {
+            return;
+          }
+        }
+        for (var element in indexDatas!) {
+          print(indexPercents.last);
+          print(element.percent);
+          indexPercents.add(indexPercents.last + element.percent);
+        }
         assetSeriesList.add(
           charts.Series(
             id: "VN30",
             data: indexDatas!,
             domainFn: (data, _) => (data.time as DateTime).beginningOfDay,
-            measureFn: (data, _) => data.percent,
+            measureFn: (_, index) => indexPercents.elementAt(index!),
             seriesColor: charts.ColorUtil.fromDartColor(AppColors.primary_01),
           )..setAttribute(charts.measureAxisIdKey, secondaryMeasureAxisId),
         );
@@ -172,11 +201,12 @@ class _AssetEffectiveChartState extends State<AssetEffectiveChart>
                   final String value;
                   switch (label) {
                     case "Tài sản":
-                      value =
-                          NumUtils.formatDouble(element.datum.cDAYPROFITRATE);
+                      value = NumUtils.formatDouble(
+                          assetPercents.elementAt(element.index!));
                       break;
                     case "VN30":
-                      value = NumUtils.formatDouble(element.datum.percent);
+                      value = NumUtils.formatDouble(
+                          indexPercents.elementAt(element.index!));
                       break;
                     // case "Giá trị CK":
                     //   value =
