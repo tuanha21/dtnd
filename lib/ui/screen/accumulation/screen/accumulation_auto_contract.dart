@@ -44,7 +44,7 @@ class _AccumulationAutoContractState extends State<AccumulationAutoContract> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const AccumulatorHeader(),
+              AccumulatorHeader(),
               const SizedBox(height: 20),
               Row(
                 children: [
