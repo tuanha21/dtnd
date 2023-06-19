@@ -110,28 +110,26 @@ class _StockDetailChartState extends State<StockDetailChart>
           stockModel: widget.stockModel, history: stockTradingHistory!);
       chart = charts.TimeSeriesChart(
         [
-          ...List<charts.Series<num, DateTime>>.generate(
-              stockTradingHistory!.c.length,
-              (index) => charts.Series<num, DateTime>(
-                    id: 'chart1',
-                    colorFn: (_, __) => charts.ColorUtil.fromDartColor(
-                        widget.stockModel.stockData.color),
-                    domainFn: (num indexBoard, int? index) {
-                      if (index != null) {
-                        if (timeSeries == TimeSeries.day) {
-                          return stockTradingHistory!.time[index];
-                        }
-                        return stockTradingHistory!.time[index].beginningOfDay;
-                      } else {
-                        throw Exception("Chart index null");
-                      }
-                    },
-                    measureFn: (num price, _) {
-                      return price;
-                    },
-                    data: stockTradingHistory!.c,
-                  )..setAttribute(
-                      charts.measureAxisIdKey, "secondaryMeasureAxisId")),
+          charts.Series<NumValue, DateTime>(
+            id: 'chart1',
+            colorFn: (_, __) => charts.ColorUtil.fromDartColor(
+                widget.stockModel.stockData.color),
+            domainFn: (NumValue indexBoard, int? index) {
+              if (index != null) {
+                if (timeSeries == TimeSeries.day) {
+                  return stockTradingHistory!.time[index];
+                }
+                return stockTradingHistory!.time[index].beginningOfDay;
+              } else {
+                throw Exception("Chart index null");
+              }
+            },
+            measureFn: (NumValue price, _) {
+              return price.value;
+            },
+            data: List.generate(stockTradingHistory!.c.length,
+                (index) => NumValue(stockTradingHistory!.c.elementAt(index))),
+          )..setAttribute(charts.measureAxisIdKey, "secondaryMeasureAxisId"),
           // if (listEvent.isNotEmpty)
           //   charts.Series<SecEvent, DateTime>(
           //     id: 'Annotation Series 2',
@@ -213,9 +211,15 @@ class _StockDetailChartState extends State<StockDetailChart>
                 final List<String> datas = [];
                 if (model.selectedDatum.length > 1) {
                   final SecEvent event = model.selectedDatum.first.datum;
+                  if (timeSeries == TimeSeries.day) {
+                    datas.add(
+                        "Lúc ${TimeUtilities.onlyHourFormat.format(event.dateTime!)}");
+                  } else {
+                    datas.add(
+                        "Ngày ${TimeUtilities.commonTimeFormat.format(event.dateTime!)}");
+                  }
                   datas.add(
-                      "Ngày ${TimeUtilities.commonTimeFormat.format(event.dateTime!)}");
-                  datas.add("Giá    ${model.selectedDatum.elementAt(1).datum}");
+                      "Giá    ${model.selectedDatum.elementAt(1).datum.value}");
                   final String title;
                   print(event.title?.length);
                   if ((event.title?.length ?? 0) > 30) {
@@ -226,9 +230,14 @@ class _StockDetailChartState extends State<StockDetailChart>
                   datas.add(title);
                 } else {
                   final index = model.selectedDatum.first.index ?? 0;
-                  datas.add(
-                      "Ngày ${TimeUtilities.commonTimeFormat.format(stockTradingHistory!.time.elementAt(index))}");
-                  datas.add("Giá    ${model.selectedDatum.first.datum}");
+                  if (timeSeries == TimeSeries.day) {
+                    datas.add(
+                        "Lúc ${TimeUtilities.onlyHourFormat.format(stockTradingHistory!.time.elementAt(index))}");
+                  } else {
+                    datas.add(
+                        "Ngày ${TimeUtilities.commonTimeFormat.format(stockTradingHistory!.time.elementAt(index))}");
+                  }
+                  datas.add("Giá    ${model.selectedDatum.first.datum.value}");
                 }
                 // if (model.selectedDatum.first.datum is SecEvent) {
                 //   print(model.selectedDatum.first.datum.dateTime.toString());

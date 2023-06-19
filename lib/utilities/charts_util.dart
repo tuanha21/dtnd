@@ -86,3 +86,8 @@ abstract class TooltipData {
     this.listData = listData;
   }
 }
+
+class NumValue {
+  final num value;
+  const NumValue(this.value);
+}

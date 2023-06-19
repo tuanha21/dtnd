@@ -80,16 +80,16 @@ class _MarketIndustryTabState extends State<MarketIndustryTab>
                 GestureDetector(
                   onTap: () => showDialog<String>(
                     context: context,
-                    builder: (BuildContext context) => Dialog(
+                    builder: (BuildContext ctx) => Dialog(
                       child: Container(
                         padding: const EdgeInsets.all(16),
                         decoration: BoxDecoration(
                             color: AppColors.light_bg,
                             borderRadius: BorderRadius.circular(8)),
-                        width: MediaQuery.of(context).size.width,
+                        width: MediaQuery.of(ctx).size.width,
                         child: Text(
                             '${S.of(context).chart_comparing_the_cash}${TimeUtilities.parseDateToString(DateTime.now())}',
-                            style: Theme.of(context)
+                            style: Theme.of(ctx)
                                 .textTheme
                                 .labelMedium
                                 ?.copyWith(

@@ -3472,16 +3472,6 @@ class S {
     );
   }
 
-  /// `End`
-  String get end {
-    return Intl.message(
-      'End',
-      name: 'end',
-      desc: '',
-      args: [],
-    );
-  }
-
   /// `ok`
   String get ok {
     return Intl.message(
@@ -5377,6 +5367,16 @@ class S {
     return Intl.message(
       'Cancel registration',
       name: 'cancel_registration',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `End`
+  String get end {
+    return Intl.message(
+      'End',
+      name: 'end',
       desc: '',
       args: [],
     );

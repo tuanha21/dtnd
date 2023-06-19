@@ -30,6 +30,8 @@ class _AssetEffectiveChartState extends State<AssetEffectiveChart>
   static const secondaryMeasureAxisId = 'secondaryMeasureAxisId';
 
   late List<AssetChartElementModel> datas;
+  late num? firstAsset;
+  late num? firstIndex;
   late List<num> assetPercents;
   late List<num> indexPercents;
   late List<OhlcHistoryItem>? indexDatas;
@@ -55,6 +57,7 @@ class _AssetEffectiveChartState extends State<AssetEffectiveChart>
         if (datas.isNotEmpty) {
           start = datas.first.cTRADINGDATE;
           end = datas.last.cTRADINGDATE;
+          firstAsset = datas.first.cNETVALUE;
           assetPercents = [datas.first.cDAYPROFITRATE];
           for (var element in datas) {
             assetPercents.add(assetPercents.last + element.cDAYPROFITRATE);
@@ -93,29 +96,23 @@ class _AssetEffectiveChartState extends State<AssetEffectiveChart>
       });
       if (widget.indexDatas != null) {
         indexDatas = historyToChartItem(widget.indexDatas!);
-        print(indexDatas!.first.time.beginningOfDay.toString());
-        print(datas.first.cTRADINGDATE.toString());
-        print(indexDatas!.first.time.beginningOfDay
-            .isSameDay(datas.first.cTRADINGDATE));
-        if (indexDatas!.first.time.beginningOfDay
+        if (!indexDatas!.first.time.beginningOfDay
             .isSameDay(datas.first.cTRADINGDATE)) {
-          indexPercents = [indexDatas!.first.percent];
-        } else {
           final index = indexDatas!.indexWhere((element) =>
               element.time.beginningOfDay.isSameDay(datas.first.cTRADINGDATE));
-          print(index);
           if (index > 0) {
             indexDatas!.removeRange(0, index);
-            print(indexDatas!.first.time.beginningOfDay.toString());
-            indexPercents = [indexDatas!.first.percent];
           } else {
             return;
           }
         }
+        firstIndex = indexDatas!.first.open;
+        // indexPercents = [
+        //   (indexDatas!.first.close - firstIndex!) * 100 / firstIndex!
+        // ];
+        indexPercents = [];
         for (var element in indexDatas!) {
-          print(indexPercents.last);
-          print(element.percent);
-          indexPercents.add(indexPercents.last + element.percent);
+          indexPercents.add((element.close - firstIndex!) * 100 / firstIndex!);
         }
         assetSeriesList.add(
           charts.Series(

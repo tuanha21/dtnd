@@ -235,6 +235,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "change_password": MessageLookupByLibrary.simpleMessage("Đổi mật khẩu"),
         "change_translations":
             MessageLookupByLibrary.simpleMessage("% Thay đổi"),
+        "chart_comparing_the_cash": MessageLookupByLibrary.simpleMessage(
+            "Biểu đồ so sánh dòng tiền tại dùng thời điểm với phiên trước, trung bình 1 tuần. Dữ liệu ngày "),
         "choose_stocks_you_interested": MessageLookupByLibrary.simpleMessage(
             "Chọn các mã CK mà bạn đang quan tâm. Bạn có thể cập nhật thêm các mã CK sau"),
         "choose_the_topic":

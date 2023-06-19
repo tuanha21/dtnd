@@ -365,7 +365,6 @@
   "interface": "Giao diện",
   "stock_analysis": "Phân tích cổ phiếu",
   "unknown_exception": "Lỗi không xác định",
-  "end": "Kết thúc",
   "ok": "Đồng ý",
   "Later": "Để sau",
   "biometric_authentication": "Đăng nhập bằng sinh trắc học",
@@ -397,7 +396,7 @@
   "stock_exchange": "Sàn chứng khoán",
   "Please_provide_a_list": "Vui lòng nhập danh mục",
   "invalid_value": "Giá trị không hợp lệ",
-  "chart_comparing_the_cash ": "Biểu đồ so sánh dòng tiền tại dùng thời điểm với phiên trước, trung bình 1 tuần. Dữ liệu ngày ",
+  "chart_comparing_the_cash": "Biểu đồ so sánh dòng tiền tại dùng thời điểm với phiên trước, trung bình 1 tuần. Dữ liệu ngày ",
   "order_cancellation_confirmation": "Xác nhận hủy lệnh",
   "Are_you_sure_you_want_to_cancel_the_order": "Bạn có chắc chắn muốn huỷ lệnh ?",
   "value": "Giá trị",
@@ -555,6 +554,6 @@
   "right_to_buy" : "Quyền mua",
   "cash_dividend":"Cổ tức tiền",
   "dividends_value":"Cổ tức bằng CP/CP thưởng",
-  "cancel_registration":"Hủy đăng ký"
-
+  "cancel_registration":"Hủy đăng ký",
+  "end" : "Kết thúc"
 }

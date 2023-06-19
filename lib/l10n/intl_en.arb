@@ -365,7 +365,6 @@
   "interface": "Interface",
   "stock_analysis": "Stock analysis",
   "unknown_exception": "Unknown exception",
-  "end": "End",
   "ok": "ok",
   "Later": "Later",
   "biometric_authentication": "Biometric authentication",
@@ -555,7 +554,7 @@
   "right_to_buy":"Right to buy",
   "cash_dividend":"Cash dividend",
   "dividends_value":"Dividends in shares/bonus shares",
-  "cancel_registration":"Cancel registration"
-
-
+  "cancel_registration":"Cancel registration",
+  
+  "end": "End"
 }

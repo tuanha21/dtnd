@@ -198,7 +198,7 @@ class _BasicIndexState extends State<BasicIndex> {
               style: Theme.of(context).textTheme.bodyMedium,
             ),
             const SizedBox(width: 6),
-            SvgPicture.asset(AppImages.circleAlert)
+            // SvgPicture.asset(AppImages.circleAlert)
           ],
         ),
         const SizedBox(height: 16),

@@ -148,14 +148,15 @@ class _IndexWidgetState extends State<IndexWidget> {
                         children: [
                           Expanded(
                               child: boxData("EPS",
-                                  "${NumUtils.formatInteger(eps?.value1)} ${eps?.unit}")),
+                                  "${NumUtils.formatInteger(eps?.value1, '-')} ${eps?.unit ?? '-'}")),
                           const SizedBox(width: 5),
                           Expanded(
-                              child:
-                                  boxData("PE", "${pe?.value1} ${pe?.unit}")),
+                              child: boxData("PE",
+                                  "${pe?.value1 ?? '-'} ${pe?.unit ?? '-'}")),
                           const SizedBox(width: 5),
                           Expanded(
-                              child: boxData("PB", "${pb?.value1} ${pb?.unit}"))
+                              child: boxData("PB",
+                                  "${pb?.value1 ?? '-'} ${pb?.unit ?? '-'}"))
                         ],
                       ),
                       const SizedBox(height: 5),
@@ -167,7 +168,7 @@ class _IndexWidgetState extends State<IndexWidget> {
                                   (tongNoVCSH?.value1 == 0 ||
                                           tongNoVCSH?.value1 == null)
                                       ? "-"
-                                      : "${NumUtils.formatInteger(tongNoVCSH?.value1 ?? 0)} ${tongNoVCSH?.unit ?? ""}")),
+                                      : "${NumUtils.formatInteger(tongNoVCSH?.value1 ?? 0, '-')} ${tongNoVCSH?.unit ?? ""}")),
                           const SizedBox(width: 5),
                           Expanded(
                               child: boxData(
@@ -175,7 +176,7 @@ class _IndexWidgetState extends State<IndexWidget> {
                                   (tongNoTS?.value1 == 0 ||
                                           tongNoTS?.value1 == null)
                                       ? "-"
-                                      : '${NumUtils.formatInteger(tongNoTS?.value1)} ${tongNoTS?.unit ?? ""}')),
+                                      : '${NumUtils.formatInteger(tongNoTS?.value1, '-')} ${tongNoTS?.unit ?? ""}')),
                           const SizedBox(width: 5),
                           Expanded(
                               child: boxData(
@@ -183,23 +184,23 @@ class _IndexWidgetState extends State<IndexWidget> {
                                   (thanhToan?.value1 == 0 ||
                                           thanhToan?.value1 == null)
                                       ? "-"
-                                      : "${NumUtils.formatInteger(thanhToan?.value1)} ${thanhToan?.unit ?? ""}"))
+                                      : "${NumUtils.formatInteger(thanhToan?.value1, '-')} ${thanhToan?.unit ?? ""}"))
                         ],
                       ),
                       const SizedBox(height: 5),
                       Row(
                         children: [
                           Expanded(
-                              child: boxData(
-                                  "ROE", "${roe?.value1} ${roe?.unit}")),
+                              child: boxData("ROE",
+                                  "${roe?.value1 ?? '-'} ${roe?.unit ?? '-'}")),
                           const SizedBox(width: 5),
                           Expanded(
-                              child: boxData(
-                                  "ROA", "${roa?.value1} ${roa?.unit}")),
+                              child: boxData("ROA",
+                                  "${roa?.value1 ?? '-'} ${roa?.unit ?? '-'}")),
                           const SizedBox(width: 5),
                           Expanded(
                               child: boxData("Tỷ suất LN gộp",
-                                  "${tyXuatLN?.value1} ${tyXuatLN?.unit}"))
+                                  "${tyXuatLN?.value1 ?? '-'} ${tyXuatLN?.unit ?? '-'}"))
                         ],
                       ),
                     ],
