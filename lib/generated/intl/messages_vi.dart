@@ -58,6 +58,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "Banking": MessageLookupByLibrary.simpleMessage("Ngân hàng"),
         "Bot_list": MessageLookupByLibrary.simpleMessage("Danh sách bot"),
         "Carriage": MessageLookupByLibrary.simpleMessage("Vận tải"),
+        "Catalog_already_exists":
+            MessageLookupByLibrary.simpleMessage("Danh mục đã tồn tại"),
         "Chemistry": MessageLookupByLibrary.simpleMessage("Hóa chất"),
         "Cigarette": MessageLookupByLibrary.simpleMessage("Thuốc lá"),
         "Close_command": MessageLookupByLibrary.simpleMessage("Lệnh đóng"),
