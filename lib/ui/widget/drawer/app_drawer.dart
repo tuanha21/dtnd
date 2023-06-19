@@ -1,5 +1,6 @@
 import 'package:dtnd/config/service/app_services.dart';
 import 'package:dtnd/data/i_user_service.dart';
+import 'package:dtnd/data/implementations/local_storage_service.dart';
 import 'package:dtnd/data/implementations/user_service.dart';
 import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/screen/login/login_screen.dart';
@@ -11,6 +12,7 @@ import 'package:dtnd/ui/widget/drawer/component/list_function.dart';
 import 'package:dtnd/ui/widget/drawer/logic/function_data.dart';
 import 'package:dtnd/ui/widget/drawer/logic/icon_asset.dart';
 import 'package:dtnd/utilities/account_util.dart';
+import 'package:dtnd/utilities/sign_in_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../../theme/app_image.dart';
@@ -254,11 +256,12 @@ class _AppDrawerState extends State<AppDrawer> {
                   return AccountUtil.deleteAccount(context,
                       afterDeletion: widget.onLogout);
                 } else {
-                  Navigator.of(context).push<bool>(
-                    MaterialPageRoute(
-                      builder: (context) => const LoginScreen(),
-                    ),
-                  );
+                  // Navigator.of(context).push<bool>(
+                  //   MaterialPageRoute(
+                  //     builder: (context) => const LoginScreen(),
+                  //   ),
+                  // );
+                  SigniInUtils.login(context, LocalStorageService());
                 }
               },
               text: "${S.of(context).delete} ${S.of(context).account}",
