@@ -5381,6 +5381,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Catalog already exists`
+  String get Catalog_already_exists {
+    return Intl.message(
+      'Catalog already exists',
+      name: 'Catalog_already_exists',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

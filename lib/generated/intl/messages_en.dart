@@ -57,6 +57,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "Banking": MessageLookupByLibrary.simpleMessage("Banking"),
         "Bot_list": MessageLookupByLibrary.simpleMessage("Bot list"),
         "Carriage": MessageLookupByLibrary.simpleMessage("Carriage"),
+        "Catalog_already_exists":
+            MessageLookupByLibrary.simpleMessage("Catalog already exists"),
         "Chemistry": MessageLookupByLibrary.simpleMessage("Chemistry"),
         "Cigarette": MessageLookupByLibrary.simpleMessage("Cigarette"),
         "Close_command": MessageLookupByLibrary.simpleMessage("Close command"),

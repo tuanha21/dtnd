@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 
 class Accumlation extends StatefulWidget {
   const Accumlation({super.key, this.defaultab = 0});
+
   final int defaultab;
 
   @override
@@ -19,6 +20,7 @@ class _AccumlationState extends State<Accumlation>
     with SingleTickerProviderStateMixin {
   late final TabController tabController;
   final AccumulationController controller = AccumulationController();
+
   @override
   void initState() {
     tabController = TabController(length: 3, vsync: this);
@@ -40,7 +42,7 @@ class _AccumlationState extends State<Accumlation>
         padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 5),
         child: Column(
           children: [
-            const AccumulatorHeader(),
+            AccumulatorHeader(),
             const SizedBox(height: 10),
             TabBar(
               controller: tabController,

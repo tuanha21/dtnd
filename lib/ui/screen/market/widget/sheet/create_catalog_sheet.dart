@@ -6,6 +6,7 @@ import 'package:dtnd/ui/widget/icon/sheet_header.dart';
 import 'package:dtnd/utilities/validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 class CreateCatalogSheet extends StatefulWidget {
   const CreateCatalogSheet({
@@ -34,6 +35,7 @@ class _CreateCatalogSheetState extends State<CreateCatalogSheet>
 
   @override
   Widget build(BuildContext context) {
+    print('tiennh----${widget.savedCatalog}');
     return SafeArea(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
@@ -67,17 +69,23 @@ class _CreateCatalogSheetState extends State<CreateCatalogSheet>
                       try {
                         final UserCatalog newCatalog =
                             UserCatalog(controller.text, []);
-                        widget.savedCatalog.addCatalog(newCatalog);
+                        if (!widget.savedCatalog.catalogs.any(
+                            (catalog) => catalog.name == controller.text)) {
+                          widget.savedCatalog.addCatalog(newCatalog);
 
-                        /// trường hợp ở màn thị trường
-                        if (!widget.isBack) {
-                          Navigator.of(context).pop(BackCmd(newCatalog));
-                        }
+                          /// trường hợp ở màn thị trường
+                          if (!widget.isBack) {
+                            Navigator.of(context).pop(BackCmd(newCatalog));
+                          }
 
-                        /// trường hợp ở màn chi tiết mã
-                        else {
-                          Navigator.of(context)
-                              .pop(BackCmd(widget.savedCatalog));
+                          /// trường hợp ở màn chi tiết mã
+                          else {
+                            Navigator.of(context)
+                                .pop(BackCmd(widget.savedCatalog));
+                          }
+                        } else {
+                          EasyLoading.showToast(
+                              S.of(context).Catalog_already_exists);
                         }
                       } catch (e) {
                         Navigator.of(context).pop();

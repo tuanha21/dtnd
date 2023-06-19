@@ -555,5 +555,6 @@
   "cash_dividend":"Cổ tức tiền",
   "dividends_value":"Cổ tức bằng CP/CP thưởng",
   "cancel_registration":"Hủy đăng ký",
-  "end" : "Kết thúc"
+  "end" : "Kết thúc",
+  "Catalog_already_exists": "Danh mục đã tồn tại"
 }

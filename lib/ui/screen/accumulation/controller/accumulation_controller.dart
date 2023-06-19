@@ -30,6 +30,8 @@ class AccumulationController {
   final RxString endDay = ''.obs;
   final RxString liquidRate = ''.obs;
   final RxString liquidFee = ''.obs;
+  RxNum sumCapital = RxNum(0);
+  RxNum sumCurrentFee = RxNum(0);
   SingleContract? singleContract;
   ContractFee? contractFee;
 
@@ -72,6 +74,11 @@ class AccumulationController {
       listAllContract.value!.clear();
       listAllContract.value!.addAll(allContract);
       listAllContract.refresh();
+    }
+
+    for(ContractModel item in allContract){
+       sumCapital.value += item.capital ?? 0;
+       sumCurrentFee.value += item.currentFee ?? 0;
     }
   }
 

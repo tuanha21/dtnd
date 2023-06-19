@@ -39,7 +39,7 @@ class _AccumulationProductDetailState extends State<AccumulationProductDetail> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const AccumulatorHeader(),
+              AccumulatorHeader(),
               const SizedBox(height: 20),
               Row(
                 children: [

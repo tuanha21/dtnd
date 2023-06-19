@@ -556,5 +556,7 @@
   "dividends_value":"Dividends in shares/bonus shares",
   "cancel_registration":"Cancel registration",
   
-  "end": "End"
+  "end": "End",
+  "Catalog_already_exists": "Catalog already exists"
+
 }
