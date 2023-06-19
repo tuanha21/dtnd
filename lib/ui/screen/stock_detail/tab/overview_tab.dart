@@ -55,7 +55,9 @@ class _OverviewTabState extends State<OverviewTab>
   void getEvent() async {
     listEvent =
         await dataCenterService.getListEvent(widget.stockModel.stockData.sym);
-    setState(() {});
+    if (listEvent?.isNotEmpty ?? false) {
+      setState(() {});
+    }
   }
 
   @override

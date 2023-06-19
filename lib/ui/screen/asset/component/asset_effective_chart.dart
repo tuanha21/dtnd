@@ -1,4 +1,4 @@
-import 'dart:math';
+import 'dart:math' as math;
 
 import 'package:dtnd/=models=/response/account/asset_chart_element.dart';
 import 'package:dtnd/=models=/response/stock_trading_history.dart';
@@ -26,7 +26,7 @@ class AssetEffectiveChart extends StatefulWidget {
 
 class _AssetEffectiveChartState extends State<AssetEffectiveChart>
     with ChartDatasMixin {
-  final Random random = Random();
+  final math.Random random = math.Random();
   static const secondaryMeasureAxisId = 'secondaryMeasureAxisId';
 
   late List<AssetChartElementModel> datas;
@@ -38,6 +38,8 @@ class _AssetEffectiveChartState extends State<AssetEffectiveChart>
   late List<charts.Series<dynamic, DateTime>> assetSeriesList;
   DateTime start = DateTime.now().subtract(const Duration(days: 1));
   DateTime end = DateTime.now();
+  num min = 0;
+  num max = 0;
   @override
   void initState() {
     super.initState();
@@ -62,6 +64,8 @@ class _AssetEffectiveChartState extends State<AssetEffectiveChart>
           for (var element in datas) {
             assetPercents.add(assetPercents.last + element.cDAYPROFITRATE);
           }
+          min = assetPercents.reduce(math.min);
+          max = assetPercents.reduce(math.max);
         }
         assetSeriesList = [
           charts.Series(
@@ -114,6 +118,10 @@ class _AssetEffectiveChartState extends State<AssetEffectiveChart>
         for (var element in indexDatas!) {
           indexPercents.add((element.close - firstIndex!) * 100 / firstIndex!);
         }
+        final _min = indexPercents.reduce(math.min);
+        final _max = indexPercents.reduce(math.max);
+        min = math.min(min, _min);
+        max = math.max(max, _max);
         assetSeriesList.add(
           charts.Series(
             id: "VN30",
@@ -247,6 +255,7 @@ class _AssetEffectiveChartState extends State<AssetEffectiveChart>
           tickFormatterSpec: simpleCurrencyFormatter,
         ),
         secondaryMeasureAxis: charts.NumericAxisSpec(
+          viewport: charts.NumericExtents(min - 1, max + 1),
           tickProviderSpec:
               const charts.BasicNumericTickProviderSpec(zeroBound: false),
           tickFormatterSpec: simpleCurrencyFormatter,

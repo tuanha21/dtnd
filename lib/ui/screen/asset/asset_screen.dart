@@ -48,11 +48,11 @@ extension AssetChartTypeX on AssetChartType {
   AssetChartType get next {
     switch (this) {
       case AssetChartType.asset:
-        return AssetChartType.effective;
-      case AssetChartType.effective:
         return AssetChartType.assetDistribution;
-      case AssetChartType.assetDistribution:
+      case AssetChartType.effective:
         return AssetChartType.asset;
+      case AssetChartType.assetDistribution:
+        return AssetChartType.effective;
     }
   }
 
@@ -96,7 +96,7 @@ class _AssetScreenState extends State<AssetScreen>
     });
   }
 
-  AssetChartType chartType = AssetChartType.asset;
+  AssetChartType chartType = AssetChartType.effective;
 
   @override
   void initState() {
