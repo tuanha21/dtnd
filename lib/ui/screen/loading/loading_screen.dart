@@ -48,7 +48,6 @@ class _LoadingScreenState extends State<LoadingScreen>
             } else {
               dimissable = true;
             }
-            print(dimissable);
             showDialog(
               barrierDismissible: dimissable,
               context: context,
@@ -56,7 +55,7 @@ class _LoadingScreenState extends State<LoadingScreen>
                 return CustomDialog(
                     disableBack: !dimissable,
                     title: S.of(context).there_is_new_update,
-                    content: dimissable ? "" : S.of(context).update_to_continue,
+                    content: S.of(context).update_to_continue,
                     action: () {
                       launchUrl(Uri.parse(storeUrl),
                           mode: LaunchMode.externalApplication);
