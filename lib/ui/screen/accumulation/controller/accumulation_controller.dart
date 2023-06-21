@@ -65,6 +65,8 @@ class AccumulationController {
   }
 
   Future<void> getAllContract() async {
+    sumCapital.value = 0;
+    sumCurrentFee.value = 0;
     final allContract = await userService.getAllContract();
     if ((allContract?.isEmpty ?? true) || allContract == null) {
       listAllContract.value!.clear();
@@ -76,9 +78,9 @@ class AccumulationController {
       listAllContract.refresh();
     }
 
-    for(ContractModel item in allContract){
-       sumCapital.value += item.capital ?? 0;
-       sumCurrentFee.value += item.currentFee ?? 0;
+    for (ContractModel item in allContract) {
+      sumCapital.value += item.capital ?? 0;
+      sumCurrentFee.value += item.currentFee ?? 0;
     }
   }
 

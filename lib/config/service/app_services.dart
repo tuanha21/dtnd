@@ -139,8 +139,8 @@ class AppService {
           "App version: ${appVersionList.join('.')}\nStore version: ${appCfg["current_version"]}\nMinimum version: ${appCfg["minimum_version"]}");
       try {
         miniumAppVersionList = appCfg["minimum_version"].split(".");
-        // storeAppVersionList = appCfg["current_version"].split(".");
-        storeAppVersionList = ["1", "0", "2"];
+        storeAppVersionList = appCfg["current_version"].split(".");
+        // storeAppVersionList = ["1", "0", "2"];
       } catch (e) {
         throw const SomethingWentWrongException();
       }
