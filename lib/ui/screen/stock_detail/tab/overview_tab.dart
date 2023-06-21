@@ -5,6 +5,7 @@ import 'package:dtnd/data/i_data_center_service.dart';
 import 'package:dtnd/data/implementations/data_center_service.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:dtnd/ui/widget/expanded_widget.dart';
+import 'package:dtnd/utilities/time_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
@@ -45,19 +46,17 @@ class _OverviewTabState extends State<OverviewTab>
 
   List<SecEvent>? listEvent;
 
-  @override
-  void initState() {
-    super.initState();
+  // @override
+  // void initState() {
+  //   super.initState();
+  // }
 
-    getEvent();
-  }
-
-  void getEvent() async {
-    listEvent =
-        await dataCenterService.getListEvent(widget.stockModel.stockData.sym);
-    if (listEvent?.isNotEmpty ?? false) {
-      setState(() {});
-    }
+  Future<List<SecEvent>?> getEvent(DateTime startDate) {
+    return dataCenterService.getListEvent(widget.stockModel.stockData.sym,
+        startDate: startDate);
+    // if (listEvent?.isNotEmpty ?? false) {
+    //   setState(() {});
+    // }
   }
 
   @override
@@ -67,7 +66,7 @@ class _OverviewTabState extends State<OverviewTab>
       children: [
         StockDetailChart(
           stockModel: widget.stockModel,
-          listEvent: listEvent,
+          // listEvent: listEvent,
         ),
         const SizedBox(height: 20),
         Padding(
@@ -156,7 +155,8 @@ class _OverviewTabState extends State<OverviewTab>
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: StockEvent(
-              listEvent: listEvent,
+              listEvent: getEvent(
+                  TimeUtilities.getPreviousDateTime(TimeUtilities.month(1))),
             ),
           ),
         ),

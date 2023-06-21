@@ -1,3 +1,4 @@
+import 'package:dtnd/ui/widget/empty_list_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -10,7 +11,7 @@ import '../../../theme/app_color.dart';
 import '../../../theme/app_textstyle.dart';
 
 class StockEvent extends StatefulWidget {
-  final List<SecEvent>? listEvent;
+  final Future<List<SecEvent>?> listEvent;
 
   const StockEvent({Key? key, required this.listEvent}) : super(key: key);
 
@@ -39,11 +40,13 @@ class _StockEventState extends State<StockEvent> {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<List<SecEvent>>(
-      future: listEvent,
+    return FutureBuilder<List<SecEvent>?>(
+      future: widget.listEvent,
       builder: (context, snapshot) {
-        if (widget.listEvent?.isEmpty ?? true) {
-          return const SizedBox();
+        if (snapshot.hasError || (snapshot.data?.isEmpty ?? true)) {
+          return EmptyListWidget(
+            title: S.of(context).no_data,
+          );
         } else {
           return Container(
             decoration: const BoxDecoration(
@@ -56,7 +59,7 @@ class _StockEventState extends State<StockEvent> {
                 itemBuilder: (context, index) {
                   return Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: EventCard(event: widget.listEvent![index]),
+                    child: EventCard(event: snapshot.data![index]),
                   );
                 },
                 separatorBuilder: (context, index) {
@@ -66,7 +69,7 @@ class _StockEventState extends State<StockEvent> {
                     height: 16,
                   );
                 },
-                itemCount: widget.listEvent!.length),
+                itemCount: snapshot.data!.length),
           );
         }
       },

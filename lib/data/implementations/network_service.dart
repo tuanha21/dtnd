@@ -57,6 +57,7 @@ import 'package:dtnd/data/i_user_service.dart';
 import 'package:dtnd/data/implementations/local_storage_service.dart';
 import 'package:dtnd/data/implementations/user_service.dart';
 import 'package:dtnd/utilities/logger.dart';
+import 'package:dtnd/utilities/time_utils.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
@@ -1219,15 +1220,16 @@ class NetworkService implements INetworkService {
   }
 
   @override
-  Future<List<SecEvent>> getListEvent(String stockCode) async {
+  Future<List<SecEvent>> getListEvent(String stockCode,
+      {required DateTime startDate,
+      required String lang,
+      required String reqLanguage}) async {
     try {
-      var response = await client.get(
-          Uri.https('opacc-api.apec.com.vn', 'algo/pbapi/api/news/sec_news', {
-        "lang": "vi",
+      var response = await client.get(url_algo_apec('news/sec_news', {
+        "lang": lang,
         "secCode": stockCode,
-        "startDate": DateFormat('yyyy-MM-dd')
-            .format(DateTime.now().add(const Duration(days: -30))),
-        "reqLanguage": "VI"
+        "startDate": TimeUtilities.usTimeFormat.format(startDate),
+        "reqLanguage": reqLanguage,
       }));
       if (response.statusCode != 200) {
         throw response;

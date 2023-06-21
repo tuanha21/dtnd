@@ -34,6 +34,8 @@ class TimeUtilities {
   static const Duration typingDelay = Duration(milliseconds: 500);
 
   static final DateFormat commonTimeFormat = DateFormat("dd/MM/yyyy");
+  static final DateFormat usTimeFormat = DateFormat("yyyy-MM-dd");
+
   static final DateFormat dateMonthTimeFormat = DateFormat("dd/MM");
   static final DateFormat onlyHourFormat = DateFormat("HH:mm");
   static final DateFormat monthYearTimeFormat = DateFormat("MM/yy");

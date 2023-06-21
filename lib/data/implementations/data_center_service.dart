@@ -836,8 +836,12 @@ class DataCenterService
   }
 
   @override
-  Future<List<SecEvent>> getListEvent(String stockCode) {
-    return networkService.getListEvent(stockCode);
+  Future<List<SecEvent>> getListEvent(String stockCode,
+      {required DateTime startDate,
+      String lang = "vi",
+      String reqLanguage = "VI"}) {
+    return networkService.getListEvent(stockCode,
+        startDate: startDate, lang: lang, reqLanguage: reqLanguage);
   }
 
   @override

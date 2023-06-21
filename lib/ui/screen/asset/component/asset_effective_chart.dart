@@ -98,7 +98,7 @@ class _AssetEffectiveChartState extends State<AssetEffectiveChart>
           // )..setAttribute(charts.measureAxisIdKey, secondaryMeasureAxisId),
         ];
       });
-      if (widget.indexDatas != null) {
+      if (widget.indexDatas != null && datas.isNotEmpty) {
         indexDatas = historyToChartItem(widget.indexDatas!);
         if (!indexDatas!.first.time.beginningOfDay
             .isSameDay(datas.first.cTRADINGDATE)) {

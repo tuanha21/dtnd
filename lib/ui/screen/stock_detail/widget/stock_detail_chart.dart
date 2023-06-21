@@ -21,11 +21,9 @@ class StockDetailChart extends StatefulWidget {
   const StockDetailChart({
     super.key,
     required this.stockModel,
-    this.listEvent,
   });
 
   final StockModel stockModel;
-  final List<SecEvent>? listEvent;
 
   @override
   State<StockDetailChart> createState() => _StockDetailChartState();
@@ -47,8 +45,9 @@ class _StockDetailChartState extends State<StockDetailChart>
 
   @override
   void initState() {
+    print("StockDetailChart init");
     getStockTradingHistory();
-    getListEvent();
+    // getListEvent();
     super.initState();
   }
 
@@ -73,25 +72,25 @@ class _StockDetailChartState extends State<StockDetailChart>
     }
   }
 
-  void getListEvent() {
-    listEvent.clear();
-    for (SecEvent event in widget.listEvent ?? <SecEvent>[]) {
-      if (event.dateTime == null ||
-          event.dateTime!.isBefore(timeSeries.dateTime)) {
-        continue;
-      } else {
-        listEvent.add(event);
-      }
-    }
-    setState(() {});
-  }
+  // void getListEvent() {
+  //   listEvent.clear();
+  //   for (SecEvent event in widget.listEvent ?? <SecEvent>[]) {
+  //     if (event.dateTime == null ||
+  //         event.dateTime!.isBefore(timeSeries.dateTime)) {
+  //       continue;
+  //     } else {
+  //       listEvent.add(event);
+  //     }
+  //   }
+  //   setState(() {});
+  // }
 
   @override
   void didUpdateWidget(StockDetailChart oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (widget.listEvent?.length != oldWidget.listEvent?.length) {
-      getListEvent();
-    }
+    // if (widget.listEvent?.length != oldWidget.listEvent?.length) {
+    //   getListEvent();
+    // }
   }
 
   num max = 2;
@@ -288,7 +287,7 @@ class _StockDetailChartState extends State<StockDetailChart>
                       timeSeries = TimeSeries.values[index];
                     });
                     getStockTradingHistory();
-                    getListEvent();
+                    // getListEvent();
                   },
                   child: Container(
                     height: 22,

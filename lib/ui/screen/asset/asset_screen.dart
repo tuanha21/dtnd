@@ -466,18 +466,19 @@ class _AssetScreenState extends State<AssetScreen>
       } else {
         aaa = null;
       }
-      if (mounted) {}
-      // return StockOrderISheet(widget.stockModel).showSheet(context, );
-      StockOrderISheet(null)
-          .show(
-              context,
-              StockOrderSheet(
-                stockModel: aaa,
-                orderData: null,
-              ))
-          .then((value) => userService.defaultAccount.value
-              ?.refreshAsset(userService, networkService)
-              .then((value) => setState(() {})));
+      if (mounted) {
+        // return StockOrderISheet(widget.stockModel).showSheet(context, );
+        StockOrderISheet(null)
+            .show(
+                context,
+                StockOrderSheet(
+                  stockModel: aaa,
+                  orderData: null,
+                ))
+            .then((value) => userService.defaultAccount.value
+                ?.refreshAsset(userService, networkService)
+                .then((value) => setState(() {})));
+      }
     }
   }
 }

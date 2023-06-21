@@ -161,7 +161,8 @@ abstract class IDataCenterService {
 
   Future<List<IndexDetailResponse>> getListIndexDetail();
 
-  Future<List<SecEvent>> getListEvent(String stockCode);
+  Future<List<SecEvent>> getListEvent(String stockCode,
+      {required DateTime startDate, String lang, String reqLanguage});
 
   Future<CompanyIntroductionResponse> getCompanyIntroduction(String stockCode);
 

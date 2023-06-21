@@ -129,10 +129,9 @@ class _RegistrationRightsSheetState extends State<RegistrationRightsSheet>
                           S.of(context).remaining_shares_available_for_purchase,
                           style: AppTextStyle.labelMedium_12
                               .copyWith(color: AppColors.neutral_03)),
-                      Text(((NumUtils.formatDouble(widget.data?.cSHARERIGHT ??
-                          0 -
-                              (widget.data?.cSHAREBUY ?? 0) /
-                                  (widget.data?.cSHARERIGHT ?? 0)))))
+                      Text(
+                        "${NumUtils.formatDouble(widget.data?.cSHARERIGHT ?? 0 - (widget.data?.cSHAREBUY ?? 0))}/${NumUtils.formatDouble(widget.data?.cSHARERIGHT ?? 0)}",
+                      )
                     ],
                   ),
                   const SizedBox(
@@ -170,12 +169,48 @@ class _RegistrationRightsSheetState extends State<RegistrationRightsSheet>
             Row(
               children: [
                 Expanded(
+                  // child: IntervalInput(
+                  //   controller: volumeController,
+                  //   labelText: S.of(context).volumn,
+                  //   interval: (value) => 100,
+                  //   validator: volumnValidator,
+                  //   // onChanged: onChangeVol,
+                  // ),
                   child: IntervalInput(
+                    validator: (vol) {
+                      if (vol == null) {
+                        setState(() {
+                          errorMsg = S.of(context).Weight_must_be_filled_in;
+                        });
+                        return errorMsg;
+                      }
+                      late final num volume;
+                      try {
+                        volume = num.parse(vol);
+                      } catch (e) {
+                        volume = -1;
+                      }
+
+                      if (volume <= 0 || volume > widget.data!.shareAvailBuy) {
+                        setState(() {
+                          errorMsg = S.of(context).invalid_weight;
+                        });
+                        return errorMsg;
+                      }
+                      return null;
+                    },
                     controller: volumeController,
                     labelText: S.of(context).volumn,
-                    interval: (value) => 100,
-                    validator: volumnValidator,
-                    // onChanged: onChangeVol,
+                    interval: (p0) => 1,
+                    onChanged: (volume) {
+                      if (volume <= 0 || volume > widget.data!.shareAvailBuy) {
+                        buyValue.value = 0;
+                        return;
+                      }
+                      buyValue.value = volume;
+                    },
+                    defaultValue: widget.data!.cSHARERIGHT,
+                    // onChanged: onChangedPrice,
                   ),
                 ),
                 const SizedBox(width: 16),

@@ -210,7 +210,10 @@ abstract class INetworkService {
 
   Future<List<StockIndustry>> getListStockByIndust(String industry);
 
-  Future<List<SecEvent>> getListEvent(String stockCode);
+  Future<List<SecEvent>> getListEvent(String stockCode,
+      {required DateTime startDate,
+      required String lang,
+      required String reqLanguage});
 
   Future<List<StockFinancialIndex>> getStockFinancialIndex(String body);
 
