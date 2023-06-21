@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
+import 'dart:io' show Platform;
 import '../../=models=/response/banner_model.dart';
 
 extension ThemeModeX on ThemeMode {
@@ -135,10 +135,12 @@ class AppService {
       throw const NoInternetException();
     } else {
       appConfig = RxMap<String, dynamic>(appCfg);
-      logger.v(appCfg["current_version"] + "/n" + appCfg["minimum_version"]);
+      logger.v(
+          "App version: ${appVersionList.join('.')}\nStore version: ${appCfg["current_version"]}\nMinimum version: ${appCfg["minimum_version"]}");
       try {
         miniumAppVersionList = appCfg["minimum_version"].split(".");
-        storeAppVersionList = appCfg["current_version"].split(".");
+        // storeAppVersionList = appCfg["current_version"].split(".");
+        storeAppVersionList = ["1", "0", "2"];
       } catch (e) {
         throw const SomethingWentWrongException();
       }
@@ -154,5 +156,15 @@ class AppService {
       }
     }
     return null;
+  }
+
+  String get storeUrl {
+    if (Platform.isAndroid) {
+      return appConfig["playstore_url"];
+    }
+    if (Platform.isIOS) {
+      return appConfig["appstore_url"];
+    }
+    throw UnimplementedError();
   }
 }

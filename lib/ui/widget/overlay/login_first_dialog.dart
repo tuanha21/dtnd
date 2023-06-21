@@ -10,7 +10,7 @@ class LoginFirstDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return CustomDialog(
       textButtonAction: S.of(context).ok,
-      textButtonExit: S.of(context).Later,
+      textButtonExit: S.of(context).later,
       title: S.of(context).login_required,
       content: S.of(context).login_to_continue,
       action: () => Navigator.of(context).pop(true),

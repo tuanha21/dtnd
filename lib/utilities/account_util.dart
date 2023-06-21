@@ -33,7 +33,7 @@ class AccountUtil {
       builder: (context) {
         return CustomDialog(
           textButtonAction: S.of(context).ok,
-          textButtonExit: S.of(context).Later,
+          textButtonExit: S.of(context).later,
           title: S.of(context).confirm,
           content:
               S.of(context).Are_you_sure_you_want_to_use_a_different_account,
@@ -79,7 +79,7 @@ class AccountUtil {
                   builder: (context) {
                     return CustomDialog(
                       textButtonAction: S.of(context).ok,
-                      textButtonExit: S.of(context).Later,
+                      textButtonExit: S.of(context).later,
                       title: S.of(context).biometric_authentication,
                       content: S.of(context).login_with_biometric,
                       action: () {

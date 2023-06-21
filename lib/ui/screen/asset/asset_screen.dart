@@ -432,7 +432,7 @@ class _AssetScreenState extends State<AssetScreen>
                 builder: (context) {
                   return CustomDialog(
                     textButtonAction: S.of(context).ok,
-                    textButtonExit: S.of(context).Later,
+                    textButtonExit: S.of(context).later,
                     title: S.of(context).biometric_authentication,
                     content: S.of(context).login_with_biometric,
                     action: () {

@@ -366,7 +366,7 @@
   "stock_analysis": "Phân tích cổ phiếu",
   "unknown_exception": "Lỗi không xác định",
   "ok": "Đồng ý",
-  "Later": "Để sau",
+  "later": "Để sau",
   "biometric_authentication": "Đăng nhập bằng sinh trắc học",
   "login_with_biometric": "Bạn chưa đăng ký đăng nhập bằng sinh trắc học\nBạn có muốn đăng ký ngay bây giờ không?",
   "money": "Tiền",
@@ -555,6 +555,10 @@
   "cash_dividend":"Cổ tức tiền",
   "dividends_value":"Cổ tức bằng CP/CP thưởng",
   "cancel_registration":"Hủy đăng ký",
-  "end" : "Kết thúc",
-  "Catalog_already_exists": "Danh mục đã tồn tại"
+  "Catalog_already_exists": "Danh mục đã tồn tại",
+
+  "there_is_new_update":"Đã có bản cập nhật mới",
+  "update_to_continue":"Vui lòng cập nhật để tiếp tục sử dụng ứng dụng",
+
+  "end" : "Kết thúc"
 }

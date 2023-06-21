@@ -9,6 +9,7 @@ import 'package:dtnd/ui/widget/overlay/custom_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class LoadingScreen extends StatefulWidget {
   const LoadingScreen({super.key});
@@ -41,19 +42,25 @@ class _LoadingScreenState extends State<LoadingScreen>
             homeController.init();
           } else {
             final bool dimissable;
+            final storeUrl = appService.storeUrl;
             if (value) {
               dimissable = false;
             } else {
               dimissable = true;
             }
+            print(dimissable);
             showDialog(
               barrierDismissible: dimissable,
               context: context,
               builder: (context) {
                 return CustomDialog(
-                    title: "Đã có bản cập nhật mới",
-                    content: "",
-                    action: () {},
+                    disableBack: !dimissable,
+                    title: S.of(context).there_is_new_update,
+                    content: dimissable ? "" : S.of(context).update_to_continue,
+                    action: () {
+                      launchUrl(Uri.parse(storeUrl),
+                          mode: LaunchMode.externalApplication);
+                    },
                     type: TypeAlert.notification);
               },
             ).then((update) => homeController.init());

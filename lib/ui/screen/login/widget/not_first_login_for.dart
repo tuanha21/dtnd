@@ -227,9 +227,11 @@ class _NotFirstLoginFormState extends State<NotFirstLoginForm> {
                 builder: (context) {
                   return CustomDialog(
                     textButtonAction: S.of(context).ok,
-                    textButtonExit: S.of(context).Later,
+                    textButtonExit: S.of(context).later,
                     title: S.of(context).confirm,
-                    content: S.of(context).Are_you_sure_you_want_to_use_a_different_account,
+                    content: S
+                        .of(context)
+                        .Are_you_sure_you_want_to_use_a_different_account,
                     action: () => Navigator.of(context).pop(true),
                     type: TypeAlert.notification,
                   );

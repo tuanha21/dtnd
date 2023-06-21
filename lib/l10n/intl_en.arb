@@ -366,7 +366,7 @@
   "stock_analysis": "Stock analysis",
   "unknown_exception": "Unknown exception",
   "ok": "ok",
-  "Later": "Later",
+  "later": "Later",
   "biometric_authentication": "Biometric authentication",
   "login_with_biometric": "You have not registered for biometric authentication.\nWould you like to register now?",
   "money": "Money",
@@ -556,7 +556,11 @@
   "dividends_value":"Dividends in shares/bonus shares",
   "cancel_registration":"Cancel registration",
   
-  "end": "End",
-  "Catalog_already_exists": "Catalog already exists"
+  "Catalog_already_exists": "Catalog already exists",
+
+  "there_is_new_update":"There is new update",
+  "update_to_continue":"Please install update to continue to using app",
+
+  "end" : "End"
 
 }

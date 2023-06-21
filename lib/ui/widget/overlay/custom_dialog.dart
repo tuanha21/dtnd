@@ -17,7 +17,7 @@ class CustomDialog extends StatelessWidget {
       required this.type,
       this.textButtonExit,
       this.textButtonAction,
-      this.disableBack,
+      this.disableBack = false,
       this.clickAble});
 
   final String? title;
@@ -27,13 +27,15 @@ class CustomDialog extends StatelessWidget {
   final VoidCallback action;
   final VoidCallback? clickAble;
   final TypeAlert type;
-  final bool? disableBack;
+  final bool disableBack;
 
   @override
   Widget build(BuildContext context) {
     final mediaQueryData = MediaQuery.of(context);
     return InkWell(
-        onTap: clickAble ?? () => Navigator.of(context).pop(),
+        onTap: disableBack
+            ? () {}
+            : clickAble ?? () => Navigator.of(context).pop(),
         child: Container(
           alignment: Alignment.center,
           padding: EdgeInsets.only(bottom: mediaQueryData.viewInsets.bottom),
@@ -101,9 +103,8 @@ class CustomDialog extends StatelessWidget {
                                               horizontal: 16),
                                           child: Row(
                                             children: [
-                                              Visibility(
-                                                visible: disableBack ?? true,
-                                                child: Expanded(
+                                              if (!disableBack)
+                                                Expanded(
                                                   child: InkWell(
                                                     child: Container(
                                                       height: 40,
@@ -120,7 +121,9 @@ class CustomDialog extends StatelessWidget {
                                                           Alignment.center,
                                                       child: Text(
                                                           textButtonExit ??
-                                                              "Để sau",
+                                                              S
+                                                                  .of(context)
+                                                                  .later,
                                                           style: AppTextStyle
                                                               .bodyMedium_14
                                                               .copyWith(
@@ -133,8 +136,8 @@ class CustomDialog extends StatelessWidget {
                                                     },
                                                   ),
                                                 ),
-                                              ),
-                                              const SizedBox(width: 20),
+                                              if (!disableBack)
+                                                const SizedBox(width: 20),
                                               Expanded(
                                                 child: InkWell(
                                                   onTap: action,
