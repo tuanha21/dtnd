@@ -5,6 +5,7 @@ import 'package:dtnd/ui/widget/icon/sheet_header.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
 
 import '../../../../=models=/response/account/i_account.dart';
 import '../../../../data/i_exchange_service.dart';
@@ -46,6 +47,9 @@ class _RegistrationRightsSheetState extends State<RegistrationRightsSheet>
   final TextEditingController pinController = TextEditingController();
   final ILocalStorageService localStorageService = LocalStorageService();
   final IExchangeService exchangeService = ExchangeService();
+
+  final Rx<num?> buyValue = Rxn();
+  String? errorMsg;
 
   bool loading = false;
   bool checked = false;
@@ -156,8 +160,13 @@ class _RegistrationRightsSheetState extends State<RegistrationRightsSheet>
                       Text(S.of(context).amount_to_be_paid,
                           style: AppTextStyle.labelMedium_12
                               .copyWith(color: AppColors.neutral_03)),
-                      Text(
-                          "${NumUtils.formatInteger(widget.data?.cCASHBUY ?? 0)} đ"),
+                      Obx(() => Text(
+                            widget.data?.cBUYPRICE == null ||
+                                    buyValue.value == null
+                                ? "-"
+                                : NumUtils.formatDouble(
+                                    buyValue.value! * widget.data!.cBUYPRICE!),
+                          )),
                     ],
                   ),
                 ],
@@ -166,100 +175,95 @@ class _RegistrationRightsSheetState extends State<RegistrationRightsSheet>
             const SizedBox(
               height: 16,
             ),
-            Row(
-              children: [
-                Expanded(
-                  // child: IntervalInput(
-                  //   controller: volumeController,
-                  //   labelText: S.of(context).volumn,
-                  //   interval: (value) => 100,
-                  //   validator: volumnValidator,
-                  //   // onChanged: onChangeVol,
-                  // ),
-                  child: IntervalInput(
-                    validator: (vol) {
-                      if (vol == null) {
-                        setState(() {
-                          errorMsg = S.of(context).Weight_must_be_filled_in;
-                        });
-                        return errorMsg;
-                      }
-                      late final num volume;
-                      try {
-                        volume = num.parse(vol);
-                      } catch (e) {
-                        volume = -1;
-                      }
+            Form(
+              key: pinKey,
+              autovalidateMode: AutovalidateMode.disabled,
+              child: Row(
+                children: [
+                  Expanded(
+                    // child: IntervalInput(
+                    //   controller: volumeController,
+                    //   labelText: S.of(context).volumn,
+                    //   interval: (value) => 100,
+                    //   validator: volumnValidator,
+                    //   // onChanged: onChangeVol,
+                    // ),
+                    child: IntervalInput(
+                      validator: (vol) {
+                        if (vol == null) {
+                          setState(() {
+                            errorMsg = S.of(context).Weight_must_be_filled_in;
+                          });
+                          return errorMsg;
+                        }
+                        late final num volume;
+                        try {
+                          volume = num.parse(vol);
+                        } catch (e) {
+                          volume = -1;
+                        }
 
-                      if (volume <= 0 || volume > widget.data!.shareAvailBuy) {
-                        setState(() {
-                          errorMsg = S.of(context).invalid_weight;
-                        });
-                        return errorMsg;
-                      }
-                      return null;
-                    },
-                    controller: volumeController,
-                    labelText: S.of(context).volumn,
-                    interval: (p0) => 1,
-                    onChanged: (volume) {
-                      if (volume <= 0 || volume > widget.data!.shareAvailBuy) {
-                        buyValue.value = 0;
-                        return;
-                      }
-                      buyValue.value = volume;
-                    },
-                    defaultValue: widget.data!.cSHARERIGHT,
-                    // onChanged: onChangedPrice,
+                        if (volume <= 0 ||
+                            volume > widget.data!.shareAvailBuy) {
+                          setState(() {
+                            errorMsg = S.of(context).invalid_weight;
+                          });
+                          return errorMsg;
+                        }
+                        return null;
+                      },
+                      controller: volumeController,
+                      labelText: S.of(context).volumn,
+                      interval: (p0) => 1,
+                      onChanged: (volume) {
+                        if (volume <= 0 ||
+                            volume > widget.data!.shareAvailBuy) {
+                          buyValue.value = 0;
+                          return;
+                        }
+                        buyValue.value = volume;
+                      },
+                      defaultValue: widget.data!.cSHARERIGHT,
+                      // onChanged: onChangedPrice,
+                    ),
                   ),
-                ),
-                const SizedBox(width: 16),
-                Expanded(
-                  child: Form(
-                    key: pinKey,
-                    autovalidateMode: AutovalidateMode.disabled,
-                    child: (localStorageService.sharedPreferences
-                                .getString(pinCodeKey)
-                                ?.isEmpty ??
-                            true)
-                        ? TextFormField(
-                            controller: pinController,
-                            // onChanged: (value) => pinFormKey.currentState?.didChange(value),
-                            validator: pinValidator,
-                            autovalidateMode: AutovalidateMode.disabled,
-                            decoration: InputDecoration(
-                              labelText: S.of(context).pin_code,
-                              // contentPadding: const EdgeInsets.all(0),
-                              floatingLabelBehavior:
-                                  FloatingLabelBehavior.always,
-                              floatingLabelAlignment:
-                                  FloatingLabelAlignment.start,
-                              suffixIcon: InkWell(
-                                onTap: () {
-                                  checked = !checked;
-                                  if (checked && pinController.text != '') {
-                                    EasyLoading.showToast(
-                                        S.of(context).saved_pin_code,
-                                        maskType: EasyLoadingMaskType.clear);
-                                  }
-                                  setState(() {});
-                                },
-                                child: Padding(
-                                  padding: const EdgeInsets.all(10),
-                                  child: SvgPicture.asset(
-                                    AppImages.save_pin_code_icon,
-                                    color: (checked && pinController.text != '')
-                                        ? AppColors.semantic_01
-                                        : AppColors.primary_01,
-                                  ),
-                                ),
-                              ),
+                  const SizedBox(width: 16),
+                  Expanded(
+                    child: TextFormField(
+                      controller: pinController,
+                      // onChanged: (value) => pinFormKey.currentState?.didChange(value),
+                      validator: pinValidator,
+                      autovalidateMode: AutovalidateMode.disabled,
+                      decoration: InputDecoration(
+                        labelText: S.of(context).pin_code,
+                        // contentPadding: const EdgeInsets.all(0),
+                        floatingLabelBehavior: FloatingLabelBehavior.always,
+                        floatingLabelAlignment: FloatingLabelAlignment.start,
+                        suffixIcon: InkWell(
+                          onTap: () {
+                            checked = !checked;
+                            if (checked && pinController.text != '') {
+                              EasyLoading.showToast(
+                                  S.of(context).saved_pin_code,
+                                  maskType: EasyLoadingMaskType.clear);
+                            }
+                            setState(() {});
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.all(10),
+                            child: SvgPicture.asset(
+                              AppImages.save_pin_code_icon,
+                              color: (checked && pinController.text != '')
+                                  ? AppColors.semantic_01
+                                  : AppColors.primary_01,
                             ),
-                          )
-                        : const SizedBox(),
+                          ),
+                        ),
+                      ),
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
             const SizedBox(
               height: 16,
