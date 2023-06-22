@@ -215,13 +215,22 @@ class _RegistrationRightsSheetState extends State<RegistrationRightsSheet>
                       controller: volumeController,
                       labelText: S.of(context).volumn,
                       interval: (p0) => 1,
+                      onTextChanged: (value) {
+                        try {
+                          buyValue.value = num.parse(value);
+                        } catch (e) {
+                          buyValue.value = 0;
+                        }
+                      },
                       onChanged: (volume) {
                         if (volume <= 0 ||
                             volume > widget.data!.shareAvailBuy) {
                           buyValue.value = 0;
+                          print(buyValue.value);
                           return;
                         }
                         buyValue.value = volume;
+                        print(buyValue.value);
                       },
                       defaultValue: widget.data!.cSHARERIGHT,
                       // onChanged: onChangedPrice,

@@ -22,7 +22,12 @@ class OrderFilterSheet extends StatefulWidget {
 class _OrderFilterSheetState extends State<OrderFilterSheet> {
   late final OrderFilterData orderFilterData;
   final List<Side?> listSides = [null, ...Side.values];
-  final List<OrderStatus?> listStatuss = [null, ...OrderStatus.values];
+  final List<OrderStatus?> listStatuss = [
+    null,
+    OrderStatus.pendingMatch,
+    OrderStatus.fullMatch,
+    OrderStatus.canceled
+  ];
   late final List<bool> listSideSelect;
   late final List<bool> listStatusSelect;
 
@@ -44,7 +49,7 @@ class _OrderFilterSheetState extends State<OrderFilterSheet> {
   }
 
   void initListStatus() {
-    listStatusSelect = List.filled(OrderStatus.values.length + 1, false);
+    listStatusSelect = List.filled(listStatuss.length + 1, false);
     if (widget.data?.orderStatus != null) {
       for (OrderStatus status in widget.data!.orderStatus!) {
         listStatusSelect[
@@ -57,7 +62,6 @@ class _OrderFilterSheetState extends State<OrderFilterSheet> {
 
   @override
   Widget build(BuildContext context) {
-    final ThemeMode themeMode = AppService.instance.themeMode.value;
     return SafeArea(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 20),

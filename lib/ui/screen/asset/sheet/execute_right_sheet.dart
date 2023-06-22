@@ -256,6 +256,13 @@ class _ExecuteRightSheetState extends State<ExecuteRightSheet>
                       interval: (p0) {
                         return 1;
                       },
+                      onTextChanged: (value) {
+                        try {
+                          buyValue.value = num.parse(value);
+                        } catch (e) {
+                          buyValue.value = 0;
+                        }
+                      },
                       onChanged: (volume) {
                         if (volume <= 0 ||
                             volume >
