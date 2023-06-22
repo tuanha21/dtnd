@@ -116,9 +116,9 @@ class _ShareStatementSheetState extends State<ShareStatementSheet> {
             ),
             Expanded(child: Builder(builder: (context) {
               if (list.isEmpty) {
-                return Column(
+                return const Column(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
+                  children: [
                     EmptyListWidget(),
                   ],
                 );

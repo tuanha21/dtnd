@@ -1,4 +1,5 @@
 import 'dart:async';
+
 import 'package:dtnd/=models=/local/i_local_catalog.dart';
 import 'package:dtnd/=models=/local/saved_catalog.dart';
 import 'package:dtnd/=models=/response/stock_model.dart';
@@ -16,6 +17,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+
 import '../../../../../=models=/local/user_catalog.dart';
 import '../../../../../=models=/response/stock.dart';
 import '../../../../../generated/l10n.dart';
@@ -155,6 +157,7 @@ class _UserCatalogWidgetState extends State<UserCatalogWidget> {
                 GestureDetector(
                   onTap: () async {
                     await updateCatalog(currentCatalog);
+                    setState(() {});
                   },
                   child: Row(
                     children: [

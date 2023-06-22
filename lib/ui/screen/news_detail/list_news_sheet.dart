@@ -22,18 +22,33 @@ class ListNewsSheet extends StatefulWidget {
 class _ListNewsSheetState extends State<ListNewsSheet> {
   final IDataCenterService dataCenterService = DataCenterService();
   final INetworkService networkService = NetworkService();
-
+  final ScrollController _scrollController = ScrollController();
   List<NewsModel>? listNews;
 
   @override
   void initState() {
+    _scrollController.addListener(_scrollListener);
     super.initState();
     getNews();
   }
 
-  Future<void> getNews() async {
-    listNews = await dataCenterService.getNews(1, 15);
+  Future<void> getNews({int? recordPerPage}) async {
+    listNews = await dataCenterService.getNews(1, recordPerPage ?? 15);
     setState(() {});
+  }
+
+  void _scrollListener() {
+    if (_scrollController.offset >=
+            _scrollController.position.maxScrollExtent &&
+        !_scrollController.position.outOfRange) {
+      getNews(recordPerPage: listNews!.length + 5);
+    }
+  }
+
+  @override
+  void dispose() {
+    _scrollController.removeListener(_scrollListener);
+    super.dispose();
   }
 
   @override
@@ -43,7 +58,7 @@ class _ListNewsSheetState extends State<ListNewsSheet> {
       list = Container();
     } else {
       list = ListView.separated(
-          controller: ScrollController(),
+          controller: _scrollController,
           shrinkWrap: true,
           itemBuilder: (context, index) {
             if (index == 0) {
