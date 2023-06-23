@@ -134,7 +134,7 @@ class _RegistrationRightsSheetState extends State<RegistrationRightsSheet>
                           style: AppTextStyle.labelMedium_12
                               .copyWith(color: AppColors.neutral_03)),
                       Text(
-                        "${NumUtils.formatDouble(widget.data?.cSHARERIGHT ?? 0 - (widget.data?.cSHAREBUY ?? 0))}/${NumUtils.formatDouble(widget.data?.cSHARERIGHT ?? 0)}",
+                        "${NumUtils.formatDouble((widget.data?.cSHARERIGHT.toDouble() ?? 0) - (widget.data?.cSHAREBUY.toDouble() ?? 0))}/${NumUtils.formatDouble(widget.data?.cSHARERIGHT ?? 0)}",
                       )
                     ],
                   ),

@@ -42,6 +42,7 @@ class UnexecutedRightModel implements CoreResponseModel {
   String? cBUSINESSNAME;
   String? cBUSINESSNAMEEN;
   String? cBUSINESSCODE;
+  String? cCREATEDATE;
 
   num get shareAvailBuy => cSHARERIGHT - cSHAREBUY;
 
@@ -96,6 +97,7 @@ class UnexecutedRightModel implements CoreResponseModel {
     cBUSINESSCODE = json['C_BUSINESS_CODE'];
     cBUSINESSNAME = json['C_BUSINESS_NAME'];
     cBUSINESSNAMEEN = json['C_BUSINESS_NAME_EN'];
+    cCREATEDATE = json['C_CREATE_DATE'];
   }
 
   Map<String, dynamic> toJson() {
@@ -141,6 +143,7 @@ class UnexecutedRightModel implements CoreResponseModel {
     data['C_BUSINESS_CODE'] = cBUSINESSCODE;
     data['C_BUSINESS_NAME'] = cBUSINESSNAME;
     data['C_BUSINESS_NAME_EN'] = cBUSINESSNAMEEN;
+    data['C_CREATE_DATE'] = cCREATEDATE;
     return data;
   }
 }

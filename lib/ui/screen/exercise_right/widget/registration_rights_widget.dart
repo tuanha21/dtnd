@@ -2,6 +2,7 @@ import 'package:dtnd/=models=/response/account/unexecuted_right_model.dart';
 import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/utilities/num_utils.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import '../../../theme/app_color.dart';
 import '../../../theme/app_textstyle.dart';
@@ -19,6 +20,10 @@ class RegistrationRightsWidget extends StatefulWidget {
 class _RegistrationRightsWidgetState extends State<RegistrationRightsWidget> {
   @override
   Widget build(BuildContext context) {
+    String dateStr = widget.data?.cCREATEDATE ?? '';
+    DateTime dateTime = DateFormat("MM/dd/yyyy HH:mm:ss").parse(dateStr);
+    String formattedDate = DateFormat("MM/dd/yyyy").format(dateTime);
+
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 8),
       padding: const EdgeInsets.all(16),
@@ -44,10 +49,28 @@ class _RegistrationRightsWidgetState extends State<RegistrationRightsWidget> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(S.of(context).status,
+              Text("Thời gian đăng ký",
                   style: AppTextStyle.labelMedium_12
                       .copyWith(color: AppColors.neutral_03)),
-              Text(widget.data?.cSTATUSNAME.toString() ?? '',
+              Text(
+                formattedDate,
+                style: const TextStyle(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w600,
+                    height: 1.1,
+                    color: AppColors.text_black_1),
+              )
+            ],
+          ),
+
+          const SizedBox(height: 8),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text('Số CP đã đăng ký',
+                  style: AppTextStyle.labelMedium_12
+                      .copyWith(color: AppColors.neutral_03)),
+              Text(NumUtils.formatDouble(widget.data?.cSHAREBUY),
                   style: const TextStyle(
                       fontSize: 12,
                       fontWeight: FontWeight.w600,
@@ -74,10 +97,10 @@ class _RegistrationRightsWidgetState extends State<RegistrationRightsWidget> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(S.of(context).number_of_shares_entitled,
+              Text('Số tiền đã nộp',
                   style: AppTextStyle.labelMedium_12
                       .copyWith(color: AppColors.neutral_03)),
-              Text(widget.data?.cRIGHTVOLUME.toString() ?? '',
+              Text('${NumUtils.formatDouble(widget.data?.cCASHBUY)} đ',
                   style: const TextStyle(
                       fontSize: 12,
                       fontWeight: FontWeight.w600,
@@ -85,56 +108,41 @@ class _RegistrationRightsWidgetState extends State<RegistrationRightsWidget> {
                       color: AppColors.text_black_1))
             ],
           ),
-          const SizedBox(height: 8),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(S.of(context).ratio,
-                  style: AppTextStyle.labelMedium_12
-                      .copyWith(color: AppColors.neutral_03)),
-              Text(widget.data?.cRIGHTRATE.toString() ?? '',
-                  style: const TextStyle(
-                      fontSize: 12,
-                      fontWeight: FontWeight.w600,
-                      height: 1.1,
-                      color: AppColors.text_black_1))
-            ],
-          ),
-          const SizedBox(height: 8),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(S.of(context).purchased_stock_code,
-                  style: AppTextStyle.labelMedium_12
-                      .copyWith(color: AppColors.neutral_03)),
-              Text(widget.data?.cRECEIVESHARECODE.toString() ?? '',
-                  style: const TextStyle(
-                      fontSize: 12,
-                      fontWeight: FontWeight.w600,
-                      height: 1.1,
-                      color: AppColors.text_black_1))
-            ],
-          ),
-          const SizedBox(height: 8),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(S.of(context).remaining_shares_available_for_purchase,
-                  style: AppTextStyle.labelMedium_12
-                      .copyWith(color: AppColors.neutral_03)),
-              Text(
-                  ((NumUtils.formatDouble(widget.data?.cSHARERIGHT ??
-                      0 -
-                          (widget.data?.cSHAREBUY ?? 0) /
-                              (widget.data?.cSHARERIGHT ?? 0)))),
-                  style: const TextStyle(
-                      fontSize: 12,
-                      fontWeight: FontWeight.w600,
-                      height: 1.1,
-                      color: AppColors.text_black_1))
-            ],
-          ),
-          const SizedBox(height: 8),
+          // const SizedBox(height: 8),
+          // Row(
+          //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //   children: [
+          //     Text(S.of(context).purchased_stock_code,
+          //         style: AppTextStyle.labelMedium_12
+          //             .copyWith(color: AppColors.neutral_03)),
+          //     Text(widget.data?.cRECEIVESHARECODE.toString() ?? '',
+          //         style: const TextStyle(
+          //             fontSize: 12,
+          //             fontWeight: FontWeight.w600,
+          //             height: 1.1,
+          //             color: AppColors.text_black_1))
+          //   ],
+          // ),
+          // const SizedBox(height: 8),
+          // Row(
+          //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //   children: [
+          //     Text(S.of(context).remaining_shares_available_for_purchase,
+          //         style: AppTextStyle.labelMedium_12
+          //             .copyWith(color: AppColors.neutral_03)),
+          //     Text(
+          //         ((NumUtils.formatDouble(widget.data?.cSHARERIGHT ??
+          //             0 -
+          //                 (widget.data?.cSHAREBUY ?? 0) /
+          //                     (widget.data?.cSHARERIGHT ?? 0)))),
+          //         style: const TextStyle(
+          //             fontSize: 12,
+          //             fontWeight: FontWeight.w600,
+          //             height: 1.1,
+          //             color: AppColors.text_black_1))
+          //   ],
+          // ),
+          // const SizedBox(height: 8),
         ],
       ),
     );
