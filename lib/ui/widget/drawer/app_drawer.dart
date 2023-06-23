@@ -220,9 +220,9 @@ class _AppDrawerState extends State<AppDrawer> {
           Expanded(child: ListFunction(list: list)),
           Container(
             padding: const EdgeInsets.symmetric(vertical: 8),
-            child: const Text(
-              'IFIS - 1.0.1',
-              style: TextStyle(color: AppColors.neutral_03),
+            child: Text(
+              'IFIS - ${AppService.instance.appVersion}',
+              style: const TextStyle(color: AppColors.neutral_03),
             ),
           ),
           SingleColorTextButton(
