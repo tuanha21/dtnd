@@ -140,7 +140,8 @@ abstract class IAccountModel implements CoreResponseModel {
   }
 
   Future<List<UnexecutedRightModel>> getListHistoryBuy(
-      IUserService userService, INetworkService networkService) async {
+      IUserService userService, INetworkService networkService,
+      {String? fromDay, String? toDay}) async {
     final requestModel = RequestModel(
       userService,
       group: "B",
@@ -148,10 +149,11 @@ abstract class IAccountModel implements CoreResponseModel {
           cmd: "ListRightHistory",
           p1: accCode,
           p2: "",
-          p3: '',
-          p4: '',
-          p5: "1",
-          p6: "20"),
+          p3: fromDay ?? '',
+          p4: toDay ?? '',
+          p5: "",
+          p6: "1",
+          p7: "20"),
     );
     final res =
         await networkService.requestTraditionalApiResList<UnexecutedRightModel>(

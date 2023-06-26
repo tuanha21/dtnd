@@ -19,7 +19,7 @@ class AccumulationDialog extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
       margin: EdgeInsets.symmetric(
-          horizontal: width / 375 * 24, vertical: height / 812 * 180),
+          horizontal: width / 400 * 24, vertical: height / 880 * 180),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12), color: Colors.white),
       child: Column(

@@ -7,6 +7,7 @@ import 'package:dtnd/ui/widget/icon/sheet_header.dart';
 import 'package:dtnd/utilities/validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 import '../../../../../data/implementations/local_storage_service.dart';
 import '../../../../../utilities/logger.dart';
@@ -68,13 +69,20 @@ class _RenameCatalogSheetState extends State<RenameCatalogSheet>
                   onPressed: () {
                     if (key.currentState?.validate() ?? false) {
                       try {
-                        widget.catalog.rename(controller.text);
-                        final ILocalStorageService localStorageService =
-                            LocalStorageService();
-                        localStorageService
-                            .putSavedCatalog(widget.savedCatalog);
-                        if (Navigator.of(context).canPop()) {
-                          Navigator.of(context).pop(const NextCmd());
+                        if (!widget.savedCatalog.catalogs.any((catalog) =>
+                            catalog.name ==
+                            controller.text)) {
+                          widget.catalog.rename(controller.text);
+                          final ILocalStorageService localStorageService =
+                              LocalStorageService();
+                          localStorageService
+                              .putSavedCatalog(widget.savedCatalog);
+                          if (Navigator.of(context).canPop()) {
+                            Navigator.of(context).pop(const NextCmd());
+                          }
+                        } else {
+                          EasyLoading.showToast(
+                              S.of(context).Catalog_already_exists);
                         }
                       } catch (e) {
                         logger.e(e);

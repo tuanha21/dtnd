@@ -174,28 +174,6 @@ class _AccumulatorBookDetailState extends State<AccumulatorBookDetail> {
               ],
             ),
           ),
-          // Container(
-          //     height: 40,
-          //     decoration: const BoxDecoration(
-          //       color: AppColors.primary_03,
-          //       borderRadius: BorderRadius.only(
-          //           bottomLeft: Radius.circular(12),
-          //           bottomRight: Radius.circular(12)),
-          //     ),
-          //     child: Row(
-          //       mainAxisAlignment: MainAxisAlignment.center,
-          //       children: [
-          //         Text('Xem lịch sử giao dịch',
-          //             style: textTheme.bodySmall?.copyWith(
-          //                 color: AppColors.primary_04,
-          //                 fontWeight: FontWeight.w600)),
-          //         const Icon(
-          //           Icons.arrow_right,
-          //           color: AppColors.primary_01,
-          //           size: 24.0,
-          //         ),
-          //       ],
-          //     )),
           const SizedBox(height: 24),
           Container(
               height: 90,
@@ -208,7 +186,7 @@ class _AccumulatorBookDetailState extends State<AccumulatorBookDetail> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text('Phương thức gia hạn',
+                  Text(S.of(context).renewal_method,
                       style: textTheme.bodySmall?.copyWith(
                         color: AppColors.neutral_02,
                       )),
@@ -230,7 +208,7 @@ class _AccumulatorBookDetailState extends State<AccumulatorBookDetail> {
                           openChangeMethod(context);
                         },
                         child: Text(
-                          'Thay đổi',
+                          S.of(context).change,
                           style: textTheme.bodySmall?.copyWith(
                               color: AppColors.linear_01,
                               fontWeight: FontWeight.bold),
@@ -255,10 +233,13 @@ class _AccumulatorBookDetailState extends State<AccumulatorBookDetail> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     RowInfomation(
-                        leftText: 'Lãi hiện tại trước hạn',
+                        leftText: S.of(context).current_pre_maturity_interest,
                         rightText: '${_controller.liquidRate.value}%/năm'),
                     const SizedBox(height: 4),
-                    Text('${_controller.liquidFee.value}đ',
+                    Text(
+                        _controller.liquidFee.value == "0.0"
+                            ? '0đ'
+                            : '${_controller.liquidFee.value}đ',
                         style: textTheme.bodyLarge?.copyWith(
                             fontWeight: FontWeight.w600,
                             color: AppColors.semantic_01)),

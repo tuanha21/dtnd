@@ -27,7 +27,7 @@ class UnknownAccountModel extends IAccountModel {
 
   @override
   Future<List<UnexecutedRightModel>> getListHistoryBuy(
-      IUserService userService, INetworkService networkService) {
+      IUserService userService, INetworkService networkService,{String? fromDay, String? toDay}) {
     throw UnimplementedError();
   }
 }

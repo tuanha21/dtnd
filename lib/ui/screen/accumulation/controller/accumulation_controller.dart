@@ -8,6 +8,7 @@ import 'package:dtnd/data/implementations/user_service.dart';
 import 'package:get/get.dart';
 
 import '../../../../=models=/response/accumulation/contract_fee_model.dart';
+import '../../../../utilities/num_utils.dart';
 
 class AccumulationController {
   static final AccumulationController _instance =
@@ -87,7 +88,8 @@ class AccumulationController {
   Future<SingleContract?> getSingleContract(String itemId) async {
     singleContract = await userService.getSingleContract(itemId);
     liquidRate.value = singleContract?.cLIQUIDRATE.toString() ?? '';
-    liquidFee.value = singleContract?.cLIQUIDFEE.toString() ?? '';
+    liquidFee.value =
+        NumUtils.formatDouble(singleContract?.cLIQUIDFEE).toString();
     return singleContract;
   }
 

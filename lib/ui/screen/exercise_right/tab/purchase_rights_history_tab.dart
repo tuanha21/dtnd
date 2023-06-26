@@ -8,6 +8,7 @@ import '../../../../data/implementations/user_service.dart';
 import '../../../../utilities/time_utils.dart';
 import '../../../widget/calendar/day_input.dart';
 import '../../../widget/empty_list_widget.dart';
+import '../widget/purchase_rights_history_widget.dart';
 
 class PurchaseRightsHistoryTab extends StatefulWidget {
   const PurchaseRightsHistoryTab({super.key});
@@ -38,15 +39,19 @@ class _PurchaseRightsHistoryTabState extends State<PurchaseRightsHistoryTab> {
       {DateTime? fromDay, DateTime? toDay}) async {
     final account =
         userService.defaultAccount.value as BaseMarginPlusAccountModel?;
-    listOrderShow =
-        await account?.getListHistoryBuy(userService, NetworkService());
+    listOrderShow = await account?.getListHistoryBuy(
+      userService,
+      NetworkService(),
+      fromDay: TimeUtilities.commonTimeFormat.format(fromDay!),
+      toDay: TimeUtilities.commonTimeFormat.format(toDay!),
+    );
     return listOrderShow;
   }
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<List<UnexecutedRightModel>?>(
-      future: _getData(),
+      future: _getData(fromDay: fromDay, toDay: toDay),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(child: CircularProgressIndicator());
@@ -70,7 +75,7 @@ class _PurchaseRightsHistoryTabState extends State<PurchaseRightsHistoryTab> {
                         setState(() {
                           fromDay = value;
                         });
-                        _getData();
+                        _getData(fromDay: fromDay, toDay: toDay);
                       }),
                   const SizedBox(
                     width: 16,
@@ -84,11 +89,29 @@ class _PurchaseRightsHistoryTabState extends State<PurchaseRightsHistoryTab> {
                       setState(() {
                         toDay = value;
                       });
-                      _getData();
+                      _getData(fromDay: fromDay, toDay: toDay);
                     },
                   ),
                 ],
               ),
+
+              listOrderShow?.isEmpty == false
+                  ? Expanded(
+                child: ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: listOrderShow?.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return PurchaseRightsHistoryWidget(
+                      data: listOrderShow?.elementAt(index),
+                    );
+                  },
+                ),
+              )
+                  : const Padding(
+                padding: EdgeInsets.only(top: 100),
+                child: EmptyListWidget(),
+              )
+
             ],
           );
         }

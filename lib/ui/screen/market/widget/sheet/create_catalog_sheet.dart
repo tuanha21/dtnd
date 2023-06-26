@@ -35,7 +35,6 @@ class _CreateCatalogSheetState extends State<CreateCatalogSheet>
 
   @override
   Widget build(BuildContext context) {
-    print('tiennh----${widget.savedCatalog}');
     return SafeArea(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
