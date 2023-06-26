@@ -2,7 +2,6 @@ import 'package:dtnd/=models=/response/account/unexecuted_right_model.dart';
 import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/utilities/num_utils.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
 import '../../../../utilities/time_utils.dart';
 import '../../../theme/app_color.dart';
@@ -52,12 +51,9 @@ class _RegistrationRightsWidgetState extends State<RegistrationRightsWidget> {
                     .copyWith(color: AppColors.neutral_03),
               ),
               Text(
-                TimeUtilities.commonTimeFormat
-                    .format(
-                      DateFormat("MM/dd/yyyy HH:mm:ss")
-                          .parse(widget.data?.cCREATEDATE ?? ''),
-                    )
-                    .toString(),
+                TimeUtilities.commonTimeFormat.format(TimeUtilities
+                    .commonTimeFormat
+                    .parse(widget.data?.cCREATEDATE ?? '')),
                 style: const TextStyle(
                     fontSize: 12,
                     fontWeight: FontWeight.w600,
