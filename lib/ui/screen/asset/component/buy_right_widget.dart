@@ -220,7 +220,7 @@ class _BuyRightWidgetState extends State<BuyRightWidget> {
                             const SizedBox(width: 2),
                             Expanded(
                               child: AssetGridElement(element: {
-                                "Số tiền đã nộp":
+                                S.of(context).amount_paid:
                                     NumUtils.formatDouble(widget.data?.cCASHBUY)
                               }),
                             ),

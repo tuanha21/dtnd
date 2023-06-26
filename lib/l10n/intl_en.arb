@@ -562,6 +562,11 @@
   "update_to_continue":"Please install update to continue to using app",
   "no_data":"No data",
 
-  "end" : "End"
-
+  "end" : "End",
+  "registered_share_volume" : "Registered Share Volume",
+  "current_pre_maturity_interest" : "Current Pre-maturity Interest",
+  "change" : "Change",
+  "amount_paid":"Amount Paid",
+  "registration_time":"Registration Time",
+  "stock_with_rights" : "Stock with Rights"
 }

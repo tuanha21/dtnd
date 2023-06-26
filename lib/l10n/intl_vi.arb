@@ -561,5 +561,11 @@
   "update_to_continue":"Vui lòng cập nhật để tiếp tục sử dụng ứng dụng",
   "no_data":"Không có dữ liệu",
 
-  "end" : "Kết thúc"
+  "end" : "Kết thúc",
+  "registered_share_volume" : "Số CP đã đăng ký",
+  "current_pre_maturity_interest" : "Lãi hiện tại trước hạn",
+  "change" : "Thay đổi",
+  "amount_paid" : "Số tiền đã nộp",
+  "registration_time" : "Thời gian đăng ký",
+  "stock_with_rights" : "Cổ phiếu hưởng quyền"
 }
