@@ -87,7 +87,7 @@ class UnexecutedRightModel implements CoreResponseModel {
     cSHAREODDLOT = json['C_SHARE_ODD_LOT'];
     cCASHODDLOT = json['C_CASH_ODD_LOT'];
     cCASHVOLUME = json['C_CASH_VOLUME'];
-    cTAXVOLUME = json['C_TAX_VOLUME'];
+    cTAXVOLUME = json['C_TAX_VALUE'];
     cNOTE = json['C_NOTE'];
     cSHAREVOLUME = json['C_SHARE_VOLUME'];
     cRIGHTRECEIVER = json['C_RIGHT_RECEIVER'];
@@ -134,7 +134,7 @@ class UnexecutedRightModel implements CoreResponseModel {
     data['C_SHARE_ODD_LOT'] = cSHAREODDLOT;
     data['C_CASH_ODD_LOT'] = cCASHODDLOT;
     data['C_CASH_VOLUME'] = cCASHVOLUME;
-    data['C_TAX_VOLUME'] = cTAXVOLUME;
+    data['C_TAX_VALUE'] = cTAXVOLUME;
     data['C_NOTE'] = cNOTE;
     data['C_SHARE_VOLUME'] = cSHAREVOLUME;
     data['C_RIGHT_RECEIVER'] = cRIGHTRECEIVER;

@@ -1,5 +1,6 @@
 import 'package:dtnd/utilities/num_utils.dart';
 import 'package:flutter/material.dart';
+
 import '../../../../=models=/response/account/unexecuted_right_model.dart';
 import '../../../../generated/l10n.dart';
 import '../../../theme/app_color.dart';
@@ -34,17 +35,31 @@ class PurchaseRightsHistoryWidget extends StatelessWidget {
         valuePermission = NumUtils.formatDouble(data?.cSHAREVOLUME);
         titleMoneyReceive = S.of(context).amount_received;
         moneyReceive =
-        "${NumUtils.formatDouble((double.tryParse(data?.cCASHVOLUME.toString() ?? '') ?? 0) + (double.tryParse(data?.cTAXVOLUME.toString() ?? '') ?? 0))}đ";
+            "${NumUtils.formatDouble((double.tryParse(data?.cCASHVOLUME.toString() ?? '') ?? 0) + (double.tryParse(data?.cTAXVOLUME.toString() ?? '') ?? 0))}đ";
         titleRightRate = S.of(context).ratio;
         rightRate = "${data?.cRIGHTRATE}";
         break;
       case "RIGHT_STOCK_DIV":
-      case "RIGHT_STOCK_BONUS":
-      case "RIGHT_VOTE":
         titlePermission = S.of(context).registered_share_volume;
         valuePermission = NumUtils.formatDouble(data?.cSHAREVOLUME);
         titleMoneyReceive = S.of(context).number_of_shares_received;
         moneyReceive = NumUtils.formatDouble(data?.cSHAREDIVIDENT);
+        titleRightRate = S.of(context).ratio;
+        rightRate = data?.cRIGHTRATE ?? '';
+        break;
+      case "RIGHT_STOCK_BONUS":
+        titlePermission = S.of(context).registered_share_volume;
+        valuePermission = NumUtils.formatDouble(data?.cSHAREVOLUME);
+        titleMoneyReceive = S.of(context).number_of_shares_received;
+        moneyReceive = NumUtils.formatDouble(data?.cSHAREDIVIDENT);
+        titleRightRate = S.of(context).ratio;
+        rightRate = data?.cRIGHTRATE ?? '';
+        break;
+      case "RIGHT_VOTE":
+        titlePermission = S.of(context).registered_share_volume;
+        valuePermission = NumUtils.formatDouble(data?.cSHAREVOLUME);
+        titleMoneyReceive = S.of(context).quantity_of_rights_received;
+        moneyReceive = NumUtils.formatDouble(data?.cRIGHTVOLUME);
         titleRightRate = S.of(context).ratio;
         rightRate = data?.cRIGHTRATE ?? '';
         break;
@@ -82,7 +97,7 @@ class PurchaseRightsHistoryWidget extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: 8),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
