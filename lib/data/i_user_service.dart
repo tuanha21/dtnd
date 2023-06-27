@@ -111,4 +111,6 @@ abstract class IUserService {
   Future<SingleContract?> getSingleContract(String itemId);
 
   Future<SingleContract?> liquidAll(String contactId);
+
+  Future<bool> methodUpdate(String contactId,String extentType);
 }

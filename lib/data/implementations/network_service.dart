@@ -1893,4 +1893,18 @@ class NetworkService implements INetworkService {
       throw res["sRs"];
     }
   }
+
+  @override
+  Future<bool> methodUpdate(String body) async {
+    var response = await client.post(url_core_endpoint, body: body);
+    if (response.statusCode != 200) {
+      throw response;
+    }
+    var res = decode(response.bodyBytes);
+    if (res["rc"] == 1) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 }

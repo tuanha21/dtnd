@@ -567,5 +567,7 @@
   "change" : "Thay đổi",
   "amount_paid" : "Số tiền đã nộp",
   "registration_time" : "Thời gian đăng ký",
-  "stock_with_rights" : "Cổ phiếu hưởng quyền"
+  "stock_with_rights" : "Cổ phiếu hưởng quyền",
+  "accumulated_code" : "Mã tích lũy",
+  "choose_renewal_method" : "Chọn phương thức gia hạn"
 }

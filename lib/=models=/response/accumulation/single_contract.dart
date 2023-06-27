@@ -23,6 +23,8 @@ class SingleContract {
   num? cCURRENTDAY;
   num? cLIQUIDRATE;
   num? cLIQUIDFEE;
+  String? cEXTENTTYPE;
+  String? cEXTENTNAME;
 
   SingleContract(
       {required this.pKCONTRACTBORROW,
@@ -48,7 +50,10 @@ class SingleContract {
       required this.cCHANNELNAME,
       required this.cCURRENTDAY,
       required this.cLIQUIDRATE,
-      required this.cLIQUIDFEE});
+      required this.cLIQUIDFEE,
+      required this.cEXTENTTYPE,
+      required this.cEXTENTNAME
+      });
 
   SingleContract.fromJson(Map<String, dynamic> json) {
     pKCONTRACTBORROW = json['PK_CONTRACT_BORROW'];
@@ -75,6 +80,8 @@ class SingleContract {
     cCURRENTDAY = json['C_CURRENT_DAY'];
     cLIQUIDRATE = json['C_LIQUID_RATE'];
     cLIQUIDFEE = json['C_LIQUID_FEE'];
+    cEXTENTTYPE = json['C_EXTENT_TYPE'];
+    cEXTENTNAME = json['C_EXTENT_NAME'];
   }
 
   Map<String, dynamic> toJson() {
@@ -103,6 +110,8 @@ class SingleContract {
     data['C_CURRENT_DAY'] = cCURRENTDAY;
     data['C_LIQUID_RATE'] = cLIQUIDRATE;
     data['C_LIQUID_FEE'] = cLIQUIDFEE;
+    data['C_EXTENT_TYPE'] = cEXTENTTYPE;
+    data['C_EXTENT_NAME'] = cEXTENTNAME;
     return data;
   }
 

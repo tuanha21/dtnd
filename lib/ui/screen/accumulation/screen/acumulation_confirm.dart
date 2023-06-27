@@ -11,6 +11,7 @@ import 'package:dtnd/utilities/num_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import '../../../../generated/l10n.dart';
 import '../widget/row_information.dart';
 
 class AccumulationConfirm extends StatefulWidget {
@@ -144,14 +145,14 @@ class _AccumulationConfirmState extends State<AccumulationConfirm> {
             child: Column(
               children: [
                 RowInfomation(
-                    leftText: 'Sản phẩm',
+                    leftText: S.of(context).product,
                     rightText: feeRate.productName.toString()),
                 RowInfomation(
-                  leftText: 'Lãi suất',
+                  leftText: S.of(context).profit,
                   rightText: '${feeRate.feeRate.toString()}%/năm',
                 ),
                 RowInfomation(
-                    leftText: 'Kỳ hạn', rightText: feeRate.termName.toString()),
+                    leftText: S.of(context).period, rightText: feeRate.termName.toString()),
                 RowInfomation(
                     leftText: 'Ngày bắt đầu ', rightText: widget.openDay),
                 RowInfomation(
@@ -172,7 +173,7 @@ class _AccumulationConfirmState extends State<AccumulationConfirm> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text('Phương thức gia hạn',
+                  Text(S.of(context).renewal_method,
                       style: textTheme.bodySmall?.copyWith(
                         color: AppColors.neutral_02,
                       )),
@@ -194,7 +195,7 @@ class _AccumulationConfirmState extends State<AccumulationConfirm> {
                           openChangeMethod(context);
                         },
                         child: Text(
-                          'Thay đổi',
+                          S.of(context).change,
                           style: textTheme.bodySmall?.copyWith(
                               color: AppColors.linear_01,
                               fontWeight: FontWeight.bold),
@@ -264,7 +265,7 @@ class _AccumulationConfirmState extends State<AccumulationConfirm> {
               mainAxisAlignment: MainAxisAlignment.center,
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
-                Text('Chọn phương thức gia hạn',
+                Text(S.of(context).choose_renewal_method,
                     style: textTheme.bodyLarge?.copyWith(
                       fontWeight: FontWeight.bold,
                     )),

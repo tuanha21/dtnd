@@ -22,13 +22,6 @@ class AccumulatorBookDetail extends StatefulWidget {
 }
 
 class _AccumulatorBookDetailState extends State<AccumulatorBookDetail> {
-  final List<bool> _selectedMethod = <bool>[true, false, false];
-  final List<String> _textMethod = <String>[
-    'Tự động gia hạn gốc và lãi',
-    'Tự động gia hạn gốc',
-    'Không tự động gia hạn'
-  ];
-  late String _method = 'Tự động gia hạn gốc và lãi';
   final AccumulationController _controller = Get.put(AccumulationController());
   late ContractModel contract = _controller.getItemContract(widget.id);
 
@@ -67,7 +60,7 @@ class _AccumulatorBookDetailState extends State<AccumulatorBookDetail> {
                     return SettlementDialog(id: widget.id);
                   });
             },
-            child: const Text('Tất toán'),
+            child: Text(S.of(context).final_settlement),
           ),
         ),
       ),
@@ -98,7 +91,7 @@ class _AccumulatorBookDetailState extends State<AccumulatorBookDetail> {
                     Flexible(
                       flex: 1,
                       child: Text(
-                        'Mã tích luỹ',
+                        S.of(context).accumulated_code,
                         style: textTheme.bodyMedium
                             ?.copyWith(color: AppColors.neutral_02),
                       ),
@@ -126,7 +119,7 @@ class _AccumulatorBookDetailState extends State<AccumulatorBookDetail> {
                   differentColor: true,
                 ),
                 RowInfomation(
-                  leftText: 'Tổng tiền gốc và lãi',
+                  leftText: S.of(context).total_principal_and_interest,
                   rightText:
                       '${NumUtils.formatInteger(contract.currentValue)}đ',
                 ),
@@ -176,24 +169,25 @@ class _AccumulatorBookDetailState extends State<AccumulatorBookDetail> {
           ),
           const SizedBox(height: 24),
           Container(
-              height: 90,
-              padding: const EdgeInsets.all(12),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(S.of(context).renewal_method,
-                      style: textTheme.bodySmall?.copyWith(
-                        color: AppColors.neutral_02,
-                      )),
-                  const SizedBox(height: 4),
-                  Row(
+            height: 90,
+            padding: const EdgeInsets.all(12),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(S.of(context).renewal_method,
+                    style: textTheme.bodySmall?.copyWith(
+                      color: AppColors.neutral_02,
+                    )),
+                const SizedBox(height: 4),
+                Obx(
+                  () => Row(
                     children: [
-                      Text(_method,
+                      Text(_controller.renewalMethod.value,
                           style: textTheme.bodyMedium
                               ?.copyWith(fontWeight: FontWeight.w600)),
                       const Spacer(),
@@ -216,8 +210,10 @@ class _AccumulatorBookDetailState extends State<AccumulatorBookDetail> {
                       ),
                     ],
                   ),
-                ],
-              )),
+                )
+              ],
+            ),
+          ),
           const SizedBox(height: 24),
           Container(
             height: 80,
@@ -258,6 +254,30 @@ class _AccumulatorBookDetailState extends State<AccumulatorBookDetail> {
     return showModalBottomSheet<void>(
       context: context,
       builder: (BuildContext context) {
+        final List<Map<String, dynamic>> methodList = [
+          {
+            'selected': _controller.singleContract?.cEXTENTNAME ==
+                    "Tự động gia hạn gốc + lãi"
+                ? true
+                : false,
+            'text': "Tự động gia hạn gốc + lãi",
+          },
+          {
+            'selected':
+                _controller.singleContract?.cEXTENTNAME == "Tự động gia hạn gốc"
+                    ? true
+                    : false,
+            'text': "Tự động gia hạn gốc",
+          },
+          {
+            'selected': _controller.singleContract?.cEXTENTNAME ==
+                    "Không tự động gia hạn"
+                ? true
+                : false,
+            'text': "Không tự động gia hạn",
+          },
+        ];
+
         return StatefulBuilder(
             builder: (BuildContext context, StateSetter setStateSheet) {
           return Container(
@@ -268,27 +288,46 @@ class _AccumulatorBookDetailState extends State<AccumulatorBookDetail> {
               mainAxisAlignment: MainAxisAlignment.center,
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
-                Text('Chọn phương thức gia hạn',
-                    style: textTheme.bodyLarge?.copyWith(
-                      fontWeight: FontWeight.bold,
-                    )),
+                Text(
+                  S.of(context).choose_renewal_method,
+                  style: textTheme.bodyLarge?.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
                 const SizedBox(height: 12),
                 Expanded(
                   child: ListView.builder(
                     shrinkWrap: true,
-                    itemCount: _selectedMethod.length,
+                    itemCount: methodList.length,
                     itemBuilder: (BuildContext context, int index) {
                       return GestureDetector(
                         onTap: () {
-                          setStateSheet(() {
-                            for (int i = 0; i < _selectedMethod.length; i++) {
-                              if (i == index) {
-                                _selectedMethod[i] = true;
-                              } else {
-                                _selectedMethod[i] = false;
+                          setStateSheet(
+                            () {
+                              for (int i = 0; i < methodList.length; i++) {
+                                if (i == index) {
+                                  methodList[i]['selected'] = true;
+                                } else {
+                                  methodList[i]['selected'] = false;
+                                }
                               }
-                            }
-                          });
+                              switch (methodList[index]['text']) {
+                                case "Tự động gia hạn gốc + lãi":
+                                  _controller.methodUpdate(
+                                      widget.id, 'LAI_NHAP_GOC');
+                                  break;
+                                case "Tự động gia hạn gốc":
+                                  _controller.methodUpdate(
+                                      widget.id, 'NGUYEN_GOC');
+                                  break;
+                                case "Không tự động gia hạn":
+                                  _controller.methodUpdate(
+                                      widget.id, 'KHONG_GIA_HAN');
+                                  break;
+                                default:
+                              }
+                            },
+                          );
                         },
                         child: Container(
                           height: 40,
@@ -300,13 +339,13 @@ class _AccumulatorBookDetailState extends State<AccumulatorBookDetail> {
                               color: Colors.white,
                               borderRadius: BorderRadius.circular(12),
                               border: Border.all(
-                                  color: _selectedMethod[index] == true
+                                  color: methodList[index]['selected'] == true
                                       ? AppColors.primary_01
                                       : Colors.transparent)),
                           child: Text(
-                            _textMethod[index],
+                            methodList[index]['text'],
                             style: textTheme.bodyMedium?.copyWith(
-                              fontWeight: _selectedMethod[index] == true
+                              fontWeight: methodList[index]['selected'] == true
                                   ? FontWeight.w700
                                   : FontWeight.w400,
                             ),
@@ -322,15 +361,7 @@ class _AccumulatorBookDetailState extends State<AccumulatorBookDetail> {
         });
       },
     ).whenComplete(() {
-      String method = '';
-      for (int i = 0; i < _selectedMethod.length; i++) {
-        if (_selectedMethod[i] == true) {
-          method = _textMethod[i];
-        }
-      }
-      setState(() {
-        _method = method;
-      });
+      _controller.getSingleContract(widget.id);
     });
   }
 }

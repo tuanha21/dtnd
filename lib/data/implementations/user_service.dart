@@ -603,4 +603,23 @@ class UserService implements IUserService {
     };
     return networkService.liquidAll(jsonEncode(body));
   }
+
+  //  Update tích lũy
+  @override
+  Future<bool> methodUpdate(String contactId, String extentType) {
+    Map<String, dynamic> body = {
+      "group": "B",
+      "user": token.value?.user ?? '',
+      "session": token.value?.sid ?? '',
+      "data": {
+        "type": "object",
+        "cmd": "MM_UpdateContract",
+        "p1": {
+          "CONTRACT_ID": contactId,
+          "EXTENT_TYPE": extentType
+        }
+      }
+    };
+    return networkService.methodUpdate(jsonEncode(body));
+  }
 }

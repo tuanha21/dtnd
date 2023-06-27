@@ -35,6 +35,8 @@ class AccumulationController {
   RxNum sumCurrentFee = RxNum(0);
   SingleContract? singleContract;
   ContractFee? contractFee;
+  RxBool extensionMethod = false.obs;
+  final RxString renewalMethod = "".obs;
 
   get flagContract => baseContract.value;
   final RxDouble cashValue = 0.0.obs;
@@ -89,7 +91,8 @@ class AccumulationController {
     singleContract = await userService.getSingleContract(itemId);
     liquidRate.value = singleContract?.cLIQUIDRATE.toString() ?? '';
     liquidFee.value =
-        NumUtils.formatDouble(singleContract?.cLIQUIDFEE).toString();
+        NumUtils.formatDouble(singleContract?.cLIQUIDFEE);
+    renewalMethod.value = singleContract?.cEXTENTNAME ?? '';
     return singleContract;
   }
 
@@ -118,5 +121,10 @@ class AccumulationController {
 
   Future<void> liquidAll(String contractId) async {
     await userService.liquidAll(contractId);
+  }
+
+  Future<void> methodUpdate(String contractId, String extentType) async {
+    extensionMethod.value = await userService.methodUpdate(contractId, extentType);
+    print("contract : ${extensionMethod.value.toString()}");
   }
 }

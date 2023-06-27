@@ -568,5 +568,7 @@
   "change" : "Change",
   "amount_paid":"Amount Paid",
   "registration_time":"Registration Time",
-  "stock_with_rights" : "Stock with Rights"
+  "stock_with_rights" : "Stock with Rights",
+  "accumulated_code" : "Accumulated code",
+  "choose_renewal_method" : "Choose renewal method"
 }

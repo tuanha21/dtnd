@@ -322,4 +322,6 @@ abstract class INetworkService {
   Future<SingleContract?> getSingleContract(String itemId);
 
   Future<SingleContract?> liquidAll(String contractId);
+
+  Future<bool> methodUpdate(String body);
 }
