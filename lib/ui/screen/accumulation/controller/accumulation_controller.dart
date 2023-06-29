@@ -8,7 +8,6 @@ import 'package:dtnd/data/implementations/user_service.dart';
 import 'package:get/get.dart';
 
 import '../../../../=models=/response/accumulation/contract_fee_model.dart';
-import '../../../../utilities/num_utils.dart';
 
 class AccumulationController {
   static final AccumulationController _instance =
@@ -27,20 +26,17 @@ class AccumulationController {
   final Rx<List<ContractModel>?> listAllContract = Rx(<ContractModel>[]);
   final Rx<bool> accumulationInitialized = false.obs;
   final Rx<bool> baseContract = false.obs;
-  final RxString openDay = ''.obs;
-  final RxString endDay = ''.obs;
+
   final RxString liquidRate = ''.obs;
   final RxString liquidFee = ''.obs;
   RxNum sumCapital = RxNum(0);
   RxNum sumCurrentFee = RxNum(0);
-  SingleContract? singleContract;
-  ContractFee? contractFee;
+  Rx<SingleContract?> singleContract = SingleContract().obs;
+  Rx<ContractFee?> contractFee = ContractFee().obs;
   RxBool extensionMethod = false.obs;
   final RxString renewalMethod = "".obs;
 
   get flagContract => baseContract.value;
-  final RxDouble cashValue = 0.0.obs;
-  final RxDouble feeValue = 0.0.obs;
 
   Future<void> init() async {
     await getFeeRate();
@@ -88,12 +84,9 @@ class AccumulationController {
   }
 
   Future<SingleContract?> getSingleContract(String itemId) async {
-    singleContract = await userService.getSingleContract(itemId);
-    liquidRate.value = singleContract?.cLIQUIDRATE.toString() ?? '';
-    liquidFee.value =
-        NumUtils.formatDouble(singleContract?.cLIQUIDFEE);
-    renewalMethod.value = singleContract?.cEXTENTNAME ?? '';
-    return singleContract;
+    singleContract.value = await userService.getSingleContract(itemId);
+    renewalMethod.value = singleContract.value?.cEXTENTNAME ?? '';
+    return singleContract.value;
   }
 
   ContractModel getItemContract(String id) {
@@ -108,15 +101,8 @@ class AccumulationController {
   }
 
   Future<ContractFee?> getProvisionalFee(String term, String capital) async {
-    contractFee = await userService.getProvisionalFee(term, capital);
-    if (contractFee != null) {
-      cashValue.value =
-          double.tryParse(contractFee!.cCASHVALUE.toString()) ?? 0;
-      feeValue.value = double.tryParse(contractFee!.cFEEVALUE.toString()) ?? 0;
-      openDay.value = contractFee?.cOPENDATE.toString() ?? '';
-      endDay.value = contractFee?.cEXPIREDATE.toString() ?? '';
-    }
-    return contractFee;
+    contractFee.value = await userService.getProvisionalFee(term, capital);
+    return contractFee.value;
   }
 
   Future<void> liquidAll(String contractId) async {
@@ -124,7 +110,7 @@ class AccumulationController {
   }
 
   Future<void> methodUpdate(String contractId, String extentType) async {
-    extensionMethod.value = await userService.methodUpdate(contractId, extentType);
-    print("contract : ${extensionMethod.value.toString()}");
+    extensionMethod.value =
+        await userService.methodUpdate(contractId, extentType);
   }
 }

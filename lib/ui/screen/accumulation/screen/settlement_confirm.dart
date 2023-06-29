@@ -4,9 +4,9 @@ import 'package:dtnd/ui/widget/appbar/simple_appbar.dart';
 import 'package:dtnd/utilities/num_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:intl/intl.dart';
-import 'package:k_chart/flutter_k_chart.dart';
+
+import '../../../../generated/l10n.dart';
 import '../controller/accumulation_controller.dart';
 import '../widget/row_information.dart';
 
@@ -32,10 +32,11 @@ class _SettlementConfirmState extends State<SettlementConfirm> {
     super.initState();
     _controller.getSingleContract(widget.id);
     sum = ((double.tryParse(
-                _controller.singleContract?.cLIQUIDFEE.toString() ?? '') ??
+                _controller.singleContract.value?.cLIQUIDFEE.toString() ??
+                    '') ??
             0) +
         (double.tryParse(
-                _controller.singleContract?.cCAPITAL.toString() ?? '') ??
+                _controller.singleContract.value?.cCAPITAL.toString() ?? '') ??
             0));
   }
 
@@ -49,8 +50,8 @@ class _SettlementConfirmState extends State<SettlementConfirm> {
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
     return Scaffold(
-      appBar: const SimpleAppbar(
-        title: 'Chi tiết tất toán',
+      appBar: SimpleAppbar(
+        title: S.of(context).payment_details,
       ),
       body: SingleChildScrollView(
         child: bodyWidget(textTheme, context),
@@ -68,13 +69,17 @@ class _SettlementConfirmState extends State<SettlementConfirm> {
             ),
             onPressed: () {
               _controller
-                  .liquidAll(_controller.singleContract?.pKCONTRACTBORROW ?? '')
-                  .whenComplete(() => showDialog(
+                  .liquidAll(
+                      _controller.singleContract.value?.pKCONTRACTBORROW ?? '')
+                  .whenComplete(
+                    () => showDialog(
                       barrierDismissible: false,
                       context: context,
-                      builder: (_) => const SettlementSuccessDialog()));
+                      builder: (_) => const SettlementSuccessDialog(),
+                    ),
+                  );
             },
-            child: const Text('Xác nhận'),
+            child: Text(S.of(context).confirm),
           ),
         ),
       ),
@@ -93,7 +98,8 @@ class _SettlementConfirmState extends State<SettlementConfirm> {
               style:
                   textTheme.bodyLarge?.copyWith(color: AppColors.neutral_02)),
           const SizedBox(height: 10),
-          Text(NumUtils.formatDouble(_controller.singleContract?.cCAPITAL),
+          Text(
+              NumUtils.formatDouble(_controller.singleContract.value?.cCAPITAL),
               style: textTheme.bodyMedium
                   ?.copyWith(fontSize: 32, fontWeight: FontWeight.bold)),
           const SizedBox(height: 24),
@@ -104,52 +110,55 @@ class _SettlementConfirmState extends State<SettlementConfirm> {
               color: Colors.white,
               borderRadius: BorderRadius.circular(12),
             ),
-            child:
-                Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'Ngày bắt đầu',
-                    style: textTheme.bodySmall
-                        ?.copyWith(color: AppColors.neutral_04),
-                  ),
-                  Text('Ngày kết thúc',
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      S.of(context).start_date,
                       style: textTheme.bodySmall
-                          ?.copyWith(color: AppColors.neutral_04)),
-                ],
-              ),
-              const SizedBox(height: 10),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(_controller.singleContract?.cOPENDATE ?? '',
-                      style: const TextStyle(fontWeight: FontWeight.bold)),
-                  Text(_controller.singleContract?.cEXPIREDATE ?? '',
-                      style: const TextStyle(fontWeight: FontWeight.bold)),
-                ],
-              )
-            ]),
+                          ?.copyWith(color: AppColors.neutral_04),
+                    ),
+                    Text(S.of(context).end_date,
+                        style: textTheme.bodySmall
+                            ?.copyWith(color: AppColors.neutral_04)),
+                  ],
+                ),
+                const SizedBox(height: 10),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(_controller.singleContract.value?.cOPENDATE ?? '',
+                        style: const TextStyle(fontWeight: FontWeight.bold)),
+                    Text(_controller.singleContract.value?.cEXPIREDATE ?? '',
+                        style: const TextStyle(fontWeight: FontWeight.bold)),
+                  ],
+                )
+              ],
+            ),
           ),
           const SizedBox(height: 24),
           RowInfomation(
-              leftText: 'Mã tích lũy',
-              rightText: _controller.singleContract?.cCONTRACTCODE ?? ''),
+              leftText: S.of(context).accumulated_code,
+              rightText: _controller.singleContract.value?.cCONTRACTCODE ?? ''),
           RowInfomation(
-              leftText: 'Kỳ hạn',
-              rightText: _controller.singleContract?.cTERMNAME ?? ''),
+              leftText: S.of(context).period,
+              rightText: _controller.singleContract.value?.cTERMNAME ?? ''),
           RowInfomation(
-              leftText: 'Số ngày gửi',
+              leftText: S.of(context).number_of_days_sent,
               rightText:
-                  "${NumUtils.formatInteger(_controller.singleContract?.cCURRENTDAY)} ngày"),
-          RowInfomation(leftText: 'Ngày tất toán ', rightText: getToDay()),
+                  "${NumUtils.formatInteger(_controller.singleContract.value?.cCURRENTDAY)} ngày"),
+          RowInfomation(
+              leftText: S.of(context).settlement_date, rightText: getToDay()),
           RowInfomation(
               leftText:
-                  'Lãi tất toán trước hạn (${_controller.singleContract?.cLIQUIDRATE}%/năm)',
+                  '${S.of(context).interest_paid_off_before_maturity} (${_controller.singleContract.value?.cLIQUIDRATE}%/năm)',
               rightText:
-                  '${NumUtils.formatDouble(_controller.singleContract?.cLIQUIDFEE)}đ'),
+                  '${NumUtils.formatDouble(_controller.singleContract.value?.cLIQUIDFEE)}đ'),
           RowInfomation(
-              leftText: 'Thực nhận',
+              leftText: S.of(context).actually_received,
               rightText: "${NumUtils.formatDouble(sum)}đ"),
         ],
       ),

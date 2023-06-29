@@ -80,11 +80,11 @@ class _AccumulationAutoContractState extends State<AccumulationAutoContract> {
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text('Bạn có thể bắt đầu bất cứ lúc nào 💯',
+                                  Text('${S.of(context).you_can_begin_whenever_you_want}} 💯',
                                       style: textTheme.bodyMedium?.copyWith(
                                           color: AppColors.text_blue)),
                                   const SizedBox(height: 4),
-                                  Text('Đăng ký ngay đừng bỏ lỡ',
+                                  Text(S.of(context).sign_up_now_dont_miss_it,
                                       style: textTheme.bodySmall?.copyWith(
                                           color: AppColors.neutral_03)),
                                 ],
@@ -103,7 +103,7 @@ class _AccumulationAutoContractState extends State<AccumulationAutoContract> {
                               ),
                               const SizedBox(width: 15),
                               Text(
-                                isRegister ? 'Đã đăng ký' : 'Chưa đăng ký',
+                                isRegister ? S.of(context).registered : S.of(context).not_registered,
                                 style: const TextStyle(
                                     fontWeight: FontWeight.bold),
                               ),
@@ -137,7 +137,7 @@ class _AccumulationAutoContractState extends State<AccumulationAutoContract> {
                               rightText: "${feeRate.liquidRate}%"),
                           RowInfomation(
                               leftText: S.of(context).renewal_method,
-                              rightText: 'Linh hoạt'),
+                              rightText: S.of(context).flexible),
                         ],
                       ),
                     )

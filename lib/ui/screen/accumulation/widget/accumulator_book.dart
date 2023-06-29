@@ -67,12 +67,12 @@ class _AccumulatorBookState extends State<AccumulatorBook> {
                               .toString(),
                           id: controller.listAllContract.value![index].id
                               .toString(),
-                          profit: controller
-                              .listAllContract.value![index].fee
+                          profit: controller.listAllContract.value![index].fee
                               .toString(),
                           money: controller
                               .listAllContract.value![index].capital
                               .toString(),
+                          controller: controller,
                         );
                       },
                     ),
@@ -97,6 +97,7 @@ class ItemBuilder extends StatelessWidget {
     required this.id,
     required this.profit,
     required this.money,
+    required this.controller,
   });
 
   final String title;
@@ -106,13 +107,23 @@ class ItemBuilder extends StatelessWidget {
   final String profit;
   final String money;
   final String id;
+  final AccumulationController controller;
 
-  void _onTap(BuildContext context, String name, String id) {
+  void _onTap(
+    BuildContext context,
+    String name,
+    String id,
+  ) {
     // phần này click vào detail các item
+    controller.getSingleContract(id);
     Navigator.push(
       context,
       MaterialPageRoute(
-          builder: (context) => AccumulatorBookDetail(name: name, id: id)),
+        builder: (context) => AccumulatorBookDetail(
+          name: name,
+          id: id,
+        ),
+      ),
     );
   }
 

@@ -22,35 +22,43 @@ class _AccumulatorProductState extends State<AccumulatorProduct> {
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
 
-    return Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-      Obx(() {
-        final initialized = controller.accumulationInitialized.value;
-        final flag = controller.baseContract.value;
-        if (!initialized) {
-          return const EmptyListWidget();
-        } else {
-          if (controller.listFeeRate.value == []) {
-            return const EmptyListWidget();
-          }
-          return Expanded(
-            child: ListView.builder(
-              padding: const EdgeInsets.symmetric(vertical: 8),
-              itemCount: controller.listFeeRate.value!.length,
-              itemBuilder: (BuildContext context, int index) {
-                return ItemBuilder(
-                  title: controller.listFeeRate.value![index].productName ?? '',
-                  textTheme: textTheme,
-                  period: controller.listFeeRate.value![index].termName ?? '',
-                  rate: controller.listFeeRate.value![index].feeRate.toString(),
-                  id: controller.listFeeRate.value![index].id.toString(),
-                  autoFlag: flag,
-                );
-              },
-            ),
-          );
-        }
-      }),
-    ]);
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Obx(
+          () {
+            final initialized = controller.accumulationInitialized.value;
+            final flag = controller.baseContract.value;
+            if (!initialized) {
+              return const EmptyListWidget();
+            } else {
+              if (controller.listFeeRate.value == []) {
+                return const EmptyListWidget();
+              }
+              return Expanded(
+                child: ListView.builder(
+                  padding: const EdgeInsets.symmetric(vertical: 8),
+                  itemCount: controller.listFeeRate.value!.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return ItemBuilder(
+                      title: controller.listFeeRate.value![index].productName ??
+                          '',
+                      textTheme: textTheme,
+                      period:
+                          controller.listFeeRate.value![index].termName ?? '',
+                      rate: controller.listFeeRate.value![index].feeRate
+                          .toString(),
+                      id: controller.listFeeRate.value![index].id.toString(),
+                      autoFlag: flag,
+                    );
+                  },
+                ),
+              );
+            }
+          },
+        ),
+      ],
+    );
   }
 }
 
@@ -77,17 +85,19 @@ class ItemBuilder extends StatelessWidget {
       Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (context) => AccumulationAutoContract(
-                  id: id,
-                )),
+          builder: (context) => AccumulationAutoContract(
+            id: id,
+          ),
+        ),
       );
     } else {
       Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (context) => AccumulationProductDetail(
-                  id: id,
-                )),
+          builder: (context) => AccumulationProductDetail(
+            id: id,
+          ),
+        ),
       );
     }
   }
@@ -102,77 +112,85 @@ class ItemBuilder extends StatelessWidget {
       margin: const EdgeInsets.only(top: 12),
       padding: const EdgeInsets.all(12),
       height: 140,
-      child: Column(children: [
-        GestureDetector(
-          onTap: () {
-            _onTap(context, id, period);
-          },
-          child: Row(children: [
-            CircleAvatar(
-              backgroundColor: AppColors.accent_light_04,
-              child: Image.asset(
-                AppImages.wallet_3,
-                height: 40,
-                fit: BoxFit.fitHeight,
-              ),
+      child: Column(
+        children: [
+          GestureDetector(
+            onTap: () {
+              _onTap(context, id, period);
+            },
+            child: Row(
+              children: [
+                CircleAvatar(
+                  backgroundColor: AppColors.accent_light_04,
+                  child: Image.asset(
+                    AppImages.wallet_3,
+                    height: 40,
+                    fit: BoxFit.fitHeight,
+                  ),
+                ),
+                const SizedBox(width: 15),
+                (period == '1 tuần')
+                    ? Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            title,
+                            style: const TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                          const SizedBox(height: 3),
+                          Text(
+                            autoFlag
+                                ? S.of(context).registered
+                                : S.of(context).not_registered,
+                            style:
+                                const TextStyle(color: AppColors.semantic_01),
+                          ),
+                        ],
+                      )
+                    : Text(title,
+                        style: const TextStyle(fontWeight: FontWeight.bold)),
+                const Spacer(),
+                const SizedBox(
+                  child: Icon(
+                    Icons.chevron_right,
+                    color: Colors.black,
+                    size: 28.0,
+                  ),
+                ),
+              ],
             ),
-            const SizedBox(width: 15),
-            (period == '1 tuần')
-                ? Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        title,
-                        style: const TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                      const SizedBox(height: 3),
-                      Text(
-                        autoFlag ? 'Đã đăng ký' : 'Chưa đăng ký',
-                        style: const TextStyle(color: AppColors.semantic_01),
-                      ),
-                    ],
-                  )
-                : Text(title,
-                    style: const TextStyle(fontWeight: FontWeight.bold)),
-            const Spacer(),
-            const SizedBox(
-              child: Icon(
-                Icons.chevron_right,
-                color: Colors.black,
-                size: 28.0,
-              ),
-            )
-          ]),
-        ),
-        const SizedBox(
-          height: 12,
-        ),
-        Row(
-          children: [
-            Flexible(
-              flex: 1,
-              child: Container(
-                height: 60,
-                decoration: const BoxDecoration(
-                  color: AppColors.primary_04,
-                  borderRadius: BorderRadius.only(
+          ),
+          const SizedBox(
+            height: 12,
+          ),
+          Row(
+            children: [
+              Flexible(
+                flex: 1,
+                child: Container(
+                  height: 60,
+                  decoration: const BoxDecoration(
+                    color: AppColors.primary_04,
+                    borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(12),
-                      bottomLeft: Radius.circular(12)),
+                      bottomLeft: Radius.circular(12),
+                    ),
+                  ),
                 ),
               ),
-            ),
-            Flexible(
-              flex: 14,
-              child: Container(
-                height: 60,
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                decoration: const BoxDecoration(
-                  color: AppColors.neutral_06,
-                  borderRadius: BorderRadius.only(
+              Flexible(
+                flex: 14,
+                child: Container(
+                  height: 60,
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  decoration: const BoxDecoration(
+                    color: AppColors.neutral_06,
+                    borderRadius: BorderRadius.only(
                       topRight: Radius.circular(12),
-                      bottomRight: Radius.circular(12)),
-                ),
-                child: Column(
+                      bottomRight: Radius.circular(12),
+                    ),
+                  ),
+                  child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Row(
@@ -183,9 +201,11 @@ class ItemBuilder extends StatelessWidget {
                             style: textTheme.bodySmall
                                 ?.copyWith(color: AppColors.neutral_04),
                           ),
-                          Text(S.of(context).profit,
-                              style: textTheme.bodySmall
-                                  ?.copyWith(color: AppColors.neutral_04)),
+                          Text(
+                            S.of(context).profit,
+                            style: textTheme.bodySmall
+                                ?.copyWith(color: AppColors.neutral_04),
+                          ),
                         ],
                       ),
                       const SizedBox(
@@ -194,20 +214,24 @@ class ItemBuilder extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(period,
-                              style:
-                                  const TextStyle(fontWeight: FontWeight.bold)),
-                          Text('$rate%',
-                              style:
-                                  const TextStyle(fontWeight: FontWeight.bold)),
+                          Text(
+                            period,
+                            style: const TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                          Text(
+                            '$rate%',
+                            style: const TextStyle(fontWeight: FontWeight.bold),
+                          ),
                         ],
-                      )
-                    ]),
+                      ),
+                    ],
+                  ),
+                ),
               ),
-            ),
-          ],
-        )
-      ]),
+            ],
+          )
+        ],
+      ),
     );
   }
 }

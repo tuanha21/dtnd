@@ -1,8 +1,11 @@
 import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
+
+import '../generated/l10n.dart';
 
 class MediaPermission {
   static var picker = ImagePicker();
@@ -128,8 +131,8 @@ class MediaPermission {
     await showCupertinoDialog(
       context: context,
       builder: (context) => CupertinoAlertDialog(
-          title: const Text('Có lỗi xảy ra!'),
-          content: const Text('Quyền truy cập đã bị từ chối.'),
+          title: Text(S.of(context).an_error_occurred),
+          content: Text(S.of(context).permission_denied),
           actions: <Widget>[
             CupertinoDialogAction(
               isDestructiveAction: true,

@@ -11,6 +11,7 @@ import 'package:dtnd/utilities/num_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+
 import '../../../../generated/l10n.dart';
 import '../widget/row_information.dart';
 
@@ -70,8 +71,8 @@ class _AccumulationConfirmState extends State<AccumulationConfirm> {
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
     return Scaffold(
-      appBar: const SimpleAppbar(
-        title: 'Xác nhận tích lũy',
+      appBar: SimpleAppbar(
+        title: S.of(context).confirm_savings,
       ),
       body: SingleChildScrollView(
         child: bodyWidget(textTheme, context),
@@ -93,19 +94,23 @@ class _AccumulationConfirmState extends State<AccumulationConfirm> {
                     feeRate.termCode!, widget.money, getExtendType());
                 if (!mounted) return;
                 showDialog(
-                    barrierDismissible: false,
-                    context: context,
-                    builder: (_) => const AccumulationDialog(
-                          content: 'Bạn đã hoàn thành đăng ký tích lũy',
-                          title: 'Đăng ký thành công!',
-                        ));
+                  barrierDismissible: false,
+                  context: context,
+                  builder: (_) => AccumulationDialog(
+                    content: S
+                        .of(context)
+                        .you_have_completed_the_cumulative_registration,
+                    title: S.of(context).successfully_registered,
+                  ),
+                );
               } catch (e) {
                 showDialog(
-                    barrierDismissible: false,
-                    context: context,
-                    builder: (_) => ErrorRegisterDialog(
-                          error: e.toString(),
-                        ));
+                  barrierDismissible: false,
+                  context: context,
+                  builder: (_) => ErrorRegisterDialog(
+                    error: e.toString(),
+                  ),
+                );
               }
               // if (updateSuccess) {
               //   if (!mounted) return;
@@ -121,7 +126,7 @@ class _AccumulationConfirmState extends State<AccumulationConfirm> {
               //       builder: (_) => const ErrorRegisterDialog());
               // }
             },
-            child: const Text('Xác nhận'),
+            child: Text(S.of(context).confirm),
           ),
         ),
       ),
@@ -152,99 +157,103 @@ class _AccumulationConfirmState extends State<AccumulationConfirm> {
                   rightText: '${feeRate.feeRate.toString()}%/năm',
                 ),
                 RowInfomation(
-                    leftText: S.of(context).period, rightText: feeRate.termName.toString()),
+                    leftText: S.of(context).period,
+                    rightText: feeRate.termName.toString()),
                 RowInfomation(
-                    leftText: 'Ngày bắt đầu ', rightText: widget.openDay),
+                    leftText: S.of(context).start_date,
+                    rightText: widget.openDay),
                 RowInfomation(
-                    leftText: 'Ngày kết thúc', rightText: widget.endDay),
+                    leftText: S.of(context).end_date, rightText: widget.endDay),
                 const SizedBox(height: 16),
               ],
             ),
           ),
           const SizedBox(height: 24),
           Container(
-              height: 90,
-              padding: const EdgeInsets.all(12),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(S.of(context).renewal_method,
-                      style: textTheme.bodySmall?.copyWith(
-                        color: AppColors.neutral_02,
-                      )),
-                  const SizedBox(height: 4),
-                  Row(
-                    children: [
-                      Text(_method,
-                          style: textTheme.bodyMedium
-                              ?.copyWith(fontWeight: FontWeight.w600)),
-                      const Spacer(),
-                      TextButton(
-                        style: TextButton.styleFrom(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          backgroundColor: AppColors.primary_03,
+            height: 90,
+            padding: const EdgeInsets.all(12),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(S.of(context).renewal_method,
+                    style: textTheme.bodySmall?.copyWith(
+                      color: AppColors.neutral_02,
+                    )),
+                const SizedBox(height: 4),
+                Row(
+                  children: [
+                    Text(_method,
+                        style: textTheme.bodyMedium
+                            ?.copyWith(fontWeight: FontWeight.w600)),
+                    const Spacer(),
+                    TextButton(
+                      style: TextButton.styleFrom(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
                         ),
-                        onPressed: () {
-                          openChangeMethod(context);
-                        },
-                        child: Text(
-                          S.of(context).change,
-                          style: textTheme.bodySmall?.copyWith(
-                              color: AppColors.linear_01,
-                              fontWeight: FontWeight.bold),
-                        ),
+                        backgroundColor: AppColors.primary_03,
                       ),
-                    ],
-                  ),
-                ],
-              )),
+                      onPressed: () {
+                        openChangeMethod(context);
+                      },
+                      child: Text(
+                        S.of(context).change,
+                        style: textTheme.bodySmall?.copyWith(
+                            color: AppColors.linear_01,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
           const SizedBox(height: 24),
           Container(
-              padding: const EdgeInsets.all(12),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  RowInfomation(
-                      leftText: 'Tổng số tiền',
-                      rightText: '${NumUtils.formatInteger(widget.money)}đ'),
-                  const SizedBox(height: 4),
-                  Container(
-                    height: 60,
-                    alignment: Alignment.center,
-                    padding: const EdgeInsets.symmetric(horizontal: 8),
-                    decoration: BoxDecoration(
-                      color: AppColors.neutral_06,
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Cần thanh toán',
-                          style: textTheme.bodyMedium
-                              ?.copyWith(color: AppColors.neutral_02),
-                        ),
-                        Text('${NumUtils.formatInteger(widget.money)}đ',
-                            style: textTheme.bodyLarge?.copyWith(
-                                fontWeight: FontWeight.bold,
-                                color: AppColors.text_black)),
-                      ],
-                    ),
-                  )
-                ],
-              )),
+            padding: const EdgeInsets.all(12),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                RowInfomation(
+                    leftText: S.of(context).total_amount,
+                    rightText: '${NumUtils.formatInteger(widget.money)}đ'),
+                const SizedBox(height: 4),
+                Container(
+                  height: 60,
+                  alignment: Alignment.center,
+                  padding: const EdgeInsets.symmetric(horizontal: 8),
+                  decoration: BoxDecoration(
+                    color: AppColors.neutral_06,
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        S.of(context).payment_required,
+                        style: textTheme.bodyMedium
+                            ?.copyWith(color: AppColors.neutral_02),
+                      ),
+                      Text('${NumUtils.formatInteger(widget.money)}đ',
+                          style: textTheme.bodyLarge?.copyWith(
+                              fontWeight: FontWeight.bold,
+                              color: AppColors.text_black)),
+                    ],
+                  ),
+                )
+              ],
+            ),
+          ),
         ],
       ),
     );
@@ -265,19 +274,22 @@ class _AccumulationConfirmState extends State<AccumulationConfirm> {
               mainAxisAlignment: MainAxisAlignment.center,
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
-                Text(S.of(context).choose_renewal_method,
-                    style: textTheme.bodyLarge?.copyWith(
-                      fontWeight: FontWeight.bold,
-                    )),
+                Text(
+                  S.of(context).choose_renewal_method,
+                  style: textTheme.bodyLarge?.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
                 const SizedBox(height: 12),
                 Expanded(
                   child: ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: _selectedMethod.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        return GestureDetector(
-                          onTap: () {
-                            setStateSheet(() {
+                    shrinkWrap: true,
+                    itemCount: _selectedMethod.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return GestureDetector(
+                        onTap: () {
+                          setStateSheet(
+                            () {
                               for (int i = 0; i < _selectedMethod.length; i++) {
                                 if (i == index) {
                                   _selectedMethod[i] = true;
@@ -285,29 +297,34 @@ class _AccumulationConfirmState extends State<AccumulationConfirm> {
                                   _selectedMethod[i] = false;
                                 }
                               }
-                            });
-                          },
-                          child: Container(
-                              height: 40,
-                              width: double.infinity,
-                              alignment: Alignment.centerLeft,
-                              padding: const EdgeInsets.only(left: 20),
-                              margin: const EdgeInsets.only(bottom: 16),
-                              decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(12),
-                                  border: Border.all(
-                                      color: _selectedMethod[index] == true
-                                          ? AppColors.primary_01
-                                          : Colors.transparent)),
-                              child: Text(_textMethod[index],
-                                  style: textTheme.bodyMedium?.copyWith(
-                                    fontWeight: _selectedMethod[index] == true
-                                        ? FontWeight.w700
-                                        : FontWeight.w400,
-                                  ))),
-                        );
-                      }),
+                            },
+                          );
+                        },
+                        child: Container(
+                          height: 40,
+                          width: double.infinity,
+                          alignment: Alignment.centerLeft,
+                          padding: const EdgeInsets.only(left: 20),
+                          margin: const EdgeInsets.only(bottom: 16),
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(12),
+                              border: Border.all(
+                                  color: _selectedMethod[index] == true
+                                      ? AppColors.primary_01
+                                      : Colors.transparent)),
+                          child: Text(
+                            _textMethod[index],
+                            style: textTheme.bodyMedium?.copyWith(
+                              fontWeight: _selectedMethod[index] == true
+                                  ? FontWeight.w700
+                                  : FontWeight.w400,
+                            ),
+                          ),
+                        ),
+                      );
+                    },
+                  ),
                 ),
               ],
             ),

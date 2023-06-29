@@ -54,11 +54,12 @@ class _AccumulatorBookDetailState extends State<AccumulatorBookDetail> {
             ),
             onPressed: () {
               showDialog(
-                  context: context,
-                  barrierDismissible: false,
-                  builder: (BuildContext context) {
-                    return SettlementDialog(id: widget.id);
-                  });
+                context: context,
+                barrierDismissible: false,
+                builder: (BuildContext context) {
+                  return SettlementDialog(id: widget.id);
+                },
+              );
             },
             child: Text(S.of(context).final_settlement),
           ),
@@ -98,12 +99,14 @@ class _AccumulatorBookDetailState extends State<AccumulatorBookDetail> {
                     ),
                     Flexible(
                       flex: 1,
-                      child: Text(contract.contractCode.toString(),
-                          textAlign: TextAlign.right,
-                          softWrap: true,
-                          style: textTheme.bodyMedium?.copyWith(
-                            fontWeight: FontWeight.bold,
-                          )),
+                      child: Text(
+                        contract.contractCode.toString(),
+                        textAlign: TextAlign.right,
+                        softWrap: true,
+                        style: textTheme.bodyMedium?.copyWith(
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                     ),
                   ],
                 ),
@@ -134,34 +137,35 @@ class _AccumulatorBookDetailState extends State<AccumulatorBookDetail> {
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              S.of(context).start_date,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            S.of(context).start_date,
+                            style: textTheme.bodySmall
+                                ?.copyWith(color: AppColors.neutral_04),
+                          ),
+                          Text(S.of(context).end_date,
                               style: textTheme.bodySmall
-                                  ?.copyWith(color: AppColors.neutral_04),
-                            ),
-                            Text(S.of(context).end_date,
-                                style: textTheme.bodySmall
-                                    ?.copyWith(color: AppColors.neutral_04)),
-                          ],
-                        ),
-                        const SizedBox(height: 10),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(contract.openDate.toString(),
-                                style: const TextStyle(
-                                    fontWeight: FontWeight.bold)),
-                            Text(contract.expiredDate.toString(),
-                                style: const TextStyle(
-                                    fontWeight: FontWeight.bold)),
-                          ],
-                        )
-                      ]),
+                                  ?.copyWith(color: AppColors.neutral_04)),
+                        ],
+                      ),
+                      const SizedBox(height: 10),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(contract.openDate.toString(),
+                              style:
+                                  const TextStyle(fontWeight: FontWeight.bold)),
+                          Text(contract.expiredDate.toString(),
+                              style:
+                                  const TextStyle(fontWeight: FontWeight.bold)),
+                        ],
+                      )
+                    ],
+                  ),
                 ),
                 const SizedBox(height: 16),
               ],
@@ -184,32 +188,32 @@ class _AccumulatorBookDetailState extends State<AccumulatorBookDetail> {
                       color: AppColors.neutral_02,
                     )),
                 const SizedBox(height: 4),
-                Obx(
-                  () => Row(
-                    children: [
-                      Text(_controller.renewalMethod.value,
+                Row(
+                  children: [
+                    Obx(
+                      () => Text(_controller.renewalMethod.value,
                           style: textTheme.bodyMedium
                               ?.copyWith(fontWeight: FontWeight.w600)),
-                      const Spacer(),
-                      TextButton(
-                        style: TextButton.styleFrom(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          backgroundColor: AppColors.primary_03,
+                    ),
+                    const Spacer(),
+                    TextButton(
+                      style: TextButton.styleFrom(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
                         ),
-                        onPressed: () {
-                          openChangeMethod(context);
-                        },
-                        child: Text(
-                          S.of(context).change,
-                          style: textTheme.bodySmall?.copyWith(
-                              color: AppColors.linear_01,
-                              fontWeight: FontWeight.bold),
-                        ),
+                        backgroundColor: AppColors.primary_03,
                       ),
-                    ],
-                  ),
+                      onPressed: () {
+                        openChangeMethod(context);
+                      },
+                      child: Text(
+                        S.of(context).change,
+                        style: textTheme.bodySmall?.copyWith(
+                            color: AppColors.linear_01,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  ],
                 )
               ],
             ),
@@ -222,26 +226,25 @@ class _AccumulatorBookDetailState extends State<AccumulatorBookDetail> {
               color: Colors.white,
               borderRadius: BorderRadius.circular(12),
             ),
-            child: Obx(
-              () {
-                return Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    RowInfomation(
-                        leftText: S.of(context).current_pre_maturity_interest,
-                        rightText: '${_controller.liquidRate.value}%/năm'),
-                    const SizedBox(height: 4),
-                    Text(
-                        _controller.liquidFee.value == "0.0"
-                            ? '0đ'
-                            : '${_controller.liquidFee.value}đ',
-                        style: textTheme.bodyLarge?.copyWith(
-                            fontWeight: FontWeight.w600,
-                            color: AppColors.semantic_01)),
-                  ],
-                );
-              },
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                RowInfomation(
+                    leftText: S.of(context).current_pre_maturity_interest,
+                    rightText:
+                        '${_controller.singleContract.value?.cLIQUIDRATE}%/năm'),
+                const SizedBox(height: 4),
+                Text(
+                    NumUtils.formatDouble(
+                                _controller.singleContract.value?.cLIQUIDFEE) ==
+                            "0.0"
+                        ? '0đ'
+                        : '${_controller.singleContract.value?.cLIQUIDFEE}đ',
+                    style: textTheme.bodyLarge?.copyWith(
+                        fontWeight: FontWeight.w600,
+                        color: AppColors.semantic_01)),
+              ],
             ),
           ),
         ],
@@ -256,21 +259,21 @@ class _AccumulatorBookDetailState extends State<AccumulatorBookDetail> {
       builder: (BuildContext context) {
         final List<Map<String, dynamic>> methodList = [
           {
-            'selected': _controller.singleContract?.cEXTENTNAME ==
+            'selected': _controller.singleContract.value?.cEXTENTNAME ==
                     "Tự động gia hạn gốc + lãi"
                 ? true
                 : false,
             'text': "Tự động gia hạn gốc + lãi",
           },
           {
-            'selected':
-                _controller.singleContract?.cEXTENTNAME == "Tự động gia hạn gốc"
-                    ? true
-                    : false,
+            'selected': _controller.singleContract.value?.cEXTENTNAME ==
+                    "Tự động gia hạn gốc"
+                ? true
+                : false,
             'text': "Tự động gia hạn gốc",
           },
           {
-            'selected': _controller.singleContract?.cEXTENTNAME ==
+            'selected': _controller.singleContract.value?.cEXTENTNAME ==
                     "Không tự động gia hạn"
                 ? true
                 : false,
@@ -279,89 +282,93 @@ class _AccumulatorBookDetailState extends State<AccumulatorBookDetail> {
         ];
 
         return StatefulBuilder(
-            builder: (BuildContext context, StateSetter setStateSheet) {
-          return Container(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
-            height: 260,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                Text(
-                  S.of(context).choose_renewal_method,
-                  style: textTheme.bodyLarge?.copyWith(
-                    fontWeight: FontWeight.bold,
+          builder: (BuildContext context, StateSetter setStateSheet) {
+            return Container(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
+              height: 260,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  Text(
+                    S.of(context).choose_renewal_method,
+                    style: textTheme.bodyLarge?.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                ),
-                const SizedBox(height: 12),
-                Expanded(
-                  child: ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: methodList.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return GestureDetector(
-                        onTap: () {
-                          setStateSheet(
-                            () {
-                              for (int i = 0; i < methodList.length; i++) {
-                                if (i == index) {
-                                  methodList[i]['selected'] = true;
-                                } else {
-                                  methodList[i]['selected'] = false;
+                  const SizedBox(height: 12),
+                  Expanded(
+                    child: ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: methodList.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return GestureDetector(
+                          onTap: () {
+                            setStateSheet(
+                              () {
+                                for (int i = 0; i < methodList.length; i++) {
+                                  if (i == index) {
+                                    methodList[i]['selected'] = true;
+                                  } else {
+                                    methodList[i]['selected'] = false;
+                                  }
                                 }
-                              }
-                              switch (methodList[index]['text']) {
-                                case "Tự động gia hạn gốc + lãi":
-                                  _controller.methodUpdate(
-                                      widget.id, 'LAI_NHAP_GOC');
-                                  break;
-                                case "Tự động gia hạn gốc":
-                                  _controller.methodUpdate(
-                                      widget.id, 'NGUYEN_GOC');
-                                  break;
-                                case "Không tự động gia hạn":
-                                  _controller.methodUpdate(
-                                      widget.id, 'KHONG_GIA_HAN');
-                                  break;
-                                default:
-                              }
-                            },
-                          );
-                        },
-                        child: Container(
-                          height: 40,
-                          width: double.infinity,
-                          alignment: Alignment.centerLeft,
-                          padding: const EdgeInsets.only(left: 20),
-                          margin: const EdgeInsets.only(bottom: 16),
-                          decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(12),
-                              border: Border.all(
-                                  color: methodList[index]['selected'] == true
-                                      ? AppColors.primary_01
-                                      : Colors.transparent)),
-                          child: Text(
-                            methodList[index]['text'],
-                            style: textTheme.bodyMedium?.copyWith(
-                              fontWeight: methodList[index]['selected'] == true
-                                  ? FontWeight.w700
-                                  : FontWeight.w400,
+                                switch (methodList[index]['text']) {
+                                  case "Tự động gia hạn gốc + lãi":
+                                    _controller.methodUpdate(
+                                        widget.id, 'LAI_NHAP_GOC');
+                                    break;
+                                  case "Tự động gia hạn gốc":
+                                    _controller.methodUpdate(
+                                        widget.id, 'NGUYEN_GOC');
+                                    break;
+                                  case "Không tự động gia hạn":
+                                    _controller.methodUpdate(
+                                        widget.id, 'KHONG_GIA_HAN');
+                                    break;
+                                  default:
+                                }
+                              },
+                            );
+                          },
+                          child: Container(
+                            height: 40,
+                            width: double.infinity,
+                            alignment: Alignment.centerLeft,
+                            padding: const EdgeInsets.only(left: 20),
+                            margin: const EdgeInsets.only(bottom: 16),
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(12),
+                                border: Border.all(
+                                    color: methodList[index]['selected'] == true
+                                        ? AppColors.primary_01
+                                        : Colors.transparent)),
+                            child: Text(
+                              methodList[index]['text'],
+                              style: textTheme.bodyMedium?.copyWith(
+                                fontWeight:
+                                    methodList[index]['selected'] == true
+                                        ? FontWeight.w700
+                                        : FontWeight.w400,
+                              ),
                             ),
                           ),
-                        ),
-                      );
-                    },
+                        );
+                      },
+                    ),
                   ),
-                ),
-              ],
-            ),
-          );
-        });
+                ],
+              ),
+            );
+          },
+        );
       },
-    ).whenComplete(() {
-      _controller.getSingleContract(widget.id);
-    });
+    ).whenComplete(
+      () {
+        _controller.getSingleContract(widget.id);
+      },
+    );
   }
 }

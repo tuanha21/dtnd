@@ -3,8 +3,11 @@ import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../generated/l10n.dart';
+
 class ErrorRegisterDialog extends StatelessWidget {
   const ErrorRegisterDialog({super.key, required this.error});
+
   final String error;
 
   @override
@@ -20,66 +23,69 @@ class ErrorRegisterDialog extends StatelessWidget {
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12), color: Colors.white),
       child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SizedBox.square(
-              dimension: 200,
-              child: Image.asset(AppImages.illust06),
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          SizedBox.square(
+            dimension: 200,
+            child: Image.asset(AppImages.illust06),
+          ),
+          const SizedBox(height: 30),
+          Text(error,
+              style: textTheme.labelLarge?.copyWith(
+                  color: AppColors.text_black, fontWeight: FontWeight.bold)),
+          const SizedBox(height: 20),
+          Text(
+            S.of(context).please_try_again,
+            style: textTheme.bodyLarge?.copyWith(
+              color: AppColors.neutral_02,
             ),
-            const SizedBox(height: 30),
-            Text(error,
-                style: textTheme.labelLarge?.copyWith(
-                    color: AppColors.text_black, fontWeight: FontWeight.bold)),
-            const SizedBox(height: 20),
-            Text('Xin vui lòng thử lại',
-                style: textTheme.bodyLarge?.copyWith(
-                  color: AppColors.neutral_02,
-                )),
-            const SizedBox(height: 24),
-            Row(
-              children: [
-                Expanded(
-                  child: TextButton(
-                    style: TextButton.styleFrom(
-                      backgroundColor: AppColors.light_tabBar_bg, // Text Color
-                    ),
-                    onPressed: () {
-                      Navigator.pushAndRemoveUntil(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const Accumlation()),
-                          (r) => r.isFirst);
-                    },
-                    child: const Text('Sản phẩm',
-                        style: TextStyle(
-                            color: AppColors.text_blue,
-                            fontSize: 14,
-                            fontWeight: FontWeight.w700,
-                            height: 1.4)),
+          ),
+          const SizedBox(height: 24),
+          Row(
+            children: [
+              Expanded(
+                child: TextButton(
+                  style: TextButton.styleFrom(
+                    backgroundColor: AppColors.light_tabBar_bg, // Text Color
+                  ),
+                  onPressed: () {
+                    Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const Accumlation()),
+                        (r) => r.isFirst);
+                  },
+                  child: Text(
+                    S.of(context).product,
+                    style: const TextStyle(
+                        color: AppColors.text_blue,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w700,
+                        height: 1.4),
                   ),
                 ),
-                const SizedBox(width: 8),
-                Expanded(
-                  child: TextButton(
-                    style: TextButton.styleFrom(
-                      backgroundColor: AppColors.color_primary_1, // Text Color
-                    ),
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    child: const Text(
-                      'Quay lại',
-                      style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w700,
-                          height: 1.4),
-                    ),
+              ),
+              const SizedBox(width: 8),
+              Expanded(
+                child: TextButton(
+                  style: TextButton.styleFrom(
+                    backgroundColor: AppColors.color_primary_1, // Text Color
+                  ),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: Text(
+                    S.of(context).come_back,
+                    style: const TextStyle(
+                        fontSize: 14, fontWeight: FontWeight.w700, height: 1.4),
                   ),
                 ),
-              ],
-            ),
-          ]),
+              ),
+            ],
+          ),
+        ],
+      ),
     );
   }
 }

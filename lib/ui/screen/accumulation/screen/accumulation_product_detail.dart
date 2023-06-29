@@ -9,6 +9,7 @@ import 'package:dtnd/ui/widget/appbar/simple_appbar.dart';
 import 'package:dtnd/utilities/num_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
 import '../widget/row_information.dart';
 
 class AccumulationProductDetail extends StatefulWidget {
@@ -43,7 +44,8 @@ class _AccumulationProductDetailState extends State<AccumulationProductDetail> {
               const SizedBox(height: 20),
               Row(
                 children: [
-                  Text('Tích luỹ ${feeRate.termName.toString()}',
+                  Text(
+                      '${S.of(context).accumulate} ${feeRate.termName.toString()}',
                       style: textTheme.bodyLarge),
                   const Spacer(),
                   Text('${feeRate.feeRate.toString()}%/năm',
@@ -73,11 +75,12 @@ class _AccumulationProductDetailState extends State<AccumulationProductDetail> {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text('Bạn có thể bắt đầu bất cứ lúc nào 💯',
+                            Text(
+                                '${S.of(context).you_can_begin_whenever_you_want}} 💯',
                                 style: textTheme.bodyMedium
                                     ?.copyWith(color: AppColors.text_blue)),
                             const SizedBox(height: 4),
-                            Text('Đăng ký ngay đừng bỏ lỡ',
+                            Text(S.of(context).sign_up_now_dont_miss_it,
                                 style: textTheme.bodySmall
                                     ?.copyWith(color: AppColors.neutral_03)),
                           ],
@@ -114,7 +117,7 @@ class _AccumulationProductDetailState extends State<AccumulationProductDetail> {
                               rightText: "${feeRate.liquidRate}%"),
                           RowInfomation(
                               leftText: S.of(context).renewal_method,
-                              rightText: 'Linh hoạt'),
+                              rightText: S.of(context).flexible),
                         ],
                       ),
                     )
@@ -141,10 +144,11 @@ class _AccumulationProductDetailState extends State<AccumulationProductDetail> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => AccumulationRegister(
-                        id: widget.id,
-                        capMax: feeRate.capMax ?? 0,
-                        capMin: feeRate.capMin ?? 0)),
+                  builder: (context) => AccumulationRegister(
+                      id: widget.id,
+                      capMax: feeRate.capMax ?? 0,
+                      capMin: feeRate.capMin ?? 0),
+                ),
               );
             },
             child: Text(S.of(context).sign_up),

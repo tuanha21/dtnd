@@ -26,12 +26,14 @@ class RowInfomation extends StatelessWidget {
             leftText,
             style: textTheme.bodyMedium?.copyWith(color: AppColors.neutral_02),
           ),
-          Text(rightText,
-              style: textTheme.bodyMedium?.copyWith(
-                  fontWeight: FontWeight.bold,
-                  color: differentColor == true
-                      ? AppColors.semantic_01
-                      : AppColors.text_black)),
+          Text(
+            rightText,
+            style: textTheme.bodyMedium?.copyWith(
+                fontWeight: FontWeight.bold,
+                color: differentColor == true
+                    ? AppColors.semantic_01
+                    : AppColors.text_black),
+          ),
         ],
       ),
     );

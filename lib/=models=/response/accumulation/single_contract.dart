@@ -27,33 +27,32 @@ class SingleContract {
   String? cEXTENTNAME;
 
   SingleContract(
-      {required this.pKCONTRACTBORROW,
-      required this.cCUSTOMERCODE,
-      required this.cACCOUNTCODE,
-      required this.cCONTRACTCODE,
-      required this.cOPENDATE,
-      required this.cEXPIREDATE,
-      required this.cTERM,
-      required this.cTERMNAME,
-      required this.cCAPITAL,
-      required this.cLIQUIDVALUE,
-      required this.cCURRENTVALUE,
-      required this.cFEE,
-      required this.cCURRENTFEE,
-      required this.cFEERATE,
-      required this.cOTHERFEERATE,
-      required this.cFEEBASE,
-      required this.cCONTENT,
-      required this.cSTATUS,
-      required this.cSTATUSNAME,
-      required this.cCHANNEL,
-      required this.cCHANNELNAME,
-      required this.cCURRENTDAY,
-      required this.cLIQUIDRATE,
-      required this.cLIQUIDFEE,
-      required this.cEXTENTTYPE,
-      required this.cEXTENTNAME
-      });
+      {this.pKCONTRACTBORROW,
+      this.cCUSTOMERCODE,
+      this.cACCOUNTCODE,
+      this.cCONTRACTCODE,
+      this.cOPENDATE,
+      this.cEXPIREDATE,
+      this.cTERM,
+      this.cTERMNAME,
+      this.cCAPITAL,
+      this.cLIQUIDVALUE,
+      this.cCURRENTVALUE,
+      this.cFEE,
+      this.cCURRENTFEE,
+      this.cFEERATE,
+      this.cOTHERFEERATE,
+      this.cFEEBASE,
+      this.cCONTENT,
+      this.cSTATUS,
+      this.cSTATUSNAME,
+      this.cCHANNEL,
+      this.cCHANNELNAME,
+      this.cCURRENTDAY,
+      this.cLIQUIDRATE,
+      this.cLIQUIDFEE,
+      this.cEXTENTTYPE,
+      this.cEXTENTNAME});
 
   SingleContract.fromJson(Map<String, dynamic> json) {
     pKCONTRACTBORROW = json['PK_CONTRACT_BORROW'];
@@ -115,4 +114,8 @@ class SingleContract {
     return data;
   }
 
+  @override
+  String toString() {
+    return 'SingleContract{pKCONTRACTBORROW: $pKCONTRACTBORROW, cCUSTOMERCODE: $cCUSTOMERCODE, cACCOUNTCODE: $cACCOUNTCODE, cCONTRACTCODE: $cCONTRACTCODE, cOPENDATE: $cOPENDATE, cEXPIREDATE: $cEXPIREDATE, cTERM: $cTERM, cTERMNAME: $cTERMNAME, cCAPITAL: $cCAPITAL, cLIQUIDVALUE: $cLIQUIDVALUE, cCURRENTVALUE: $cCURRENTVALUE, cFEE: $cFEE, cCURRENTFEE: $cCURRENTFEE, cFEERATE: $cFEERATE, cOTHERFEERATE: $cOTHERFEERATE, cFEEBASE: $cFEEBASE, cCONTENT: $cCONTENT, cSTATUS: $cSTATUS, cSTATUSNAME: $cSTATUSNAME, cCHANNEL: $cCHANNEL, cCHANNELNAME: $cCHANNELNAME, cCURRENTDAY: $cCURRENTDAY, cLIQUIDRATE: $cLIQUIDRATE, cLIQUIDFEE: $cLIQUIDFEE, cEXTENTTYPE: $cEXTENTTYPE, cEXTENTNAME: $cEXTENTNAME}';
+  }
 }

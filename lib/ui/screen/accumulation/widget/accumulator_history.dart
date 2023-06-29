@@ -3,7 +3,6 @@ import 'package:dtnd/data/i_user_service.dart';
 import 'package:dtnd/data/implementations/user_service.dart';
 import 'package:dtnd/ui/screen/account/component/cash_transaction_component.dart';
 import 'package:dtnd/ui/widget/calendar/day_input.dart';
-// import 'package:dtnd/ui/widget/calendar/day_input.dart';
 import 'package:dtnd/ui/widget/empty_list_widget.dart';
 import 'package:dtnd/utilities/time_utils.dart';
 import 'package:flutter/material.dart';
@@ -108,39 +107,43 @@ class _AccumulatorHistoryState extends State<AccumulatorHistory> {
         ),
       ),
       const SizedBox(height: 16),
-      Expanded(child: Builder(builder: (context) {
-        if (list.isEmpty) {
-          return Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: const [
-              EmptyListWidget(),
-            ],
-          );
-        } else {
-          return Column(
-            children: [
-              Expanded(
-                child: ListView.builder(
-                  controller: _scrollController,
-                  shrinkWrap: true,
-                  itemCount: list.length + 1,
-                  itemBuilder: (context, index) {
-                    if (index < list.length) {
-                      return CashTransactionComponent(
-                        data: list.elementAt(index),
-                      );
-                    } else if (index == list.length && isLoading) {
-                      return _buildLoader();
-                    } else {
-                      return const SizedBox.shrink();
-                    }
-                  },
-                ),
-              ),
-            ],
-          );
-        }
-      }))
+      Expanded(
+        child: Builder(
+          builder: (context) {
+            if (list.isEmpty) {
+              return const Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  EmptyListWidget(),
+                ],
+              );
+            } else {
+              return Column(
+                children: [
+                  Expanded(
+                    child: ListView.builder(
+                      controller: _scrollController,
+                      shrinkWrap: true,
+                      itemCount: list.length + 1,
+                      itemBuilder: (context, index) {
+                        if (index < list.length) {
+                          return CashTransactionComponent(
+                            data: list.elementAt(index),
+                          );
+                        } else if (index == list.length && isLoading) {
+                          return _buildLoader();
+                        } else {
+                          return const SizedBox.shrink();
+                        }
+                      },
+                    ),
+                  ),
+                ],
+              );
+            }
+          },
+        ),
+      ),
     ]);
   }
 }

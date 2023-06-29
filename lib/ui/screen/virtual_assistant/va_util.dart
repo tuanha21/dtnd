@@ -47,7 +47,7 @@ class VAUtil {
       );
     } else {
       Navigator.of(context).push<void>(
-        MaterialPageRoute(builder: (context) => RegisterIntro()),
+        MaterialPageRoute(builder: (context) => const RegisterIntro()),
       );
     }
   }
