@@ -15,12 +15,6 @@ class DeepMarketChart extends StatefulWidget {
 }
 
 class _DeepMarketChartState extends State<DeepMarketChart> {
-  int _total = 0;
-
-  int _gain = 0;
-  int _loss = 0;
-  int _ref = 0;
-
   @override
   void initState() {
     super.initState();
@@ -29,18 +23,11 @@ class _DeepMarketChartState extends State<DeepMarketChart> {
 
   void analyze() {
     // ignore: no_leading_underscores_for_local_identifiers
-    int _sum = 0;
     for (var element in widget.seriesList.first.data) {
-      _sum += element.sL;
       if (element.sortValue < 0) {
-        _loss += element.sL;
       } else if (element.sortValue > 0) {
-        _gain += element.sL;
-      } else {
-        _ref += element.sL;
-      }
+      } else {}
     }
-    _total = _sum;
   }
 
   @override

@@ -14,8 +14,6 @@ class SigniInUtils {
     ))
         .then((result) async {
       if ((result ?? false)) {
-        afterLogin?.call();
-
         if (!localStorageService.biometricsRegistered &&
             localStorageService.isDeviceSupport) {
           final reg = await showDialog<bool>(
@@ -39,6 +37,7 @@ class SigniInUtils {
               await localStorageService.registerBiometrics();
             }
           }
+          afterLogin?.call();
         }
         return;
       }
