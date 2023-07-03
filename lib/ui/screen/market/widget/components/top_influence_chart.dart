@@ -1,3 +1,5 @@
+// ignore_for_file: unused_field
+
 import 'package:dtnd/=models=/response/top_influence_model.dart';
 import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/theme/app_color.dart';

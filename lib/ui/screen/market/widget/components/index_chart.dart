@@ -1,15 +1,22 @@
+import 'dart:convert';
 import 'dart:ui';
 
+import 'package:dtnd/=models=/fake/brief_model.dart';
+import 'package:dtnd/=models=/fake/summary_model.dart';
 import 'package:dtnd/=models=/index.dart';
 import 'package:dtnd/=models=/response/index_model.dart';
+import 'package:dtnd/=models=/response/stock_model.dart';
 import 'package:dtnd/data/i_data_center_service.dart';
 import 'package:dtnd/data/i_local_storage_service.dart';
 import 'package:dtnd/data/i_user_service.dart';
 import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/screen/market/market_controller.dart';
 import 'package:dtnd/ui/screen/market/widget/components/index_item.dart';
+import 'package:dtnd/ui/screen/market/widget/page/brief_page.dart';
+import 'package:dtnd/ui/screen/stock_detail/stock_detail_screen.dart';
 import 'package:dtnd/ui/screen/stock_detail/widget/k_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:k_chart/chart_translations.dart';
 
@@ -17,6 +24,15 @@ import 'package:dtnd/=models=/response/index_detail.dart';
 import 'package:dtnd/data/implementations/data_center_service.dart';
 import 'package:dtnd/data/implementations/local_storage_service.dart';
 import 'package:dtnd/data/implementations/user_service.dart';
+
+import 'market_noti_card.dart';
+
+Future<Map> readJsonFile(String filePath) async {
+  var fileContent = await rootBundle.loadString(filePath);
+
+  var map = jsonDecode(fileContent);
+  return map;
+}
 
 class IndexChart extends StatefulWidget {
   const IndexChart({super.key});
@@ -40,7 +56,6 @@ class _IndexChartState extends State<IndexChart> {
   }
 
   void changeIndex(Index index) async {
-    print(index.chartCode);
     if (marketController.loadingIndex.value) {
       return;
     }
@@ -133,6 +148,43 @@ class _IndexChartState extends State<IndexChart> {
           },
           marketController.initialized,
         ),
+        FutureBuilder<Map>(
+          future: readJsonFile("./assets/fake_data/data_loz.json"),
+          builder: (context, snapshot) {
+            if (!snapshot.hasData) {
+              return const SizedBox();
+            }
+            final Map data = snapshot.data!;
+            final BriefModel briefModel = BriefModel.fromJson(data['brief']);
+            final SummaryModel summaryModel =
+                SummaryModel.fromJson(data['summary']);
+            return Column(
+              children: [
+                MarketNotiCard(
+                  title: briefModel.title!,
+                  date: briefModel.regDateTime!,
+                  onTap: () => Navigator.of(context)
+                      .push(MaterialPageRoute(
+                    builder: (context) => BriefPage(data: briefModel),
+                  ))
+                      .then((value) {
+                    if (value is StockModel) {
+                      Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) =>
+                            StockDetailScreen(stockModel: value),
+                      ));
+                      return;
+                    }
+                  }),
+                ),
+                MarketNotiCard(
+                    title: summaryModel.title!,
+                    date: summaryModel.regDateTime!),
+              ],
+            );
+          },
+        )
+        // MarketNotiCard(title: ,)
       ],
     );
   }

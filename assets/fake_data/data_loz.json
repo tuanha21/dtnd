@@ -1,0 +1,259 @@
+{
+    "brief": {
+        "noticeId": 105648603,
+        "title": "Morning Brief - Dòng tiền dịch chuyển sang nhóm Bluechips!",
+        "contentFull": {
+            "id": 70,
+            "title": "Morning Brief - Dòng tiền dịch chuyển sang nhóm Bluechips!",
+            "trend": "Thị trường: Chỉ số Vn-index liên tiếp lập các mức cao mới nhưng dòng tiền đã chững lại, thanh khoản phiên hôm qua giảm còn hơn 16,600 tỷ đồng từ mức bình quân 21,000 tỷ đồng ở 4 phiên trước đó. Nhóm Vn30 đã vượt đỉnh nhưng các cổ phiếu trụ khá phân hóa.   \nKịch bản: Phiên chốt NAV còn vừa đủ 1 vòng T+, do vậy lực cầu vẫn duy trì tốt trong khi áp lực bán giảm, các nhịp rung lắc vẫn tiếp diễn khi thị trường tiến về vùng 1,138 điểm.   ",
+            "buyStrategy": "Vẫn giữ quan điểm nên hạn chế mua mới, có thể tiếp tục nắm giữ hoặc trading trên cổ phiếu có sẵn, ưu tiên nhóm cổ phiếu cơ bản hoặc nhóm chứng khoán, đầu tư công.",
+            "sellStrategy": "Nâng dần ngưỡng chốt lời, canh nhịp tăng trong phiên ở ngưỡng cản 1,135;1,138, 1,141 điểm để NĐT cơ cấu hoặc chốt lời từng phần danh mục.",
+            "recommendId": 145,
+            "recommendations": 0,
+            "linkFile": "https://snapmobview.mbs.com.vn/flashDeal/morningNews/NEWS_MORNING_1687915440.jpg",
+            "worldMarket": [
+                {
+                    "marketCode": "DJI",
+                    "marketName": "Dow Jones",
+                    "close": 33926.74,
+                    "change": 212.03,
+                    "changePercent": 0.63
+                },
+                {
+                    "marketCode": "DAX",
+                    "marketName": "DAX",
+                    "close": 15846.86,
+                    "change": 33.8,
+                    "changePercent": 0.21
+                },
+                {
+                    "marketCode": "NDX",
+                    "marketName": "NASDAQ Composite",
+                    "close": 13555.67,
+                    "change": 219.89,
+                    "changePercent": 1.65
+                },
+                {
+                    "marketCode": "VIX",
+                    "marketName": "VIX",
+                    "close": 13.74,
+                    "change": -0.51,
+                    "changePercent": -3.58
+                },
+                {
+                    "marketCode": "GOLD",
+                    "marketName": "Gold",
+                    "close": 1924.5,
+                    "change": 0.8,
+                    "changePercent": 0.04
+                },
+                {
+                    "marketCode": "FTSE",
+                    "marketName": "FTSE 100",
+                    "close": 7461.46,
+                    "change": 7.86,
+                    "changePercent": 0.11
+                },
+                {
+                    "marketCode": "GSPC",
+                    "marketName": "S&P 500",
+                    "close": 4378.41,
+                    "change": 49.59,
+                    "changePercent": 1.15
+                },
+                {
+                    "marketCode": "CRUDE_OIL",
+                    "marketName": "Crude Oil",
+                    "close": 67.88,
+                    "change": -1.49,
+                    "changePercent": -2.15
+                }
+            ],
+            "createAt": "Jun 28, 2023, 8:24:00 AM",
+            "createBy": "cuong.nghiemphu",
+            "updateAt": "Jun 28, 2023, 8:24:00 AM",
+            "updateBy": "cuong.nghiemphu",
+            "status": 0,
+            "recommendForMorningNews": {
+                "securitiesCode": "VHM",
+                "fromPrice": 55.1,
+                "toPrice": 55.6,
+                "targetPrice": 60.5,
+                "stopLossPrice": 53.4,
+                "upsize": 9.3,
+                "analyticalSummary": "Về kỹ thuật, cổ phiếu này đang nằm trên nhiều đường MA quan trọng: MA20, MA50, MA100, MA200, … cho thấy xu hướng tăng còn tiếp tục được mở rộng. Bên cạnh đó, VHM cũng nằm trong kênh tăng giá kể từ đầu tháng 3 và có nhiều khả năng hướng tới mục tiêu ở vùng 60.600 đồng.",
+                "recommendStatus": 1
+            }
+        },
+        "date": 20230628,
+        "regDateTime": 1687917213000,
+        "status": 1,
+        "flashDealType": "",
+        "shareCode": ""
+    },
+    "summary": {
+        "noticeId": 105954405,
+        "title": "Market Summary - Tổng hợp thị trường",
+        "contentFull": {
+            "createAt": "Jun 28, 2023, 7:17:00 PM",
+            "title": "Market Summary - Tổng hợp thị trường",
+            "indexSummaries": [
+                {
+                    "code": "VNIndex",
+                    "value": 1138.35,
+                    "changedValue": 4.02,
+                    "changedPercentage": 0.35,
+                    "color": 1,
+                    "totalSharesTraded": 892.14,
+                    "totalValuesTraded": 17931.19,
+                    "totalForeignBuyValue": 1007,
+                    "totalForeignSellValue": 931.24,
+                    "totalForeignNetValue": 75.76,
+                    "advances": 201,
+                    "declines": 228,
+                    "noChange": 51,
+                    "indexDescription": "1,138.35, tăng 4.02 điểm (+0.35%), nằm trên SMA10.",
+                    "morningDescription": "khối lượng giao dịch VNIndex tăng 10.45% so với phiên hôm qua.",
+                    "closeDescription": "khối lượng giao dịch VNIndex tăng 23.57% so với phiên hôm qua và giảm 0.08% so với bình quân một tuần qua. NĐT nước ngoài mua ròng 75.76 tỷ đồng, tập trung ở các mã HPG, VHM, DGW, CTG, FRT .",
+                    "summary": "Kết thúc phiên giao dịch thanh khoản toàn thị trường đạt 19,886.74 tỷ đồng, tăng 20.68% so với phiên trước đó và tăng 1.99% so với bình quân 10 ngày."
+                },
+                {
+                    "code": "VN30",
+                    "value": 1141.12,
+                    "changedValue": 6.71,
+                    "changedPercentage": 0.59,
+                    "color": 1,
+                    "totalSharesTraded": 254.96,
+                    "totalValuesTraded": 6210.21,
+                    "totalForeignBuyValue": 679.38,
+                    "totalForeignSellValue": 569.4,
+                    "totalForeignNetValue": 109.99,
+                    "advances": 16,
+                    "declines": 13,
+                    "noChange": 1,
+                    "indexDescription": "1,138.35, tăng 4.02 điểm (+0.35%), nằm trên SMA10.",
+                    "morningDescription": "khối lượng giao dịch VNIndex tăng 10.45% so với phiên hôm qua.",
+                    "closeDescription": "khối lượng giao dịch VNIndex tăng 23.57% so với phiên hôm qua và giảm 0.08% so với bình quân một tuần qua.NĐT nước ngoài mua ròng 75.76 tỷ đồng, tập trung ở các mã HPG, VHM, DGW, CTG, FRT .",
+                    "summary": "Kết thúc phiên giao dịch thanh khoản toàn thị trường đạt 19,886.74 tỷ đồng, tăng 20.68% so với phiên trước đó và tăng 1.99% so với bình quân 10 ngày."
+                }
+            ],
+            "foreignRoomSummary": {
+                "topBuyNetValue": [
+                    {
+                        "security": "HPG",
+                        "value": 245.31
+                    },
+                    {
+                        "security": "VHM",
+                        "value": 17.83
+                    },
+                    {
+                        "security": "DGW",
+                        "value": 13.73
+                    },
+                    {
+                        "security": "CTG",
+                        "value": 12.71
+                    },
+                    {
+                        "security": "FRT",
+                        "value": 11.75
+                    },
+                    {
+                        "security": "SHB",
+                        "value": 11.2
+                    },
+                    {
+                        "security": "DBC",
+                        "value": 11.03
+                    },
+                    {
+                        "security": "VNM",
+                        "value": 8.72
+                    },
+                    {
+                        "security": "TLG",
+                        "value": 6.59
+                    },
+                    {
+                        "security": "VHC",
+                        "value": 5.32
+                    }
+                ],
+                "topSeLLNetValue": [
+                    {
+                        "security": "STB",
+                        "value": 71.66
+                    },
+                    {
+                        "security": "NLG",
+                        "value": 40.61
+                    },
+                    {
+                        "security": "KBC",
+                        "value": 39.7
+                    },
+                    {
+                        "security": "BID",
+                        "value": 31.8
+                    },
+                    {
+                        "security": "VRE",
+                        "value": 19.87
+                    },
+                    {
+                        "security": "TPB",
+                        "value": 18.3
+                    },
+                    {
+                        "security": "GAS",
+                        "value": 18.02
+                    },
+                    {
+                        "security": "SSI",
+                        "value": 12.1
+                    },
+                    {
+                        "security": "VCI",
+                        "value": 10.18
+                    },
+                    {
+                        "security": "PVT",
+                        "value": 8.36
+                    }
+                ]
+            },
+            "derivativesSummaries": [
+                {
+                    "code": "VN30F2307",
+                    "value": 1132.4,
+                    "changedValue": 7.2,
+                    "changedPercentage": 0.64,
+                    "color": 1,
+                    "totalSharesTraded": 139703,
+                    "foreignAccumulatedNetValue": 22959,
+                    "biasPrice": -8.7199999999998,
+                    "highestPrice": 1136,
+                    "lowestPrice": 1049.09
+                },
+                {
+                    "code": "VN30F2308",
+                    "value": 1125.09,
+                    "changedValue": 3.19,
+                    "changedPercentage": 0.28,
+                    "color": 1,
+                    "totalSharesTraded": 564,
+                    "foreignAccumulatedNetValue": 501,
+                    "biasPrice": -16.029999999999973,
+                    "highestPrice": 1132,
+                    "lowestPrice": 1088.09
+                }
+            ]
+        },
+        "date": 20230628,
+        "regDateTime": 1687954621000,
+        "status": 1,
+        "flashDealType": "",
+        "shareCode": ""
+    }
+}

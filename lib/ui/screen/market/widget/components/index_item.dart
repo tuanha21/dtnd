@@ -1,6 +1,5 @@
 import 'package:dtnd/=models=/index.dart';
 import 'package:dtnd/=models=/response/index_model.dart';
-import 'package:dtnd/config/service/app_services.dart';
 import 'package:dtnd/ui/screen/home/widget/home_market_today.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_textstyle.dart';
@@ -26,7 +25,6 @@ class MarketIndexItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final themeMode = AppService.instance.themeMode.value;
     BoxBorder? border;
     if (selectedIndex != null && data.index == selectedIndex) {
       border = Border.all(color: AppColors.neutral_04);

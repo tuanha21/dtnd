@@ -106,6 +106,7 @@ class _DerivativeWidgetState extends State<DerivativeWidget> {
                   var list = snapshot.data;
 
                   return ListView.separated(
+                      physics: const NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
                       itemCount: list!.length,
                       itemBuilder: (context, index) {
