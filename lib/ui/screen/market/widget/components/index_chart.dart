@@ -13,6 +13,7 @@ import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/screen/market/market_controller.dart';
 import 'package:dtnd/ui/screen/market/widget/components/index_item.dart';
 import 'package:dtnd/ui/screen/market/widget/page/brief_page.dart';
+import 'package:dtnd/ui/screen/market/widget/page/summary_chart_page.dart';
 import 'package:dtnd/ui/screen/stock_detail/stock_detail_screen.dart';
 import 'package:dtnd/ui/screen/stock_detail/widget/k_chart.dart';
 import 'package:flutter/material.dart';
@@ -61,6 +62,11 @@ class _IndexChartState extends State<IndexChart> {
     }
     await marketController.changeSelectedIndex(index);
     setState(() {});
+  }
+
+  Future<Map> readJsonFile(String filePath) async {
+    final jsonString = await rootBundle.loadString(filePath);
+    return json.decode(jsonString);
   }
 
   @override
@@ -149,7 +155,7 @@ class _IndexChartState extends State<IndexChart> {
           marketController.initialized,
         ),
         FutureBuilder<Map>(
-          future: readJsonFile("./assets/fake_data/data_loz.json"),
+          future: readJsonFile('assets/fake_data/data_loz.json'),
           builder: (context, snapshot) {
             if (!snapshot.hasData) {
               return const SizedBox();
@@ -178,8 +184,14 @@ class _IndexChartState extends State<IndexChart> {
                   }),
                 ),
                 MarketNotiCard(
-                    title: summaryModel.title!,
-                    date: summaryModel.regDateTime!),
+                  title: summaryModel.title!,
+                  date: summaryModel.regDateTime!,
+                  onTap: () => Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) =>  SummaryChartPage(data: summaryModel),
+                    ),
+                  ),
+                ),
               ],
             );
           },
