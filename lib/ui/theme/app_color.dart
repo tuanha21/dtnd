@@ -92,4 +92,10 @@ class AppColors {
   static const semantic_06_1 = Color(0xFFFB6714);
   static const data_2 = Color(0xFFA155B9);
   static const semantic_04_1 = Color(0xFF14B5FB);
+
+  static const app_bar_summary = Color(0xFF1D242E);
+  static const text_summary = Color(0xFF9597A0);
+  static const bg_icon_summary = Color(0xFF0D3630);
+  static const bg_text_summary = Color(0xFF0A5C49);
+  static const bg_share_summary = Color(0xFF0086C6);
 }

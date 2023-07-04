@@ -25,6 +25,7 @@ import 'package:dtnd/data/implementations/data_center_service.dart';
 import 'package:dtnd/data/implementations/local_storage_service.dart';
 import 'package:dtnd/data/implementations/user_service.dart';
 
+import '../page/summary_chart_page.dart';
 import 'market_noti_card.dart';
 
 Future<Map> readJsonFile(String filePath) async {
@@ -178,8 +179,14 @@ class _IndexChartState extends State<IndexChart> {
                   }),
                 ),
                 MarketNotiCard(
-                    title: summaryModel.title!,
-                    date: summaryModel.regDateTime!),
+                  title: summaryModel.title!,
+                  date: summaryModel.regDateTime!,
+                  onTap: () => Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) =>  SummaryChartPage(data: summaryModel),
+                    ),
+                  ),
+                ),
               ],
             );
           },
