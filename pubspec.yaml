@@ -134,6 +134,7 @@ flutter:
     - assets/home_icon/
     - assets/commodities_icon/
     - assets/drawer_icon/
+    - assets/fake_data/
     - .env
     - production_domain_config.env
     - test_domain_config.env
