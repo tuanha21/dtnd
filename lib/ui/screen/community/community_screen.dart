@@ -1,14 +1,10 @@
-import 'package:dtnd/=models=/response/stock.dart';
 import 'package:dtnd/data/i_data_center_service.dart';
 import 'package:dtnd/data/implementations/data_center_service.dart';
-import 'package:dtnd/ui/screen/search/search_screen.dart';
-import 'package:dtnd/ui/screen/stock_detail/stock_detail_screen.dart';
+import 'package:dtnd/ui/screen/community/livestream_tab.dart';
+import 'package:dtnd/ui/screen/community/premium_tab.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-import '../../../generated/l10n.dart';
 
-import '../../theme/app_image.dart';
-import '../../widget/my_appbar.dart';
+import '../../theme/app_color.dart';
 import 'community_tab.dart';
 import 'copy_trade_tab.dart';
 
@@ -33,58 +29,38 @@ class _CommunityScreenState extends State<CommunityScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: MyAppBar(
-        actions: [
-          GestureDetector(
+      appBar: AppBar(
+        title: Container(
+          alignment: Alignment.center,
+          height: 40,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(12),
+            color: AppColors.neutral_05,
+          ),
+          child: const TextField(
+            onChanged: null,
+            enableSuggestions: false,
+            decoration: InputDecoration(
+              hintText: "Từ khóa, bài viết, người dùng",
+              hintStyle: TextStyle(color: AppColors.neutral_04, fontSize: 14),
+              prefixIcon: Icon(Icons.search),
+              border: InputBorder.none,
+              focusedBorder: InputBorder.none,
+              enabledBorder: InputBorder.none,
+            ),
+          ),
+        ),
+        leading: InkWell(
             onTap: () {
-              Navigator.of(context)
-                  .push(MaterialPageRoute(
-                builder: (context) => const SearchScreen(),
-              ))
-                  .then((value) async {
-                if (value is Stock) {
-                  dataCenterService.getStocksModelsFromStockCodes(
-                      [value.stockCode]).then((stockModels) {
-                    if (stockModels != null) {
-                      return Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => StockDetailScreen(
-                          stockModel: stockModels.first,
-                        ),
-                      ));
-                    }
-                  });
-                }
-              });
+              Scaffold.of(context).openDrawer();
             },
-            child: SizedBox.square(
-                dimension: 26,
-                child: Image.asset(
-                  AppImages.home_icon_search_normal,
-                )),
-          ),
-          const SizedBox(
-            width: 20,
-          ),
-          InkWell(
-            child: SizedBox.square(
-                dimension: 26,
-                child: Image.asset(
-                  AppImages.home_icon_notification,
-                )),
-            onTap: (){
-              Fluttertoast.showToast(
-                msg: S.of(context).developing_feature,
-                toastLength: Toast.LENGTH_LONG,
-                gravity: ToastGravity.CENTER,
-                timeInSecForIosWeb: 1,
-                backgroundColor: Colors.black,
-                textColor: Colors.white,
-              );
-            },
-          ),
-          const SizedBox(
-            width: 16,
-          ),
+            child: const Icon(Icons.menu)),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(right: 8),
+            child: InkWell(
+                onTap: () {}, child: const Icon(Icons.notifications_sharp)),
+          )
         ],
       ),
       body: SafeArea(
@@ -94,11 +70,13 @@ class _CommunityScreenState extends State<CommunityScreen>
               controller: _tabController,
               isScrollable: false,
               labelPadding:
-                  const EdgeInsets.symmetric(horizontal: 18, vertical: 6),
+                  const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
               padding: const EdgeInsets.only(top: 8),
-              tabs: <Widget>[
-                Text(S.of(context).community),
-                Text(S.of(context).copytrade)
+              tabs: const <Widget>[
+                Text("Đề xuất"),
+                Text("Mới nhất"),
+                Text("Premium"),
+                Text("Livestream"),
               ],
             ),
             const SizedBox(height: 20),
@@ -106,6 +84,8 @@ class _CommunityScreenState extends State<CommunityScreen>
               child: TabBarView(controller: _tabController, children: const [
                 CommunityTab(),
                 CopyTradeTab(),
+                PremiumTab(),
+                LiveStreamTab()
               ]),
             )
           ],

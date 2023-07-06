@@ -57,9 +57,7 @@ dependencies:
   logger: ^1.1.0
   # Chart
   charts_flutter:
-    git:
-      url: https://github.com/tuanha21/charts.git
-      path: charts_flutter
+    path: /Users/tiennh/Developer/flutter_project/charts/charts_flutter
   k_chart:
     git:
       url: https://github.com/tuanha21/k_chart.git
