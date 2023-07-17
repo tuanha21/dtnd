@@ -39,6 +39,7 @@ class _CommunityPostsSheetState extends State<CommunityPostsSheet>
   void dispose() {
     postsController.removeListener(_updatePostLength);
     postsController.dispose();
+    controller.clearImage();
     super.dispose();
   }
 
@@ -119,101 +120,207 @@ class _CommunityPostsSheetState extends State<CommunityPostsSheet>
       },
     );
 
-    return SafeArea(
-      child: Container(
-        height: MediaQuery.of(context).size.height,
-        padding: const EdgeInsets.only(top: 25, right: 16, left: 16, bottom: 8),
-        child: Column(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                InkWell(
-                  child: SvgPicture.asset(
-                    AppImages.back_draw_icon,
+    return Scaffold(
+      resizeToAvoidBottomInset: true,
+      body: SafeArea(
+        child: Container(
+          height: MediaQuery.of(context).size.height,
+          padding: const EdgeInsets.only(right: 16, left: 16, bottom: 8),
+          child: Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  InkWell(
+                    child: SvgPicture.asset(
+                      AppImages.back_draw_icon,
+                    ),
+                    onTap: () => Navigator.of(context).pop(),
                   ),
-                  onTap: () => Navigator.of(context).pop(),
-                ),
-                Text(
-                  S.of(context).create_a_post,
-                  style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w700,
-                        color: AppColors.text_black_1,
-                      ),
-                ),
-                TextButton(
+                  Text(
+                    S.of(context).create_a_post,
+                    style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w700,
+                          color: AppColors.text_black_1,
+                        ),
+                  ),
+                  TextButton(
                     onPressed: () {
                       if (postsController.text != '') {
-                        controller.postPosts(postsController.text).then((value) {
-                          if (value) {
-                            EasyLoading.showToast(
-                                S.of(context).post_created_successfully);
-                            Navigator.of(context).pop();
-                          } else {
-                            EasyLoading.showToast(
-                                S.of(context).post_creation_failed);
-                          }
-                        });
+                        controller.postPosts(postsController.text).then(
+                          (value) {
+                            if (value) {
+                              EasyLoading.showToast(
+                                  S.of(context).post_created_successfully);
+                              Navigator.of(context).pop();
+                            } else {
+                              EasyLoading.showToast(
+                                  S.of(context).post_creation_failed);
+                            }
+                          },
+                        );
                       } else {
                         EasyLoading.showToast(
                             S.of(context).please_enter_the_content_of_the_post);
                       }
                     },
-                    child: Text(S.of(context).post))
-              ],
-            ),
-            const Divider(),
-            const SizedBox(
-              height: 8,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                title,
-                Text(
-                  '$postLength/1000',
-                  style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w700,
-                        color: AppColors.graph_5,
-                      ),
-                )
-              ],
-            ),
-            const SizedBox(
-              height: 8,
-            ),
-            Expanded(
-              child: SizedBox(
-                child: TextField(
-                  maxLengthEnforcement: MaxLengthEnforcement.none,
-                  maxLength: 1000,
-                  controller: postsController,
-                  decoration: InputDecoration(
-                    counterText: '',
-                    contentPadding: EdgeInsets.zero,
-                    border: InputBorder.none,
-                    enabledBorder: InputBorder.none,
-                    disabledBorder: InputBorder.none,
-                    focusedBorder: InputBorder.none,
-                    hintText: S.of(context).share_your_thoughts,
+                    child: Text(S.of(context).post),
+                  )
+                ],
+              ),
+              const Divider(),
+              const SizedBox(
+                height: 8,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  title,
+                  Text(
+                    '$postLength/1000',
+                    style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w700,
+                          color: AppColors.graph_5,
+                        ),
+                  )
+                ],
+              ),
+              const SizedBox(
+                height: 8,
+              ),
+              Expanded(
+                child: SizedBox(
+                  child: TextField(
+                    maxLengthEnforcement: MaxLengthEnforcement.none,
+                    maxLength: 1000,
+                    controller: postsController,
+                    decoration: InputDecoration(
+                      counterText: '',
+                      contentPadding: EdgeInsets.zero,
+                      border: InputBorder.none,
+                      enabledBorder: InputBorder.none,
+                      disabledBorder: InputBorder.none,
+                      focusedBorder: InputBorder.none,
+                      hintText: S.of(context).share_your_thoughts,
+                    ),
+                    maxLines: null,
                   ),
-                  maxLines: null,
                 ),
               ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Text(
-                  '${S.of(context).choose_the_topic}(0/3)',
-                  textAlign: TextAlign.start,
-                ),
-              ],
-            ),
-            const SizedBox(height: 10,)
-          ],
+              Obx(() {
+                final image = controller.image.value;
+                return (image != null)
+                    ? Image.file(image)
+                    : const SizedBox();
+              }),
+              const SizedBox(height: 10,),
+              Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Text(
+                        '${S.of(context).choose_the_topic}(0/3)',
+                        textAlign: TextAlign.start,
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Row(
+                    children: [
+                      Container(
+                        margin: const EdgeInsets.only(right: 10),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 8, vertical: 4),
+                        decoration: BoxDecoration(
+                            color: Colors.blue.shade100,
+                            borderRadius: BorderRadius.circular(12)),
+                        child: const Text(
+                          "Diễn biến thị trường",
+                          style: TextStyle(
+                              color: Colors.blue, fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      Container(
+                        margin: const EdgeInsets.only(right: 10),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 8, vertical: 4),
+                        decoration: BoxDecoration(
+                            color: Colors.blue.shade100,
+                            borderRadius: BorderRadius.circular(12)),
+                        child: const Text(
+                          "Tín hiệu đầu tư",
+                          style: TextStyle(
+                              color: Colors.blue, fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      Container(
+                        margin: const EdgeInsets.only(right: 10),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 8, vertical: 4),
+                        decoration: BoxDecoration(
+                            color: Colors.blue.shade100,
+                            borderRadius: BorderRadius.circular(12)),
+                        child: const Text(
+                          "Giải trí",
+                          style: TextStyle(
+                              color: Colors.blue, fontWeight: FontWeight.bold),
+                        ),
+                      )
+                    ],
+                  )
+                ],
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      child: const Icon(Icons.add_circle)),
+                  InkWell(
+                    onTap: (){
+                      controller.takePicture();
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      child: const Icon(
+                        Icons.camera_alt_rounded,
+                        color: Colors.grey,
+                      ),
+                    ),
+                  ),
+                  InkWell(
+                    onTap: (){
+                      // chọn ảnh
+                      controller.pickImage();
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      child: const Icon(
+                        Icons.image,
+                        color: Colors.grey,
+                      ),
+                    ),
+                  ),
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    child: const Icon(
+                      Icons.gif,
+                      color: Colors.grey,
+                    ),
+                  ),
+                ],
+              )
+            ],
+          ),
         ),
       ),
     );

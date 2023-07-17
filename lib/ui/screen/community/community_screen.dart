@@ -22,7 +22,7 @@ class _CommunityScreenState extends State<CommunityScreen>
 
   @override
   void initState() {
-    _tabController = TabController(length: 2, vsync: this);
+    _tabController = TabController(length: 4, vsync: this);
     super.initState();
   }
 
@@ -79,9 +79,8 @@ class _CommunityScreenState extends State<CommunityScreen>
                 Text("Livestream"),
               ],
             ),
-            const SizedBox(height: 20),
             Expanded(
-              child: TabBarView(controller: _tabController, children: const [
+              child: TabBarView(controller: _tabController, children:  const [
                 CommunityTab(),
                 CopyTradeTab(),
                 PremiumTab(),

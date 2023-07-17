@@ -5,6 +5,7 @@ import 'package:dtnd/ui/screen/community/widget/post_detail_widget.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/widget/appbar/simple_appbar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'list_comment_tab.dart';
 
@@ -82,8 +83,41 @@ class _CommentDetailPageState extends State<CommentDetailPage>
           const SizedBox(height: 8),
           Expanded(
             child: TabBarView(controller: _tabController, children: [
-              ListCommentTab(
-                post: widget.post,
+              Padding(
+                padding:   EdgeInsets.symmetric(horizontal: 18),
+                child:   Column(
+                  children: [
+                    Flexible(
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(16),
+                          border: Border.all(color: Colors.black)
+                        ),
+                        child: const TextField(
+                          maxLengthEnforcement: MaxLengthEnforcement.none,
+                          maxLength: 1000,
+                          cursorColor: Colors.red,
+                          decoration: InputDecoration(
+                            counterText: '',
+                            contentPadding: EdgeInsets.zero,
+                            border: InputBorder.none,
+                            enabledBorder: InputBorder.none,
+                            disabledBorder: InputBorder.none,
+                            focusedBorder: InputBorder.none,
+                            hintText: "Viết những gì bạn nghĩ",
+                          ),
+                          maxLines: null,
+                        ),
+                      ),
+                    ),
+                    Flexible(
+                      child: ListCommentTab(
+                        post: widget.post,
+                      ),
+                    ),
+                  ],
+                ),
               ),
               Container()
             ]),

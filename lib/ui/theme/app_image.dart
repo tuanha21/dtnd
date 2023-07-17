@@ -78,6 +78,7 @@ class AppImages {
   static const String verify_account_icon =
       "assets/svg/verify_account_icon.svg";
   static const String save_pin_code_icon = "assets/svg/save_pin_code_icon.svg";
+  static const String icon_pencil = "assets/svg/icon_pencil.svg";
 
   static const String qa_base = "assets/svg/qa_base.svg";
   static const String qa_bond = "assets/svg/qa_bond.svg";

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dtnd/=models=/response/community/post_model.dart';
 import 'package:dtnd/data/i_community_service.dart';
 import 'package:dtnd/data/i_network_service.dart';
@@ -7,6 +9,7 @@ import 'package:dtnd/data/implementations/user_service.dart';
 import 'package:dtnd/utilities/logger.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 
 class CommunityController {
   static final CommunityController _instance = CommunityController._intern();
@@ -22,6 +25,8 @@ class CommunityController {
   CommunityController._intern();
 
   factory CommunityController() => _instance;
+
+  final Rx<File?> image = Rx<File?>(null);
 
   Future<void> init() async {
     await getPosts();
@@ -83,4 +88,27 @@ class CommunityController {
           recordPerPage: posts.length + 5);
     }
   }
+
+  Future<void> pickImage() async {
+    final picker = ImagePicker();
+    final pickedImage = await picker.pickImage(source: ImageSource.gallery);
+
+    if (pickedImage != null) {
+      image.value = File(pickedImage.path);
+    }
+  }
+
+  Future<void> takePicture() async {
+    final picker = ImagePicker();
+    final pickedImage = await picker.pickImage(source: ImageSource.camera);
+
+    if (pickedImage != null) {
+      image.value = File(pickedImage.path);
+    }
+  }
+
+  void clearImage() {
+    image.value = null;
+  }
+
 }
