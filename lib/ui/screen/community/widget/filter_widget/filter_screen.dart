@@ -30,9 +30,6 @@ class _FilterScreenState extends State<FilterScreen> {
     "Bán lẻ",
     "Điện nước",
     "Tài chính bảo hiểm",
-    "Vàng",
-    "Kinh doanh hàng hóa",
-    "Ngành khác",
   ];
 
   List<String> chiaSeChuDeList = [
@@ -86,9 +83,9 @@ class _FilterScreenState extends State<FilterScreen> {
         Container(
           margin: const EdgeInsets.only(top: 10),
           width: MediaQuery.of(context).size.width,
-          height: 250,
+          height: 180,
           child: GridView.builder(
-            gridDelegate:  SliverGridDelegateWithFixedCrossAxisCount(
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 3,
               mainAxisExtent: 45,
               crossAxisSpacing: 10,
