@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:dtnd/ui/screen/community/widget/discover_widget/discover_screen.dart';
 import 'package:dtnd/ui/screen/community/widget/post_widget.dart';
 import 'package:dtnd/ui/screen/community/widget/premium_widget/premium_post_group.dart';
-import 'package:dtnd/ui/screen/community/widget/single_post.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -59,7 +59,7 @@ class _CopyTradeTabState extends State<CopyTradeTab>
                         const SizedBox(
                           height: 10,
                         ),
-                        const Row(
+                        Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
@@ -67,12 +67,19 @@ class _CopyTradeTabState extends State<CopyTradeTab>
                               style: TextStyle(
                                   fontSize: 16, fontWeight: FontWeight.bold),
                             ),
-                            Text(
-                              "Xem tất cả",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.normal,
-                                  color: Colors.lightBlue,
-                                  fontSize: 16),
+                            InkWell(
+                              onTap: () {
+                                Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) => DiscoverScreen(),
+                                ));
+                              },
+                              child: Text(
+                                "Xem tất cả",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.normal,
+                                    color: Colors.lightBlue,
+                                    fontSize: 16),
+                              ),
                             )
                           ],
                         ),
@@ -214,7 +221,9 @@ class _CopyTradeTabState extends State<CopyTradeTab>
                       );
                     },
                   ),
-                  SizedBox(height: 16,),
+                  SizedBox(
+                    height: 16,
+                  ),
                   const PremiumPostGroup(),
                 ],
               ),

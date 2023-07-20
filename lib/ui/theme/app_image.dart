@@ -96,6 +96,7 @@ class AppImages {
   static const String prefix_down_icon2 = "assets/images/prefix_down_icon2.png";
   static const String wallet_icon = "assets/svg/wallet.svg";
   static const String wallet_search = "assets/svg/wallet_search.svg";
+  static const String like_icon = "assets/svg/icon_like.svg";
 
   static const String notification_icon = "assets/images/notification_icon.png";
   static const String document_text_icon =

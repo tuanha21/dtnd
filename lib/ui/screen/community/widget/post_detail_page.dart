@@ -5,7 +5,6 @@ import 'package:dtnd/ui/screen/community/widget/post_detail_widget.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/widget/appbar/simple_appbar.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 import 'list_comment_tab.dart';
 
@@ -84,33 +83,9 @@ class _CommentDetailPageState extends State<CommentDetailPage>
           Expanded(
             child: TabBarView(controller: _tabController, children: [
               Padding(
-                padding:   EdgeInsets.symmetric(horizontal: 18),
-                child:   Column(
+                padding: const EdgeInsets.symmetric(horizontal: 18),
+                child: Column(
                   children: [
-                    Flexible(
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 16),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(16),
-                          border: Border.all(color: Colors.black)
-                        ),
-                        child: const TextField(
-                          maxLengthEnforcement: MaxLengthEnforcement.none,
-                          maxLength: 1000,
-                          cursorColor: Colors.red,
-                          decoration: InputDecoration(
-                            counterText: '',
-                            contentPadding: EdgeInsets.zero,
-                            border: InputBorder.none,
-                            enabledBorder: InputBorder.none,
-                            disabledBorder: InputBorder.none,
-                            focusedBorder: InputBorder.none,
-                            hintText: "Viết những gì bạn nghĩ",
-                          ),
-                          maxLines: null,
-                        ),
-                      ),
-                    ),
                     Flexible(
                       child: ListCommentTab(
                         post: widget.post,
@@ -121,6 +96,62 @@ class _CommentDetailPageState extends State<CommentDetailPage>
               ),
               Container()
             ]),
+          ),
+          Container(
+            alignment: Alignment.center,
+            height: 70,
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                const SizedBox(
+                  width: 20,
+                ),
+                InkWell(
+                  onTap: () {
+                    controller.pickImage();
+                  },
+                  child: const Icon(
+                    Icons.photo_camera,
+                    size: 30,
+                  ),
+                ),
+                const SizedBox(
+                  width: 20,
+                ),
+                const Icon(
+                  Icons.gif_box_outlined,
+                  size: 30,
+                ),
+                const SizedBox(
+                  width: 20,
+                ),
+                Expanded(
+                  child: TextField(
+                    cursorColor: Colors.red,
+                    decoration: InputDecoration(
+                      counterText: '',
+                      suffixIcon: const Icon(Icons.send),
+                      border: InputBorder.none,
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: const BorderSide(color: Colors.grey),
+                        borderRadius: BorderRadius.circular(12.0),
+                      ),
+                      contentPadding: EdgeInsets.symmetric(horizontal: 8.0),
+                      disabledBorder: InputBorder.none,
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: const BorderSide(color: Colors.blue),
+                        borderRadius: BorderRadius.circular(12.0),
+                      ),
+                      hintText: "Nhập bình luận...",
+                    ),
+                    maxLines: null,
+                  ),
+                ),
+                const SizedBox(
+                  width: 10,
+                ),
+              ],
+            ),
           )
         ],
       ),

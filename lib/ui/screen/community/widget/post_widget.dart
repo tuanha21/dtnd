@@ -2,7 +2,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dtnd/=models=/response/community/post_model.dart';
 import 'package:dtnd/ui/screen/community/widget/profile_widget/profile_user_screen.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
-import 'package:dtnd/utilities/num_utils.dart';
 import 'package:dtnd/utilities/time_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -10,23 +9,48 @@ import 'package:flutter_svg/flutter_svg.dart';
 import '../../../theme/app_color.dart';
 import 'post_detail_page.dart';
 
-class PostWidget extends StatelessWidget {
+class PostWidget extends StatefulWidget {
   final PostModel post;
+
   const PostWidget({
     Key? key,
     required this.post,
   }) : super(key: key);
 
   @override
+  State<PostWidget> createState() => _PostWidgetState();
+}
+
+class _PostWidgetState extends State<PostWidget> {
+  bool showEmoji = false;
+  bool like = false;
+  List<IconData> emojis = [
+    Icons.emoji_emotions,
+    Icons.sentiment_very_satisfied,
+    Icons.sentiment_satisfied,
+    Icons.sentiment_neutral,
+    Icons.sentiment_dissatisfied,
+  ];
+  IconData? selectedEmoji;
+
+  @override
   Widget build(BuildContext context) {
     var bodySmall_12 = Theme.of(context).textTheme.titleSmall;
     return GestureDetector(
       onTap: () {
-        Navigator.push(context, MaterialPageRoute(builder: (context) {
-          return CommentDetailPage(
-            post: post,
-          );
-        }));
+        setState(() {
+          showEmoji = false;
+        });
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) {
+              return CommentDetailPage(
+                post: widget.post,
+              );
+            },
+          ),
+        );
       },
       child: Container(
         padding:
@@ -76,7 +100,7 @@ class PostWidget extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        post.user,
+                        widget.post.user,
                         style:
                             bodySmall_12?.copyWith(fontWeight: FontWeight.w700),
                       ),
@@ -88,7 +112,7 @@ class PostWidget extends StatelessWidget {
                           Flexible(
                             child: Text(
                               TimeUtilities.getTimeAgo(
-                                  context, post.createTime),
+                                  context, widget.post.createTime),
                               style: bodySmall_12?.copyWith(
                                   fontSize: 10, color: AppColors.neutral_03),
                             ),
@@ -123,7 +147,7 @@ class PostWidget extends StatelessWidget {
               children: [
                 Expanded(
                   child: Text(
-                    post.content,
+                    widget.post.content,
                     style: bodySmall_12?.copyWith(fontSize: 12),
                   ),
                 )
@@ -162,21 +186,31 @@ class PostWidget extends StatelessWidget {
             //   ],
             // ),
             const SizedBox(height: 16),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            Stack(
               children: [
-                const Icon(
-                  Icons.account_box,
-                  color: Colors.grey,
-                ),
-                Text(
-                  NumUtils.formatInteger(post.viewCount),
-                  style: bodySmall_12?.copyWith(
-                      fontSize: 12, color: AppColors.neutral_03),
-                )
+                if (selectedEmoji != null && like == true)
+                  Icon(
+                    selectedEmoji,
+                    color: Colors.blue,
+                  ),
+                // Row(
+                //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //   children: [
+                //     const Icon(
+                //       Icons.account_box,
+                //       color: Colors.grey,
+                //     ),
+                //     Text(
+                //       NumUtils.formatInteger(widget.post.viewCount),
+                //       style: bodySmall_12?.copyWith(
+                //           fontSize: 12, color: AppColors.neutral_03),
+                //     )
+                //   ],
+                // ),
+                showEmoji ? iconEmoji() : const SizedBox()
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 5,
             ),
             const Divider(
@@ -187,32 +221,59 @@ class PostWidget extends StatelessWidget {
             ),
             Row(
               children: [
-                const Expanded(
+                Expanded(
+                  child: InkWell(
                     child: Row(
-                  children: [
-                    Icon(Icons.back_hand_outlined, color: Colors.black26),
-                    SizedBox(width: 5),
-                    Text("Thích")
-                    // Text(
-                    //   NumUtils.formatInteger(post.viewCount),
-                    //   style: bodySmall_12?.copyWith(
-                    //       fontSize: 12, color: AppColors.neutral_03),
-                    // )
-                  ],
-                )),
+                      children: [
+                        like == true
+                            ? Icon(
+                                selectedEmoji,
+                                color: Colors.blue,
+                              )
+                            : const Icon(
+                                Icons.emoji_emotions,
+                                color: Colors.grey,
+                              ),
+                        const SizedBox(width: 5),
+                        Text("Thích")
+                        // Text(
+                        //   NumUtils.formatInteger(post.viewCount),
+                        //   style: bodySmall_12?.copyWith(
+                        //       fontSize: 12, color: AppColors.neutral_03),
+                        // )
+                      ],
+                    ),
+                    onTap: () {
+                      setState(() {
+                        like = !like;
+                        if (!showEmoji) {
+                          selectedEmoji = emojis[0];
+                        }
+                      });
+                    },
+                    onLongPress: () {
+                      setState(() {
+                        showEmoji = !showEmoji;
+                      });
+                    },
+                  ),
+                ),
                 const Expanded(
+                  child: InkWell(
                     child: Row(
-                  children: [
-                    Icon(Icons.mode_comment_rounded, color: Colors.black26),
-                    SizedBox(width: 5),
-                    Text("Bình luận")
-                    // Text(
-                    //   NumUtils.formatInteger(post.commentCount),
-                    //   style: bodySmall_12?.copyWith(
-                    //       fontSize: 12, color: AppColors.neutral_03),
-                    // )
-                  ],
-                )),
+                      children: [
+                        Icon(Icons.mode_comment_rounded, color: Colors.black26),
+                        SizedBox(width: 5),
+                        Text("Bình luận")
+                        // Text(
+                        //   NumUtils.formatInteger(post.commentCount),
+                        //   style: bodySmall_12?.copyWith(
+                        //       fontSize: 12, color: AppColors.neutral_03),
+                        // )
+                      ],
+                    ),
+                  ),
+                ),
                 // Expanded(
                 //     child: Row(
                 //   children: [
@@ -326,6 +387,43 @@ class PostWidget extends StatelessWidget {
           ),
         );
       },
+    );
+  }
+
+  Widget iconEmoji() {
+    return Container(
+      padding: const EdgeInsets.all(5),
+      decoration: BoxDecoration(
+        color: Colors.grey.shade300,
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisSize: MainAxisSize.min,
+        children: emojis.map((emoji) {
+          final isSelected =
+              emoji == selectedEmoji; // Check if the emoji is selected
+          return GestureDetector(
+            onTap: () {
+              setState(() {
+                selectedEmoji = emoji;
+                showEmoji = false;
+                like = true;
+              });
+            },
+            child: Padding(
+              padding: const EdgeInsets.all(5),
+              child: Icon(
+                emoji,
+                color: isSelected
+                    ? Colors.blue
+                    : Colors.black, // Change the color of the selected emoji
+              ),
+            ),
+          );
+        }).toList(),
+      ),
     );
   }
 }
