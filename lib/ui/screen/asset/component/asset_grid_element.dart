@@ -17,6 +17,7 @@ class AssetGridElement extends StatelessWidget {
   final EdgeInsetsGeometry? contentPadding;
   @override
   Widget build(BuildContext context) {
+    final ThemeData themeData = Theme.of(context);
     final textTheme = AppTextStyle.labelMedium_12;
     final labelTheme = textTheme.copyWith(color: AppColors.neutral_03);
     bool hasSubElements = (subElements != null);
@@ -43,9 +44,14 @@ class AssetGridElement extends StatelessWidget {
       }
     } else {
       child = [
-        Text(
-          element.values.toList().first!,
-          style: textTheme,
+        Flexible(
+          child: Text(
+            element.values.toList().first!,
+            style: textTheme.copyWith(color: themeData.colorScheme.onBackground),
+            maxLines: 1,
+            overflow: TextOverflow.visible,
+            textAlign: TextAlign.center,
+          ),
         ),
       ];
     }
@@ -53,9 +59,9 @@ class AssetGridElement extends StatelessWidget {
     return Container(
       padding: contentPadding ?? const EdgeInsets.all(4),
       constraints: const BoxConstraints.expand(),
-      decoration: const BoxDecoration(
-        borderRadius: BorderRadius.all(Radius.circular(4)),
-        color: Colors.white,
+      decoration: BoxDecoration(
+        borderRadius: const BorderRadius.all(Radius.circular(4)),
+        color: themeData.colorScheme.background,
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,

@@ -52,7 +52,7 @@ class _AccumulationAutoContractState extends State<AccumulationAutoContract> {
                       '${S.of(context).accumulate} ${feeRate.termName.toString()}',
                       style: textTheme.bodyLarge),
                   const Spacer(),
-                  Text('${feeRate.feeRate.toString()}%/năm',
+                  Text('${feeRate.feeRate.toString()}%/${S.of(context).year}',
                       style: textTheme.bodyLarge
                           ?.copyWith(color: AppColors.semantic_01)),
                 ],
@@ -120,7 +120,7 @@ class _AccumulationAutoContractState extends State<AccumulationAutoContract> {
                         children: [
                           RowInfomation(
                               leftText: S.of(context).profit,
-                              rightText: '${feeRate.feeRate.toString()}%/năm'),
+                              rightText: '${feeRate.feeRate.toString()}%/${S.of(context).year}'),
                           RowInfomation(
                               leftText: S.of(context).period,
                               rightText: feeRate.termName.toString()),

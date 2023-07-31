@@ -3,6 +3,8 @@ import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../generated/l10n.dart';
+
 class AccumulationDialog extends StatelessWidget {
   const AccumulationDialog(
       {super.key, required this.title, required this.content});
@@ -56,12 +58,12 @@ class AccumulationDialog extends StatelessWidget {
                               builder: (context) => const Accumlation()),
                           (r) => r.isFirst);
                     },
-                    child: const Text('Sản phẩm',
-                        style: TextStyle(
+                    child:   Text(S.of(context).product,
+                        style: const TextStyle(
                             color: AppColors.text_blue,
                             fontSize: 14,
                             fontWeight: FontWeight.w700,
-                            height: 1.4)),
+                            height: 1.4),),
                   ),
                 ),
                 const SizedBox(width: 8),
@@ -79,9 +81,9 @@ class AccumulationDialog extends StatelessWidget {
                                   )),
                           (r) => r.isFirst);
                     },
-                    child: const Text(
-                      'Sổ tích lũy',
-                      style: TextStyle(
+                    child: Text(
+                      S.of(context).accumulation_book,
+                      style: const TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w700,
                           height: 1.4),

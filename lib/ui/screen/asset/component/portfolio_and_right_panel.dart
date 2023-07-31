@@ -55,12 +55,13 @@ class _PortfolioAndRightPanelState extends State<PortfolioAndRightPanel>
   @override
   Widget build(BuildContext context) {
     // final textTheme = Theme.of(context).textTheme;
+    final ThemeData themeData = Theme.of(context);
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
       margin: const EdgeInsets.symmetric(horizontal: 16),
-      decoration: const BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.all(Radius.circular(8)),
+      decoration: BoxDecoration(
+        color: themeData.colorScheme.background,
+        borderRadius: const BorderRadius.all(Radius.circular(8)),
       ),
       child: Column(
         children: [
@@ -78,9 +79,9 @@ class _PortfolioAndRightPanelState extends State<PortfolioAndRightPanel>
           if (_tabController.index == 0)
             Container(
               height: 56,
-              decoration: const BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.all(Radius.circular(8)),
+              decoration: BoxDecoration(
+                color: themeData.colorScheme.background,
+                borderRadius: const BorderRadius.all(Radius.circular(8)),
               ),
               child: Obx(() {
                 final data = userService.defaultAccount.value
@@ -93,7 +94,7 @@ class _PortfolioAndRightPanelState extends State<PortfolioAndRightPanel>
                       Row(
                         children: [
                           Text(
-                            "Tổng lãi/lỗ chưa đóng",
+                            S.of(context).total_unclosed_profit_loss,
                             style: AppTextStyle.labelMedium_12.copyWith(
                               color: AppColors.neutral_03,
                             ),

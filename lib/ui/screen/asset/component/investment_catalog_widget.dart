@@ -260,7 +260,7 @@ class _InvestmentCatalogWidgetState extends State<InvestmentCatalogWidget> {
                                             CrossAxisAlignment.end,
                                         children: [
                                           Text(
-                                            "Giá TB",
+                                            S.of(context).avg_price,
                                             style: AppTextStyle.labelSmall_10,
                                           ),
                                           const SizedBox(height: 4),

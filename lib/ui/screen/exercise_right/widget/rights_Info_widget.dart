@@ -21,12 +21,14 @@ class RightsInfoWidget extends StatefulWidget {
 class _RightsInfoWidgetState extends State<RightsInfoWidget> {
   @override
   Widget build(BuildContext context) {
+    final ThemeData themeData = Theme.of(context);
+
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 8),
       padding: const EdgeInsets.all(16),
-      decoration: const BoxDecoration(
-          color: AppColors.neutral_06,
-          borderRadius: BorderRadius.all(Radius.circular(12))),
+      decoration: BoxDecoration(
+          color: themeData.colorScheme.background,
+          borderRadius: const BorderRadius.all(Radius.circular(12))),
       child: Column(
         children: [
           widget.data?.cBUSINESSNAME == "Quyền mua cổ phiếu/TP"

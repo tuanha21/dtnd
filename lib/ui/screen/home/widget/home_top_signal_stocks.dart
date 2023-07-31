@@ -35,8 +35,10 @@ class _HomeTopSignalStocksState extends State<HomeTopSignalStocks> {
 
   @override
   Widget build(BuildContext context) {
+    final ThemeData themeData = Theme.of(context);
+
     return Container(
-      color: AppColors.neutral_07,
+      color: themeData.colorScheme.background,
       padding: const EdgeInsets.symmetric(vertical: 16),
       child: Column(
         children: [
@@ -62,7 +64,9 @@ class _HomeTopSignalStocksState extends State<HomeTopSignalStocks> {
                       children: [
                         Text.rich(
                           TextSpan(
-                              text: "Có top mã cổ phiếu dành cho bạn",
+                              text: S
+                                  .of(context)
+                                  .there_are_top_stock_codes_for_you,
                               recognizer: TapGestureRecognizer()
                                 ..onTap = () {
                                   Navigator.of(context).push(MaterialPageRoute(
@@ -82,7 +86,7 @@ class _HomeTopSignalStocksState extends State<HomeTopSignalStocks> {
                       ],
                     ),
                     Text(
-                      "Đầu tư ngay đừng bỏ lỡ",
+                      S.of(context).invest_now_do_not_miss_it,
                       style: AppTextStyle.bodySmall_12
                           .copyWith(color: AppColors.neutral_03),
                     ),

@@ -56,4 +56,6 @@ abstract class ILocalStorageService {
   Future<void> saveInfoRegistered(String infoRegistered);
 
   Future<void> savePinCode(String pinCode);
+
+  Future<void> saveLanguage(String pinCode);
 }

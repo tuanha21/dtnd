@@ -15,8 +15,10 @@ class PremiumPostGroup extends StatefulWidget {
 class _PremiumPostGroupState extends State<PremiumPostGroup> {
   @override
   Widget build(BuildContext context) {
+    final ThemeData themeData = Theme.of(context);
+
     return Container(
-      color: Colors.white,
+      color: themeData.colorScheme.background,
       padding: const EdgeInsets.all(10),
       margin: const EdgeInsets.only(bottom: 10),
       child: Column(

@@ -57,7 +57,9 @@ extension AssetChartTypeX on AssetChartType {
   }
 
   bool get isAsset => this == AssetChartType.asset;
+
   bool get isEffective => this == AssetChartType.effective;
+
   bool get isAssetDistribution => this == AssetChartType.assetDistribution;
 
   String get title {
@@ -88,6 +90,7 @@ class _AssetScreenState extends State<AssetScreen>
   final INetworkService networkService = NetworkService();
   final ILocalStorageService localStorageService = LocalStorageService();
   final AssetController controller = AssetController();
+
   void rebuild() => setState(() {});
 
   void changeChart() {
@@ -106,6 +109,7 @@ class _AssetScreenState extends State<AssetScreen>
 
   @override
   Widget build(BuildContext context) {
+    final ThemeData themeData = Theme.of(context);
     Widget child;
 
     return Scaffold(
@@ -270,6 +274,7 @@ class _AssetScreenState extends State<AssetScreen>
                           ],
                         ),
                         Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             const CustomDropDownButton(
                               items: [
@@ -279,6 +284,7 @@ class _AssetScreenState extends State<AssetScreen>
                             ),
                             const SizedBox(width: 8),
                             Material(
+                              color: themeData.colorScheme.background,
                               borderRadius:
                                   const BorderRadius.all(Radius.circular(6)),
                               child: InkWell(

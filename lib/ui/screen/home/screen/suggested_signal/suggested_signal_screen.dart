@@ -12,6 +12,7 @@ import 'package:dtnd/ui/widget/empty_list_widget.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../../=models=/ui_model/user_cmd.dart';
+import '../../../../../generated/l10n.dart';
 import '../../../../theme/app_image.dart';
 import '../../../exchange_stock/order_note/data/order_filter_data.dart';
 import 'flow/suggested_signal_flow.dart';
@@ -118,7 +119,7 @@ class _SuggestedSignalScreenState extends State<SuggestedSignalScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: SimpleAppbar(
-        title: "Hiệu quả tín hiệu",
+        title: S.of(context).signal_efficiency,
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 16),

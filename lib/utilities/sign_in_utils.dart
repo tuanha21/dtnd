@@ -12,37 +12,39 @@ class SigniInUtils {
         .push(MaterialPageRoute(
       builder: (context) => const LoginScreen(),
     ))
-        .then((result) async {
-      if ((result ?? false)) {
-        if (!localStorageService.biometricsRegistered &&
-            localStorageService.isDeviceSupport) {
-          final reg = await showDialog<bool>(
-            context: context,
-            builder: (context) {
-              return CustomDialog(
-                textButtonAction: S.of(context).ok,
-                textButtonExit: S.of(context).later,
-                title: S.of(context).biometric_authentication,
-                content: S.of(context).login_with_biometric,
-                action: () => Navigator.of(context).pop(true),
-                type: TypeAlert.notification,
-              );
-            },
-          );
-          if (reg ?? false) {
-            final auth = await localStorageService
-                .biometricsValidate()
-                .onError((error, stackTrace) => false);
-            if (auth) {
-              await localStorageService.registerBiometrics();
+        .then(
+      (result) async {
+        if ((result ?? false)) {
+          if (!localStorageService.biometricsRegistered &&
+              localStorageService.isDeviceSupport) {
+            final reg = await showDialog<bool>(
+              context: context,
+              builder: (context) {
+                return CustomDialog(
+                  textButtonAction: S.of(context).ok,
+                  textButtonExit: S.of(context).later,
+                  title: S.of(context).biometric_authentication,
+                  content: S.of(context).login_with_biometric,
+                  action: () => Navigator.of(context).pop(true),
+                  type: TypeAlert.notification,
+                );
+              },
+            );
+            if (reg ?? false) {
+              final auth = await localStorageService
+                  .biometricsValidate()
+                  .onError((error, stackTrace) => false);
+              if (auth) {
+                await localStorageService.registerBiometrics();
+              }
             }
+            afterLogin?.call();
           }
-          afterLogin?.call();
+          return;
         }
         return;
-      }
-      return;
-    });
+      },
+    );
     return;
   }
 }

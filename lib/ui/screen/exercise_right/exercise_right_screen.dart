@@ -1,8 +1,7 @@
 import 'package:dtnd/generated/l10n.dart';
-import 'package:dtnd/ui/screen/exercise_right/tab/rights_info_tab.dart';
 import 'package:dtnd/ui/screen/exercise_right/tab/purchase_rights_history_tab.dart';
 import 'package:dtnd/ui/screen/exercise_right/tab/registration_rights_tab.dart';
-import 'package:dtnd/ui/theme/app_color.dart';
+import 'package:dtnd/ui/screen/exercise_right/tab/rights_info_tab.dart';
 import 'package:dtnd/ui/theme/app_textstyle.dart';
 import 'package:dtnd/ui/widget/appbar/simple_appbar.dart';
 import 'package:flutter/material.dart';
@@ -32,8 +31,8 @@ class _ExerciseRightScreenState extends State<ExerciseRightScreen>
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
+
     return Scaffold(
-      backgroundColor: AppColors.light_bg,
       appBar: SimpleAppbar(
         title: S.of(context).exercise_right,
       ),

@@ -82,6 +82,8 @@ class _MoneyStatementSheetState extends State<MoneyStatementSheet> {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
+    final ThemeData themeData = Theme.of(context);
+
     return Scaffold(
       appBar: SimpleAppbar(
         title: S.of(context).money_statement,
@@ -98,6 +100,7 @@ class _MoneyStatementSheetState extends State<MoneyStatementSheet> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   DayInput(
+                    color: themeData.colorScheme.background,
                     initialDay: fromDay,
                     firstDay: firstDay,
                     lastDay: lastDay,
@@ -110,6 +113,7 @@ class _MoneyStatementSheetState extends State<MoneyStatementSheet> {
                   ),
                   const Text("-"),
                   DayInput(
+                    color: themeData.colorScheme.background,
                     initialDay: toDay,
                     firstDay: firstDay,
                     lastDay: lastDay,

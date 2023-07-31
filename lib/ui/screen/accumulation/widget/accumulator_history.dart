@@ -71,6 +71,8 @@ class _AccumulatorHistoryState extends State<AccumulatorHistory> {
 
   @override
   Widget build(BuildContext context) {
+    final ThemeData themeData = Theme.of(context);
+
     return Column(mainAxisAlignment: MainAxisAlignment.start, children: [
       const SizedBox(height: 16),
       Padding(
@@ -79,7 +81,7 @@ class _AccumulatorHistoryState extends State<AccumulatorHistory> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             DayInput(
-              color: Colors.white,
+              color: themeData.colorScheme.background,
               initialDay: fromDay,
               firstDay: firstDay,
               lastDay: lastDay,
@@ -92,7 +94,7 @@ class _AccumulatorHistoryState extends State<AccumulatorHistory> {
             ),
             const Text("  -  "),
             DayInput(
-              color: Colors.white,
+              color: themeData.colorScheme.background,
               initialDay: toDay,
               firstDay: firstDay,
               lastDay: lastDay,

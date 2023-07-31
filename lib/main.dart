@@ -4,8 +4,8 @@ import 'dart:io';
 import 'package:dtnd/config/service/app_services.dart';
 import 'package:dtnd/config/service/environment.dart';
 import 'package:dtnd/data/implementations/data_center_service.dart';
-import 'package:dtnd/data/implementations/network_service.dart';
 import 'package:dtnd/data/implementations/local_storage_service.dart';
+import 'package:dtnd/data/implementations/network_service.dart';
 import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/screen/ekyc/page/camera_preview_card.dart';
 import 'package:dtnd/ui/screen/home_base/home_base.dart';
@@ -148,10 +148,16 @@ class _MyAppState extends State<MyApp> {
             GlobalWidgetsLocalizations.delegate,
             GlobalCupertinoLocalizations.delegate,
           ],
-          supportedLocales: S.delegate.supportedLocales,
-          // routeInformationParser: _router.routeInformationParser,
-          // routeInformationProvider: _router.routeInformationProvider,
-          // routerDelegate: _router.routerDelegate,
+          supportedLocales: const [Locale('vi', 'VN'), Locale('en', 'EN')],
+          localeResolutionCallback: (locale, supportedLocales) {
+            for (var supportedLocale in supportedLocales) {
+              if (supportedLocale.languageCode == locale?.languageCode &&
+                  supportedLocale.countryCode == locale?.countryCode) {
+                return supportedLocale;
+              }
+            }
+            return supportedLocales.first;
+          },
           routerConfig: _router,
           builder: EasyLoading.init(),
         ),

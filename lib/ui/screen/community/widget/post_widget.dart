@@ -36,6 +36,8 @@ class _PostWidgetState extends State<PostWidget> {
   @override
   Widget build(BuildContext context) {
     var bodySmall_12 = Theme.of(context).textTheme.titleSmall;
+    final ThemeData themeData = Theme.of(context);
+
     return GestureDetector(
       onTap: () {
         setState(() {
@@ -53,10 +55,11 @@ class _PostWidgetState extends State<PostWidget> {
         );
       },
       child: Container(
+        margin: const EdgeInsets.only(right: 4,left: 4),
         padding:
             const EdgeInsets.only(left: 18, right: 18, top: 16, bottom: 16),
         decoration: BoxDecoration(
-            color: AppColors.light_bg, borderRadius: BorderRadius.circular(12)),
+            color: themeData.colorScheme.background, borderRadius: BorderRadius.circular(12)),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -118,19 +121,11 @@ class _PostWidgetState extends State<PostWidget> {
                             ),
                           ),
                           const SizedBox(width: 19),
-                          // SvgPicture.asset(AppImages.eyes),
-                          // const SizedBox(width: 5),
-                          // Text(
-                          //   NumUtils.formatInteger(post.viewCount),
-                          //   style: bodySmall_12?.copyWith(
-                          //       fontSize: 10, color: AppColors.neutral_03),
-                          // )
                         ],
                       ),
                     ],
                   ),
                 ),
-                // SvgPicture.asset(AppImages.archive_add)
                 InkWell(
                   onTap: () {
                     _showBottomSheetMore(context);
@@ -153,38 +148,6 @@ class _PostWidgetState extends State<PostWidget> {
                 )
               ],
             ),
-
-            // const SizedBox(height: 8),
-            // Row(
-            //   children: [
-            //     Text(
-            //       'Giá vào',
-            //       style: bodySmall_12?.copyWith(
-            //           fontSize: 12, color: AppColors.neutral_03),
-            //     ),
-            //     const SizedBox(width: 4),
-            //     Text(
-            //       '1.000.000',
-            //       style: bodySmall_12?.copyWith(
-            //           fontSize: 12, fontWeight: FontWeight.w600),
-            //     ),
-            //     const SizedBox(width: 46),
-            //     Text(
-            //       'Lãi/Lỗ',
-            //       style: bodySmall_12?.copyWith(
-            //           fontSize: 12, color: AppColors.neutral_03),
-            //     ),
-            //     const SizedBox(width: 4),
-            //     SvgPicture.asset(AppImages.arrowUp),
-            //     Text(
-            //       '16.3%',
-            //       style: bodySmall_12?.copyWith(
-            //           fontSize: 12,
-            //           color: AppColors.semantic_01,
-            //           fontWeight: FontWeight.w600),
-            //     )
-            //   ],
-            // ),
             const SizedBox(height: 16),
             Stack(
               children: [
@@ -193,20 +156,6 @@ class _PostWidgetState extends State<PostWidget> {
                     selectedEmoji,
                     color: Colors.blue,
                   ),
-                // Row(
-                //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                //   children: [
-                //     const Icon(
-                //       Icons.account_box,
-                //       color: Colors.grey,
-                //     ),
-                //     Text(
-                //       NumUtils.formatInteger(widget.post.viewCount),
-                //       style: bodySmall_12?.copyWith(
-                //           fontSize: 12, color: AppColors.neutral_03),
-                //     )
-                //   ],
-                // ),
                 showEmoji ? iconEmoji() : const SizedBox()
               ],
             ),
@@ -235,12 +184,7 @@ class _PostWidgetState extends State<PostWidget> {
                                 color: Colors.grey,
                               ),
                         const SizedBox(width: 5),
-                        Text("Thích")
-                        // Text(
-                        //   NumUtils.formatInteger(post.viewCount),
-                        //   style: bodySmall_12?.copyWith(
-                        //       fontSize: 12, color: AppColors.neutral_03),
-                        // )
+                        const Text("Thích")
                       ],
                     ),
                     onTap: () {
@@ -265,39 +209,10 @@ class _PostWidgetState extends State<PostWidget> {
                         Icon(Icons.mode_comment_rounded, color: Colors.black26),
                         SizedBox(width: 5),
                         Text("Bình luận")
-                        // Text(
-                        //   NumUtils.formatInteger(post.commentCount),
-                        //   style: bodySmall_12?.copyWith(
-                        //       fontSize: 12, color: AppColors.neutral_03),
-                        // )
                       ],
                     ),
                   ),
                 ),
-                // Expanded(
-                //     child: Row(
-                //   children: [
-                //     SvgPicture.asset(AppImages.share),
-                //     const SizedBox(width: 4),
-                //     Text(
-                //       NumUtils.formatInteger(post.viewCount),
-                //       style: bodySmall_12?.copyWith(
-                //           fontSize: 12, color: AppColors.neutral_03),
-                //     )
-                //   ],
-                // )),
-                // Expanded(
-                //     child: Row(
-                //   children: [
-                //     SvgPicture.asset(AppImages.heart),
-                //     const SizedBox(width: 4),
-                //     Text(
-                //       '50.5K',
-                //       style: bodySmall_12?.copyWith(
-                //           fontSize: 12, color: AppColors.neutral_03),
-                //     )
-                //   ],
-                // )),
                 InkWell(
                   onTap: () {
                     _showBottomSheetShare(context);
@@ -333,22 +248,22 @@ class _PostWidgetState extends State<PostWidget> {
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               ListTile(
-                leading: Icon(Icons.front_hand),
-                title: Text('Chặn '),
+                leading: const Icon(Icons.front_hand),
+                title: const Text('Chặn '),
                 onTap: () {
                   Navigator.pop(context);
                 },
               ),
               ListTile(
-                leading: Icon(Icons.person),
-                title: Text('Báo cáo'),
+                leading: const Icon(Icons.person),
+                title: const Text('Báo cáo'),
                 onTap: () {
                   Navigator.pop(context);
                 },
               ),
               ListTile(
-                leading: Icon(Icons.warning),
-                title: Text('Báo cáo bài viết này '),
+                leading: const Icon(Icons.warning),
+                title: const Text('Báo cáo bài viết này '),
                 onTap: () {
                   Navigator.pop(context);
                 },
@@ -370,15 +285,15 @@ class _PostWidgetState extends State<PostWidget> {
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               ListTile(
-                leading: Icon(Icons.image),
-                title: Text('Chia sẻ màn hình chụp bài viết'),
+                leading: const Icon(Icons.image),
+                title: const Text('Chia sẻ màn hình chụp bài viết'),
                 onTap: () {
                   Navigator.pop(context);
                 },
               ),
               ListTile(
-                leading: Icon(Icons.link_outlined),
-                title: Text('Chia sẻ link bài viết'),
+                leading: const Icon(Icons.link_outlined),
+                title: const Text('Chia sẻ link bài viết'),
                 onTap: () {
                   Navigator.pop(context);
                 },

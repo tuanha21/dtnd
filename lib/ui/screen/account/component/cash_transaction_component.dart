@@ -7,7 +7,9 @@ import 'package:flutter/material.dart';
 
 class CashTransactionComponent extends StatefulWidget {
   const CashTransactionComponent({super.key, required this.data});
+
   final CashTransactionHistoryModel data;
+
   @override
   State<CashTransactionComponent> createState() =>
       _CashTransactionComponentState();
@@ -17,12 +19,13 @@ class _CashTransactionComponentState extends State<CashTransactionComponent> {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
+    final ThemeData themeData = Theme.of(context);
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 4),
       padding: const EdgeInsets.all(16),
-      decoration: const BoxDecoration(
-        color: AppColors.neutral_06,
-        borderRadius: BorderRadius.all(
+      decoration: BoxDecoration(
+        color: themeData.colorScheme.background,
+        borderRadius: const BorderRadius.all(
           Radius.circular(12),
         ),
       ),

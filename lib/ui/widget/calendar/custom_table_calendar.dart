@@ -35,11 +35,12 @@ class _CustomTableCalendarState extends State<CustomTableCalendar> {
 
   @override
   Widget build(BuildContext context) {
+    final ThemeData themeData = Theme.of(context);
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-      decoration: const BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(12)),
-          color: AppColors.neutral_06),
+      decoration: BoxDecoration(
+          borderRadius: const BorderRadius.all(Radius.circular(12)),
+          color: themeData.colorScheme.background),
       child: TableCalendar(
         firstDay: _firstDay,
         lastDay: _lastDay,

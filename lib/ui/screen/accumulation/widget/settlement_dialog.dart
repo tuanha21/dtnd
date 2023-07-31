@@ -72,7 +72,7 @@ class SettlementDialog extends StatelessWidget {
                                         padding: const EdgeInsets.only(
                                             left: 16, right: 16),
                                         child: Text(
-                                          'Bạn có chắc chắn muốn tất toán trước hạn ? ',
+                                          S.of(context).are_you_sure_you_want_to_pay_off_early,
                                           style: AppTextStyle.bodyMedium_14
                                               .copyWith(
                                                   color: AppColors.neutral_04),

@@ -91,8 +91,8 @@ class _AccumulationAutoRegisterDialogState
                                             left: 16, right: 16),
                                         child: Text(
                                           widget.isRegister
-                                              ? 'Bạn có chắc chắn muốn hủy đăng ký sản phẩm tích lũy tự động ? '
-                                              : 'Bạn có chắc chắn muốn đăng ký sản phẩm tích lũy tự động ? ',
+                                              ? S.of(context).are_you_sure_you_want_to_unsubscribe_from_automatic_accrual_products
+                                              : S.of(context).are_you_sure_you_want_to_sign_up_for_automatic_accrual_products,
                                           style: AppTextStyle.bodyMedium_14
                                               .copyWith(
                                                   color: AppColors.neutral_04),
@@ -154,8 +154,8 @@ class _AccumulationAutoRegisterDialogState
                                                           AccumulationDialog(
                                                         content: widget
                                                                 .isRegister
-                                                            ? 'Bạn đã huỷ đăng ký tích lũy tự động thành công'
-                                                            : 'Bạn đã hoàn thành đăng ký tích lũy tự động',
+                                                            ? S.of(context).you_have_successfully_deleted_the_auto_registry
+                                                            :S.of(context).you_have_completed_the_automatic_accrual_registration,
                                                         title: widget.isRegister
                                                             ? S
                                                                 .of(context)

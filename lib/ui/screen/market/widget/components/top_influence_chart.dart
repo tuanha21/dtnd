@@ -1,11 +1,11 @@
 // ignore_for_file: unused_field
 
+import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:dtnd/=models=/response/top_influence_model.dart';
 import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/utilities/charts_util.dart';
 import 'package:flutter/material.dart';
-import 'package:charts_flutter/flutter.dart' as charts;
 
 class TopInfluenceChart extends StatefulWidget {
   final Future<List<TopInfluenceModel>> topInfluenceList;
@@ -25,7 +25,7 @@ class _TopInfluenceChartState extends State<TopInfluenceChart> {
         const SizedBox(height: 24),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: Text('Top ảnh hưởng đến INDEX',
+          child: Text(S.of(context).top_influence_on_INDEX,
               style: Theme.of(context)
                   .textTheme
                   .titleMedium
@@ -81,9 +81,4 @@ class _TopInfluenceChartState extends State<TopInfluenceChart> {
       ],
     );
   }
-}
-
-class _TooltipData extends TooltipData {
-  _TooltipData._internal();
-  static final _TooltipData instance = _TooltipData._internal();
 }

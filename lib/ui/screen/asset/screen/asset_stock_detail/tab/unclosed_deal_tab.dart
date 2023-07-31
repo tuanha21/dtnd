@@ -10,6 +10,8 @@ import 'package:dtnd/ui/widget/empty_list_widget.dart';
 import 'package:dtnd/utilities/num_utils.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../../../generated/l10n.dart';
+
 class UnclosedDealTab extends StatefulWidget {
   const UnclosedDealTab({super.key, required this.stockCode});
 
@@ -106,7 +108,7 @@ class _UnclosedDealTabState extends State<UnclosedDealTab>
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      "Tổng lãi/lỗ chưa đóng",
+                      S.of(context).total_unclosed_profit_loss,
                       style: textTheme.labelMedium
                           ?.copyWith(fontWeight: FontWeight.w600),
                     ),

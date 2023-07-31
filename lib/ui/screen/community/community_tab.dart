@@ -3,8 +3,8 @@ import 'package:dtnd/data/i_local_storage_service.dart';
 import 'package:dtnd/data/implementations/local_storage_service.dart';
 import 'package:dtnd/data/implementations/network_service.dart';
 import 'package:dtnd/data/implementations/user_service.dart';
-import 'package:dtnd/ui/screen/community/widget/read_more_screen.dart';
 import 'package:dtnd/ui/screen/community/sheet/community_posts_sheet.dart';
+import 'package:dtnd/ui/screen/community/widget/read_more_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -50,202 +50,200 @@ class _CommunityTabState extends State<CommunityTab>
 
   @override
   Widget build(BuildContext context) {
+    final ThemeData themeData = Theme.of(context);
     super.build(context);
     return Scaffold(
-        body: Obx(
-          () {
-            if (userService.token.value == null) {
-              return Center(
-                child: NotSignInCatalogWidget(
-                  afterLogin: rebuild,
-                  localStorageService: localStorageService,
-                ),
+      body: Obx(
+        () {
+          if (userService.token.value == null) {
+            return Center(
+              child: NotSignInCatalogWidget(
+                afterLogin: rebuild,
+                localStorageService: localStorageService,
+              ),
+            );
+          } else {
+            if (controller.posts.isEmpty && controller.loadingPosts.value) {
+              return const Center(
+                child: CircularProgressIndicator(),
               );
-            } else {
-              if (controller.posts.isEmpty && controller.loadingPosts.value) {
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              }
-              return Container(
-                margin: const EdgeInsets.only(bottom: 80),
-                child: SingleChildScrollView(
-                  scrollDirection: Axis.vertical,
-                  child: Column(
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.all(8),
-                        margin: const EdgeInsets.only(bottom: 10),
-                        decoration: const BoxDecoration(color: Colors.white),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Row(
+            }
+            return Container(
+              margin: const EdgeInsets.only(bottom: 80),
+              child: SingleChildScrollView(
+                scrollDirection: Axis.vertical,
+                child: Column(
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.all(8),
+                      margin: const EdgeInsets.only(bottom: 10),
+                      decoration: BoxDecoration(
+                          color: themeData.colorScheme.background),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Row(
+                            children: [
+                              Icon(
+                                Icons.local_fire_department,
+                                color: Colors.red,
+                              ),
+                              SizedBox(
+                                width: 10,
+                              ),
+                              Text(
+                                "Đáng chú ý",
+                                style: TextStyle(
+                                    fontSize: 16, fontWeight: FontWeight.bold),
+                              )
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 5,
+                          ),
+                          rowStatus("Ngoài quỹ mới UIKO trước đó có",
+                              "Nguyễn Phúc Thức", context),
+                          rowStatus(
+                              "GEG điểm mua thứ nhất 13.900 - 14.100 / điểm....",
+                              "Nguyễn Gia Vinh",
+                              context),
+                          const Text("#AAM"),
+                          rowStatus(
+                              "Cho hỏi sao anfin mới 11h đã thông báo giờ đóng cửa",
+                              "Hồ Gia Bảo",
+                              context),
+                          rowStatus(
+                              "VNIDEX tuần sau", "Nguyễn Quốc Dũng", context),
+                          InkWell(
+                            onTap: () {
+                              Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => const ReadMoreScreen(),
+                              ));
+                            },
+                            child: const Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                Icon(
-                                  Icons.local_fire_department,
-                                  color: Colors.red,
-                                ),
-                                SizedBox(
-                                  width: 10,
-                                ),
                                 Text(
-                                  "Đáng chú ý",
-                                  style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold),
+                                  "Xem thêm ",
+                                  style: TextStyle(color: Colors.blue),
+                                ),
+                                Icon(
+                                  Icons.arrow_right_alt_sharp,
+                                  color: Colors.blue,
                                 )
                               ],
                             ),
-                            const SizedBox(
-                              height: 5,
-                            ),
-                            rowStatus("Ngoài quỹ mới UIKO trước đó có",
-                                "Nguyễn Phúc Thức"),
-                            rowStatus(
-                                "GEG điểm mua thứ nhất 13.900 - 14.100 / điểm....",
-                                "Nguyễn Gia Vinh"),
-                            const Text("#AAM"),
-                            rowStatus(
-                                "Cho hỏi sao anfin mới 11h đã thông báo giờ đóng cửa",
-                                "Hồ Gia Bảo"),
-                            rowStatus("VNIDEX tuần sau", "Nguyễn Quốc Dũng"),
-                            InkWell(
-                              onTap: () {
-                                Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) => const ReadMoreScreen(),
-                                ));
-                              },
-                              child: const Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    "Xem thêm ",
-                                    style: TextStyle(color: Colors.blue),
-                                  ),
-                                  Icon(
-                                    Icons.arrow_right_alt_sharp,
-                                    color: Colors.blue,
-                                  )
-                                ],
+                          )
+                        ],
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    Container(
+                      padding: const EdgeInsets.all(8),
+                      color: themeData.colorScheme.background,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: [
+                              const Icon(Icons.stars_rounded),
+                              const SizedBox(
+                                width: 5,
                               ),
-                            )
-                          ],
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 5,
-                      ),
-                      Container(
-                        padding: EdgeInsets.all(8),
-                        color: Colors.white,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Row(
+                              Text(
+                                "Nhà sáng tạo nổi bật",
+                                style: TextStyle(
+                                    color: themeData.colorScheme.onBackground,
+                                    fontSize: 16),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 5,
+                          ),
+                          const Text(
+                            "Theo dõi và ủng hộ nội dung của những nhà sáng tạo hàng đầu",
+                            style: TextStyle(color: Colors.grey, fontSize: 14),
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          SingleChildScrollView(
+                            scrollDirection: Axis.horizontal,
+                            child: Row(
                               children: [
-                                Icon(Icons.stars_rounded),
-                                SizedBox(
-                                  width: 5,
-                                ),
-                                Text(
-                                  "Nhà sáng tạo nổi bật",
-                                  style: TextStyle(
-                                      color: Colors.black, fontSize: 16),
-                                ),
+                                featuredCreator(context),
+                                featuredCreator(context),
+                                featuredCreator(context),
                               ],
                             ),
-                            const SizedBox(
-                              height: 5,
-                            ),
-                            const Text(
-                              "Theo dõi và ủng hộ nội dung của những nhà sáng tạo hàng đầu",
-                              style:
-                                  TextStyle(color: Colors.grey, fontSize: 14),
-                            ),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            SingleChildScrollView(
-                              scrollDirection: Axis.horizontal,
-                              child: Row(
-                                children: [
-                                  featuredCreator(context),
-                                  featuredCreator(context),
-                                  featuredCreator(context),
-                                ],
-                              ),
-                            )
-                          ],
-                        ),
+                          )
+                        ],
                       ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      ListView.separated(
-                        controller: controller.scrollController,
-                        shrinkWrap: true,
-                        itemCount: controller.posts.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          if (index < controller.posts.length) {
-                            return PostWidget(
-                              post: controller.posts.elementAt(index),
-                            );
-                          } else if (index == controller.posts.length &&
-                              controller.loadingPosts.value) {
-                            return _buildLoader();
-                          } else {
-                            return const SizedBox.shrink();
-                          }
-                        },
-                        separatorBuilder: (BuildContext context, int index) {
-                          return const SizedBox(
-                            height: 16,
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    ListView.separated(
+                      controller: controller.scrollController,
+                      shrinkWrap: true,
+                      itemCount: controller.posts.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        if (index < controller.posts.length) {
+                          return PostWidget(
+                            post: controller.posts.elementAt(index),
                           );
-                        },
-                      ),
-                    ],
-                  ),
+                        } else if (index == controller.posts.length &&
+                            controller.loadingPosts.value) {
+                          return _buildLoader();
+                        } else {
+                          return const SizedBox.shrink();
+                        }
+                      },
+                      separatorBuilder: (BuildContext context, int index) {
+                        return const SizedBox(
+                          height: 16,
+                        );
+                      },
+                    ),
+                  ],
                 ),
-              );
-            }
-          },
-        ),
-        floatingActionButton: userService.isLogin
-            ? Padding(
-                padding: const EdgeInsets.only(bottom: 60),
-                child: SizedBox.square(
-                  dimension: 50,
-                  child: Material(
-                    borderRadius: const BorderRadius.all(Radius.circular(6)),
-                    child: InkWell(
-                      borderRadius: const BorderRadius.all(Radius.circular(6)),
-                      onTap: _onFABTapped,
-                      child: Ink(
-                          decoration: const BoxDecoration(
-                            borderRadius: BorderRadius.all(Radius.circular(6)),
-                          ),
-                          child: Container(
-                              padding: const EdgeInsets.all(15),
-                              decoration: BoxDecoration(
-                                  color: Colors.blue,
-                                  borderRadius: BorderRadius.circular(25)),
-                              child: SvgPicture.asset(
-                                AppImages.icon_pencil,
-                                color: Colors.white,
-                              ))
-                          // child: SvgPicture.asset(
-                          //   AppImages.arrange_circle,
-                          // ),
-                          ),
+              ),
+            );
+          }
+        },
+      ),
+      floatingActionButton: userService.isLogin
+          ? Padding(
+              padding: const EdgeInsets.only(bottom: 60),
+              child: SizedBox.square(
+                dimension: 50,
+                child: Material(
+                  borderRadius: const BorderRadius.all(Radius.circular(30)),
+                  child: InkWell(
+                    onTap: _onFABTapped,
+                    child: Container(
+                      padding: const EdgeInsets.all(15),
+                      decoration: BoxDecoration(
+                        color: Colors.blue,
+                        borderRadius: BorderRadius.circular(25),
+                      ),
+                      child: SvgPicture.asset(
+                        AppImages.icon_pencil,
+                        color: Colors.white,
+                      ),
                     ),
                   ),
                 ),
-              )
-            : const SizedBox());
+              ),
+            )
+          : const SizedBox(),
+    );
   }
 
   void _onFABTapped() async {
@@ -276,7 +274,8 @@ Widget _buildLoader() {
   );
 }
 
-Widget rowStatus(String status, String userName) {
+Widget rowStatus(String status, String userName, BuildContext context) {
+  final ThemeData themeData = Theme.of(context);
   return Container(
     margin: const EdgeInsets.only(bottom: 5),
     padding: const EdgeInsets.symmetric(vertical: 5),
@@ -286,7 +285,8 @@ Widget rowStatus(String status, String userName) {
       children: [
         Text(
           status,
-          style: const TextStyle(fontSize: 14, color: Colors.black),
+          style: TextStyle(
+              fontSize: 14, color: themeData.colorScheme.onBackground),
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
         ),
@@ -324,7 +324,8 @@ Widget rowStatus(String status, String userName) {
             ),
             Text(
               userName,
-              style: const TextStyle(color: Colors.grey, fontSize: 14),
+              style: TextStyle(
+                  color: themeData.colorScheme.onBackground, fontSize: 14),
             )
           ],
         ),

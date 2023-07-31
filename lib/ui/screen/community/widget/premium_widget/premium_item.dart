@@ -13,6 +13,8 @@ class PremiumItem extends StatefulWidget {
 class _PremiumItemState extends State<PremiumItem> {
   @override
   Widget build(BuildContext context) {
+    final ThemeData themeData = Theme.of(context);
+
     return Container(
       alignment: Alignment.center,
       margin: const EdgeInsets.only(right: 10),
@@ -20,7 +22,7 @@ class _PremiumItemState extends State<PremiumItem> {
       width: 150,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16),
-        color: AppColors.neutral_07,
+        color: themeData.colorScheme.background,
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,

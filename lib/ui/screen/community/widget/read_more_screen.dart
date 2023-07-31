@@ -12,16 +12,16 @@ class ReadMoreScreen extends StatefulWidget {
 class _ReadMoreScreenState extends State<ReadMoreScreen> {
   @override
   Widget build(BuildContext context) {
+    final ThemeData themeData = Theme.of(context);
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white,
         centerTitle: true,
-        title: const Text(
+        title: Text(
           "Đáng chú ý",
-          style: TextStyle(fontSize: 16, color: Colors.black,fontWeight: FontWeight.w500),
+          style: TextStyle(fontSize: 16, color: themeData.colorScheme.onBackground,fontWeight: FontWeight.w500),
         ),
       ),
-      body: SingleChildScrollView(
+      body: const SingleChildScrollView(
         child: Column(
           children: [SinglePost(),
           PremiumPostGroup()

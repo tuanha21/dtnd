@@ -80,9 +80,9 @@ class _AccountScreenViewState extends State<AccountScreenView> {
             ctx: context,
           ),
           const SizedBox(height: 40),
-          Row(
+          const Row(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: const [
+            children: [
               Text("Version 1.0"),
             ],
           ),

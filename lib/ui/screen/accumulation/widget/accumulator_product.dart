@@ -104,9 +104,11 @@ class ItemBuilder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final ThemeData themeData = Theme.of(context);
+
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: themeData.colorScheme.background,
         borderRadius: BorderRadius.circular(12),
       ),
       margin: const EdgeInsets.only(top: 12),
@@ -150,10 +152,10 @@ class ItemBuilder extends StatelessWidget {
                     : Text(title,
                         style: const TextStyle(fontWeight: FontWeight.bold)),
                 const Spacer(),
-                const SizedBox(
+                  SizedBox(
                   child: Icon(
                     Icons.chevron_right,
-                    color: Colors.black,
+                    color: themeData.colorScheme.onBackground,
                     size: 28.0,
                   ),
                 ),
@@ -183,9 +185,9 @@ class ItemBuilder extends StatelessWidget {
                 child: Container(
                   height: 60,
                   padding: const EdgeInsets.symmetric(horizontal: 16),
-                  decoration: const BoxDecoration(
-                    color: AppColors.neutral_06,
-                    borderRadius: BorderRadius.only(
+                  decoration: BoxDecoration(
+                    color: themeData.colorScheme.background,
+                    borderRadius: const BorderRadius.only(
                       topRight: Radius.circular(12),
                       bottomRight: Radius.circular(12),
                     ),

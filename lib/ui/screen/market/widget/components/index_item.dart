@@ -25,6 +25,7 @@ class MarketIndexItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final ThemeData themeData = Theme.of(context);
     BoxBorder? border;
     if (selectedIndex != null && data.index == selectedIndex) {
       border = Border.all(color: AppColors.neutral_04);
@@ -37,6 +38,8 @@ class MarketIndexItem extends StatelessWidget {
     }
     return Obx(() {
       return Material(
+        borderRadius: const BorderRadius.all(Radius.circular(8)),
+        color: themeData.colorScheme.background,
         child: InkWell(
           onTap: onTap,
           borderRadius: const BorderRadius.all(Radius.circular(8)),
@@ -47,7 +50,7 @@ class MarketIndexItem extends StatelessWidget {
             decoration: BoxDecoration(
               border: border,
               borderRadius: const BorderRadius.all(Radius.circular(8)),
-              color: AppColors.neutral_07,
+              color: themeData.colorScheme.background,
             ),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,

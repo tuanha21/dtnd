@@ -69,6 +69,8 @@ class _AccumulatorBookDetailState extends State<AccumulatorBookDetail> {
   }
 
   Widget bodyWidget(TextTheme textTheme, BuildContext context) {
+    final ThemeData themeData = Theme.of(context);
+
     return Padding(
       padding:
           const EdgeInsets.only(left: 16.0, right: 16.0, top: 5, bottom: 100.0),
@@ -76,9 +78,9 @@ class _AccumulatorBookDetailState extends State<AccumulatorBookDetail> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            decoration: const BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.only(
+            decoration: BoxDecoration(
+              color: themeData.colorScheme.background,
+              borderRadius: const BorderRadius.only(
                   topLeft: Radius.circular(12), topRight: Radius.circular(12)),
             ),
             padding:
@@ -133,7 +135,7 @@ class _AccumulatorBookDetailState extends State<AccumulatorBookDetail> {
                   height: 60,
                   padding: const EdgeInsets.symmetric(horizontal: 8),
                   decoration: BoxDecoration(
-                    color: AppColors.neutral_06,
+                    color: themeData.colorScheme.background,
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Column(
@@ -176,7 +178,7 @@ class _AccumulatorBookDetailState extends State<AccumulatorBookDetail> {
             height: 90,
             padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: themeData.colorScheme.background,
               borderRadius: BorderRadius.circular(12),
             ),
             child: Column(
@@ -223,7 +225,7 @@ class _AccumulatorBookDetailState extends State<AccumulatorBookDetail> {
             height: 80,
             padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: themeData.colorScheme.background,
               borderRadius: BorderRadius.circular(12),
             ),
             child: Column(

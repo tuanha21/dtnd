@@ -25,6 +25,7 @@ class OrderOwnedStockPanel extends StatefulWidget {
 
 class _OrderOwnedStockPanelState extends State<OrderOwnedStockPanel> {
   final IUserService userService = UserService();
+
   @override
   void initState() {
     super.initState();
@@ -131,14 +132,12 @@ class _OrderOwnedStockWidgetState extends State<OrderOwnedStockWidget> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "KL có thể bán",
+                  S.of(context).sellable_volume,
                   style: AppTextStyle.labelSmall_10
                       .copyWith(color: AppColors.neutral_03),
                 ),
                 Text(
-                  '${NumUtils.formatInteger(
-                      widget.portfolioStock.avaiableVol ?? 0)}/${NumUtils.formatInteger(
-                      widget.portfolioStock.actualVol ?? 0)}',
+                  '${NumUtils.formatInteger(widget.portfolioStock.avaiableVol ?? 0)}/${NumUtils.formatInteger(widget.portfolioStock.actualVol ?? 0)}',
                   style: textTheme.labelMedium,
                 ),
               ],

@@ -133,7 +133,7 @@ class AppImages {
   static const String simple_line_chart_icon =
       "assets/images/simple_line_chart_icon.png";
 
-  static const String circleAlert = 'assets/svg/alert-circle.svg';
+  static const String circleAlert = 'assets/svg/alert_circle.svg';
 
   static const String money_2 = "assets/images/money_2.png";
   static const String money_change = "assets/images/money_change.png";

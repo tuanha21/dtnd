@@ -27,6 +27,7 @@ const String usernameKey = "usernameKey";
 const String passwordKey = "passwordKey";
 const String infoRegisteredKey = "infoRegistered";
 const String pinCodeKey = 'pinCode';
+const String languageKey = 'language';
 
 class LocalStorageService implements ILocalStorageService {
   LocalStorageService._internal();
@@ -250,5 +251,10 @@ class LocalStorageService implements ILocalStorageService {
   @override
   Future<void> savePinCode(String pinCode) async {
     sharedPreferences.setString(pinCodeKey, pinCode);
+  }
+
+  @override
+  Future<void> saveLanguage(String language) async {
+    sharedPreferences.setString(languageKey, language);
   }
 }

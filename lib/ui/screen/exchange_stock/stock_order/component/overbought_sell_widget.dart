@@ -6,6 +6,8 @@ import 'package:dtnd/utilities/num_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../../../generated/l10n.dart';
+
 class OverboughtSellWidget extends StatefulWidget {
   const OverboughtSellWidget({super.key, this.stockModel});
   final StockModel? stockModel;
@@ -48,7 +50,7 @@ class _OverboughtSellWidgetState extends State<OverboughtSellWidget> {
                 Row(
                   children: [
                     Text(
-                      "Dư mua ",
+                      S.of(context).excess_purchase,
                       style: AppTextStyle.labelSmall_10
                           .copyWith(color: AppColors.neutral_03),
                     ),
@@ -64,7 +66,7 @@ class _OverboughtSellWidgetState extends State<OverboughtSellWidget> {
                 Row(
                   children: [
                     Text(
-                      "Dư bán ",
+                      S.of(context).oversold,
                       style: AppTextStyle.labelSmall_10
                           .copyWith(color: AppColors.neutral_03),
                     ),
@@ -85,8 +87,8 @@ class _OverboughtSellWidgetState extends State<OverboughtSellWidget> {
     } else {
       return Column(
         children: [
-          Row(
-            children: const [
+          const Row(
+            children: [
               Expanded(
                 child: CustomPaint(
                   painter: OverboughtSellRatioPainter(0.5),
@@ -103,7 +105,7 @@ class _OverboughtSellWidgetState extends State<OverboughtSellWidget> {
               Row(
                 children: [
                   Text(
-                    "Dư mua ",
+                    S.of(context).excess_purchase,
                     style: AppTextStyle.labelSmall_10
                         .copyWith(color: AppColors.neutral_03),
                   ),
@@ -118,7 +120,7 @@ class _OverboughtSellWidgetState extends State<OverboughtSellWidget> {
               Row(
                 children: [
                   Text(
-                    "Dư bán ",
+                    S.of(context).oversold,
                     style: AppTextStyle.labelSmall_10
                         .copyWith(color: AppColors.neutral_03),
                   ),

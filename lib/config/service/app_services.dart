@@ -65,6 +65,8 @@ class AppService {
     }
   }
 
+  ThemeMode get currentTheme => themeMode.value;
+
   /// change [ThemeMode] and return [ThemeMode] after change
   Future<ThemeMode> switchTheme() async {
     return _changeThemeMode(themeMode.value.switcher);

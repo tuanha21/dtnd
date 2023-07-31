@@ -94,7 +94,7 @@ class _SettlementConfirmState extends State<SettlementConfirm> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           const SizedBox(height: 24),
-          Text('Số tiền',
+          Text(S.of(context).amount_of_money,
               style:
                   textTheme.bodyLarge?.copyWith(color: AppColors.neutral_02)),
           const SizedBox(height: 10),

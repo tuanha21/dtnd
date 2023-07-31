@@ -2,13 +2,13 @@ class FunctionData {
   final String title;
   final String? iconPath;
   final Function? function;
-  final List<String>? subTitle;
+  final List<FunctionData>? subTitle;
   late bool isExpanded;
 
   FunctionData(
       {required this.title,
       this.function,
-      required this.subTitle,
+       this.subTitle,
       this.iconPath,
       this.isExpanded = false});
 }

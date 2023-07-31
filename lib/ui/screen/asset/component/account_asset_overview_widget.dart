@@ -26,13 +26,14 @@ class _AccountAssetOverviewWidgetState
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
+    final ThemeData themeData = Theme.of(context);
     return Column(
       children: [
         Container(
           padding: const EdgeInsets.all(16),
-          decoration: const BoxDecoration(
-            borderRadius: BorderRadius.vertical(top: Radius.circular(12)),
-            color: Colors.white,
+          decoration: BoxDecoration(
+            borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
+            color: themeData.colorScheme.background,
           ),
           // height: 186,
           child: Column(

@@ -93,21 +93,24 @@ class _HomeQuickAccessState extends State<HomeQuickAccess> {
 
   @override
   Widget build(BuildContext context) {
+    final ThemeData themeData = Theme.of(context);
     return LayoutBuilder(
       builder: (context, constrains) {
         // final int elementPerRow = constrains.maxWidth ~/ 80;
         return Container(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-            decoration: const BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(12)),
-              color: Colors.white,
+            decoration: BoxDecoration(
+              borderRadius: const BorderRadius.all(Radius.circular(12)),
+              color: themeData.colorScheme.background,
             ),
             child: widget.hasUser
                 ? Column(
                     children: [
                       Row(
                         children: [
-                          Text("Tài sản", style: AppTextStyle.titleLarge_18),
+                          Text(S.of(context).asset,
+                              style: AppTextStyle.titleLarge_18.copyWith(
+                                  color: themeData.colorScheme.onBackground)),
                           Expanded(child: Container()),
                           Container(
                             padding: const EdgeInsets.only(
@@ -166,14 +169,14 @@ class _HomeQuickAccessState extends State<HomeQuickAccess> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text("Đăng nhập",
+                              Text(S.of(context).login,
                                   style: AppTextStyle.titleLarge_18
                                       .copyWith(color: AppColors.primary_01)),
                               const SizedBox(
                                 height: 4,
                               ),
-                              const Text(
-                                "Kết nối đến thị trường chứng khoán sôi động của IFIS ngay nào!",
+                               Text(
+                                S.of(context).connect_with_ifis,
                                 maxLines: 2,
                               )
                             ],
@@ -210,6 +213,8 @@ class __AssetRowState extends State<_AssetRow> {
 
   @override
   Widget build(BuildContext context) {
+    final ThemeData themeData = Theme.of(context);
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -225,7 +230,7 @@ class __AssetRowState extends State<_AssetRow> {
                   show
                       ? Icons.visibility_outlined
                       : Icons.visibility_off_outlined,
-                  color: AppColors.text_black,
+                  color: themeData.colorScheme.onBackground,
                 )),
             const SizedBox(
               width: 16,
@@ -239,15 +244,20 @@ class __AssetRowState extends State<_AssetRow> {
                     } else {
                       data = "-";
                     }
-                    return Text("$datađ");
+                    return Text(
+                      "$datađ",
+                      style:
+                          TextStyle(color: themeData.colorScheme.onBackground),
+                    );
                   })
-                : Text("**********")
+                : Text("**********",
+                    style: TextStyle(color: themeData.colorScheme.onBackground))
           ],
         ),
         GestureDetector(
-          child: const Icon(
+          child: Icon(
             Icons.arrow_forward_ios_rounded,
-            color: AppColors.text_black,
+            color: themeData.colorScheme.onBackground,
           ),
           onTap: () {
             if (!userService.isLogin) {

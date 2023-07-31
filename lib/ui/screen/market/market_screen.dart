@@ -39,7 +39,6 @@ class _MarketScreenState extends State<MarketScreen>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: MyAppBar(
-        // backgroundColor: AppColors.linear_01,
         actions: [
           GestureDetector(
             onTap: () {

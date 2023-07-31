@@ -8,6 +8,7 @@ import 'package:dtnd/ui/screen/home/screen/signal/component/signal_effective.dar
 import 'package:dtnd/utilities/logger.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../../generated/l10n.dart';
 import 'component/signal_appbar.dart';
 import 'component/signal_chart.dart';
 import 'component/signal_overview.dart';
@@ -96,7 +97,7 @@ class _SignalScreenState extends State<SignalScreen> {
             child: Row(
               children: [
                 Text(
-                  "Lịch sử giao dịch",
+                  S.of(context).transaction_history,
                   style: textTheme.bodyLarge
                       ?.copyWith(fontWeight: FontWeight.w700),
                 )

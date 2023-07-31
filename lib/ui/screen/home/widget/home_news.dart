@@ -31,6 +31,8 @@ class _HomeNewsState extends State<HomeNews> {
 
   @override
   Widget build(BuildContext context) {
+    final ThemeData themeData = Theme.of(context);
+
     return Obx(
       () {
         if (controller.newsLoading.value) {
@@ -40,9 +42,9 @@ class _HomeNewsState extends State<HomeNews> {
         } else {
           return Container(
             padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-            decoration: const BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.all(Radius.circular(12))),
+            decoration: BoxDecoration(
+                color: themeData.colorScheme.background,
+                borderRadius: const BorderRadius.all(Radius.circular(12))),
             child: Column(
               children: [
                 for (int i = 0; i < controller.news.length; i++)
@@ -94,9 +96,8 @@ class HomeNewsCard extends StatelessWidget {
               .push(MaterialPageRoute(
                 builder: (context) => NewsDetailScreen(
                     dataFunct: dataFunct, newsModel: stockNews),
-              ))
+              ),)
               .then((value) => onDetail?.call());
-          ;
         },
         borderRadius: const BorderRadius.all(Radius.circular(8)),
         child: Ink(

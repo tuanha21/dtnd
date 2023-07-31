@@ -34,6 +34,8 @@ class HomeAppbarDelegate extends SliverPersistentHeaderDelegate {
       BuildContext context, double shrinkOffset, bool overlapsContent) {
     final size = MediaQuery.of(context).size;
     final ratio = 1 - (shrinkOffset / _difference);
+    final ThemeData themeData = Theme.of(context);
+
     Widget title = Obx(() {
       String textTitle;
       Widget avatar;
@@ -103,6 +105,7 @@ class HomeAppbarDelegate extends SliverPersistentHeaderDelegate {
       );
     });
     return Material(
+      color: themeData.colorScheme.background,
       child: Stack(
         children: [
           Positioned(

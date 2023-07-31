@@ -129,9 +129,11 @@ class ItemBuilder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final ThemeData themeData = Theme.of(context);
+
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: themeData.colorScheme.background,
         borderRadius: BorderRadius.circular(12),
       ),
       margin: const EdgeInsets.only(top: 16),
@@ -168,10 +170,10 @@ class ItemBuilder extends StatelessWidget {
               ],
             ),
             const Spacer(),
-            const SizedBox(
+            SizedBox(
               child: Icon(
                 Icons.chevron_right,
-                color: AppColors.neutral_01,
+                color: themeData.colorScheme.onBackground,
                 size: 28.0,
               ),
             )

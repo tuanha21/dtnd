@@ -118,10 +118,10 @@ class _AccumulationRegisterState extends State<AccumulationRegister> {
                       double? parsedValue =
                           double.tryParse(value.replaceAll(',', ''));
                       if (parsedValue == null) {
-                        return 'Nhập từ ${NumUtils.formatInteger(widget.capMin)} đến ${NumUtils.formatInteger(widget.capMax)}';
+                        return '${S.of(context).enter_the_word} ${NumUtils.formatInteger(widget.capMin)} ${S.of(context).to} ${NumUtils.formatInteger(widget.capMax)}';
                       } else if (parsedValue < widget.capMin ||
                           parsedValue > widget.capMax) {
-                        return 'Nhập từ ${NumUtils.formatInteger(widget.capMin)} đến ${NumUtils.formatInteger(widget.capMax)}';
+                        return '${S.of(context).enter_the_word} ${NumUtils.formatInteger(widget.capMin)} ${S.of(context).to} ${NumUtils.formatInteger(widget.capMax)}';
                       }
                     }
                     return null;
@@ -172,7 +172,7 @@ class _AccumulationRegisterState extends State<AccumulationRegister> {
                               ?.copyWith(color: AppColors.text_black),
                         ),
                         Text(
-                          '${feeRate.feeRate.toString()}%/năm',
+                          '${feeRate.feeRate.toString()}%/${S.of(context).year}',
                           style: textTheme.bodyMedium?.copyWith(
                             fontWeight: FontWeight.bold,
                             color: AppColors.text_blue,
@@ -205,7 +205,8 @@ class _AccumulationRegisterState extends State<AccumulationRegister> {
                                 differentColor: true,
                               ),
                               RowInfomation(
-                                leftText: S.of(context).total_principal_and_interest,
+                                leftText:
+                                    S.of(context).total_principal_and_interest,
                                 rightText:
                                     "${NumUtils.formatInteger((_controller.contractFee.value?.cCASHVALUE ?? 0) + (_controller.contractFee.value?.cFEEVALUE ?? 0))}đ",
                               ),

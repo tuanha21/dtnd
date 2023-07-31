@@ -154,7 +154,7 @@ class _AccumulationConfirmState extends State<AccumulationConfirm> {
                     rightText: feeRate.productName.toString()),
                 RowInfomation(
                   leftText: S.of(context).profit,
-                  rightText: '${feeRate.feeRate.toString()}%/năm',
+                  rightText: '${feeRate.feeRate.toString()}%/${S.of(context).year}',
                 ),
                 RowInfomation(
                     leftText: S.of(context).period,

@@ -369,7 +369,7 @@ class _UserCatalogWidgetState extends State<UserCatalogWidget> {
                       var stock = dataCenterService.listStockReg.firstWhere(
                           (element) =>
                               element.stock.stockCode ==
-                              list![index].stock.stockCode);
+                              list[index].stock.stockCode);
                       return defaultCatalog.name != currentCatalog.name
                           ? Slidable(
                               endActionPane: ActionPane(
@@ -382,7 +382,7 @@ class _UserCatalogWidgetState extends State<UserCatalogWidget> {
                                       setState(
                                         () {
                                           currentCatalog.listData.remove(
-                                              list![index].stock.stockCode);
+                                              list[index].stock.stockCode);
                                           savedCatalog.catalogs[
                                                   currentCatalogIndex] =
                                               currentCatalog;
@@ -684,7 +684,7 @@ class _BottomAddStockState extends State<BottomAddStock> {
                           shrinkWrap: true,
                           itemBuilder: (context, index) {
                             return StockWidgetChart(
-                              key: ObjectKey(list![index]),
+                              key: ObjectKey(list[index]),
                               stockModel: list[index],
                               onChanged: (value) {
                                 if (value &&

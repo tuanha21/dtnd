@@ -29,6 +29,7 @@ class _AccumulationProductDetailState extends State<AccumulationProductDetail> {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
+    final ThemeData themeData = Theme.of(context);
 
     return Scaffold(
       appBar: SimpleAppbar(
@@ -48,7 +49,7 @@ class _AccumulationProductDetailState extends State<AccumulationProductDetail> {
                       '${S.of(context).accumulate} ${feeRate.termName.toString()}',
                       style: textTheme.bodyLarge),
                   const Spacer(),
-                  Text('${feeRate.feeRate.toString()}%/năm',
+                  Text('${feeRate.feeRate.toString()}%/${S.of(context).year}',
                       style: textTheme.bodyLarge
                           ?.copyWith(color: AppColors.semantic_01)),
                 ],
@@ -57,7 +58,7 @@ class _AccumulationProductDetailState extends State<AccumulationProductDetail> {
               Container(
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: themeData.colorScheme.background,
                     borderRadius: BorderRadius.circular(8)),
                 child: Column(
                   children: [
@@ -94,13 +95,13 @@ class _AccumulationProductDetailState extends State<AccumulationProductDetail> {
                       padding:
                           const EdgeInsets.only(top: 12, left: 10, right: 10),
                       decoration: BoxDecoration(
-                          color: AppColors.neutral_06,
+                          color: themeData.colorScheme.background,
                           borderRadius: BorderRadius.circular(8)),
                       child: Column(
                         children: [
                           RowInfomation(
                               leftText: S.of(context).profit,
-                              rightText: '${feeRate.feeRate.toString()}%/năm'),
+                              rightText: '${feeRate.feeRate.toString()}%/${S.of(context).year}'),
                           RowInfomation(
                               leftText: S.of(context).period,
                               rightText: feeRate.termName.toString()),

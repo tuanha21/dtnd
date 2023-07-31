@@ -36,7 +36,7 @@ class _TopIndexWidgetChartState extends State<TopIndexWidgetChart> {
           child: Row(
             children: [
               Text(
-                'Top ngành ảnh hưởng đến INDEX',
+                S.of(context).top_industry_affecting_INDEX,
                 style: Theme.of(context)
                     .textTheme
                     .labelMedium
@@ -56,7 +56,7 @@ class _TopIndexWidgetChartState extends State<TopIndexWidgetChart> {
                           borderRadius: BorderRadius.circular(8)),
                       width: MediaQuery.of(context).size.width,
                       child: Text(
-                          'Biểu đồ thể hiện đóng góp của ngành vào INDEX. Dữ liệu ngày ${TimeUtilities.parseDateToString(DateTime.now())}',
+                          '${S.of(context).the_chart_show} ${TimeUtilities.parseDateToString(DateTime.now())}',
                           style: Theme.of(context)
                               .textTheme
                               .labelMedium

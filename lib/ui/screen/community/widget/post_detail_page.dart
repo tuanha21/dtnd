@@ -32,20 +32,11 @@ class _CommentDetailPageState extends State<CommentDetailPage>
   }
 
   @override
-  void dispose() {
-    // controller.refresh();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: SimpleAppbar(
         title: S.of(context).article_details,
       ),
-      // MyAppBar(
-      //   title: S.of(context).article_details,
-      // ),
       body: Column(
         children: [
           PostDetailWidget(

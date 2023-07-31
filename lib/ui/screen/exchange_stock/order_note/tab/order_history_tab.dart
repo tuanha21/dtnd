@@ -109,6 +109,8 @@ class _OrderHistoryTabState extends State<OrderHistoryTab> {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
+    final ThemeData themeData = Theme.of(context);
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
       child: Column(
@@ -118,6 +120,7 @@ class _OrderHistoryTabState extends State<OrderHistoryTab> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               DayInput(
+                  color: themeData.colorScheme.background,
                   initialDay: fromDay,
                   firstDay: firstDay,
                   lastDay: lastDay,
@@ -132,6 +135,7 @@ class _OrderHistoryTabState extends State<OrderHistoryTab> {
                 child: Text('-'),
               ),
               DayInput(
+                color: themeData.colorScheme.background,
                 initialDay: toDay,
                 firstDay: firstDay,
                 lastDay: lastDay,

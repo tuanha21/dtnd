@@ -1,5 +1,4 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../../theme/app_color.dart';
@@ -15,8 +14,7 @@ class _SinglePostState extends State<SinglePost> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.white,
-      margin: EdgeInsets.only(bottom: 10),
+      margin: const EdgeInsets.only(bottom: 10),
       padding: const EdgeInsets.all(8),
       child: Column(
         children: [
@@ -65,23 +63,23 @@ class _SinglePostState extends State<SinglePost> {
                       )
                     ],
                   ),
-                  Icon(Icons.more_vert)
+                  const Icon(Icons.more_vert)
                 ],
               ),
             ],
           ),
-          Text(
+          const Text(
               "Chia buồn cho những ai chê quà nhé ạ !!\nTối nay 20h30 e Hiếu live cả nhà vào ủng hộ e hiếu tặng quà nhé ạ"),
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
-          Divider(
+          const Divider(
             height: 1,
           ),
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
-          Padding(
+          const Padding(
             padding: EdgeInsets.symmetric(horizontal: 8),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,

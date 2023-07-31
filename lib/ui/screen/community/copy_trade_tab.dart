@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:dtnd/ui/screen/community/widget/create_group_widget/create_group_widget.dart';
 import 'package:dtnd/ui/screen/community/widget/discover_widget/discover_screen.dart';
 import 'package:dtnd/ui/screen/community/widget/post_widget.dart';
 import 'package:dtnd/ui/screen/community/widget/premium_widget/premium_post_group.dart';
@@ -33,24 +34,24 @@ class _CopyTradeTabState extends State<CopyTradeTab>
 
   @override
   Widget build(BuildContext context) {
+    final ThemeData themeData = Theme.of(context);
+
     return Scaffold(
-      body: Obx(() {
-        if (userService.token.value == null) {
-          return Center(
-            child: NotSignInCatalogWidget(
-              afterLogin: rebuild,
-              localStorageService: localStorageService,
-            ),
-          );
-        } else {
-          return SingleChildScrollView(
-            child: Container(
-              color: Colors.black12,
+      body: Obx(
+        () {
+          if (userService.token.value == null) {
+            return Center(
+              child: NotSignInCatalogWidget(
+                afterLogin: rebuild,
+                localStorageService: localStorageService,
+              ),
+            );
+          } else {
+            return SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
-                    color: Colors.black12,
                     padding: const EdgeInsets.all(8),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -65,15 +66,17 @@ class _CopyTradeTabState extends State<CopyTradeTab>
                             Text(
                               "Nhóm nổi bật",
                               style: TextStyle(
-                                  fontSize: 16, fontWeight: FontWeight.bold),
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                  color: themeData.colorScheme.onBackground),
                             ),
                             InkWell(
                               onTap: () {
                                 Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) => DiscoverScreen(),
+                                  builder: (context) => const DiscoverScreen(),
                                 ));
                               },
-                              child: Text(
+                              child: const Text(
                                 "Xem tất cả",
                                 style: TextStyle(
                                     fontWeight: FontWeight.normal,
@@ -88,9 +91,52 @@ class _CopyTradeTabState extends State<CopyTradeTab>
                         ),
                         Row(
                           children: [
+                            InkWell(
+                              onTap: () {
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        const CreateGroupWidget(),
+                                  ),
+                                );
+                              },
+                              child: Container(
+                                decoration: BoxDecoration(
+                                    color: Colors.blue.shade300,
+                                    borderRadius: BorderRadius.circular(12)),
+                                height: 265,
+                                alignment: Alignment.center,
+                                margin: const EdgeInsets.only(right: 20),
+                                child: Container(
+                                  padding: const EdgeInsets.all(20),
+                                  alignment: Alignment.center,
+                                  child: const Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Icon(
+                                        Icons.add_circle,
+                                        color: Colors.white,
+                                        size: 40,
+                                      ),
+                                      SizedBox(
+                                        height: 10,
+                                      ),
+                                      Text(
+                                        "Tạo nhóm\n của bạn",
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 16,
+                                        ),
+                                        textAlign: TextAlign.center,
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
                             Container(
                               decoration: BoxDecoration(
-                                color: Colors.white,
+                                color: themeData.colorScheme.background,
                                 borderRadius: BorderRadius.circular(8),
                               ),
                               width: 200,
@@ -120,7 +166,7 @@ class _CopyTradeTabState extends State<CopyTradeTab>
                                         ),
                                       ),
                                       Container(
-                                        margin: EdgeInsets.only(top: 110),
+                                        margin: const EdgeInsets.only(top: 110),
                                         height: 36,
                                         width: 36,
                                         child: CachedNetworkImage(
@@ -183,9 +229,9 @@ class _CopyTradeTabState extends State<CopyTradeTab>
                                         color: Colors.lightBlue,
                                         borderRadius:
                                             BorderRadius.circular(20)),
-                                    child: Text("+ Tham gia nhóm"),
+                                    child: const Text("+ Tham gia nhóm"),
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 10,
                                   )
                                 ],
@@ -193,7 +239,7 @@ class _CopyTradeTabState extends State<CopyTradeTab>
                             ),
                           ],
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                       ],
@@ -221,16 +267,16 @@ class _CopyTradeTabState extends State<CopyTradeTab>
                       );
                     },
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 16,
                   ),
                   const PremiumPostGroup(),
                 ],
               ),
-            ),
-          );
-        }
-      }),
+            );
+          }
+        },
+      ),
     );
   }
 

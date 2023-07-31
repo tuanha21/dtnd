@@ -14,7 +14,7 @@ class HomeWorldIndexItem extends StatelessWidget {
   final ValueChanged<WorldIndexModel>? onSelected;
   @override
   Widget build(BuildContext context) {
-    final themeMode = AppService.instance.themeMode.value;
+    final ThemeData themeData = Theme.of(context);
     BoxBorder? border;
     if (selectedSymbol != null && data.iDSYMBOL == selectedSymbol) {
       border = Border.all(color: AppColors.neutral_04);
@@ -27,6 +27,7 @@ class HomeWorldIndexItem extends StatelessWidget {
       };
     }
     return Material(
+      color: themeData.colorScheme.background,
       child: InkWell(
         onTap: onTap,
         borderRadius: const BorderRadius.all(Radius.circular(8)),
@@ -37,7 +38,7 @@ class HomeWorldIndexItem extends StatelessWidget {
           decoration: BoxDecoration(
             border: border,
             borderRadius: const BorderRadius.all(Radius.circular(8)),
-            color: AppColors.neutral_07,
+            color: themeData.colorScheme.background,
           ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,

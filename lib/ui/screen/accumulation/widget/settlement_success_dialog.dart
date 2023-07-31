@@ -3,6 +3,8 @@ import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../generated/l10n.dart';
+
 class SettlementSuccessDialog extends StatelessWidget {
   const SettlementSuccessDialog({super.key});
 
@@ -27,11 +29,11 @@ class SettlementSuccessDialog extends StatelessWidget {
               child: Image.asset(AppImages.illust06),
             ),
             const SizedBox(height: 30),
-            Text('Tất toán thành công!',
+            Text(S.of(context).successful_settlement,
                 style: textTheme.labelLarge?.copyWith(
                     color: AppColors.text_black, fontWeight: FontWeight.bold)),
             const SizedBox(height: 20),
-            Text('Bạn đã hoàn thành tất toán',
+            Text(S.of(context).you_have_completed_the_payment,
                 style: textTheme.bodyLarge?.copyWith(
                   color: AppColors.neutral_02,
                 )),
@@ -50,8 +52,8 @@ class SettlementSuccessDialog extends StatelessWidget {
                               builder: (context) => const Accumlation()),
                           (r) => r.isFirst);
                     },
-                    child: const Text('Sản phẩm',
-                        style: TextStyle(
+                    child: Text(S.of(context).product,
+                        style: const TextStyle(
                             color: AppColors.text_blue,
                             fontSize: 14,
                             fontWeight: FontWeight.w700,
@@ -73,9 +75,9 @@ class SettlementSuccessDialog extends StatelessWidget {
                                   )),
                           (r) => r.isFirst);
                     },
-                    child: const Text(
-                      'Lịch sử',
-                      style: TextStyle(
+                    child: Text(
+                      S.of(context).history,
+                      style: const TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w700,
                           height: 1.4),

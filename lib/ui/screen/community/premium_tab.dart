@@ -1,6 +1,5 @@
 import 'package:dtnd/ui/screen/community/widget/premium_widget/premium_item.dart';
 import 'package:dtnd/ui/screen/community/widget/premium_widget/premium_post_group.dart';
-import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -29,64 +28,65 @@ class _PremiumTabState extends State<PremiumTab>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Obx(() {
-        if (userService.token.value == null) {
-          return Center(
-            child: NotSignInCatalogWidget(
-              afterLogin: rebuild,
-              localStorageService: localStorageService,
-            ),
-          );
-        } else {
-          return SingleChildScrollView(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const SizedBox(
-                  height: 10,
-                ),
-                Container(
-                  padding: const EdgeInsets.all(8),
-                  color: AppColors.neutral_05,
-                  child: const Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Text(
-                        "Nhóm có nội dung Premium",
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 16),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Row(
-                        children: [
-                          SizedBox(
-                            height: 10,
-                          ),
-                          PremiumItem(),
-                          PremiumItem()
-                        ],
-                      ),
-                    ],
+      body: Obx(
+        () {
+          if (userService.token.value == null) {
+            return Center(
+              child: NotSignInCatalogWidget(
+                afterLogin: rebuild,
+                localStorageService: localStorageService,
+              ),
+            );
+          } else {
+            return SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(
+                    height: 10,
                   ),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                PremiumPostGroup(),
-                PremiumPostGroup(),
-                PremiumPostGroup(),
-              ],
-            ),
-          );
-        }
-      }),
+                  Container(
+                    padding: const EdgeInsets.all(8),
+                    child: const Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Text(
+                          "Nhóm có nội dung Premium",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 16),
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Row(
+                          children: [
+                            SizedBox(
+                              height: 10,
+                            ),
+                            PremiumItem(),
+                            PremiumItem()
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  const PremiumPostGroup(),
+                  const PremiumPostGroup(),
+                  const PremiumPostGroup(),
+                ],
+              ),
+            );
+          }
+        },
+      ),
     );
   }
 

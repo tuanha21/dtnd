@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../../../generated/l10n.dart';
+
 class FilterScreen extends StatefulWidget {
   const FilterScreen({Key? key}) : super(key: key);
 
@@ -43,7 +45,7 @@ class _FilterScreenState extends State<FilterScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Lọc theo"),
+        title: Text(S.of(context).filter),
         centerTitle: true,
       ),
       body: Container(
@@ -52,9 +54,11 @@ class _FilterScreenState extends State<FilterScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              _buildFilterSection("Trường phái đầu tư", truongPhaiList, _selectedStatesTruongPhai),
+              _buildFilterSection("Trường phái đầu tư", truongPhaiList,
+                  _selectedStatesTruongPhai),
               _buildFilterSection("Ngành", nganhList, _selectedStatesNganh),
-              _buildFilterSection("Chia sẻ chủ đề", chiaSeChuDeList, _selectedStatesChiaSeChuDe),
+              _buildFilterSection("Chia sẻ chủ đề", chiaSeChuDeList,
+                  _selectedStatesChiaSeChuDe),
             ],
           ),
         ),
@@ -64,21 +68,23 @@ class _FilterScreenState extends State<FilterScreen> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            _buildActionButton('Làm mới'),
-            _buildActionButton('Áp dụng'),
+            _buildActionButton(S.of(context).refresh),
+            _buildActionButton(S.of(context).apply),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildFilterSection(String title, List<String> itemList, List<bool> selectedStates) {
+  Widget _buildFilterSection(
+      String title, List<String> itemList, List<bool> selectedStates) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Container(
           margin: const EdgeInsets.only(top: 10),
-          child: Text(title, style: const TextStyle(fontWeight: FontWeight.bold)),
+          child:
+              Text(title, style: const TextStyle(fontWeight: FontWeight.bold)),
         ),
         Container(
           margin: const EdgeInsets.only(top: 10),
@@ -86,11 +92,10 @@ class _FilterScreenState extends State<FilterScreen> {
           height: 180,
           child: GridView.builder(
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 3,
-              mainAxisExtent: 45,
-              crossAxisSpacing: 10,
-              mainAxisSpacing: 10
-            ),
+                crossAxisCount: 3,
+                mainAxisExtent: 45,
+                crossAxisSpacing: 10,
+                mainAxisSpacing: 10),
             itemCount: itemList.length,
             itemBuilder: (context, index) {
               return _buildFilterItem(index, itemList, selectedStates);
@@ -101,7 +106,8 @@ class _FilterScreenState extends State<FilterScreen> {
     );
   }
 
-  Widget _buildFilterItem(int index, List<String> itemList, List<bool> selectedStates) {
+  Widget _buildFilterItem(
+      int index, List<String> itemList, List<bool> selectedStates) {
     return InkWell(
       onTap: () {
         setState(() {
@@ -116,7 +122,8 @@ class _FilterScreenState extends State<FilterScreen> {
               alignment: Alignment.center,
               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
               decoration: BoxDecoration(
-                color: selectedStates[index] ? Colors.blue : Colors.blue.shade50,
+                color:
+                    selectedStates[index] ? Colors.blue : Colors.blue.shade50,
                 borderRadius: BorderRadius.circular(18),
               ),
               child: Text(
@@ -143,7 +150,10 @@ class _FilterScreenState extends State<FilterScreen> {
         color: Colors.white,
         borderRadius: BorderRadius.circular(4),
       ),
-      child: Text(text),
+      child: Text(
+        text,
+        style: const TextStyle(color: Colors.black),
+      ),
     );
   }
 }

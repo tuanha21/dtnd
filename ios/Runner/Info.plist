@@ -16,8 +16,8 @@
 	<string>6.0</string>
 	<key>CFBundleLocalizations</key>
 	<array>
-		<string>en</string>
-		<string>vi</string>
+		<string>en_EN</string>
+		<string>vi_VN</string>
 	</array>
 	<key>CFBundleName</key>
 	<string>dtnd</string>

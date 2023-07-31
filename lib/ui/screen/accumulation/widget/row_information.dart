@@ -17,6 +17,8 @@ class RowInfomation extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
+    final ThemeData themeData = Theme.of(context);
+
     return Container(
       margin: const EdgeInsets.only(bottom: 16),
       child: Row(
@@ -32,7 +34,7 @@ class RowInfomation extends StatelessWidget {
                 fontWeight: FontWeight.bold,
                 color: differentColor == true
                     ? AppColors.semantic_01
-                    : AppColors.text_black),
+                    : themeData.colorScheme.onBackground),
           ),
         ],
       ),

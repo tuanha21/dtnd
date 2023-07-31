@@ -32,7 +32,7 @@ class _MoneyChartState extends State<MoneyChart> {
           child: Row(
             children: [
               Text(
-                'Dòng tiền',
+                S.of(context).cash_flow,
                 style: Theme.of(context)
                     .textTheme
                     .labelMedium
@@ -142,7 +142,7 @@ class _MoneyChartState extends State<MoneyChart> {
           child: Row(
             children: [
               Text(
-                'Độ rộng thị trường',
+                S.of(context).market_breadth,
                 style: Theme.of(context)
                     .textTheme
                     .labelMedium

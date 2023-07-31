@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dtnd/ui/screen/community/widget/filter_widget/filter_screen.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../../generated/l10n.dart';
 import '../../../../theme/app_color.dart';
 
 class DiscoverScreen extends StatefulWidget {
@@ -14,42 +15,41 @@ class DiscoverScreen extends StatefulWidget {
 class _DiscoverScreenState extends State<DiscoverScreen> {
   @override
   Widget build(BuildContext context) {
+    final ThemeData themeData = Theme.of(context);
+
     return Scaffold(
       appBar: AppBar(
-        title: Text("Khám phá"),
+        backgroundColor: themeData.colorScheme.background,
+        title: Text(
+          S.of(context).discover,
+          style: const TextStyle(fontSize: 16),
+        ),
         centerTitle: true,
         actions: [
-          // Add the action icon here
           IconButton(
             onPressed: () {
-              // Handle the filtering action here
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => const FilterScreen(),
+                ),
+              );
             },
-            icon: InkWell(
-              onTap: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => const FilterScreen(),
-                  ),
-                );
-              },
-              child: const Icon(
-                Icons.filter_list_alt,
-                color: Colors.grey,
-              ),
+            icon: const Icon(
+              Icons.filter_list_alt,
+              color: Colors.grey,
             ),
           ),
         ],
       ),
       body: Container(
-        padding: EdgeInsets.symmetric(horizontal: 16),
+        height: MediaQuery.of(context).size.height,
+        padding: const EdgeInsets.symmetric(horizontal: 16),
         child: SingleChildScrollView(
           child: Column(
-            children: [
-              itemDiscover(context),
-              itemDiscover(context),
-              itemDiscover(context),
-              itemDiscover(context),
-            ],
+            children: List.generate(
+              4,
+              (index) => itemDiscover(context),
+            ),
           ),
         ),
       ),
@@ -57,9 +57,11 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
   }
 
   Widget itemDiscover(BuildContext context) {
+    final ThemeData themeData = Theme.of(context);
+
     return Column(
       children: [
-        SizedBox(
+        const SizedBox(
           height: 20,
         ),
         Row(
@@ -77,12 +79,16 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     image: DecorationImage(
-                        image: imageProvider, fit: BoxFit.cover),
+                      image: imageProvider,
+                      fit: BoxFit.cover,
+                    ),
                   ),
                 ),
                 placeholder: (context, url) => Container(
                   decoration: const BoxDecoration(
-                      color: AppColors.accent_light_01, shape: BoxShape.circle),
+                    color: AppColors.accent_light_01,
+                    shape: BoxShape.circle,
+                  ),
                 ),
                 errorWidget: (context, url, error) =>
                     const Center(child: Icon(Icons.error)),
@@ -94,13 +100,32 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text("Chứng khoán F0 (Mầm non chứng khoán)"),
-                Text("1822 Thành viên")
+                const Text(
+                  "Chứng khoán F0 (Mầm non chứng khoán)",
+                  style: TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                RichText(
+                  text: TextSpan(
+                    children: [
+                        TextSpan(
+                        text: "1822",
+                        style: TextStyle(color: themeData.colorScheme.onBackground),
+                      ),
+                      TextSpan(
+                        text: " thành viên",
+                        style: TextStyle(color: Colors.grey.shade700),
+                      ),
+                    ],
+                  ),
+                ),
               ],
             ),
           ],
         ),
-        SizedBox(
+        const SizedBox(
           height: 10,
         ),
         SizedBox(
@@ -110,29 +135,33 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
             shrinkWrap: true,
             itemCount: 5,
             itemBuilder: (context, index) {
-              return itemTag();
+              return itemTag(context);
             },
           ),
         ),
-        SizedBox(
+        const SizedBox(
           height: 10,
         ),
-        Divider(
+        const Divider(
           height: 5,
+          color: Colors.grey,
         )
       ],
     );
   }
 
-  Widget itemTag() {
+  Widget itemTag(context) {
+    final ThemeData themeData = Theme.of(context);
     return Row(
       children: [
         Container(
+          alignment: Alignment.center,
           padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
           decoration: BoxDecoration(
-              color: Colors.grey.shade300,
-              borderRadius: BorderRadius.circular(12)),
-          child: Text("Tin tức mỗi ngày"),
+            color: Colors.blue.shade50,
+            borderRadius: BorderRadius.circular(12),
+          ),
+          child: Text(S.of(context).news_every_day,style: TextStyle(color: themeData.colorScheme.background),),
         ),
         const SizedBox(
           width: 10,

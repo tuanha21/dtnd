@@ -1,10 +1,10 @@
 import 'dart:ui';
 
+import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:dtnd/=models=/index.dart';
 import 'package:dtnd/=models=/response/index_detail.dart';
 import 'package:dtnd/=models=/response/index_model.dart';
 import 'package:dtnd/=models=/response/world_index_model.dart';
-import 'package:dtnd/config/service/app_services.dart';
 import 'package:dtnd/data/implementations/network_service.dart';
 import 'package:dtnd/generated/l10n.dart' as s;
 import 'package:dtnd/generated/l10n.dart';
@@ -18,7 +18,6 @@ import 'package:dtnd/ui/theme/app_textstyle.dart';
 import 'package:dtnd/utilities/num_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:k_chart/chart_translations.dart';
 import 'package:k_chart/flutter_k_chart.dart' as kcharts;
 import 'package:k_chart/k_chart_widget.dart';
@@ -314,12 +313,14 @@ class _HomeMarketTodayState extends State<HomeMarketToday>
 class HomeIndexItem extends StatelessWidget {
   const HomeIndexItem(
       {super.key, required this.data, this.selectedIndex, this.onSelected});
+
   final IndexModel data;
   final Index? selectedIndex;
   final ValueChanged<Index>? onSelected;
+
   @override
   Widget build(BuildContext context) {
-    final themeMode = AppService.instance.themeMode.value;
+    final ThemeData themeData = Theme.of(context);
     BoxBorder? border;
     if (selectedIndex != null && data.index == selectedIndex) {
       border = Border.all(color: AppColors.neutral_04);
@@ -327,10 +328,12 @@ class HomeIndexItem extends StatelessWidget {
     VoidCallback? onTap;
     if (onSelected != null) {
       onTap = () {
-         onSelected?.call(data.index);
+        onSelected?.call(data.index);
       };
     }
     return Material(
+      borderRadius: const BorderRadius.all(Radius.circular(8)),
+      color: themeData.colorScheme.background,
       child: InkWell(
         onTap: onTap,
         borderRadius: const BorderRadius.all(Radius.circular(8)),
@@ -341,7 +344,7 @@ class HomeIndexItem extends StatelessWidget {
           decoration: BoxDecoration(
             border: border,
             borderRadius: const BorderRadius.all(Radius.circular(8)),
-            color: AppColors.neutral_07,
+            color: themeData.colorScheme.background,
           ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,

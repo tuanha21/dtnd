@@ -15,7 +15,8 @@ class CommodityItem extends StatelessWidget {
   final ValueChanged<CommodityModel>? onSelected;
   @override
   Widget build(BuildContext context) {
-    final themeMode = AppService.instance.themeMode.value;
+    final ThemeData themeData = Theme.of(context);
+
     final img =
         LanguageUtil.toUnsigned(data.nAME).toLowerCase().removeAllWhitespace;
     BoxBorder? border;
@@ -29,6 +30,7 @@ class CommodityItem extends StatelessWidget {
       };
     }
     return Material(
+      color: themeData.colorScheme.background,
       child: InkWell(
         onTap: onTap,
         borderRadius: const BorderRadius.all(Radius.circular(8)),
@@ -39,7 +41,7 @@ class CommodityItem extends StatelessWidget {
           decoration: BoxDecoration(
             border: border,
             borderRadius: const BorderRadius.all(Radius.circular(8)),
-            color: AppColors.neutral_07,
+            color: themeData.colorScheme.background,
           ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,

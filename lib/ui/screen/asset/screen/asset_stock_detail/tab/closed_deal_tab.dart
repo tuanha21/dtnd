@@ -128,7 +128,7 @@ class _ClosedDealTabState extends State<ClosedDealTab>
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      "Tổng lãi/lỗ đã đóng",
+                      S.of(context).total_closed_profit_loss,
                       style: textTheme.labelMedium
                           ?.copyWith(fontWeight: FontWeight.w600),
                     ),

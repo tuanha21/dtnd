@@ -30,7 +30,7 @@ class _FiChartValueState extends State<FiChartValue> {
           child: Row(
             children: [
               Text(
-                'Top mã nước ngoài mua ròng',
+                S.of(context).top_foreign_stocks_with_net_buying,
                 style: Theme.of(context)
                     .textTheme
                     .labelMedium
@@ -50,7 +50,7 @@ class _FiChartValueState extends State<FiChartValue> {
                           borderRadius: BorderRadius.circular(8)),
                       width: MediaQuery.of(context).size.width,
                       child: Text(
-                          'Màu xanh trên biểu đồ thể hiện khối ngoại mua ròng. Màu đỏ thể hiện khối ngoại bán ròng. Dữ liệu bao gồm cả Cổ phiếu và ETF. Dữ liệu ngày ${TimeUtilities.parseDateToString(DateTime.now())}',
+                          '${S.of(context).suggest_infomation_2} ${TimeUtilities.parseDateToString(DateTime.now())}',
                           style: Theme.of(context)
                               .textTheme
                               .labelMedium

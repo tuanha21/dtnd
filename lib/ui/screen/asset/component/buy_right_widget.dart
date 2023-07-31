@@ -27,6 +27,7 @@ class BuyRightWidget extends StatefulWidget {
     required this.accountModel,
     required this.onSuccessExecute,
   });
+
   final UnexecutedRightModel? data;
   final ValueChanged<UnexecutedRightModel?>? onExpand;
   final VoidCallback? onHold;
@@ -73,6 +74,7 @@ class _BuyRightWidgetState extends State<BuyRightWidget> {
   Widget build(BuildContext context) {
     final themeMode = AppService.instance.themeMode.value;
     final textTheme = Theme.of(context).textTheme;
+    final ThemeData themeData = Theme.of(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -138,7 +140,7 @@ class _BuyRightWidgetState extends State<BuyRightWidget> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "Còn được mua / tiền phải nộp",
+                          S.of(context).still_to_be_purchased_payable,
                           style: AppTextStyle.labelSmall_10
                               .copyWith(color: AppColors.neutral_01),
                         ),
@@ -156,7 +158,7 @@ class _BuyRightWidgetState extends State<BuyRightWidget> {
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
                         Text(
-                          "Ngày chốt",
+                          S.of(context).closing_date,
                           style: AppTextStyle.labelSmall_10
                               .copyWith(color: AppColors.neutral_01),
                         ),
@@ -176,9 +178,9 @@ class _BuyRightWidgetState extends State<BuyRightWidget> {
                 child: Container(
                   height: 134,
                   margin: const EdgeInsets.symmetric(vertical: 8),
-                  decoration: const BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(12)),
-                    color: AppColors.neutral_06,
+                  decoration: BoxDecoration(
+                    borderRadius: const BorderRadius.all(Radius.circular(12)),
+                    color: themeData.colorScheme.background,
                   ),
                   child: Column(
                     children: [
@@ -187,7 +189,7 @@ class _BuyRightWidgetState extends State<BuyRightWidget> {
                           children: [
                             Expanded(
                               child: AssetGridElement(element: {
-                                "Tỷ lệ": widget.data?.cRIGHTRATE
+                                S.of(context).ratio: widget.data?.cRIGHTRATE
                                     ?.replaceAll("-", ":")
                               }),
                             ),
@@ -214,7 +216,7 @@ class _BuyRightWidgetState extends State<BuyRightWidget> {
                           children: [
                             Expanded(
                               child: AssetGridElement(element: {
-                                "Hạn chốt ĐK": widget.data?.cCLOSEDATE,
+                                S.of(context).registration_deadline: widget.data?.cCLOSEDATE,
                               }),
                             ),
                             const SizedBox(width: 2),
@@ -250,14 +252,14 @@ class _BuyRightWidgetState extends State<BuyRightWidget> {
                                     return;
                                   }
                                   IExecuteRightSheet(widget.data!).show(
-                                      context,
-                                      ExecuteRightSheet(
-                                        accountModel: widget.accountModel,
-                                        unexecutedRightModel: widget.data!,
-                                        stock: stock!,
-                                        onSuccessExecute:
-                                            widget.onSuccessExecute,
-                                      ));
+                                    context,
+                                    ExecuteRightSheet(
+                                      accountModel: widget.accountModel,
+                                      unexecutedRightModel: widget.data!,
+                                      stock: stock!,
+                                      onSuccessExecute: widget.onSuccessExecute,
+                                    ),
+                                  );
                                 },
                               ),
                             ),

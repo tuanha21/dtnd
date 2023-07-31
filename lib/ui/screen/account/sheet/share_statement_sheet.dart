@@ -73,6 +73,8 @@ class _ShareStatementSheetState extends State<ShareStatementSheet> {
 
   @override
   Widget build(BuildContext context) {
+    final ThemeData themeData = Theme.of(context);
+
     return Scaffold(
       appBar: SimpleAppbar(
         title: S.of(context).stock_statement,
@@ -89,6 +91,7 @@ class _ShareStatementSheetState extends State<ShareStatementSheet> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   DayInput(
+                    color: themeData.colorScheme.background,
                     initialDay: fromDay,
                     firstDay: firstDay,
                     lastDay: lastDay,
@@ -101,6 +104,7 @@ class _ShareStatementSheetState extends State<ShareStatementSheet> {
                   ),
                   const Text("-"),
                   DayInput(
+                    color: themeData.colorScheme.background,
                     initialDay: toDay,
                     firstDay: firstDay,
                     lastDay: lastDay,

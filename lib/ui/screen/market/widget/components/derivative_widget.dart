@@ -40,7 +40,7 @@ class _DerivativeWidgetState extends State<DerivativeWidget> {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: Text(
-            'Chỉ số phái sinh',
+            S.of(context).derivative_index,
             style: Theme.of(context)
                 .textTheme
                 .labelMedium

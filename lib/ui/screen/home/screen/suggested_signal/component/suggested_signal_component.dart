@@ -169,7 +169,7 @@ class _SuggestedSignalComponentState extends State<SuggestedSignalComponent> {
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
                         Text(
-                          '${S.of(context).ratio} lãi/lỗ',
+                          '${S.of(context).ratio} ${S.of(context).profit_and_loss}',
                           style: AppTextStyle.bodySmall_8.copyWith(
                             fontSize: 12,
                             color: AppColors.neutral_04,

@@ -21,18 +21,19 @@ class _LiveStreamTabState extends State<LiveStreamTab>
   final IUserService userService = UserService();
   final ILocalStorageService localStorageService = LocalStorageService();
 
-  void rebuild() => setState(() {
-        initState();
-      });
-
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Scaffold(
       body: Obx(() {
         if (userService.token.value == null) {
           return Center(
             child: NotSignInCatalogWidget(
-              afterLogin: rebuild,
+              afterLogin: () {
+                setState(() {
+                  // Rebuild the widget after login
+                });
+              },
               localStorageService: localStorageService,
             ),
           );
@@ -56,11 +57,9 @@ class _LiveStreamTabState extends State<LiveStreamTab>
                   const SizedBox(
                     height: 10,
                   ),
-                  itemLiveStream(),
-                  itemLiveStream(),
-                  itemLiveStream(),
-                  itemLiveStream(),
-                  itemLiveStream()
+                  Column(
+                    children: List.generate(5, (_) => itemLiveStream(context)),
+                  ),
                 ],
               ),
             ),
@@ -70,7 +69,9 @@ class _LiveStreamTabState extends State<LiveStreamTab>
     );
   }
 
-  Widget itemLiveStream() {
+  Widget itemLiveStream(BuildContext context) {
+    final ThemeData themeData = Theme.of(context);
+
     return Container(
       margin: const EdgeInsets.only(bottom: 10),
       padding: const EdgeInsets.symmetric(horizontal: 8),
@@ -87,7 +88,7 @@ class _LiveStreamTabState extends State<LiveStreamTab>
             padding: const EdgeInsets.all(8),
             margin: const EdgeInsets.symmetric(vertical: 8),
             decoration: BoxDecoration(
-                color: Colors.white, borderRadius: BorderRadius.circular(20)),
+                color: themeData.colorScheme.background, borderRadius: BorderRadius.circular(20)),
             child: const Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -115,7 +116,7 @@ class _LiveStreamTabState extends State<LiveStreamTab>
                   key: const ObjectKey(
                       'https://nld.mediacdn.vn/291774122806476800/2022/10/20/hinh-0-1666238114349931972391.jpg'),
                   imageUrl:
-                  "https://nld.mediacdn.vn/291774122806476800/2022/10/20/hinh-0-1666238114349931972391.jpg",
+                      "https://nld.mediacdn.vn/291774122806476800/2022/10/20/hinh-0-1666238114349931972391.jpg",
                   imageBuilder: (context, imageProvider) => Container(
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
@@ -129,7 +130,7 @@ class _LiveStreamTabState extends State<LiveStreamTab>
                         shape: BoxShape.circle),
                   ),
                   errorWidget: (context, url, error) =>
-                  const Center(child: Icon(Icons.error)),
+                      const Center(child: Icon(Icons.error)),
                 ),
               ),
               SizedBox(

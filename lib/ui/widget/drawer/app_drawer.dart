@@ -3,6 +3,7 @@ import 'package:dtnd/data/i_user_service.dart';
 import 'package:dtnd/data/implementations/local_storage_service.dart';
 import 'package:dtnd/data/implementations/user_service.dart';
 import 'package:dtnd/generated/l10n.dart';
+import 'package:dtnd/ui/screen/exchange_stock/stock_order/business/stock_order_util.dart';
 import 'package:dtnd/ui/screen/login/login_screen.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_textstyle.dart';
@@ -14,13 +15,25 @@ import 'package:dtnd/ui/widget/drawer/logic/icon_asset.dart';
 import 'package:dtnd/utilities/account_util.dart';
 import 'package:dtnd/utilities/sign_in_utils.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:go_router/go_router.dart';
+
+import '../../screen/account/sheet/money_statement_sheet.dart';
+import '../../screen/account/sheet/share_statement_sheet.dart';
+import '../../screen/asset/screen/executed_profit_loss/realized_profit_loss.dart';
+import '../../screen/asset/screen/margin_debt/margin_debt_screen.dart';
+import '../../screen/display/display_screen.dart';
+import '../../screen/exchange_stock/order_note/screen/order_note_screen.dart';
+import '../../screen/exercise_right/exercise_right_screen.dart';
+import '../../screen/language/language_screen.dart';
 import '../../theme/app_image.dart';
 import 'component/drawer_avatar.dart';
 
 class AppDrawer extends StatefulWidget {
-  const AppDrawer({super.key, this.onLogout});
+  const AppDrawer({super.key, this.onLogout, this.drawerRebuild});
+
   final VoidCallback? onLogout;
+  final VoidCallback? drawerRebuild;
 
   @override
   State<AppDrawer> createState() => _AppDrawerState();
@@ -30,7 +43,7 @@ class _AppDrawerState extends State<AppDrawer> {
   final AppService appService = AppService();
   final IUserService userService = UserService();
 
-  late final List<FunctionData> list;
+  late List<FunctionData> list;
 
   void back() {
     return Navigator.of(context).pop();
@@ -38,82 +51,152 @@ class _AppDrawerState extends State<AppDrawer> {
 
   @override
   void initState() {
+    super.initState();
+  }
+
+  setupListUi(BuildContext context) {
     if (userService.isLogin) {
       list = <FunctionData>[
         FunctionData(
-            title: S.current.eKYC_quote,
+            title: S.of(context).eKYC_quote,
             iconPath: DrawerIconAsset.verify_account_icon,
             subTitle: []),
         FunctionData(
-          title: S.current.stock_trade,
+          title: S.of(context).stock_trade,
           iconPath: DrawerIconAsset.chart_2,
           subTitle: [
-            S.current.base_trading,
-            S.current.derivative_trading,
-            S.current.exercise_right,
-            S.current.transfer_stock,
+            FunctionData(
+                title: S.of(context).base_trading,
+                function: () => StockModelUtil.openSheet(context)),
+            FunctionData(
+                title: S.of(context).derivative_trading,
+                function: () => onDeveloping()),
+            FunctionData(
+              title: S.of(context).exercise_right,
+              function: () => Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => const ExerciseRightScreen(),
+                ),
+              ),
+            ),
+            FunctionData(
+                title: S.of(context).transfer_stock,
+                function: () => onDeveloping()),
           ],
         ),
         FunctionData(
-          title: S.current.money_trading,
+          title: S.of(context).money_trading,
           iconPath: DrawerIconAsset.money_change,
           subTitle: [],
         ),
         FunctionData(
-          title: S.current.analysis_tools,
+          title: S.of(context).analysis_tools,
           iconPath: DrawerIconAsset.setting_3,
           subTitle: [
-            S.current.filter_stock,
+            FunctionData(
+                title: S.of(context).filter_stock,
+                function: () => onDeveloping()),
           ],
         ),
         FunctionData(
-            title: S.current.accumulate,
+            title: S.of(context).accumulate,
             iconPath: DrawerIconAsset.archive_book,
             subTitle: []),
         FunctionData(
-          title: S.current.account_statement,
+          title: S.of(context).account_statement,
           iconPath: DrawerIconAsset.clipboard_text,
           subTitle: [
-            S.current.money_statement,
-            S.current.stock_statement,
-            S.current.order_history,
-            S.current.gain_loss_history,
-            S.current.margin_debt,
+            FunctionData(
+              title: S.of(context).money_statement,
+              function: () => Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => const MoneyStatementSheet(),
+                ),
+              ),
+            ),
+            FunctionData(
+              title: S.of(context).stock_statement,
+              function: () => Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => const ShareStatementSheet(),
+                ),
+              ),
+            ),
+            FunctionData(
+              title: S.of(context).order_history,
+              function: () => Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => const OrderNoteScreen(defaultab: 1),
+                ),
+              ),
+            ),
+            FunctionData(
+              title: S.of(context).gain_loss_history,
+              function: () => Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => const RealizedProfitLoss(),
+                ),
+              ),
+            ),
+            FunctionData(
+              title: S.of(context).margin_debt,
+              function: () => Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => const MarginDebtScreen(),
+                ),
+              ),
+            ),
           ],
         ),
         FunctionData(
-          title: S.current.security,
+          title: S.of(context).security,
           iconPath: DrawerIconAsset.shield_security,
           subTitle: [
-            "${S.current.delete} ${S.current.account}",
+            FunctionData(
+                title: "${S.of(context).delete} ${S.of(context).account}",
+                function: () => onDeveloping()),
           ],
         ),
         FunctionData(
-          title: S.current.setting,
+          title: S.of(context).setting,
           iconPath: DrawerIconAsset.setting_2,
           subTitle: [
-            S.current.languges,
-            S.current.interface,
+            FunctionData(
+              title: S.of(context).languges,
+              function: () => Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => const LanguagesScreen(),
+                ),
+              ),
+            ),
+            FunctionData(
+              title: S.of(context).interface,
+              function: () => Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => const DisplayScreen(),
+                ),
+              ),
+            ),
           ],
         ),
       ];
     } else {
       list = <FunctionData>[
         FunctionData(
-          title: S.current.setting,
+          title: S.of(context).setting,
           iconPath: DrawerIconAsset.setting_2,
           function: () {
             Navigator.of(context).push(
               MaterialPageRoute(
                 builder: (context) => AppDrawerSubView(
-                  title: S.current.setting,
+                  title: S.of(context).setting,
                   list: <FunctionData>[
                     FunctionData(
-                        title: S.current.languges,
+                        title: S.of(context).languges,
                         iconPath: DrawerIconAsset.archive_book,
                         subTitle: []),
                     FunctionData(
-                        title: S.current.interface,
+                        title: S.of(context).interface,
                         iconPath: DrawerIconAsset.archive_book,
                         subTitle: []),
                   ],
@@ -125,18 +208,29 @@ class _AppDrawerState extends State<AppDrawer> {
         ),
       ];
     }
-    super.initState();
+  }
+
+  void onDeveloping() {
+    Fluttertoast.showToast(
+      msg: S.of(context).developing_feature,
+      toastLength: Toast.LENGTH_LONG,
+      gravity: ToastGravity.CENTER,
+      timeInSecForIosWeb: 1,
+      backgroundColor: Colors.black,
+      textColor: Colors.white,
+    );
   }
 
   @override
   Widget build(BuildContext context) {
+    setupListUi(context);
     bool isLogin = userService.isLogin;
     final info = userService.userInfo.value;
-
+    final ThemeData themeData = Theme.of(context);
     return Container(
       padding: EdgeInsets.only(
           top: MediaQuery.of(context).padding.top, right: 16, left: 16),
-      decoration: const BoxDecoration(color: Colors.white),
+      decoration: BoxDecoration(color: themeData.colorScheme.background),
       // width: 275,
       child: Column(
         children: [
@@ -180,7 +274,7 @@ class _AppDrawerState extends State<AppDrawer> {
                           ),
                           const SizedBox(width: 30),
                           Text(
-                            "Bạn chưa xác thực tài khoản",
+                            S.of(context).you_have_not_verified_your_account,
                             style: AppTextStyle.bodySmall_12.copyWith(
                                 color: AppColors.semantic_03,
                                 fontWeight: FontWeight.bold),
