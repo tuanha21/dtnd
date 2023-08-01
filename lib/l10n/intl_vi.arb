@@ -561,7 +561,6 @@
   "update_to_continue":"Vui lòng cập nhật để tiếp tục sử dụng ứng dụng",
   "no_data":"Không có dữ liệu",
 
-  "end" : "Kết thúc",
   "registered_share_volume" : "Số CP đã đăng ký",
   "current_pre_maturity_interest" : "Lãi hiện tại trước hạn",
   "change" : "Thay đổi",
@@ -641,6 +640,10 @@
   "excess_purchase" : "Dư mua",
   "oversold" : "Dư bán",
   "transaction_history" : "Lịch sử giao dịch",
-  "signal_efficiency" : "Hiệu quả tín hiệu"
+  "signal_efficiency" : "Hiệu quả tín hiệu",
 
+  "vietnamese": "Tiếng Việt",
+  "english": "Tiếng Anh",
+
+  "end" : "Kết thúc"
 }

@@ -562,7 +562,6 @@
   "update_to_continue":"Please install update to continue to using app",
   "no_data":"No data",
 
-  "end" : "End",
   "registered_share_volume" : "Registered Share Volume",
   "current_pre_maturity_interest" : "Current Pre-maturity Interest",
   "change" : "Change",
@@ -642,5 +641,11 @@
   "excess_purchase" : "excess_purchase",
   "oversold" : "oversold",
   "transaction_history" : "transaction history",
-  "signal_efficiency" : "signal efficiency"
+  "signal_efficiency" : "signal efficiency",
+
+
+  "vietnamese": "Vietnamese",
+  "english": "English",
+
+  "end" : "End"
 }

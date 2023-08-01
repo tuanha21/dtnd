@@ -6,6 +6,7 @@ import 'package:dtnd/=models=/response/stock.dart';
 import 'package:dtnd/config/service/app_services.dart';
 import 'package:dtnd/data/i_data_center_service.dart';
 import 'package:dtnd/data/i_user_service.dart';
+import 'package:dtnd/data/implementations/local_storage_service.dart';
 import 'package:dtnd/data/implementations/network_service.dart';
 import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/screen/home/widget/home_quick_access.dart';
@@ -15,6 +16,7 @@ import 'package:dtnd/ui/screen/stock_detail/stock_detail_screen.dart';
 import 'package:dtnd/ui/screen/virtual_assistant/va_util.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
+import 'package:dtnd/utilities/sign_in_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 
@@ -29,6 +31,10 @@ class HomeAppbarDelegate extends SliverPersistentHeaderDelegate {
   final IUserService userService;
   final ValueChanged<HomeNav> navigateTab;
 
+  void onLogin(BuildContext context) async {
+    SigniInUtils.login(context, LocalStorageService());
+  }
+
   @override
   Widget build(
       BuildContext context, double shrinkOffset, bool overlapsContent) {
@@ -40,7 +46,7 @@ class HomeAppbarDelegate extends SliverPersistentHeaderDelegate {
       String textTitle;
       Widget avatar;
       if (userService.userInfo.value != null) {
-        textTitle = userService.userInfo.value!.customerName ?? "Kien Nguyen";
+        textTitle = userService.userInfo.value!.customerName ?? "Username";
         if (userService.userInfo.value!.faceImg != null) {
           avatar = Container(
             width: 36,
@@ -95,7 +101,7 @@ class HomeAppbarDelegate extends SliverPersistentHeaderDelegate {
                   textTitle,
                   style: Theme.of(context).textTheme.labelLarge?.copyWith(
                         fontWeight: FontWeight.w700,
-                        color: Colors.white,
+                        color: const Color.fromRGBO(255, 255, 255, 1),
                       ),
                 ),
               ],

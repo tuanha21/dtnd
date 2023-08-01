@@ -67,14 +67,14 @@ class _LanguagesScreenState extends State<LanguagesScreen> {
         children: <Widget>[
           _buildLanguageOption(
             context,
-            'Tiếng Việt',
+            S.of(context).vietnamese,
             Colors.red,
             _backgroundColor,
             'vi',
           ),
           _buildLanguageOption(
             context,
-            'Tiếng Anh',
+            S.of(context).english,
             Colors.green,
             _backgroundColor,
             'en',
@@ -98,6 +98,7 @@ class _LanguagesScreenState extends State<LanguagesScreen> {
         await appService.switchLanguage();
         await _saveSelectedLanguage(languageCode);
         _setBackgroundColor(value);
+        setState(() {});
       },
       child: Container(
         margin: const EdgeInsets.all(8),

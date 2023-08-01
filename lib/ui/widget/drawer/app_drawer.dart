@@ -30,9 +30,11 @@ import '../../theme/app_image.dart';
 import 'component/drawer_avatar.dart';
 
 class AppDrawer extends StatefulWidget {
-  const AppDrawer({super.key, this.onLogout, this.drawerRebuild});
+  const AppDrawer({super.key, this.onLogout, this.drawerRebuild, this.onLogin});
 
   final VoidCallback? onLogout;
+  final VoidCallback? onLogin;
+
   final VoidCallback? drawerRebuild;
 
   @override
@@ -46,7 +48,7 @@ class _AppDrawerState extends State<AppDrawer> {
   late List<FunctionData> list;
 
   void back() {
-    return Navigator.of(context).pop();
+    return Navigator.of(context).pop(true);
   }
 
   @override
@@ -170,13 +172,13 @@ class _AppDrawerState extends State<AppDrawer> {
               ),
             ),
             FunctionData(
-              title: S.of(context).interface,
-              function: () => Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => const DisplayScreen(),
+                title: S.of(context).interface, function: () => onDeveloping()
+                // function: () => Navigator.of(context).push(
+                //   MaterialPageRoute(
+                //     builder: (context) => const DisplayScreen(),
+                //   ),
+                // ),
                 ),
-              ),
-            ),
           ],
         ),
       ];
@@ -295,8 +297,8 @@ class _AppDrawerState extends State<AppDrawer> {
               } else {
                 return SingleColorTextButton(
                   onTap: () {
-                    back();
-                    GoRouter.of(context).push('/SignUp');
+                    // back();
+                    widget.onLogin?.call();
                     // Navigator.of(context).push<bool>(MaterialPageRoute(
                     //   builder: (context) => const LoginScreen(
                     //     toSignup: true,
@@ -321,17 +323,17 @@ class _AppDrawerState extends State<AppDrawer> {
           ),
           SingleColorTextButton(
             onTap: () {
-              back();
-              if (isLogin) {
-                return AccountUtil.logout(context,
-                    afterLogout: widget.onLogout);
-              } else {
-                Navigator.of(context).push<bool>(
-                  MaterialPageRoute(
-                    builder: (context) => const LoginScreen(),
-                  ),
-                );
-              }
+              widget.onLogin?.call();
+              // if (isLogin) {
+              //   return AccountUtil.logout(context,
+              //       afterLogout: widget.onLogout);
+              // } else {
+              //   Navigator.of(context).push<bool>(
+              //     MaterialPageRoute(
+              //       builder: (context) => const LoginScreen(),
+              //     ),
+              //   );
+              // }
             },
             text: isLogin ? S.of(context).logout : S.of(context).login,
             color: isLogin ? AppColors.neutral_05 : AppColors.primary_01,
