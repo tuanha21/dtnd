@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
+import '../../../../config/service/app_services.dart';
+
 class HomeBaseBottomNav extends StatefulWidget {
   const HomeBaseBottomNav({
     super.key,
@@ -21,6 +23,8 @@ class HomeBaseBottomNav extends StatefulWidget {
 class _HomeBaseBottomNavState extends State<HomeBaseBottomNav> {
   @override
   Widget build(BuildContext context) {
+    final themeMode = AppService.instance.themeMode.value;
+
     return Padding(
       padding: const EdgeInsets.all(16),
       child: ObxValue<Rx<HomeNav>>(

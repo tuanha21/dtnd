@@ -94,6 +94,8 @@ class _HomeQuickAccessState extends State<HomeQuickAccess> {
   @override
   Widget build(BuildContext context) {
     final ThemeData themeData = Theme.of(context);
+    final themeMode = AppService.instance.themeMode.value;
+
     return LayoutBuilder(
       builder: (context, constrains) {
         // final int elementPerRow = constrains.maxWidth ~/ 80;
@@ -101,7 +103,7 @@ class _HomeQuickAccessState extends State<HomeQuickAccess> {
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
             decoration: BoxDecoration(
               borderRadius: const BorderRadius.all(Radius.circular(12)),
-              color: themeData.colorScheme.background,
+              color: themeMode.isLight ? AppColors.neutral_07 : AppColors.text_black_1,
             ),
             child: widget.hasUser
                 ? Column(

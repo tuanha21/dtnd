@@ -8,6 +8,8 @@ import 'package:dtnd/utilities/num_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../../config/service/app_services.dart';
+
 class AccumulatorBook extends StatefulWidget {
   const AccumulatorBook({super.key});
 
@@ -34,6 +36,8 @@ class _AccumulatorBookState extends State<AccumulatorBook> {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
+    final themeMode = AppService.instance.themeMode.value;
+
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -130,10 +134,11 @@ class ItemBuilder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ThemeData themeData = Theme.of(context);
+    final themeMode = AppService.instance.themeMode.value;
 
     return Container(
       decoration: BoxDecoration(
-        color: themeData.colorScheme.background,
+        color: themeMode.isLight ? AppColors.neutral_07 : AppColors.neutral_01,
         borderRadius: BorderRadius.circular(12),
       ),
       margin: const EdgeInsets.only(top: 16),
@@ -184,7 +189,7 @@ class ItemBuilder extends StatelessWidget {
           height: 40,
           padding: const EdgeInsets.symmetric(horizontal: 16),
           decoration: BoxDecoration(
-            color: AppColors.neutral_06,
+            color: themeMode.isLight ? AppColors.neutral_07 : AppColors.neutral_02,
             borderRadius: BorderRadius.circular(12),
           ),
           child: Row(
@@ -193,7 +198,7 @@ class ItemBuilder extends StatelessWidget {
               Text('$rate%/năm',
                   style: textTheme.bodyMedium?.copyWith(
                       fontWeight: FontWeight.bold,
-                      color: AppColors.neutral_02)),
+                      color: themeMode.isLight ? AppColors.neutral_02 : AppColors.neutral_07)),
               Text('+${NumUtils.formatDoubleString(profit)}đ',
                   style: textTheme.bodyMedium?.copyWith(
                       fontWeight: FontWeight.bold,

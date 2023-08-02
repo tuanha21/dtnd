@@ -16,9 +16,11 @@ import 'package:get/get.dart';
 class TrashComponent extends StatefulWidget {
   const TrashComponent(
       {super.key, required this.snapshotData, this.onTap, this.onHold});
+
   final TrashModel snapshotData;
   final VoidCallback? onTap;
   final VoidCallback? onHold;
+
   @override
   State<TrashComponent> createState() => _TrashComponentState();
 }
@@ -27,6 +29,7 @@ class _TrashComponentState extends State<TrashComponent> {
   final IDataCenterService dataCenterService = DataCenterService();
   late TrashModel snapshotData;
   StockModel? stockModel;
+
   @override
   void initState() {
     snapshotData = widget.snapshotData;
@@ -227,7 +230,9 @@ class _TrashComponentState extends State<TrashComponent> {
           padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(
             borderRadius: const BorderRadius.all(Radius.circular(8)),
-            color: themeMode.isDark ? AppColors.bg_2 : AppColors.neutral_07,
+            color: themeMode.isDark
+                ? AppColors.text_black_1
+                : AppColors.neutral_07,
           ),
           child: Row(
             children: [
@@ -243,10 +248,11 @@ class _TrashComponentState extends State<TrashComponent> {
                   children: [
                     Text(
                       widget.snapshotData.sTOCKCODE,
-                      style: Theme.of(context)
-                          .textTheme
-                          .titleSmall!
-                          .copyWith(fontWeight: FontWeight.w600),
+                      style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                          fontWeight: FontWeight.w600,
+                          color: themeMode.isLight
+                              ? AppColors.text_black_1
+                              : AppColors.neutral_07),
                     ),
                     changePcWidget,
                   ],

@@ -132,9 +132,9 @@ class _SearchScreenState extends State<SearchScreen>
                       onTap: () => Navigator.of(context).pop(element.stock),
                       child: Container(
                         padding: const EdgeInsets.all(10),
-                        decoration: const BoxDecoration(
-                            borderRadius: BorderRadius.all(Radius.circular(8)),
-                            color: AppColors.neutral_07),
+                        decoration: BoxDecoration(
+                            borderRadius: const BorderRadius.all(Radius.circular(8)),
+                            color: themeMode.isLight ? AppColors.neutral_07 : AppColors.neutral_01),
                         child: Row(
                           children: [
                             Text(element.stock.stockCode),
@@ -476,7 +476,7 @@ class _SearchScreenState extends State<SearchScreen>
                         AppImages.search_icon,
                       ),
                     ),
-                    fillColor: AppColors.neutral_07,
+                    fillColor: themeMode.isLight ? AppColors.neutral_07 : AppColors.neutral_01,
                     suffixIconConstraints:
                         const BoxConstraints(maxWidth: 52, maxHeight: 20)),
               ),

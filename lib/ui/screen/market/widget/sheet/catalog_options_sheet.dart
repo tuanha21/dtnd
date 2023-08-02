@@ -81,7 +81,7 @@ class _CatalogOptionsSheetState extends State<CatalogOptionsSheet> {
               decoration: BoxDecoration(
                 color: themeMode.isLight
                     ? AppColors.neutral_06
-                    : AppColors.neutral_06,
+                    : AppColors.neutral_02,
                 borderRadius: const BorderRadius.all(Radius.circular(8)),
               ),
               child: ListView.separated(
@@ -121,8 +121,10 @@ class _RowButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final themeMode = AppService.instance.themeMode.value;
+
     return Material(
-      color: Colors.transparent,
+      color: themeMode.isLight ? Colors.transparent : Colors.black38,
       borderRadius: const BorderRadius.all(Radius.circular(8)),
       child: InkWell(
         onTap: onTap,

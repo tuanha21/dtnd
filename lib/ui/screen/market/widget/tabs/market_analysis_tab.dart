@@ -12,6 +12,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
+import '../../../../../config/service/app_services.dart';
 import '../../../../theme/app_color.dart';
 import '../components/Fi_chart.dart';
 import '../components/IndFvalue.dart';
@@ -53,6 +54,7 @@ class _MarketAnalysisTabState extends State<MarketAnalysisTab>
   Widget build(BuildContext context) {
     super.build(context);
     final ThemeData themeData = Theme.of(context);
+    final ThemeMode = AppService.instance.themeMode.value;
 
     return ListView(
       children: [
@@ -317,10 +319,11 @@ class _MarketAnalysisTabState extends State<MarketAnalysisTab>
                   onTap: () => showDialog<String>(
                     context: context,
                     builder: (BuildContext context) => Dialog(
+                      backgroundColor: ThemeMode.isLight ? AppColors.light_bg : AppColors.neutral_01,
                       child: Container(
                         padding: const EdgeInsets.all(16),
                         decoration: BoxDecoration(
-                            color: AppColors.light_bg,
+                            color: ThemeMode.isLight ? AppColors.light_bg : AppColors.neutral_01,
                             borderRadius: BorderRadius.circular(8)),
                         width: MediaQuery.of(context).size.width,
                         child: Text(
@@ -405,11 +408,14 @@ class _BottomSheetState extends State<BottomSheet> {
 
   @override
   Widget build(BuildContext context) {
+    final themeMode = AppService.instance.themeMode.value;
+
     return SafeArea(
       child: Container(
-        decoration: const BoxDecoration(
-            color: AppColors.light_bg,
-            borderRadius: BorderRadius.only(
+        decoration: BoxDecoration(
+            color:
+                themeMode.isLight ? AppColors.light_bg : AppColors.neutral_01,
+            borderRadius: const BorderRadius.only(
                 topRight: Radius.circular(24), topLeft: Radius.circular(24))),
         child: SingleChildScrollView(
           child: Column(
@@ -433,8 +439,10 @@ class _BottomSheetState extends State<BottomSheet> {
                         onTap: () {
                           Navigator.pop(context);
                         },
-                        child: const Icon(Icons.clear,
-                            color: AppColors.text_black)),
+                        child: Icon(Icons.clear,
+                            color: themeMode.isLight
+                                ? AppColors.text_black
+                                : AppColors.neutral_05)),
                   ],
                 ),
               ),
@@ -540,7 +548,10 @@ class _CheckBoxMarketState extends State<CheckBoxMarket> {
 
   @override
   Widget build(BuildContext context) {
+    final themeMode = AppService.instance.themeMode.value;
+
     return Material(
+      color: themeMode.isLight ? AppColors.neutral_07 : AppColors.neutral_01 ,
       child: ListTile(
         onTap: () {
           setState(() {
@@ -607,7 +618,10 @@ class _CheckBoxMatchTypeState extends State<CheckBoxMatchType> {
 
   @override
   Widget build(BuildContext context) {
+    final themeMode = AppService.instance.themeMode.value;
+
     return Material(
+      color : themeMode.isLight ? AppColors.neutral_07 : AppColors.neutral_01 ,
       child: ListTile(
         onTap: () {
           setState(() {

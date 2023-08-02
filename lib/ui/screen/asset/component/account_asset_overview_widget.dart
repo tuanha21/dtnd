@@ -1,4 +1,5 @@
 import 'package:dtnd/=models=/response/account/base_margin_plus_account_model.dart';
+import 'package:dtnd/config/service/app_services.dart';
 import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
@@ -27,13 +28,15 @@ class _AccountAssetOverviewWidgetState
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
     final ThemeData themeData = Theme.of(context);
+    final themeMode = AppService.instance.themeMode.value;
+
     return Column(
       children: [
         Container(
           padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(
             borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
-            color: themeData.colorScheme.background,
+            color: themeMode.isLight ? AppColors.neutral_07 : AppColors.text_black_1,
           ),
           // height: 186,
           child: Column(
@@ -135,9 +138,9 @@ class _AccountAssetOverviewWidgetState
                     child: Container(
                       padding: const EdgeInsets.only(
                           left: 24, right: 8, top: 10, bottom: 10),
-                      decoration: const BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(8)),
-                        color: AppColors.neutral_06,
+                      decoration:  BoxDecoration(
+                        borderRadius: const BorderRadius.all(Radius.circular(8)),
+                        color: themeMode.isLight ? AppColors.neutral_06 : AppColors.neutral_01,
                       ),
                       child: Column(
                         children: [
@@ -265,9 +268,9 @@ class _AccountAssetOverviewWidgetState
                     child: Container(
                       padding: const EdgeInsets.only(
                           left: 24, right: 8, top: 10, bottom: 10),
-                      decoration: const BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(8)),
-                        color: AppColors.neutral_06,
+                      decoration: BoxDecoration(
+                        borderRadius: const BorderRadius.all(Radius.circular(8)),
+                        color: themeMode.isLight ? AppColors.neutral_06 : AppColors.neutral_01,
                       ),
                       child: Column(
                         children: [

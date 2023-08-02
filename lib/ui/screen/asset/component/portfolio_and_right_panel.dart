@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../../=models=/response/account/base_margin_plus_account_model.dart';
+import '../../../../config/service/app_services.dart';
 import '../../../../data/i_data_center_service.dart';
 import '../../../../data/i_user_service.dart';
 import '../../../../data/implementations/data_center_service.dart';
@@ -55,12 +56,14 @@ class _PortfolioAndRightPanelState extends State<PortfolioAndRightPanel>
   @override
   Widget build(BuildContext context) {
     // final textTheme = Theme.of(context).textTheme;
+    final themeMode = AppService.instance.themeMode.value;
     final ThemeData themeData = Theme.of(context);
+
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
       margin: const EdgeInsets.symmetric(horizontal: 16),
       decoration: BoxDecoration(
-        color: themeData.colorScheme.background,
+        color: themeMode.isLight ? AppColors.neutral_07 : AppColors.text_black_1,
         borderRadius: const BorderRadius.all(Radius.circular(8)),
       ),
       child: Column(
@@ -80,7 +83,7 @@ class _PortfolioAndRightPanelState extends State<PortfolioAndRightPanel>
             Container(
               height: 56,
               decoration: BoxDecoration(
-                color: themeData.colorScheme.background,
+                color: themeMode.isLight ? AppColors.neutral_07 : AppColors.text_black_1,
                 borderRadius: const BorderRadius.all(Radius.circular(8)),
               ),
               child: Obx(() {

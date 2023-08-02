@@ -6,6 +6,7 @@ import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
+import '../../../../../config/service/app_services.dart';
 import '../../../../../data/i_local_storage_service.dart';
 import '../../../../../data/implementations/local_storage_service.dart';
 import '../../../../../utilities/logger.dart';
@@ -29,7 +30,9 @@ class DeleteCatalogDialog extends StatefulWidget {
 class _DeleteCatalogDialogState extends State<DeleteCatalogDialog> {
   @override
   Widget build(BuildContext context) {
+    final themeMode = AppService.instance.themeMode.value;
     final mediaQueryData = MediaQuery.of(context);
+
     return Stack(
       children: <Widget>[
         Container(
@@ -37,7 +40,7 @@ class _DeleteCatalogDialogState extends State<DeleteCatalogDialog> {
           padding: const EdgeInsets.only(
               top: 40.0, left: 10.0, right: 10.0, bottom: 10.0),
           child: Material(
-            color: AppColors.light_bg,
+            color: themeMode.isLight ? AppColors.light_bg : AppColors.dark_stronger_bg,
             shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.all(
                 Radius.circular(10),
@@ -53,7 +56,7 @@ class _DeleteCatalogDialogState extends State<DeleteCatalogDialog> {
                     Stack(
                       children: <Widget>[
                         Container(
-                          color: AppColors.light_bg,
+                          color:  themeMode.isLight ? AppColors.light_bg : AppColors.dark_stronger_bg ,
                           child: Container(
                             padding: EdgeInsets.zero,
                             width: MediaQuery.of(context).size.width,

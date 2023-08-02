@@ -11,6 +11,7 @@ import 'package:dtnd/utilities/num_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../../../config/service/app_services.dart';
 import 'overbought_sell_widget.dart';
 
 final GlobalKey<FormFieldState<StockModel?>> stockModelFormKey =
@@ -28,6 +29,8 @@ class OrderOrderPanel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
+    final themeMode = AppService.instance.themeMode.value;
+
     return Column(
       children: [
         FormField<StockModel?>(
@@ -81,7 +84,7 @@ class OrderOrderPanel extends StatelessWidget {
                       border: border,
                       borderRadius:
                           const BorderRadius.vertical(top: Radius.circular(12)),
-                      color: AppColors.neutral_05,
+                      color: themeMode.isLight ? AppColors.neutral_05 : AppColors.neutral_01  ,
                     ),
                     child: Row(
                       children: [
@@ -255,9 +258,9 @@ class OrderOrderPanel extends StatelessWidget {
         Container(
           padding:
               const EdgeInsets.only(bottom: 16, top: 40, left: 16, right: 16),
-          decoration: const BoxDecoration(
-            borderRadius: BorderRadius.vertical(top: Radius.circular(12)),
-            color: AppColors.neutral_06,
+          decoration: BoxDecoration(
+            borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
+            color: themeMode.isLight ? AppColors.neutral_06 : AppColors.neutral_01,
           ),
           child: Column(
             children: [

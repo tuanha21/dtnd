@@ -12,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
+import '../../../../config/service/app_services.dart';
 import '../../../../generated/l10n.dart';
 import '../widget/row_information.dart';
 
@@ -134,6 +135,8 @@ class _AccumulationConfirmState extends State<AccumulationConfirm> {
   }
 
   Widget bodyWidget(TextTheme textTheme, BuildContext context) {
+    final themeMode = AppService.instance.themeMode.value;
+
     return Padding(
       padding:
           const EdgeInsets.only(left: 16.0, right: 16.0, top: 5, bottom: 100.0),
@@ -142,7 +145,7 @@ class _AccumulationConfirmState extends State<AccumulationConfirm> {
         children: [
           Container(
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: themeMode.isLight ? AppColors.neutral_07 : AppColors.neutral_01,
               borderRadius: BorderRadius.circular(12),
             ),
             padding:
@@ -173,7 +176,7 @@ class _AccumulationConfirmState extends State<AccumulationConfirm> {
             height: 90,
             padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: themeMode.isLight ? AppColors.neutral_07 : AppColors.neutral_01,
               borderRadius: BorderRadius.circular(12),
             ),
             child: Column(
@@ -182,7 +185,7 @@ class _AccumulationConfirmState extends State<AccumulationConfirm> {
               children: [
                 Text(S.of(context).renewal_method,
                     style: textTheme.bodySmall?.copyWith(
-                      color: AppColors.neutral_02,
+                      color: themeMode.isLight ? AppColors.neutral_02 : AppColors.neutral_05,
                     )),
                 const SizedBox(height: 4),
                 Row(
@@ -217,7 +220,7 @@ class _AccumulationConfirmState extends State<AccumulationConfirm> {
           Container(
             padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: themeMode.isLight ? AppColors.neutral_07 : AppColors.neutral_01,
               borderRadius: BorderRadius.circular(12),
             ),
             child: Column(
@@ -233,7 +236,7 @@ class _AccumulationConfirmState extends State<AccumulationConfirm> {
                   alignment: Alignment.center,
                   padding: const EdgeInsets.symmetric(horizontal: 8),
                   decoration: BoxDecoration(
-                    color: AppColors.neutral_06,
+                    color: themeMode.isLight ? AppColors.neutral_06 : AppColors.neutral_02,
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Row(
@@ -242,12 +245,12 @@ class _AccumulationConfirmState extends State<AccumulationConfirm> {
                       Text(
                         S.of(context).payment_required,
                         style: textTheme.bodyMedium
-                            ?.copyWith(color: AppColors.neutral_02),
+                            ?.copyWith(color: themeMode.isLight ? AppColors.neutral_02 : AppColors.neutral_07),
                       ),
                       Text('${NumUtils.formatInteger(widget.money)}đ',
                           style: textTheme.bodyLarge?.copyWith(
                               fontWeight: FontWeight.bold,
-                              color: AppColors.text_black)),
+                              color: themeMode.isLight ? AppColors.text_black : AppColors.neutral_07)),
                     ],
                   ),
                 )

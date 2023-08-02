@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../../../../../=models=/response/indContrib.dart';
+import '../../../../../config/service/app_services.dart';
 import '../../../../../generated/l10n.dart';
 import '../../../../theme/app_color.dart';
 
@@ -27,6 +28,8 @@ class _TopIndexWidgetChartState extends State<TopIndexWidgetChart> {
   @override
   Widget build(BuildContext context) {
     // final size = MediaQuery.of(context).size;
+    final themeMode = AppService.instance.themeMode.value;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -49,10 +52,11 @@ class _TopIndexWidgetChartState extends State<TopIndexWidgetChart> {
                 onTap: () => showDialog<String>(
                   context: context,
                   builder: (BuildContext context) => Dialog(
+                    backgroundColor: themeMode.isLight ? AppColors.light_bg : AppColors.neutral_01,
                     child: Container(
                       padding: const EdgeInsets.all(16),
                       decoration: BoxDecoration(
-                          color: AppColors.light_bg,
+                          color: themeMode.isLight ? AppColors.light_bg : AppColors.neutral_01,
                           borderRadius: BorderRadius.circular(8)),
                       width: MediaQuery.of(context).size.width,
                       child: Text(

@@ -20,6 +20,7 @@ import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 import '../../../../../=models=/local/user_catalog.dart';
 import '../../../../../=models=/response/stock.dart';
+import '../../../../../config/service/app_services.dart';
 import '../../../../../generated/l10n.dart';
 import '../../../../../utilities/logger.dart';
 import '../../logic/add_catalog_logic.dart';
@@ -91,6 +92,7 @@ class _UserCatalogWidgetState extends State<UserCatalogWidget> {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
+    final themeMode = AppService.instance.themeMode.value;
 
     final Widget sortArrow = Container(
       padding: const EdgeInsets.all(5),
@@ -150,7 +152,7 @@ class _UserCatalogWidgetState extends State<UserCatalogWidget> {
             padding: const EdgeInsets.all(18),
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(12),
-                color: AppColors.neutral_06),
+                color: themeMode.isLight ? AppColors.neutral_06 : AppColors.neutral_01),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -436,6 +438,7 @@ class _UserCatalogWidgetState extends State<UserCatalogWidget> {
   }
 
   Widget rowCatalog() {
+    final themeMode = AppService.instance.themeMode.value;
     // if (savedCatalog.catalogs.isEmpty) {
     //   return GestureDetector(
     //     onTap: addCatalog,
@@ -470,8 +473,11 @@ class _UserCatalogWidgetState extends State<UserCatalogWidget> {
             onTap: addCatalog,
             child: Container(
               decoration: BoxDecoration(
-                  color: const Color.fromRGBO(236, 241, 253, 1),
-                  borderRadius: BorderRadius.circular(4)),
+                color: themeMode.isLight
+                    ? const Color.fromRGBO(236, 241, 253, 1)
+                    : AppColors.neutral_03,
+                borderRadius: BorderRadius.circular(4),
+              ),
               height: 28,
               width: 28,
               alignment: Alignment.center,
@@ -620,13 +626,15 @@ class _BottomAddStockState extends State<BottomAddStock> {
 
   @override
   Widget build(BuildContext context) {
+    final themeMode = AppService.instance.themeMode.value;
+
     return Material(
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 18),
-        decoration: const BoxDecoration(
-            borderRadius: BorderRadius.only(
+        padding:   const EdgeInsets.symmetric(horizontal: 16, vertical: 18),
+        decoration:  BoxDecoration(
+            borderRadius: const BorderRadius.only(
                 topLeft: Radius.circular(12), topRight: Radius.circular(12)),
-            color: AppColors.light_bg),
+            color: themeMode.isLight ? AppColors.light_bg : AppColors.neutral_01),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -645,7 +653,7 @@ class _BottomAddStockState extends State<BottomAddStock> {
                   child: Container(
                     padding: const EdgeInsets.all(10),
                     decoration: BoxDecoration(
-                        color: const Color.fromRGBO(245, 248, 255, 1),
+                        color: themeMode.isLight ? const Color.fromRGBO(245, 248, 255, 1) : AppColors.neutral_03,
                         borderRadius: BorderRadius.circular(6)),
                     child: const Icon(
                       Icons.clear,
@@ -704,10 +712,10 @@ class _BottomAddStockState extends State<BottomAddStock> {
                             );
                           },
                           separatorBuilder: (context, index) {
-                            return const Divider(
+                            return Divider(
                               thickness: 2,
                               height: 0,
-                              color: Color.fromRGBO(245, 248, 255, 1),
+                              color: themeMode.isLight ? const Color.fromRGBO(245, 248, 255, 1) : AppColors.neutral_03,
                             );
                           },
                           itemCount: list!.length);

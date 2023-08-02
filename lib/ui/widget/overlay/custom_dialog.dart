@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
+import '../../../config/service/app_services.dart';
 import '../../../generated/l10n.dart';
 import '../../theme/app_color.dart';
 import '../../theme/app_image.dart';
@@ -32,6 +33,8 @@ class CustomDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final mediaQueryData = MediaQuery.of(context);
+    final ThemeMode themeMode = AppService.instance.themeMode.value;
+
     return InkWell(
         onTap: disableBack
             ? () {}
@@ -46,7 +49,9 @@ class CustomDialog extends StatelessWidget {
                 padding: const EdgeInsets.only(
                     top: 40.0, left: 10.0, right: 10.0, bottom: 10.0),
                 child: Material(
-                  color: AppColors.light_bg,
+                  color: themeMode.isLight
+                      ? AppColors.light_bg
+                      : AppColors.text_black_1,
                   shape: const RoundedRectangleBorder(
                     borderRadius: BorderRadius.all(
                       Radius.circular(10),
@@ -62,7 +67,9 @@ class CustomDialog extends StatelessWidget {
                           Stack(
                             children: <Widget>[
                               Container(
-                                color: AppColors.light_bg,
+                                color: themeMode.isLight
+                                    ? AppColors.light_bg
+                                    : AppColors.text_black_1,
                                 child: Container(
                                   padding: EdgeInsets.zero,
                                   width: MediaQuery.of(context).size.width,
@@ -79,8 +86,10 @@ class CustomDialog extends StatelessWidget {
                                               title ?? 'Tiêu đề',
                                               style: AppTextStyle.labelLarge_18
                                                   .copyWith(
-                                                      color:
-                                                          AppColors.neutral_01),
+                                                color: themeMode.isLight
+                                                    ? AppColors.neutral_01
+                                                    : AppColors.neutral_07,
+                                              ),
                                             )
                                           ],
                                         ),
@@ -92,8 +101,9 @@ class CustomDialog extends StatelessWidget {
                                             content ?? 'Nội dung thông báo',
                                             style: AppTextStyle.bodyMedium_14
                                                 .copyWith(
-                                                    color:
-                                                        AppColors.neutral_04),
+                                                    color: themeMode.isLight
+                                                        ? AppColors.neutral_04
+                                                        : AppColors.neutral_07),
                                             textAlign: TextAlign.center,
                                           ),
                                         ),

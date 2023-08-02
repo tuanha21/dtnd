@@ -8,6 +8,7 @@ import 'package:dtnd/utilities/num_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../../config/service/app_services.dart';
 import '../widget/row_information.dart';
 
 class AccumulatorBookDetail extends StatefulWidget {
@@ -70,6 +71,7 @@ class _AccumulatorBookDetailState extends State<AccumulatorBookDetail> {
 
   Widget bodyWidget(TextTheme textTheme, BuildContext context) {
     final ThemeData themeData = Theme.of(context);
+    final themeMode = AppService.instance.themeMode.value;
 
     return Padding(
       padding:
@@ -79,7 +81,7 @@ class _AccumulatorBookDetailState extends State<AccumulatorBookDetail> {
         children: [
           Container(
             decoration: BoxDecoration(
-              color: themeData.colorScheme.background,
+              color: themeMode.isLight ? AppColors.neutral_07 : AppColors.neutral_01,
               borderRadius: const BorderRadius.only(
                   topLeft: Radius.circular(12), topRight: Radius.circular(12)),
             ),
@@ -135,7 +137,7 @@ class _AccumulatorBookDetailState extends State<AccumulatorBookDetail> {
                   height: 60,
                   padding: const EdgeInsets.symmetric(horizontal: 8),
                   decoration: BoxDecoration(
-                    color: themeData.colorScheme.background,
+                    color: themeMode.isLight ? AppColors.neutral_07 : AppColors.neutral_01,
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Column(
@@ -178,7 +180,7 @@ class _AccumulatorBookDetailState extends State<AccumulatorBookDetail> {
             height: 90,
             padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
-              color: themeData.colorScheme.background,
+              color: themeMode.isLight ? AppColors.neutral_07 : AppColors.neutral_01,
               borderRadius: BorderRadius.circular(12),
             ),
             child: Column(
@@ -225,7 +227,7 @@ class _AccumulatorBookDetailState extends State<AccumulatorBookDetail> {
             height: 80,
             padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
-              color: themeData.colorScheme.background,
+              color: themeMode.isLight ? AppColors.neutral_07 : AppColors.neutral_01,
               borderRadius: BorderRadius.circular(12),
             ),
             child: Column(
@@ -256,6 +258,8 @@ class _AccumulatorBookDetailState extends State<AccumulatorBookDetail> {
 
   Future<void> openChangeMethod(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
+    final themeMode = AppService.instance.themeMode.value;
+
     return showModalBottomSheet<void>(
       context: context,
       builder: (BuildContext context) {
@@ -341,7 +345,7 @@ class _AccumulatorBookDetailState extends State<AccumulatorBookDetail> {
                             padding: const EdgeInsets.only(left: 20),
                             margin: const EdgeInsets.only(bottom: 16),
                             decoration: BoxDecoration(
-                                color: Colors.white,
+                                color: themeMode.isLight ? AppColors.neutral_07 : AppColors.neutral_01,
                                 borderRadius: BorderRadius.circular(12),
                                 border: Border.all(
                                     color: methodList[index]['selected'] == true

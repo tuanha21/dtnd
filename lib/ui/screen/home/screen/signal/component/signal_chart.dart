@@ -11,6 +11,8 @@ import 'package:dtnd/utilities/logger.dart';
 import 'package:dtnd/utilities/time_utils.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../../../config/service/app_services.dart';
+
 const List<String> _label = ["1M", "3M", "6M", "1Y"];
 
 class SignalChart extends StatefulWidget {
@@ -99,6 +101,8 @@ class _SignalChartState extends State<SignalChart> with ChartDatasMixin {
 
   @override
   Widget build(BuildContext context) {
+    final ThemeMode themeMode = AppService.instance.themeMode.value;
+
     return Column(
       children: [
         Row(
@@ -126,7 +130,7 @@ class _SignalChartState extends State<SignalChart> with ChartDatasMixin {
                             const BorderRadius.all(Radius.circular(4)),
                         color: _label[i] == currentPeriod
                             ? AppColors.primary_03
-                            : AppColors.neutral_06,
+                            : themeMode.isLight ? AppColors.neutral_06 : AppColors.bg_share_inside_nav,
                       ),
                       child: Text(
                         _label[i],

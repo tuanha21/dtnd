@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../../=models=/response/stock.dart';
+import '../../../../../config/service/app_services.dart';
 import '../../../../theme/app_color.dart';
 import '../../../../theme/app_textstyle.dart';
 import '../../../../widget/icon/stock_icon.dart';
@@ -25,9 +26,11 @@ class StockWidgetChart extends StatefulWidget {
 class _StockWidgetChartState extends State<StockWidgetChart> {
   @override
   Widget build(BuildContext context) {
+    final themeMode = AppService.instance.themeMode.value;
+
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 22.5),
-      decoration: const BoxDecoration(color: AppColors.light_bg),
+      decoration: BoxDecoration(color: themeMode.isLight ? AppColors.light_bg : AppColors.neutral_01),
       child: Row(
         children: [
           StockIcon(

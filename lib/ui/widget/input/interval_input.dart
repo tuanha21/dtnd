@@ -3,6 +3,9 @@ import 'package:dtnd/utilities/string_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../../../config/service/app_services.dart';
+import '../../theme/app_color.dart';
+
 typedef GetInterval = num Function(num);
 
 class IntervalInput extends StatelessWidget {
@@ -93,7 +96,10 @@ class IntervalInput extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final themeMode = AppService.instance.themeMode.value;
+
     return Material(
+      color: themeMode.isLight ? AppColors.neutral_07 : AppColors.neutral_01,
       child: TextFormField(
         textAlign: TextAlign.center,
         key: formKey,
@@ -107,10 +113,24 @@ class IntervalInput extends StatelessWidget {
           contentPadding: const EdgeInsets.all(0),
           floatingLabelBehavior: FloatingLabelBehavior.always,
           floatingLabelAlignment: FloatingLabelAlignment.start,
-          prefixIcon:
-              InkWell(onTap: _onMinus, child: const Icon(Icons.remove_rounded)),
-          suffixIcon:
-              InkWell(onTap: _onAdd, child: const Icon(Icons.add_rounded)),
+          prefixIcon: InkWell(
+            onTap: _onMinus,
+            child: Icon(
+              Icons.remove_rounded,
+              color: themeMode.isLight
+                  ? AppColors.neutral_01
+                  : AppColors.neutral_07,
+            ),
+          ),
+          suffixIcon: InkWell(
+            onTap: _onAdd,
+            child: Icon(
+              Icons.add_rounded,
+              color: themeMode.isLight
+                  ? AppColors.neutral_01
+                  : AppColors.neutral_07,
+            ),
+          ),
         ),
       ),
     );

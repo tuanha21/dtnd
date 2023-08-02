@@ -101,7 +101,7 @@ class _InvestmentCatalogWidgetState extends State<InvestmentCatalogWidget> {
               decoration: BoxDecoration(
                 borderRadius:
                     const BorderRadius.vertical(top: Radius.circular(12)),
-                color: themeMode.isDark ? AppColors.bg_2 : AppColors.neutral_06,
+                color: themeMode.isDark ? AppColors.text_black_1 : AppColors.neutral_06,
               ),
               child: Column(
                 children: [
@@ -333,9 +333,10 @@ class _InvestmentCatalogWidgetState extends State<InvestmentCatalogWidget> {
                     child: Container(
                       height: 40,
                       margin: const EdgeInsets.symmetric(vertical: 8),
-                      decoration: const BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(12)),
-                        color: AppColors.neutral_06,
+                      padding: const EdgeInsets.all(4),
+                      decoration:  BoxDecoration(
+                        borderRadius: const BorderRadius.all(Radius.circular(12)),
+                        color: themeMode.isLight ? AppColors.neutral_06 : AppColors.text_black_1,
                       ),
                       child: Column(
                         children: [
@@ -426,7 +427,7 @@ class _InvestmentCatalogWidgetState extends State<InvestmentCatalogWidget> {
               decoration: BoxDecoration(
                 borderRadius:
                     const BorderRadius.vertical(bottom: Radius.circular(12)),
-                color: themeMode.isDark ? AppColors.bg_2 : AppColors.neutral_05,
+                color: themeMode.isDark ? AppColors.neutral_02 : AppColors.neutral_05,
               ),
               child: Center(
                 child: AnimatedRotation(

@@ -19,6 +19,8 @@ class MarketNotiCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final ThemeData themeData = Theme.of(context);
+
     return Material(
       color: Colors.transparent,
       child: InkWell(
@@ -95,8 +97,8 @@ class MarketNotiCard extends StatelessWidget {
                             Container(
                               padding: const EdgeInsets.symmetric(
                                   vertical: 2, horizontal: 8),
-                              decoration: const BoxDecoration(
-                                  color: AppColors.bg_1,
+                              decoration: BoxDecoration(
+                                  color: themeData.colorScheme.background,
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(56))),
                               child: Row(
@@ -117,10 +119,10 @@ class MarketNotiCard extends StatelessWidget {
                             Container(
                               padding: const EdgeInsets.symmetric(
                                   vertical: 2, horizontal: 8),
-                              decoration: const BoxDecoration(
-                                  color: AppColors.bg_1,
+                              decoration: BoxDecoration(
+                                  color: themeData.colorScheme.background,
                                   borderRadius:
-                                      BorderRadius.all(Radius.circular(56))),
+                                      const BorderRadius.all(Radius.circular(56))),
                               child: Row(
                                 children: [
                                   SizedBox.square(

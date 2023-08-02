@@ -48,13 +48,13 @@ class AppService {
     final themeMode = sharedPreferencesInstance.getString("ThemeMode");
     print("themeMode $themeMode");
     _themeMode = Rx<ThemeMode>(ThemeMode.light);
-    // if (themeMode == null) {
-    //   await sharedPreferencesInstance.setString(
-    //       "ThemeMode", ThemeMode.dark.name);
-    //   _themeMode = Rx<ThemeMode>(ThemeMode.light);
-    // } else {
-    //   _themeMode = Rx<ThemeMode>(ThemeModeHelper.fromString(themeMode));
-    // }
+    if (themeMode == null) {
+      await sharedPreferencesInstance.setString(
+          "ThemeMode", ThemeMode.dark.name);
+      _themeMode = Rx<ThemeMode>(ThemeMode.light);
+    } else {
+      // _themeMode = Rx<ThemeMode>(ThemeModeHelper.fromString(themeMode));
+    }
 
     final languageCode = sharedPreferencesInstance.getString("Locale");
     if (languageCode == null) {

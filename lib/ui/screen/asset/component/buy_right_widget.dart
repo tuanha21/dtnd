@@ -82,7 +82,7 @@ class _BuyRightWidgetState extends State<BuyRightWidget> {
           padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
           decoration: BoxDecoration(
             borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
-            color: themeMode.isDark ? AppColors.bg_2 : AppColors.neutral_06,
+            color: themeMode.isDark ? AppColors.text_black_1 : AppColors.neutral_06,
           ),
           child: Column(
             children: [
@@ -180,7 +180,7 @@ class _BuyRightWidgetState extends State<BuyRightWidget> {
                   margin: const EdgeInsets.symmetric(vertical: 8),
                   decoration: BoxDecoration(
                     borderRadius: const BorderRadius.all(Radius.circular(12)),
-                    color: themeData.colorScheme.background,
+                    color: themeMode.isDark ? AppColors.text_black_1 : AppColors.neutral_06,
                   ),
                   child: Column(
                     children: [
@@ -286,7 +286,7 @@ class _BuyRightWidgetState extends State<BuyRightWidget> {
               decoration: BoxDecoration(
                 borderRadius:
                     const BorderRadius.vertical(bottom: Radius.circular(12)),
-                color: themeMode.isDark ? AppColors.bg_2 : AppColors.neutral_05,
+                color: themeMode.isDark ? AppColors.text_black_1 : AppColors.neutral_05,
               ),
               child: Center(
                 child: AnimatedRotation(

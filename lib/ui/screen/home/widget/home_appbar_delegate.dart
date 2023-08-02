@@ -35,6 +35,7 @@ class HomeAppbarDelegate extends SliverPersistentHeaderDelegate {
     final size = MediaQuery.of(context).size;
     final ratio = 1 - (shrinkOffset / _difference);
     final ThemeData themeData = Theme.of(context);
+    final themeMode = AppService.instance.themeMode.value;
 
     Widget title = Obx(() {
       String textTitle;
@@ -105,7 +106,7 @@ class HomeAppbarDelegate extends SliverPersistentHeaderDelegate {
       );
     });
     return Material(
-      color: themeData.colorScheme.background,
+      color: themeMode.isLight ? AppColors.neutral_07 : AppColors.bg_2,
       child: Stack(
         children: [
           Positioned(

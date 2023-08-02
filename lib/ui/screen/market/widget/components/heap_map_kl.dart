@@ -10,6 +10,7 @@ import 'package:get/get.dart';
 import 'package:syncfusion_flutter_treemap/treemap.dart';
 
 import '../../../../../=models=/ui_model/field_tree_element_model.dart';
+import '../../../../../config/service/app_services.dart';
 import '../../../../../generated/l10n.dart';
 import '../../../../../utilities/num_utils.dart';
 import '../../../../theme/app_color.dart';
@@ -90,6 +91,8 @@ class _HeapMapKLState extends State<HeapMapKL> {
 
   @override
   Widget build(BuildContext context) {
+    final themeMode = AppService.instance.themeMode.value;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -179,7 +182,7 @@ class _HeapMapKLState extends State<HeapMapKL> {
                             const SizedBox(height: 5),
                             Expanded(
                               child: Container(
-                                  color: AppColors.bg_1,
+                                  color: themeMode.isLight ? AppColors.bg_1 : AppColors.neutral_01,
                                   child: SfTreemap(
                                     dataCount: listStock.length,
                                     weightValueMapper: (int index) {
@@ -211,8 +214,8 @@ class _HeapMapKLState extends State<HeapMapKL> {
                                             TreemapTile tile) {
                                           return Container(
                                             padding: const EdgeInsets.all(2.5),
-                                            decoration: const BoxDecoration(
-                                                color: Colors.white),
+                                            decoration: BoxDecoration(
+                                                color: themeMode.isLight ? AppColors.bg_1 : AppColors.neutral_01),
                                             child: Text(
                                               '${tile.group} : ${NumUtils.formatInteger(tile.weight * 10)}',
                                               overflow: TextOverflow.ellipsis,

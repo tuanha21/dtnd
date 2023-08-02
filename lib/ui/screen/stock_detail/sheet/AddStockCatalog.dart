@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import '../../../../=models=/local/saved_catalog.dart';
 import '../../../../=models=/ui_model/sheet.dart';
+import '../../../../config/service/app_services.dart';
 import '../../../../data/i_local_storage_service.dart';
 import '../../../../data/i_user_service.dart';
 import '../../../../data/implementations/data_center_service.dart';
@@ -100,12 +101,14 @@ class _AddCatalogSheetState extends State<AddCatalogSheet> {
 
   @override
   Widget build(BuildContext context) {
+    final ThemeMode themeMode = AppService.instance.themeMode.value;
+
     return Container(
       padding: const EdgeInsets.all(16),
-      decoration: const BoxDecoration(
-          borderRadius: BorderRadius.only(
+      decoration: BoxDecoration(
+          borderRadius: const BorderRadius.only(
               topLeft: Radius.circular(20), topRight: Radius.circular(20)),
-          color: AppColors.light_bg),
+          color: themeMode.isLight ? AppColors.light_bg : AppColors.text_black_1),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [

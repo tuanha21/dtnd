@@ -1,11 +1,13 @@
+import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:dtnd/=models=/response/index_board.dart';
+import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:dtnd/utilities/charts_util.dart';
 import 'package:dtnd/utilities/num_utils.dart';
-import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
-import 'package:charts_flutter/flutter.dart' as charts;
+
+import '../../../../../config/service/app_services.dart';
 import '../../../../../generated/l10n.dart';
 import '../../../../theme/app_color.dart';
 
@@ -22,7 +24,9 @@ class MoneyChart extends StatefulWidget {
 class _MoneyChartState extends State<MoneyChart> {
   @override
   Widget build(BuildContext context) {
+    final themeMode = AppService.instance.themeMode.value;
     final size = MediaQuery.of(context).size;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -45,10 +49,15 @@ class _MoneyChartState extends State<MoneyChart> {
                 onTap: () => showDialog<String>(
                   context: context,
                   builder: (BuildContext context) => Dialog(
+                    backgroundColor: themeMode.isLight
+                        ? AppColors.bg_1
+                        : AppColors.neutral_01,
                     child: Container(
                       padding: const EdgeInsets.all(16),
                       decoration: BoxDecoration(
-                          color: AppColors.light_bg,
+                          color: themeMode.isLight
+                              ? AppColors.bg_1
+                              : AppColors.neutral_01,
                           borderRadius: BorderRadius.circular(8)),
                       width: MediaQuery.of(context).size.width,
                       child: Text(
@@ -155,10 +164,11 @@ class _MoneyChartState extends State<MoneyChart> {
                 onTap: () => showDialog<String>(
                   context: context,
                   builder: (BuildContext context) => Dialog(
+                    backgroundColor: themeMode.isLight ? AppColors.light_bg : AppColors.neutral_01,
                     child: Container(
                       padding: const EdgeInsets.all(16),
                       decoration: BoxDecoration(
-                          color: AppColors.light_bg,
+                          color: themeMode.isLight ? AppColors.light_bg : AppColors.neutral_01,
                           borderRadius: BorderRadius.circular(8)),
                       width: MediaQuery.of(context).size.width,
                       child: Text(
@@ -357,11 +367,13 @@ class _MoneyChartState extends State<MoneyChart> {
 
 class _MoneyFlowTooltipData extends TooltipData {
   _MoneyFlowTooltipData._internal();
+
   static final _MoneyFlowTooltipData instance =
       _MoneyFlowTooltipData._internal();
 }
 
 class _TooltipData extends TooltipData {
   _TooltipData._internal();
+
   static final _TooltipData instance = _TooltipData._internal();
 }

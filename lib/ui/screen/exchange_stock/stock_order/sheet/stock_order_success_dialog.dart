@@ -13,6 +13,8 @@ import 'package:dtnd/utilities/string_util.dart';
 import 'package:dtnd/utilities/time_utils.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../../config/service/app_services.dart';
+
 class StockOrderSuccessSheet extends StatefulWidget {
   const StockOrderSuccessSheet({
     super.key,
@@ -28,12 +30,14 @@ class StockOrderSuccessSheet extends StatefulWidget {
 class _StockOrderSuccessSheetState extends State<StockOrderSuccessSheet> {
   @override
   Widget build(BuildContext context) {
+    final themeMode = AppService.instance.themeMode.value;
     final textTheme = Theme.of(context).textTheme;
+
     return Container(
       padding: const EdgeInsets.all(16),
-      decoration: const BoxDecoration(
-        borderRadius: BorderRadius.all(Radius.circular(8)),
-        color: AppColors.light_bg,
+      decoration: BoxDecoration(
+        borderRadius: const BorderRadius.all(Radius.circular(8)),
+        color: themeMode.isLight ? AppColors.light_bg : AppColors.neutral_01,
       ),
       child: SingleChildScrollView(
         child: Column(
@@ -118,7 +122,7 @@ class _StockOrderSuccessSheetState extends State<StockOrderSuccessSheet> {
             Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
-                  color: AppColors.neutral_06,
+                  color: themeMode.isLight ? AppColors.light_bg : AppColors.neutral_02,
                   borderRadius: BorderRadius.circular(8)),
               child: Column(
                 children: [
@@ -218,7 +222,9 @@ class _Row extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final themeMode = AppService.instance.themeMode.value;
     final texTheme = Theme.of(context).textTheme;
+
     final valueTheme = texTheme.bodyMedium!
         .copyWith(fontWeight: FontWeight.w600, color: valueColor);
     String valueTxt;
@@ -234,8 +240,8 @@ class _Row extends StatelessWidget {
       children: [
         Text(
           label,
-          style: const TextStyle(
-              color: AppColors.text_grey_1,
+          style: TextStyle(
+              color: themeMode.isLight ? AppColors.text_grey_1 : AppColors.neutral_05,
               fontSize: 14,
               fontWeight: FontWeight.w500,
               height: 1.4),

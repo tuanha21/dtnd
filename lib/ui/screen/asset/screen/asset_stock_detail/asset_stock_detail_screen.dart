@@ -177,26 +177,26 @@ class _AssetStockDetailScreenState extends State<AssetStockDetailScreen>
                           ),
                         ),
                         const SizedBox(width: 2),
-                        Expanded(
-                          child: Column(
-                            children: [
-                              Expanded(
-                                child: AssetGridElement(element: {
-                                  S.of(context).available_vol:
-                                      NumUtils.formatInteger(
-                                          widget.porfolioStock.avaiableVol)
-                                }),
-                              ),
-                              const SizedBox(height: 2),
-                              Expanded(
-                                child: AssetGridElement(element: {
-                                  S.of(context).avg_price: NumUtils.formatDouble(
-                                      widget.porfolioStock.avgPrice)
-                                }),
-                              ),
-                            ],
-                          ),
-                        ),
+                        // Expanded(
+                        //   child: Column(
+                        //     children: [
+                        //       Expanded(
+                        //         child: AssetGridElement(element: {
+                        //           S.of(context).available_vol:
+                        //               NumUtils.formatInteger(
+                        //                   widget.porfolioStock.avaiableVol)
+                        //         }),
+                        //       ),
+                        //       const SizedBox(height: 2),
+                        //       Expanded(
+                        //         child: AssetGridElement(element: {
+                        //           S.of(context).avg_price: NumUtils.formatDouble(
+                        //               widget.porfolioStock.avgPrice)
+                        //         }),
+                        //       ),
+                        //     ],
+                        //   ),
+                        // ),
                       ],
                     ),
                   ),

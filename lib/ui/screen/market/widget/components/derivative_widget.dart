@@ -33,6 +33,8 @@ class _DerivativeWidgetState extends State<DerivativeWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final ThemeData themeData = Theme.of(context);
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -113,10 +115,10 @@ class _DerivativeWidgetState extends State<DerivativeWidget> {
                         return DerivativeComponent(model: list[index]);
                       },
                       separatorBuilder: (context, index) {
-                        return const Divider(
+                        return Divider(
                           thickness: 2,
                           height: 0,
-                          color: Color.fromRGBO(245, 248, 255, 1),
+                          color: themeData.colorScheme.background,
                         );
                       });
                 } else {

@@ -33,6 +33,7 @@ import 'package:dtnd/utilities/time_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../../../../../config/service/app_services.dart';
 import '../../../../widget/input/thousand_separator_input_formatter.dart';
 
 class StockOrderSheet extends StatefulWidget {
@@ -227,6 +228,8 @@ class _StockOrderSheetState extends State<StockOrderSheet>
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
+    final themeMode = AppService.instance.themeMode.value;
+
     listMR = stockModel?.stockDataCore?.mr.map((mr) => mr.mr).toList() ?? [];
     return SingleChildScrollView(
       scrollDirection: Axis.vertical,
@@ -277,8 +280,8 @@ class _StockOrderSheetState extends State<StockOrderSheet>
                       borderRadius: const BorderRadius.all(Radius.circular(6)),
                       child: Ink(
                         padding: const EdgeInsets.all(8),
-                        decoration: const BoxDecoration(
-                          color: AppColors.primary_03,
+                        decoration: BoxDecoration(
+                          color: themeMode.isLight ? AppColors.primary_03 : AppColors.neutral_03,
                           borderRadius: BorderRadius.all(Radius.circular(6)),
                         ),
                         child: SizedBox.square(
@@ -558,10 +561,12 @@ class _OrderTypeButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bool selected = isSelected.call(orderType);
+    final themeMode = AppService.instance.themeMode.value;
     final textTheme = Theme.of(context).textTheme.bodySmall?.copyWith(
         fontWeight: FontWeight.w500,
         color: selected ? Colors.white : AppColors.neutral_04);
     return Material(
+      color: themeMode.isLight ? Colors.white : AppColors.neutral_02,
       child: InkWell(
         onTap: () => select.call(orderType),
         borderRadius: const BorderRadius.all(Radius.circular(4)),

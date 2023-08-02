@@ -7,6 +7,7 @@ import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/widget/news_card.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../config/service/app_services.dart';
 import '../../news_detail/new_detail_screen.dart';
 
 class StockDetailNews extends StatefulWidget {
@@ -47,6 +48,8 @@ class _StockDetailNewsState extends State<StockDetailNews> {
 
   @override
   Widget build(BuildContext context) {
+    final themeMode = AppService.instance.themeMode.value;
+
     if (!initialized) {
       return SizedBox(
         height: 200,
@@ -56,9 +59,9 @@ class _StockDetailNewsState extends State<StockDetailNews> {
       );
     }
     return Container(
-      decoration: const BoxDecoration(
-        borderRadius: BorderRadius.all(Radius.circular(12)),
-        color: AppColors.neutral_07,
+      decoration: BoxDecoration(
+        borderRadius: const BorderRadius.all(Radius.circular(12)),
+        color: themeMode.isLight ? AppColors.neutral_07 : AppColors.bg_share_inside_nav,
       ),
       child: ListView.separated(
           shrinkWrap: true,
@@ -82,9 +85,9 @@ class _StockDetailNewsState extends State<StockDetailNews> {
                 ));
           },
           separatorBuilder: (context, index) {
-            return const Divider(
+            return Divider(
               thickness: 2,
-              color: AppColors.neutral_06,
+              color: themeMode.isLight ? AppColors.neutral_06 : AppColors.neutral_02,
               height: 16,
             );
           },
