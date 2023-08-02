@@ -61,6 +61,8 @@ class AppService {
       await sharedPreferencesInstance.setString("Locale", "vi");
       _locale = Rx<Locale>(const Locale("vi", "VN"));
     } else {
+      print(languageCode);      print(LocaleHelper.fromLanguageCode(languageCode).toString());
+
       _locale = Rx<Locale>(LocaleHelper.fromLanguageCode(languageCode));
     }
   }
@@ -87,6 +89,7 @@ class AppService {
   }
 
   Future<Locale> _changeLanguage(Locale locale) async {
+    await sharedPreferencesInstance.setString("Locale", locale.languageCode);
     _locale.value = locale;
     await S.load(locale);
     return locale;

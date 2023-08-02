@@ -13,7 +13,7 @@ class LanguagesScreen extends StatefulWidget {
 }
 
 class _LanguagesScreenState extends State<LanguagesScreen> {
-  late Color _backgroundColor = Colors.red;
+  late Color _backgroundColor ;
   late AppService appService = AppService();
 
   final ILocalStorageService localStorageService = LocalStorageService();
@@ -21,20 +21,8 @@ class _LanguagesScreenState extends State<LanguagesScreen> {
   @override
   void initState() {
     super.initState();
-    _loadSelectedLanguage();
-  }
-
-  Future<void> _loadSelectedLanguage() async {
-    final String? selectedLanguage =
-        localStorageService.sharedPreferences.getString(languageKey);
-    if (selectedLanguage != null) {
-      setState(
-        () {
-          _backgroundColor =
-              (selectedLanguage == 'vi') ? Colors.red : Colors.green;
-        },
-      );
-    }
+    _backgroundColor =
+    (appService.locale.value.languageCode == 'vi') ? Colors.red : Colors.green;
   }
 
   void _setBackgroundColor(Color? color) {
@@ -43,9 +31,6 @@ class _LanguagesScreenState extends State<LanguagesScreen> {
     });
   }
 
-  Future<void> _saveSelectedLanguage(String languageCode) async {
-    localStorageService.saveLanguage(languageCode);
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -96,7 +81,6 @@ class _LanguagesScreenState extends State<LanguagesScreen> {
     return InkWell(
       onTap: () async {
         await appService.switchLanguage();
-        await _saveSelectedLanguage(languageCode);
         _setBackgroundColor(value);
       },
       child: Container(
@@ -118,7 +102,6 @@ class _LanguagesScreenState extends State<LanguagesScreen> {
               groupValue: groupValue,
               onChanged: (value) async {
                 await appService.switchLanguage();
-                await _saveSelectedLanguage(languageCode);
                 _setBackgroundColor(value);
               },
               activeColor: Colors.white,
