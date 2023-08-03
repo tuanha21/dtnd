@@ -10,6 +10,7 @@ import 'package:dtnd/ui/widget/empty_list_widget.dart';
 import 'package:dtnd/utilities/num_utils.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../../../config/service/app_services.dart';
 import '../../../../../../generated/l10n.dart';
 
 class UnclosedDealTab extends StatefulWidget {
@@ -63,15 +64,16 @@ class _UnclosedDealTabState extends State<UnclosedDealTab>
     final actualVol = portfolioStocks
         ?.firstWhere((element) => element.symbol == widget.stockCode)
         .actualVol;
+    final ThemeMode themeMode = AppService.instance.themeMode.value;
 
     return SingleChildScrollView(
       child: Column(
         children: [
           Container(
             padding: const EdgeInsets.all(16),
-            decoration: const BoxDecoration(
-                borderRadius: BorderRadius.all(Radius.circular(8)),
-                color: AppColors.neutral_06),
+            decoration: BoxDecoration(
+                borderRadius: const BorderRadius.all(Radius.circular(8)),
+                color: themeMode.isLight ? AppColors.neutral_06 : AppColors.text_black_1),
             child: Column(
               children: [
                 // Row(
@@ -125,8 +127,8 @@ class _UnclosedDealTabState extends State<UnclosedDealTab>
           actualVol != 0
               ? Container(
                   padding: const EdgeInsets.all(16),
-                  decoration: const BoxDecoration(
-                      color: AppColors.neutral_06,
+                  decoration: BoxDecoration(
+                      color: themeMode.isLight ? AppColors.neutral_06 : AppColors.text_black_1,
                       borderRadius: BorderRadius.all(Radius.circular(12))),
                   child: Column(
                     children: [

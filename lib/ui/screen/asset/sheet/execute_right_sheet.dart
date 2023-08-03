@@ -17,6 +17,8 @@ import 'package:dtnd/utilities/validator.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../../config/service/app_services.dart';
+
 class ExecuteRightSheet extends StatefulWidget {
   const ExecuteRightSheet({
     super.key,
@@ -103,6 +105,8 @@ class _ExecuteRightSheetState extends State<ExecuteRightSheet>
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
+    final ThemeMode themeMode = AppService.instance.themeMode.value;
+
     return SafeArea(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
@@ -130,7 +134,7 @@ class _ExecuteRightSheetState extends State<ExecuteRightSheet>
                           Text(
                             widget.unexecutedRightModel.cRECEIVESHARECODE ??
                                 "-",
-                            style: textTheme.titleSmall,
+                            style: textTheme.titleSmall?.copyWith(color: themeMode.isLight ? null : AppColors.neutral_07),
                           ),
                         ],
                       ),
@@ -183,9 +187,9 @@ class _ExecuteRightSheetState extends State<ExecuteRightSheet>
             const SizedBox(height: 20),
             Container(
               padding: const EdgeInsets.all(16),
-              decoration: const BoxDecoration(
+              decoration: BoxDecoration(
                 borderRadius: BorderRadius.all(Radius.circular(12)),
-                color: AppColors.neutral_06,
+                color: themeMode.isLight ? AppColors.neutral_06 : AppColors.bg_share_inside_nav,
               ),
               child: Column(
                 children: [

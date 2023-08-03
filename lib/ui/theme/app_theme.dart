@@ -310,7 +310,7 @@ const ColorScheme _darkColorScheme = ColorScheme(
   background: Colors.black,
   onBackground: Colors.white,
   surface: Colors.black,
-  onSurface: Colors.white,
+  onSurface: AppColors.text_black_1,
 );
 
 final ElevatedButtonThemeData _elevatedButtonTheme = ElevatedButtonThemeData(

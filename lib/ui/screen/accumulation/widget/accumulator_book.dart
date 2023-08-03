@@ -138,7 +138,7 @@ class ItemBuilder extends StatelessWidget {
 
     return Container(
       decoration: BoxDecoration(
-        color: themeMode.isLight ? AppColors.neutral_07 : AppColors.neutral_01,
+        color: themeMode.isLight ? AppColors.neutral_07 : AppColors.text_black_1,
         borderRadius: BorderRadius.circular(12),
       ),
       margin: const EdgeInsets.only(top: 16),
@@ -165,7 +165,7 @@ class ItemBuilder extends StatelessWidget {
                 Text(
                   title,
                   style: textTheme.bodySmall
-                      ?.copyWith(color: AppColors.neutral_02),
+                      ?.copyWith(color: AppColors.neutral_03),
                 ),
                 const SizedBox(height: 4),
                 Text(
@@ -189,7 +189,7 @@ class ItemBuilder extends StatelessWidget {
           height: 40,
           padding: const EdgeInsets.symmetric(horizontal: 16),
           decoration: BoxDecoration(
-            color: themeMode.isLight ? AppColors.neutral_07 : AppColors.neutral_02,
+            color: themeMode.isLight ? AppColors.neutral_07 : AppColors.bg_share_inside_nav,
             borderRadius: BorderRadius.circular(12),
           ),
           child: Row(

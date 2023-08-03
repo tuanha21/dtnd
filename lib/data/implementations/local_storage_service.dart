@@ -253,8 +253,4 @@ class LocalStorageService implements ILocalStorageService {
     sharedPreferences.setString(pinCodeKey, pinCode);
   }
 
-  @override
-  Future<void> saveLanguage(String language) async {
-    sharedPreferences.setString(languageKey, language);
-  }
 }

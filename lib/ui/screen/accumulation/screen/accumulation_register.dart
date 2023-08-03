@@ -156,7 +156,7 @@ class _AccumulationRegisterState extends State<AccumulationRegister> {
                 decoration: BoxDecoration(
                   color: themeMode.isLight
                       ? AppColors.neutral_06
-                      : AppColors.neutral_01,
+                      : AppColors.bg_share_inside_nav,
                   borderRadius: BorderRadius.circular(12),
                 ),
                 padding: const EdgeInsets.only(
@@ -191,7 +191,7 @@ class _AccumulationRegisterState extends State<AccumulationRegister> {
                       decoration: BoxDecoration(
                         color: themeMode.isLight
                             ? AppColors.neutral_06
-                            : AppColors.neutral_01,
+                            : AppColors.bg_share_inside_nav,
                         borderRadius: BorderRadius.circular(12),
                       ),
                       child: Obx(
@@ -263,7 +263,7 @@ class _AccumulationRegisterState extends State<AccumulationRegister> {
                             width: MediaQuery.of(context).size.width / 375 * 95,
                             alignment: Alignment.center,
                             decoration: BoxDecoration(
-                              color: themeMode.isLight ? AppColors.neutral_07 : AppColors.neutral_01,
+                              color: themeMode.isLight ? AppColors.neutral_07 : AppColors.bg_share_inside_nav,
                               borderRadius: BorderRadius.circular(12),
                               border: Border.all(
                                 color: _selectedMethod[index] == true

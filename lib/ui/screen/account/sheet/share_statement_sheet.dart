@@ -10,6 +10,9 @@ import 'package:dtnd/utilities/time_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../../config/service/app_services.dart';
+import '../../../theme/app_color.dart';
+
 class ShareStatementSheet extends StatefulWidget {
   const ShareStatementSheet({super.key});
 
@@ -73,7 +76,7 @@ class _ShareStatementSheetState extends State<ShareStatementSheet> {
 
   @override
   Widget build(BuildContext context) {
-    final ThemeData themeData = Theme.of(context);
+    final ThemeMode themeMode = AppService.instance.themeMode.value;
 
     return Scaffold(
       appBar: SimpleAppbar(
@@ -91,7 +94,7 @@ class _ShareStatementSheetState extends State<ShareStatementSheet> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   DayInput(
-                    color: themeData.colorScheme.background,
+                    color: themeMode.isLight ? AppColors.neutral_06 : AppColors.text_black_1,
                     initialDay: fromDay,
                     firstDay: firstDay,
                     lastDay: lastDay,
@@ -104,7 +107,7 @@ class _ShareStatementSheetState extends State<ShareStatementSheet> {
                   ),
                   const Text("-"),
                   DayInput(
-                    color: themeData.colorScheme.background,
+                    color: themeMode.isLight ? AppColors.neutral_06 : AppColors.text_black_1,
                     initialDay: toDay,
                     firstDay: firstDay,
                     lastDay: lastDay,

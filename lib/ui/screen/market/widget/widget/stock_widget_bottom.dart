@@ -30,7 +30,7 @@ class _StockWidgetChartState extends State<StockWidgetChart> {
 
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 22.5),
-      decoration: BoxDecoration(color: themeMode.isLight ? AppColors.light_bg : AppColors.neutral_01),
+      decoration: BoxDecoration(color: themeMode.isLight ? AppColors.light_bg : AppColors.text_black_1),
       child: Row(
         children: [
           StockIcon(
@@ -47,7 +47,7 @@ class _StockWidgetChartState extends State<StockWidgetChart> {
                   style: Theme.of(context)
                       .textTheme
                       .titleSmall!
-                      .copyWith(fontWeight: FontWeight.w600),
+                      .copyWith(fontWeight: FontWeight.w600,color: themeMode.isLight ? null : AppColors.neutral_07),
                 ),
                 Text(
                   widget.stockModel.nameShort ?? "",

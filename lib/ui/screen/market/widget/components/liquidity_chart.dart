@@ -6,6 +6,8 @@ import 'package:dtnd/utilities/num_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 
+import '../../../../../config/service/app_services.dart';
+
 //custom chart
 
 class LiquidityChart extends StatefulWidget {
@@ -20,6 +22,8 @@ class LiquidityChart extends StatefulWidget {
 class _LiquidityChartState extends State<LiquidityChart> {
   @override
   Widget build(BuildContext context) {
+    final ThemeMode themeMode = AppService.instance.themeMode.value;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -167,16 +171,41 @@ class _LiquidityChartState extends State<LiquidityChart> {
                     // secondaryMeasureAxis: charts.NumericAxisSpec(
                     //     tickProviderSpec:
                     //         charts.BasicNumericTickProviderSpec(desiredTickCount: 10)),
-                    domainAxis: const charts.OrdinalAxisSpec(
+                    domainAxis: charts.OrdinalAxisSpec(
                       renderSpec: charts.SmallTickRendererSpec(
                         labelRotation: 45,
+                        labelStyle: charts.TextStyleSpec(
+                            fontSize: 8,
+                            color: themeMode.isLight
+                                ? null
+                                : charts.ColorUtil.fromDartColor(AppColors.neutral_07)),
+                        lineStyle: charts.LineStyleSpec(
+                            dashPattern: [4],
+                            color: themeMode.isLight
+                                ? null
+                                : charts.ColorUtil.fromDartColor(AppColors.neutral_02)),
                       ),
                     ),
-                    secondaryMeasureAxis: const charts.NumericAxisSpec(
-                      tickProviderSpec: charts.BasicNumericTickProviderSpec(
+                    secondaryMeasureAxis: charts.NumericAxisSpec(
+                      tickProviderSpec: const charts.BasicNumericTickProviderSpec(
                           // zeroBound: true,
                           ),
                       showAxisLine: false,
+                      renderSpec: charts.GridlineRendererSpec(
+
+                        labelStyle: charts.TextStyleSpec(
+                          fontSize: 8,
+                          color: themeMode.isLight
+                              ? null
+                              : charts.ColorUtil.fromDartColor(AppColors.neutral_07),
+                        ),
+                        lineStyle: charts.LineStyleSpec(
+                          dashPattern: [4],
+                          color: themeMode.isLight
+                              ? null
+                              : charts.ColorUtil.fromDartColor(AppColors.neutral_02),
+                        ),
+                      ),
                       // showAxisLine: false,
                     ),
                   ),
@@ -188,18 +217,18 @@ class _LiquidityChartState extends State<LiquidityChart> {
     );
   }
 
-  // final axis = charts.NumericAxisSpec(
-  //   tickProviderSpec:
-  //       const charts.BasicNumericTickProviderSpec(dataIsInWholeNumbers: false),
-  //   showAxisLine: false,
-  //   renderSpec: charts.GridlineRendererSpec(
-  //       labelStyle: const charts.TextStyleSpec(
-  //           color: charts.MaterialPalette.white, fontSize: 12),
-  //       lineStyle: charts.LineStyleSpec(
-  //         color: charts.ColorUtil.fromDartColor(AppColors.primary_01),
-  //         thickness: 0,
-  //       )),
-  // );
+  final axis = charts.NumericAxisSpec(
+    tickProviderSpec:
+        const charts.BasicNumericTickProviderSpec(dataIsInWholeNumbers: false),
+    showAxisLine: false,
+    renderSpec: charts.GridlineRendererSpec(
+        labelStyle: const charts.TextStyleSpec(
+            color: charts.MaterialPalette.white, fontSize: 12),
+        lineStyle: charts.LineStyleSpec(
+          color: charts.ColorUtil.fromDartColor(AppColors.primary_01),
+          thickness: 0,
+        )),
+  );
 }
 
 class _TooltipData extends TooltipData {

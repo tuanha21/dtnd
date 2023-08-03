@@ -123,6 +123,7 @@ class _StockOrderConfirmSheetState extends State<StockOrderConfirmSheet>
             const SizedBox(height: 20),
             Container(
               padding: const EdgeInsets.all(16),
+              margin: const EdgeInsets.only(bottom: 10),
               decoration: BoxDecoration(
                 borderRadius: const BorderRadius.all(Radius.circular(12)),
                 color: themeMode.isLight ? AppColors.neutral_06 : AppColors.neutral_01,

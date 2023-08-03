@@ -57,7 +57,6 @@ class _PortfolioAndRightPanelState extends State<PortfolioAndRightPanel>
   Widget build(BuildContext context) {
     // final textTheme = Theme.of(context).textTheme;
     final themeMode = AppService.instance.themeMode.value;
-    final ThemeData themeData = Theme.of(context);
 
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),

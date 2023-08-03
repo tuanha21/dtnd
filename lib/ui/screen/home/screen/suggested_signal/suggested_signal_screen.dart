@@ -12,6 +12,7 @@ import 'package:dtnd/ui/widget/empty_list_widget.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../../=models=/ui_model/user_cmd.dart';
+import '../../../../../config/service/app_services.dart';
 import '../../../../../generated/l10n.dart';
 import '../../../../theme/app_image.dart';
 import '../../../exchange_stock/order_note/data/order_filter_data.dart';
@@ -117,6 +118,8 @@ class _SuggestedSignalScreenState extends State<SuggestedSignalScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final ThemeMode themeMode = AppService.instance.themeMode.value;
+
     return Scaffold(
       appBar: SimpleAppbar(
         title: S.of(context).signal_efficiency,
@@ -165,9 +168,9 @@ class _SuggestedSignalScreenState extends State<SuggestedSignalScreen> {
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Container(
                 padding: const EdgeInsets.symmetric(horizontal: 10),
-                decoration: const BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.all(Radius.circular(12))),
+                decoration: BoxDecoration(
+                    color: themeMode.isLight ? Colors.white : AppColors.bg_share_inside_nav,
+                    borderRadius: const BorderRadius.all(Radius.circular(12))),
                 child: Row(
                   children: [
                     for (_Period period in _Period.values)
@@ -193,9 +196,9 @@ class _SuggestedSignalScreenState extends State<SuggestedSignalScreen> {
                 child: Container(
                   margin: const EdgeInsets.symmetric(horizontal: 16),
                   padding: const EdgeInsets.symmetric(horizontal: 16),
-                  decoration: const BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.all(Radius.circular(12))),
+                  decoration: BoxDecoration(
+                      color:  themeMode.isLight ? Colors.white : AppColors.bg_share_inside_nav,
+                      borderRadius: const BorderRadius.all(Radius.circular(12))),
                   child: ListView(
                     shrinkWrap: true,
                     children: [
@@ -205,6 +208,7 @@ class _SuggestedSignalScreenState extends State<SuggestedSignalScreen> {
                             children: [
                               const Divider(
                                 height: 8,
+                                color: AppColors.neutral_03,
                               ),
                               SuggestedSignalComponent(
                                   onTap: onTap, data: datas.elementAt(i)),
@@ -236,6 +240,8 @@ class _PeriodButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final ThemeMode themeMode = AppService.instance.themeMode.value;
+
     return SingleColorTextButton(
       padding: const EdgeInsets.symmetric(vertical: 4),
       text: period.title,
@@ -245,7 +251,7 @@ class _PeriodButton extends StatelessWidget {
       ),
       color: selectedPeriod == period
           ? AppColors.primary_01
-          : AppColors.neutral_05,
+          : themeMode.isLight ? AppColors.neutral_05 : AppColors.neutral_03,
       onTap: () => onTap.call(period),
     );
   }

@@ -95,7 +95,7 @@ class _AccountAssetOverviewWidgetState
                   ),
                 ],
               ),
-              const Divider(height: 33),
+              Divider(height: 33,color: themeMode.isLight ? AppColors.neutral_04 : AppColors.neutral_03,),
               // Row(
               //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
               //   children: [
@@ -162,7 +162,7 @@ class _AccountAssetOverviewWidgetState
                               Container(
                                 height: 80,
                                 width: 2,
-                                color: const Color(0xFFD8EBFD),
+                                color: themeMode.isLight ? Color(0xFFD8EBFD) : AppColors.bg_share_inside_nav,
                               ),
                               const SizedBox(width: 14),
                               Expanded(
@@ -292,7 +292,7 @@ class _AccountAssetOverviewWidgetState
                               Container(
                                 height: 56,
                                 width: 2,
-                                color: const Color(0xFFD8EBFD),
+                                color: themeMode.isLight ? Color(0xFFD8EBFD) : AppColors.bg_share_inside_nav,
                               ),
                               const SizedBox(width: 14),
                               Expanded(

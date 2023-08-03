@@ -337,7 +337,7 @@ class HomeIndexItem extends StatelessWidget {
     }
     return Material(
       borderRadius: const BorderRadius.all(Radius.circular(8)),
-      color: themeData.colorScheme.background,
+      color: Colors.transparent,
       child: InkWell(
         onTap: onTap,
         borderRadius: const BorderRadius.all(Radius.circular(8)),

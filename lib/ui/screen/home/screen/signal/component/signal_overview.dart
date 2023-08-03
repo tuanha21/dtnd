@@ -85,7 +85,7 @@ class SignalOverview extends StatelessWidget {
             height: 60,
             padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
             decoration: BoxDecoration(
-              color: themeMode.isLight ? AppColors.neutral_06 : AppColors.text_black_1,
+              color: themeMode.isLight ? AppColors.neutral_06 : AppColors.bg_share_inside_nav,
               borderRadius: const BorderRadius.all(Radius.circular(8)),
             ),
             child: Row(
@@ -94,25 +94,27 @@ class SignalOverview extends StatelessWidget {
                 _Column(
                   S.of(context).purchase_price,
                   detail?.cBUYPRICE.toString() ?? "-",
-                  textStyle: textTheme.titleSmall,
+                  textStyle: textTheme.titleSmall?.copyWith(color: themeMode.isLight ? null : AppColors.neutral_07),
                 ),
-                const VerticalDivider(
+                VerticalDivider(
                   thickness: 1,
                   width: 1,
+                  color: themeMode.isLight ? null : AppColors.neutral_03,
                 ),
                 _Column(
                   S.of(context).profit_value,
                   "${detail?.cPC ?? "-"}%",
-                  textStyle: textTheme.titleSmall,
+                  textStyle: textTheme.titleSmall?.copyWith(color: themeMode.isLight ? null : AppColors.neutral_07),
                 ),
-                const VerticalDivider(
+                  VerticalDivider(
                   thickness: 1,
                   width: 1,
+                  color: themeMode.isLight ? null : AppColors.neutral_03,
                 ),
                 _Column(
                   S.of(context).risk,
                   "${detail?.rUIRO ?? "-"}%",
-                  textStyle: textTheme.titleSmall,
+                  textStyle: textTheme.titleSmall?.copyWith(color: themeMode.isLight ? null : AppColors.neutral_07),
                 ),
               ],
             ),

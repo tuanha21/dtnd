@@ -9,6 +9,8 @@ import 'package:dtnd/ui/widget/icon/stock_icon.dart';
 import 'package:dtnd/utilities/num_utils.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../../../config/service/app_services.dart';
+
 class SuggestedSignalComponent extends StatefulWidget {
   const SuggestedSignalComponent(
       {super.key, required this.data, required this.onTap});
@@ -46,6 +48,8 @@ class _SuggestedSignalComponentState extends State<SuggestedSignalComponent> {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
+    final ThemeMode themeMode = AppService.instance.themeMode.value;
+
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4),
       child: Material(
@@ -81,7 +85,7 @@ class _SuggestedSignalComponentState extends State<SuggestedSignalComponent> {
                         children: [
                           Text(
                             widget.data.cSHARECODE,
-                            style: textTheme.titleSmall,
+                            style: textTheme.titleSmall?.copyWith(color: themeMode.isLight ? null : AppColors.neutral_07),
                           ),
                           Row(
                             children: [
@@ -123,7 +127,7 @@ class _SuggestedSignalComponentState extends State<SuggestedSignalComponent> {
                         const SizedBox(height: 4),
                         Text(
                           widget.data.type,
-                          style: textTheme.titleSmall,
+                          style: textTheme.titleSmall?.copyWith(color: themeMode.isLight ? null : AppColors.neutral_07),
                         ),
                       ],
                     ),
@@ -142,7 +146,7 @@ class _SuggestedSignalComponentState extends State<SuggestedSignalComponent> {
                         const SizedBox(height: 4),
                         Text(
                           widget.data.t.toString(),
-                          style: textTheme.titleSmall,
+                          style: textTheme.titleSmall?.copyWith(color: themeMode.isLight ? null : AppColors.neutral_07),
                           textAlign: TextAlign.center,
                         ),
                       ],

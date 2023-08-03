@@ -267,6 +267,7 @@ class _StockOrderSheetState extends State<StockOrderSheet>
                     ],
                   ),
                   Material(
+                    color: Colors.transparent,
                     borderRadius: const BorderRadius.all(Radius.circular(6)),
                     child: InkWell(
                       onTap: () {
@@ -280,13 +281,18 @@ class _StockOrderSheetState extends State<StockOrderSheet>
                       borderRadius: const BorderRadius.all(Radius.circular(6)),
                       child: Ink(
                         padding: const EdgeInsets.all(8),
-                        decoration: BoxDecoration(
-                          color: themeMode.isLight ? AppColors.primary_03 : AppColors.neutral_03,
+                        decoration: const BoxDecoration(
+                          color: AppColors.primary_03,
                           borderRadius: BorderRadius.all(Radius.circular(6)),
                         ),
                         child: SizedBox.square(
                             dimension: 16,
-                            child: Image.asset(AppImages.filter_icon)),
+                            child: Image.asset(
+                              AppImages.filter_icon,
+                              color: themeMode.isLight
+                                  ? null
+                                  : AppColors.neutral_01,
+                            )),
                       ),
                     ),
                   ),
@@ -343,7 +349,10 @@ class _StockOrderSheetState extends State<StockOrderSheet>
                       ),
                       Text(
                         "${NumUtils.formatInteger(stockCashBalanceModel?.pp, "0")}đ",
-                        style: textTheme.titleSmall,
+                        style: textTheme.titleSmall?.copyWith(
+                            color: themeMode.isLight
+                                ? null
+                                : AppColors.neutral_07),
                       ),
                     ],
                   ),

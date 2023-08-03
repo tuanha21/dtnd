@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../config/service/app_services.dart';
+import '../../theme/app_color.dart';
 import 'back_button.dart';
 import 'close_button.dart';
 
@@ -12,6 +13,7 @@ class SheetHeader extends StatelessWidget {
     this.implementDivider = true,
     this.backData,
   });
+
   final String? title;
   final bool implementBackButton;
   final bool implementDivider;
@@ -52,6 +54,7 @@ class SheetHeader extends StatelessWidget {
           implementDivider
               ? const Divider(
                   thickness: 1,
+                  color: AppColors.neutral_03,
                 )
               : Container(),
         ],

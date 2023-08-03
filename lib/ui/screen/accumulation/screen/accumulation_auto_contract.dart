@@ -12,6 +12,7 @@ import 'package:dtnd/utilities/num_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../../config/service/app_services.dart';
 import '../widget/row_information.dart';
 
 class AccumulationAutoContract extends StatefulWidget {
@@ -33,6 +34,7 @@ class _AccumulationAutoContractState extends State<AccumulationAutoContract> {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
+    final ThemeMode themeMode = AppService.instance.themeMode.value;
 
     return Scaffold(
       appBar: SimpleAppbar(
@@ -61,7 +63,7 @@ class _AccumulationAutoContractState extends State<AccumulationAutoContract> {
               Container(
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: themeMode.isLight ? Colors.white : AppColors.bg_share_inside_nav,
                     borderRadius: BorderRadius.circular(8)),
                 child: Column(
                   children: [
@@ -114,7 +116,7 @@ class _AccumulationAutoContractState extends State<AccumulationAutoContract> {
                       padding:
                           const EdgeInsets.only(top: 12, left: 10, right: 10),
                       decoration: BoxDecoration(
-                          color: AppColors.neutral_06,
+                          color: themeMode.isLight ? Colors.white : AppColors.text_black_1,
                           borderRadius: BorderRadius.circular(8)),
                       child: Column(
                         children: [

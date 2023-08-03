@@ -98,7 +98,7 @@ class _AccumulatorBookDetailState extends State<AccumulatorBookDetail> {
                       child: Text(
                         S.of(context).accumulated_code,
                         style: textTheme.bodyMedium
-                            ?.copyWith(color: AppColors.neutral_02),
+                            ?.copyWith(color: AppColors.neutral_05),
                       ),
                     ),
                     Flexible(
@@ -149,11 +149,11 @@ class _AccumulatorBookDetailState extends State<AccumulatorBookDetail> {
                           Text(
                             S.of(context).start_date,
                             style: textTheme.bodySmall
-                                ?.copyWith(color: AppColors.neutral_04),
+                                ?.copyWith(color: AppColors.neutral_05),
                           ),
                           Text(S.of(context).end_date,
                               style: textTheme.bodySmall
-                                  ?.copyWith(color: AppColors.neutral_04)),
+                                  ?.copyWith(color: AppColors.neutral_05)),
                         ],
                       ),
                       const SizedBox(height: 10),
@@ -189,7 +189,7 @@ class _AccumulatorBookDetailState extends State<AccumulatorBookDetail> {
               children: [
                 Text(S.of(context).renewal_method,
                     style: textTheme.bodySmall?.copyWith(
-                      color: AppColors.neutral_02,
+                      color: AppColors.neutral_05,
                     )),
                 const SizedBox(height: 4),
                 Row(

@@ -34,6 +34,7 @@ class _HomeNewsState extends State<HomeNews> {
   @override
   Widget build(BuildContext context) {
     final themeMode = AppService.instance.themeMode.value;
+    final ThemeData themeData = Theme.of(context);
 
     return Obx(
       () {
@@ -45,7 +46,7 @@ class _HomeNewsState extends State<HomeNews> {
           return Container(
             padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
             decoration: BoxDecoration(
-                color: themeMode.isLight ? AppColors.neutral_07 : AppColors.bg_share_inside_nav,
+                color: themeData.colorScheme.onSurface,
                 borderRadius: const BorderRadius.all(Radius.circular(12))),
             child: Column(
               children: [
@@ -154,7 +155,7 @@ class HomeNewsCard extends StatelessWidget {
                             stockNews.title ?? "Title",
                             maxLines: 2,
                             textAlign: TextAlign.left,
-                            style: Theme.of(context).textTheme.titleSmall,
+                            style: Theme.of(context).textTheme.titleSmall?.copyWith(color: themeMode.isLight ? null : AppColors.neutral_07),
                           ),
                         ),
                       ],

@@ -3,6 +3,7 @@ import 'package:dtnd/=models=/response/stock_derivative_model.dart';
 import 'package:dtnd/data/implementations/data_center_service.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:flutter/material.dart';
+import '../../../../../config/service/app_services.dart';
 import '../../../../../generated/l10n.dart';
 import '../widget/derivative_component.dart';
 
@@ -34,6 +35,7 @@ class _DerivativeWidgetState extends State<DerivativeWidget> {
   @override
   Widget build(BuildContext context) {
     final ThemeData themeData = Theme.of(context);
+    final ThemeMode themeMode = AppService.instance.themeMode.value;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -118,7 +120,7 @@ class _DerivativeWidgetState extends State<DerivativeWidget> {
                         return Divider(
                           thickness: 2,
                           height: 0,
-                          color: themeData.colorScheme.background,
+                          color: themeMode.isLight ? AppColors.neutral_07 : AppColors.text_black_1,
                         );
                       });
                 } else {

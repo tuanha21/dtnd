@@ -30,7 +30,6 @@ class _AccumulationProductDetailState extends State<AccumulationProductDetail> {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
-    final ThemeData themeData = Theme.of(context);
     final themeMode = AppService.instance.themeMode.value;
 
 
@@ -61,7 +60,7 @@ class _AccumulationProductDetailState extends State<AccumulationProductDetail> {
               Container(
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
-                    color: themeMode.isLight ? AppColors.neutral_07 : AppColors.neutral_01,
+                    color: themeMode.isLight ? AppColors.neutral_07 : AppColors.bg_share_inside_nav,
                     borderRadius: BorderRadius.circular(8)),
                 child: Column(
                   children: [
@@ -98,7 +97,7 @@ class _AccumulationProductDetailState extends State<AccumulationProductDetail> {
                       padding:
                           const EdgeInsets.only(top: 12, left: 10, right: 10),
                       decoration: BoxDecoration(
-                          color: themeMode.isLight ? AppColors.neutral_07 : AppColors.neutral_01,
+                          color: themeMode.isLight ? AppColors.neutral_07 : AppColors.bg_share_inside_nav,
                           borderRadius: BorderRadius.circular(8)),
                       child: Column(
                         children: [

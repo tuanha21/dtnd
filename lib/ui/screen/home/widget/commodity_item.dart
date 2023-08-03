@@ -17,7 +17,6 @@ class CommodityItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ThemeData themeData = Theme.of(context);
     final themeMode = AppService.instance.themeMode.value;
 
     final img =
@@ -33,7 +32,7 @@ class CommodityItem extends StatelessWidget {
       };
     }
     return Material(
-      color: themeData.colorScheme.background,
+      color: Colors.transparent,
       child: InkWell(
         onTap: onTap,
         borderRadius: const BorderRadius.all(Radius.circular(8)),

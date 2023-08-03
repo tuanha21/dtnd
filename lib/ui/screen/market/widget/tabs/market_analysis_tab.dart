@@ -63,7 +63,8 @@ class _MarketAnalysisTabState extends State<MarketAnalysisTab>
           padding: const EdgeInsets.all(8),
           decoration: BoxDecoration(
               borderRadius: const BorderRadius.all(Radius.circular(12)),
-              color: themeData.colorScheme.background),
+              color: ThemeMode.isLight ? AppColors.neutral_07 : AppColors.bg_2
+          ),
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 8),
             child: Row(
@@ -76,7 +77,7 @@ class _MarketAnalysisTabState extends State<MarketAnalysisTab>
                       decoration: BoxDecoration(
                           borderRadius:
                               const BorderRadius.all(Radius.circular(8)),
-                          color: themeData.colorScheme.background),
+                          color: ThemeMode.isLight ? AppColors.neutral_07 : AppColors.text_black_1),
                       child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -162,7 +163,7 @@ class _MarketAnalysisTabState extends State<MarketAnalysisTab>
                       decoration: BoxDecoration(
                           borderRadius:
                               const BorderRadius.all(Radius.circular(8)),
-                          color: themeData.colorScheme.background),
+                          color: ThemeMode.isLight ? AppColors.neutral_07 : AppColors.text_black_1),
                       child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -232,7 +233,7 @@ class _MarketAnalysisTabState extends State<MarketAnalysisTab>
                     decoration: BoxDecoration(
                         borderRadius:
                             const BorderRadius.all(Radius.circular(8)),
-                        color: themeData.colorScheme.background),
+                        color: ThemeMode.isLight ? AppColors.neutral_07 : AppColors.text_black_1),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [

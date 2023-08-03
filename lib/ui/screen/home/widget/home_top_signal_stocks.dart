@@ -35,10 +35,9 @@ class _HomeTopSignalStocksState extends State<HomeTopSignalStocks> {
 
   @override
   Widget build(BuildContext context) {
-    final themeMode = AppService.instance.themeMode.value;
-
+    final ThemeData themeData = Theme.of(context);
     return Container(
-      color: themeMode.isLight ? AppColors.neutral_07 : AppColors.text_black_1,
+      color: themeData.colorScheme.onSurface,
       padding: const EdgeInsets.symmetric(vertical: 16),
       child: Column(
         children: [

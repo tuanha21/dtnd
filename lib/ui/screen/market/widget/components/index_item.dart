@@ -53,7 +53,9 @@ class MarketIndexItem extends StatelessWidget {
             decoration: BoxDecoration(
               border: border,
               borderRadius: const BorderRadius.all(Radius.circular(8)),
-              color: themeMode.isLight ? AppColors.neutral_07 : AppColors.text_black_1,
+              color: themeMode.isLight
+                  ? AppColors.neutral_07
+                  : AppColors.text_black_1,
             ),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -63,10 +65,11 @@ class MarketIndexItem extends StatelessWidget {
                   children: [
                     Text(
                       data.index.exchangeName,
-                      style: Theme.of(context)
-                          .textTheme
-                          .titleSmall!
-                          .copyWith(fontWeight: FontWeight.w600),
+                      style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                          fontWeight: FontWeight.w600,
+                          color: themeMode.isLight
+                              ? AppColors.bg_2
+                              : AppColors.neutral_07),
                     ),
                     Builder(builder: (context) {
                       return SizedBox.square(

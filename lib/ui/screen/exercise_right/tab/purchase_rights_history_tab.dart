@@ -81,7 +81,7 @@ class _PurchaseRightsHistoryTabState extends State<PurchaseRightsHistoryTab> {
                         });
                         _getData(fromDay: fromDay, toDay: toDay);
                       },
-                      color: themeMode.isLight ? AppColors.neutral_07 : AppColors.neutral_01,
+                    color: themeMode.isLight ? AppColors.neutral_06 : AppColors.text_black_1,
                   ),
                   const SizedBox(
                     width: 16,
@@ -97,7 +97,7 @@ class _PurchaseRightsHistoryTabState extends State<PurchaseRightsHistoryTab> {
                       });
                       _getData(fromDay: fromDay, toDay: toDay);
                     },
-                    color: themeMode.isLight ? AppColors.neutral_07 : AppColors.neutral_01,
+                    color: themeMode.isLight ? AppColors.neutral_06 : AppColors.text_black_1,
                   ),
                 ],
               ),

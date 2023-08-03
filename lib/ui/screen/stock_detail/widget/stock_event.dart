@@ -54,7 +54,7 @@ class _StockEventState extends State<StockEvent> {
           return Container(
             decoration: BoxDecoration(
               borderRadius: const BorderRadius.all(Radius.circular(12)),
-              color: themeMode.isLight ? AppColors.neutral_07 : AppColors.neutral_02,
+              color: themeMode.isLight ? AppColors.neutral_07 : AppColors.bg_share_inside_nav,
             ),
             child: ListView.separated(
                 shrinkWrap: true,
@@ -90,6 +90,9 @@ class EventCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final ThemeData themeData = Theme.of(context);
+    final ThemeMode themeMode = AppService.instance.themeMode.value;
+
     return GestureDetector(
       onTap: () {
         print(event.link);
@@ -102,7 +105,7 @@ class EventCard extends StatelessWidget {
               height: 60,
               width: 60,
               decoration: BoxDecoration(
-                  color: AppColors.neutral_06,
+                  color: themeData.colorScheme.onSurface,
                   borderRadius: BorderRadius.circular(4)),
               child: Column(
                 children: [
@@ -153,7 +156,7 @@ class EventCard extends StatelessWidget {
                       event.title ?? "Title",
                       maxLines: 2,
                       textAlign: TextAlign.left,
-                      style: Theme.of(context).textTheme.titleSmall,
+                      style: Theme.of(context).textTheme.titleSmall?.copyWith(color: themeMode.isLight ? null : AppColors.neutral_07),
                     ),
                   ),
                   Row(

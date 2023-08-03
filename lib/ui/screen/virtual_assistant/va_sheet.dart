@@ -210,6 +210,7 @@ class _VaSheetState extends State<VaSheet> with SingleTickerProviderStateMixin {
                     ],
                   ),
                   Material(
+                    color: Colors.transparent,
                     borderRadius: const BorderRadius.all(Radius.circular(6)),
                     child: InkWell(
                       onTap: () {
@@ -468,6 +469,7 @@ class _OrderTypeButton extends StatelessWidget {
         fontWeight: FontWeight.w500,
         color: selected ? Colors.white : AppColors.neutral_04);
     return Material(
+      color: Colors.transparent,
       child: InkWell(
         onTap: () => select.call(orderType),
         borderRadius: const BorderRadius.all(Radius.circular(4)),

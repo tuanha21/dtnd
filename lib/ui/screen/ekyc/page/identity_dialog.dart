@@ -2,6 +2,8 @@ import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../config/service/app_services.dart';
+
 class IdentityDialog extends StatelessWidget {
   const IdentityDialog({super.key});
 
@@ -10,13 +12,15 @@ class IdentityDialog extends StatelessWidget {
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
     final textTheme = Theme.of(context).textTheme;
+    final ThemeMode themeMode = AppService.instance.themeMode.value;
+
 
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
       margin: EdgeInsets.symmetric(
-          horizontal: width / 375 * 24, vertical: height / 812 * 180),
+          horizontal: width / 375 * 24, vertical: height / 812 * 160),
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12), color: Colors.white),
+          borderRadius: BorderRadius.circular(12), color: themeMode.isLight ? Colors.white : AppColors.text_black_1),
       child: Column(children: [
         SizedBox.square(
           dimension: 200,
@@ -25,11 +29,12 @@ class IdentityDialog extends StatelessWidget {
         const SizedBox(height: 30),
         Text('Xác minh eKYC thành công',
             style: textTheme.labelLarge?.copyWith(
-                color: AppColors.text_black, fontWeight: FontWeight.bold)),
+                color: themeMode.isLight ? AppColors.text_black : AppColors.neutral_07, fontWeight: FontWeight.bold)),
         const SizedBox(height: 20),
-        const Text(
+        Text(
           'Bạn đã có thể thực hiện các giao dịch trong ứng dụng DTND',
           textAlign: TextAlign.center,
+          style: TextStyle(color: themeMode.isLight ? AppColors.text_black : AppColors.neutral_07),
         ),
         const SizedBox(height: 20),
         Row(

@@ -52,11 +52,15 @@ class _TopIndexWidgetChartState extends State<TopIndexWidgetChart> {
                 onTap: () => showDialog<String>(
                   context: context,
                   builder: (BuildContext context) => Dialog(
-                    backgroundColor: themeMode.isLight ? AppColors.light_bg : AppColors.neutral_01,
+                    backgroundColor: themeMode.isLight
+                        ? AppColors.light_bg
+                        : AppColors.neutral_01,
                     child: Container(
                       padding: const EdgeInsets.all(16),
                       decoration: BoxDecoration(
-                          color: themeMode.isLight ? AppColors.light_bg : AppColors.neutral_01,
+                          color: themeMode.isLight
+                              ? AppColors.light_bg
+                              : AppColors.neutral_01,
                           borderRadius: BorderRadius.circular(8)),
                       width: MediaQuery.of(context).size.width,
                       child: Text(
@@ -117,6 +121,7 @@ class _TopIndexWidgetChartState extends State<TopIndexWidgetChart> {
                           labelAccessorFn: (Map<String, dynamic> model, _) =>
                               "${model['contribPoint'].toStringAsFixed(2)}",
                           data: list,
+                          // seriesColor: charts.ColorUtil.fromDartColor(AppColors.yellow),
                         )..setAttribute(
                             charts.measureAxisIdKey, "secondaryMeasureAxisId")
                       ],
@@ -128,14 +133,40 @@ class _TopIndexWidgetChartState extends State<TopIndexWidgetChart> {
                       // secondaryMeasureAxis: const charts.NumericAxisSpec(
                       //     showAxisLine: false,
                       //     renderSpec: charts.NoneRenderSpec()),
-                      domainAxis: const charts.OrdinalAxisSpec(
+                      domainAxis: charts.OrdinalAxisSpec(
                         showAxisLine: false,
                         renderSpec: charts.SmallTickRendererSpec(
-                            // labelRotation: 45,
-
-                            minimumPaddingBetweenLabelsPx: 0,
-                            labelStyle: charts.TextStyleSpec(fontSize: 10),
-                            lineStyle: charts.LineStyleSpec()),
+                          // labelRotation: 45,
+                          minimumPaddingBetweenLabelsPx: 0,
+                          labelStyle: charts.TextStyleSpec(
+                            fontSize: 10,
+                            color: themeMode.isLight
+                                ? null
+                                : charts.ColorUtil.fromDartColor(
+                                    AppColors.neutral_07),
+                          ),
+                          lineStyle: charts.LineStyleSpec(
+                            color: themeMode.isLight
+                                ? null
+                                : charts.ColorUtil.fromDartColor(
+                                    AppColors.neutral_02),
+                          ),
+                        ),
+                      ),
+                      secondaryMeasureAxis: charts.NumericAxisSpec(
+                        renderSpec: charts.GridlineRendererSpec(
+                          labelStyle: charts.TextStyleSpec(
+                              color: themeMode.isLight
+                                  ? null
+                                  : charts.ColorUtil.fromDartColor(
+                                      AppColors.neutral_07)),
+                          lineStyle: charts.LineStyleSpec(
+                            color: themeMode.isLight
+                                ? null
+                                : charts.ColorUtil.fromDartColor(
+                                    AppColors.neutral_02),
+                          ),
+                        ),
                       ),
                       barRendererDecorator: charts.BarLabelDecorator<String>(),
                       behaviors: [

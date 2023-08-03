@@ -208,6 +208,7 @@ class _TrashComponentState extends State<TrashComponent> {
       });
     }
     return Material(
+      color: Colors.transparent,
       borderRadius: const BorderRadius.all(Radius.circular(8)),
       child: InkWell(
         onTap: () {

@@ -17,6 +17,7 @@ import 'package:dtnd/ui/widget/overlay/login_first_dialog.dart';
 import 'package:dtnd/utilities/num_utils.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../../config/service/app_services.dart';
 import 'component/asset_stock_detail_overview.dart';
 import 'tab/closed_deal_tab.dart';
 import 'tab/history_tab.dart';
@@ -70,6 +71,8 @@ class _AssetStockDetailScreenState extends State<AssetStockDetailScreen>
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
+    final ThemeMode themeMode = AppService.instance.themeMode.value;
+
     return Scaffold(
       appBar: AssetStockDetailAppbar(
         stockCode: widget.stockCode,
@@ -147,9 +150,9 @@ class _AssetStockDetailScreenState extends State<AssetStockDetailScreen>
             child: Container(
               height: 106,
               padding: const EdgeInsets.all(8),
-              decoration: const BoxDecoration(
+              decoration: BoxDecoration(
                 borderRadius: BorderRadius.all(Radius.circular(12)),
-                color: AppColors.neutral_06,
+                color: themeMode.isLight ? AppColors.neutral_06 : AppColors.bg_share_inside_nav,
               ),
               child: Row(
                 children: [
@@ -228,9 +231,9 @@ class _AssetStockDetailScreenState extends State<AssetStockDetailScreen>
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Container(
                 padding: const EdgeInsets.all(16),
-                decoration: const BoxDecoration(
+                decoration: BoxDecoration(
                     borderRadius: BorderRadius.all(Radius.circular(12)),
-                    color: Colors.white),
+                    color: themeMode.isLight ? Colors.white : AppColors.bg_share_inside_nav),
                 child: Column(
                   children: [
                     TabBar(

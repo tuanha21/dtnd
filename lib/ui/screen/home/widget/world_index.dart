@@ -31,7 +31,7 @@ class HomeWorldIndexItem extends StatelessWidget {
       };
     }
     return Material(
-      color: themeData.colorScheme.background,
+      color: Colors.transparent,
       child: InkWell(
         onTap: onTap,
         borderRadius: const BorderRadius.all(Radius.circular(8)),

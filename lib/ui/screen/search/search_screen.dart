@@ -247,7 +247,7 @@ class _SearchScreenState extends State<SearchScreen>
                                                     .titleSmall!
                                                     .copyWith(
                                                         fontWeight:
-                                                            FontWeight.w600),
+                                                            FontWeight.w600,color: themeMode.isLight ? null : AppColors.neutral_07),
                                               ),
                                               const SizedBox(width: 3),
                                               Text(

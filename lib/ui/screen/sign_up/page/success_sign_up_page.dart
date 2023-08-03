@@ -2,6 +2,7 @@ import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../config/service/app_services.dart';
 import '../../../theme/app_image.dart';
 import '../../../theme/app_textstyle.dart';
 import '../business/signup_cmd.dart';
@@ -12,6 +13,8 @@ class SuccessSignUpPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final mediaQueryData = MediaQuery.of(context);
+    final ThemeMode themeMode = AppService.instance.themeMode.value;
+
     return Container(
       alignment: Alignment.center,
       padding: EdgeInsets.only(bottom: mediaQueryData.viewInsets.bottom),
@@ -20,7 +23,7 @@ class SuccessSignUpPage extends StatelessWidget {
         padding: const EdgeInsets.only(
             top: 40.0, left: 10.0, right: 10.0, bottom: 10.0),
         child: Material(
-          color: AppColors.light_bg,
+          color: themeMode.isLight ? AppColors.light_bg : AppColors.text_black_1,
           shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.all(
               Radius.circular(10),
@@ -34,7 +37,7 @@ class SuccessSignUpPage extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
                   Container(
-                    color: AppColors.light_bg,
+                    color: themeMode.isLight ? AppColors.light_bg : AppColors.text_black_1,
                     child: Container(
                       padding: EdgeInsets.zero,
                       width: MediaQuery.of(context).size.width,
@@ -52,11 +55,11 @@ class SuccessSignUpPage extends StatelessWidget {
                                   const EdgeInsets.only(left: 16, right: 16),
                               child: Text(
                                 S.of(context).info_sent_to_email,
-                                style: const TextStyle(
+                                style: TextStyle(
                                     fontSize: 16,
                                     height: 1.4,
                                     fontWeight: FontWeight.w500,
-                                    color: AppColors.text_grey_1),
+                                    color: themeMode.isLight ? AppColors.text_grey_1 : AppColors.neutral_07),
                                 textAlign: TextAlign.center,
                               ),
                             ),

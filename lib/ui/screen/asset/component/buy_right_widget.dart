@@ -102,7 +102,7 @@ class _BuyRightWidgetState extends State<BuyRightWidget> {
                           children: [
                             Text(
                               widget.data?.cRECEIVESHARECODE ?? "-",
-                              style: textTheme.titleSmall,
+                              style: textTheme.titleSmall?.copyWith(color: themeMode.isLight ? null : AppColors.neutral_07),
                             ),
                             Text(
                               (widget.data?.canRegistered ?? false)
@@ -142,13 +142,13 @@ class _BuyRightWidgetState extends State<BuyRightWidget> {
                         Text(
                           S.of(context).still_to_be_purchased_payable,
                           style: AppTextStyle.labelSmall_10
-                              .copyWith(color: AppColors.neutral_01),
+                              .copyWith(color: themeMode.isLight ? AppColors.neutral_01 : AppColors.neutral_07),
                         ),
                         const SizedBox(height: 4),
                         Text(
                           "${NumUtils.formatInteger(widget.data?.shareAvailBuy)}/${NumUtils.formatDouble(widget.data?.cashAvailRight)}",
                           style: AppTextStyle.labelMedium_12
-                              .copyWith(color: AppColors.neutral_03),
+                              .copyWith(color: themeMode.isLight ? AppColors.neutral_03 : AppColors.neutral_07),
                         ),
                       ],
                     ),
@@ -160,7 +160,7 @@ class _BuyRightWidgetState extends State<BuyRightWidget> {
                         Text(
                           S.of(context).closing_date,
                           style: AppTextStyle.labelSmall_10
-                              .copyWith(color: AppColors.neutral_01),
+                              .copyWith(color: themeMode.isLight ? AppColors.neutral_01 : AppColors.neutral_07),
                         ),
                         const SizedBox(height: 4),
                         Text(
@@ -178,9 +178,10 @@ class _BuyRightWidgetState extends State<BuyRightWidget> {
                 child: Container(
                   height: 134,
                   margin: const EdgeInsets.symmetric(vertical: 8),
+                  padding: EdgeInsets.all(8),
                   decoration: BoxDecoration(
                     borderRadius: const BorderRadius.all(Radius.circular(12)),
-                    color: themeMode.isDark ? AppColors.text_black_1 : AppColors.neutral_06,
+                    color: themeMode.isDark ? AppColors.bg_share_inside_nav : AppColors.neutral_06,
                   ),
                   child: Column(
                     children: [
@@ -274,6 +275,7 @@ class _BuyRightWidgetState extends State<BuyRightWidget> {
           ),
         ),
         Material(
+          color: Colors.transparent,
           borderRadius:
               const BorderRadius.vertical(bottom: Radius.circular(12)),
           child: InkWell(
@@ -301,6 +303,7 @@ class _BuyRightWidgetState extends State<BuyRightWidget> {
             ),
           ),
         ),
+        themeMode.isDark ? const Divider(height: 10,color: AppColors.neutral_07,) : const SizedBox()
       ],
     );
   }

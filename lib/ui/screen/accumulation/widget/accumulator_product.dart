@@ -23,6 +23,7 @@ class _AccumulatorProductState extends State<AccumulatorProduct> {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
+    final ThemeMode themeMode = AppService.instance.themeMode.value;
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -111,7 +112,7 @@ class ItemBuilder extends StatelessWidget {
 
     return Container(
       decoration: BoxDecoration(
-        color: themeMode.isLight ? AppColors.neutral_07 : AppColors.neutral_01,
+        color: themeMode.isLight ? AppColors.neutral_07 : AppColors.text_black_1,
         borderRadius: BorderRadius.circular(12),
       ),
       margin: const EdgeInsets.only(top: 12),
@@ -189,7 +190,7 @@ class ItemBuilder extends StatelessWidget {
                   height: 60,
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   decoration: BoxDecoration(
-                    color: themeMode.isLight ? AppColors.neutral_07 : AppColors.neutral_02,
+                    color: themeMode.isLight ? AppColors.neutral_07 : AppColors.bg_share_inside_nav,
                     borderRadius: const BorderRadius.only(
                       topRight: Radius.circular(12),
                       bottomRight: Radius.circular(12),

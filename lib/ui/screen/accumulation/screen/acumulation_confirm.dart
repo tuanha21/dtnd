@@ -264,6 +264,8 @@ class _AccumulationConfirmState extends State<AccumulationConfirm> {
 
   Future<void> openChangeMethod(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
+    final ThemeMode themeMode = AppService.instance.themeMode.value;
+
     return showModalBottomSheet<void>(
       context: context,
       builder: (BuildContext context) {
@@ -310,7 +312,7 @@ class _AccumulationConfirmState extends State<AccumulationConfirm> {
                           padding: const EdgeInsets.only(left: 20),
                           margin: const EdgeInsets.only(bottom: 16),
                           decoration: BoxDecoration(
-                              color: Colors.white,
+                              color: themeMode.isLight ? Colors.white : AppColors.bg_share_inside_nav,
                               borderRadius: BorderRadius.circular(12),
                               border: Border.all(
                                   color: _selectedMethod[index] == true

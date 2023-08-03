@@ -62,7 +62,7 @@ class FinancialIndex extends StatelessWidget {
     return Container(
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
-          color: themeMode.isDark ? AppColors.neutral_01 : AppColors.neutral_06,
+          color: themeMode.isDark ? AppColors.bg_share_inside_nav : AppColors.neutral_06,
           borderRadius: const BorderRadius.all(
             Radius.circular(8),
           ),

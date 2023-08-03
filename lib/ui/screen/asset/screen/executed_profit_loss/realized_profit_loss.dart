@@ -172,7 +172,7 @@ class _RealizedProfitLossState extends State<RealizedProfitLoss> {
           children: [
             Container(
               decoration: BoxDecoration(
-                color: themeMode.isLight ? AppColors.light_bg : AppColors.neutral_01,
+                color: themeMode.isLight ? AppColors.light_bg : AppColors.text_black_1,
               ),
               height: kToolbarHeight,
               child: TextField(
@@ -186,7 +186,7 @@ class _RealizedProfitLossState extends State<RealizedProfitLoss> {
                         AppImages.search_icon,
                       ),
                     ),
-                    fillColor: themeMode.isLight ? AppColors.neutral_07 : AppColors.neutral_01,
+                    fillColor: themeMode.isLight ? AppColors.neutral_07 : AppColors.text_black_1,
                     suffixIconConstraints:
                         const BoxConstraints(maxWidth: 52, maxHeight: 20),
                     disabledBorder: InputBorder.none),
@@ -206,7 +206,7 @@ class _RealizedProfitLossState extends State<RealizedProfitLoss> {
                       });
                       getData();
                     },
-                    color: themeMode.isLight ? AppColors.neutral_07 : AppColors.neutral_01,
+                    color: themeMode.isLight ? AppColors.neutral_07 : AppColors.text_black_1,
                   ),
                 ),
                 const SizedBox(width: 8),
@@ -214,6 +214,7 @@ class _RealizedProfitLossState extends State<RealizedProfitLoss> {
                 const SizedBox(width: 8),
                 Expanded(
                   child: DayInput(
+                    color: themeMode.isLight ? AppColors.neutral_07 : AppColors.text_black_1,
                     initialDay: toDay,
                     firstDay: firstDay,
                     lastDay: lastDay,
@@ -223,7 +224,6 @@ class _RealizedProfitLossState extends State<RealizedProfitLoss> {
                       });
                       getData();
                     },
-                    color: themeMode.isLight ? AppColors.neutral_07 : AppColors.neutral_01,
                   ),
                 )
               ],
@@ -235,7 +235,7 @@ class _RealizedProfitLossState extends State<RealizedProfitLoss> {
               return Container(
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
-                  color: themeMode.isLight ? AppColors.light_bg : AppColors.neutral_01,
+                  color: themeMode.isLight ? AppColors.light_bg : AppColors.bg_share_inside_nav,
                   borderRadius: const BorderRadius.all(Radius.circular(8)),
                 ),
                 alignment: Alignment.center,
@@ -270,7 +270,7 @@ class _RealizedProfitLossState extends State<RealizedProfitLoss> {
                     return Container(
                       padding: const EdgeInsets.all(16),
                       decoration: BoxDecoration(
-                          color: AppColors.light_bg,
+                          color: themeMode.isLight ? AppColors.light_bg : AppColors.bg_share_inside_nav,
                           borderRadius: BorderRadius.circular(12)),
                       child: ListView.builder(
                         shrinkWrap: true,
@@ -308,7 +308,7 @@ class _RealizedProfitLossState extends State<RealizedProfitLoss> {
                     return Container(
                       padding: const EdgeInsets.all(16),
                       decoration: BoxDecoration(
-                          color: AppColors.light_bg,
+                          color: themeMode.isLight ? AppColors.light_bg : AppColors.bg_share_inside_nav,
                           borderRadius: BorderRadius.circular(12)),
                       child: Column(
                         children: [

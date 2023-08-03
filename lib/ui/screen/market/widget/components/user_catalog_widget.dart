@@ -150,6 +150,7 @@ class _UserCatalogWidgetState extends State<UserCatalogWidget> {
               currentCatalog.name != defaultCatalog.name,
           child: Container(
             padding: const EdgeInsets.all(18),
+            margin: const EdgeInsets.all(8),
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(12),
                 color: themeMode.isLight ? AppColors.neutral_06 : AppColors.neutral_01),
@@ -421,10 +422,10 @@ class _UserCatalogWidgetState extends State<UserCatalogWidget> {
                             );
                     },
                     separatorBuilder: (context, index) {
-                      return const Divider(
+                      return Divider(
                         thickness: 2,
                         height: 0,
-                        color: Color.fromRGBO(245, 248, 255, 1),
+                        color: themeMode.isLight ? const Color.fromRGBO(245, 248, 255, 1) : null,
                       );
                     },
                     itemCount: list!.length);
@@ -634,7 +635,7 @@ class _BottomAddStockState extends State<BottomAddStock> {
         decoration:  BoxDecoration(
             borderRadius: const BorderRadius.only(
                 topLeft: Radius.circular(12), topRight: Radius.circular(12)),
-            color: themeMode.isLight ? AppColors.light_bg : AppColors.neutral_01),
+            color: themeMode.isLight ? AppColors.light_bg : AppColors.text_black_1),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -713,7 +714,7 @@ class _BottomAddStockState extends State<BottomAddStock> {
                           },
                           separatorBuilder: (context, index) {
                             return Divider(
-                              thickness: 2,
+                              thickness: 1,
                               height: 0,
                               color: themeMode.isLight ? const Color.fromRGBO(245, 248, 255, 1) : AppColors.neutral_03,
                             );

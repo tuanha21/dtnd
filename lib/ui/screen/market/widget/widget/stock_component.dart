@@ -105,7 +105,7 @@ class _StockComponentState extends State<StockComponent> {
                     NumUtils.formatInteger10(widget.model.stockData.lot.value),
                     style: AppTextStyle.titleSmall_14.copyWith(
                         fontWeight: FontWeight.w500,
-                        color: const Color(0xFF566276)),
+                        color: themeMode.isLight ? const Color(0xFF566276) : AppColors.neutral_07),
                   ),
                 );
               }),

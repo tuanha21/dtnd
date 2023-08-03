@@ -53,6 +53,7 @@ class OrderOrderPanel extends StatelessWidget {
                 border = null;
               }
               return Material(
+                color: Colors.transparent,
                 borderRadius:
                     const BorderRadius.vertical(top: Radius.circular(12)),
                 child: InkWell(
@@ -92,7 +93,7 @@ class OrderOrderPanel extends StatelessWidget {
                           children: [
                             Text(
                               "${stockModel?.stock.stockCode ?? "-"} (${stockModel?.stock.postTo?.name ?? "-"})",
-                              style: textTheme.titleSmall,
+                              style: textTheme.titleSmall?.copyWith(color: themeMode.isLight ? null : AppColors.neutral_07),
                             ),
                             const SizedBox(width: 4),
                             SizedBox.square(
@@ -144,7 +145,7 @@ class OrderOrderPanel extends StatelessWidget {
                                                 "-"),
                                             style: AppTextStyle.labelSmall_10
                                                 .copyWith(
-                                              color: AppColors.neutral_02,
+                                              color: themeMode.isLight ? AppColors.neutral_02 : AppColors.neutral_07,
                                               fontWeight: FontWeight.w500,
                                             ),
                                           ),
@@ -165,7 +166,7 @@ class OrderOrderPanel extends StatelessWidget {
                                                 "-"),
                                             style: AppTextStyle.labelSmall_10
                                                 .copyWith(
-                                              color: AppColors.neutral_02,
+                                              color: themeMode.isLight ? AppColors.neutral_02 : AppColors.neutral_07,
                                               fontWeight: FontWeight.w500,
                                             ),
                                           ),
@@ -260,7 +261,7 @@ class OrderOrderPanel extends StatelessWidget {
               const EdgeInsets.only(bottom: 16, top: 40, left: 16, right: 16),
           decoration: BoxDecoration(
             borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
-            color: themeMode.isLight ? AppColors.neutral_06 : AppColors.neutral_01,
+            color: themeMode.isLight ? AppColors.neutral_06 : null,
           ),
           child: Column(
             children: [

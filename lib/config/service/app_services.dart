@@ -51,9 +51,9 @@ class AppService {
     if (themeMode == null) {
       await sharedPreferencesInstance.setString(
           "ThemeMode", ThemeMode.dark.name);
-      _themeMode = Rx<ThemeMode>(ThemeMode.light);
+      _themeMode.value = ThemeMode.light;
     } else {
-      // _themeMode = Rx<ThemeMode>(ThemeModeHelper.fromString(themeMode));
+      _themeMode.value = ThemeModeHelper.fromString(themeMode);
     }
 
     final languageCode = sharedPreferencesInstance.getString("Locale");
