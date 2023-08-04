@@ -3,6 +3,8 @@ import 'package:dtnd/utilities/num_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
+import '../../../../config/service/app_services.dart';
+
 class AssetDistributionChart extends StatefulWidget {
   const AssetDistributionChart({super.key, this.datas, this.total});
   final List<ChartData>? datas;
@@ -16,10 +18,12 @@ class _AssetDistributionChartState extends State<AssetDistributionChart> {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
+    final ThemeMode themeMode = AppService.instance.themeMode.value;
+
     return Container(
       padding: const EdgeInsets.all(10),
       decoration:
-          const BoxDecoration(shape: BoxShape.circle, color: Colors.white),
+           BoxDecoration(shape: BoxShape.circle, color: themeMode.isLight ? Colors.white : AppColors.text_black_1),
       child: AspectRatio(
         aspectRatio: 1.3,
         child: SfCircularChart(
@@ -90,10 +94,11 @@ class _AssetDistributionChartState extends State<AssetDistributionChart> {
                 yValueMapper: (ChartData data, _) => data.percent,
                 dataLabelMapper: (ChartData data, _) =>
                     "${data.label}\n${data.percent.toStringAsFixed(2)}%",
-                dataLabelSettings: const DataLabelSettings(
+                dataLabelSettings: DataLabelSettings(
                   isVisible: true,
                   // Positioning the data label
-                  margin: EdgeInsets.all(0),
+                  margin: const EdgeInsets.all(0),
+                  textStyle: TextStyle(color: themeMode.isLight ? null :Colors.white),
                   labelPosition: ChartDataLabelPosition.outside,
                 ),
               )

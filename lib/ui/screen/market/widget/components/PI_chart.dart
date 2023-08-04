@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_treemap/treemap.dart';
 
 import '../../../../../=models=/response/indContrib.dart';
+import '../../../../../config/service/app_services.dart';
 import '../../../../../generated/l10n.dart';
 import '../../../../../utilities/num_utils.dart';
 import '../../../../theme/app_color.dart';
@@ -18,6 +19,8 @@ class PiValueChart extends StatefulWidget {
 class _PiValueChartState extends State<PiValueChart> {
   @override
   Widget build(BuildContext context) {
+    final themeMode = AppService.instance.themeMode.value;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -54,7 +57,7 @@ class _PiValueChartState extends State<PiValueChart> {
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: Container(
                       height: 200,
-                      color: AppColors.bg_1,
+                      color: themeMode.isLight ? AppColors.bg_1 : AppColors.neutral_01,
                       child: SfTreemap(
                         dataCount: data0.length,
                         weightValueMapper: (int index) {
@@ -70,7 +73,7 @@ class _PiValueChartState extends State<PiValueChart> {
                               return Container(
                                 padding: const EdgeInsets.all(2.5),
                                 decoration:
-                                    const BoxDecoration(color: Colors.white),
+                                      BoxDecoration(color: themeMode.isLight ? AppColors.bg_1 : AppColors.neutral_01),
                                 child: Text(
                                   '${tile.group} : ${NumUtils.formatInteger(tile.weight)} ${S.of(context).million_lower}',
                                   overflow: TextOverflow.ellipsis,

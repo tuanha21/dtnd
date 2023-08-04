@@ -16,7 +16,7 @@ class RoundedTabbar extends StatelessWidget {
   Widget build(BuildContext context) {
     final themeMode = AppService.instance.themeMode.value;
     final tabbarBgColor =
-        themeMode.isLight ? AppColors.neutral_05 : AppColors.neutral_01;
+        themeMode.isLight ? AppColors.neutral_05 : AppColors.bg_2;
     return Container(
       padding: const EdgeInsets.all(5),
       decoration: BoxDecoration(
@@ -32,7 +32,7 @@ class RoundedTabbar extends StatelessWidget {
         ),
         labelColor: AppColors.neutral_07,
         unselectedLabelColor:
-            themeMode.isLight ? AppColors.neutral_01 : AppColors.neutral_07,
+            themeMode.isLight ? AppColors.neutral_01 : AppColors.neutral_04,
         labelPadding: const EdgeInsets.symmetric(horizontal: 18, vertical: 6),
         padding: EdgeInsets.zero,
         // indicatorSize: TabBarIndicatorSize.label,

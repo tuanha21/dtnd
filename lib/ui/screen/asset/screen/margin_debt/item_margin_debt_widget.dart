@@ -73,7 +73,7 @@ class _ItemRealizedState extends State<ItemMarginDebtWidget> {
           padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
           decoration: BoxDecoration(
             borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
-            color: themeMode.isDark ? AppColors.bg_2 : AppColors.neutral_06,
+            color: themeMode.isDark ? AppColors.bg_share_inside_nav : AppColors.neutral_06,
           ),
           child: Column(
             children: [
@@ -93,7 +93,7 @@ class _ItemRealizedState extends State<ItemMarginDebtWidget> {
                       children: [
                         Text(widget.detail?.cLOANID ?? '',
                             style: AppTextStyle.bodyMedium_14
-                                .copyWith(color: AppColors.neutral_01)),
+                                .copyWith(color: themeMode.isLight ? AppColors.neutral_01 : AppColors.neutral_07)),
                         const SizedBox(height: 2),
                         Row(
                           children: [
@@ -128,7 +128,7 @@ class _ItemRealizedState extends State<ItemMarginDebtWidget> {
                         Text(
                           widget.detail?.expireDate ?? '',
                           style: AppTextStyle.labelMedium_12
-                              .copyWith(color: AppColors.neutral_01),
+                              .copyWith(color: themeMode.isLight ? AppColors.neutral_01 : AppColors.neutral_07),
                         ),
                       ],
                     ),
@@ -146,7 +146,7 @@ class _ItemRealizedState extends State<ItemMarginDebtWidget> {
                         Text(
                           NumUtils.formatDouble(widget.detail?.loan),
                           style: AppTextStyle.labelMedium_12
-                              .copyWith(color: AppColors.neutral_01),
+                              .copyWith(color: themeMode.isLight ? AppColors.neutral_01 : AppColors.neutral_07),
                         ),
                       ],
                     ),
@@ -177,9 +177,10 @@ class _ItemRealizedState extends State<ItemMarginDebtWidget> {
                 child: Container(
                   height: 90,
                   margin: const EdgeInsets.symmetric(vertical: 8),
-                  decoration: const BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(12)),
-                    color: AppColors.neutral_06,
+                  padding: const EdgeInsets.all(4),
+                  decoration: BoxDecoration(
+                    borderRadius: const BorderRadius.all(Radius.circular(12)),
+                    color: themeMode.isLight ? AppColors.neutral_06 : AppColors.neutral_03,
                   ),
                   child: Column(
                     children: [
@@ -252,6 +253,7 @@ class _ItemRealizedState extends State<ItemMarginDebtWidget> {
           ),
         ),
         Material(
+          color: Colors.transparent,
           borderRadius:
               const BorderRadius.vertical(bottom: Radius.circular(12)),
           child: InkWell(
@@ -264,7 +266,7 @@ class _ItemRealizedState extends State<ItemMarginDebtWidget> {
               decoration: BoxDecoration(
                 borderRadius:
                     const BorderRadius.vertical(bottom: Radius.circular(12)),
-                color: themeMode.isDark ? AppColors.bg_2 : AppColors.neutral_05,
+                color: themeMode.isDark ? AppColors.bg_share_inside_nav : AppColors.neutral_05,
               ),
               child: Center(
                 child: AnimatedRotation(

@@ -1,11 +1,13 @@
+import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:dtnd/=models=/response/index_board.dart';
+import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:dtnd/utilities/charts_util.dart';
 import 'package:dtnd/utilities/num_utils.dart';
-import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
-import 'package:charts_flutter/flutter.dart' as charts;
+
+import '../../../../../config/service/app_services.dart';
 import '../../../../../generated/l10n.dart';
 import '../../../../theme/app_color.dart';
 
@@ -22,7 +24,9 @@ class MoneyChart extends StatefulWidget {
 class _MoneyChartState extends State<MoneyChart> {
   @override
   Widget build(BuildContext context) {
+    final themeMode = AppService.instance.themeMode.value;
     final size = MediaQuery.of(context).size;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -45,10 +49,15 @@ class _MoneyChartState extends State<MoneyChart> {
                 onTap: () => showDialog<String>(
                   context: context,
                   builder: (BuildContext context) => Dialog(
+                    backgroundColor: themeMode.isLight
+                        ? AppColors.bg_1
+                        : AppColors.neutral_01,
                     child: Container(
                       padding: const EdgeInsets.all(16),
                       decoration: BoxDecoration(
-                          color: AppColors.light_bg,
+                          color: themeMode.isLight
+                              ? AppColors.bg_1
+                              : AppColors.neutral_01,
                           borderRadius: BorderRadius.circular(8)),
                       width: MediaQuery.of(context).size.width,
                       child: Text(
@@ -155,10 +164,15 @@ class _MoneyChartState extends State<MoneyChart> {
                 onTap: () => showDialog<String>(
                   context: context,
                   builder: (BuildContext context) => Dialog(
+                    backgroundColor: themeMode.isLight
+                        ? AppColors.light_bg
+                        : AppColors.neutral_01,
                     child: Container(
                       padding: const EdgeInsets.all(16),
                       decoration: BoxDecoration(
-                          color: AppColors.light_bg,
+                          color: themeMode.isLight
+                              ? AppColors.light_bg
+                              : AppColors.neutral_01,
                           borderRadius: BorderRadius.circular(8)),
                       width: MediaQuery.of(context).size.width,
                       child: Text(
@@ -206,10 +220,30 @@ class _MoneyChartState extends State<MoneyChart> {
                         rightMarginSpec: charts.MarginSpec.fixedPixel(0),
                         bottomMarginSpec: charts.MarginSpec.fixedPixel(0),
                       ),
-                      secondaryMeasureAxis: const charts.NumericAxisSpec(
-                        viewport: charts.NumericExtents(0, 100),
-                        tickProviderSpec: charts.BasicNumericTickProviderSpec(
-                            desiredTickCount: 5),
+                      secondaryMeasureAxis:   charts.NumericAxisSpec(
+                        viewport: const charts.NumericExtents(0, 100),
+                        tickProviderSpec: const charts.BasicNumericTickProviderSpec(
+                            desiredTickCount: 5
+                        ),
+                        renderSpec: charts.GridlineRendererSpec(
+                          axisLineStyle: charts.LineStyleSpec(
+                            dashPattern: [4],
+                            thickness: 1,
+                            color: charts.ColorUtil.fromDartColor(AppColors.neutral_03),
+                          ),
+                          labelStyle: charts.TextStyleSpec(
+                            fontSize: 8,
+                            color: themeMode.isLight
+                                ? null
+                                : charts.ColorUtil.fromDartColor(AppColors.neutral_07),
+                          ),
+                          lineStyle: charts.LineStyleSpec(
+                            dashPattern: [4],
+                            color: themeMode.isLight
+                                ? null
+                                : charts.ColorUtil.fromDartColor(AppColors.neutral_02),
+                          ),
+                        ),
                       ),
                       domainAxis: domainSpec(list),
                       behaviors: [
@@ -310,6 +344,7 @@ class _MoneyChartState extends State<MoneyChart> {
   }
 
   charts.NumericAxisSpec domainSpec(List<IndexBoard> list) {
+    final ThemeMode themeMode = AppService.instance.themeMode.value;
     return charts.NumericAxisSpec(
         tickFormatterSpec: charts.BasicNumericTickFormatterSpec((index) {
           if (index! < list.length) {
@@ -319,17 +354,27 @@ class _MoneyChartState extends State<MoneyChart> {
           }
           return "";
         }),
-        renderSpec: const charts.GridlineRendererSpec(
-            axisLineStyle: charts.LineStyleSpec(
+        renderSpec: charts.GridlineRendererSpec(
+            axisLineStyle: const charts.LineStyleSpec(
               dashPattern: [4],
               thickness: 0,
               color: charts.Color(r: 74, g: 85, b: 104),
             ),
-            labelStyle: charts.TextStyleSpec(fontSize: 9),
-            lineStyle: charts.LineStyleSpec(dashPattern: [4])));
+            labelStyle: charts.TextStyleSpec(
+                fontSize: 9,
+                color: themeMode.isLight
+                    ? null
+                    : charts.ColorUtil.fromDartColor(AppColors.neutral_07)),
+            lineStyle: charts.LineStyleSpec(
+                dashPattern: [4],
+                color: themeMode.isLight
+                    ? null
+                    : charts.ColorUtil.fromDartColor(AppColors.neutral_02))));
   }
 
   charts.NumericAxisSpec axisSpec() {
+    final ThemeMode themeMode = AppService.instance.themeMode.value;
+
     return charts.NumericAxisSpec(
       showAxisLine: true,
       tickFormatterSpec: charts.BasicNumericTickFormatterSpec((measure) {
@@ -343,25 +388,35 @@ class _MoneyChartState extends State<MoneyChart> {
       }),
       tickProviderSpec: const charts.BasicNumericTickProviderSpec(
           dataIsInWholeNumbers: false, desiredTickCount: 4, zeroBound: false),
-      renderSpec: const charts.GridlineRendererSpec(
-          axisLineStyle: charts.LineStyleSpec(
+      renderSpec: charts.GridlineRendererSpec(
+          axisLineStyle: const charts.LineStyleSpec(
             dashPattern: [4],
             thickness: 0,
             color: charts.Color(r: 74, g: 85, b: 104),
           ),
-          labelStyle: charts.TextStyleSpec(fontSize: 9),
-          lineStyle: charts.LineStyleSpec(dashPattern: [4])),
+          labelStyle: charts.TextStyleSpec(
+              fontSize: 9,
+              color: themeMode.isLight
+                  ? null
+                  : charts.ColorUtil.fromDartColor(AppColors.neutral_07)),
+          lineStyle: charts.LineStyleSpec(
+              dashPattern: [4],
+              color: themeMode.isLight
+                  ? null
+                  : charts.ColorUtil.fromDartColor(AppColors.neutral_02))),
     );
   }
 }
 
 class _MoneyFlowTooltipData extends TooltipData {
   _MoneyFlowTooltipData._internal();
+
   static final _MoneyFlowTooltipData instance =
       _MoneyFlowTooltipData._internal();
 }
 
 class _TooltipData extends TooltipData {
   _TooltipData._internal();
+
   static final _TooltipData instance = _TooltipData._internal();
 }

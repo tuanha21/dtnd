@@ -4,6 +4,7 @@ import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../=models=/response/subsidiaries_model.dart';
+import '../../../../config/service/app_services.dart';
 import '../../../../data/implementations/data_center_service.dart';
 import '../../../../generated/l10n.dart';
 
@@ -44,6 +45,8 @@ class _SubsidiariesInfoTabState extends State<SubsidiariesInfoTab> {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
+    final ThemeMode themeMode = AppService.instance.themeMode.value;
+
     return Column(
       children: [
         Row(
@@ -74,9 +77,9 @@ class _SubsidiariesInfoTabState extends State<SubsidiariesInfoTab> {
                       return Container(
                         padding: const EdgeInsets.symmetric(
                             vertical: 10, horizontal: 16),
-                        decoration: const BoxDecoration(
+                        decoration: BoxDecoration(
                           borderRadius: BorderRadius.all(Radius.circular(12)),
-                          color: AppColors.neutral_06,
+                          color: themeMode.isLight ? AppColors.neutral_06 : AppColors.text_black_1,
                         ),
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -166,9 +169,9 @@ class _SubsidiariesInfoTabState extends State<SubsidiariesInfoTab> {
                       return Container(
                         padding: const EdgeInsets.symmetric(
                             vertical: 10, horizontal: 16),
-                        decoration: const BoxDecoration(
+                        decoration: BoxDecoration(
                           borderRadius: BorderRadius.all(Radius.circular(12)),
-                          color: AppColors.neutral_06,
+                          color: themeMode.isLight ? AppColors.neutral_06 : AppColors.text_black_1,
                         ),
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -258,9 +261,9 @@ class _SubsidiariesInfoTabState extends State<SubsidiariesInfoTab> {
                       return Container(
                         padding: const EdgeInsets.symmetric(
                             vertical: 10, horizontal: 16),
-                        decoration: const BoxDecoration(
+                        decoration: BoxDecoration(
                           borderRadius: BorderRadius.all(Radius.circular(12)),
-                          color: AppColors.neutral_06,
+                          color: themeMode.isLight ? AppColors.neutral_06 : AppColors.text_black_1,
                         ),
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.start,

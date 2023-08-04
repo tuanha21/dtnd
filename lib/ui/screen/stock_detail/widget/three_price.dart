@@ -2,9 +2,9 @@ import 'dart:math';
 
 import 'package:dtnd/=models=/response/stock_model.dart';
 import 'package:dtnd/=models=/side.dart';
+import 'package:dtnd/=models=/stock_status.dart';
 import 'package:dtnd/config/service/app_services.dart';
 import 'package:dtnd/generated/l10n.dart';
-import 'package:dtnd/=models=/stock_status.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_textstyle.dart';
 import 'package:dtnd/utilities/num_utils.dart';
@@ -224,13 +224,16 @@ class _ThreePriceElementState extends State<ThreePriceElement>
   }
 
   List<Widget> rowChildren() {
+    final ThemeMode themeMode = AppService.instance.themeMode.value;
     List<Widget> rowChildren;
     if (widget.side.isBuy) {
       rowChildren = [
         Text(
           NumUtils.formatInteger10(widget.vol),
-          style:
-              AppTextStyle.labelMedium_12.copyWith(color: AppColors.neutral_02),
+          style: AppTextStyle.labelMedium_12.copyWith(
+              color: themeMode.isLight
+                  ? AppColors.neutral_02
+                  : AppColors.neutral_07),
         ),
         Expanded(
           child: LayoutBuilder(builder: (context, ctx) {
@@ -285,8 +288,10 @@ class _ThreePriceElementState extends State<ThreePriceElement>
         ),
         Text(
           NumUtils.formatInteger10(widget.vol),
-          style:
-              AppTextStyle.labelMedium_12.copyWith(color: AppColors.neutral_02),
+          style: AppTextStyle.labelMedium_12.copyWith(
+              color: themeMode.isLight
+                  ? AppColors.neutral_02
+                  : AppColors.neutral_07),
         )
       ];
     }

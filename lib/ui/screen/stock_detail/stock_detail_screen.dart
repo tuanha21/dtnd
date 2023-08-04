@@ -22,6 +22,7 @@ import 'package:dtnd/ui/widget/overlay/login_first_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
+import '../../../config/service/app_services.dart';
 import '../../../generated/l10n.dart';
 import '../../widget/overlay/custom_dialog.dart';
 import '../exchange_stock/stock_order/business/stock_order_flow.dart';
@@ -134,6 +135,8 @@ class _StockDetailScreenState extends State<StockDetailScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final themeMode = AppService.instance.themeMode.value;
+
     return Scaffold(
       appBar: StockDetailAppbar(
           stockModel: widget.stockModel,
@@ -194,7 +197,9 @@ class _StockDetailScreenState extends State<StockDetailScreen> {
                 ),
               )
             ]),
-      backgroundColor: AppColors.bg_1,
+      backgroundColor: themeMode.isLight
+          ? AppColors.bg_1
+          : AppColors.neutral_01,
       floatingActionButton: SizedBox.square(
         dimension: 40,
         child: Material(

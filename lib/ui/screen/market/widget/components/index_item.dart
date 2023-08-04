@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../../../=models=/response/index_detail.dart';
+import '../../../../../config/service/app_services.dart';
 import '../../../../../generated/l10n.dart';
 import '../../../../theme/app_image.dart';
 
@@ -26,6 +27,8 @@ class MarketIndexItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ThemeData themeData = Theme.of(context);
+    final themeMode = AppService.instance.themeMode.value;
+
     BoxBorder? border;
     if (selectedIndex != null && data.index == selectedIndex) {
       border = Border.all(color: AppColors.neutral_04);
@@ -50,7 +53,9 @@ class MarketIndexItem extends StatelessWidget {
             decoration: BoxDecoration(
               border: border,
               borderRadius: const BorderRadius.all(Radius.circular(8)),
-              color: themeData.colorScheme.background,
+              color: themeMode.isLight
+                  ? AppColors.neutral_07
+                  : AppColors.text_black_1,
             ),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -60,10 +65,11 @@ class MarketIndexItem extends StatelessWidget {
                   children: [
                     Text(
                       data.index.exchangeName,
-                      style: Theme.of(context)
-                          .textTheme
-                          .titleSmall!
-                          .copyWith(fontWeight: FontWeight.w600),
+                      style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                          fontWeight: FontWeight.w600,
+                          color: themeMode.isLight
+                              ? AppColors.bg_2
+                              : AppColors.neutral_07),
                     ),
                     Builder(builder: (context) {
                       return SizedBox.square(

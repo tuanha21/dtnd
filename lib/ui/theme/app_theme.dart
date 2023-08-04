@@ -173,7 +173,7 @@ final BottomNavigationBarThemeData _lightBottomNavigationBarThemeData =
 );
 final BottomNavigationBarThemeData _darkBottomNavigationBarThemeData =
     BottomNavigationBarThemeData(
-  backgroundColor: AppColors.neutral_02,
+  backgroundColor: AppColors.text_black_1,
   elevation: 4.0,
   type: BottomNavigationBarType.fixed,
   showSelectedLabels: true,
@@ -296,7 +296,7 @@ const ColorScheme _lightColorScheme = ColorScheme(
   onError: Colors.white,
   background: Colors.white,
   onBackground: Colors.black,
-  surface: AppColors.primary_01,
+  surface: AppColors.neutral_03,
   onSurface: Colors.white,
 );
 const ColorScheme _darkColorScheme = ColorScheme(
@@ -309,8 +309,8 @@ const ColorScheme _darkColorScheme = ColorScheme(
   onError: Colors.white,
   background: Colors.black,
   onBackground: Colors.white,
-  surface: AppColors.primary_01,
-  onSurface: Colors.white,
+  surface: Colors.black,
+  onSurface: AppColors.text_black_1,
 );
 
 final ElevatedButtonThemeData _elevatedButtonTheme = ElevatedButtonThemeData(

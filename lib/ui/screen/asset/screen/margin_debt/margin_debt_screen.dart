@@ -91,6 +91,8 @@ class _MarginDebtScreenState extends State<MarginDebtScreen> {
                         });
                         getData();
                       },
+                      color: themeMode.isLight ? AppColors.neutral_06 : AppColors.text_black_1,
+
                     ),
                   ),
                   const SizedBox(width: 8),
@@ -107,6 +109,8 @@ class _MarginDebtScreenState extends State<MarginDebtScreen> {
                         });
                         getData();
                       },
+                      color: themeMode.isLight ? AppColors.neutral_06 : AppColors.text_black_1,
+
                     ),
                   )
                 ],
@@ -115,7 +119,9 @@ class _MarginDebtScreenState extends State<MarginDebtScreen> {
             Container(
               margin: const EdgeInsets.symmetric(horizontal: 16),
               decoration: BoxDecoration(
-                  color: AppColors.light_bg,
+                  color: themeMode.isLight
+                      ? AppColors.light_bg
+                      : AppColors.text_black_1,
                   borderRadius: BorderRadius.circular(12)),
               padding: const EdgeInsets.all(16),
               child: Obx(
@@ -177,7 +183,7 @@ class _MarginDebtScreenState extends State<MarginDebtScreen> {
                   margin: const EdgeInsets.symmetric(horizontal: 16),
                   padding: const EdgeInsets.all(16),
                   decoration: BoxDecoration(
-                      color: AppColors.light_bg,
+                      color: themeMode.isLight ? AppColors.light_bg : AppColors.text_black_1,
                       borderRadius: BorderRadius.circular(12)),
                   child: Column(
                     children: [

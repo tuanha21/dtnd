@@ -36,9 +36,8 @@ class _HomeTopSignalStocksState extends State<HomeTopSignalStocks> {
   @override
   Widget build(BuildContext context) {
     final ThemeData themeData = Theme.of(context);
-
     return Container(
-      color: themeData.colorScheme.background,
+      color: themeData.colorScheme.onSurface,
       padding: const EdgeInsets.symmetric(vertical: 16),
       child: Column(
         children: [
@@ -196,7 +195,11 @@ class HomeTopSignalItem extends StatelessWidget {
                               style: Theme.of(context)
                                   .textTheme
                                   .titleSmall!
-                                  .copyWith(fontWeight: FontWeight.w600),
+                                  .copyWith(
+                                      fontWeight: FontWeight.w600,
+                                      color: themeMode.isLight
+                                          ? AppColors.dark_bg
+                                          : AppColors.neutral_07),
                             ),
                             const SizedBox(width: 4),
                             Text.rich(

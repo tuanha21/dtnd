@@ -22,6 +22,8 @@ import 'package:k_chart/chart_translations.dart';
 import 'package:k_chart/flutter_k_chart.dart' as kcharts;
 import 'package:k_chart/k_chart_widget.dart';
 
+import '../../../../config/service/app_services.dart';
+
 class HomeMarketToday extends StatefulWidget {
   const HomeMarketToday({super.key});
 
@@ -321,6 +323,8 @@ class HomeIndexItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ThemeData themeData = Theme.of(context);
+    final themeMode = AppService.instance.themeMode.value;
+
     BoxBorder? border;
     if (selectedIndex != null && data.index == selectedIndex) {
       border = Border.all(color: AppColors.neutral_04);
@@ -333,7 +337,7 @@ class HomeIndexItem extends StatelessWidget {
     }
     return Material(
       borderRadius: const BorderRadius.all(Radius.circular(8)),
-      color: themeData.colorScheme.background,
+      color: Colors.transparent,
       child: InkWell(
         onTap: onTap,
         borderRadius: const BorderRadius.all(Radius.circular(8)),
@@ -344,7 +348,9 @@ class HomeIndexItem extends StatelessWidget {
           decoration: BoxDecoration(
             border: border,
             borderRadius: const BorderRadius.all(Radius.circular(8)),
-            color: themeData.colorScheme.background,
+            color: themeMode.isLight
+                ? AppColors.neutral_07
+                : AppColors.text_black_1,
           ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -354,10 +360,11 @@ class HomeIndexItem extends StatelessWidget {
                 children: [
                   Text(
                     data.index.exchangeName,
-                    style: Theme.of(context)
-                        .textTheme
-                        .titleSmall!
-                        .copyWith(fontWeight: FontWeight.w600),
+                    style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                        fontWeight: FontWeight.w600,
+                        color: themeMode.isLight
+                            ? AppColors.text_black_1
+                            : AppColors.neutral_07),
                   ),
                   Obx(() {
                     return SizedBox.square(
@@ -409,7 +416,9 @@ class HomeIndexItem extends StatelessWidget {
                       )} ${S.of(context).billion_lowercase}",
                       style: AppTextStyle.labelSmall_11.copyWith(
                         fontWeight: FontWeight.w600,
-                        color: AppColors.neutral_03,
+                        color: themeMode.isLight
+                            ? AppColors.text_black_1
+                            : AppColors.neutral_07,
                       ),
                     );
                   }),

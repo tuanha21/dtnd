@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../=models=/response/sec_trading.dart';
 import '../../../../=models=/response/stock_board.dart';
+import '../../../../config/service/app_services.dart';
 import '../../../../generated/l10n.dart';
 
 class ForeignWidget extends StatefulWidget {
@@ -38,6 +39,8 @@ class _ForeignWidgetState extends State<ForeignWidget> {
   @override
   Widget build(BuildContext context) {
     var title = Theme.of(context).textTheme.bodySmall;
+    final themeMode = AppService.instance.themeMode.value;
+
     return Column(
       children: [
         FutureBuilder<StockBoard>(
@@ -52,8 +55,11 @@ class _ForeignWidgetState extends State<ForeignWidget> {
                   margin: const EdgeInsets.symmetric(horizontal: 16),
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(12),
-                      color: AppColors.light_bg),
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                      color: themeMode.isLight
+                          ? AppColors.light_bg
+                          : AppColors.neutral_01),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
                   child: Column(
                     children: [
                       const SizedBox(height: 16),
@@ -67,7 +73,9 @@ class _ForeignWidgetState extends State<ForeignWidget> {
                                 child: Text(S.of(context).buy,
                                     style: title?.copyWith(
                                         fontWeight: FontWeight.w600,
-                                        color: AppColors.neutral_02)),
+                                        color: themeMode.isLight
+                                            ? AppColors.neutral_02
+                                            : AppColors.neutral_05)),
                               )),
                           Expanded(
                               flex: 4,
@@ -76,7 +84,9 @@ class _ForeignWidgetState extends State<ForeignWidget> {
                                 child: Text(S.of(context).sell,
                                     style: title?.copyWith(
                                         fontWeight: FontWeight.w600,
-                                        color: AppColors.neutral_02)),
+                                        color: themeMode.isLight
+                                            ? AppColors.neutral_02
+                                            : AppColors.neutral_05)),
                               )),
                           Expanded(
                               flex: 6,
@@ -85,7 +95,9 @@ class _ForeignWidgetState extends State<ForeignWidget> {
                                 child: Text("Mua bán ròng",
                                     style: title?.copyWith(
                                         fontWeight: FontWeight.w600,
-                                        color: AppColors.neutral_02)),
+                                        color: themeMode.isLight
+                                            ? AppColors.neutral_02
+                                            : AppColors.neutral_05)),
                               ))
                         ],
                       ),
@@ -101,7 +113,9 @@ class _ForeignWidgetState extends State<ForeignWidget> {
                               child: Text(S.of(context).volumn,
                                   style: title?.copyWith(
                                       fontWeight: FontWeight.w600,
-                                      color: AppColors.neutral_02))),
+                                      color: themeMode.isLight
+                                          ? AppColors.neutral_02
+                                          : AppColors.neutral_05))),
                           Expanded(
                               flex: 4,
                               child: Align(
@@ -146,7 +160,9 @@ class _ForeignWidgetState extends State<ForeignWidget> {
                               child: Text("Giá trị giao dịch",
                                   style: title?.copyWith(
                                       fontWeight: FontWeight.w600,
-                                      color: AppColors.neutral_02))),
+                                      color: themeMode.isLight
+                                          ? AppColors.neutral_02
+                                          : AppColors.neutral_05))),
                           Expanded(
                               flex: 4,
                               child: Align(
@@ -167,7 +183,9 @@ class _ForeignWidgetState extends State<ForeignWidget> {
                                       S.of(context).billion,
                                       style: title?.copyWith(
                                           fontWeight: FontWeight.w400,
-                                          color: AppColors.neutral_02),
+                                          color: themeMode.isLight
+                                              ? AppColors.neutral_02
+                                              : AppColors.neutral_05),
                                     ),
                                   ],
                                 ),
@@ -192,7 +210,9 @@ class _ForeignWidgetState extends State<ForeignWidget> {
                                       S.of(context).billion,
                                       style: title?.copyWith(
                                           fontWeight: FontWeight.w400,
-                                          color: AppColors.neutral_02),
+                                          color: themeMode.isLight
+                                              ? AppColors.neutral_02
+                                              : AppColors.neutral_05),
                                     ),
                                   ],
                                 ),
@@ -219,7 +239,9 @@ class _ForeignWidgetState extends State<ForeignWidget> {
                                       S.of(context).billion,
                                       style: title?.copyWith(
                                           fontWeight: FontWeight.w400,
-                                          color: AppColors.neutral_02),
+                                          color: themeMode.isLight
+                                              ? AppColors.neutral_02
+                                              : AppColors.neutral_05),
                                     ),
                                   ],
                                 ),
@@ -268,10 +290,15 @@ class _ForeignWidgetState extends State<ForeignWidget> {
                       defaultRenderer: charts.BarRendererConfig(
                         cornerStrategy: const charts.ConstCornerStrategy(2),
                       ),
-                      domainAxis: const charts.OrdinalAxisSpec(
+                      domainAxis: charts.OrdinalAxisSpec(
                         renderSpec: charts.SmallTickRendererSpec(
                           labelOffsetFromAxisPx: 5,
-                          labelStyle: charts.TextStyleSpec(fontSize: 9),
+                          labelStyle: charts.TextStyleSpec(
+                              fontSize: 9,
+                              color: themeMode.isLight
+                                  ? null
+                                  : charts.ColorUtil.fromDartColor(
+                                      AppColors.neutral_07)),
                         ),
                       ),
                       secondaryMeasureAxis: charts.NumericAxisSpec(
@@ -284,13 +311,18 @@ class _ForeignWidgetState extends State<ForeignWidget> {
                                 dataIsInWholeNumbers: false,
                                 desiredTickCount: 4,
                                 zeroBound: false),
-                        renderSpec: const charts.GridlineRendererSpec(
-                            axisLineStyle: charts.LineStyleSpec(
+                        renderSpec: charts.GridlineRendererSpec(
+                            axisLineStyle: const charts.LineStyleSpec(
                               dashPattern: [4],
                               thickness: 0,
                               color: charts.Color(r: 74, g: 85, b: 104),
                             ),
-                            labelStyle: charts.TextStyleSpec(fontSize: 9),
+                            labelStyle: charts.TextStyleSpec(
+                                fontSize: 9,
+                                color: themeMode.isLight
+                                    ? null
+                                    : charts.ColorUtil.fromDartColor(
+                                        AppColors.neutral_07)),
                             lineStyle: charts.LineStyleSpec(dashPattern: [4])),
                       ),
                       behaviors: [
@@ -360,5 +392,6 @@ class _ForeignWidgetState extends State<ForeignWidget> {
 
 class _TooltipData extends TooltipData {
   _TooltipData._internal();
+
   static final _TooltipData instance = _TooltipData._internal();
 }

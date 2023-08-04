@@ -14,6 +14,7 @@ import '../../../../=models=/response/company_info.dart';
 import '../../../../=models=/response/news_model.dart';
 import '../../../../=models=/response/stock_news.dart';
 import '../../../../=models=/response/stock_trading_history.dart';
+import '../../../../config/service/app_services.dart';
 import '../../../../data/i_network_service.dart';
 import '../../../../data/implementations/network_service.dart';
 import '../../../../generated/l10n.dart';
@@ -61,6 +62,8 @@ class _OverviewTabState extends State<OverviewTab>
 
   @override
   Widget build(BuildContext context) {
+    final themeMode = AppService.instance.themeMode.value;
+
     super.build(context);
     return ListView(
       children: [
@@ -93,7 +96,7 @@ class _OverviewTabState extends State<OverviewTab>
                       height: 63,
                       width: 63,
                       decoration: BoxDecoration(
-                          color: AppColors.neutral_06,
+                          color: themeMode.isLight ? AppColors.neutral_06 : AppColors.neutral_01,
                           borderRadius: BorderRadius.circular(4)),
                     );
                   },
@@ -225,11 +228,13 @@ class _BasicIndexState extends State<BasicIndex> {
 
   @override
   Widget build(BuildContext context) {
+    final themeMode = AppService.instance.themeMode.value;
+
     return Container(
       margin: const EdgeInsets.all(16),
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-          color: AppColors.light_bg, borderRadius: BorderRadius.circular(16)),
+          color: themeMode.isLight ? AppColors.light_bg : AppColors.text_black_1, borderRadius: BorderRadius.circular(16)),
       child: Column(
         children: [
           indexPrice(),
@@ -388,6 +393,7 @@ class _CompanyInfoWidgetState extends State<CompanyInfoWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final themeMode = AppService.instance.themeMode.value;
     final textTheme = Theme.of(context).textTheme;
 
     return FutureBuilder<CompanyInfo>(
@@ -401,9 +407,9 @@ class _CompanyInfoWidgetState extends State<CompanyInfoWidget> {
             return Container(
               margin: const EdgeInsets.symmetric(horizontal: 16),
               padding: const EdgeInsets.all(16),
-              decoration: const BoxDecoration(
-                borderRadius: BorderRadius.all(Radius.circular(12)),
-                color: AppColors.neutral_06,
+              decoration: BoxDecoration(
+                borderRadius: const BorderRadius.all(Radius.circular(12)),
+                color: themeMode.isLight ? AppColors.neutral_06 : AppColors.text_black_1,
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -564,6 +570,8 @@ class _ListNewsISheetState extends State<ListNewsISheet> {
 
   @override
   Widget build(BuildContext context) {
+    final ThemeMode themeMode = AppService.instance.themeMode.value;
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: Column(
@@ -583,11 +591,11 @@ class _ListNewsISheetState extends State<ListNewsISheet> {
                 child: Container(
                   padding: const EdgeInsets.all(3),
                   decoration: BoxDecoration(
-                      color: AppColors.primary_03,
+                      color: themeMode.isLight ? AppColors.primary_03 : AppColors.neutral_02,
                       borderRadius: BorderRadius.circular(6)),
-                  child: const Icon(
+                  child: Icon(
                     Icons.clear,
-                    color: AppColors.text_black_1,
+                    color: themeMode.isLight ? AppColors.text_black_1 : AppColors.neutral_07,
                     size: 20,
                   ),
                 ),

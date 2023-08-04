@@ -3,6 +3,7 @@ import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../config/service/app_services.dart';
 import '../../../../generated/l10n.dart';
 
 class AccumulationDialog extends StatelessWidget {
@@ -17,13 +18,14 @@ class AccumulationDialog extends StatelessWidget {
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
     final textTheme = Theme.of(context).textTheme;
+    final ThemeMode themeMode = AppService.instance.themeMode.value;
 
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
       margin: EdgeInsets.symmetric(
           horizontal: width / 400 * 24, vertical: height / 880 * 180),
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12), color: Colors.white),
+          borderRadius: BorderRadius.circular(12), color: themeMode.isLight ? Colors.white : AppColors.text_black_1),
       child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
@@ -36,12 +38,12 @@ class AccumulationDialog extends StatelessWidget {
             Text(title,
                 textAlign: TextAlign.center,
                 style: textTheme.labelLarge?.copyWith(
-                    color: AppColors.text_black, fontWeight: FontWeight.bold)),
+                    color: themeMode.isLight ? AppColors.text_black : AppColors.neutral_07, fontWeight: FontWeight.bold)),
             const SizedBox(height: 20),
             Text(content,
                 textAlign: TextAlign.center,
                 style: textTheme.bodyLarge?.copyWith(
-                  color: AppColors.neutral_02,
+                  color: themeMode.isLight ? AppColors.neutral_02 : AppColors.neutral_07,
                 )),
             const SizedBox(height: 20),
             Row(

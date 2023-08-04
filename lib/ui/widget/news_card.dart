@@ -6,6 +6,8 @@ import 'package:dtnd/ui/theme/app_textstyle.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+import '../../config/service/app_services.dart';
+
 class NewsCard extends StatelessWidget {
   const NewsCard({
     super.key,
@@ -16,6 +18,8 @@ class NewsCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final ThemeMode themeMode = AppService.instance.themeMode.value;
+
     return IntrinsicHeight(
       child: Row(
         children: [
@@ -49,7 +53,7 @@ class NewsCard extends StatelessWidget {
                     stockNews.title ?? "Title",
                     maxLines: 2,
                     textAlign: TextAlign.left,
-                    style: Theme.of(context).textTheme.titleSmall,
+                    style: Theme.of(context).textTheme.titleSmall?.copyWith(color: themeMode.isLight ? null : AppColors.neutral_07),
                   ),
                 ),
                 Text(DateFormat("dd/MM/yyyy").format(stockNews.dateTime!),

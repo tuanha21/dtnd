@@ -2,6 +2,7 @@ import 'package:dtnd/utilities/num_utils.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../=models=/response/account/unexecuted_right_model.dart';
+import '../../../../config/service/app_services.dart';
 import '../../../../generated/l10n.dart';
 import '../../../theme/app_color.dart';
 import '../../../theme/app_textstyle.dart';
@@ -14,6 +15,8 @@ class PurchaseRightsHistoryWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final themeMode = AppService.instance.themeMode.value;
+
     String titlePermission = '';
     String valuePermission = '';
     String titleMoneyReceive = '';
@@ -68,9 +71,9 @@ class PurchaseRightsHistoryWidget extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 8),
       padding: const EdgeInsets.all(16),
-      decoration: const BoxDecoration(
-        color: AppColors.neutral_06,
-        borderRadius: BorderRadius.all(Radius.circular(12)),
+      decoration: BoxDecoration(
+        color: themeMode.isLight ? AppColors.neutral_06 : AppColors.neutral_01,
+        borderRadius: const BorderRadius.all(Radius.circular(12)),
       ),
       child: Column(
         children: [

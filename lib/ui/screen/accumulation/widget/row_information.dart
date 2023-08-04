@@ -3,6 +3,8 @@
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../config/service/app_services.dart';
+
 class RowInfomation extends StatelessWidget {
   RowInfomation(
       {super.key,
@@ -18,6 +20,7 @@ class RowInfomation extends StatelessWidget {
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
     final ThemeData themeData = Theme.of(context);
+    final themeMode = AppService.instance.themeMode.value;
 
     return Container(
       margin: const EdgeInsets.only(bottom: 16),
@@ -26,7 +29,7 @@ class RowInfomation extends StatelessWidget {
         children: [
           Text(
             leftText,
-            style: textTheme.bodyMedium?.copyWith(color: AppColors.neutral_02),
+            style: textTheme.bodyMedium?.copyWith(color: themeMode.isLight ? AppColors.neutral_02 : AppColors.neutral_05),
           ),
           Text(
             rightText,

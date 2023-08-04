@@ -5,6 +5,8 @@ import 'package:dtnd/ui/theme/app_textstyle.dart';
 import 'package:dtnd/utilities/num_utils.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../config/service/app_services.dart';
+
 class CashTransactionComponent extends StatefulWidget {
   const CashTransactionComponent({super.key, required this.data});
 
@@ -19,12 +21,16 @@ class _CashTransactionComponentState extends State<CashTransactionComponent> {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
+    final ThemeMode themeMode = AppService.instance.themeMode.value;
     final ThemeData themeData = Theme.of(context);
+
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 4),
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: themeData.colorScheme.background,
+        color: themeMode.isLight
+            ? AppColors.neutral_07
+            : AppColors.bg_share_inside_nav,
         borderRadius: const BorderRadius.all(
           Radius.circular(12),
         ),
@@ -46,7 +52,11 @@ class _CashTransactionComponentState extends State<CashTransactionComponent> {
                   ),
                   Text(
                     widget.data.cTRANSACTIONDATE ?? "",
-                    style: textTheme.titleSmall,
+                    style: textTheme.titleSmall?.copyWith(
+                      color: themeMode.isLight
+                          ? AppColors.neutral_04
+                          : AppColors.neutral_07,
+                    ),
                   ),
                 ],
               ),
@@ -73,21 +83,30 @@ class _CashTransactionComponentState extends State<CashTransactionComponent> {
           Row(
             children: [
               Flexible(
-                  child: RichText(
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      text: TextSpan(children: [
-                        TextSpan(
-                            text: "${S.of(context).detail}: ",
-                            style: AppTextStyle.labelSmall_10
-                                .copyWith(color: AppColors.neutral_01)),
-                        TextSpan(
-                            text: widget.data.cCONTENT,
-                            style: AppTextStyle.labelSmall_10.copyWith(
-                              fontWeight: FontWeight.w500,
-                              color: AppColors.neutral_03,
-                            )),
-                      ])))
+                child: RichText(
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  text: TextSpan(
+                    children: [
+                      TextSpan(
+                          text: "${S.of(context).detail}: ",
+                          style: AppTextStyle.labelSmall_10.copyWith(
+                              color: themeMode.isLight
+                                  ? AppColors.neutral_01
+                                  : AppColors.neutral_03)),
+                      TextSpan(
+                        text: widget.data.cCONTENT,
+                        style: AppTextStyle.labelSmall_10.copyWith(
+                          fontWeight: FontWeight.w500,
+                          color: themeMode.isLight
+                              ? AppColors.neutral_03
+                              : AppColors.neutral_07,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              )
             ],
           )
         ],

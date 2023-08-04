@@ -14,6 +14,8 @@ import 'package:dtnd/utilities/time_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../../../../config/service/app_services.dart';
+
 class ClosedDealTab extends StatefulWidget {
   const ClosedDealTab({super.key, required this.stockCode});
 
@@ -58,6 +60,8 @@ class _ClosedDealTabState extends State<ClosedDealTab>
   Widget build(BuildContext context) {
     super.build(context);
     final textTheme = Theme.of(context).textTheme;
+    final ThemeMode themeMode = AppService.instance.themeMode.value;
+
     return SingleChildScrollView(
       child: Column(
         children: [
@@ -90,6 +94,7 @@ class _ClosedDealTabState extends State<ClosedDealTab>
                   initialDay: fromDay,
                   firstDay: firstDay,
                   lastDay: lastDay,
+                  color: themeMode.isLight ? AppColors.neutral_06 : AppColors.text_black_1,
                   onChanged: (value) {
                     setState(() {
                       fromDay = value;
@@ -106,6 +111,7 @@ class _ClosedDealTabState extends State<ClosedDealTab>
                   initialDay: toDay,
                   firstDay: firstDay,
                   lastDay: lastDay,
+                  color: themeMode.isLight ? AppColors.neutral_06 : AppColors.text_black_1,
                   onChanged: (value) {
                     setState(() {
                       toDay = value;
@@ -119,9 +125,9 @@ class _ClosedDealTabState extends State<ClosedDealTab>
           const SizedBox(height: 8),
           Container(
             padding: const EdgeInsets.all(16),
-            decoration: const BoxDecoration(
-                borderRadius: BorderRadius.all(Radius.circular(12)),
-                color: AppColors.neutral_06),
+            decoration: BoxDecoration(
+                borderRadius: const BorderRadius.all(Radius.circular(12)),
+                color: themeMode.isLight ? AppColors.neutral_06 : AppColors.text_black_1,),
             child: Column(
               children: [
                 Row(
@@ -161,8 +167,8 @@ class _ClosedDealTabState extends State<ClosedDealTab>
             }
             return Container(
               padding: const EdgeInsets.all(16),
-              decoration: const BoxDecoration(
-                  color: AppColors.neutral_06,
+              decoration: BoxDecoration(
+                  color: themeMode.isLight ? AppColors.neutral_06 : AppColors.text_black_1,
                   borderRadius: BorderRadius.all(Radius.circular(12))),
               child: Column(
                 children: [

@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
+import '../../../../config/service/app_services.dart';
 import '../../../../generated/l10n.dart';
 import '../controller/accumulation_controller.dart';
 import '../widget/row_information.dart';
@@ -87,6 +88,8 @@ class _SettlementConfirmState extends State<SettlementConfirm> {
   }
 
   Widget bodyWidget(TextTheme textTheme, BuildContext context) {
+    final themeMode = AppService.instance.themeMode.value;
+
     return Padding(
       padding:
           const EdgeInsets.only(left: 16.0, right: 16.0, top: 5, bottom: 100.0),
@@ -107,7 +110,7 @@ class _SettlementConfirmState extends State<SettlementConfirm> {
             height: 60,
             padding: const EdgeInsets.symmetric(horizontal: 8),
             decoration: BoxDecoration(
-              color: Colors.white,
+              color:themeMode.isLight ? Colors.white : AppColors.neutral_01,
               borderRadius: BorderRadius.circular(12),
             ),
             child: Column(

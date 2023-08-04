@@ -14,6 +14,8 @@ import 'package:dtnd/utilities/time_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 
+import '../../../../../config/service/app_services.dart';
+
 class OrderRecordWidget extends StatefulWidget {
   const OrderRecordWidget(
       {super.key, required this.data, this.onChange, this.onCancel});
@@ -33,6 +35,8 @@ class _OrderRecordWidgetState extends State<OrderRecordWidget> {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
+    final ThemeMode themeMode = AppService.instance.themeMode.value;
+
     return Slidable(
       key: ValueKey(widget.data.hashCode),
       endActionPane: ActionPane(
@@ -40,6 +44,7 @@ class _OrderRecordWidgetState extends State<OrderRecordWidget> {
         children: [
           Flexible(
             child: Material(
+              color: Colors.transparent,
               child: InkWell(
                 onTap: widget.onChange,
                 child: Ink(
@@ -127,7 +132,7 @@ class _OrderRecordWidgetState extends State<OrderRecordWidget> {
                 const SizedBox(width: 8),
                 Text(
                   widget.data.symbol,
-                  style: textTheme.titleSmall,
+                  style: textTheme.titleSmall?.copyWith(color: themeMode.isLight ? null : AppColors.neutral_07),
                 ),
                 const SizedBox(width: 6),
                 Text(
@@ -166,7 +171,7 @@ class _OrderRecordWidgetState extends State<OrderRecordWidget> {
                         TimeUtilities.onlyHourFormat
                             .format(widget.data.orderTime),
                         style: AppTextStyle.labelSmall_10
-                            .copyWith(color: AppColors.neutral_01),
+                            .copyWith(color: themeMode.isLight ? AppColors.neutral_01 : AppColors.neutral_07),
                       ),
                     ],
                   ),
@@ -205,7 +210,7 @@ class _OrderRecordWidgetState extends State<OrderRecordWidget> {
                           Text(
                             widget.data.showPrice ?? "-",
                             style: AppTextStyle.labelSmall_10
-                                .copyWith(color: AppColors.neutral_01),
+                                .copyWith(color: themeMode.isLight ? AppColors.neutral_01 : AppColors.neutral_07),
                           ),
                         ],
                       )
@@ -229,7 +234,7 @@ class _OrderRecordWidgetState extends State<OrderRecordWidget> {
                           Text(
                             NumUtils.formatDouble(widget.data.matchPrice, "-"),
                             style: AppTextStyle.labelSmall_10
-                                .copyWith(color: AppColors.neutral_01),
+                                .copyWith(color:  themeMode.isLight ? AppColors.neutral_01 : AppColors.neutral_07),
                           ),
                         ],
                       )
@@ -252,7 +257,7 @@ class _OrderRecordWidgetState extends State<OrderRecordWidget> {
                             ? '-/${widget.data.volume}'
                             : '${widget.data.matchVolume}/${widget.data.volume!}',
                         style: AppTextStyle.labelSmall_10
-                            .copyWith(color: AppColors.neutral_01),
+                            .copyWith(color: themeMode.isLight ? AppColors.neutral_01 : AppColors.neutral_07),
                       ),
                     ],
                   ),
@@ -260,12 +265,10 @@ class _OrderRecordWidgetState extends State<OrderRecordWidget> {
               ],
             ),
             const SizedBox(
-              height: 12,
+              height: 8,
             ),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 4),
-              color: AppColors.neutral_05,
-              height: 1,
+            const Divider(
+              color: AppColors.neutral_03,
             )
           ],
         ),

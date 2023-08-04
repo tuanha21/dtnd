@@ -5,6 +5,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:syncfusion_flutter_treemap/treemap.dart';
 
 import '../../../../../=models=/response/indContrib.dart';
+import '../../../../../config/service/app_services.dart';
 import '../../../../../generated/l10n.dart';
 import '../../../../../utilities/num_utils.dart';
 import '../../../../theme/app_color.dart';
@@ -21,6 +22,8 @@ class IndFvalue extends StatefulWidget {
 class _IndFvalueState extends State<IndFvalue> {
   @override
   Widget build(BuildContext context) {
+    final themeMode = AppService.instance.themeMode.value;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -43,10 +46,11 @@ class _IndFvalueState extends State<IndFvalue> {
                 onTap: () => showDialog<String>(
                   context: context,
                   builder: (BuildContext context) => Dialog(
+                    backgroundColor: themeMode.isLight ? AppColors.light_bg : AppColors.neutral_01,
                     child: Container(
                       padding: const EdgeInsets.all(16),
                       decoration: BoxDecoration(
-                          color: AppColors.light_bg,
+                          color: themeMode.isLight ? AppColors.light_bg : AppColors.neutral_01,
                           borderRadius: BorderRadius.circular(8)),
                       width: MediaQuery.of(context).size.width,
                       child: Text(
@@ -83,7 +87,7 @@ class _IndFvalueState extends State<IndFvalue> {
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: Container(
                       height: 200,
-                      color: AppColors.bg_1,
+                      color: themeMode.isLight ? AppColors.bg_1 : AppColors.neutral_01,
                       child: SfTreemap(
                         dataCount: data.length,
                         weightValueMapper: (int index) {
@@ -99,7 +103,7 @@ class _IndFvalueState extends State<IndFvalue> {
                               return Container(
                                 padding: const EdgeInsets.all(2.5),
                                 decoration:
-                                    const BoxDecoration(color: Colors.white),
+                                      BoxDecoration(color: themeMode.isLight ? AppColors.bg_1 : AppColors.neutral_01),
                                 child: Text(
                                   '${tile.group} : ${NumUtils.formatInteger(tile.weight)} ${S.of(context).million_lower}',
                                   overflow: TextOverflow.ellipsis,

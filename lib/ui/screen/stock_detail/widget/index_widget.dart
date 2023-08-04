@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../../=models=/response/company_info.dart';
+import '../../../../config/service/app_services.dart';
 import '../../../theme/app_color.dart';
 
 class IndexWidget extends StatefulWidget {
@@ -34,10 +35,13 @@ class _IndexWidgetState extends State<IndexWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final ThemeMode themeMode = AppService.instance.themeMode.value;
+
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 16),
+      padding: const EdgeInsets.symmetric(vertical: 16,horizontal: 8),
       decoration: BoxDecoration(
           // color: const Color(0xffF5F8FF),
+          color: themeMode.isLight ? AppColors.neutral_07 : AppColors.bg_share_inside_nav,
           borderRadius: BorderRadius.circular(16)),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -214,10 +218,12 @@ class _IndexWidgetState extends State<IndexWidget> {
   }
 
   Widget boxData(String title, String value) {
+    final themeMode = AppService.instance.themeMode.value;
+
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 8),
       decoration: BoxDecoration(
-        color: AppColors.neutral_06,
+        color: themeMode.isLight ? AppColors.neutral_06 : AppColors.neutral_01 ,
         borderRadius: BorderRadius.circular(4),
       ),
       child: Column(

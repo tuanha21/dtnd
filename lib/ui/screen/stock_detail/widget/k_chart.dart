@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:k_chart/chart_translations.dart';
 import 'package:k_chart/flutter_k_chart.dart';
 
+import '../../../../config/service/app_services.dart';
+
 class KChart extends StatefulWidget {
   const KChart({
     super.key,
@@ -19,6 +21,7 @@ class KChart extends StatefulWidget {
     required this.vol,
     this.color,
   });
+
   final String code;
   final StockTradingHistory stockTradingHistory;
   final double? vol;
@@ -30,6 +33,7 @@ class KChart extends StatefulWidget {
   final Map<String, ChartTranslations>? translations;
   final MainState? mainState;
   final SecondaryState? secondaryState;
+
   @override
   State<KChart> createState() => _KChartState();
 }
@@ -96,6 +100,8 @@ class _KChartState extends State<KChart> {
 
   @override
   Widget build(BuildContext context) {
+    final ThemeMode themeMode = AppService.instance.themeMode.value;
+
     final bgColor = <Color>[
       Colors.transparent,
       Colors.transparent,
@@ -121,8 +127,8 @@ class _KChartState extends State<KChart> {
         vCrossColor: const Color(0x1E000000),
         defaultTextColor: const Color(0xFFA0AEC0),
         selectFillColor: AppColors.neutral_06,
-        minColor: Colors.black,
-        maxColor: Colors.black,
+        minColor: themeMode.isLight ? Colors.black : Colors.white,
+        maxColor: themeMode.isLight ? Colors.black : Colors.white,
       ),
       stockCode: widget.code,
       showNowPrice: widget.showNowPrice,

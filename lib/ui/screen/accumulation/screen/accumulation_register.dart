@@ -12,6 +12,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../=models=/response/accumulation/fee_rate_model.dart';
+import '../../../../config/service/app_services.dart';
 import '../widget/row_information.dart';
 
 class AccumulationRegister extends StatefulWidget {
@@ -89,6 +90,7 @@ class _AccumulationRegisterState extends State<AccumulationRegister> {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
+    final themeMode = AppService.instance.themeMode.value;
 
     return Scaffold(
       appBar: SimpleAppbar(
@@ -152,7 +154,9 @@ class _AccumulationRegisterState extends State<AccumulationRegister> {
               Container(
                 margin: const EdgeInsets.only(top: 20),
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: themeMode.isLight
+                      ? AppColors.neutral_06
+                      : AppColors.bg_share_inside_nav,
                   borderRadius: BorderRadius.circular(12),
                 ),
                 padding: const EdgeInsets.only(
@@ -166,11 +170,7 @@ class _AccumulationRegisterState extends State<AccumulationRegister> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
-                          S.of(context).profit,
-                          style: textTheme.bodyMedium
-                              ?.copyWith(color: AppColors.text_black),
-                        ),
+                        Text(S.of(context).profit, style: textTheme.bodyMedium),
                         Text(
                           '${feeRate.feeRate.toString()}%/${S.of(context).year}',
                           style: textTheme.bodyMedium?.copyWith(
@@ -189,7 +189,9 @@ class _AccumulationRegisterState extends State<AccumulationRegister> {
                         top: 16,
                       ),
                       decoration: BoxDecoration(
-                        color: AppColors.neutral_06,
+                        color: themeMode.isLight
+                            ? AppColors.neutral_06
+                            : AppColors.bg_share_inside_nav,
                         borderRadius: BorderRadius.circular(12),
                       ),
                       child: Obx(
@@ -261,7 +263,7 @@ class _AccumulationRegisterState extends State<AccumulationRegister> {
                             width: MediaQuery.of(context).size.width / 375 * 95,
                             alignment: Alignment.center,
                             decoration: BoxDecoration(
-                              color: Colors.white,
+                              color: themeMode.isLight ? AppColors.neutral_07 : AppColors.bg_share_inside_nav,
                               borderRadius: BorderRadius.circular(12),
                               border: Border.all(
                                 color: _selectedMethod[index] == true

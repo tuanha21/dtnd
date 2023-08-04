@@ -12,6 +12,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
+import '../../../../config/service/app_services.dart';
+
 class HomeNews extends StatefulWidget {
   const HomeNews({super.key});
 
@@ -31,6 +33,7 @@ class _HomeNewsState extends State<HomeNews> {
 
   @override
   Widget build(BuildContext context) {
+    final themeMode = AppService.instance.themeMode.value;
     final ThemeData themeData = Theme.of(context);
 
     return Obx(
@@ -43,7 +46,7 @@ class _HomeNewsState extends State<HomeNews> {
           return Container(
             padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
             decoration: BoxDecoration(
-                color: themeData.colorScheme.background,
+                color: themeData.colorScheme.onSurface,
                 borderRadius: const BorderRadius.all(Radius.circular(12))),
             child: Column(
               children: [
@@ -51,7 +54,9 @@ class _HomeNewsState extends State<HomeNews> {
                   if (i != 0)
                     Column(
                       children: [
-                        const Divider(),
+                          Divider(
+                          color: themeMode.isLight ? AppColors.neutral_07 : AppColors.neutral_03,
+                        ),
                         HomeNewsCard(
                           dataFunct: networkService.getNewsDetail,
                           stockNews: controller.news.elementAt(i),
@@ -88,15 +93,20 @@ class HomeNewsCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final ThemeData themeData = Theme.of(context);
+    final themeMode = AppService.instance.themeMode.value;
+
     return Material(
       color: Colors.transparent,
       child: InkWell(
         onTap: () {
           Navigator.of(context)
-              .push(MaterialPageRoute(
-                builder: (context) => NewsDetailScreen(
-                    dataFunct: dataFunct, newsModel: stockNews),
-              ),)
+              .push(
+                MaterialPageRoute(
+                  builder: (context) => NewsDetailScreen(
+                      dataFunct: dataFunct, newsModel: stockNews),
+                ),
+              )
               .then((value) => onDetail?.call());
         },
         borderRadius: const BorderRadius.all(Radius.circular(8)),
@@ -145,7 +155,7 @@ class HomeNewsCard extends StatelessWidget {
                             stockNews.title ?? "Title",
                             maxLines: 2,
                             textAlign: TextAlign.left,
-                            style: Theme.of(context).textTheme.titleSmall,
+                            style: Theme.of(context).textTheme.titleSmall?.copyWith(color: themeMode.isLight ? null : AppColors.neutral_07),
                           ),
                         ),
                       ],
@@ -204,16 +214,19 @@ class HomeNewsCard extends StatelessWidget {
                             Container(
                               padding: const EdgeInsets.symmetric(
                                   vertical: 2, horizontal: 8),
-                              decoration: const BoxDecoration(
-                                  color: AppColors.bg_1,
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(56))),
+                              decoration: BoxDecoration(
+                                color: themeMode.isLight ? AppColors.neutral_07 : AppColors.text_grey_1,
+                                borderRadius: const BorderRadius.all(
+                                  Radius.circular(56),
+                                ),
+                              ),
                               child: Row(
                                 children: [
                                   SizedBox.square(
                                       dimension: 10,
                                       child: Image.asset(
-                                          AppImages.home_icon_like)),
+                                          AppImages.home_icon_like,
+                                      color:  AppColors.neutral_07  )),
                                   const SizedBox(width: 2),
                                   Text(
                                     "${stockNews.viewCount}",
@@ -226,16 +239,19 @@ class HomeNewsCard extends StatelessWidget {
                             Container(
                               padding: const EdgeInsets.symmetric(
                                   vertical: 2, horizontal: 8),
-                              decoration: const BoxDecoration(
-                                  color: AppColors.bg_1,
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(56))),
+                              decoration: BoxDecoration(
+                                color: themeMode.isLight ? AppColors.neutral_07 : AppColors.text_grey_1,
+                                borderRadius: const BorderRadius.all(
+                                  Radius.circular(56),
+                                ),
+                              ),
                               child: Row(
                                 children: [
                                   SizedBox.square(
                                       dimension: 10,
                                       child: Image.asset(
-                                          AppImages.home_icon_sharing)),
+                                          AppImages.home_icon_sharing,
+                                      color: themeMode.isDark ? AppColors.neutral_07 : AppColors.text_grey_1,)),
                                   const SizedBox(width: 2),
                                   Text(
                                     "${stockNews.commentCount}",

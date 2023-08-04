@@ -13,6 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../../../=models=/response/account/base_margin_plus_account_model.dart';
+import '../../../../../config/service/app_services.dart';
 
 class OrderOwnedStockPanel extends StatefulWidget {
   const OrderOwnedStockPanel({super.key, this.onSell});
@@ -82,6 +83,8 @@ class _OrderOwnedStockWidgetState extends State<OrderOwnedStockWidget> {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
+    final ThemeMode themeMode = AppService.instance.themeMode.value;
+
     return Column(
       children: [
         Row(
@@ -94,7 +97,7 @@ class _OrderOwnedStockWidgetState extends State<OrderOwnedStockWidget> {
               children: [
                 Text(
                   widget.portfolioStock.symbol,
-                  style: textTheme.titleSmall,
+                  style: textTheme.titleSmall?.copyWith(color: themeMode.isLight ? null : AppColors.neutral_07),
                 ),
                 Text(
                   stock?.nameShort ?? "-",
@@ -185,9 +188,11 @@ class _OrderOwnedStockWidgetState extends State<OrderOwnedStockWidget> {
             )
           ],
         ),
-        const Padding(
-          padding: EdgeInsets.symmetric(vertical: 8),
-          child: Divider(),
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 8),
+          child: Divider(
+            color: themeMode.isLight ? null : AppColors.neutral_03,
+          ),
         ),
       ],
     );

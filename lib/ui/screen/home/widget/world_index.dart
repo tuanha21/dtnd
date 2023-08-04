@@ -9,12 +9,16 @@ import 'package:flutter_svg/flutter_svg.dart';
 class HomeWorldIndexItem extends StatelessWidget {
   const HomeWorldIndexItem(
       {super.key, required this.data, this.selectedSymbol, this.onSelected});
+
   final WorldIndexModel data;
   final int? selectedSymbol;
   final ValueChanged<WorldIndexModel>? onSelected;
+
   @override
   Widget build(BuildContext context) {
     final ThemeData themeData = Theme.of(context);
+    final themeMode = AppService.instance.themeMode.value;
+
     BoxBorder? border;
     if (selectedSymbol != null && data.iDSYMBOL == selectedSymbol) {
       border = Border.all(color: AppColors.neutral_04);
@@ -27,7 +31,7 @@ class HomeWorldIndexItem extends StatelessWidget {
       };
     }
     return Material(
-      color: themeData.colorScheme.background,
+      color: Colors.transparent,
       child: InkWell(
         onTap: onTap,
         borderRadius: const BorderRadius.all(Radius.circular(8)),
@@ -38,7 +42,9 @@ class HomeWorldIndexItem extends StatelessWidget {
           decoration: BoxDecoration(
             border: border,
             borderRadius: const BorderRadius.all(Radius.circular(8)),
-            color: themeData.colorScheme.background,
+            color: themeMode.isLight
+                ? AppColors.neutral_07
+                : AppColors.text_black_1,
           ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -55,10 +61,11 @@ class HomeWorldIndexItem extends StatelessWidget {
                   const SizedBox(width: 5),
                   Text(
                     data.nAME ?? "",
-                    style: Theme.of(context)
-                        .textTheme
-                        .titleSmall!
-                        .copyWith(fontWeight: FontWeight.w600),
+                    style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                        fontWeight: FontWeight.w600,
+                        color: themeMode.isLight
+                            ? AppColors.text_black_1
+                            : AppColors.neutral_07),
                   ),
                 ],
               ),

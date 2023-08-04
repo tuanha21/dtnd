@@ -3,6 +3,8 @@ import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_textstyle.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../config/service/app_services.dart';
+
 class HomeSection extends StatelessWidget {
   const HomeSection({
     super.key,
@@ -21,6 +23,8 @@ class HomeSection extends StatelessWidget {
   final double padding;
   @override
   Widget build(BuildContext context) {
+    final themeMode = AppService.instance.themeMode.value;
+
     return Column(
       children: [
         Padding(
@@ -50,9 +54,9 @@ class HomeSection extends StatelessWidget {
               else if (onMoreDot != null)
                 InkWell(
                   onTap: onMoreDot,
-                  child: const Icon(
+                  child: Icon(
                     Icons.more_horiz_rounded,
-                    color: AppColors.neutral_01,
+                    color: themeMode.isLight ? AppColors.neutral_01 : AppColors.neutral_07,
                   ),
                 ),
             ],

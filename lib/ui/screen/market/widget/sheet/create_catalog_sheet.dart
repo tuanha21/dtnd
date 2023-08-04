@@ -46,6 +46,7 @@ class _CreateCatalogSheetState extends State<CreateCatalogSheet>
               implementBackButton: widget.isBack,
               backData: const BackCmd(),
             ),
+            const SizedBox(height: 20,),
             Form(
               key: key,
               child: TextFormField(

@@ -6,6 +6,7 @@ import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import '../../../../config/service/app_services.dart';
 import '../../../../utilities/media_permission.dart';
 import '../../../theme/app_color.dart';
 
@@ -39,6 +40,8 @@ class _ValidatorIdentityState extends State<ValidatorIdentity> {
   Widget build(BuildContext context) {
     final headlineSmall = Theme.of(context).textTheme.headlineSmall;
     var titleSmall = Theme.of(context).textTheme.titleSmall;
+    final ThemeMode themeMode = AppService.instance.themeMode.value;
+
     return Scaffold(
       appBar: AppBar(
         leading: BackButton(
@@ -73,7 +76,7 @@ class _ValidatorIdentityState extends State<ValidatorIdentity> {
                   TextSpan(
                       text: "2 mặt CMND/CCCD",
                       style: titleSmall?.copyWith(
-                          fontWeight: FontWeight.w700, color: AppColors.bg_2)),
+                          fontWeight: FontWeight.w700, color:themeMode.isLight ? AppColors.bg_2 : AppColors.neutral_07)),
                   TextSpan(
                       text: ' để xác minh tài khoản',
                       style: titleSmall?.copyWith(
@@ -161,6 +164,8 @@ class _CardIdentityPickState extends State<CardIdentityPick> {
   @override
   Widget build(BuildContext context) {
     final bodySmall = Theme.of(context).textTheme.bodySmall;
+    final ThemeMode themeMode = AppService.instance.themeMode.value;
+
     return Container(
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8),
@@ -207,7 +212,7 @@ class _CardIdentityPickState extends State<CardIdentityPick> {
                       padding: const EdgeInsets.symmetric(horizontal: 10),
                       alignment: Alignment.centerLeft,
                       decoration: BoxDecoration(
-                        color: AppColors.neutral_06,
+                        color: themeMode.isLight ? AppColors.neutral_06 : AppColors.text_black_1,
                         borderRadius: BorderRadius.circular(8),
                       ),
                       child: Row(
@@ -245,7 +250,7 @@ class _CardIdentityPickState extends State<CardIdentityPick> {
                       padding: const EdgeInsets.symmetric(horizontal: 10),
                       alignment: Alignment.centerLeft,
                       decoration: BoxDecoration(
-                        color: AppColors.neutral_06,
+                        color: themeMode.isLight ? AppColors.neutral_06 : AppColors.text_black_1,
                         borderRadius: BorderRadius.circular(8),
                       ),
                       child: Row(

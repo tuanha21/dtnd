@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:html/parser.dart' show parse;
 
 import '../../../../=models=/response/introduct_company.dart';
+import '../../../../config/service/app_services.dart';
 import '../../../../generated/l10n.dart';
 import '../../home/widget/home_section.dart';
 import '../tab/general_info_tab.dart';
@@ -59,11 +60,13 @@ class _BusinessInformationSheetState extends State<BusinessInformationSheet>
 
   @override
   Widget build(BuildContext context) {
+    final ThemeMode themeMode = AppService.instance.themeMode.value;
     return Material(
+      color: themeMode.isLight ? AppColors.light_bg : AppColors.bg_2,
       child: Container(
-        decoration: const BoxDecoration(
-            color: AppColors.light_bg,
-            borderRadius: BorderRadius.only(
+        decoration: BoxDecoration(
+            color: themeMode.isLight ? AppColors.light_bg : AppColors.bg_share_inside_nav,
+            borderRadius: const BorderRadius.only(
                 topRight: Radius.circular(12), topLeft: Radius.circular(12))),
         child: DefaultTabController(
           length: 2,
@@ -86,11 +89,11 @@ class _BusinessInformationSheetState extends State<BusinessInformationSheet>
                       child: Container(
                         padding: const EdgeInsets.all(3),
                         decoration: BoxDecoration(
-                            color: AppColors.primary_03,
+                            color: themeMode.isLight ? AppColors.primary_03 : AppColors.neutral_02,
                             borderRadius: BorderRadius.circular(6)),
-                        child: const Icon(
+                        child: Icon(
                           Icons.clear,
-                          color: AppColors.text_black_1,
+                          color: themeMode.isLight ? AppColors.text_black_1 : AppColors.neutral_07,
                           size: 20,
                         ),
                       ),
@@ -98,9 +101,9 @@ class _BusinessInformationSheetState extends State<BusinessInformationSheet>
                   ],
                 ),
               ),
-              const Divider(
+              Divider(
                 height: 36,
-                color: AppColors.light_tabBar_bg,
+                color: themeMode.isLight ? AppColors.light_tabBar_bg : AppColors.neutral_02,
                 indent: 16,
                 endIndent: 16,
                 thickness: 1,
@@ -206,7 +209,7 @@ class _BusinessInformationSheetState extends State<BusinessInformationSheet>
                       padding: const EdgeInsets.all(4),
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(12),
-                          color: AppColors.light_tabBar_bg),
+                          color: themeMode.isLight ? AppColors.light_tabBar_bg  : AppColors.neutral_01),
                       child: TabBar(
                         unselectedLabelStyle: Theme.of(context)
                             .textTheme
@@ -224,7 +227,7 @@ class _BusinessInformationSheetState extends State<BusinessInformationSheet>
                         indicatorSize: TabBarIndicatorSize.tab,
                         labelPadding: const EdgeInsets.symmetric(vertical: 4),
                         labelColor: AppColors.light_bg,
-                        unselectedLabelColor: AppColors.text_black,
+                        unselectedLabelColor: AppColors.neutral_03,
                         onTap: (index) {
                           setState(() {
                             currentIndex = index;

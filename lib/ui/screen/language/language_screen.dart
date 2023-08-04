@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../../../config/service/app_services.dart';
-import '../../../data/i_local_storage_service.dart';
-import '../../../data/implementations/local_storage_service.dart';
 import '../../../generated/l10n.dart';
+import '../../theme/app_color.dart';
 
 class LanguagesScreen extends StatefulWidget {
   const LanguagesScreen({Key? key}) : super(key: key);
@@ -13,28 +12,16 @@ class LanguagesScreen extends StatefulWidget {
 }
 
 class _LanguagesScreenState extends State<LanguagesScreen> {
-  late Color _backgroundColor = Colors.red;
+  late Color _backgroundColor;
   late AppService appService = AppService();
-
-  final ILocalStorageService localStorageService = LocalStorageService();
+  final ThemeMode themeMode = AppService.instance.themeMode.value;
 
   @override
   void initState() {
     super.initState();
-    _loadSelectedLanguage();
-  }
-
-  Future<void> _loadSelectedLanguage() async {
-    final String? selectedLanguage =
-        localStorageService.sharedPreferences.getString(languageKey);
-    if (selectedLanguage != null) {
-      setState(
-        () {
-          _backgroundColor =
-              (selectedLanguage == 'vi') ? Colors.red : Colors.green;
-        },
-      );
-    }
+    _backgroundColor = (appService.locale.value.languageCode == 'vi')
+        ? Colors.red
+        : Colors.green;
   }
 
   void _setBackgroundColor(Color? color) {
@@ -43,18 +30,16 @@ class _LanguagesScreenState extends State<LanguagesScreen> {
     });
   }
 
-  Future<void> _saveSelectedLanguage(String languageCode) async {
-    localStorageService.saveLanguage(languageCode);
-  }
-
   @override
   Widget build(BuildContext context) {
     final ThemeData themeData = Theme.of(context);
 
     return Scaffold(
       appBar: AppBar(
+        backgroundColor:
+            themeMode.isLight ? AppColors.neutral_07 : AppColors.text_black_1,
         title: Text(
-          S.of(context).languges,
+          S.of(context).languge,
           style: TextStyle(
             color: themeData.colorScheme.onBackground,
             fontWeight: FontWeight.bold,
@@ -63,23 +48,27 @@ class _LanguagesScreenState extends State<LanguagesScreen> {
         ),
         centerTitle: true,
       ),
-      body: Column(
-        children: <Widget>[
-          _buildLanguageOption(
-            context,
-            S.of(context).vietnamese,
-            Colors.red,
-            _backgroundColor,
-            'vi',
-          ),
-          _buildLanguageOption(
-            context,
-            S.of(context).english,
-            Colors.green,
-            _backgroundColor,
-            'en',
-          ),
-        ],
+      body: Container(
+        color:
+            themeMode.isLight ? AppColors.neutral_07 : AppColors.text_black_1,
+        child: Column(
+          children: <Widget>[
+            _buildLanguageOption(
+              context,
+              S.of(context).vietnamese,
+              Colors.red,
+              _backgroundColor,
+              'vi',
+            ),
+            _buildLanguageOption(
+              context,
+              S.of(context).english,
+              Colors.green,
+              _backgroundColor,
+              'en',
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -92,18 +81,24 @@ class _LanguagesScreenState extends State<LanguagesScreen> {
     String languageCode,
   ) {
     final isSelected = value == groupValue;
+    final ThemeData themeData = Theme.of(context);
 
     return InkWell(
       onTap: () async {
         await appService.switchLanguage();
-        await _saveSelectedLanguage(languageCode);
         _setBackgroundColor(value);
         setState(() {});
       },
       child: Container(
         margin: const EdgeInsets.all(8),
         decoration: BoxDecoration(
-          color: isSelected ? Colors.blue : Colors.grey,
+          color: isSelected
+              ? themeMode.isLight
+                  ? AppColors.neutral_07
+                  : AppColors.text_black_1
+              : themeMode.isLight
+                  ? AppColors.neutral_07
+                  : AppColors.text_black_1,
           borderRadius: BorderRadius.circular(16),
         ),
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -112,17 +107,30 @@ class _LanguagesScreenState extends State<LanguagesScreen> {
           children: <Widget>[
             Text(
               label,
-              style: TextStyle(color: isSelected ? Colors.white : Colors.blue),
+              style: TextStyle(
+                  color: themeMode.isLight
+                      ? AppColors.text_black_1
+                      : AppColors.neutral_07),
             ),
             Radio(
               value: value,
               groupValue: groupValue,
               onChanged: (value) async {
                 await appService.switchLanguage();
-                await _saveSelectedLanguage(languageCode);
                 _setBackgroundColor(value);
               },
               activeColor: Colors.white,
+              materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+              visualDensity: VisualDensity.compact,
+              fillColor: MaterialStateProperty.resolveWith<Color?>(
+                (Set<MaterialState> states) {
+                  if (states.contains(MaterialState.selected)) {
+                    return AppColors.color_secondary;
+                  } else {
+                    return AppColors.neutral_03;
+                  }
+                },
+              ),
             ),
           ],
         ),

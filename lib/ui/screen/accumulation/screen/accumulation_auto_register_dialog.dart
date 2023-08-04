@@ -8,6 +8,8 @@ import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:dtnd/ui/theme/app_textstyle.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../config/service/app_services.dart';
+
 class AccumulationAutoRegisterDialog extends StatefulWidget {
   const AccumulationAutoRegisterDialog({
     super.key,
@@ -28,6 +30,8 @@ class _AccumulationAutoRegisterDialogState
   @override
   Widget build(BuildContext context) {
     final mediaQueryData = MediaQuery.of(context);
+    final ThemeMode themeMode = AppService.instance.themeMode.value;
+
     return InkWell(
       onTap: () => Navigator.of(context).pop(),
       child: Container(
@@ -41,7 +45,7 @@ class _AccumulationAutoRegisterDialogState
               padding: const EdgeInsets.only(
                   top: 40.0, left: 10.0, right: 10.0, bottom: 10.0),
               child: Material(
-                color: AppColors.light_bg,
+                color: themeMode.isLight ? AppColors.light_bg : AppColors.text_black_1,
                 shape: const RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(
                     Radius.circular(10),
@@ -57,7 +61,7 @@ class _AccumulationAutoRegisterDialogState
                         Stack(
                           children: <Widget>[
                             Container(
-                              color: AppColors.light_bg,
+                              color: themeMode.isLight ? AppColors.light_bg : AppColors.text_black_1,
                               child: Container(
                                 padding: EdgeInsets.zero,
                                 width: MediaQuery.of(context).size.width,
@@ -81,7 +85,7 @@ class _AccumulationAutoRegisterDialogState
                                             style: AppTextStyle.labelLarge_18
                                                 .copyWith(
                                                     color:
-                                                        AppColors.neutral_01),
+                                                    themeMode.isLight ? AppColors.neutral_01 : AppColors.neutral_07),
                                           )
                                         ],
                                       ),
@@ -95,7 +99,7 @@ class _AccumulationAutoRegisterDialogState
                                               : S.of(context).are_you_sure_you_want_to_sign_up_for_automatic_accrual_products,
                                           style: AppTextStyle.bodyMedium_14
                                               .copyWith(
-                                                  color: AppColors.neutral_04),
+                                                  color: themeMode.isLight ? AppColors.neutral_04 : AppColors.neutral_07),
                                           textAlign: TextAlign.center,
                                         ),
                                       ),

@@ -5,6 +5,7 @@ import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
+import '../../../../config/service/app_services.dart';
 import '../logic/function_data.dart';
 
 class ListFunction extends StatefulWidget {
@@ -53,6 +54,8 @@ class _ListFunctionState extends State<ListFunction> {
 
   @override
   Widget build(BuildContext context) {
+    final ThemeMode themeMode = AppService.instance.themeMode.value;
+
     return ListView.builder(
       padding: const EdgeInsets.all(8),
       itemCount: widget.list.length,
@@ -108,7 +111,10 @@ class _ListFunctionState extends State<ListFunction> {
                             style: Theme.of(context)
                                 .textTheme
                                 .bodyMedium
-                                ?.copyWith(color: AppColors.neutral_02),
+                                ?.copyWith(
+                                    color: themeMode.isLight
+                                        ? AppColors.neutral_02
+                                        : AppColors.neutral_07),
                           ),
                         ),
                       );

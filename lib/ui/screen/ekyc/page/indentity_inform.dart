@@ -4,6 +4,7 @@ import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+import '../../../../config/service/app_services.dart';
 import 'indentity_face.dart';
 
 class IdentityInform extends StatefulWidget {
@@ -73,6 +74,8 @@ class _IdentityInformState extends State<IdentityInform> {
   Widget build(BuildContext context) {
     final headlineSmall = Theme.of(context).textTheme.headlineSmall;
     var titleSmall = Theme.of(context).textTheme.titleSmall;
+    final ThemeMode themeMode = AppService.instance.themeMode.value;
+
     return Scaffold(
       appBar: AppBar(
         leading: BackButton(
@@ -98,16 +101,16 @@ class _IdentityInformState extends State<IdentityInform> {
                 'Xác nhận lại thông tin đã trích xuất từ CCCD',
                 style: titleSmall?.copyWith(
                     fontWeight: FontWeight.w500,
-                    color: AppColors.neutral_03,
+                    color: themeMode.isLight ? AppColors.neutral_03 : AppColors.neutral_07,
                     fontSize: 14),
               ),
               const SizedBox(height: 36),
-              const Text(
+              Text(
                 'Thông tin cá nhân',
                 style: TextStyle(
                     height: 1.5,
                     fontWeight: FontWeight.w600,
-                    color: AppColors.bg_2,
+                    color: themeMode.isLight ?  AppColors.bg_2 : AppColors.neutral_07,
                     fontSize: 16),
               ),
               const SizedBox(height: 16),
@@ -260,12 +263,12 @@ class _IdentityInformState extends State<IdentityInform> {
                     const SizedBox(
                       height: 36,
                     ),
-                    const Text(
+                    Text(
                       'Thông tin nơi cấp',
                       style: TextStyle(
                           height: 1.5,
                           fontWeight: FontWeight.w600,
-                          color: AppColors.bg_2,
+                          color: themeMode.isLight ? AppColors.bg_2 : AppColors.neutral_07 ,
                           fontSize: 16),
                     ),
                     const SizedBox(
@@ -303,9 +306,9 @@ class _IdentityInformState extends State<IdentityInform> {
                         top: 12,
                         child: GestureDetector(
                           onTap: pickRangeDate,
-                          child: const Icon(
+                          child: Icon(
                             Icons.calendar_month,
-                            color: AppColors.text_black,
+                            color: themeMode.isLight ? AppColors.text_black : AppColors.neutral_07,
                             size: 24.0,
                           ),
                         ),
@@ -329,9 +332,9 @@ class _IdentityInformState extends State<IdentityInform> {
                         top: 12,
                         child: GestureDetector(
                           onTap: pickExpirationDate,
-                          child: const Icon(
+                          child: Icon(
                             Icons.calendar_month,
-                            color: AppColors.text_black,
+                            color: themeMode.isLight ? AppColors.text_black : AppColors.neutral_07,
                             size: 24.0,
                           ),
                         ),
