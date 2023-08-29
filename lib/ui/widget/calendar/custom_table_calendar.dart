@@ -4,6 +4,8 @@ import 'package:dtnd/utilities/time_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 
+import '../../../config/service/app_services.dart';
+
 class CustomTableCalendar extends StatefulWidget {
   const CustomTableCalendar({
     super.key,
@@ -35,12 +37,13 @@ class _CustomTableCalendarState extends State<CustomTableCalendar> {
 
   @override
   Widget build(BuildContext context) {
-    final ThemeData themeData = Theme.of(context);
+    final ThemeMode themeMode = AppService.instance.themeMode.value;
+
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
       decoration: BoxDecoration(
           borderRadius: const BorderRadius.all(Radius.circular(12)),
-          color: themeData.colorScheme.background),
+          color: themeMode.isLight ? AppColors.neutral_07 : AppColors.text_black_1 ),
       child: TableCalendar(
         firstDay: _firstDay,
         lastDay: _lastDay,

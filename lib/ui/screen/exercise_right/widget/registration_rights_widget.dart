@@ -3,6 +3,7 @@ import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/utilities/num_utils.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../config/service/app_services.dart';
 import '../../../../utilities/time_utils.dart';
 import '../../../theme/app_color.dart';
 import '../../../theme/app_textstyle.dart';
@@ -20,12 +21,14 @@ class RegistrationRightsWidget extends StatefulWidget {
 class _RegistrationRightsWidgetState extends State<RegistrationRightsWidget> {
   @override
   Widget build(BuildContext context) {
+    final themeMode = AppService.instance.themeMode.value;
+
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 8),
       padding: const EdgeInsets.all(16),
-      decoration: const BoxDecoration(
-          color: AppColors.neutral_06,
-          borderRadius: BorderRadius.all(Radius.circular(12))),
+      decoration: BoxDecoration(
+          color: themeMode.isLight ? AppColors.neutral_06 : AppColors.neutral_01,
+          borderRadius: const BorderRadius.all(Radius.circular(12))),
       child: Column(
         children: [
           Row(
@@ -33,11 +36,13 @@ class _RegistrationRightsWidgetState extends State<RegistrationRightsWidget> {
             children: [
               Text(
                 widget.data?.cSHARECODE.toString() ?? '',
-                style: const TextStyle(
+                style: TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w600,
                     height: 1.3,
-                    color: AppColors.text_black_1),
+                    color: themeMode.isLight
+                        ? AppColors.text_black_1
+                        : AppColors.neutral_07),
               )
             ],
           ),
@@ -48,17 +53,21 @@ class _RegistrationRightsWidgetState extends State<RegistrationRightsWidget> {
               Text(
                 S.of(context).registration_time,
                 style: AppTextStyle.labelMedium_12
-                    .copyWith(color: AppColors.neutral_03),
+                    .copyWith(color: themeMode.isLight
+                    ? AppColors.neutral_03
+                    : AppColors.neutral_07),
               ),
               Text(
                 TimeUtilities.commonTimeFormat.format(TimeUtilities
                     .commonTimeFormat
                     .parse(widget.data?.cCREATEDATE ?? '')),
-                style: const TextStyle(
+                style:   TextStyle(
                     fontSize: 12,
                     fontWeight: FontWeight.w600,
                     height: 1.1,
-                    color: AppColors.text_black_1),
+                    color: themeMode.isLight
+                        ? AppColors.text_black_1
+                        : AppColors.neutral_07),
               )
             ],
           ),
@@ -68,13 +77,17 @@ class _RegistrationRightsWidgetState extends State<RegistrationRightsWidget> {
             children: [
               Text(S.of(context).registered_share_volume,
                   style: AppTextStyle.labelMedium_12
-                      .copyWith(color: AppColors.neutral_03)),
+                      .copyWith(color: themeMode.isLight
+                      ? AppColors.neutral_03
+                      : AppColors.neutral_07)),
               Text(NumUtils.formatDouble(widget.data?.cSHAREBUY),
-                  style: const TextStyle(
+                  style:   TextStyle(
                       fontSize: 12,
                       fontWeight: FontWeight.w600,
                       height: 1.1,
-                      color: AppColors.text_black_1))
+                      color: themeMode.isLight
+                          ? AppColors.text_black_1
+                          : AppColors.neutral_07))
             ],
           ),
           const SizedBox(height: 8),
@@ -83,13 +96,17 @@ class _RegistrationRightsWidgetState extends State<RegistrationRightsWidget> {
             children: [
               Text(S.of(context).purchase_price,
                   style: AppTextStyle.labelMedium_12
-                      .copyWith(color: AppColors.neutral_03)),
+                      .copyWith(color: themeMode.isLight
+                      ? AppColors.neutral_03
+                      : AppColors.neutral_07)),
               Text("${NumUtils.formatInteger(widget.data?.cBUYPRICE ?? 0)} đ",
-                  style: const TextStyle(
+                  style:   TextStyle(
                       fontSize: 12,
                       fontWeight: FontWeight.w600,
                       height: 1.1,
-                      color: AppColors.text_black_1)),
+                      color: themeMode.isLight
+                          ? AppColors.text_black_1
+                          : AppColors.neutral_07)),
             ],
           ),
           const SizedBox(height: 8),
@@ -98,13 +115,17 @@ class _RegistrationRightsWidgetState extends State<RegistrationRightsWidget> {
             children: [
               Text(S.of(context).amount_paid,
                   style: AppTextStyle.labelMedium_12
-                      .copyWith(color: AppColors.neutral_03)),
+                      .copyWith(color: themeMode.isLight
+                      ? AppColors.neutral_03
+                      : AppColors.neutral_07)),
               Text('${NumUtils.formatDouble(widget.data?.cCASHBUY)} đ',
-                  style: const TextStyle(
+                  style:   TextStyle(
                       fontSize: 12,
                       fontWeight: FontWeight.w600,
                       height: 1.1,
-                      color: AppColors.text_black_1))
+                      color: themeMode.isLight
+                          ? AppColors.text_black_1
+                          : AppColors.neutral_07))
             ],
           ),
         ],

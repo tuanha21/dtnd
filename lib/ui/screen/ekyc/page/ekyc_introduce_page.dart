@@ -1,6 +1,7 @@
 import 'package:dtnd/ui/screen/ekyc/page/ekyc_select_type.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../config/service/app_services.dart';
 import '../../../theme/app_color.dart';
 import '../../../theme/app_image.dart';
 
@@ -11,6 +12,8 @@ class EkycIntroducePage extends StatelessWidget {
   Widget build(BuildContext context) {
     final headlineSmall = Theme.of(context).textTheme.headlineSmall;
     var titleSmall = Theme.of(context).textTheme.titleSmall;
+    final ThemeMode themeMode = AppService.instance.themeMode.value;
+
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -43,7 +46,7 @@ class EkycIntroducePage extends StatelessWidget {
                   TextSpan(
                       text: "eKYC",
                       style: titleSmall?.copyWith(
-                          fontWeight: FontWeight.w700, color: AppColors.bg_2)),
+                          fontWeight: FontWeight.w700, color: themeMode.isLight ? AppColors.bg_2 : AppColors.neutral_07)),
                   TextSpan(
                       text:
                           ' là điều kiện bắt buộc khi giao dịch các sản phẩm đầu tư',

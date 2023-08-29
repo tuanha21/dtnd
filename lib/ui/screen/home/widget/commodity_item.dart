@@ -10,12 +10,14 @@ import 'package:get/get.dart';
 class CommodityItem extends StatelessWidget {
   const CommodityItem(
       {super.key, required this.data, this.selectedSymbol, this.onSelected});
+
   final CommodityModel data;
   final CommodityModel? selectedSymbol;
   final ValueChanged<CommodityModel>? onSelected;
+
   @override
   Widget build(BuildContext context) {
-    final ThemeData themeData = Theme.of(context);
+    final themeMode = AppService.instance.themeMode.value;
 
     final img =
         LanguageUtil.toUnsigned(data.nAME).toLowerCase().removeAllWhitespace;
@@ -30,7 +32,7 @@ class CommodityItem extends StatelessWidget {
       };
     }
     return Material(
-      color: themeData.colorScheme.background,
+      color: Colors.transparent,
       child: InkWell(
         onTap: onTap,
         borderRadius: const BorderRadius.all(Radius.circular(8)),
@@ -41,7 +43,9 @@ class CommodityItem extends StatelessWidget {
           decoration: BoxDecoration(
             border: border,
             borderRadius: const BorderRadius.all(Radius.circular(8)),
-            color: themeData.colorScheme.background,
+            color: themeMode.isLight
+                ? AppColors.neutral_07
+                : AppColors.text_black_1,
           ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -57,10 +61,11 @@ class CommodityItem extends StatelessWidget {
                   Flexible(
                     child: Text(
                       data.nAME,
-                      style: Theme.of(context)
-                          .textTheme
-                          .titleSmall!
-                          .copyWith(fontWeight: FontWeight.w600),
+                      style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                          fontWeight: FontWeight.w600,
+                          color: themeMode.isLight
+                              ? AppColors.text_black_1
+                              : AppColors.neutral_07),
                     ),
                   ),
                 ],

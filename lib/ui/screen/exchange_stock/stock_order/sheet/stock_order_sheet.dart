@@ -33,6 +33,7 @@ import 'package:dtnd/utilities/time_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../../../../../config/service/app_services.dart';
 import '../../../../widget/input/thousand_separator_input_formatter.dart';
 
 class StockOrderSheet extends StatefulWidget {
@@ -227,6 +228,8 @@ class _StockOrderSheetState extends State<StockOrderSheet>
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
+    final themeMode = AppService.instance.themeMode.value;
+
     listMR = stockModel?.stockDataCore?.mr.map((mr) => mr.mr).toList() ?? [];
     return SingleChildScrollView(
       scrollDirection: Axis.vertical,
@@ -264,6 +267,7 @@ class _StockOrderSheetState extends State<StockOrderSheet>
                     ],
                   ),
                   Material(
+                    color: Colors.transparent,
                     borderRadius: const BorderRadius.all(Radius.circular(6)),
                     child: InkWell(
                       onTap: () {
@@ -283,7 +287,12 @@ class _StockOrderSheetState extends State<StockOrderSheet>
                         ),
                         child: SizedBox.square(
                             dimension: 16,
-                            child: Image.asset(AppImages.filter_icon)),
+                            child: Image.asset(
+                              AppImages.filter_icon,
+                              color: themeMode.isLight
+                                  ? null
+                                  : AppColors.neutral_01,
+                            )),
                       ),
                     ),
                   ),
@@ -340,7 +349,10 @@ class _StockOrderSheetState extends State<StockOrderSheet>
                       ),
                       Text(
                         "${NumUtils.formatInteger(stockCashBalanceModel?.pp, "0")}đ",
-                        style: textTheme.titleSmall,
+                        style: textTheme.titleSmall?.copyWith(
+                            color: themeMode.isLight
+                                ? null
+                                : AppColors.neutral_07),
                       ),
                     ],
                   ),
@@ -558,10 +570,12 @@ class _OrderTypeButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bool selected = isSelected.call(orderType);
+    final themeMode = AppService.instance.themeMode.value;
     final textTheme = Theme.of(context).textTheme.bodySmall?.copyWith(
         fontWeight: FontWeight.w500,
         color: selected ? Colors.white : AppColors.neutral_04);
     return Material(
+      color: themeMode.isLight ? Colors.white : AppColors.neutral_02,
       child: InkWell(
         onTap: () => select.call(orderType),
         borderRadius: const BorderRadius.all(Radius.circular(4)),

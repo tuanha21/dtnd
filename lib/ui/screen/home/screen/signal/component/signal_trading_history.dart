@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../../../../=models=/response/top_signal_detail_model.dart';
+import '../../../../../../config/service/app_services.dart';
 import '../../../../../theme/app_image.dart';
 
 const List<String> _label = ["1W", "2W", "1M", "3M"];
@@ -69,13 +70,15 @@ class _SignalTradingHistoryState extends State<SignalTradingHistory> {
 
   @override
   Widget build(BuildContext context) {
+    final ThemeMode themeMode = AppService.instance.themeMode.value;
+
     return Container(
       padding: const EdgeInsets.only(top: 16),
-      decoration: const BoxDecoration(
-        borderRadius: BorderRadius.all(
+      decoration: BoxDecoration(
+        borderRadius: const BorderRadius.all(
           Radius.circular(12),
         ),
-        color: Colors.white,
+        color: themeMode.isLight ? Colors.white : AppColors.text_black_1,
       ),
       child: Column(
         children: [
@@ -112,18 +115,28 @@ class _SignalTradingHistoryState extends State<SignalTradingHistory> {
               itemCount: widget.listHis!.length,
               itemBuilder: (context, index) {
                 final his = widget.listHis!.elementAt(index);
-                return Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 4),
-                  child: SignalTradingHistoryElement(
-                    pc: his.pc,
-                    buy: his.buyPrice,
-                    sell: his.sellPrice,
-                    buyTime: his.buyDateString,
-                    sellTime: his.sellDateString,
-                    icon: his.prefixIcon(),
-                    color: his.color,
-                    risk: his.volatility,
-                  ),
+                return Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 2),
+                      child: SignalTradingHistoryElement(
+                        pc: his.pc,
+                        buy: his.buyPrice,
+                        sell: his.sellPrice,
+                        buyTime: his.buyDateString,
+                        sellTime: his.sellDateString,
+                        icon: his.prefixIcon(),
+                        color: his.color,
+                        risk: his.volatility,
+                      ),
+                    ),
+                    index != widget.listHis!.length ? const Divider(
+                      thickness: 1,
+                      color: AppColors.neutral_04,
+                      indent: 16,
+                      endIndent: 16,
+                    ) : SizedBox(),
+                  ],
                 );
               },
             ),
@@ -155,13 +168,15 @@ class SignalTradingHistoryElement extends StatelessWidget {
   final Color color;
   @override
   Widget build(BuildContext context) {
+    final ThemeMode themeMode = AppService.instance.themeMode.value;
+
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-      decoration: const BoxDecoration(
-        borderRadius: BorderRadius.all(
+      decoration: BoxDecoration(
+        borderRadius: const BorderRadius.all(
           Radius.circular(12),
         ),
-        color: Colors.white,
+        color: themeMode.isLight ? Colors.white :AppColors.text_black_1 ,
       ),
       child: Column(children: [
         Row(
@@ -202,9 +217,10 @@ class SignalTradingHistoryElement extends StatelessWidget {
                     style: AppTextStyle.titleSmall_14
                         .copyWith(color: AppColors.semantic_01),
                   ),
-                  const VerticalDivider(
+                  VerticalDivider(
                     width: 10,
                     thickness: 2,
+                    color: themeMode.isLight ? null : AppColors.neutral_03,
                   ),
                   Text(
                     "${sell ?? "-"}",
@@ -316,6 +332,7 @@ class _Figure extends StatelessWidget {
         ),
         const SizedBox(height: 4),
         Material(
+          color: Colors.transparent,
           borderRadius: const BorderRadius.all(Radius.circular(8)),
           child: InkWell(
             onTap: () => onChanged?.call(data),

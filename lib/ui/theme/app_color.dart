@@ -50,6 +50,9 @@ class AppColors {
   static const accent_dark_01 = Color.fromRGBO(105, 224, 199, 1);
   static const accent_dark_03 = Color(0xFFFF754C);
 
+  static const stock_up = Color(0xFF302A4A);
+  static const stock_down = Color(0xFF40252F);
+
   //
   static const bg_1 = Color(0xFFFAFAFA);
   static const bg_light_1 = Color(0xFFFEFEFE);
@@ -98,4 +101,5 @@ class AppColors {
   static const bg_icon_summary = Color(0xFF0D3630);
   static const bg_text_summary = Color(0xFF0A5C49);
   static const bg_share_summary = Color(0xFF0086C6);
+  static const bg_share_inside_nav = Color(0xFF2E2E47);
 }

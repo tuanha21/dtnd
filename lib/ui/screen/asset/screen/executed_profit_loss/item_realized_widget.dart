@@ -85,7 +85,7 @@ class _ItemRealizedState extends State<ItemRealizedWidget> {
           padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
           decoration: BoxDecoration(
             borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
-            color: themeMode.isDark ? AppColors.bg_2 : AppColors.neutral_06,
+            color: themeMode.isDark ? AppColors.text_black_1 : AppColors.neutral_06,
           ),
           child: Column(
             children: [
@@ -140,7 +140,7 @@ class _ItemRealizedState extends State<ItemRealizedWidget> {
                         Text(
                           widget.detail?.cTRADINGDATE ?? '',
                           style: AppTextStyle.labelMedium_12
-                              .copyWith(color: AppColors.neutral_01),
+                              .copyWith(color: themeMode.isLight ? AppColors.neutral_01 : AppColors.neutral_07),
                         ),
                       ],
                     ),
@@ -161,7 +161,7 @@ class _ItemRealizedState extends State<ItemRealizedWidget> {
                         Text(
                           NumUtils.formatDouble(widget.detail?.cSHAREVOLUME),
                           style: AppTextStyle.labelMedium_12
-                              .copyWith(color: AppColors.neutral_01),
+                              .copyWith(color: themeMode.isLight ? AppColors.neutral_01 : AppColors.neutral_07),
                         ),
                       ],
                     ),
@@ -214,9 +214,10 @@ class _ItemRealizedState extends State<ItemRealizedWidget> {
                 child: Container(
                   height: 90,
                   margin: const EdgeInsets.symmetric(vertical: 8),
-                  decoration: const BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(12)),
-                    color: AppColors.neutral_06,
+                  padding: const EdgeInsets.all(4),
+                  decoration: BoxDecoration(
+                    borderRadius: const BorderRadius.all(Radius.circular(12)),
+                    color: themeMode.isLight ? AppColors.neutral_06 : AppColors.neutral_03,
                   ),
                   child: Column(
                     children: [
@@ -301,7 +302,7 @@ class _ItemRealizedState extends State<ItemRealizedWidget> {
               decoration: BoxDecoration(
                 borderRadius:
                     const BorderRadius.vertical(bottom: Radius.circular(12)),
-                color: themeMode.isDark ? AppColors.bg_2 : AppColors.neutral_05,
+                color: themeMode.isDark ? AppColors.text_black_1 : AppColors.neutral_05,
               ),
               child: Center(
                 child: AnimatedRotation(

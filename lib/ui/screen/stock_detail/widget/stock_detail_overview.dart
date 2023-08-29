@@ -79,7 +79,7 @@ class StockDetailOverview extends StatelessWidget {
                               child: Text(
                                 "${NumUtils.formatInteger10(lot.value, "-")} CP",
                                 style: AppTextStyle.labelSmall_10
-                                    .copyWith(color: AppColors.neutral_04),
+                                    .copyWith(color: themeMode.isLight ? AppColors.neutral_04 : AppColors.neutral_07),
                               ),
                             );
                           },

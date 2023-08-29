@@ -37,6 +37,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 
+import '../../../config/service/app_services.dart';
 import '../../widget/overlay/custom_dialog.dart';
 import 'component/asset_effective_chart.dart';
 import 'component/portfolio_and_right_panel.dart';
@@ -110,6 +111,7 @@ class _AssetScreenState extends State<AssetScreen>
   @override
   Widget build(BuildContext context) {
     final ThemeData themeData = Theme.of(context);
+    final ThemeMode themeMode = AppService.instance.themeMode.value;
     Widget child;
 
     return Scaffold(
@@ -335,15 +337,16 @@ class _AssetScreenState extends State<AssetScreen>
                                 ),
                                 child: Ink(
                                   padding: const EdgeInsets.all(8),
-                                  decoration: const BoxDecoration(
-                                    color: AppColors.primary_03,
+                                  decoration: BoxDecoration(
+                                    color: themeMode.isLight ? AppColors.primary_03 : AppColors.bg_2,
                                     borderRadius:
-                                        BorderRadius.all(Radius.circular(6)),
+                                        const BorderRadius.all(Radius.circular(6)),
                                   ),
                                   child: SizedBox.square(
                                     dimension: 20,
                                     child: Image.asset(
                                       AppImages.asset_menu_icon,
+                                      color: themeMode.isLight ? null : AppColors.bg_1 ,
                                     ),
                                   ),
                                 ),

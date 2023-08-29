@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 
 import '../../../../=models=/response/account/base_margin_plus_account_model.dart';
 import '../../../../=models=/response/account/unexecuted_right_model.dart';
+import '../../../../config/service/app_services.dart';
 import '../../../../data/i_user_service.dart';
 import '../../../../data/implementations/user_service.dart';
 import '../../../../utilities/time_utils.dart';
+import '../../../theme/app_color.dart';
 import '../../../widget/calendar/day_input.dart';
 import '../../../widget/empty_list_widget.dart';
 import '../widget/purchase_rights_history_widget.dart';
@@ -50,6 +52,8 @@ class _PurchaseRightsHistoryTabState extends State<PurchaseRightsHistoryTab> {
 
   @override
   Widget build(BuildContext context) {
+    final themeMode = AppService.instance.themeMode.value;
+
     return FutureBuilder<List<UnexecutedRightModel>?>(
       future: _getData(fromDay: fromDay, toDay: toDay),
       builder: (context, snapshot) {
@@ -76,7 +80,9 @@ class _PurchaseRightsHistoryTabState extends State<PurchaseRightsHistoryTab> {
                           fromDay = value;
                         });
                         _getData(fromDay: fromDay, toDay: toDay);
-                      }),
+                      },
+                    color: themeMode.isLight ? AppColors.neutral_06 : AppColors.text_black_1,
+                  ),
                   const SizedBox(
                     width: 16,
                     child: Text('-'),
@@ -91,6 +97,7 @@ class _PurchaseRightsHistoryTabState extends State<PurchaseRightsHistoryTab> {
                       });
                       _getData(fromDay: fromDay, toDay: toDay);
                     },
+                    color: themeMode.isLight ? AppColors.neutral_06 : AppColors.text_black_1,
                   ),
                 ],
               ),

@@ -12,6 +12,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../=models=/response/stock_trading_history.dart';
+import '../../../../config/service/app_services.dart';
 import '../../../../data/i_data_center_service.dart';
 import '../../../../data/implementations/data_center_service.dart';
 import '../../../../utilities/time_utils.dart';
@@ -101,6 +102,7 @@ class _StockDetailChartState extends State<StockDetailChart>
 
   @override
   Widget build(BuildContext context) {
+    final ThemeMode themeMode = AppService.instance.themeMode.value;
     super.build(context);
     final Widget chart;
     final Widget row;
@@ -156,22 +158,35 @@ class _StockDetailChartState extends State<StockDetailChart>
           includeArea: true,
         ),
         domainAxis: charts.DateTimeAxisSpec(
-            tickFormatterSpec: charts.BasicDateTimeTickFormatterSpec((time) {
-              String formattedDate =
-                  TimeUtilities.dateMonthTimeFormat.format(time);
-              return formattedDate;
-            }),
-            tickProviderSpec: const charts.AutoDateTimeTickProviderSpec(),
-            // viewport: charts.NumericExtents(minX, maxX),
+          tickFormatterSpec: charts.BasicDateTimeTickFormatterSpec((time) {
+            String formattedDate =
+                TimeUtilities.dateMonthTimeFormat.format(time);
+            return formattedDate;
+          }),
+          tickProviderSpec: const charts.AutoDateTimeTickProviderSpec(),
+          // viewport: charts.NumericExtents(minX, maxX),
 
-            renderSpec: const charts.GridlineRendererSpec(
-                axisLineStyle: charts.LineStyleSpec(
-                  dashPattern: [4],
-                  thickness: 0,
-                  color: charts.Color(r: 74, g: 85, b: 104),
-                ),
-                labelStyle: charts.TextStyleSpec(fontSize: 9),
-                lineStyle: charts.LineStyleSpec(dashPattern: [4]))),
+          renderSpec: charts.GridlineRendererSpec(
+            axisLineStyle: charts.LineStyleSpec(
+              dashPattern: [4],
+              thickness: 0,
+              color: themeMode.isLight
+                  ? const charts.Color(r: 74, g: 85, b: 104)
+                  : charts.ColorUtil.fromDartColor(AppColors.neutral_07),
+            ),
+            labelStyle: charts.TextStyleSpec(
+                fontSize: 9,
+                color: themeMode.isLight
+                    ? null
+                    : charts.ColorUtil.fromDartColor(AppColors.neutral_07)),
+            lineStyle: charts.LineStyleSpec(
+              dashPattern: const [4],
+              color: themeMode.isLight
+                  ? null
+                  : charts.ColorUtil.fromDartColor(AppColors.neutral_02),
+            ),
+          ),
+        ),
         primaryMeasureAxis: const charts.NumericAxisSpec(
           showAxisLine: false,
           tickProviderSpec: charts.BasicNumericTickProviderSpec(
@@ -294,15 +309,21 @@ class _StockDetailChartState extends State<StockDetailChart>
                     margin: EdgeInsets.only(left: index == 0 ? 0 : 7),
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
-                        color: AppColors.neutral_05,
+                        color: themeMode.isLight
+                            ? AppColors.neutral_05
+                            : AppColors.bg_share_inside_nav,
                         borderRadius: BorderRadius.circular(4)),
                     child: Text(
                       TimeSeries.values[index].title,
                       style: Theme.of(context).textTheme.bodySmall?.copyWith(
                           fontWeight: FontWeight.w600,
                           color: timeSeries == TimeSeries.values[index]
-                              ? AppColors.primary_01
-                              : AppColors.text_black),
+                              ? themeMode.isLight
+                                  ? AppColors.primary_01
+                                  : AppColors.neutral_07
+                              : themeMode.isLight
+                                  ? AppColors.text_black
+                                  : AppColors.neutral_02),
                     ),
                   ),
                 ),
@@ -317,22 +338,32 @@ class _StockDetailChartState extends State<StockDetailChart>
   }
 
   charts.NumericAxisSpec axisSpec() {
-    return const charts.NumericAxisSpec(
+    final ThemeMode themeMode = AppService.instance.themeMode.value;
+
+    return charts.NumericAxisSpec(
       showAxisLine: true,
-      tickProviderSpec: charts.BasicNumericTickProviderSpec(
+      tickProviderSpec: const charts.BasicNumericTickProviderSpec(
         zeroBound: false,
         // desiredTickCount: 5,
         dataIsInWholeNumbers: false,
       ),
       // viewport: charts.NumericExtents(min.floor(), max.round()),
       renderSpec: charts.GridlineRendererSpec(
-          axisLineStyle: charts.LineStyleSpec(
+          axisLineStyle: const charts.LineStyleSpec(
             dashPattern: [4],
             thickness: 0,
             color: charts.Color(r: 74, g: 85, b: 104),
           ),
-          labelStyle: charts.TextStyleSpec(fontSize: 9),
-          lineStyle: charts.LineStyleSpec(dashPattern: [4])),
+          labelStyle: charts.TextStyleSpec(
+              fontSize: 9,
+              color: themeMode.isLight
+                  ? null
+                  : charts.ColorUtil.fromDartColor(AppColors.neutral_07)),
+          lineStyle: charts.LineStyleSpec(
+              dashPattern: const [4],
+              color: themeMode.isLight
+                  ? null
+                  : charts.ColorUtil.fromDartColor(AppColors.neutral_02))),
     );
   }
 

@@ -10,6 +10,7 @@ import 'package:dtnd/utilities/num_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../../config/service/app_services.dart';
 import '../widget/row_information.dart';
 
 class AccumulationProductDetail extends StatefulWidget {
@@ -29,7 +30,8 @@ class _AccumulationProductDetailState extends State<AccumulationProductDetail> {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
-    final ThemeData themeData = Theme.of(context);
+    final themeMode = AppService.instance.themeMode.value;
+
 
     return Scaffold(
       appBar: SimpleAppbar(
@@ -58,7 +60,7 @@ class _AccumulationProductDetailState extends State<AccumulationProductDetail> {
               Container(
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
-                    color: themeData.colorScheme.background,
+                    color: themeMode.isLight ? AppColors.neutral_07 : AppColors.bg_share_inside_nav,
                     borderRadius: BorderRadius.circular(8)),
                 child: Column(
                   children: [
@@ -95,7 +97,7 @@ class _AccumulationProductDetailState extends State<AccumulationProductDetail> {
                       padding:
                           const EdgeInsets.only(top: 12, left: 10, right: 10),
                       decoration: BoxDecoration(
-                          color: themeData.colorScheme.background,
+                          color: themeMode.isLight ? AppColors.neutral_07 : AppColors.bg_share_inside_nav,
                           borderRadius: BorderRadius.circular(8)),
                       child: Column(
                         children: [

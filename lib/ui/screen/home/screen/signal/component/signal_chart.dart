@@ -11,6 +11,8 @@ import 'package:dtnd/utilities/logger.dart';
 import 'package:dtnd/utilities/time_utils.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../../../config/service/app_services.dart';
+
 const List<String> _label = ["1M", "3M", "6M", "1Y"];
 
 class SignalChart extends StatefulWidget {
@@ -25,6 +27,8 @@ class SignalChart extends StatefulWidget {
 
 class _SignalChartState extends State<SignalChart> with ChartDatasMixin {
   final IDataCenterService dataCenterService = DataCenterService();
+  final ThemeMode themeMode = AppService.instance.themeMode.value;
+
   String currentPeriod = _label[1];
   List<OhlcHistoryItem> datas = [];
   late num annotationX;
@@ -99,6 +103,8 @@ class _SignalChartState extends State<SignalChart> with ChartDatasMixin {
 
   @override
   Widget build(BuildContext context) {
+    final ThemeMode themeMode = AppService.instance.themeMode.value;
+
     return Column(
       children: [
         Row(
@@ -126,7 +132,9 @@ class _SignalChartState extends State<SignalChart> with ChartDatasMixin {
                             const BorderRadius.all(Radius.circular(4)),
                         color: _label[i] == currentPeriod
                             ? AppColors.primary_03
-                            : AppColors.neutral_06,
+                            : themeMode.isLight
+                                ? AppColors.neutral_06
+                                : AppColors.bg_share_inside_nav,
                       ),
                       child: Text(
                         _label[i],
@@ -189,20 +197,32 @@ class _SignalChartState extends State<SignalChart> with ChartDatasMixin {
                 topMarginSpec: charts.MarginSpec.defaultSpec,
               ),
               domainAxis: charts.DateTimeAxisSpec(
-                  tickFormatterSpec:
-                      charts.BasicDateTimeTickFormatterSpec.fromDateFormat(
-                          TimeUtilities.dateMonthTimeFormat),
-                  tickProviderSpec: const charts.AutoDateTimeTickProviderSpec(),
-                  showAxisLine: true,
-                  // viewport: charts.NumericExtents(minX, maxX),
-                  renderSpec: const charts.GridlineRendererSpec(
-                      axisLineStyle: charts.LineStyleSpec(
-                        dashPattern: [4],
-                        thickness: 0,
-                        color: charts.Color(r: 74, g: 85, b: 104),
-                      ),
-                      labelStyle: charts.TextStyleSpec(fontSize: 9),
-                      lineStyle: charts.LineStyleSpec(dashPattern: [4]))),
+                tickFormatterSpec:
+                    charts.BasicDateTimeTickFormatterSpec.fromDateFormat(
+                        TimeUtilities.dateMonthTimeFormat),
+                tickProviderSpec: const charts.AutoDateTimeTickProviderSpec(),
+                showAxisLine: true,
+                // viewport: charts.NumericExtents(minX, maxX),
+                renderSpec: charts.GridlineRendererSpec(
+                  axisLineStyle: const charts.LineStyleSpec(
+                    dashPattern: [4],
+                    thickness: 0,
+                    color: charts.Color(r: 74, g: 85, b: 104),
+                  ),
+                  labelStyle: charts.TextStyleSpec(
+                      fontSize: 9,
+                      color: themeMode.isLight
+                          ? null
+                          : charts.ColorUtil.fromDartColor(
+                              AppColors.neutral_07)),
+                  lineStyle: charts.LineStyleSpec(
+                    dashPattern: [4],
+                    color: themeMode.isLight
+                        ? null
+                        : charts.ColorUtil.fromDartColor(AppColors.neutral_02),
+                  ),
+                ),
+              ),
               primaryMeasureAxis: const charts.NumericAxisSpec(
                 showAxisLine: false,
                 tickProviderSpec: charts.BasicNumericTickProviderSpec(
@@ -210,19 +230,29 @@ class _SignalChartState extends State<SignalChart> with ChartDatasMixin {
                 ),
                 renderSpec: charts.NoneRenderSpec(),
               ),
-              secondaryMeasureAxis: const charts.NumericAxisSpec(
+              secondaryMeasureAxis: charts.NumericAxisSpec(
                 showAxisLine: true,
-                tickProviderSpec: charts.BasicNumericTickProviderSpec(
+                tickProviderSpec: const charts.BasicNumericTickProviderSpec(
                   zeroBound: false,
                 ),
                 renderSpec: charts.GridlineRendererSpec(
-                  axisLineStyle: charts.LineStyleSpec(
+                  axisLineStyle: const charts.LineStyleSpec(
                     dashPattern: [4],
                     thickness: 0,
                     color: charts.Color(r: 74, g: 85, b: 104),
                   ),
-                  labelStyle: charts.TextStyleSpec(fontSize: 9),
-                  lineStyle: charts.LineStyleSpec(dashPattern: [4]),
+                  labelStyle: charts.TextStyleSpec(
+                      fontSize: 9,
+                      color: themeMode.isLight
+                          ? null
+                          : charts.ColorUtil.fromDartColor(
+                              AppColors.neutral_07)),
+                  lineStyle: charts.LineStyleSpec(
+                    dashPattern: [4],
+                    color: themeMode.isLight
+                        ? null
+                        : charts.ColorUtil.fromDartColor(AppColors.neutral_02),
+                  ),
                 ),
               ),
               defaultRenderer: charts.PointRendererConfig(),

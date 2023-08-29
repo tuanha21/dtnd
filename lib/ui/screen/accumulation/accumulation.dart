@@ -7,6 +7,8 @@ import 'package:dtnd/ui/screen/accumulation/widget/accumulator_product.dart';
 import 'package:dtnd/ui/widget/appbar/simple_appbar.dart';
 import 'package:flutter/material.dart';
 
+import '../../../config/service/app_services.dart';
+
 class Accumlation extends StatefulWidget {
   const Accumlation({super.key, this.defaultab = 0});
 
@@ -34,6 +36,8 @@ class _AccumlationState extends State<Accumlation>
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
+    final themeMode = AppService.instance.themeMode.value;
+
     return Scaffold(
       appBar: SimpleAppbar(
         title: S.of(context).accumulation,

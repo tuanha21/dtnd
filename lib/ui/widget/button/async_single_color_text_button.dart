@@ -41,6 +41,7 @@ class _AsyncSingleColorTextButtonState
   @override
   Widget build(BuildContext context) {
     return Material(
+      color: Colors.transparent,
       child: InkWell(
         onTap: _onTap,
         borderRadius: const BorderRadius.all(Radius.circular(8)),

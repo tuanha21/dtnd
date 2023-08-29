@@ -48,19 +48,21 @@ class AppService {
     final themeMode = sharedPreferencesInstance.getString("ThemeMode");
     print("themeMode $themeMode");
     _themeMode = Rx<ThemeMode>(ThemeMode.light);
-    // if (themeMode == null) {
-    //   await sharedPreferencesInstance.setString(
-    //       "ThemeMode", ThemeMode.dark.name);
-    //   _themeMode = Rx<ThemeMode>(ThemeMode.light);
-    // } else {
-    //   _themeMode = Rx<ThemeMode>(ThemeModeHelper.fromString(themeMode));
-    // }
+    if (themeMode == null) {
+      await sharedPreferencesInstance.setString(
+          "ThemeMode", ThemeMode.dark.name);
+      _themeMode.value = ThemeMode.light;
+    } else {
+      _themeMode.value = ThemeModeHelper.fromString(themeMode);
+    }
 
     final languageCode = sharedPreferencesInstance.getString("Locale");
     if (languageCode == null) {
       await sharedPreferencesInstance.setString("Locale", "vi");
       _locale = Rx<Locale>(const Locale("vi", "VN"));
     } else {
+      print(languageCode);      print(LocaleHelper.fromLanguageCode(languageCode).toString());
+
       _locale = Rx<Locale>(LocaleHelper.fromLanguageCode(languageCode));
     }
   }
@@ -87,6 +89,7 @@ class AppService {
   }
 
   Future<Locale> _changeLanguage(Locale locale) async {
+    await sharedPreferencesInstance.setString("Locale", locale.languageCode);
     _locale.value = locale;
     await S.load(locale);
     return locale;

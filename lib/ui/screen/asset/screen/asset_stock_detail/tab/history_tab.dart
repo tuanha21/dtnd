@@ -15,6 +15,8 @@ import 'package:dtnd/utilities/num_utils.dart';
 import 'package:dtnd/utilities/time_utils.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../../../config/service/app_services.dart';
+
 class HistoryTab extends StatefulWidget {
   const HistoryTab({super.key, required this.stockCode});
   final String stockCode;
@@ -71,6 +73,8 @@ class _HistoryTabState extends State<HistoryTab>
   @override
   Widget build(BuildContext context) {
     super.build(context);
+    final ThemeMode themeMode = AppService.instance.themeMode.value;
+
     return SingleChildScrollView(
       child: Column(
         children: [
@@ -99,6 +103,7 @@ class _HistoryTabState extends State<HistoryTab>
                   initialDay: fromDay,
                   firstDay: firstDay,
                   lastDay: lastDay,
+                  color: themeMode.isLight ? AppColors.neutral_06 : AppColors.text_black_1,
                   onChanged: (value) {
                     setState(() {
                       fromDay = value;
@@ -115,6 +120,7 @@ class _HistoryTabState extends State<HistoryTab>
                   initialDay: toDay,
                   firstDay: firstDay,
                   lastDay: lastDay,
+                  color: themeMode.isLight ? AppColors.neutral_06 : AppColors.text_black_1,
                   onChanged: (value) {
                     setState(() {
                       toDay = value;
@@ -135,17 +141,18 @@ class _HistoryTabState extends State<HistoryTab>
           else
             Container(
               padding: const EdgeInsets.all(16),
-              decoration: const BoxDecoration(
-                  color: AppColors.neutral_06,
-                  borderRadius: BorderRadius.all(Radius.circular(12))),
+              decoration: BoxDecoration(
+                  color: themeMode.isLight ? AppColors.neutral_06 : AppColors.text_black_1,
+                  borderRadius: const BorderRadius.all(Radius.circular(12))),
               child: Column(
                 children: [
                   for (int i = 0; i < listDatas.length; i++)
                     Column(
                       children: [
                         if (i != 0)
-                          const Divider(
+                          Divider(
                             height: 17,
+                            color: themeMode.isLight ? AppColors.neutral_02 : AppColors.neutral_05
                           ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,

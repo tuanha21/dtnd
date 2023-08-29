@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../=models=/response/sec_event.dart';
+import '../../../../config/service/app_services.dart';
 import '../../../../data/i_data_center_service.dart';
 import '../../../../data/implementations/data_center_service.dart';
 import '../../../../generated/l10n.dart';
@@ -40,6 +41,8 @@ class _StockEventState extends State<StockEvent> {
 
   @override
   Widget build(BuildContext context) {
+    final themeMode = AppService.instance.themeMode.value;
+
     return FutureBuilder<List<SecEvent>?>(
       future: widget.listEvent,
       builder: (context, snapshot) {
@@ -49,9 +52,9 @@ class _StockEventState extends State<StockEvent> {
           );
         } else {
           return Container(
-            decoration: const BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(12)),
-              color: AppColors.neutral_07,
+            decoration: BoxDecoration(
+              borderRadius: const BorderRadius.all(Radius.circular(12)),
+              color: themeMode.isLight ? AppColors.neutral_07 : AppColors.bg_share_inside_nav,
             ),
             child: ListView.separated(
                 shrinkWrap: true,
@@ -63,9 +66,9 @@ class _StockEventState extends State<StockEvent> {
                   );
                 },
                 separatorBuilder: (context, index) {
-                  return const Divider(
+                  return Divider(
                     thickness: 2,
-                    color: AppColors.neutral_06,
+                    color: themeMode.isLight ? AppColors.neutral_06 : AppColors.neutral_01,
                     height: 16,
                   );
                 },
@@ -87,6 +90,9 @@ class EventCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final ThemeData themeData = Theme.of(context);
+    final ThemeMode themeMode = AppService.instance.themeMode.value;
+
     return GestureDetector(
       onTap: () {
         print(event.link);
@@ -99,7 +105,7 @@ class EventCard extends StatelessWidget {
               height: 60,
               width: 60,
               decoration: BoxDecoration(
-                  color: AppColors.neutral_06,
+                  color: themeData.colorScheme.onSurface,
                   borderRadius: BorderRadius.circular(4)),
               child: Column(
                 children: [
@@ -150,7 +156,7 @@ class EventCard extends StatelessWidget {
                       event.title ?? "Title",
                       maxLines: 2,
                       textAlign: TextAlign.left,
-                      style: Theme.of(context).textTheme.titleSmall,
+                      style: Theme.of(context).textTheme.titleSmall?.copyWith(color: themeMode.isLight ? null : AppColors.neutral_07),
                     ),
                   ),
                   Row(

@@ -1,6 +1,7 @@
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../config/service/app_services.dart';
 import '../../../theme/app_textstyle.dart';
 
 class AssetGridElement extends StatelessWidget {
@@ -20,6 +21,8 @@ class AssetGridElement extends StatelessWidget {
     final ThemeData themeData = Theme.of(context);
     final textTheme = AppTextStyle.labelMedium_12;
     final labelTheme = textTheme.copyWith(color: AppColors.neutral_03);
+    final ThemeMode themeMode = AppService.instance.themeMode.value;
+
     bool hasSubElements = (subElements != null);
     List<Widget> child;
     if (hasSubElements) {
@@ -61,7 +64,7 @@ class AssetGridElement extends StatelessWidget {
       constraints: const BoxConstraints.expand(),
       decoration: BoxDecoration(
         borderRadius: const BorderRadius.all(Radius.circular(4)),
-        color: themeData.colorScheme.background,
+        color: themeMode.isLight ? AppColors.neutral_07 : AppColors.text_black_1,
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,

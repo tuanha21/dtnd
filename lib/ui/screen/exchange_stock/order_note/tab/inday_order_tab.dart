@@ -14,6 +14,7 @@ import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:dtnd/ui/widget/empty_list_widget.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../../config/service/app_services.dart';
 import '../../../../../generated/l10n.dart';
 
 class IndayOrderTab extends StatefulWidget {
@@ -98,6 +99,8 @@ class _IndayOrderTabState extends State<IndayOrderTab> {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
+    final ThemeMode themeMode = AppService.instance.themeMode.value;
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
       child: Column(
@@ -146,8 +149,8 @@ class _IndayOrderTabState extends State<IndayOrderTab> {
                   builder: (context) {
                     return Container(
                       padding: const EdgeInsets.all(16),
-                      decoration: const BoxDecoration(
-                          color: Colors.white,
+                      decoration: BoxDecoration(
+                          color: themeMode.isLight ? Colors.white : AppColors.text_black_1,
                           borderRadius: BorderRadius.all(Radius.circular(12))),
                       child: ListView.builder(
                           shrinkWrap: true,

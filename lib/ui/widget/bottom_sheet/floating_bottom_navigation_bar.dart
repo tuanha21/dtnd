@@ -5,6 +5,8 @@ import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:flutter/material.dart';
 import 'package:vector_math/vector_math_64.dart' show Vector3;
 
+import '../../../config/service/app_services.dart';
+
 class FloatingBottomNavigationBar extends StatefulWidget {
   FloatingBottomNavigationBar({
     super.key,
@@ -299,6 +301,7 @@ class _Tile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final themeMode = AppService.instance.themeMode.value;
     final MediaQueryData data = MediaQuery.of(context);
     if (data.orientation == Orientation.landscape &&
         layout == BottomNavigationBarLandscapeLayout.linear) {
@@ -320,9 +323,9 @@ class _Tile extends StatelessWidget {
     if (animation.value > 0) {
       child = Container(
         padding: const EdgeInsets.all(8),
-        decoration: const BoxDecoration(
-          color: AppColors.neutral_06,
-          borderRadius: BorderRadius.all(
+        decoration: BoxDecoration(
+          color: themeMode.isLight ? AppColors.neutral_06 : AppColors.bg_share_inside_nav,
+          borderRadius: const BorderRadius.all(
             Radius.circular(20),
           ),
         ),

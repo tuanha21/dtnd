@@ -1,7 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dtnd/generated/l10n.dart';
 import 'package:dtnd/ui/screen/community/community_controller.dart';
-import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -102,7 +101,6 @@ class _CommunityPostsSheetState extends State<CommunityPostsSheet>
                   style: Theme.of(context).textTheme.labelLarge?.copyWith(
                         fontSize: 14,
                         fontWeight: FontWeight.w700,
-                        color: AppColors.text_black_1,
                       ),
                 ),
                 Text(
@@ -110,7 +108,6 @@ class _CommunityPostsSheetState extends State<CommunityPostsSheet>
                   style: Theme.of(context).textTheme.labelLarge?.copyWith(
                         fontSize: 12,
                         fontWeight: FontWeight.w700,
-                        color: AppColors.graph_5,
                       ),
                 ),
               ],
@@ -142,7 +139,6 @@ class _CommunityPostsSheetState extends State<CommunityPostsSheet>
                     style: Theme.of(context).textTheme.labelLarge?.copyWith(
                           fontSize: 20,
                           fontWeight: FontWeight.w700,
-                          color: AppColors.text_black_1,
                         ),
                   ),
                   TextButton(
@@ -182,7 +178,6 @@ class _CommunityPostsSheetState extends State<CommunityPostsSheet>
                     style: Theme.of(context).textTheme.labelLarge?.copyWith(
                           fontSize: 14,
                           fontWeight: FontWeight.w700,
-                          color: AppColors.graph_5,
                         ),
                   )
                 ],
@@ -211,11 +206,11 @@ class _CommunityPostsSheetState extends State<CommunityPostsSheet>
               ),
               Obx(() {
                 final image = controller.image.value;
-                return (image != null)
-                    ? Image.file(image)
-                    : const SizedBox();
+                return (image != null) ? Image.file(image) : const SizedBox();
               }),
-              const SizedBox(height: 10,),
+              const SizedBox(
+                height: 10,
+              ),
               Column(
                 children: [
                   Row(
@@ -286,7 +281,7 @@ class _CommunityPostsSheetState extends State<CommunityPostsSheet>
                       padding: const EdgeInsets.symmetric(horizontal: 10),
                       child: const Icon(Icons.add_circle)),
                   InkWell(
-                    onTap: (){
+                    onTap: () {
                       controller.takePicture();
                     },
                     child: Container(
@@ -298,7 +293,7 @@ class _CommunityPostsSheetState extends State<CommunityPostsSheet>
                     ),
                   ),
                   InkWell(
-                    onTap: (){
+                    onTap: () {
                       // chọn ảnh
                       controller.pickImage();
                     },

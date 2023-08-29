@@ -16,6 +16,8 @@ import 'package:dtnd/ui/widget/empty_list_widget.dart';
 import 'package:dtnd/utilities/time_utils.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../../config/service/app_services.dart';
+
 class OrderHistoryTab extends StatefulWidget {
   const OrderHistoryTab({super.key});
 
@@ -109,7 +111,7 @@ class _OrderHistoryTabState extends State<OrderHistoryTab> {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
-    final ThemeData themeData = Theme.of(context);
+    final ThemeMode themeMode = AppService.instance.themeMode.value;
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
@@ -120,7 +122,9 @@ class _OrderHistoryTabState extends State<OrderHistoryTab> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               DayInput(
-                  color: themeData.colorScheme.background,
+                  color: themeMode.isLight
+                      ? AppColors.neutral_06
+                      : AppColors.text_black_1,
                   initialDay: fromDay,
                   firstDay: firstDay,
                   lastDay: lastDay,
@@ -135,7 +139,9 @@ class _OrderHistoryTabState extends State<OrderHistoryTab> {
                 child: Text('-'),
               ),
               DayInput(
-                color: themeData.colorScheme.background,
+                color: themeMode.isLight
+                    ? AppColors.neutral_06
+                    : AppColors.text_black_1,
                 initialDay: toDay,
                 firstDay: firstDay,
                 lastDay: lastDay,
@@ -181,7 +187,10 @@ class _OrderHistoryTabState extends State<OrderHistoryTab> {
                     ),
                     child: SizedBox.square(
                         dimension: 16,
-                        child: Image.asset(AppImages.filter_icon)),
+                        child: Image.asset(AppImages.filter_icon,
+                            color: themeMode.isLight
+                                ? null
+                                : AppColors.neutral_01)),
                   ),
                 ),
               ),
@@ -198,9 +207,11 @@ class _OrderHistoryTabState extends State<OrderHistoryTab> {
               }
               return Container(
                 padding: const EdgeInsets.all(16),
-                decoration: const BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.all(Radius.circular(12))),
+                decoration: BoxDecoration(
+                    color: themeMode.isLight
+                        ? Colors.white
+                        : AppColors.text_black_1,
+                    borderRadius: const BorderRadius.all(Radius.circular(12))),
                 child: ListView.builder(
                   shrinkWrap: true,
                   controller: _scrollController,
@@ -209,7 +220,12 @@ class _OrderHistoryTabState extends State<OrderHistoryTab> {
                     if (index < listOrderShow!.length) {
                       return Column(
                         children: [
-                          index != 0 ? const Divider(height: 1) : Container(),
+                          index != 0
+                              ? const Divider(
+                                  height: 1,
+                                  color: AppColors.neutral_03,
+                                )
+                              : Container(),
                           Padding(
                             padding: const EdgeInsets.symmetric(vertical: 4),
                             child: OrderHistoryElement(

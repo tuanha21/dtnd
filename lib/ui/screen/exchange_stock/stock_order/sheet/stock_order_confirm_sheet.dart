@@ -21,6 +21,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_svg/svg.dart';
 
+import '../../../../../config/service/app_services.dart';
 import '../../../../../data/i_local_storage_service.dart';
 import '../../../../../data/implementations/local_storage_service.dart';
 
@@ -56,6 +57,8 @@ class _StockOrderConfirmSheetState extends State<StockOrderConfirmSheet>
 
   @override
   Widget build(BuildContext context) {
+    final themeMode = AppService.instance.themeMode.value;
+
     return SafeArea(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
@@ -120,9 +123,10 @@ class _StockOrderConfirmSheetState extends State<StockOrderConfirmSheet>
             const SizedBox(height: 20),
             Container(
               padding: const EdgeInsets.all(16),
-              decoration: const BoxDecoration(
-                borderRadius: BorderRadius.all(Radius.circular(12)),
-                color: AppColors.neutral_06,
+              margin: const EdgeInsets.only(bottom: 10),
+              decoration: BoxDecoration(
+                borderRadius: const BorderRadius.all(Radius.circular(12)),
+                color: themeMode.isLight ? AppColors.neutral_06 : AppColors.neutral_01,
               ),
               child: Column(
                 children: [

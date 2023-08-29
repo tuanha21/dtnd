@@ -7,6 +7,8 @@ import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/utilities/charts_util.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../../config/service/app_services.dart';
+
 class TopInfluenceChart extends StatefulWidget {
   final Future<List<TopInfluenceModel>> topInfluenceList;
 
@@ -19,6 +21,8 @@ class TopInfluenceChart extends StatefulWidget {
 class _TopInfluenceChartState extends State<TopInfluenceChart> {
   @override
   Widget build(BuildContext context) {
+    final ThemeMode themeMode = AppService.instance.themeMode.value;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [

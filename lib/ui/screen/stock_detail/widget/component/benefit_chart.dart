@@ -5,6 +5,8 @@ import 'package:dtnd/utilities/num_utils.dart';
 import 'package:dtnd/utilities/time_utils.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../../config/service/app_services.dart';
+
 class BenefitChart extends StatelessWidget {
   const BenefitChart({
     super.key,
@@ -98,13 +100,17 @@ class BenefitChartColumn extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final ThemeMode themeMode = AppService.instance.themeMode.value;
+
     return Column(
       children: [
         Container(
           height: 100,
           width: 8,
-          decoration: const BoxDecoration(
-            borderRadius: BorderRadius.vertical(top: Radius.circular(8)),
+          decoration:  BoxDecoration(
+            borderRadius: BorderRadius.vertical(
+                top: Radius.circular(ratio > 0 ? 8 : 0),
+                bottom: Radius.circular(ratio < 0 ? 8 : 0)),
             color: AppColors.neutral_05,
           ),
           alignment: Alignment.bottomCenter,
@@ -118,7 +124,7 @@ class BenefitChartColumn extends StatelessWidget {
                   borderRadius: BorderRadius.vertical(
                       top: Radius.circular(ratio > 0 ? 8 : 0),
                       bottom: Radius.circular(ratio < 0 ? 8 : 0)),
-                  color: AppColors.primary_02,
+                  color: AppColors.neutral_03,
                 ),
               );
             },
@@ -140,13 +146,13 @@ class BenefitChartColumn extends StatelessWidget {
         Text(
           NumUtils.getMoneyWithPostfix(
               (stockFinancialIndex.nETINC ?? 0) * 1000000, context),
-          style: const TextStyle(color: AppColors.primary_02),
+          style: TextStyle(color: themeMode.isLight ? AppColors.primary_02 : AppColors.neutral_03),
         ),
         const SizedBox(height: 10),
         Text(
           NumUtils.getMoneyWithPostfix(
               (stockFinancialIndex.nETREV ?? 0) * 1000000, context),
-          style: const TextStyle(color: AppColors.neutral_03),
+          style: TextStyle(color:  themeMode.isLight ? AppColors.neutral_03 : AppColors.neutral_07),
         ),
       ],
     );

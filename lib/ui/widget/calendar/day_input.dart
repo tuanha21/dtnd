@@ -38,6 +38,7 @@ class _DayInputState extends State<DayInput> {
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
     return Material(
+      color: Colors.transparent,
       borderRadius: const BorderRadius.all(Radius.circular(8)),
       child: InkWell(
         onTap: () => TableCalendarISheet()

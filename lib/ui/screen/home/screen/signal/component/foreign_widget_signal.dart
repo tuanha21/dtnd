@@ -1,4 +1,5 @@
 import 'package:charts_flutter/flutter.dart' as charts;
+import 'package:dtnd/config/service/app_services.dart';
 import 'package:dtnd/data/i_data_center_service.dart';
 import 'package:dtnd/data/implementations/data_center_service.dart';
 import 'package:dtnd/generated/l10n.dart';
@@ -50,6 +51,8 @@ class _ForeignWidgetState extends State<ForeignWidgetSignal> {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     listMonth?.sort((a, b) => a.cMONTH.compareTo(b.cMONTH));
+    final ThemeMode themeMode = AppService.instance.themeMode.value;
+
     return listMonth?.isNotEmpty == true
         ? Column(
             children: [
@@ -76,10 +79,18 @@ class _ForeignWidgetState extends State<ForeignWidgetSignal> {
                   defaultRenderer: charts.BarRendererConfig(
                     cornerStrategy: const charts.ConstCornerStrategy(2),
                   ),
-                  domainAxis: const charts.OrdinalAxisSpec(
+                  domainAxis: charts.OrdinalAxisSpec(
                     renderSpec: charts.SmallTickRendererSpec(
                       labelOffsetFromAxisPx: 5,
-                      labelStyle: charts.TextStyleSpec(fontSize: 9),
+                      lineStyle: charts.LineStyleSpec(
+                        color: themeMode.isLight
+                            ? null
+                            : charts.ColorUtil.fromDartColor(AppColors.neutral_02),
+                      ),
+                      labelStyle: charts.TextStyleSpec(fontSize: 9,color: themeMode.isLight
+                          ? null
+                          : charts.ColorUtil.fromDartColor(
+                          AppColors.neutral_07)),
                     ),
                   ),
                   secondaryMeasureAxis: charts.NumericAxisSpec(
@@ -90,14 +101,19 @@ class _ForeignWidgetState extends State<ForeignWidgetSignal> {
                         dataIsInWholeNumbers: false,
                         desiredTickCount: 4,
                         zeroBound: true),
-                    renderSpec: const charts.GridlineRendererSpec(
-                        axisLineStyle: charts.LineStyleSpec(
+                    renderSpec: charts.GridlineRendererSpec(
+                        axisLineStyle: const charts.LineStyleSpec(
                           dashPattern: [4],
                           thickness: 0,
                           color: charts.Color(r: 74, g: 85, b: 104),
                         ),
-                        labelStyle: charts.TextStyleSpec(fontSize: 9),
-                        lineStyle: charts.LineStyleSpec(dashPattern: [4])),
+                        labelStyle: charts.TextStyleSpec(fontSize: 9,color: themeMode.isLight
+                            ? null
+                            : charts.ColorUtil.fromDartColor(
+                            AppColors.neutral_07)),
+                        lineStyle: charts.LineStyleSpec(dashPattern: [4],color: themeMode.isLight
+                            ? null
+                            : charts.ColorUtil.fromDartColor(AppColors.neutral_02))),
                   ),
                   behaviors: [
                     charts.SelectNearest(

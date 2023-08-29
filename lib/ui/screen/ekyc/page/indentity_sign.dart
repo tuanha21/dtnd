@@ -7,6 +7,7 @@ import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../../config/service/app_services.dart';
 import '../ekyc_logic.dart';
 import '../ekyc_state.dart';
 
@@ -30,6 +31,8 @@ class _IdentitySignState extends State<IdentitySign> {
     final headlineSmall = Theme.of(context).textTheme.headlineSmall;
     final textTheme = Theme.of(context).textTheme;
     var titleSmall = Theme.of(context).textTheme.titleSmall;
+    final ThemeMode themeMode = AppService.instance.themeMode.value;
+
     return Scaffold(
       appBar: AppBar(
         leading: BackButton(
@@ -70,6 +73,7 @@ class _IdentitySignState extends State<IdentitySign> {
                     children: [
                       Image.asset(
                         AppImages.personal_card,
+                        color: themeMode.isLight ? AppColors.text_grey_1 : AppColors.neutral_07,
                         height: 24,
                         width: 24,
                       ),
@@ -79,8 +83,8 @@ class _IdentitySignState extends State<IdentitySign> {
                   ),
                   const SizedBox(height: 18),
                   Container(
-                    decoration: const BoxDecoration(
-                      color: AppColors.neutral_06,
+                    decoration: BoxDecoration(
+                      color: themeMode.isLight? AppColors.neutral_06 :AppColors.bg_2,
                       borderRadius: BorderRadius.all(Radius.circular(5.0)),
                     ),
                     child: Padding(
@@ -89,6 +93,7 @@ class _IdentitySignState extends State<IdentitySign> {
                         children: [
                           Image.asset(
                             AppImages.edit_sign,
+                            color: themeMode.isLight ? AppColors.text_grey_1 : AppColors.neutral_07,
                             height: 24,
                             width: 24,
                           ),
@@ -100,14 +105,14 @@ class _IdentitySignState extends State<IdentitySign> {
                                 Text(
                                   'Bắt đầu ký',
                                   style: textTheme.bodySmall?.copyWith(
-                                      color: AppColors.neutral_02,
+                                      color: themeMode.isLight ? AppColors.neutral_02 : AppColors.neutral_05,
                                       fontWeight: FontWeight.bold),
                                 ),
                                 const SizedBox(height: 4),
                                 Text(
                                     'Chữ ký cần rõ nét, thể hiện đủ trong khung nhập liệu',
                                     style: textTheme.bodySmall?.copyWith(
-                                        color: AppColors.neutral_02)),
+                                        color: themeMode.isLight ? AppColors.neutral_02 : AppColors.neutral_05)),
                               ],
                             ),
                           )

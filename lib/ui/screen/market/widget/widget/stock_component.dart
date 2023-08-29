@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../../../=models=/response/stock_model.dart';
+import '../../../../../config/service/app_services.dart';
 import '../../../stock_detail/stock_detail_screen.dart';
 
 class StockComponent extends StatefulWidget {
@@ -39,6 +40,8 @@ class _StockComponentState extends State<StockComponent> {
 
   @override
   Widget build(BuildContext context) {
+    final themeMode = AppService.instance.themeMode.value;
+
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
       onTap: () {
@@ -49,7 +52,7 @@ class _StockComponentState extends State<StockComponent> {
                     StockDetailScreen(stockModel: widget.model)));
       },
       child: Container(
-        color: widget.index.isEven ? Colors.white : null,
+        color: widget.index.isEven ? (themeMode.isLight ? Colors.white : AppColors.neutral_01) : null,
         padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
         child: Row(
           children: [
@@ -102,7 +105,7 @@ class _StockComponentState extends State<StockComponent> {
                     NumUtils.formatInteger10(widget.model.stockData.lot.value),
                     style: AppTextStyle.titleSmall_14.copyWith(
                         fontWeight: FontWeight.w500,
-                        color: const Color(0xFF566276)),
+                        color: themeMode.isLight ? const Color(0xFF566276) : AppColors.neutral_07),
                   ),
                 );
               }),

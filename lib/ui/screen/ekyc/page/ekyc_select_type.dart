@@ -2,6 +2,7 @@ import 'package:dtnd/ui/screen/ekyc/page/validator_identity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+import '../../../../config/service/app_services.dart';
 import '../../../theme/app_color.dart';
 import '../../../theme/app_image.dart';
 
@@ -117,9 +118,11 @@ class CardTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final themeMode = AppService.instance.themeMode.value;
+
     return ListTile(
       onTap: onTap,
-      tileColor: AppColors.neutral_06,
+      tileColor: themeMode.isLight ? AppColors.neutral_06 : AppColors.neutral_01,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
       leading: Container(
         height: 40,

@@ -9,6 +9,8 @@ import 'package:dtnd/ui/widget/icon/stock_icon.dart';
 import 'package:dtnd/utilities/num_utils.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../config/service/app_services.dart';
+
 class ShareTransactionComponent extends StatefulWidget {
   const ShareTransactionComponent({super.key, required this.data});
 
@@ -34,12 +36,14 @@ class _ShareTransactionComponentState extends State<ShareTransactionComponent> {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
+    final ThemeMode themeMode = AppService.instance.themeMode.value;
+
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 4),
       padding: const EdgeInsets.all(16),
-      decoration: const BoxDecoration(
-        color: AppColors.neutral_06,
-        borderRadius: BorderRadius.all(
+      decoration: BoxDecoration(
+        color: themeMode.isLight ? AppColors.neutral_06 : AppColors.text_black_1,
+        borderRadius: const BorderRadius.all(
           Radius.circular(12),
         ),
       ),
@@ -62,12 +66,12 @@ class _ShareTransactionComponentState extends State<ShareTransactionComponent> {
                         Expanded(
                           child: Text(
                             widget.data.cSHARECODE ?? "-",
-                            style: textTheme.titleSmall,
+                            style: textTheme.titleSmall?.copyWith(color: themeMode.isLight ? AppColors.neutral_04 : AppColors.neutral_07,),
                           ),
                         ),
                         Text(
                           widget.data.cSTATUSNODE ?? "-",
-                          style: textTheme.titleSmall,
+                          style: textTheme.titleSmall?.copyWith(color: themeMode.isLight ? AppColors.neutral_04 : AppColors.neutral_07,),
                         ),
                       ],
                     ),
@@ -75,7 +79,7 @@ class _ShareTransactionComponentState extends State<ShareTransactionComponent> {
                       stock?.nameShort ?? "",
                       overflow: TextOverflow.ellipsis,
                       style: AppTextStyle.labelSmall_10
-                          .copyWith(color: AppColors.neutral_03),
+                          .copyWith(color:   AppColors.neutral_03  ,),
                     ),
                     // Text(
                     //   "${(widget.volPc ?? 0).toStringAsFixed(2)}%",
@@ -97,14 +101,14 @@ class _ShareTransactionComponentState extends State<ShareTransactionComponent> {
                   Text(
                     S.of(context).time,
                     style: AppTextStyle.bodySmall_8.copyWith(
-                      color: AppColors.neutral_04,
+                      color:  AppColors.neutral_04  ,
                       fontWeight: FontWeight.w600,
                     ),
                   ),
                   Text(
                     widget.data.cDUEDATE ?? "",
                     style:  AppTextStyle.bodySmall_12.copyWith(
-                      color: AppColors.neutral_01,
+                      color: themeMode.isLight ? AppColors.neutral_01 : AppColors.neutral_07,
                       fontWeight: FontWeight.w600,
                     ),
                   ),
@@ -116,7 +120,7 @@ class _ShareTransactionComponentState extends State<ShareTransactionComponent> {
                   Text(
                     S.of(context).increase_decrease_occurred,
                     style: AppTextStyle.bodySmall_8.copyWith(
-                      color: AppColors.neutral_04,
+                      color:  AppColors.neutral_04  ,
                       fontWeight: FontWeight.w600,
                     ),
                   ),
@@ -140,12 +144,12 @@ class _ShareTransactionComponentState extends State<ShareTransactionComponent> {
                         TextSpan(
                             text: "${S.of(context).detail}: ",
                             style: AppTextStyle.labelSmall_10
-                                .copyWith(color: AppColors.neutral_01)),
+                                .copyWith(color: themeMode.isLight ? AppColors.neutral_01 : AppColors.neutral_03)),
                         TextSpan(
                             text: widget.data.cCONTENT,
                             style: AppTextStyle.labelSmall_10.copyWith(
                               fontWeight: FontWeight.w500,
-                              color: AppColors.neutral_03,
+                              color: themeMode.isLight ? AppColors.neutral_03 : AppColors.neutral_07,
                             )),
                       ])))
             ],

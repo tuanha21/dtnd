@@ -19,6 +19,9 @@ abstract class IAppbar extends StatelessWidget implements PreferredSizeWidget {
         child: SizedBox.square(
           dimension: 32,
           child: Material(
+            color: themeMode.isLight
+                ? AppColors.neutral_05
+                : AppColors.neutral_01,
             child: InkWell(
               onTap: () => Navigator.of(context).pop(),
               borderRadius: const BorderRadius.all(Radius.circular(6)),

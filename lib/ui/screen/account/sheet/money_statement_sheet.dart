@@ -14,6 +14,8 @@ import 'package:dtnd/utilities/time_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../../config/service/app_services.dart';
+
 class MoneyStatementSheet extends StatefulWidget {
   const MoneyStatementSheet({super.key});
 
@@ -82,7 +84,7 @@ class _MoneyStatementSheetState extends State<MoneyStatementSheet> {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
-    final ThemeData themeData = Theme.of(context);
+    final ThemeMode themeMode = AppService.instance.themeMode.value;
 
     return Scaffold(
       appBar: SimpleAppbar(
@@ -100,7 +102,7 @@ class _MoneyStatementSheetState extends State<MoneyStatementSheet> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   DayInput(
-                    color: themeData.colorScheme.background,
+                    color: themeMode.isLight ? AppColors.neutral_06 : AppColors.text_black_1,
                     initialDay: fromDay,
                     firstDay: firstDay,
                     lastDay: lastDay,
@@ -113,7 +115,7 @@ class _MoneyStatementSheetState extends State<MoneyStatementSheet> {
                   ),
                   const Text("-"),
                   DayInput(
-                    color: themeData.colorScheme.background,
+                    color: themeMode.isLight ? AppColors.neutral_06 : AppColors.text_black_1,
                     initialDay: toDay,
                     firstDay: firstDay,
                     lastDay: lastDay,

@@ -1,5 +1,6 @@
 import 'dart:math' as math;
 
+import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:dtnd/=models=/response/account/asset_chart_element.dart';
 import 'package:dtnd/=models=/response/stock_trading_history.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
@@ -8,8 +9,9 @@ import 'package:dtnd/utilities/charts_util.dart';
 import 'package:dtnd/utilities/num_utils.dart';
 import 'package:dtnd/utilities/time_utils.dart';
 import 'package:flutter/material.dart';
-import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:intl/intl.dart';
+
+import '../../../../config/service/app_services.dart';
 
 final simpleCurrencyFormatter =
     charts.BasicNumericTickFormatterSpec.fromNumberFormat(
@@ -18,8 +20,10 @@ const percentageFormatter = PercentTickFormatterSpec();
 
 class AssetEffectiveChart extends StatefulWidget {
   const AssetEffectiveChart({super.key, this.datas, this.indexDatas});
+
   final List<AssetChartElementModel>? datas;
   final StockTradingHistory? indexDatas;
+
   @override
   State<AssetEffectiveChart> createState() => _AssetEffectiveChartState();
 }
@@ -40,6 +44,7 @@ class _AssetEffectiveChartState extends State<AssetEffectiveChart>
   DateTime end = DateTime.now();
   num min = 0;
   num max = 0;
+
   @override
   void initState() {
     super.initState();
@@ -137,6 +142,8 @@ class _AssetEffectiveChartState extends State<AssetEffectiveChart>
 
   @override
   Widget build(BuildContext context) {
+    final ThemeMode themeMode = AppService.instance.themeMode.value;
+
     return Container(
       height: 260,
       width: MediaQuery.of(context).size.width,
@@ -245,8 +252,16 @@ class _AssetEffectiveChartState extends State<AssetEffectiveChart>
               thickness: 1,
               color: charts.ColorUtil.fromDartColor(AppColors.neutral_03),
             ),
-            labelStyle: const charts.TextStyleSpec(fontSize: 8),
-            lineStyle: const charts.LineStyleSpec(dashPattern: [4]),
+            labelStyle: charts.TextStyleSpec(
+                fontSize: 8,
+                color: themeMode.isLight
+                    ? null
+                    : charts.ColorUtil.fromDartColor(AppColors.neutral_07)),
+            lineStyle: charts.LineStyleSpec(
+                dashPattern: [4],
+                color: themeMode.isLight
+                    ? null
+                    : charts.ColorUtil.fromDartColor(AppColors.neutral_02)),
           ),
         ),
         primaryMeasureAxis: charts.NumericAxisSpec(
@@ -265,8 +280,18 @@ class _AssetEffectiveChartState extends State<AssetEffectiveChart>
               thickness: 1,
               color: charts.ColorUtil.fromDartColor(AppColors.neutral_03),
             ),
-            labelStyle: const charts.TextStyleSpec(fontSize: 8),
-            lineStyle: const charts.LineStyleSpec(dashPattern: [4]),
+            labelStyle: charts.TextStyleSpec(
+              fontSize: 8,
+              color: themeMode.isLight
+                  ? null
+                  : charts.ColorUtil.fromDartColor(AppColors.neutral_07),
+            ),
+            lineStyle: charts.LineStyleSpec(
+              dashPattern: [4],
+              color: themeMode.isLight
+                  ? null
+                  : charts.ColorUtil.fromDartColor(AppColors.neutral_02),
+            ),
           ),
         ),
       ),
@@ -276,6 +301,7 @@ class _AssetEffectiveChartState extends State<AssetEffectiveChart>
 
 class PercentTickFormatterSpec implements charts.NumericTickFormatterSpec {
   const PercentTickFormatterSpec();
+
   @override
   PercentageTickFormatter createTickFormatter(charts.ChartContext context) {
     return const PercentageTickFormatter();
@@ -303,5 +329,6 @@ class PercentageTickFormatter extends charts.SimpleTickFormatterBase<num> {
 
 class _ToolTipMgr extends TooltipData {
   _ToolTipMgr._intern();
+
   static final _ToolTipMgr instance = _ToolTipMgr._intern();
 }

@@ -6,6 +6,7 @@ import 'package:dtnd/utilities/num_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../../../config/service/app_services.dart';
 import '../../../../../generated/l10n.dart';
 
 class OverboughtSellWidget extends StatefulWidget {
@@ -18,6 +19,8 @@ class OverboughtSellWidget extends StatefulWidget {
 class _OverboughtSellWidgetState extends State<OverboughtSellWidget> {
   @override
   Widget build(BuildContext context) {
+    final themeMode = AppService.instance.themeMode.value;
+
     if (widget.stockModel != null) {
       return Obx(() {
         final num? totalVolBuy =

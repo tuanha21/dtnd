@@ -8,6 +8,8 @@ import 'package:dtnd/ui/widget/empty_list_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../../config/service/app_services.dart';
+
 class AccumulatorProduct extends StatefulWidget {
   const AccumulatorProduct({super.key});
 
@@ -21,6 +23,7 @@ class _AccumulatorProductState extends State<AccumulatorProduct> {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
+    final ThemeMode themeMode = AppService.instance.themeMode.value;
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -105,10 +108,11 @@ class ItemBuilder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ThemeData themeData = Theme.of(context);
+    final themeMode = AppService.instance.themeMode.value;
 
     return Container(
       decoration: BoxDecoration(
-        color: themeData.colorScheme.background,
+        color: themeMode.isLight ? AppColors.neutral_07 : AppColors.text_black_1,
         borderRadius: BorderRadius.circular(12),
       ),
       margin: const EdgeInsets.only(top: 12),
@@ -186,7 +190,7 @@ class ItemBuilder extends StatelessWidget {
                   height: 60,
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   decoration: BoxDecoration(
-                    color: themeData.colorScheme.background,
+                    color: themeMode.isLight ? AppColors.neutral_07 : AppColors.bg_share_inside_nav,
                     borderRadius: const BorderRadius.only(
                       topRight: Radius.circular(12),
                       bottomRight: Radius.circular(12),

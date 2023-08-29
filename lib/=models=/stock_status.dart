@@ -156,9 +156,9 @@ abstract class StockStatus {
         // case SStatus.ref:
         //   return AppColors.ac;
         case SStatus.up:
-          return AppColors.accent_dark_01;
+          return AppColors.stock_up;
         case SStatus.down:
-          return AppColors.accent_dark_03;
+          return AppColors.stock_down;
         // case SStatus.ceil:
         //   return AppColors.accent_light_05;
         // case SStatus.floor:

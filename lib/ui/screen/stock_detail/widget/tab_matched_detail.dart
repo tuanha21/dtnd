@@ -1,4 +1,5 @@
 import 'dart:async';
+
 import 'package:dtnd/=models=/response/inday_matched_order.dart';
 import 'package:dtnd/=models=/response/stock_model.dart';
 import 'package:dtnd/data/i_data_center_service.dart';
@@ -11,6 +12,7 @@ import 'package:dtnd/utilities/num_utils.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../=models=/response/stock_vol.dart';
+import '../../../../config/service/app_services.dart';
 
 class TabMatchedDetail extends StatefulWidget {
   const TabMatchedDetail({
@@ -139,7 +141,7 @@ class _TabMatchedDetailState extends State<TabMatchedDetail> {
               widget.stockModel.updateListMatchedOrder(list);
               maxVolumn = widget.stockModel.maxVolumnMatchedOrder;
 
-              return  ListView.builder(
+              return ListView.builder(
                 padding: const EdgeInsets.only(bottom: 60),
                 shrinkWrap: true,
                 itemCount: list.length,
@@ -297,11 +299,13 @@ class _TabMatchStock extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double percentage = stockMatch.totalVol / maxVolumn;
+    final ThemeMode themeMode = AppService.instance.themeMode.value;
 
     return Container(
-        height: 40,
-        padding: const EdgeInsets.symmetric(vertical: 12),
-        child: Row(children: [
+      height: 40,
+      padding: const EdgeInsets.symmetric(vertical: 12),
+      child: Row(
+        children: [
           const SizedBox(width: 16),
           Expanded(
             flex: 1,
@@ -349,10 +353,14 @@ class _TabMatchStock extends StatelessWidget {
                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
                       fontSize: 10,
                       fontWeight: FontWeight.w600,
-                      color: AppColors.neutral_02)),
+                      color: themeMode.isLight
+                          ? AppColors.neutral_02
+                          : AppColors.neutral_07)),
             ),
           ),
           const SizedBox(width: 16),
-        ]));
+        ],
+      ),
+    );
   }
 }

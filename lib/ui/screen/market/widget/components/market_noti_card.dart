@@ -5,6 +5,8 @@ import 'package:dtnd/ui/theme/app_textstyle.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+import '../../../../../config/service/app_services.dart';
+
 class MarketNotiCard extends StatelessWidget {
   const MarketNotiCard({
     super.key,
@@ -19,6 +21,9 @@ class MarketNotiCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final ThemeData themeData = Theme.of(context);
+    final ThemeMode themeMode = AppService.instance.themeMode.value;
+
     return Material(
       color: Colors.transparent,
       child: InkWell(
@@ -95,8 +100,10 @@ class MarketNotiCard extends StatelessWidget {
                             Container(
                               padding: const EdgeInsets.symmetric(
                                   vertical: 2, horizontal: 8),
-                              decoration: const BoxDecoration(
-                                  color: AppColors.bg_1,
+                              decoration: BoxDecoration(
+                                  color: themeMode.isLight
+                                      ? AppColors.neutral_07
+                                      : AppColors.bg_share_inside_nav,
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(56))),
                               child: Row(
@@ -104,7 +111,11 @@ class MarketNotiCard extends StatelessWidget {
                                   SizedBox.square(
                                       dimension: 10,
                                       child: Image.asset(
-                                          AppImages.home_icon_like)),
+                                        AppImages.home_icon_like,
+                                        color: themeMode.isLight
+                                            ? AppColors.neutral_01
+                                            : AppColors.neutral_07,
+                                      )),
                                   const SizedBox(width: 2),
                                   Text(
                                     "0",
@@ -117,16 +128,22 @@ class MarketNotiCard extends StatelessWidget {
                             Container(
                               padding: const EdgeInsets.symmetric(
                                   vertical: 2, horizontal: 8),
-                              decoration: const BoxDecoration(
-                                  color: AppColors.bg_1,
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(56))),
+                              decoration: BoxDecoration(
+                                  color: themeMode.isLight
+                                      ? AppColors.neutral_07
+                                      : AppColors.bg_share_inside_nav,
+                                  borderRadius: const BorderRadius.all(
+                                      Radius.circular(56))),
                               child: Row(
                                 children: [
                                   SizedBox.square(
                                       dimension: 10,
                                       child: Image.asset(
-                                          AppImages.home_icon_sharing)),
+                                        AppImages.home_icon_sharing,
+                                        color: themeMode.isLight
+                                            ? AppColors.neutral_01
+                                            : AppColors.neutral_07,
+                                      )),
                                   const SizedBox(width: 2),
                                   Text(
                                     "0",

@@ -164,7 +164,7 @@ class _AppDrawerState extends State<AppDrawer> {
           iconPath: DrawerIconAsset.setting_2,
           subTitle: [
             FunctionData(
-              title: S.of(context).languges,
+              title: S.of(context).languge,
               function: () => Navigator.of(context).push(
                 MaterialPageRoute(
                   builder: (context) => const LanguagesScreen(),
@@ -194,7 +194,7 @@ class _AppDrawerState extends State<AppDrawer> {
                   title: S.of(context).setting,
                   list: <FunctionData>[
                     FunctionData(
-                        title: S.of(context).languges,
+                        title: S.of(context).languge,
                         iconPath: DrawerIconAsset.archive_book,
                         subTitle: []),
                     FunctionData(
@@ -229,10 +229,12 @@ class _AppDrawerState extends State<AppDrawer> {
     bool isLogin = userService.isLogin;
     final info = userService.userInfo.value;
     final ThemeData themeData = Theme.of(context);
+    final ThemeMode themeMode = AppService.instance.themeMode.value;
+
     return Container(
       padding: EdgeInsets.only(
           top: MediaQuery.of(context).padding.top, right: 16, left: 16),
-      decoration: BoxDecoration(color: themeData.colorScheme.background),
+      decoration: BoxDecoration(color: themeData.colorScheme.onSurface),
       // width: 275,
       child: Column(
         children: [
@@ -250,11 +252,12 @@ class _AppDrawerState extends State<AppDrawer> {
           Text(
             userService.userInfo.value?.customerCode ?? "",
             style:
-                AppTextStyle.bodySmall_12.copyWith(color: AppColors.neutral_03),
+                AppTextStyle.bodySmall_12.copyWith(color: themeMode.isLight ? AppColors.neutral_03 : AppColors.neutral_07),
           ),
           const SizedBox(height: 16),
           isLogin
               ? Material(
+              color: Colors.transparent,
                   child: InkWell(
                     onTap: () {},
                     child: Ink(
@@ -336,7 +339,7 @@ class _AppDrawerState extends State<AppDrawer> {
               // }
             },
             text: isLogin ? S.of(context).logout : S.of(context).login,
-            color: isLogin ? AppColors.neutral_05 : AppColors.primary_01,
+            color: isLogin ? themeMode.isLight ? AppColors.neutral_05 : AppColors.bg_share_inside_nav : AppColors.primary_01,
             textStyle: AppTextStyle.titleSmall_14
                 .copyWith(color: isLogin ? AppColors.primary_01 : Colors.white),
           ),

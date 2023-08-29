@@ -8,6 +8,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../=models=/response/company_info.dart';
 import '../../../../=models=/response/share_holder.dart';
+import '../../../../config/service/app_services.dart';
 import '../../../../data/i_network_service.dart';
 import '../../../../data/implementations/network_service.dart';
 import '../../../../generated/l10n.dart';
@@ -45,6 +46,8 @@ class _GeneralInfoTabState extends State<GeneralInfoTab> {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
+    final ThemeMode themeMode = AppService.instance.themeMode.value;
+
     final int leaderLength =
         !isFull && widget.stockModel.businnessLeaders!.length > 3
             ? 3
@@ -64,9 +67,9 @@ class _GeneralInfoTabState extends State<GeneralInfoTab> {
                 children: [
                   Container(
                     padding: const EdgeInsets.all(16),
-                    decoration: const BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(12)),
-                      color: AppColors.neutral_06,
+                    decoration:  BoxDecoration(
+                      borderRadius: const BorderRadius.all(Radius.circular(12)),
+                      color: themeMode.isLight ? AppColors.neutral_06 : AppColors.text_black_1,
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -81,12 +84,12 @@ class _GeneralInfoTabState extends State<GeneralInfoTab> {
                                   Text(
                                     S.of(context).Foundation_Day,
                                     style: textTheme.bodyMedium!
-                                        .copyWith(color: AppColors.neutral_03),
+                                        .copyWith(color: themeMode.isLight ? AppColors.neutral_03 : AppColors.neutral_07),
                                   ),
                                   const SizedBox(height: 8),
                                   Text(
                                     info.foundDateString,
-                                    style: textTheme.titleSmall,
+                                    style: textTheme.titleSmall?.copyWith(color: themeMode.isLight ? AppColors.neutral_03 : AppColors.neutral_07),
                                   ),
                                 ],
                               )),
@@ -97,12 +100,12 @@ class _GeneralInfoTabState extends State<GeneralInfoTab> {
                                   Text(
                                     S.of(context).Tax_code,
                                     style: textTheme.bodyMedium!
-                                        .copyWith(color: AppColors.neutral_03),
+                                        .copyWith(color: themeMode.isLight ? AppColors.neutral_03 : AppColors.neutral_07),
                                   ),
                                   const SizedBox(height: 8),
                                   Text(
                                     info.taxCode ?? "",
-                                    style: textTheme.titleSmall,
+                                    style: textTheme.titleSmall?.copyWith(color: themeMode.isLight ? AppColors.neutral_03 : AppColors.neutral_07),
                                   ),
                                 ],
                               ))
@@ -120,12 +123,12 @@ class _GeneralInfoTabState extends State<GeneralInfoTab> {
                                   Text(
                                     S.of(context).Abbreviated_name,
                                     style: textTheme.bodyMedium!
-                                        .copyWith(color: AppColors.neutral_03),
+                                        .copyWith(color: themeMode.isLight ? AppColors.neutral_03 : AppColors.neutral_07),
                                   ),
                                   const SizedBox(height: 8),
                                   Text(
                                     info.name ?? "",
-                                    style: textTheme.titleSmall,
+                                    style: textTheme.titleSmall?.copyWith(color: themeMode.isLight ? AppColors.neutral_03 : AppColors.neutral_07),
                                   ),
                                 ],
                               )),
@@ -136,12 +139,12 @@ class _GeneralInfoTabState extends State<GeneralInfoTab> {
                                   Text(
                                     S.of(context).Agent,
                                     style: textTheme.bodyMedium!
-                                        .copyWith(color: AppColors.neutral_03),
+                                        .copyWith(color: themeMode.isLight ? AppColors.neutral_03 : AppColors.neutral_07),
                                   ),
                                   const SizedBox(height: 8),
                                   Text(
                                     info.infoSupplier ?? "",
-                                    style: textTheme.titleSmall,
+                                    style: textTheme.titleSmall?.copyWith(color: themeMode.isLight ? AppColors.neutral_03 : AppColors.neutral_07),
                                   ),
                                 ],
                               ))
@@ -218,9 +221,9 @@ class _GeneralInfoTabState extends State<GeneralInfoTab> {
                         return Container(
                           padding: const EdgeInsets.symmetric(
                               vertical: 8, horizontal: 16),
-                          decoration: const BoxDecoration(
+                          decoration: BoxDecoration(
                             borderRadius: BorderRadius.all(Radius.circular(12)),
-                            color: AppColors.neutral_06,
+                            color: themeMode.isLight ? AppColors.neutral_06 : AppColors.text_black_1,
                           ),
                           child: Row(
                             children: [
@@ -387,7 +390,7 @@ class _GeneralInfoTabState extends State<GeneralInfoTab> {
                             return Container(
                                 padding: const EdgeInsets.all(10),
                                 decoration:
-                                    const BoxDecoration(color: Colors.white),
+                                BoxDecoration(color: themeMode.isLight ? Colors.white : AppColors.text_black_1),
                                 child: Text(
                                   "Không có dữ liệu",
                                   style: textTheme.bodyMedium!
@@ -412,7 +415,7 @@ class _GeneralInfoTabState extends State<GeneralInfoTab> {
                           return Container(
                               padding: const EdgeInsets.all(10),
                               decoration:
-                                  const BoxDecoration(color: Colors.white),
+                                    BoxDecoration(color: themeMode.isLight ? Colors.white : AppColors.text_black_1),
                               child: Column(
                                 children: [
                                   AspectRatio(
@@ -464,13 +467,14 @@ class _GeneralInfoTabState extends State<GeneralInfoTab> {
                                                 (ShareHolders data, _) =>
                                                     "${data.heldPct}%",
                                             dataLabelSettings:
-                                                const DataLabelSettings(
+                                            DataLabelSettings(
                                               isVisible: true,
                                               // Positioning the data label
-                                              margin: EdgeInsets.all(0),
+                                              margin: const EdgeInsets.all(0),
                                               labelPosition:
                                                   ChartDataLabelPosition
                                                       .outside,
+                                                  textStyle: TextStyle(color: themeMode.isLight ? Colors.black : Colors.white)
                                             ),
                                           )
                                         ]),
@@ -483,10 +487,10 @@ class _GeneralInfoTabState extends State<GeneralInfoTab> {
                                         return Container(
                                           padding: const EdgeInsets.symmetric(
                                               vertical: 8, horizontal: 16),
-                                          decoration: const BoxDecoration(
-                                            borderRadius: BorderRadius.all(
+                                          decoration:   BoxDecoration(
+                                            borderRadius: const BorderRadius.all(
                                                 Radius.circular(12)),
-                                            color: AppColors.neutral_06,
+                                            color: themeMode.isLight ? Colors.white : AppColors.bg_share_inside_nav,
                                           ),
                                           child: Row(
                                             children: [
