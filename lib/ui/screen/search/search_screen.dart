@@ -1,12 +1,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:dtnd/=models=/response/stock.dart';
-import 'package:dtnd/=models=/response/stock_model.dart';
+import 'package:dtnd/=models=/response/market/stock.dart';
+import 'package:dtnd/=models=/response/market/stock_model.dart';
 import 'package:dtnd/config/service/app_services.dart';
 import 'package:dtnd/data/i_data_center_service.dart';
 import 'package:dtnd/data/i_user_service.dart';
 import 'package:dtnd/data/implementations/data_center_service.dart';
 import 'package:dtnd/data/implementations/user_service.dart';
-import 'package:dtnd/generated/l10n.dart';
+import 'package:dtnd/l10n/generated/l10n.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:dtnd/ui/theme/app_textstyle.dart';
@@ -133,8 +133,11 @@ class _SearchScreenState extends State<SearchScreen>
                       child: Container(
                         padding: const EdgeInsets.all(10),
                         decoration: BoxDecoration(
-                            borderRadius: const BorderRadius.all(Radius.circular(8)),
-                            color: themeMode.isLight ? AppColors.neutral_07 : AppColors.neutral_01),
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(8)),
+                            color: themeMode.isLight
+                                ? AppColors.neutral_07
+                                : AppColors.neutral_01),
                         child: Row(
                           children: [
                             Text(element.stock.stockCode),
@@ -247,7 +250,11 @@ class _SearchScreenState extends State<SearchScreen>
                                                     .titleSmall!
                                                     .copyWith(
                                                         fontWeight:
-                                                            FontWeight.w600,color: themeMode.isLight ? null : AppColors.neutral_07),
+                                                            FontWeight.w600,
+                                                        color: themeMode.isLight
+                                                            ? null
+                                                            : AppColors
+                                                                .neutral_07),
                                               ),
                                               const SizedBox(width: 3),
                                               Text(
@@ -476,7 +483,9 @@ class _SearchScreenState extends State<SearchScreen>
                         AppImages.search_icon,
                       ),
                     ),
-                    fillColor: themeMode.isLight ? AppColors.neutral_07 : AppColors.neutral_01,
+                    fillColor: themeMode.isLight
+                        ? AppColors.neutral_07
+                        : AppColors.neutral_01,
                     suffixIconConstraints:
                         const BoxConstraints(maxWidth: 52, maxHeight: 20)),
               ),

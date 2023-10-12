@@ -31,9 +31,6 @@ class AssetCatalogRatioChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (ratio == null) {
-      return Container();
-    }
     return charts.PieChart(
       toSeries(ratio),
       animate: false,

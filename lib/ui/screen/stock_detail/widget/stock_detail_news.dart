@@ -1,8 +1,8 @@
-import 'package:dtnd/=models=/response/news_model.dart';
-import 'package:dtnd/=models=/response/stock_news.dart';
+import 'package:dtnd/=models=/response/market/news_model.dart';
+import 'package:dtnd/=models=/response/market/stock_news.dart';
 import 'package:dtnd/data/i_network_service.dart';
 import 'package:dtnd/data/implementations/network_service.dart';
-import 'package:dtnd/generated/l10n.dart';
+import 'package:dtnd/l10n/generated/l10n.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/widget/news_card.dart';
 import 'package:flutter/material.dart';
@@ -61,7 +61,9 @@ class _StockDetailNewsState extends State<StockDetailNews> {
     return Container(
       decoration: BoxDecoration(
         borderRadius: const BorderRadius.all(Radius.circular(12)),
-        color: themeMode.isLight ? AppColors.neutral_07 : AppColors.bg_share_inside_nav,
+        color: themeMode.isLight
+            ? AppColors.neutral_07
+            : AppColors.bg_share_inside_nav,
       ),
       child: ListView.separated(
           shrinkWrap: true,
@@ -87,7 +89,9 @@ class _StockDetailNewsState extends State<StockDetailNews> {
           separatorBuilder: (context, index) {
             return Divider(
               thickness: 2,
-              color: themeMode.isLight ? AppColors.neutral_06 : AppColors.neutral_02,
+              color: themeMode.isLight
+                  ? AppColors.neutral_06
+                  : AppColors.neutral_02,
               height: 16,
             );
           },

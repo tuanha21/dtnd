@@ -2,7 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dtnd/ui/screen/community/widget/filter_widget/filter_screen.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../../generated/l10n.dart';
+import '../../../../../l10n/generated/l10n.dart';
 import '../../../../theme/app_color.dart';
 
 class DiscoverScreen extends StatefulWidget {
@@ -110,9 +110,10 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
                 RichText(
                   text: TextSpan(
                     children: [
-                        TextSpan(
+                      TextSpan(
                         text: "1822",
-                        style: TextStyle(color: themeData.colorScheme.onBackground),
+                        style: TextStyle(
+                            color: themeData.colorScheme.onBackground),
                       ),
                       TextSpan(
                         text: " thành viên",
@@ -161,7 +162,10 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
             color: Colors.blue.shade50,
             borderRadius: BorderRadius.circular(12),
           ),
-          child: Text(S.of(context).news_every_day,style: TextStyle(color: themeData.colorScheme.background),),
+          child: Text(
+            S.of(context).news_every_day,
+            style: TextStyle(color: themeData.colorScheme.background),
+          ),
         ),
         const SizedBox(
           width: 10,

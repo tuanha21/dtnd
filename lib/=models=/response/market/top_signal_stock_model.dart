@@ -1,4 +1,4 @@
-import 'package:dtnd/=models=/response/stock_model.dart';
+import 'package:dtnd/=models=/response/market/stock_model.dart';
 import 'package:dtnd/=models=/stock_status.dart';
 import 'package:dtnd/utilities/time_utils.dart';
 

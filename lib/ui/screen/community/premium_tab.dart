@@ -27,6 +27,7 @@ class _PremiumTabState extends State<PremiumTab>
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Scaffold(
       body: Obx(
         () {

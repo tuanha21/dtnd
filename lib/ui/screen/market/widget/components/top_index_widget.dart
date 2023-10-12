@@ -9,9 +9,9 @@ import 'package:dtnd/utilities/time_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
-import '../../../../../=models=/response/indContrib.dart';
+import '../../../../../=models=/response/market/ind_contrib.dart';
 import '../../../../../config/service/app_services.dart';
-import '../../../../../generated/l10n.dart';
+import '../../../../../l10n/generated/l10n.dart';
 import '../../../../theme/app_color.dart';
 
 class TopIndexWidgetChart extends StatefulWidget {

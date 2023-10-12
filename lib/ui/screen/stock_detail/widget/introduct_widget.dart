@@ -1,8 +1,8 @@
-import 'package:dtnd/=models=/response/stock_model.dart';
+import 'package:dtnd/=models=/response/market/stock_model.dart';
 import 'package:dtnd/ui/screen/home/widget/home_section.dart';
 import 'package:flutter/material.dart';
-import '../../../../=models=/response/company_info.dart';
-import '../../../../=models=/response/introduct_company.dart';
+import '../../../../=models=/response/market/company_info.dart';
+import '../../../../=models=/response/market/introduct_company.dart';
 import '../../../../data/i_network_service.dart';
 import '../../../../data/implementations/network_service.dart';
 import 'package:html/parser.dart' show parse;

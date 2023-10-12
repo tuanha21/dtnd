@@ -10,9 +10,9 @@ import 'package:dtnd/utilities/num_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import '../../../../../=models=/response/get_bedt_model.dart';
-import '../../../../../=models=/response/stock_model.dart';
-import '../../../../../generated/l10n.dart';
+import '../../../../../=models=/response/account/debt_model.dart';
+import '../../../../../=models=/response/market/stock_model.dart';
+import '../../../../../l10n/generated/l10n.dart';
 import '../../component/asset_grid_element.dart';
 
 class ItemMarginDebtWidget extends StatefulWidget {
@@ -25,7 +25,7 @@ class ItemMarginDebtWidget extends StatefulWidget {
 
   final ValueChanged<UnexecutedRightModel?>? onExpand;
   final VoidCallback? onHold;
-  final GetDebtModel? detail;
+  final DebtModel? detail;
 
   @override
   State<ItemMarginDebtWidget> createState() => _ItemRealizedState();
@@ -73,7 +73,9 @@ class _ItemRealizedState extends State<ItemMarginDebtWidget> {
           padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
           decoration: BoxDecoration(
             borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
-            color: themeMode.isDark ? AppColors.bg_share_inside_nav : AppColors.neutral_06,
+            color: themeMode.isDark
+                ? AppColors.bg_share_inside_nav
+                : AppColors.neutral_06,
           ),
           child: Column(
             children: [
@@ -92,8 +94,10 @@ class _ItemRealizedState extends State<ItemMarginDebtWidget> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(widget.detail?.cLOANID ?? '',
-                            style: AppTextStyle.bodyMedium_14
-                                .copyWith(color: themeMode.isLight ? AppColors.neutral_01 : AppColors.neutral_07)),
+                            style: AppTextStyle.bodyMedium_14.copyWith(
+                                color: themeMode.isLight
+                                    ? AppColors.neutral_01
+                                    : AppColors.neutral_07)),
                         const SizedBox(height: 2),
                         Row(
                           children: [
@@ -127,8 +131,10 @@ class _ItemRealizedState extends State<ItemMarginDebtWidget> {
                         const SizedBox(height: 4),
                         Text(
                           widget.detail?.expireDate ?? '',
-                          style: AppTextStyle.labelMedium_12
-                              .copyWith(color: themeMode.isLight ? AppColors.neutral_01 : AppColors.neutral_07),
+                          style: AppTextStyle.labelMedium_12.copyWith(
+                              color: themeMode.isLight
+                                  ? AppColors.neutral_01
+                                  : AppColors.neutral_07),
                         ),
                       ],
                     ),
@@ -145,8 +151,10 @@ class _ItemRealizedState extends State<ItemMarginDebtWidget> {
                         const SizedBox(height: 4),
                         Text(
                           NumUtils.formatDouble(widget.detail?.loan),
-                          style: AppTextStyle.labelMedium_12
-                              .copyWith(color: themeMode.isLight ? AppColors.neutral_01 : AppColors.neutral_07),
+                          style: AppTextStyle.labelMedium_12.copyWith(
+                              color: themeMode.isLight
+                                  ? AppColors.neutral_01
+                                  : AppColors.neutral_07),
                         ),
                       ],
                     ),
@@ -180,7 +188,9 @@ class _ItemRealizedState extends State<ItemMarginDebtWidget> {
                   padding: const EdgeInsets.all(4),
                   decoration: BoxDecoration(
                     borderRadius: const BorderRadius.all(Radius.circular(12)),
-                    color: themeMode.isLight ? AppColors.neutral_06 : AppColors.neutral_03,
+                    color: themeMode.isLight
+                        ? AppColors.neutral_06
+                        : AppColors.neutral_03,
                   ),
                   child: Column(
                     children: [
@@ -266,7 +276,9 @@ class _ItemRealizedState extends State<ItemMarginDebtWidget> {
               decoration: BoxDecoration(
                 borderRadius:
                     const BorderRadius.vertical(bottom: Radius.circular(12)),
-                color: themeMode.isDark ? AppColors.bg_share_inside_nav : AppColors.neutral_05,
+                color: themeMode.isDark
+                    ? AppColors.bg_share_inside_nav
+                    : AppColors.neutral_05,
               ),
               child: Center(
                 child: AnimatedRotation(

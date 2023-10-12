@@ -1,10 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:dtnd/=models=/response/news_model.dart';
+import 'package:dtnd/=models=/response/market/news_model.dart';
 import 'package:dtnd/data/i_data_center_service.dart';
 import 'package:dtnd/data/i_network_service.dart';
 import 'package:dtnd/data/implementations/data_center_service.dart';
 import 'package:dtnd/data/implementations/network_service.dart';
-import 'package:dtnd/generated/l10n.dart';
+import 'package:dtnd/l10n/generated/l10n.dart';
 import 'package:dtnd/ui/screen/home/widget/home_news.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/widget/icon/sheet_header.dart';

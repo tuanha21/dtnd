@@ -1,6 +1,6 @@
 import 'package:charts_flutter/flutter.dart' as charts;
-import 'package:dtnd/=models=/response/stock_model.dart';
-import 'package:dtnd/=models=/response/top_signal_detail_model.dart';
+import 'package:dtnd/=models=/response/market/stock_model.dart';
+import 'package:dtnd/=models=/response/market/top_signal_detail_model.dart';
 import 'package:dtnd/data/i_data_center_service.dart';
 import 'package:dtnd/data/implementations/data_center_service.dart';
 import 'package:dtnd/ui/theme/app_color.dart';

@@ -2,7 +2,7 @@ import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/widget/input/rounded_pinput.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../../../generated/l10n.dart';
+import '../../../../../../l10n/generated/l10n.dart';
 
 class CreateSmartOtpPinPage extends StatefulWidget {
   const CreateSmartOtpPinPage({

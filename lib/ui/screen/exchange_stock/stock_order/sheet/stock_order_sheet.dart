@@ -2,8 +2,8 @@ import 'dart:async';
 
 import 'package:dtnd/=models=/exchange.dart';
 import 'package:dtnd/=models=/response/stock_cash_balance_model.dart';
-import 'package:dtnd/=models=/response/stock_info_core.dart';
-import 'package:dtnd/=models=/response/stock_model.dart';
+import 'package:dtnd/=models=/response/market/stock_info_core.dart';
+import 'package:dtnd/=models=/response/market/stock_model.dart';
 import 'package:dtnd/=models=/side.dart';
 import 'package:dtnd/=models=/ui_model/user_cmd.dart';
 import 'package:dtnd/data/i_data_center_service.dart';
@@ -14,7 +14,7 @@ import 'package:dtnd/data/implementations/data_center_service.dart';
 import 'package:dtnd/data/implementations/exchange_service.dart';
 import 'package:dtnd/data/implementations/network_service.dart';
 import 'package:dtnd/data/implementations/user_service.dart';
-import 'package:dtnd/generated/l10n.dart';
+import 'package:dtnd/l10n/generated/l10n.dart';
 import 'package:dtnd/ui/screen/exchange_stock/order_note/screen/order_note_screen.dart';
 import 'package:dtnd/ui/screen/exchange_stock/stock_order/business/stock_order_flow.dart';
 import 'package:dtnd/ui/screen/exchange_stock/stock_order/component/order_order_note_panel.dart';
@@ -32,6 +32,7 @@ import 'package:dtnd/utilities/num_utils.dart';
 import 'package:dtnd/utilities/time_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:tutorial_coach_mark/tutorial_coach_mark.dart';
 
 import '../../../../../config/service/app_services.dart';
 import '../../../../widget/input/thousand_separator_input_formatter.dart';
@@ -42,12 +43,13 @@ class StockOrderSheet extends StatefulWidget {
     required this.stockModel,
     this.orderData,
     this.defaultTab,
+    this.onGuide,
   });
 
   final StockModel? stockModel;
   final OrderData? orderData;
   final int? defaultTab;
-
+  final void Function(List<TargetFocus> targets)? onGuide;
   @override
   State<StockOrderSheet> createState() => _StockOrderSheetState();
 }
@@ -78,6 +80,14 @@ class _StockOrderSheetState extends State<StockOrderSheet>
 
   String? errorText;
   String? _selectedItem;
+
+  /// Guide
+  final GlobalKey panelKey = GlobalKey();
+  final GlobalKey eeKey = GlobalKey();
+  final GlobalKey priceTypeKey = GlobalKey();
+  final GlobalKey marginKey = GlobalKey();
+  final GlobalKey priceVolKey = GlobalKey();
+  final GlobalKey buySellKey = GlobalKey();
 
   @override
   void initState() {
@@ -112,6 +122,155 @@ class _StockOrderSheetState extends State<StockOrderSheet>
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       if (widget.defaultTab != null) {
         tabController.animateTo(widget.defaultTab!);
+      }
+      if (widget.onGuide != null) {
+        final List<TargetFocus> targets = [
+          TargetFocus(
+            identify: "panelKey",
+            keyTarget: panelKey,
+            alignSkip: Alignment.topRight,
+            enableOverlayTab: true,
+            shape: ShapeLightFocus.RRect,
+            contents: [
+              TargetContent(
+                align: ContentAlign.top,
+                builder: (context, controller) {
+                  return Column(
+                    // mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        S.of(context).tour_guide2,
+                        style: AppTextStyle.bodyLarge_16,
+                      ),
+                    ],
+                  );
+                },
+              ),
+            ],
+          ),
+          TargetFocus(
+            identify: "eeKey",
+            keyTarget: eeKey,
+            alignSkip: Alignment.topRight,
+            enableOverlayTab: true,
+            shape: ShapeLightFocus.RRect,
+            contents: [
+              TargetContent(
+                align: ContentAlign.top,
+                builder: (context, controller) {
+                  return Column(
+                    // mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        S.of(context).tour_guide3,
+                        style: AppTextStyle.bodyLarge_16,
+                      ),
+                    ],
+                  );
+                },
+              ),
+            ],
+          ),
+          TargetFocus(
+            identify: "priceTypeKey",
+            keyTarget: priceTypeKey,
+            alignSkip: Alignment.topRight,
+            enableOverlayTab: true,
+            shape: ShapeLightFocus.RRect,
+            contents: [
+              TargetContent(
+                align: ContentAlign.top,
+                builder: (context, controller) {
+                  return Column(
+                    // mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        S.of(context).tour_guide4,
+                        style: AppTextStyle.bodyLarge_16,
+                      ),
+                    ],
+                  );
+                },
+              ),
+            ],
+          ),
+          TargetFocus(
+            identify: "marginKey",
+            keyTarget: marginKey,
+            alignSkip: Alignment.topRight,
+            enableOverlayTab: true,
+            shape: ShapeLightFocus.RRect,
+            contents: [
+              TargetContent(
+                align: ContentAlign.top,
+                builder: (context, controller) {
+                  return Column(
+                    // mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        S.of(context).tour_guide5,
+                        style: AppTextStyle.bodyLarge_16,
+                      ),
+                    ],
+                  );
+                },
+              ),
+            ],
+          ),
+          TargetFocus(
+            identify: "priceVolKey",
+            keyTarget: priceVolKey,
+            alignSkip: Alignment.topRight,
+            enableOverlayTab: true,
+            shape: ShapeLightFocus.RRect,
+            contents: [
+              TargetContent(
+                align: ContentAlign.top,
+                builder: (context, controller) {
+                  return Column(
+                    // mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        S.of(context).tour_guide6,
+                        style: AppTextStyle.bodyLarge_16,
+                      ),
+                    ],
+                  );
+                },
+              ),
+            ],
+          ),
+          TargetFocus(
+            identify: "buySellKey",
+            keyTarget: buySellKey,
+            alignSkip: Alignment.topRight,
+            enableOverlayTab: true,
+            shape: ShapeLightFocus.RRect,
+            contents: [
+              TargetContent(
+                align: ContentAlign.top,
+                builder: (context, controller) {
+                  return Column(
+                    // mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        S.of(context).tour_guide7,
+                        style: AppTextStyle.bodyLarge_16,
+                      ),
+                    ],
+                  );
+                },
+              ),
+            ],
+          ),
+        ];
+        widget.onGuide!.call(targets);
       }
     });
   }
@@ -302,41 +461,43 @@ class _StockOrderSheetState extends State<StockOrderSheet>
               SizedBox(
                 height: 300,
                 child: TabBarView(
-                    controller: tabController,
-                    // physics: const NeverScrollableScrollPhysics(),
-                    children: [
-                      OrderOrderPanel(
-                        stockModel: stockModel,
-                        onChangeStock: changeStock,
-                        onValidate: (value) {
-                          setState(() {
-                            errorText = value;
-                          });
-                        },
-                      ),
-                      OrderOrderNotePanel(
-                        onChangedOrder: (value) => Navigator.of(context)
-                            .pop(ToChangeOrderCmd([stockModel, value])),
-                        onCancelledOrder: (value) => Navigator.of(context)
-                            .pop(ToCancelOrderCmd([stockModel, value])),
-                      ),
-                      OrderOwnedStockPanel(
-                        onSell: (stockCodes) async {
-                          final model = await dataCenterService
-                              .getStocksModelsFromStockCodes(
-                                  [stockCodes.symbol]);
-                          if (model?.isNotEmpty ?? false) {
-                            changeStock(model!.first);
-                            tabController.animateTo(0);
-                          }
-                          volumeController.text =
-                              stockCodes.avaiableVol.toString();
-                        },
-                      ),
-                    ]),
+                  controller: tabController,
+                  // physics: const NeverScrollableScrollPhysics(),
+                  children: [
+                    OrderOrderPanel(
+                      key: panelKey,
+                      stockModel: stockModel,
+                      onChangeStock: changeStock,
+                      onValidate: (value) {
+                        setState(() {
+                          errorText = value;
+                        });
+                      },
+                    ),
+                    OrderOrderNotePanel(
+                      onChangedOrder: (value) => Navigator.of(context)
+                          .pop(ToChangeOrderCmd([stockModel, value])),
+                      onCancelledOrder: (value) => Navigator.of(context)
+                          .pop(ToCancelOrderCmd([stockModel, value])),
+                    ),
+                    OrderOwnedStockPanel(
+                      onSell: (stockCodes) async {
+                        final model = await dataCenterService
+                            .getStocksModelsFromStockCodes([stockCodes.symbol]);
+                        if (model?.isNotEmpty ?? false) {
+                          changeStock(model!.first);
+                          tabController.animateTo(0);
+                        }
+                        volumeController.text =
+                            stockCodes.avaiableVol.toString();
+                      },
+                    ),
+                  ],
+                ),
               ),
               const SizedBox(height: 16),
               Row(
+                key: eeKey,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Row(
@@ -392,6 +553,7 @@ class _StockOrderSheetState extends State<StockOrderSheet>
                   children: [
                     Expanded(
                       child: ListView(
+                        key: priceTypeKey,
                         scrollDirection: Axis.horizontal,
                         children: [
                           for (final OrderType orderType in listOrderTypes)
@@ -407,6 +569,7 @@ class _StockOrderSheetState extends State<StockOrderSheet>
                       ),
                     ),
                     Container(
+                      key: marginKey,
                       padding: const EdgeInsets.symmetric(
                           vertical: 4, horizontal: 12),
                       decoration: const BoxDecoration(
@@ -476,6 +639,7 @@ class _StockOrderSheetState extends State<StockOrderSheet>
               ),
               const SizedBox(height: 16),
               Row(
+                key: priceVolKey,
                 children: [
                   Expanded(
                     child: IntervalInput(
@@ -515,6 +679,7 @@ class _StockOrderSheetState extends State<StockOrderSheet>
                   )),
               const SizedBox(height: 8),
               Row(
+                key: buySellKey,
                 children: [
                   Expanded(
                     child: SingleColorTextButton(

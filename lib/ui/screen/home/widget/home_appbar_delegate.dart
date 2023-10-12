@@ -2,13 +2,13 @@ import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:dtnd/=models=/response/stock.dart';
+import 'package:dtnd/=models=/response/market/stock.dart';
 import 'package:dtnd/config/service/app_services.dart';
 import 'package:dtnd/data/i_data_center_service.dart';
 import 'package:dtnd/data/i_user_service.dart';
 import 'package:dtnd/data/implementations/local_storage_service.dart';
 import 'package:dtnd/data/implementations/network_service.dart';
-import 'package:dtnd/generated/l10n.dart';
+import 'package:dtnd/l10n/generated/l10n.dart';
 import 'package:dtnd/ui/screen/home/widget/home_quick_access.dart';
 import 'package:dtnd/ui/screen/home_base/widget/home_base_nav.dart';
 import 'package:dtnd/ui/screen/search/search_screen.dart';
@@ -40,7 +40,6 @@ class HomeAppbarDelegate extends SliverPersistentHeaderDelegate {
       BuildContext context, double shrinkOffset, bool overlapsContent) {
     final size = MediaQuery.of(context).size;
     final ratio = 1 - (shrinkOffset / _difference);
-    final ThemeData themeData = Theme.of(context);
     final themeMode = AppService.instance.themeMode.value;
 
     Widget title = Obx(() {

@@ -1,6 +1,6 @@
-import 'package:dtnd/=models=/response/top_signal_detail_model.dart';
+import 'package:dtnd/=models=/response/market/top_signal_detail_model.dart';
 import 'package:dtnd/config/service/app_services.dart';
-import 'package:dtnd/generated/l10n.dart';
+import 'package:dtnd/l10n/generated/l10n.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_textstyle.dart';
 import 'package:dtnd/utilities/time_utils.dart';
@@ -85,7 +85,9 @@ class SignalOverview extends StatelessWidget {
             height: 60,
             padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
             decoration: BoxDecoration(
-              color: themeMode.isLight ? AppColors.neutral_06 : AppColors.bg_share_inside_nav,
+              color: themeMode.isLight
+                  ? AppColors.neutral_06
+                  : AppColors.bg_share_inside_nav,
               borderRadius: const BorderRadius.all(Radius.circular(8)),
             ),
             child: Row(
@@ -94,7 +96,8 @@ class SignalOverview extends StatelessWidget {
                 _Column(
                   S.of(context).purchase_price,
                   detail?.cBUYPRICE.toString() ?? "-",
-                  textStyle: textTheme.titleSmall?.copyWith(color: themeMode.isLight ? null : AppColors.neutral_07),
+                  textStyle: textTheme.titleSmall?.copyWith(
+                      color: themeMode.isLight ? null : AppColors.neutral_07),
                 ),
                 VerticalDivider(
                   thickness: 1,
@@ -104,9 +107,10 @@ class SignalOverview extends StatelessWidget {
                 _Column(
                   S.of(context).profit_value,
                   "${detail?.cPC ?? "-"}%",
-                  textStyle: textTheme.titleSmall?.copyWith(color: themeMode.isLight ? null : AppColors.neutral_07),
+                  textStyle: textTheme.titleSmall?.copyWith(
+                      color: themeMode.isLight ? null : AppColors.neutral_07),
                 ),
-                  VerticalDivider(
+                VerticalDivider(
                   thickness: 1,
                   width: 1,
                   color: themeMode.isLight ? null : AppColors.neutral_03,
@@ -114,7 +118,8 @@ class SignalOverview extends StatelessWidget {
                 _Column(
                   S.of(context).risk,
                   "${detail?.rUIRO ?? "-"}%",
-                  textStyle: textTheme.titleSmall?.copyWith(color: themeMode.isLight ? null : AppColors.neutral_07),
+                  textStyle: textTheme.titleSmall?.copyWith(
+                      color: themeMode.isLight ? null : AppColors.neutral_07),
                 ),
               ],
             ),

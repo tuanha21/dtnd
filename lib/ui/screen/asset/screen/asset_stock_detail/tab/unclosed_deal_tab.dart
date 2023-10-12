@@ -11,7 +11,7 @@ import 'package:dtnd/utilities/num_utils.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../../../config/service/app_services.dart';
-import '../../../../../../generated/l10n.dart';
+import '../../../../../../l10n/generated/l10n.dart';
 
 class UnclosedDealTab extends StatefulWidget {
   const UnclosedDealTab({super.key, required this.stockCode});
@@ -73,7 +73,9 @@ class _UnclosedDealTabState extends State<UnclosedDealTab>
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
                 borderRadius: const BorderRadius.all(Radius.circular(8)),
-                color: themeMode.isLight ? AppColors.neutral_06 : AppColors.text_black_1),
+                color: themeMode.isLight
+                    ? AppColors.neutral_06
+                    : AppColors.text_black_1),
             child: Column(
               children: [
                 // Row(
@@ -128,7 +130,9 @@ class _UnclosedDealTabState extends State<UnclosedDealTab>
               ? Container(
                   padding: const EdgeInsets.all(16),
                   decoration: BoxDecoration(
-                      color: themeMode.isLight ? AppColors.neutral_06 : AppColors.text_black_1,
+                      color: themeMode.isLight
+                          ? AppColors.neutral_06
+                          : AppColors.text_black_1,
                       borderRadius: BorderRadius.all(Radius.circular(12))),
                   child: Column(
                     children: [

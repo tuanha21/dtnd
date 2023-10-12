@@ -1,8 +1,8 @@
-import 'package:dtnd/=models=/response/stock.dart';
-import 'package:dtnd/=models=/response/suggested_signal_model.dart';
+import 'package:dtnd/=models=/response/market/stock.dart';
+import 'package:dtnd/=models=/response/market/suggested_signal_model.dart';
 import 'package:dtnd/data/i_data_center_service.dart';
 import 'package:dtnd/data/implementations/data_center_service.dart';
-import 'package:dtnd/generated/l10n.dart';
+import 'package:dtnd/l10n/generated/l10n.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_textstyle.dart';
 import 'package:dtnd/ui/widget/icon/stock_icon.dart';
@@ -85,7 +85,10 @@ class _SuggestedSignalComponentState extends State<SuggestedSignalComponent> {
                         children: [
                           Text(
                             widget.data.cSHARECODE,
-                            style: textTheme.titleSmall?.copyWith(color: themeMode.isLight ? null : AppColors.neutral_07),
+                            style: textTheme.titleSmall?.copyWith(
+                                color: themeMode.isLight
+                                    ? null
+                                    : AppColors.neutral_07),
                           ),
                           Row(
                             children: [
@@ -127,7 +130,10 @@ class _SuggestedSignalComponentState extends State<SuggestedSignalComponent> {
                         const SizedBox(height: 4),
                         Text(
                           widget.data.type,
-                          style: textTheme.titleSmall?.copyWith(color: themeMode.isLight ? null : AppColors.neutral_07),
+                          style: textTheme.titleSmall?.copyWith(
+                              color: themeMode.isLight
+                                  ? null
+                                  : AppColors.neutral_07),
                         ),
                       ],
                     ),
@@ -146,7 +152,10 @@ class _SuggestedSignalComponentState extends State<SuggestedSignalComponent> {
                         const SizedBox(height: 4),
                         Text(
                           widget.data.t.toString(),
-                          style: textTheme.titleSmall?.copyWith(color: themeMode.isLight ? null : AppColors.neutral_07),
+                          style: textTheme.titleSmall?.copyWith(
+                              color: themeMode.isLight
+                                  ? null
+                                  : AppColors.neutral_07),
                           textAlign: TextAlign.center,
                         ),
                       ],

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-import '../../../../../../generated/l10n.dart';
+import '../../../../../../l10n/generated/l10n.dart';
 
 class itemCommunity extends StatefulWidget {
   const itemCommunity({Key? key}) : super(key: key);

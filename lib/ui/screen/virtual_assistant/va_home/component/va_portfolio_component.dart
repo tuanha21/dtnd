@@ -1,5 +1,5 @@
 import 'package:dtnd/=models=/local/va_portfolio_model.dart';
-import 'package:dtnd/=models=/response/stock_model.dart';
+import 'package:dtnd/=models=/response/market/stock_model.dart';
 import 'package:dtnd/config/service/app_services.dart';
 import 'package:dtnd/data/i_data_center_service.dart';
 import 'package:dtnd/data/implementations/data_center_service.dart';

@@ -1,7 +1,7 @@
 import 'package:dtnd/=models=/local/i_local_catalog.dart';
 import 'package:dtnd/=models=/local/saved_catalog.dart';
 import 'package:dtnd/=models=/ui_model/user_cmd.dart';
-import 'package:dtnd/generated/l10n.dart';
+import 'package:dtnd/l10n/generated/l10n.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -40,7 +40,9 @@ class _DeleteCatalogDialogState extends State<DeleteCatalogDialog> {
           padding: const EdgeInsets.only(
               top: 40.0, left: 10.0, right: 10.0, bottom: 10.0),
           child: Material(
-            color: themeMode.isLight ? AppColors.light_bg : AppColors.dark_stronger_bg,
+            color: themeMode.isLight
+                ? AppColors.light_bg
+                : AppColors.dark_stronger_bg,
             shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.all(
                 Radius.circular(10),
@@ -56,7 +58,9 @@ class _DeleteCatalogDialogState extends State<DeleteCatalogDialog> {
                     Stack(
                       children: <Widget>[
                         Container(
-                          color:  themeMode.isLight ? AppColors.light_bg : AppColors.dark_stronger_bg ,
+                          color: themeMode.isLight
+                              ? AppColors.light_bg
+                              : AppColors.dark_stronger_bg,
                           child: Container(
                             padding: EdgeInsets.zero,
                             width: MediaQuery.of(context).size.width,

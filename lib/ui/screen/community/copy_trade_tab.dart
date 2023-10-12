@@ -34,8 +34,8 @@ class _CopyTradeTabState extends State<CopyTradeTab>
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     final ThemeData themeData = Theme.of(context);
-
     return Scaffold(
       body: Obx(
         () {

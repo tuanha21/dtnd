@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:dtnd/=models=/local/i_local_catalog.dart';
 import 'package:dtnd/=models=/local/saved_catalog.dart';
-import 'package:dtnd/=models=/response/stock_model.dart';
+import 'package:dtnd/=models=/response/market/stock_model.dart';
 import 'package:dtnd/=models=/ui_model/user_cmd.dart';
 import 'package:dtnd/data/i_local_storage_service.dart';
 import 'package:dtnd/data/i_user_service.dart';
@@ -19,9 +19,9 @@ import 'package:flutter_svg/svg.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 import '../../../../../=models=/local/user_catalog.dart';
-import '../../../../../=models=/response/stock.dart';
+import '../../../../../=models=/response/market/stock.dart';
 import '../../../../../config/service/app_services.dart';
-import '../../../../../generated/l10n.dart';
+import '../../../../../l10n/generated/l10n.dart';
 import '../../../../../utilities/logger.dart';
 import '../../logic/add_catalog_logic.dart';
 import '../sheet/catalog_options_sheet.dart';
@@ -153,7 +153,9 @@ class _UserCatalogWidgetState extends State<UserCatalogWidget> {
             margin: const EdgeInsets.all(8),
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(12),
-                color: themeMode.isLight ? AppColors.neutral_06 : AppColors.neutral_01),
+                color: themeMode.isLight
+                    ? AppColors.neutral_06
+                    : AppColors.neutral_01),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -425,7 +427,9 @@ class _UserCatalogWidgetState extends State<UserCatalogWidget> {
                       return Divider(
                         thickness: 2,
                         height: 0,
-                        color: themeMode.isLight ? const Color.fromRGBO(245, 248, 255, 1) : null,
+                        color: themeMode.isLight
+                            ? const Color.fromRGBO(245, 248, 255, 1)
+                            : null,
                       );
                     },
                     itemCount: list!.length);
@@ -631,11 +635,13 @@ class _BottomAddStockState extends State<BottomAddStock> {
 
     return Material(
       child: Container(
-        padding:   const EdgeInsets.symmetric(horizontal: 16, vertical: 18),
-        decoration:  BoxDecoration(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 18),
+        decoration: BoxDecoration(
             borderRadius: const BorderRadius.only(
                 topLeft: Radius.circular(12), topRight: Radius.circular(12)),
-            color: themeMode.isLight ? AppColors.light_bg : AppColors.text_black_1),
+            color: themeMode.isLight
+                ? AppColors.light_bg
+                : AppColors.text_black_1),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -654,7 +660,9 @@ class _BottomAddStockState extends State<BottomAddStock> {
                   child: Container(
                     padding: const EdgeInsets.all(10),
                     decoration: BoxDecoration(
-                        color: themeMode.isLight ? const Color.fromRGBO(245, 248, 255, 1) : AppColors.neutral_03,
+                        color: themeMode.isLight
+                            ? const Color.fromRGBO(245, 248, 255, 1)
+                            : AppColors.neutral_03,
                         borderRadius: BorderRadius.circular(6)),
                     child: const Icon(
                       Icons.clear,
@@ -716,7 +724,9 @@ class _BottomAddStockState extends State<BottomAddStock> {
                             return Divider(
                               thickness: 1,
                               height: 0,
-                              color: themeMode.isLight ? const Color.fromRGBO(245, 248, 255, 1) : AppColors.neutral_03,
+                              color: themeMode.isLight
+                                  ? const Color.fromRGBO(245, 248, 255, 1)
+                                  : AppColors.neutral_03,
                             );
                           },
                           itemCount: list!.length);

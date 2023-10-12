@@ -1,4 +1,4 @@
-import 'package:dtnd/=models=/response/stock_model.dart';
+import 'package:dtnd/=models=/response/market/stock_model.dart';
 import 'package:dtnd/config/service/app_services.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
@@ -35,9 +35,8 @@ class StockDetailAppbar extends StatelessWidget implements PreferredSizeWidget {
         child: SizedBox.square(
           dimension: 32,
           child: Material(
-            color: themeMode.isLight
-                ? AppColors.neutral_05
-                : AppColors.neutral_01,
+            color:
+                themeMode.isLight ? AppColors.neutral_05 : AppColors.neutral_01,
             child: InkWell(
               onTap: () => Navigator.of(context).pop(),
               borderRadius: const BorderRadius.all(Radius.circular(6)),
@@ -102,9 +101,7 @@ class StockDetailAppbar extends StatelessWidget implements PreferredSizeWidget {
             AppImages.chart,
             height: 24,
             width: 24,
-            color: isChart
-                ? AppColors.semantic_02
-                : AppColors.neutral_03,
+            color: isChart ? AppColors.semantic_02 : AppColors.neutral_03,
           ),
         ),
         const SizedBox(width: 16),

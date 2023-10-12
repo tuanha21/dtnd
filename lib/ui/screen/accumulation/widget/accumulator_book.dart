@@ -1,4 +1,4 @@
-import 'package:dtnd/generated/l10n.dart';
+import 'package:dtnd/l10n/generated/l10n.dart';
 import 'package:dtnd/ui/screen/accumulation/controller/accumulation_controller.dart';
 import 'package:dtnd/ui/screen/accumulation/screen/accumulator_book_detail.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
@@ -36,7 +36,6 @@ class _AccumulatorBookState extends State<AccumulatorBook> {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
-    final themeMode = AppService.instance.themeMode.value;
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -138,7 +137,8 @@ class ItemBuilder extends StatelessWidget {
 
     return Container(
       decoration: BoxDecoration(
-        color: themeMode.isLight ? AppColors.neutral_07 : AppColors.text_black_1,
+        color:
+            themeMode.isLight ? AppColors.neutral_07 : AppColors.text_black_1,
         borderRadius: BorderRadius.circular(12),
       ),
       margin: const EdgeInsets.only(top: 16),
@@ -189,7 +189,9 @@ class ItemBuilder extends StatelessWidget {
           height: 40,
           padding: const EdgeInsets.symmetric(horizontal: 16),
           decoration: BoxDecoration(
-            color: themeMode.isLight ? AppColors.neutral_07 : AppColors.bg_share_inside_nav,
+            color: themeMode.isLight
+                ? AppColors.neutral_07
+                : AppColors.bg_share_inside_nav,
             borderRadius: BorderRadius.circular(12),
           ),
           child: Row(
@@ -198,7 +200,9 @@ class ItemBuilder extends StatelessWidget {
               Text('$rate%/năm',
                   style: textTheme.bodyMedium?.copyWith(
                       fontWeight: FontWeight.bold,
-                      color: themeMode.isLight ? AppColors.neutral_02 : AppColors.neutral_07)),
+                      color: themeMode.isLight
+                          ? AppColors.neutral_02
+                          : AppColors.neutral_07)),
               Text('+${NumUtils.formatDoubleString(profit)}đ',
                   style: textTheme.bodyMedium?.copyWith(
                       fontWeight: FontWeight.bold,

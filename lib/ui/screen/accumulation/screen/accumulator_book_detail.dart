@@ -1,5 +1,5 @@
 import 'package:dtnd/=models=/response/accumulation/contract_model.dart';
-import 'package:dtnd/generated/l10n.dart';
+import 'package:dtnd/l10n/generated/l10n.dart';
 import 'package:dtnd/ui/screen/accumulation/controller/accumulation_controller.dart';
 import 'package:dtnd/ui/screen/accumulation/widget/settlement_dialog.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
@@ -70,7 +70,6 @@ class _AccumulatorBookDetailState extends State<AccumulatorBookDetail> {
   }
 
   Widget bodyWidget(TextTheme textTheme, BuildContext context) {
-    final ThemeData themeData = Theme.of(context);
     final themeMode = AppService.instance.themeMode.value;
 
     return Padding(
@@ -81,7 +80,9 @@ class _AccumulatorBookDetailState extends State<AccumulatorBookDetail> {
         children: [
           Container(
             decoration: BoxDecoration(
-              color: themeMode.isLight ? AppColors.neutral_07 : AppColors.neutral_01,
+              color: themeMode.isLight
+                  ? AppColors.neutral_07
+                  : AppColors.neutral_01,
               borderRadius: const BorderRadius.only(
                   topLeft: Radius.circular(12), topRight: Radius.circular(12)),
             ),
@@ -137,7 +138,9 @@ class _AccumulatorBookDetailState extends State<AccumulatorBookDetail> {
                   height: 60,
                   padding: const EdgeInsets.symmetric(horizontal: 8),
                   decoration: BoxDecoration(
-                    color: themeMode.isLight ? AppColors.neutral_07 : AppColors.neutral_01,
+                    color: themeMode.isLight
+                        ? AppColors.neutral_07
+                        : AppColors.neutral_01,
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Column(
@@ -180,7 +183,9 @@ class _AccumulatorBookDetailState extends State<AccumulatorBookDetail> {
             height: 90,
             padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
-              color: themeMode.isLight ? AppColors.neutral_07 : AppColors.neutral_01,
+              color: themeMode.isLight
+                  ? AppColors.neutral_07
+                  : AppColors.neutral_01,
               borderRadius: BorderRadius.circular(12),
             ),
             child: Column(
@@ -227,7 +232,9 @@ class _AccumulatorBookDetailState extends State<AccumulatorBookDetail> {
             height: 80,
             padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
-              color: themeMode.isLight ? AppColors.neutral_07 : AppColors.neutral_01,
+              color: themeMode.isLight
+                  ? AppColors.neutral_07
+                  : AppColors.neutral_01,
               borderRadius: BorderRadius.circular(12),
             ),
             child: Column(
@@ -345,7 +352,9 @@ class _AccumulatorBookDetailState extends State<AccumulatorBookDetail> {
                             padding: const EdgeInsets.only(left: 20),
                             margin: const EdgeInsets.only(bottom: 16),
                             decoration: BoxDecoration(
-                                color: themeMode.isLight ? AppColors.neutral_07 : AppColors.neutral_01,
+                                color: themeMode.isLight
+                                    ? AppColors.neutral_07
+                                    : AppColors.neutral_01,
                                 borderRadius: BorderRadius.circular(12),
                                 border: Border.all(
                                     color: methodList[index]['selected'] == true

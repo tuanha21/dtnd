@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../../../generated/l10n.dart';
+import '../../../../../l10n/generated/l10n.dart';
 
 class FilterScreen extends StatefulWidget {
   const FilterScreen({Key? key}) : super(key: key);

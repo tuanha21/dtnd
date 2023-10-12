@@ -1,6 +1,6 @@
 import 'package:dtnd/data/i_local_storage_service.dart';
 import 'package:dtnd/data/implementations/local_storage_service.dart';
-import 'package:dtnd/generated/l10n.dart';
+import 'package:dtnd/l10n/generated/l10n.dart';
 import 'package:dtnd/ui/screen/login/login_screen.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
@@ -39,7 +39,8 @@ class _SuccessResetPasswordPageState extends State<SuccessResetPasswordPage> {
         padding: const EdgeInsets.only(
             top: 40.0, left: 10.0, right: 10.0, bottom: 10.0),
         child: Material(
-          color: themeMode.isLight ? AppColors.light_bg : AppColors.text_black_1,
+          color:
+              themeMode.isLight ? AppColors.light_bg : AppColors.text_black_1,
           shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.all(
               Radius.circular(10),
@@ -53,7 +54,9 @@ class _SuccessResetPasswordPageState extends State<SuccessResetPasswordPage> {
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
                   Container(
-                    color: themeMode.isLight ? AppColors.light_bg : AppColors.text_black_1,
+                    color: themeMode.isLight
+                        ? AppColors.light_bg
+                        : AppColors.text_black_1,
                     child: Container(
                       padding: EdgeInsets.zero,
                       width: MediaQuery.of(context).size.width,
@@ -72,10 +75,13 @@ class _SuccessResetPasswordPageState extends State<SuccessResetPasswordPage> {
                               child: Text(
                                 S.of(context).success_reset_password,
                                 style: TextStyle(
-                                    fontSize: 16,
-                                    height: 1.4,
-                                    fontWeight: FontWeight.w500,
-                                    color: themeMode.isLight ? AppColors.text_grey_1 : AppColors.neutral_07,),
+                                  fontSize: 16,
+                                  height: 1.4,
+                                  fontWeight: FontWeight.w500,
+                                  color: themeMode.isLight
+                                      ? AppColors.text_grey_1
+                                      : AppColors.neutral_07,
+                                ),
                                 textAlign: TextAlign.center,
                               ),
                             ),

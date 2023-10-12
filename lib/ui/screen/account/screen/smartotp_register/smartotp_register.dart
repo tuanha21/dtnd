@@ -1,6 +1,6 @@
 import 'package:dtnd/data/i_user_service.dart';
 import 'package:dtnd/data/implementations/user_service.dart';
-import 'package:dtnd/generated/l10n.dart';
+import 'package:dtnd/l10n/generated/l10n.dart';
 import 'package:dtnd/ui/screen/account/screen/smartotp_register/page/authen_smsotp_pin.dart';
 import 'package:dtnd/ui/screen/account/screen/smartotp_register/page/create_smartotp_pin.dart';
 import 'package:dtnd/ui/screen/account/screen/smartotp_register/page/recreate_smartotp_pin.dart';

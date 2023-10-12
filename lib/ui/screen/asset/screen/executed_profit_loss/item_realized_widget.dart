@@ -10,9 +10,9 @@ import 'package:dtnd/ui/widget/expanded_widget.dart';
 import 'package:dtnd/utilities/num_utils.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../../=models=/response/stock.dart';
-import '../../../../../=models=/response/stock_model.dart';
-import '../../../../../generated/l10n.dart';
+import '../../../../../=models=/response/market/stock.dart';
+import '../../../../../=models=/response/market/stock_model.dart';
+import '../../../../../l10n/generated/l10n.dart';
 import '../../../../widget/icon/stock_icon.dart';
 import '../../component/asset_grid_element.dart';
 
@@ -85,7 +85,9 @@ class _ItemRealizedState extends State<ItemRealizedWidget> {
           padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
           decoration: BoxDecoration(
             borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
-            color: themeMode.isDark ? AppColors.text_black_1 : AppColors.neutral_06,
+            color: themeMode.isDark
+                ? AppColors.text_black_1
+                : AppColors.neutral_06,
           ),
           child: Column(
             children: [
@@ -139,8 +141,10 @@ class _ItemRealizedState extends State<ItemRealizedWidget> {
                         const SizedBox(height: 4),
                         Text(
                           widget.detail?.cTRADINGDATE ?? '',
-                          style: AppTextStyle.labelMedium_12
-                              .copyWith(color: themeMode.isLight ? AppColors.neutral_01 : AppColors.neutral_07),
+                          style: AppTextStyle.labelMedium_12.copyWith(
+                              color: themeMode.isLight
+                                  ? AppColors.neutral_01
+                                  : AppColors.neutral_07),
                         ),
                       ],
                     ),
@@ -160,8 +164,10 @@ class _ItemRealizedState extends State<ItemRealizedWidget> {
                         const SizedBox(height: 4),
                         Text(
                           NumUtils.formatDouble(widget.detail?.cSHAREVOLUME),
-                          style: AppTextStyle.labelMedium_12
-                              .copyWith(color: themeMode.isLight ? AppColors.neutral_01 : AppColors.neutral_07),
+                          style: AppTextStyle.labelMedium_12.copyWith(
+                              color: themeMode.isLight
+                                  ? AppColors.neutral_01
+                                  : AppColors.neutral_07),
                         ),
                       ],
                     ),
@@ -217,7 +223,9 @@ class _ItemRealizedState extends State<ItemRealizedWidget> {
                   padding: const EdgeInsets.all(4),
                   decoration: BoxDecoration(
                     borderRadius: const BorderRadius.all(Radius.circular(12)),
-                    color: themeMode.isLight ? AppColors.neutral_06 : AppColors.neutral_03,
+                    color: themeMode.isLight
+                        ? AppColors.neutral_06
+                        : AppColors.neutral_03,
                   ),
                   child: Column(
                     children: [
@@ -225,14 +233,18 @@ class _ItemRealizedState extends State<ItemRealizedWidget> {
                         child: Row(
                           children: [
                             Expanded(
-                              child: AssetGridElement(contentPadding:const EdgeInsets.all(5) ,element: {
-                                S.of(context).selling_price: NumUtils.formatDouble(
-                                    widget.detail?.cSHAREPRICE),
-                              }),
+                              child: AssetGridElement(
+                                  contentPadding: const EdgeInsets.all(5),
+                                  element: {
+                                    S.of(context).selling_price:
+                                        NumUtils.formatDouble(
+                                            widget.detail?.cSHAREPRICE),
+                                  }),
                             ),
                             const SizedBox(width: 2),
                             Expanded(
-                              child: AssetGridElement(contentPadding:const EdgeInsets.all(5) ,
+                              child: AssetGridElement(
+                                contentPadding: const EdgeInsets.all(5),
                                 element: {
                                   S.of(context).tax_fee: NumUtils.formatDouble(
                                       widget.detail?.cCOMMVALUE)
@@ -241,10 +253,11 @@ class _ItemRealizedState extends State<ItemRealizedWidget> {
                             ),
                             const SizedBox(width: 2),
                             Expanded(
-                              child: AssetGridElement(contentPadding:const EdgeInsets.all(5) ,
+                              child: AssetGridElement(
+                                contentPadding: const EdgeInsets.all(5),
                                 element: {
-                                  S.of(context).sale_value: NumUtils.formatDouble(
-                                      ((((widget
+                                  S.of(context).sale_value:
+                                      NumUtils.formatDouble(((((widget
                                                       .detail?.cSHAREPRICE!
                                                       .toDouble() ??
                                                   0) *
@@ -265,17 +278,22 @@ class _ItemRealizedState extends State<ItemRealizedWidget> {
                         child: Row(
                           children: [
                             Expanded(
-                              child: AssetGridElement(contentPadding:const EdgeInsets.all(5) ,element: {
-                                S.of(context).cost_price: NumUtils.formatDouble(
-                                    widget.detail?.cAVERAGEPRICE),
-                              }),
+                              child: AssetGridElement(
+                                  contentPadding: const EdgeInsets.all(5),
+                                  element: {
+                                    S.of(context).cost_price:
+                                        NumUtils.formatDouble(
+                                            widget.detail?.cAVERAGEPRICE),
+                                  }),
                             ),
                             const SizedBox(width: 2),
                             Expanded(
-                              child: AssetGridElement(contentPadding:const EdgeInsets.all(5) ,
+                              child: AssetGridElement(
+                                contentPadding: const EdgeInsets.all(5),
                                 element: {
-                                  S.of(context).cost_value: NumUtils.formatDouble(
-                                      widget.detail?.cCOSTVALUE)
+                                  S.of(context).cost_value:
+                                      NumUtils.formatDouble(
+                                          widget.detail?.cCOSTVALUE)
                                 },
                               ),
                             ),
@@ -302,7 +320,9 @@ class _ItemRealizedState extends State<ItemRealizedWidget> {
               decoration: BoxDecoration(
                 borderRadius:
                     const BorderRadius.vertical(bottom: Radius.circular(12)),
-                color: themeMode.isDark ? AppColors.text_black_1 : AppColors.neutral_05,
+                color: themeMode.isDark
+                    ? AppColors.text_black_1
+                    : AppColors.neutral_05,
               ),
               child: Center(
                 child: AnimatedRotation(

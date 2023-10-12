@@ -5,10 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 
-import '../../../../../=models=/response/stock_data.dart';
+import '../../../../../=models=/response/market/stock_data.dart';
 import '../../../../../data/i_data_center_service.dart';
 import '../../../../../data/implementations/data_center_service.dart';
-import '../../../../../generated/l10n.dart';
+import '../../../../../l10n/generated/l10n.dart';
 import 'industry_detail_page.dart';
 
 class IndustryInfoWidget extends StatefulWidget {
@@ -229,7 +229,7 @@ class _IndustryWidgetState extends State<IndustryWidget> {
               onTap: () {
                 Navigator.of(context).push(MaterialPageRoute(
                     builder: (context) => IndustryDetailPage(
-                        listStock: list!, title: widget.title)));
+                        listStock: list, title: widget.title)));
               },
               child: Container(
                 padding: const EdgeInsets.all(8),

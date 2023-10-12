@@ -1,5 +1,5 @@
 import 'dart:io';
-import 'package:dtnd/generated/l10n.dart';
+import 'package:dtnd/l10n/generated/l10n.dart';
 import 'package:dtnd/ui/screen/ekyc/ekyc_controller.dart';
 import 'package:dtnd/ui/screen/ekyc/page/indentity_inform.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
@@ -76,7 +76,10 @@ class _ValidatorIdentityState extends State<ValidatorIdentity> {
                   TextSpan(
                       text: "2 mặt CMND/CCCD",
                       style: titleSmall?.copyWith(
-                          fontWeight: FontWeight.w700, color:themeMode.isLight ? AppColors.bg_2 : AppColors.neutral_07)),
+                          fontWeight: FontWeight.w700,
+                          color: themeMode.isLight
+                              ? AppColors.bg_2
+                              : AppColors.neutral_07)),
                   TextSpan(
                       text: ' để xác minh tài khoản',
                       style: titleSmall?.copyWith(
@@ -212,7 +215,9 @@ class _CardIdentityPickState extends State<CardIdentityPick> {
                       padding: const EdgeInsets.symmetric(horizontal: 10),
                       alignment: Alignment.centerLeft,
                       decoration: BoxDecoration(
-                        color: themeMode.isLight ? AppColors.neutral_06 : AppColors.text_black_1,
+                        color: themeMode.isLight
+                            ? AppColors.neutral_06
+                            : AppColors.text_black_1,
                         borderRadius: BorderRadius.circular(8),
                       ),
                       child: Row(
@@ -250,7 +255,9 @@ class _CardIdentityPickState extends State<CardIdentityPick> {
                       padding: const EdgeInsets.symmetric(horizontal: 10),
                       alignment: Alignment.centerLeft,
                       decoration: BoxDecoration(
-                        color: themeMode.isLight ? AppColors.neutral_06 : AppColors.text_black_1,
+                        color: themeMode.isLight
+                            ? AppColors.neutral_06
+                            : AppColors.text_black_1,
                         borderRadius: BorderRadius.circular(8),
                       ),
                       child: Row(

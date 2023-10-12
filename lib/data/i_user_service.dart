@@ -1,11 +1,11 @@
 import 'package:dtnd/=models=/check_account_success_data_model.dart';
 import 'package:dtnd/=models=/response/account/i_account.dart';
-import 'package:dtnd/=models=/response/account_info_model.dart';
+import 'package:dtnd/=models=/response/account/account_info_model.dart';
 import 'package:dtnd/=models=/response/accumulation/contract_model.dart';
 import 'package:dtnd/=models=/response/accumulation/fee_rate_model.dart';
-import 'package:dtnd/=models=/response/cash_transaction_model.dart';
+import 'package:dtnd/=models=/response/account/cash_transaction_model.dart';
 import 'package:dtnd/=models=/response/order_model/base_order_model.dart';
-import 'package:dtnd/=models=/response/total_asset_model.dart';
+import 'package:dtnd/=models=/response/account/total_asset_model.dart';
 import 'package:dtnd/=models=/response/user_token.dart';
 import 'package:dtnd/=models=/local/va_portfolio_model.dart';
 import 'package:dtnd/=models=/side.dart';
@@ -112,5 +112,5 @@ abstract class IUserService {
 
   Future<SingleContract?> liquidAll(String contactId);
 
-  Future<bool> methodUpdate(String contactId,String extentType);
+  Future<bool> methodUpdate(String contactId, String extentType);
 }

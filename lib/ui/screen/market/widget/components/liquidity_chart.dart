@@ -1,5 +1,5 @@
-import 'package:dtnd/=models=/response/liquidity_model.dart';
-import 'package:dtnd/generated/l10n.dart';
+import 'package:dtnd/=models=/response/market/liquidity_model.dart';
+import 'package:dtnd/l10n/generated/l10n.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/utilities/charts_util.dart';
 import 'package:dtnd/utilities/num_utils.dart';
@@ -178,32 +178,36 @@ class _LiquidityChartState extends State<LiquidityChart> {
                             fontSize: 8,
                             color: themeMode.isLight
                                 ? null
-                                : charts.ColorUtil.fromDartColor(AppColors.neutral_07)),
+                                : charts.ColorUtil.fromDartColor(
+                                    AppColors.neutral_07)),
                         lineStyle: charts.LineStyleSpec(
                             dashPattern: [4],
                             color: themeMode.isLight
                                 ? null
-                                : charts.ColorUtil.fromDartColor(AppColors.neutral_02)),
+                                : charts.ColorUtil.fromDartColor(
+                                    AppColors.neutral_02)),
                       ),
                     ),
                     secondaryMeasureAxis: charts.NumericAxisSpec(
-                      tickProviderSpec: const charts.BasicNumericTickProviderSpec(
-                          // zeroBound: true,
-                          ),
+                      tickProviderSpec:
+                          const charts.BasicNumericTickProviderSpec(
+                              // zeroBound: true,
+                              ),
                       showAxisLine: false,
                       renderSpec: charts.GridlineRendererSpec(
-
                         labelStyle: charts.TextStyleSpec(
                           fontSize: 8,
                           color: themeMode.isLight
                               ? null
-                              : charts.ColorUtil.fromDartColor(AppColors.neutral_07),
+                              : charts.ColorUtil.fromDartColor(
+                                  AppColors.neutral_07),
                         ),
                         lineStyle: charts.LineStyleSpec(
                           dashPattern: [4],
                           color: themeMode.isLight
                               ? null
-                              : charts.ColorUtil.fromDartColor(AppColors.neutral_02),
+                              : charts.ColorUtil.fromDartColor(
+                                  AppColors.neutral_02),
                         ),
                       ),
                       // showAxisLine: false,

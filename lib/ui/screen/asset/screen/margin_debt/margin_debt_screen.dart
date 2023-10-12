@@ -1,4 +1,4 @@
-import 'package:dtnd/generated/l10n.dart';
+import 'package:dtnd/l10n/generated/l10n.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/widget/appbar/simple_appbar.dart';
 import 'package:dtnd/ui/widget/empty_list_widget.dart';
@@ -8,7 +8,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:get/get_utils/get_utils.dart';
 
-import '../../../../../=models=/response/stock_model.dart';
+import '../../../../../=models=/response/market/stock_model.dart';
 import '../../../../../config/service/app_services.dart';
 import '../../../../../utilities/num_utils.dart';
 import '../../../../../utilities/time_utils.dart';
@@ -91,8 +91,9 @@ class _MarginDebtScreenState extends State<MarginDebtScreen> {
                         });
                         getData();
                       },
-                      color: themeMode.isLight ? AppColors.neutral_06 : AppColors.text_black_1,
-
+                      color: themeMode.isLight
+                          ? AppColors.neutral_06
+                          : AppColors.text_black_1,
                     ),
                   ),
                   const SizedBox(width: 8),
@@ -109,8 +110,9 @@ class _MarginDebtScreenState extends State<MarginDebtScreen> {
                         });
                         getData();
                       },
-                      color: themeMode.isLight ? AppColors.neutral_06 : AppColors.text_black_1,
-
+                      color: themeMode.isLight
+                          ? AppColors.neutral_06
+                          : AppColors.text_black_1,
                     ),
                   )
                 ],
@@ -183,7 +185,9 @@ class _MarginDebtScreenState extends State<MarginDebtScreen> {
                   margin: const EdgeInsets.symmetric(horizontal: 16),
                   padding: const EdgeInsets.all(16),
                   decoration: BoxDecoration(
-                      color: themeMode.isLight ? AppColors.light_bg : AppColors.text_black_1,
+                      color: themeMode.isLight
+                          ? AppColors.light_bg
+                          : AppColors.text_black_1,
                       borderRadius: BorderRadius.circular(12)),
                   child: Column(
                     children: [

@@ -1,5 +1,5 @@
 import 'package:dtnd/data/i_user_service.dart';
-import 'package:dtnd/generated/l10n.dart';
+import 'package:dtnd/l10n/generated/l10n.dart';
 import 'package:dtnd/ui/screen/account/component/account_total_asset_widget.dart';
 import 'package:dtnd/ui/screen/account/component/extensions_widget.dart';
 import 'package:dtnd/ui/screen/account/icon/account_icon.dart';

@@ -1,8 +1,8 @@
 import 'dart:ui';
 
 import 'package:dtnd/=models=/response/account/base_margin_plus_account_model.dart';
-import 'package:dtnd/=models=/response/stock.dart';
-import 'package:dtnd/=models=/response/stock_model.dart';
+import 'package:dtnd/=models=/response/market/stock.dart';
+import 'package:dtnd/=models=/response/market/stock_model.dart';
 import 'package:dtnd/data/i_data_center_service.dart';
 import 'package:dtnd/data/i_local_storage_service.dart';
 import 'package:dtnd/data/i_network_service.dart';
@@ -11,7 +11,7 @@ import 'package:dtnd/data/implementations/data_center_service.dart';
 import 'package:dtnd/data/implementations/local_storage_service.dart';
 import 'package:dtnd/data/implementations/network_service.dart';
 import 'package:dtnd/data/implementations/user_service.dart';
-import 'package:dtnd/generated/l10n.dart';
+import 'package:dtnd/l10n/generated/l10n.dart';
 import 'package:dtnd/ui/screen/asset/asset_controller.dart';
 import 'package:dtnd/ui/screen/asset/component/account_asset_overview_widget.dart';
 import 'package:dtnd/ui/screen/asset/component/asset_distribution_chart.dart';
@@ -32,8 +32,8 @@ import 'package:dtnd/ui/widget/dropdown/custom_dropdown_button.dart';
 import 'package:dtnd/ui/widget/icon/icon_button.dart';
 import 'package:dtnd/ui/widget/my_appbar.dart';
 import 'package:dtnd/ui/widget/overlay/login_first_dialog.dart';
+import 'package:dtnd/utilities/functional/invest_effect.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 
@@ -85,7 +85,7 @@ class AssetScreen extends StatefulWidget {
 }
 
 class _AssetScreenState extends State<AssetScreen>
-    with SingleTickerProviderStateMixin {
+    with SingleTickerProviderStateMixin, InvestEffect {
   final IUserService userService = UserService();
   final IDataCenterService dataCenterService = DataCenterService();
   final INetworkService networkService = NetworkService();
@@ -338,15 +338,19 @@ class _AssetScreenState extends State<AssetScreen>
                                 child: Ink(
                                   padding: const EdgeInsets.all(8),
                                   decoration: BoxDecoration(
-                                    color: themeMode.isLight ? AppColors.primary_03 : AppColors.bg_2,
-                                    borderRadius:
-                                        const BorderRadius.all(Radius.circular(6)),
+                                    color: themeMode.isLight
+                                        ? AppColors.primary_03
+                                        : AppColors.bg_2,
+                                    borderRadius: const BorderRadius.all(
+                                        Radius.circular(6)),
                                   ),
                                   child: SizedBox.square(
                                     dimension: 20,
                                     child: Image.asset(
                                       AppImages.asset_menu_icon,
-                                      color: themeMode.isLight ? null : AppColors.bg_1 ,
+                                      color: themeMode.isLight
+                                          ? null
+                                          : AppColors.bg_1,
                                     ),
                                   ),
                                 ),
@@ -387,32 +391,32 @@ class _AssetScreenState extends State<AssetScreen>
         }
         return child;
       }),
-      floatingActionButton: Padding(
-        padding: const EdgeInsets.only(bottom: 60),
-        child: SizedBox.square(
-          dimension: 40,
-          child: Material(
-            borderRadius: const BorderRadius.all(Radius.circular(6)),
-            child: InkWell(
-              borderRadius: const BorderRadius.all(Radius.circular(6)),
-              onTap: _onFABTapped,
-              child: Ink(
-                padding: const EdgeInsets.all(8),
-                decoration: const BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(6)),
-                  color: AppColors.primary_01,
-                ),
-                child: SvgPicture.asset(
-                  AppImages.arrange_circle,
-                ),
-                // child: SvgPicture.asset(
-                //   AppImages.arrange_circle,
-                // ),
-              ),
-            ),
-          ),
-        ),
-      ),
+      // floatingActionButton: Padding(
+      //   padding: const EdgeInsets.only(bottom: 60),
+      //   child: SizedBox.square(
+      //     dimension: 40,
+      //     child: Material(
+      //       borderRadius: const BorderRadius.all(Radius.circular(6)),
+      //       child: InkWell(
+      //         borderRadius: const BorderRadius.all(Radius.circular(6)),
+      //         onTap: _onFABTapped,
+      //         child: Ink(
+      //           padding: const EdgeInsets.all(8),
+      //           decoration: const BoxDecoration(
+      //             borderRadius: BorderRadius.all(Radius.circular(6)),
+      //             color: AppColors.primary_01,
+      //           ),
+      //           child: SvgPicture.asset(
+      //             AppImages.arrange_circle,
+      //           ),
+      //           // child: SvgPicture.asset(
+      //           //   AppImages.arrange_circle,
+      //           // ),
+      //         ),
+      //       ),
+      //     ),
+      //   ),
+      // ),
       // floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );
   }

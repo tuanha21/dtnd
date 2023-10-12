@@ -1,7 +1,7 @@
 import 'package:dtnd/config/service/app_services.dart';
 import 'package:dtnd/data/i_user_service.dart';
 import 'package:dtnd/data/implementations/user_service.dart';
-import 'package:dtnd/generated/l10n.dart';
+import 'package:dtnd/l10n/generated/l10n.dart';
 import 'package:dtnd/ui/screen/login/login_screen.dart';
 import 'package:dtnd/ui/screen/virtual_assistant/va_util.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
@@ -103,7 +103,9 @@ class _HomeQuickAccessState extends State<HomeQuickAccess> {
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
             decoration: BoxDecoration(
               borderRadius: const BorderRadius.all(Radius.circular(12)),
-              color: themeMode.isLight ? AppColors.neutral_07 : AppColors.text_black_1,
+              color: themeMode.isLight
+                  ? AppColors.neutral_07
+                  : AppColors.text_black_1,
             ),
             child: widget.hasUser
                 ? Column(
@@ -177,7 +179,7 @@ class _HomeQuickAccessState extends State<HomeQuickAccess> {
                               const SizedBox(
                                 height: 4,
                               ),
-                               Text(
+                              Text(
                                 S.of(context).connect_with_ifis,
                                 maxLines: 2,
                               )

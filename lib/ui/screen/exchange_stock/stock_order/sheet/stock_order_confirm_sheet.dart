@@ -5,7 +5,7 @@ import 'package:dtnd/data/i_exchange_service.dart';
 import 'package:dtnd/data/i_user_service.dart';
 import 'package:dtnd/data/implementations/exchange_service.dart';
 import 'package:dtnd/data/implementations/user_service.dart';
-import 'package:dtnd/generated/l10n.dart';
+import 'package:dtnd/l10n/generated/l10n.dart';
 import 'package:dtnd/ui/screen/exchange_stock/stock_order/business/stock_order_flow.dart';
 import 'package:dtnd/ui/screen/exchange_stock/stock_order/data/order_data.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
@@ -126,7 +126,9 @@ class _StockOrderConfirmSheetState extends State<StockOrderConfirmSheet>
               margin: const EdgeInsets.only(bottom: 10),
               decoration: BoxDecoration(
                 borderRadius: const BorderRadius.all(Radius.circular(12)),
-                color: themeMode.isLight ? AppColors.neutral_06 : AppColors.neutral_01,
+                color: themeMode.isLight
+                    ? AppColors.neutral_06
+                    : AppColors.neutral_01,
               ),
               child: Column(
                 children: [
@@ -222,7 +224,9 @@ class _StockOrderConfirmSheetState extends State<StockOrderConfirmSheet>
                             widget.orderData.copyWithPin(pinController.text));
                       } on int catch (rc) {
                         response = null;
-                        Navigator.of(context).pop(OrderFailCmd(rc));
+                        if (mounted) {
+                          Navigator.of(context).pop(OrderFailCmd(rc));
+                        }
                         return;
                       }
                       if (!mounted) return;

@@ -1,7 +1,7 @@
 import 'package:dtnd/=models=/local/i_local_catalog.dart';
 import 'package:dtnd/=models=/local/saved_catalog.dart';
 import 'package:dtnd/config/service/app_services.dart';
-import 'package:dtnd/generated/l10n.dart';
+import 'package:dtnd/l10n/generated/l10n.dart';
 import 'package:dtnd/ui/screen/market/logic/cmd.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
@@ -124,7 +124,9 @@ class _RowButton extends StatelessWidget {
     final themeMode = AppService.instance.themeMode.value;
 
     return Material(
-      color: themeMode.isLight ? Colors.transparent : AppColors.bg_share_inside_nav,
+      color: themeMode.isLight
+          ? Colors.transparent
+          : AppColors.bg_share_inside_nav,
       borderRadius: const BorderRadius.all(Radius.circular(8)),
       child: InkWell(
         onTap: onTap,

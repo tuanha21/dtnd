@@ -1,9 +1,9 @@
 import 'package:dtnd/=models=/response/account/portfolio_status_model.dart';
-import 'package:dtnd/=models=/response/stock_model.dart';
+import 'package:dtnd/=models=/response/market/stock_model.dart';
 import 'package:dtnd/data/i_data_center_service.dart';
 import 'package:dtnd/data/implementations/data_center_service.dart';
 import 'package:dtnd/data/implementations/user_service.dart';
-import 'package:dtnd/generated/l10n.dart';
+import 'package:dtnd/l10n/generated/l10n.dart';
 import 'package:dtnd/ui/screen/asset/component/asset_grid_element.dart';
 import 'package:dtnd/ui/screen/asset/screen/asset_stock_detail/asset_stock_detail_controller.dart';
 import 'package:dtnd/ui/screen/asset/screen/asset_stock_detail/component/asset_stock_detail_appbar.dart';
@@ -152,7 +152,9 @@ class _AssetStockDetailScreenState extends State<AssetStockDetailScreen>
               padding: const EdgeInsets.all(8),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.all(Radius.circular(12)),
-                color: themeMode.isLight ? AppColors.neutral_06 : AppColors.bg_share_inside_nav,
+                color: themeMode.isLight
+                    ? AppColors.neutral_06
+                    : AppColors.bg_share_inside_nav,
               ),
               child: Row(
                 children: [
@@ -172,8 +174,9 @@ class _AssetStockDetailScreenState extends State<AssetStockDetailScreen>
                               const SizedBox(height: 2),
                               Expanded(
                                 child: AssetGridElement(element: {
-                                  S.of(context).bonus_sh : NumUtils.formatInteger(
-                                      widget.porfolioStock.rightVol)
+                                  S.of(context).bonus_sh:
+                                      NumUtils.formatInteger(
+                                          widget.porfolioStock.rightVol)
                                 }),
                               ),
                             ],
@@ -233,7 +236,9 @@ class _AssetStockDetailScreenState extends State<AssetStockDetailScreen>
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.all(Radius.circular(12)),
-                    color: themeMode.isLight ? Colors.white : AppColors.bg_share_inside_nav),
+                    color: themeMode.isLight
+                        ? Colors.white
+                        : AppColors.bg_share_inside_nav),
                 child: Column(
                   children: [
                     TabBar(
@@ -242,7 +247,7 @@ class _AssetStockDetailScreenState extends State<AssetStockDetailScreen>
                       labelStyle: textTheme.titleSmall,
                       labelPadding: const EdgeInsets.symmetric(
                           horizontal: 0, vertical: 4),
-                      tabs:  [
+                      tabs: [
                         Text(
                           S.of(context).Open_command,
                         ),

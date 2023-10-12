@@ -1,7 +1,7 @@
 import 'dart:math';
 import 'dart:convert';
 import 'package:crypto/crypto.dart';
-import 'package:dtnd/generated/l10n.dart';
+import 'package:dtnd/l10n/generated/l10n.dart';
 import 'package:flutter/cupertino.dart';
 
 import 'package:intl/intl.dart';

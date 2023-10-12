@@ -15,7 +15,7 @@ import 'package:dtnd/ui/widget/empty_list_widget.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../../config/service/app_services.dart';
-import '../../../../../generated/l10n.dart';
+import '../../../../../l10n/generated/l10n.dart';
 
 class IndayOrderTab extends StatefulWidget {
   const IndayOrderTab({super.key});
@@ -150,7 +150,9 @@ class _IndayOrderTabState extends State<IndayOrderTab> {
                     return Container(
                       padding: const EdgeInsets.all(16),
                       decoration: BoxDecoration(
-                          color: themeMode.isLight ? Colors.white : AppColors.text_black_1,
+                          color: themeMode.isLight
+                              ? Colors.white
+                              : AppColors.text_black_1,
                           borderRadius: BorderRadius.all(Radius.circular(12))),
                       child: ListView.builder(
                           shrinkWrap: true,

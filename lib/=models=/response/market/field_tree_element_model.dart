@@ -1,4 +1,4 @@
-import 'package:dtnd/=models=/response/stock.dart';
+import 'package:dtnd/=models=/response/market/stock.dart';
 import 'package:dtnd/data/i_data_center_service.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:flutter/material.dart';
@@ -7,8 +7,6 @@ class FieldTreeModel {
   late final String iNDUSTRY;
   late final num tOTALKLGD;
   final List<FieldTreeElementModel> stocks = [];
-
-
 
   FieldTreeModel(
       {required this.iNDUSTRY,

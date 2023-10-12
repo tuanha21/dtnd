@@ -2,7 +2,7 @@
 
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:dtnd/=models=/response/deep_model.dart';
-import 'package:dtnd/generated/l10n.dart';
+import 'package:dtnd/l10n/generated/l10n.dart';
 import 'package:flutter/material.dart';
 
 class DeepMarketChart extends StatefulWidget {

@@ -6,7 +6,7 @@ import 'package:dtnd/ui/screen/community/widget/notification_widget/widget/volat
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import '../../../../../generated/l10n.dart';
+import '../../../../../l10n/generated/l10n.dart';
 import '../../../../theme/app_image.dart';
 
 class NotificationScreen extends StatefulWidget {
@@ -118,7 +118,6 @@ class _NotificationScreenState extends State<NotificationScreen>
   }
 
   void _showConfirmationDialog() {
-
     showDialog(
       barrierDismissible: false,
       context: context,
@@ -155,7 +154,9 @@ class _NotificationScreenState extends State<NotificationScreen>
                 const SizedBox(height: 20),
                 Text(S.of(context).mark_as_read),
                 const SizedBox(height: 10),
-                Text(S.of(context).all_notifications_in_the_notifications_section),
+                Text(S
+                    .of(context)
+                    .all_notifications_in_the_notifications_section),
                 const SizedBox(height: 20),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,

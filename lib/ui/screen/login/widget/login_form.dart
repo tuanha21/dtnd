@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:dtnd/=models=/response/user_token.dart';
 import 'package:dtnd/=models=/sign_up_success_data_model.dart';
-import 'package:dtnd/generated/l10n.dart';
+import 'package:dtnd/l10n/generated/l10n.dart';
 import 'package:dtnd/ui/screen/forgot_password/forgot_password.dart';
 import 'package:dtnd/ui/screen/login/login_controller.dart';
 import 'package:dtnd/ui/screen/sign_up/sign_up_screen.dart';

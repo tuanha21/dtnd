@@ -1,9 +1,9 @@
 import 'package:dtnd/=models=/algo/match_type.dart';
 import 'package:dtnd/=models=/algo/org_filter.dart';
 import 'package:dtnd/=models=/index.dart';
-import 'package:dtnd/=models=/response/indContrib.dart';
-import 'package:dtnd/=models=/response/index_board.dart';
-import 'package:dtnd/=models=/response/liquidity_model.dart';
+import 'package:dtnd/=models=/response/market/ind_contrib.dart';
+import 'package:dtnd/=models=/response/market/index_board.dart';
+import 'package:dtnd/=models=/response/market/liquidity_model.dart';
 import 'package:dtnd/data/i_data_center_service.dart';
 import 'package:dtnd/data/implementations/data_center_service.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
@@ -13,7 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../../../../../config/service/app_services.dart';
-import '../../../../../generated/l10n.dart';
+import '../../../../../l10n/generated/l10n.dart';
 import '../../../../theme/app_color.dart';
 import '../components/liquidity_chart.dart';
 import '../components/money_chart.dart';
@@ -83,11 +83,15 @@ class _MarketIndustryTabState extends State<MarketIndustryTab>
                   onTap: () => showDialog<String>(
                     context: context,
                     builder: (BuildContext ctx) => Dialog(
-                      backgroundColor: themeMode.isLight ? AppColors.light_bg : AppColors.neutral_01,
+                      backgroundColor: themeMode.isLight
+                          ? AppColors.light_bg
+                          : AppColors.neutral_01,
                       child: Container(
                         padding: const EdgeInsets.all(16),
                         decoration: BoxDecoration(
-                            color: themeMode.isLight ? AppColors.light_bg : AppColors.neutral_01,
+                            color: themeMode.isLight
+                                ? AppColors.light_bg
+                                : AppColors.neutral_01,
                             borderRadius: BorderRadius.circular(8)),
                         width: MediaQuery.of(ctx).size.width,
                         child: Text(
@@ -176,7 +180,8 @@ class _BottomSheetState extends State<BottomSheet> {
     return SafeArea(
       child: Container(
         decoration: BoxDecoration(
-            color: themeMode.isLight ? AppColors.light_bg : AppColors.neutral_01,
+            color:
+                themeMode.isLight ? AppColors.light_bg : AppColors.neutral_01,
             borderRadius: const BorderRadius.only(
                 topRight: Radius.circular(24), topLeft: Radius.circular(24))),
         child: SingleChildScrollView(
@@ -198,11 +203,16 @@ class _BottomSheetState extends State<BottomSheet> {
                           ?.copyWith(fontWeight: FontWeight.w700),
                     ),
                     GestureDetector(
-                        onTap: () {
-                          Navigator.pop(context);
-                        },
-                        child:   Icon(Icons.clear,
-                            color: themeMode.isLight ? AppColors.neutral_01 : AppColors.neutral_05,  ),),
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                      child: Icon(
+                        Icons.clear,
+                        color: themeMode.isLight
+                            ? AppColors.neutral_01
+                            : AppColors.neutral_05,
+                      ),
+                    ),
                   ],
                 ),
               ),

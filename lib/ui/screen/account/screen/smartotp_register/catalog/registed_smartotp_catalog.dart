@@ -1,4 +1,4 @@
-import 'package:dtnd/generated/l10n.dart';
+import 'package:dtnd/l10n/generated/l10n.dart';
 import 'package:dtnd/ui/screen/account/icon/account_icon.dart';
 import 'package:flutter/material.dart';
 

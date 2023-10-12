@@ -1,6 +1,5 @@
+import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:flutter/material.dart';
-
-import '../../ui/theme/app_color.dart';
 
 class StockIndustry {
   String? sTOCKCODE;
@@ -39,23 +38,23 @@ class StockIndustry {
 
   StockIndustry(
       {this.sTOCKCODE,
-        this.vHTT,
-        this.sTOCKNAME,
-        this.iNDUSTRY,
-        this.sECONDINDUSTRY,
-        this.dEVIEND,
-        this.gTGD,
-        this.pERCENTCHANGE,
-        this.uPDATEDTIME,
-        this.cHANGE,
-        this.cOLOR,
-        this.kLGD,
-        this.lASTPRICE,
-        this.iNTERESTED,
-        this.cHARTNOTIME,
-        this.cATID,
-        this.pERCENTRANGEPRICE,
-        this.tOP30});
+      this.vHTT,
+      this.sTOCKNAME,
+      this.iNDUSTRY,
+      this.sECONDINDUSTRY,
+      this.dEVIEND,
+      this.gTGD,
+      this.pERCENTCHANGE,
+      this.uPDATEDTIME,
+      this.cHANGE,
+      this.cOLOR,
+      this.kLGD,
+      this.lASTPRICE,
+      this.iNTERESTED,
+      this.cHARTNOTIME,
+      this.cATID,
+      this.pERCENTRANGEPRICE,
+      this.tOP30});
 
   StockIndustry.fromJson(Map<String, dynamic> json) {
     sTOCKCODE = json['STOCK_CODE'];

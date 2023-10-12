@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../../../=models=/response/stock.dart';
+import '../../../../../=models=/response/market/stock.dart';
 import '../../../../../config/service/app_services.dart';
 import '../../../../theme/app_color.dart';
 import '../../../../theme/app_textstyle.dart';
@@ -14,9 +14,9 @@ class StockWidgetChart extends StatefulWidget {
 
   const StockWidgetChart(
       {Key? key,
-        required this.stockModel,
-        this.onChanged,
-        this.initSelect = false})
+      required this.stockModel,
+      this.onChanged,
+      this.initSelect = false})
       : super(key: key);
 
   @override
@@ -30,7 +30,9 @@ class _StockWidgetChartState extends State<StockWidgetChart> {
 
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 22.5),
-      decoration: BoxDecoration(color: themeMode.isLight ? AppColors.light_bg : AppColors.text_black_1),
+      decoration: BoxDecoration(
+          color:
+              themeMode.isLight ? AppColors.light_bg : AppColors.text_black_1),
       child: Row(
         children: [
           StockIcon(
@@ -44,10 +46,9 @@ class _StockWidgetChartState extends State<StockWidgetChart> {
               children: [
                 Text(
                   widget.stockModel.stockCode,
-                  style: Theme.of(context)
-                      .textTheme
-                      .titleSmall!
-                      .copyWith(fontWeight: FontWeight.w600,color: themeMode.isLight ? null : AppColors.neutral_07),
+                  style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                      fontWeight: FontWeight.w600,
+                      color: themeMode.isLight ? null : AppColors.neutral_07),
                 ),
                 Text(
                   widget.stockModel.nameShort ?? "",

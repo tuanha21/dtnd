@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../../../../=models=/response/sec_event.dart';
+import '../../../../=models=/response/market/sec_event.dart';
 import '../../../../config/service/app_services.dart';
 import '../../../../data/i_data_center_service.dart';
 import '../../../../data/implementations/data_center_service.dart';
-import '../../../../generated/l10n.dart';
+import '../../../../l10n/generated/l10n.dart';
 import '../../../theme/app_color.dart';
 import '../../../theme/app_textstyle.dart';
 
@@ -54,7 +54,9 @@ class _StockEventState extends State<StockEvent> {
           return Container(
             decoration: BoxDecoration(
               borderRadius: const BorderRadius.all(Radius.circular(12)),
-              color: themeMode.isLight ? AppColors.neutral_07 : AppColors.bg_share_inside_nav,
+              color: themeMode.isLight
+                  ? AppColors.neutral_07
+                  : AppColors.bg_share_inside_nav,
             ),
             child: ListView.separated(
                 shrinkWrap: true,
@@ -68,7 +70,9 @@ class _StockEventState extends State<StockEvent> {
                 separatorBuilder: (context, index) {
                   return Divider(
                     thickness: 2,
-                    color: themeMode.isLight ? AppColors.neutral_06 : AppColors.neutral_01,
+                    color: themeMode.isLight
+                        ? AppColors.neutral_06
+                        : AppColors.neutral_01,
                     height: 16,
                   );
                 },
@@ -156,7 +160,9 @@ class EventCard extends StatelessWidget {
                       event.title ?? "Title",
                       maxLines: 2,
                       textAlign: TextAlign.left,
-                      style: Theme.of(context).textTheme.titleSmall?.copyWith(color: themeMode.isLight ? null : AppColors.neutral_07),
+                      style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                          color:
+                              themeMode.isLight ? null : AppColors.neutral_07),
                     ),
                   ),
                   Row(

@@ -11,7 +11,7 @@ import 'package:dtnd/ui/widget/overlay/custom_dialog.dart';
 import 'package:dtnd/ui/widget/overlay/login_first_dialog.dart';
 import 'package:flutter/material.dart';
 
-import '../generated/l10n.dart';
+import '../l10n/generated/l10n.dart';
 
 class AccountUtil {
   static Type getAccountType(String accountCode) {

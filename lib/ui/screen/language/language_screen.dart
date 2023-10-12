@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../config/service/app_services.dart';
-import '../../../generated/l10n.dart';
+import '../../../l10n/generated/l10n.dart';
 import '../../theme/app_color.dart';
 
 class LanguagesScreen extends StatefulWidget {
@@ -77,7 +77,6 @@ class _LanguagesScreenState extends State<LanguagesScreen> {
     String languageCode,
   ) {
     final isSelected = value == groupValue;
-    final ThemeData themeData = Theme.of(context);
 
     return InkWell(
       onTap: () async {
@@ -111,7 +110,7 @@ class _LanguagesScreenState extends State<LanguagesScreen> {
             Radio(
               value: value,
               groupValue: groupValue,
-              onChanged: (value) async {
+              onChanged: (Color? value) async {
                 await appService.switchLanguage();
                 _setBackgroundColor(value);
               },

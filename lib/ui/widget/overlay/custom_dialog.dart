@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../../../config/service/app_services.dart';
-import '../../../generated/l10n.dart';
+import '../../../l10n/generated/l10n.dart';
 import '../../theme/app_color.dart';
 import '../../theme/app_image.dart';
 import '../../theme/app_textstyle.dart';

@@ -1,12 +1,12 @@
-import 'dart:async';
 import 'dart:io';
 
 import 'package:dtnd/config/service/app_services.dart';
 import 'package:dtnd/config/service/environment.dart';
 import 'package:dtnd/data/implementations/data_center_service.dart';
+import 'package:dtnd/data/implementations/firebase_service.dart';
 import 'package:dtnd/data/implementations/local_storage_service.dart';
 import 'package:dtnd/data/implementations/network_service.dart';
-import 'package:dtnd/generated/l10n.dart';
+import 'package:dtnd/l10n/generated/l10n.dart';
 import 'package:dtnd/ui/screen/ekyc/page/camera_preview_card.dart';
 import 'package:dtnd/ui/screen/home_base/home_base.dart';
 import 'package:dtnd/ui/screen/loading/loading_screen.dart';
@@ -14,6 +14,7 @@ import 'package:dtnd/ui/screen/login/login_screen.dart';
 import 'package:dtnd/ui/screen/sign_up/page/success_sign_up_page.dart';
 import 'package:dtnd/ui/screen/sign_up/sign_up_screen.dart';
 import 'package:dtnd/ui/theme/app_theme.dart';
+import 'package:dtnd/utilities/logger.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -35,16 +36,22 @@ class MyHttpOverrides extends HttpOverrides {
   }
 }
 
-Future<void> main() async {
+void main() async {
   // load .env file
   await dotenv.load(fileName: ".env");
 
   WidgetsFlutterBinding.ensureInitialized();
 
   final Environment appEnvironment = E.fromString(dotenv.env['ENVIRONMENT']);
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+  try {
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
+    await FirebaseService.init();
+  } catch (e) {
+    logger.e(e);
+  }
+
   HttpOverrides.global = MyHttpOverrides();
 
   await LocalStorageService().init();
@@ -104,7 +111,7 @@ class _MyAppState extends State<MyApp> {
         name: "otp",
         path: '/otp/:phone',
         builder: (BuildContext context, GoRouterState state) {
-          return OtpPage(phone: state.params['phone']!);
+          return OtpPage(phone: state.pathParameters['phone']!);
         },
       ),
       GoRoute(
@@ -129,6 +136,12 @@ class _MyAppState extends State<MyApp> {
       ),
     ],
   );
+
+  @override
+  void initState() {
+    FirebaseService.setupFirebaseOnApp();
+    super.initState();
+  }
 
   // This widget is the root of your application.
   @override

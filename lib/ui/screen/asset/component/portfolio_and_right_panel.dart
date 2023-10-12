@@ -1,6 +1,6 @@
 import 'package:dtnd/=models=/response/account/i_account.dart';
 import 'package:dtnd/data/implementations/network_service.dart';
-import 'package:dtnd/generated/l10n.dart';
+import 'package:dtnd/l10n/generated/l10n.dart';
 import 'package:dtnd/ui/screen/asset/component/investment_catalog_widget.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_textstyle.dart';
@@ -62,7 +62,8 @@ class _PortfolioAndRightPanelState extends State<PortfolioAndRightPanel>
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
       margin: const EdgeInsets.symmetric(horizontal: 16),
       decoration: BoxDecoration(
-        color: themeMode.isLight ? AppColors.neutral_07 : AppColors.text_black_1,
+        color:
+            themeMode.isLight ? AppColors.neutral_07 : AppColors.text_black_1,
         borderRadius: const BorderRadius.all(Radius.circular(8)),
       ),
       child: Column(
@@ -82,7 +83,9 @@ class _PortfolioAndRightPanelState extends State<PortfolioAndRightPanel>
             Container(
               height: 56,
               decoration: BoxDecoration(
-                color: themeMode.isLight ? AppColors.neutral_07 : AppColors.text_black_1,
+                color: themeMode.isLight
+                    ? AppColors.neutral_07
+                    : AppColors.text_black_1,
                 borderRadius: const BorderRadius.all(Radius.circular(8)),
               ),
               child: Obx(() {

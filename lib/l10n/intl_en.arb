@@ -647,5 +647,16 @@
   "vietnamese": "Vietnamese",
   "english": "English",
 
+  "skip": "Skip",
+  "welcome_overlay_qoute1": "Welcome to IFIS application.",
+  "welcome_overlay_qoute2": "Let us introduce some functional facilities to you.",
+  "tour_guide1": "To make a stock order, click here, but you must first log in to your account",
+  "tour_guide2": "Bảng chứa các chỉ số cơ bản của một mã chứng khoán",
+  "tour_guide3": "Sức mua tài khoản của bạn và số lượng tối đa mã chứng khoán hiện tại bạn có thể mua/bán",
+  "tour_guide4": "Các loại giá có bạn có thể đặt cho mã hiện tại",
+  "tour_guide5": "Tỷ lệ ký quỹ cho lệnh mua mã chứng khoán hiện tại. Click để chọn",
+  "tour_guide6": "Sửa giá và khối lượng theo ý của bạn",
+  "tour_guide7": "Cuối cùng, chọn đặt lệnh mua hoặc lệnh bán",
+
   "end" : "End"
 }

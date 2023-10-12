@@ -1,4 +1,4 @@
-import 'package:dtnd/=models=/response/news_model.dart';
+import 'package:dtnd/=models=/response/market/news_model.dart';
 import 'package:dtnd/data/i_network_service.dart';
 import 'package:dtnd/data/implementations/network_service.dart';
 import 'package:dtnd/ui/theme/app_textstyle.dart';

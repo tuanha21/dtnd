@@ -1,4 +1,4 @@
-import 'package:dtnd/=models=/response/stock_model.dart';
+import 'package:dtnd/=models=/response/market/stock_model.dart';
 import 'package:dtnd/data/i_data_center_service.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:flutter/material.dart';
@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import '../../../../=models=/response/subsidiaries_model.dart';
 import '../../../../config/service/app_services.dart';
 import '../../../../data/implementations/data_center_service.dart';
-import '../../../../generated/l10n.dart';
+import '../../../../l10n/generated/l10n.dart';
 
 class SubsidiariesInfoTab extends StatefulWidget {
   const SubsidiariesInfoTab({
@@ -79,7 +79,9 @@ class _SubsidiariesInfoTabState extends State<SubsidiariesInfoTab> {
                             vertical: 10, horizontal: 16),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.all(Radius.circular(12)),
-                          color: themeMode.isLight ? AppColors.neutral_06 : AppColors.text_black_1,
+                          color: themeMode.isLight
+                              ? AppColors.neutral_06
+                              : AppColors.text_black_1,
                         ),
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -171,7 +173,9 @@ class _SubsidiariesInfoTabState extends State<SubsidiariesInfoTab> {
                             vertical: 10, horizontal: 16),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.all(Radius.circular(12)),
-                          color: themeMode.isLight ? AppColors.neutral_06 : AppColors.text_black_1,
+                          color: themeMode.isLight
+                              ? AppColors.neutral_06
+                              : AppColors.text_black_1,
                         ),
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -263,7 +267,9 @@ class _SubsidiariesInfoTabState extends State<SubsidiariesInfoTab> {
                             vertical: 10, horizontal: 16),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.all(Radius.circular(12)),
-                          color: themeMode.isLight ? AppColors.neutral_06 : AppColors.text_black_1,
+                          color: themeMode.isLight
+                              ? AppColors.neutral_06
+                              : AppColors.text_black_1,
                         ),
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.start,

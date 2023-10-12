@@ -1,4 +1,4 @@
-import 'package:dtnd/generated/l10n.dart';
+import 'package:dtnd/l10n/generated/l10n.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:flutter/material.dart';
@@ -11,7 +11,6 @@ class AccumulatorHeader extends StatelessWidget {
   AccumulatorHeader({super.key});
 
   final AccumulationController controller = AccumulationController();
-
 
   @override
   Widget build(BuildContext context) {

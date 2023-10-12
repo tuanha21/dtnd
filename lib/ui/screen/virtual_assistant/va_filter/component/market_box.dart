@@ -3,7 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
 import '../../../../../=models=/algo/filter.dart';
-import '../../../../../generated/l10n.dart';
+import '../../../../../l10n/generated/l10n.dart';
 import '../../../../theme/app_color.dart';
 import '../../../../theme/app_image.dart';
 import '../../../../widget/expanded_widget.dart';
@@ -13,7 +13,7 @@ class MarketBox extends StatefulWidget {
   final Filter? filter;
   final OpTapCheckBox onChanged;
 
-  const MarketBox({Key? key,  this.filter, required this.onChanged})
+  const MarketBox({Key? key, this.filter, required this.onChanged})
       : super(key: key);
 
   @override
@@ -62,7 +62,8 @@ class _MarketBoxState extends State<MarketBox> {
             },
             child: Row(
               children: [
-                Text(S.of(context).floor, style: Theme.of(context).textTheme.titleSmall),
+                Text(S.of(context).floor,
+                    style: Theme.of(context).textTheme.titleSmall),
                 Visibility(
                     visible: count > 0,
                     child: Text(

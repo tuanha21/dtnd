@@ -1,15 +1,15 @@
 import 'dart:math' as math;
 
 import 'package:charts_flutter/flutter.dart' as charts;
-import 'package:dtnd/=models=/response/stock_model.dart';
+import 'package:dtnd/=models=/response/market/stock_model.dart';
 import 'package:dtnd/data/i_data_center_service.dart';
 import 'package:dtnd/data/implementations/data_center_service.dart';
-import 'package:dtnd/generated/l10n.dart';
+import 'package:dtnd/l10n/generated/l10n.dart';
 import 'package:dtnd/ui/screen/stock_detail/widget/component/benefit_chart.dart';
 import 'package:dtnd/ui/screen/stock_detail/widget/financial_index.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../=models=/response/stock_financial_index_model.dart';
+import '../../../../=models=/response/market/stock_financial_index_model.dart';
 import '../../../../utilities/time_utils.dart';
 import '../../../theme/app_color.dart';
 

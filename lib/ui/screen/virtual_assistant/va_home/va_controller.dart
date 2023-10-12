@@ -1,6 +1,6 @@
 import 'package:dtnd/=models=/local/va_portfolio_model.dart';
-import 'package:dtnd/=models=/response/stock.dart';
-import 'package:dtnd/=models=/response/stock_model.dart';
+import 'package:dtnd/=models=/response/market/stock.dart';
+import 'package:dtnd/=models=/response/market/stock_model.dart';
 import 'package:dtnd/data/i_data_center_service.dart';
 import 'package:dtnd/data/i_user_service.dart';
 import 'package:dtnd/data/implementations/data_center_service.dart';

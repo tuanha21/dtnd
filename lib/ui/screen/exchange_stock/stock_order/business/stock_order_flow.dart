@@ -1,5 +1,5 @@
 import 'package:dtnd/=models=/response/order_model/base_order_model.dart';
-import 'package:dtnd/=models=/response/stock_model.dart';
+import 'package:dtnd/=models=/response/market/stock_model.dart';
 import 'package:dtnd/=models=/ui_model/dialog.dart';
 import 'package:dtnd/=models=/ui_model/overlay.dart';
 import 'package:dtnd/=models=/ui_model/sheet.dart';

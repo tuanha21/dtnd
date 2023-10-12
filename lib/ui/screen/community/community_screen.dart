@@ -5,7 +5,7 @@ import 'package:dtnd/ui/screen/community/premium_tab.dart';
 import 'package:dtnd/ui/screen/community/widget/notification_widget/notification_page.dart';
 import 'package:flutter/material.dart';
 
-import '../../../generated/l10n.dart';
+import '../../../l10n/generated/l10n.dart';
 import '../../theme/app_color.dart';
 import 'community_tab.dart';
 import 'copy_trade_tab.dart';

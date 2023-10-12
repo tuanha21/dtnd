@@ -1,12 +1,10 @@
-import 'package:dtnd/=models=/response/stock_model.dart';
+import 'package:dtnd/=models=/response/market/stock_model.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:dtnd/ui/theme/app_textstyle.dart';
 import 'package:dtnd/ui/widget/appbar/i_appbar.dart';
 import 'package:dtnd/ui/widget/svg_icon_button.dart';
 import 'package:flutter/material.dart';
-
-import '../../../../../../config/service/app_services.dart';
 
 class AssetStockDetailAppbar extends IAppbar {
   const AssetStockDetailAppbar({

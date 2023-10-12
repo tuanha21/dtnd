@@ -4,7 +4,7 @@ import 'package:dtnd/data/i_exchange_service.dart';
 import 'package:dtnd/data/i_user_service.dart';
 import 'package:dtnd/data/implementations/exchange_service.dart';
 import 'package:dtnd/data/implementations/user_service.dart';
-import 'package:dtnd/generated/l10n.dart';
+import 'package:dtnd/l10n/generated/l10n.dart';
 import 'package:dtnd/ui/screen/exchange_stock/order_note/component/order_history_element.dart';
 import 'package:dtnd/ui/screen/exchange_stock/order_note/data/order_filter_data.dart';
 import 'package:dtnd/ui/screen/exchange_stock/order_note/sheet/order_filter_flow.dart';

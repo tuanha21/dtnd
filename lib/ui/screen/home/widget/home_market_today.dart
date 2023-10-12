@@ -2,12 +2,12 @@ import 'dart:ui';
 
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:dtnd/=models=/index.dart';
-import 'package:dtnd/=models=/response/index_detail.dart';
-import 'package:dtnd/=models=/response/index_model.dart';
-import 'package:dtnd/=models=/response/world_index_model.dart';
+import 'package:dtnd/=models=/response/market/index_detail.dart';
+import 'package:dtnd/=models=/response/market/index_model.dart';
+import 'package:dtnd/=models=/response/market/world_index_model.dart';
 import 'package:dtnd/data/implementations/network_service.dart';
-import 'package:dtnd/generated/l10n.dart' as s;
-import 'package:dtnd/generated/l10n.dart';
+import 'package:dtnd/l10n/generated/l10n.dart' as s;
+import 'package:dtnd/l10n/generated/l10n.dart';
 import 'package:dtnd/ui/screen/home/home_controller.dart';
 import 'package:dtnd/ui/screen/home/widget/commodity_item.dart';
 import 'package:dtnd/ui/screen/home/widget/world_index.dart';
@@ -322,7 +322,6 @@ class HomeIndexItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ThemeData themeData = Theme.of(context);
     final themeMode = AppService.instance.themeMode.value;
 
     BoxBorder? border;

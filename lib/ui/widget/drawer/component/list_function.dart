@@ -1,4 +1,4 @@
-import 'package:dtnd/generated/l10n.dart';
+import 'package:dtnd/l10n/generated/l10n.dart';
 import 'package:dtnd/ui/screen/accumulation/accumulation.dart';
 import 'package:dtnd/ui/screen/ekyc/page/ekyc_introduce_page.dart';
 import 'package:dtnd/ui/theme/app_color.dart';

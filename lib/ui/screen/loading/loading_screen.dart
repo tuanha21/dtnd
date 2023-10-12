@@ -1,7 +1,7 @@
 import 'package:dtnd/config/service/app_services.dart';
 import 'package:dtnd/data/i_network_service.dart';
 import 'package:dtnd/data/implementations/network_service.dart';
-import 'package:dtnd/generated/l10n.dart';
+import 'package:dtnd/l10n/generated/l10n.dart';
 import 'package:dtnd/ui/screen/home/home_controller.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
@@ -114,7 +114,9 @@ class _LoadingScreenState extends State<LoadingScreen>
                 width: MediaQuery.of(context).size.width * 0.6,
                 child: Column(
                   children: [
-                    const SizedBox(height: 10,),
+                    const SizedBox(
+                      height: 10,
+                    ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
@@ -126,7 +128,9 @@ class _LoadingScreenState extends State<LoadingScreen>
                               ?.copyWith(
                                   fontWeight: FontWeight.w700,
                                   fontSize: 50,
-                                  color: themeMode.isLight ? AppColors.loading_text : AppColors.linear_01),
+                                  color: themeMode.isLight
+                                      ? AppColors.loading_text
+                                      : AppColors.linear_01),
                         ),
                         SizedBox(
                           height: 85,
@@ -144,13 +148,17 @@ class _LoadingScreenState extends State<LoadingScreen>
                       S.of(context).loading_quote1,
                       style: Theme.of(context).textTheme.labelLarge?.copyWith(
                           fontWeight: FontWeight.w700,
-                          color: themeMode.isLight ? AppColors.loading_text : AppColors.linear_01 ),
+                          color: themeMode.isLight
+                              ? AppColors.loading_text
+                              : AppColors.linear_01),
                     ),
                     Text(
                       S.of(context).loading_quote2,
                       style: Theme.of(context).textTheme.labelLarge?.copyWith(
                           fontWeight: FontWeight.w700,
-                          color: themeMode.isLight ? AppColors.loading_text : AppColors.linear_01),
+                          color: themeMode.isLight
+                              ? AppColors.loading_text
+                              : AppColors.linear_01),
                     )
                   ],
                 ),

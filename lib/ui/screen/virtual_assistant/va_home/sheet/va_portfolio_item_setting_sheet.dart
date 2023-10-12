@@ -1,5 +1,5 @@
 import 'package:dtnd/=models=/local/va_portfolio_model.dart';
-import 'package:dtnd/generated/l10n.dart';
+import 'package:dtnd/l10n/generated/l10n.dart';
 import 'package:dtnd/ui/screen/stock_detail/sheet/list_bot_sheet.dart';
 import 'package:dtnd/ui/screen/virtual_assistant/interval_input_custom2.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
@@ -52,11 +52,11 @@ class _VAPortfolioItemSettingSheetState
             const SizedBox(
               height: 16,
             ),
-              Text(S.of(context).Your_portfolio),
+            Text(S.of(context).Your_portfolio),
             const SizedBox(
               height: 16,
             ),
-              Text(S.of(context).Maximum_risk),
+            Text(S.of(context).Maximum_risk),
             const SizedBox(
               height: 16,
             ),
@@ -86,7 +86,7 @@ class _VAPortfolioItemSettingSheetState
                               horizontal: 16, vertical: 20),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
-                            children:   [
+                            children: [
                               SheetHeader(
                                 title: S.of(context).Bot_list,
                                 implementBackButton: true,

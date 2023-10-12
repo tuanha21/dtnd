@@ -1,10 +1,10 @@
 import 'dart:async';
-import 'package:dtnd/=models=/response/stock_derivative_model.dart';
+import 'package:dtnd/=models=/response/market/stock_derivative_model.dart';
 import 'package:dtnd/data/implementations/data_center_service.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:flutter/material.dart';
 import '../../../../../config/service/app_services.dart';
-import '../../../../../generated/l10n.dart';
+import '../../../../../l10n/generated/l10n.dart';
 import '../widget/derivative_component.dart';
 
 class DerivativeWidget extends StatefulWidget {
@@ -34,7 +34,6 @@ class _DerivativeWidgetState extends State<DerivativeWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final ThemeData themeData = Theme.of(context);
     final ThemeMode themeMode = AppService.instance.themeMode.value;
 
     return Column(
@@ -120,7 +119,9 @@ class _DerivativeWidgetState extends State<DerivativeWidget> {
                         return Divider(
                           thickness: 2,
                           height: 0,
-                          color: themeMode.isLight ? AppColors.neutral_07 : AppColors.text_black_1,
+                          color: themeMode.isLight
+                              ? AppColors.neutral_07
+                              : AppColors.text_black_1,
                         );
                       });
                 } else {

@@ -1,5 +1,5 @@
-import 'package:dtnd/=models=/response/stock_financial_index_model.dart';
-import 'package:dtnd/generated/l10n.dart';
+import 'package:dtnd/=models=/response/market/stock_financial_index_model.dart';
+import 'package:dtnd/l10n/generated/l10n.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/utilities/num_utils.dart';
 import 'package:dtnd/utilities/time_utils.dart';
@@ -90,7 +90,7 @@ class BenefitChartColumn extends StatelessWidget {
     String time = "";
     if (type == "Q") {
       time =
-      'Q${TimeUtilities.getQuarter(stockFinancialIndex.rEPORTDATE)}/${stockFinancialIndex.rEPORTDATE.year}';
+          'Q${TimeUtilities.getQuarter(stockFinancialIndex.rEPORTDATE)}/${stockFinancialIndex.rEPORTDATE.year}';
     }
     if (type == "Y") {
       time = '${stockFinancialIndex.rEPORTDATE.year}';
@@ -107,7 +107,7 @@ class BenefitChartColumn extends StatelessWidget {
         Container(
           height: 100,
           width: 8,
-          decoration:  BoxDecoration(
+          decoration: BoxDecoration(
             borderRadius: BorderRadius.vertical(
                 top: Radius.circular(ratio > 0 ? 8 : 0),
                 bottom: Radius.circular(ratio < 0 ? 8 : 0)),
@@ -146,13 +146,19 @@ class BenefitChartColumn extends StatelessWidget {
         Text(
           NumUtils.getMoneyWithPostfix(
               (stockFinancialIndex.nETINC ?? 0) * 1000000, context),
-          style: TextStyle(color: themeMode.isLight ? AppColors.primary_02 : AppColors.neutral_03),
+          style: TextStyle(
+              color: themeMode.isLight
+                  ? AppColors.primary_02
+                  : AppColors.neutral_03),
         ),
         const SizedBox(height: 10),
         Text(
           NumUtils.getMoneyWithPostfix(
               (stockFinancialIndex.nETREV ?? 0) * 1000000, context),
-          style: TextStyle(color:  themeMode.isLight ? AppColors.neutral_03 : AppColors.neutral_07),
+          style: TextStyle(
+              color: themeMode.isLight
+                  ? AppColors.neutral_03
+                  : AppColors.neutral_07),
         ),
       ],
     );

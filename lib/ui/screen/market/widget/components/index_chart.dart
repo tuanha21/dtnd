@@ -4,12 +4,12 @@ import 'dart:ui';
 import 'package:dtnd/=models=/fake/brief_model.dart';
 import 'package:dtnd/=models=/fake/summary_model.dart';
 import 'package:dtnd/=models=/index.dart';
-import 'package:dtnd/=models=/response/index_model.dart';
-import 'package:dtnd/=models=/response/stock_model.dart';
+import 'package:dtnd/=models=/response/market/index_model.dart';
+import 'package:dtnd/=models=/response/market/stock_model.dart';
 import 'package:dtnd/data/i_data_center_service.dart';
 import 'package:dtnd/data/i_local_storage_service.dart';
 import 'package:dtnd/data/i_user_service.dart';
-import 'package:dtnd/generated/l10n.dart';
+import 'package:dtnd/l10n/generated/l10n.dart';
 import 'package:dtnd/ui/screen/market/market_controller.dart';
 import 'package:dtnd/ui/screen/market/widget/components/index_item.dart';
 import 'package:dtnd/ui/screen/market/widget/page/brief_page.dart';
@@ -21,12 +21,11 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:k_chart/chart_translations.dart';
 
-import 'package:dtnd/=models=/response/index_detail.dart';
+import 'package:dtnd/=models=/response/market/index_detail.dart';
 import 'package:dtnd/data/implementations/data_center_service.dart';
 import 'package:dtnd/data/implementations/local_storage_service.dart';
 import 'package:dtnd/data/implementations/user_service.dart';
 
-import '../page/summary_chart_page.dart';
 import 'market_noti_card.dart';
 
 Future<Map> readJsonFile(String filePath) async {
@@ -189,7 +188,8 @@ class _IndexChartState extends State<IndexChart> {
                   date: summaryModel.regDateTime!,
                   onTap: () => Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (context) =>  SummaryChartPage(data: summaryModel),
+                      builder: (context) =>
+                          SummaryChartPage(data: summaryModel),
                     ),
                   ),
                 ),

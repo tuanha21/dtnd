@@ -1,7 +1,7 @@
 import 'package:dtnd/=models=/local/saved_catalog.dart';
 import 'package:dtnd/data/i_local_storage_service.dart';
 import 'package:dtnd/data/implementations/local_storage_service.dart';
-import 'package:dtnd/generated/l10n.dart';
+import 'package:dtnd/l10n/generated/l10n.dart';
 import 'package:dtnd/ui/screen/virtual_assistant/va_volatolity_warning/volatility_warning_catalog/component/user_warning_catalog_widget.dart';
 import 'package:dtnd/ui/widget/icon/sheet_header.dart';
 import 'package:flutter/material.dart';

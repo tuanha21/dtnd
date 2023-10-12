@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:syncfusion_flutter_treemap/treemap.dart';
 
-import '../../../../../=models=/response/indContrib.dart';
+import '../../../../../=models=/response/market/ind_contrib.dart';
 import '../../../../../config/service/app_services.dart';
-import '../../../../../generated/l10n.dart';
+import '../../../../../l10n/generated/l10n.dart';
 import '../../../../../utilities/num_utils.dart';
 import '../../../../theme/app_color.dart';
 
@@ -46,11 +46,15 @@ class _IndFvalueState extends State<IndFvalue> {
                 onTap: () => showDialog<String>(
                   context: context,
                   builder: (BuildContext context) => Dialog(
-                    backgroundColor: themeMode.isLight ? AppColors.light_bg : AppColors.neutral_01,
+                    backgroundColor: themeMode.isLight
+                        ? AppColors.light_bg
+                        : AppColors.neutral_01,
                     child: Container(
                       padding: const EdgeInsets.all(16),
                       decoration: BoxDecoration(
-                          color: themeMode.isLight ? AppColors.light_bg : AppColors.neutral_01,
+                          color: themeMode.isLight
+                              ? AppColors.light_bg
+                              : AppColors.neutral_01,
                           borderRadius: BorderRadius.circular(8)),
                       width: MediaQuery.of(context).size.width,
                       child: Text(
@@ -87,7 +91,9 @@ class _IndFvalueState extends State<IndFvalue> {
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: Container(
                       height: 200,
-                      color: themeMode.isLight ? AppColors.bg_1 : AppColors.neutral_01,
+                      color: themeMode.isLight
+                          ? AppColors.bg_1
+                          : AppColors.neutral_01,
                       child: SfTreemap(
                         dataCount: data.length,
                         weightValueMapper: (int index) {
@@ -102,8 +108,10 @@ class _IndFvalueState extends State<IndFvalue> {
                                 (BuildContext context, TreemapTile tile) {
                               return Container(
                                 padding: const EdgeInsets.all(2.5),
-                                decoration:
-                                      BoxDecoration(color: themeMode.isLight ? AppColors.bg_1 : AppColors.neutral_01),
+                                decoration: BoxDecoration(
+                                    color: themeMode.isLight
+                                        ? AppColors.bg_1
+                                        : AppColors.neutral_01),
                                 child: Text(
                                   '${tile.group} : ${NumUtils.formatInteger(tile.weight)} ${S.of(context).million_lower}',
                                   overflow: TextOverflow.ellipsis,

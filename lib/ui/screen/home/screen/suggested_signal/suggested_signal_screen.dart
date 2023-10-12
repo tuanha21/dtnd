@@ -1,5 +1,5 @@
-import 'package:dtnd/=models=/response/signal_type.dart';
-import 'package:dtnd/=models=/response/suggested_signal_model.dart';
+import 'package:dtnd/=models=/response/market/signal_type.dart';
+import 'package:dtnd/=models=/response/market/suggested_signal_model.dart';
 import 'package:dtnd/data/i_data_center_service.dart';
 import 'package:dtnd/data/implementations/data_center_service.dart';
 import 'package:dtnd/ui/screen/home/screen/signal/signal_screen.dart';
@@ -13,7 +13,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../../=models=/ui_model/user_cmd.dart';
 import '../../../../../config/service/app_services.dart';
-import '../../../../../generated/l10n.dart';
+import '../../../../../l10n/generated/l10n.dart';
 import '../../../../theme/app_image.dart';
 import '../../../exchange_stock/order_note/data/order_filter_data.dart';
 import 'flow/suggested_signal_flow.dart';
@@ -169,7 +169,9 @@ class _SuggestedSignalScreenState extends State<SuggestedSignalScreen> {
               child: Container(
                 padding: const EdgeInsets.symmetric(horizontal: 10),
                 decoration: BoxDecoration(
-                    color: themeMode.isLight ? Colors.white : AppColors.bg_share_inside_nav,
+                    color: themeMode.isLight
+                        ? Colors.white
+                        : AppColors.bg_share_inside_nav,
                     borderRadius: const BorderRadius.all(Radius.circular(12))),
                 child: Row(
                   children: [
@@ -197,8 +199,11 @@ class _SuggestedSignalScreenState extends State<SuggestedSignalScreen> {
                   margin: const EdgeInsets.symmetric(horizontal: 16),
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   decoration: BoxDecoration(
-                      color:  themeMode.isLight ? Colors.white : AppColors.bg_share_inside_nav,
-                      borderRadius: const BorderRadius.all(Radius.circular(12))),
+                      color: themeMode.isLight
+                          ? Colors.white
+                          : AppColors.bg_share_inside_nav,
+                      borderRadius:
+                          const BorderRadius.all(Radius.circular(12))),
                   child: ListView(
                     shrinkWrap: true,
                     children: [
@@ -251,7 +256,9 @@ class _PeriodButton extends StatelessWidget {
       ),
       color: selectedPeriod == period
           ? AppColors.primary_01
-          : themeMode.isLight ? AppColors.neutral_05 : AppColors.neutral_03,
+          : themeMode.isLight
+              ? AppColors.neutral_05
+              : AppColors.neutral_03,
       onTap: () => onTap.call(period),
     );
   }

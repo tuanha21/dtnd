@@ -2,9 +2,8 @@ import 'package:dtnd/config/service/app_services.dart';
 import 'package:dtnd/data/i_user_service.dart';
 import 'package:dtnd/data/implementations/local_storage_service.dart';
 import 'package:dtnd/data/implementations/user_service.dart';
-import 'package:dtnd/generated/l10n.dart';
+import 'package:dtnd/l10n/generated/l10n.dart';
 import 'package:dtnd/ui/screen/exchange_stock/stock_order/business/stock_order_util.dart';
-import 'package:dtnd/ui/screen/login/login_screen.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_textstyle.dart';
 import 'package:dtnd/ui/widget/button/single_color_text_button.dart';
@@ -16,13 +15,11 @@ import 'package:dtnd/utilities/account_util.dart';
 import 'package:dtnd/utilities/sign_in_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:go_router/go_router.dart';
 
 import '../../screen/account/sheet/money_statement_sheet.dart';
 import '../../screen/account/sheet/share_statement_sheet.dart';
 import '../../screen/asset/screen/executed_profit_loss/realized_profit_loss.dart';
 import '../../screen/asset/screen/margin_debt/margin_debt_screen.dart';
-import '../../screen/display/display_screen.dart';
 import '../../screen/exchange_stock/order_note/screen/order_note_screen.dart';
 import '../../screen/exercise_right/exercise_right_screen.dart';
 import '../../screen/language/language_screen.dart';
@@ -251,13 +248,15 @@ class _AppDrawerState extends State<AppDrawer> {
           const SizedBox(height: 4),
           Text(
             userService.userInfo.value?.customerCode ?? "",
-            style:
-                AppTextStyle.bodySmall_12.copyWith(color: themeMode.isLight ? AppColors.neutral_03 : AppColors.neutral_07),
+            style: AppTextStyle.bodySmall_12.copyWith(
+                color: themeMode.isLight
+                    ? AppColors.neutral_03
+                    : AppColors.neutral_07),
           ),
           const SizedBox(height: 16),
           isLogin
               ? Material(
-              color: Colors.transparent,
+                  color: Colors.transparent,
                   child: InkWell(
                     onTap: () {},
                     child: Ink(
@@ -339,7 +338,11 @@ class _AppDrawerState extends State<AppDrawer> {
               // }
             },
             text: isLogin ? S.of(context).logout : S.of(context).login,
-            color: isLogin ? themeMode.isLight ? AppColors.neutral_05 : AppColors.bg_share_inside_nav : AppColors.primary_01,
+            color: isLogin
+                ? themeMode.isLight
+                    ? AppColors.neutral_05
+                    : AppColors.bg_share_inside_nav
+                : AppColors.primary_01,
             textStyle: AppTextStyle.titleSmall_14
                 .copyWith(color: isLogin ? AppColors.primary_01 : Colors.white),
           ),

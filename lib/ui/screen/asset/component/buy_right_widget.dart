@@ -1,10 +1,10 @@
 import 'package:dtnd/=models=/response/account/i_account.dart';
 import 'package:dtnd/=models=/response/account/unexecuted_right_model.dart';
-import 'package:dtnd/=models=/response/stock.dart';
+import 'package:dtnd/=models=/response/market/stock.dart';
 import 'package:dtnd/config/service/app_services.dart';
 import 'package:dtnd/data/i_data_center_service.dart';
 import 'package:dtnd/data/implementations/data_center_service.dart';
-import 'package:dtnd/generated/l10n.dart';
+import 'package:dtnd/l10n/generated/l10n.dart';
 import 'package:dtnd/ui/screen/asset/sheet/execute_right_sheet.dart';
 import 'package:dtnd/ui/screen/asset/sheet/sheet_flow.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
@@ -74,7 +74,6 @@ class _BuyRightWidgetState extends State<BuyRightWidget> {
   Widget build(BuildContext context) {
     final themeMode = AppService.instance.themeMode.value;
     final textTheme = Theme.of(context).textTheme;
-    final ThemeData themeData = Theme.of(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -82,7 +81,9 @@ class _BuyRightWidgetState extends State<BuyRightWidget> {
           padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
           decoration: BoxDecoration(
             borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
-            color: themeMode.isDark ? AppColors.text_black_1 : AppColors.neutral_06,
+            color: themeMode.isDark
+                ? AppColors.text_black_1
+                : AppColors.neutral_06,
           ),
           child: Column(
             children: [
@@ -102,7 +103,10 @@ class _BuyRightWidgetState extends State<BuyRightWidget> {
                           children: [
                             Text(
                               widget.data?.cRECEIVESHARECODE ?? "-",
-                              style: textTheme.titleSmall?.copyWith(color: themeMode.isLight ? null : AppColors.neutral_07),
+                              style: textTheme.titleSmall?.copyWith(
+                                  color: themeMode.isLight
+                                      ? null
+                                      : AppColors.neutral_07),
                             ),
                             Text(
                               (widget.data?.canRegistered ?? false)
@@ -141,14 +145,18 @@ class _BuyRightWidgetState extends State<BuyRightWidget> {
                       children: [
                         Text(
                           S.of(context).still_to_be_purchased_payable,
-                          style: AppTextStyle.labelSmall_10
-                              .copyWith(color: themeMode.isLight ? AppColors.neutral_01 : AppColors.neutral_07),
+                          style: AppTextStyle.labelSmall_10.copyWith(
+                              color: themeMode.isLight
+                                  ? AppColors.neutral_01
+                                  : AppColors.neutral_07),
                         ),
                         const SizedBox(height: 4),
                         Text(
                           "${NumUtils.formatInteger(widget.data?.shareAvailBuy)}/${NumUtils.formatDouble(widget.data?.cashAvailRight)}",
-                          style: AppTextStyle.labelMedium_12
-                              .copyWith(color: themeMode.isLight ? AppColors.neutral_03 : AppColors.neutral_07),
+                          style: AppTextStyle.labelMedium_12.copyWith(
+                              color: themeMode.isLight
+                                  ? AppColors.neutral_03
+                                  : AppColors.neutral_07),
                         ),
                       ],
                     ),
@@ -159,8 +167,10 @@ class _BuyRightWidgetState extends State<BuyRightWidget> {
                       children: [
                         Text(
                           S.of(context).closing_date,
-                          style: AppTextStyle.labelSmall_10
-                              .copyWith(color: themeMode.isLight ? AppColors.neutral_01 : AppColors.neutral_07),
+                          style: AppTextStyle.labelSmall_10.copyWith(
+                              color: themeMode.isLight
+                                  ? AppColors.neutral_01
+                                  : AppColors.neutral_07),
                         ),
                         const SizedBox(height: 4),
                         Text(
@@ -181,7 +191,9 @@ class _BuyRightWidgetState extends State<BuyRightWidget> {
                   padding: EdgeInsets.all(8),
                   decoration: BoxDecoration(
                     borderRadius: const BorderRadius.all(Radius.circular(12)),
-                    color: themeMode.isDark ? AppColors.bg_share_inside_nav : AppColors.neutral_06,
+                    color: themeMode.isDark
+                        ? AppColors.bg_share_inside_nav
+                        : AppColors.neutral_06,
                   ),
                   child: Column(
                     children: [
@@ -217,7 +229,8 @@ class _BuyRightWidgetState extends State<BuyRightWidget> {
                           children: [
                             Expanded(
                               child: AssetGridElement(element: {
-                                S.of(context).registration_deadline: widget.data?.cCLOSEDATE,
+                                S.of(context).registration_deadline:
+                                    widget.data?.cCLOSEDATE,
                               }),
                             ),
                             const SizedBox(width: 2),
@@ -288,7 +301,9 @@ class _BuyRightWidgetState extends State<BuyRightWidget> {
               decoration: BoxDecoration(
                 borderRadius:
                     const BorderRadius.vertical(bottom: Radius.circular(12)),
-                color: themeMode.isDark ? AppColors.text_black_1 : AppColors.neutral_05,
+                color: themeMode.isDark
+                    ? AppColors.text_black_1
+                    : AppColors.neutral_05,
               ),
               child: Center(
                 child: AnimatedRotation(
@@ -303,7 +318,12 @@ class _BuyRightWidgetState extends State<BuyRightWidget> {
             ),
           ),
         ),
-        themeMode.isDark ? const Divider(height: 10,color: AppColors.neutral_07,) : const SizedBox()
+        themeMode.isDark
+            ? const Divider(
+                height: 10,
+                color: AppColors.neutral_07,
+              )
+            : const SizedBox()
       ],
     );
   }
