@@ -7,7 +7,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../config/service/app_services.dart';
-import '../../../../generated/l10n.dart';
+import '../../../../l10n/generated/l10n.dart';
 import '../controller/accumulation_controller.dart';
 import '../widget/row_information.dart';
 
@@ -110,7 +110,7 @@ class _SettlementConfirmState extends State<SettlementConfirm> {
             height: 60,
             padding: const EdgeInsets.symmetric(horizontal: 8),
             decoration: BoxDecoration(
-              color:themeMode.isLight ? Colors.white : AppColors.neutral_01,
+              color: themeMode.isLight ? Colors.white : AppColors.neutral_01,
               borderRadius: BorderRadius.circular(12),
             ),
             child: Column(

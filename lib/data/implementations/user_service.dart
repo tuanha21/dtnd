@@ -5,13 +5,13 @@ import 'package:dtnd/=models=/local/va_portfolio_model.dart';
 import 'package:dtnd/=models=/request/request_model.dart';
 import 'package:dtnd/=models=/response/account/base_margin_plus_account_model.dart';
 import 'package:dtnd/=models=/response/account/i_account.dart';
-import 'package:dtnd/=models=/response/account_info_model.dart';
+import 'package:dtnd/=models=/response/account/account_info_model.dart';
 import 'package:dtnd/=models=/response/accumulation/contract_model.dart';
 import 'package:dtnd/=models=/response/accumulation/fee_rate_model.dart';
 import 'package:dtnd/=models=/response/accumulation/single_contract.dart';
-import 'package:dtnd/=models=/response/cash_transaction_model.dart';
+import 'package:dtnd/=models=/response/account/cash_transaction_model.dart';
 import 'package:dtnd/=models=/response/order_model/base_order_model.dart';
-import 'package:dtnd/=models=/response/total_asset_model.dart';
+import 'package:dtnd/=models=/response/account/total_asset_model.dart';
 import 'package:dtnd/=models=/response/user_token.dart';
 import 'package:dtnd/=models=/side.dart';
 import 'package:dtnd/=models=/sign_up_success_data_model.dart';
@@ -438,7 +438,6 @@ class UserService implements IUserService {
     }
   }
 
-
   // Danh sách sản phẩm tích lũy
 
   @override
@@ -595,10 +594,7 @@ class UserService implements IUserService {
       "data": {
         "type": "object",
         "cmd": "MM_LiquidContract",
-        "p1": {
-          "CONTRACT_ID": contractId,
-          "CHANNEL": "M"
-        }
+        "p1": {"CONTRACT_ID": contractId, "CHANNEL": "M"}
       }
     };
     return networkService.liquidAll(jsonEncode(body));
@@ -614,10 +610,7 @@ class UserService implements IUserService {
       "data": {
         "type": "object",
         "cmd": "MM_UpdateContract",
-        "p1": {
-          "CONTRACT_ID": contactId,
-          "EXTENT_TYPE": extentType
-        }
+        "p1": {"CONTRACT_ID": contactId, "EXTENT_TYPE": extentType}
       }
     };
     return networkService.methodUpdate(jsonEncode(body));

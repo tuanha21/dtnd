@@ -1,8 +1,8 @@
 import 'package:get/get_rx/src/rx_types/rx_types.dart';
 
 import '../../../../../=models=/request/request_model.dart';
-import '../../../../../=models=/response/get_bedt_model.dart';
-import '../../../../../=models=/response/stock_model.dart';
+import '../../../../../=models=/response/account/debt_model.dart';
+import '../../../../../=models=/response/market/stock_model.dart';
 import '../../../../../data/i_data_center_service.dart';
 import '../../../../../data/i_network_service.dart';
 import '../../../../../data/i_user_service.dart';
@@ -29,13 +29,13 @@ class MarginDebtControllers {
   final RxDouble sumCloanIn = 0.0.obs;
   final RxDouble sumCFEE = 0.0.obs;
   final RxDouble sumCloan = 0.0.obs;
-  final Rx<List<GetDebtModel?>> listData = Rx([]);
+  final Rx<List<DebtModel?>> listData = Rx([]);
 
   final Rx<String?> stockCode = Rxn();
 
   final INetworkService networkService = NetworkService();
 
-  Future<List<GetDebtModel?>?> getDebt(
+  Future<List<DebtModel?>?> getDebt(
       {DateTime? fromDay, DateTime? toDay}) async {
     if (!userService.isLogin) {
       return [];
@@ -54,10 +54,10 @@ class MarginDebtControllers {
     );
     logger.v(requestModel.toJson());
     listData.value = await networkService
-            .requestTraditionalApiResList<GetDebtModel>(requestModel) ??
+            .requestTraditionalApiResList<DebtModel>(requestModel) ??
         [];
     if (listData.value.isNotEmpty) {
-      for (GetDebtModel? item in listData.value) {
+      for (DebtModel? item in listData.value) {
         sumCloanIn.value += item?.cLOANIN?.toDouble() ?? 0;
         sumCFEE.value += item?.fee?.toDouble() ?? 0;
         sumCloan.value += item?.loan?.toDouble() ?? 0;

@@ -1,19 +1,19 @@
 import 'package:dtnd/=models=/response/account/asset_chart_element.dart';
 import 'package:dtnd/=models=/response/account/i_account.dart';
 import 'package:dtnd/=models=/response/account/list_account_model.dart';
-import 'package:dtnd/=models=/response/get_bedt_model.dart';
+import 'package:dtnd/=models=/response/account/debt_model.dart';
+import 'package:dtnd/=models=/response/market/stock_info_core.dart';
 
 import 'response/account/portfolio_status_model.dart';
 import 'response/account/unexecuted_right_model.dart';
-import 'response/account_info_model.dart';
-import 'response/cash_transaction_model.dart';
+import 'response/account/account_info_model.dart';
+import 'response/account/cash_transaction_model.dart';
 import 'response/order_history_model.dart';
 import 'response/order_model/base_order_model.dart';
 import 'response/order_model/change_order_model.dart';
 import 'response/share_earned_model.dart';
 import 'response/share_transaction_model.dart';
 import 'response/stock_cash_balance_model.dart';
-import 'response/stock_info_core.dart';
 import 'response/user_token.dart';
 
 abstract class CoreResponseModel {
@@ -51,8 +51,8 @@ abstract class CoreResponseModel {
         return CashTransactionHistoryModel.fromJson(json) as T;
       case ShareTransactionModel:
         return ShareTransactionModel.fromJson(json) as T;
-      case GetDebtModel:
-        return GetDebtModel.fromJson(json) as T;
+      case DebtModel:
+        return DebtModel.fromJson(json) as T;
       default:
         return null;
     }

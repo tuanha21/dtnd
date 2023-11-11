@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../=models=/response/account/unexecuted_right_model.dart';
 import '../../../../config/service/app_services.dart';
-import '../../../../generated/l10n.dart';
+import '../../../../l10n/generated/l10n.dart';
 import '../../../theme/app_color.dart';
 import '../../../theme/app_textstyle.dart';
 
@@ -22,14 +22,14 @@ class RightsInfoWidget extends StatefulWidget {
 class _RightsInfoWidgetState extends State<RightsInfoWidget> {
   @override
   Widget build(BuildContext context) {
-    final ThemeData themeData = Theme.of(context);
     final themeMode = AppService.instance.themeMode.value;
 
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 8),
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-          color: themeMode.isLight ? AppColors.neutral_06 : AppColors.neutral_01,
+          color:
+              themeMode.isLight ? AppColors.neutral_06 : AppColors.neutral_01,
           borderRadius: const BorderRadius.all(Radius.circular(12))),
       child: Column(
         children: [

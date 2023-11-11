@@ -1,5 +1,5 @@
 import 'package:dtnd/=models=/response/accumulation/fee_rate_model.dart';
-import 'package:dtnd/generated/l10n.dart';
+import 'package:dtnd/l10n/generated/l10n.dart';
 import 'package:dtnd/ui/screen/accumulation/controller/accumulation_controller.dart';
 import 'package:dtnd/ui/screen/accumulation/screen/accumulation_register.dart';
 import 'package:dtnd/ui/screen/accumulation/widget/accumulator_header.dart';
@@ -32,7 +32,6 @@ class _AccumulationProductDetailState extends State<AccumulationProductDetail> {
     final textTheme = Theme.of(context).textTheme;
     final themeMode = AppService.instance.themeMode.value;
 
-
     return Scaffold(
       appBar: SimpleAppbar(
         title: feeRate.productName.toString(),
@@ -60,7 +59,9 @@ class _AccumulationProductDetailState extends State<AccumulationProductDetail> {
               Container(
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
-                    color: themeMode.isLight ? AppColors.neutral_07 : AppColors.bg_share_inside_nav,
+                    color: themeMode.isLight
+                        ? AppColors.neutral_07
+                        : AppColors.bg_share_inside_nav,
                     borderRadius: BorderRadius.circular(8)),
                 child: Column(
                   children: [
@@ -97,13 +98,16 @@ class _AccumulationProductDetailState extends State<AccumulationProductDetail> {
                       padding:
                           const EdgeInsets.only(top: 12, left: 10, right: 10),
                       decoration: BoxDecoration(
-                          color: themeMode.isLight ? AppColors.neutral_07 : AppColors.bg_share_inside_nav,
+                          color: themeMode.isLight
+                              ? AppColors.neutral_07
+                              : AppColors.bg_share_inside_nav,
                           borderRadius: BorderRadius.circular(8)),
                       child: Column(
                         children: [
                           RowInfomation(
                               leftText: S.of(context).profit,
-                              rightText: '${feeRate.feeRate.toString()}%/${S.of(context).year}'),
+                              rightText:
+                                  '${feeRate.feeRate.toString()}%/${S.of(context).year}'),
                           RowInfomation(
                               leftText: S.of(context).period,
                               rightText: feeRate.termName.toString()),

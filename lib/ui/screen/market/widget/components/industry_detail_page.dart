@@ -1,8 +1,8 @@
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../../=models=/response/stock_data.dart';
-import '../../../../../generated/l10n.dart';
+import '../../../../../=models=/response/market/stock_data.dart';
+import '../../../../../l10n/generated/l10n.dart';
 
 class IndustryDetailPage extends StatefulWidget {
   final List<StockData> listStock;

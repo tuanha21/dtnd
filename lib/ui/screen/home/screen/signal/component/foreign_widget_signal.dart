@@ -2,14 +2,14 @@ import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:dtnd/config/service/app_services.dart';
 import 'package:dtnd/data/i_data_center_service.dart';
 import 'package:dtnd/data/implementations/data_center_service.dart';
-import 'package:dtnd/generated/l10n.dart';
+import 'package:dtnd/l10n/generated/l10n.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/utilities/charts_util.dart';
 import 'package:dtnd/utilities/num_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-import '../../../../../../=models=/response/signal_month_model.dart';
+import '../../../../../../=models=/response/market/signal_month_model.dart';
 
 class ForeignWidgetSignal extends StatefulWidget {
   const ForeignWidgetSignal({Key? key, required this.code, required this.type})
@@ -85,12 +85,15 @@ class _ForeignWidgetState extends State<ForeignWidgetSignal> {
                       lineStyle: charts.LineStyleSpec(
                         color: themeMode.isLight
                             ? null
-                            : charts.ColorUtil.fromDartColor(AppColors.neutral_02),
+                            : charts.ColorUtil.fromDartColor(
+                                AppColors.neutral_02),
                       ),
-                      labelStyle: charts.TextStyleSpec(fontSize: 9,color: themeMode.isLight
-                          ? null
-                          : charts.ColorUtil.fromDartColor(
-                          AppColors.neutral_07)),
+                      labelStyle: charts.TextStyleSpec(
+                          fontSize: 9,
+                          color: themeMode.isLight
+                              ? null
+                              : charts.ColorUtil.fromDartColor(
+                                  AppColors.neutral_07)),
                     ),
                   ),
                   secondaryMeasureAxis: charts.NumericAxisSpec(
@@ -107,13 +110,18 @@ class _ForeignWidgetState extends State<ForeignWidgetSignal> {
                           thickness: 0,
                           color: charts.Color(r: 74, g: 85, b: 104),
                         ),
-                        labelStyle: charts.TextStyleSpec(fontSize: 9,color: themeMode.isLight
-                            ? null
-                            : charts.ColorUtil.fromDartColor(
-                            AppColors.neutral_07)),
-                        lineStyle: charts.LineStyleSpec(dashPattern: [4],color: themeMode.isLight
-                            ? null
-                            : charts.ColorUtil.fromDartColor(AppColors.neutral_02))),
+                        labelStyle: charts.TextStyleSpec(
+                            fontSize: 9,
+                            color: themeMode.isLight
+                                ? null
+                                : charts.ColorUtil.fromDartColor(
+                                    AppColors.neutral_07)),
+                        lineStyle: charts.LineStyleSpec(
+                            dashPattern: [4],
+                            color: themeMode.isLight
+                                ? null
+                                : charts.ColorUtil.fromDartColor(
+                                    AppColors.neutral_02))),
                   ),
                   behaviors: [
                     charts.SelectNearest(

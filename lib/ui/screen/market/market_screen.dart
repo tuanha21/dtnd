@@ -1,4 +1,4 @@
-import 'package:dtnd/generated/l10n.dart';
+import 'package:dtnd/l10n/generated/l10n.dart';
 import 'package:dtnd/ui/screen/market/market_controller.dart';
 import 'package:dtnd/ui/screen/market/widget/tabs/interested_tab.dart';
 import 'package:dtnd/ui/screen/market/widget/tabs/market_analysis_tab.dart';
@@ -7,7 +7,8 @@ import 'package:dtnd/ui/screen/market/widget/tabs/market_overview_tab.dart';
 import 'package:dtnd/ui/widget/my_appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import '../../../=models=/response/stock.dart';
+import 'package:tutorial_coach_mark/tutorial_coach_mark.dart';
+import '../../../=models=/response/market/stock.dart';
 import '../../../data/i_data_center_service.dart';
 import '../../../data/implementations/data_center_service.dart';
 import '../../theme/app_image.dart';
@@ -25,6 +26,7 @@ class _MarketScreenState extends State<MarketScreen>
     with SingleTickerProviderStateMixin {
   final MarketController marketController = MarketController();
   late final TabController _tabController;
+  final List<TargetFocus> targets = [];
 
   final IDataCenterService dataCenterService = DataCenterService();
 
@@ -84,7 +86,7 @@ class _MarketScreenState extends State<MarketScreen>
                 child: Image.asset(
                   AppImages.home_icon_notification,
                 )),
-            onTap: (){
+            onTap: () {
               Fluttertoast.showToast(
                 msg: S.of(context).developing_feature,
                 toastLength: Toast.LENGTH_LONG,

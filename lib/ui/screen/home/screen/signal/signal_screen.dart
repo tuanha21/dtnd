@@ -1,14 +1,14 @@
-import 'package:dtnd/=models=/response/stock.dart';
-import 'package:dtnd/=models=/response/stock_model.dart';
-import 'package:dtnd/=models=/response/top_signal_detail_model.dart';
-import 'package:dtnd/=models=/response/top_signal_history_model.dart';
+import 'package:dtnd/=models=/response/market/stock.dart';
+import 'package:dtnd/=models=/response/market/stock_model.dart';
+import 'package:dtnd/=models=/response/market/top_signal_detail_model.dart';
+import 'package:dtnd/=models=/response/market/top_signal_history_model.dart';
 import 'package:dtnd/data/i_data_center_service.dart';
 import 'package:dtnd/data/implementations/data_center_service.dart';
 import 'package:dtnd/ui/screen/home/screen/signal/component/signal_effective.dart';
 import 'package:dtnd/utilities/logger.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../../generated/l10n.dart';
+import '../../../../../l10n/generated/l10n.dart';
 import 'component/signal_appbar.dart';
 import 'component/signal_chart.dart';
 import 'component/signal_overview.dart';

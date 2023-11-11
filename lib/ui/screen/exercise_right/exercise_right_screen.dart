@@ -1,4 +1,4 @@
-import 'package:dtnd/generated/l10n.dart';
+import 'package:dtnd/l10n/generated/l10n.dart';
 import 'package:dtnd/ui/screen/exercise_right/tab/purchase_rights_history_tab.dart';
 import 'package:dtnd/ui/screen/exercise_right/tab/registration_rights_tab.dart';
 import 'package:dtnd/ui/screen/exercise_right/tab/rights_info_tab.dart';

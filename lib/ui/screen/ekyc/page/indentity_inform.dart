@@ -1,4 +1,4 @@
-import 'package:dtnd/generated/l10n.dart';
+import 'package:dtnd/l10n/generated/l10n.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:flutter/material.dart';
@@ -101,7 +101,9 @@ class _IdentityInformState extends State<IdentityInform> {
                 'Xác nhận lại thông tin đã trích xuất từ CCCD',
                 style: titleSmall?.copyWith(
                     fontWeight: FontWeight.w500,
-                    color: themeMode.isLight ? AppColors.neutral_03 : AppColors.neutral_07,
+                    color: themeMode.isLight
+                        ? AppColors.neutral_03
+                        : AppColors.neutral_07,
                     fontSize: 14),
               ),
               const SizedBox(height: 36),
@@ -110,7 +112,9 @@ class _IdentityInformState extends State<IdentityInform> {
                 style: TextStyle(
                     height: 1.5,
                     fontWeight: FontWeight.w600,
-                    color: themeMode.isLight ?  AppColors.bg_2 : AppColors.neutral_07,
+                    color: themeMode.isLight
+                        ? AppColors.bg_2
+                        : AppColors.neutral_07,
                     fontSize: 16),
               ),
               const SizedBox(height: 16),
@@ -268,7 +272,9 @@ class _IdentityInformState extends State<IdentityInform> {
                       style: TextStyle(
                           height: 1.5,
                           fontWeight: FontWeight.w600,
-                          color: themeMode.isLight ? AppColors.bg_2 : AppColors.neutral_07 ,
+                          color: themeMode.isLight
+                              ? AppColors.bg_2
+                              : AppColors.neutral_07,
                           fontSize: 16),
                     ),
                     const SizedBox(
@@ -308,7 +314,9 @@ class _IdentityInformState extends State<IdentityInform> {
                           onTap: pickRangeDate,
                           child: Icon(
                             Icons.calendar_month,
-                            color: themeMode.isLight ? AppColors.text_black : AppColors.neutral_07,
+                            color: themeMode.isLight
+                                ? AppColors.text_black
+                                : AppColors.neutral_07,
                             size: 24.0,
                           ),
                         ),
@@ -334,7 +342,9 @@ class _IdentityInformState extends State<IdentityInform> {
                           onTap: pickExpirationDate,
                           child: Icon(
                             Icons.calendar_month,
-                            color: themeMode.isLight ? AppColors.text_black : AppColors.neutral_07,
+                            color: themeMode.isLight
+                                ? AppColors.text_black
+                                : AppColors.neutral_07,
                             size: 24.0,
                           ),
                         ),

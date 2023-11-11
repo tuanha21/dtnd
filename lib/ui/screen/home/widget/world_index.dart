@@ -1,4 +1,4 @@
-import 'package:dtnd/=models=/response/world_index_model.dart';
+import 'package:dtnd/=models=/response/market/world_index_model.dart';
 import 'package:dtnd/config/service/app_services.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_textstyle.dart';
@@ -16,7 +16,6 @@ class HomeWorldIndexItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ThemeData themeData = Theme.of(context);
     final themeMode = AppService.instance.themeMode.value;
 
     BoxBorder? border;

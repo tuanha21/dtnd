@@ -1,5 +1,5 @@
 import 'package:dtnd/=models=/response/account/unexecuted_right_model.dart';
-import 'package:dtnd/generated/l10n.dart';
+import 'package:dtnd/l10n/generated/l10n.dart';
 import 'package:dtnd/ui/screen/exercise_right/exercise_right_screen.dart';
 import 'package:dtnd/ui/widget/icon/sheet_header.dart';
 import 'package:flutter/material.dart';

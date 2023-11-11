@@ -2,7 +2,7 @@ import 'package:dtnd/=models=/exchange.dart';
 import 'package:dtnd/=models=/local/saved_catalog.dart';
 import 'package:dtnd/=models=/local/user_catalog.dart';
 import 'package:dtnd/=models=/local/va_portfolio_model.dart';
-import 'package:dtnd/=models=/response/stock.dart';
+import 'package:dtnd/=models=/response/market/stock.dart';
 import 'package:dtnd/=models=/response/user_token.dart';
 import 'package:dtnd/=models=/ui_model/exception.dart';
 import 'package:dtnd/utilities/logger.dart';
@@ -108,6 +108,9 @@ class LocalStorageService implements ILocalStorageService {
 
   @override
   int get appAccessTime => _appAccessTime;
+
+  @override
+  bool get firstTimeOpenApp => _appAccessTime == 1;
 
   @override
   UserToken? getSavedUserToken() {
@@ -252,5 +255,4 @@ class LocalStorageService implements ILocalStorageService {
   Future<void> savePinCode(String pinCode) async {
     sharedPreferences.setString(pinCodeKey, pinCode);
   }
-
 }

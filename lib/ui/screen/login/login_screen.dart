@@ -9,7 +9,7 @@ import 'package:dtnd/ui/widget/login_scaffold.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../generated/l10n.dart';
+import '../../../l10n/generated/l10n.dart';
 import 'widget/not_first_login_for.dart';
 
 const String _userKey = "_userKey";

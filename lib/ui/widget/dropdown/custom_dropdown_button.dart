@@ -109,33 +109,41 @@ class _CustomDropDownButtonState extends State<CustomDropDownButton> {
             selectedValue = value as String;
           });
         },
-        icon: const Icon(
-          Icons.expand_more_rounded,
+        iconStyleData: const IconStyleData(
+          icon: Icon(
+            Icons.expand_more_rounded,
+          ),
+          iconSize: 14,
+          iconEnabledColor: AppColors.primary_01,
+          iconDisabledColor: Colors.grey,
         ),
-        iconSize: 14,
-        iconEnabledColor: AppColors.primary_01,
-        iconDisabledColor: Colors.grey,
-        buttonHeight: 36,
-        buttonWidth: 136,
-        buttonPadding: const EdgeInsets.all(8),
-        buttonDecoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(6),
-          color: AppColors.primary_03,
+        buttonStyleData: ButtonStyleData(
+          height: 36,
+          width: 136,
+          padding: const EdgeInsets.all(8),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(6),
+            color: AppColors.primary_03,
+          ),
+          elevation: 0,
         ),
-        buttonElevation: 0,
-        itemHeight: 28,
-        itemPadding: const EdgeInsets.all(0),
-        dropdownMaxHeight: 200,
-        dropdownWidth: 136,
-        dropdownPadding: const EdgeInsets.all(8),
-        dropdownDecoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(8),
+        menuItemStyleData: const MenuItemStyleData(
+          height: 28,
+          padding: EdgeInsets.all(0),
         ),
-        dropdownElevation: 8,
-        scrollbarRadius: const Radius.circular(40),
-        scrollbarThickness: 6,
-        scrollbarAlwaysShow: true,
-        offset: const Offset(0, -8),
+        dropdownStyleData: DropdownStyleData(
+            maxHeight: 200,
+            width: 136,
+            padding: const EdgeInsets.all(8),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(8),
+            ),
+            elevation: 8,
+            offset: const Offset(0, -8),
+            scrollbarTheme: const ScrollbarThemeData(
+                radius: Radius.circular(40),
+                thickness: MaterialStatePropertyAll(6),
+                trackVisibility: MaterialStatePropertyAll(true))),
       ),
     );
   }

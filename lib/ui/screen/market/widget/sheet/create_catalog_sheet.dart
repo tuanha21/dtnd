@@ -1,7 +1,7 @@
 import 'package:dtnd/=models=/local/saved_catalog.dart';
 import 'package:dtnd/=models=/local/user_catalog.dart';
 import 'package:dtnd/=models=/ui_model/user_cmd.dart';
-import 'package:dtnd/generated/l10n.dart';
+import 'package:dtnd/l10n/generated/l10n.dart';
 import 'package:dtnd/ui/widget/icon/sheet_header.dart';
 import 'package:dtnd/utilities/validator.dart';
 import 'package:flutter/material.dart';
@@ -46,7 +46,9 @@ class _CreateCatalogSheetState extends State<CreateCatalogSheet>
               implementBackButton: widget.isBack,
               backData: const BackCmd(),
             ),
-            const SizedBox(height: 20,),
+            const SizedBox(
+              height: 20,
+            ),
             Form(
               key: key,
               child: TextFormField(

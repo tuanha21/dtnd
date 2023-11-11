@@ -1,5 +1,5 @@
 import 'package:dtnd/config/service/app_services.dart';
-import 'package:dtnd/generated/l10n.dart';
+import 'package:dtnd/l10n/generated/l10n.dart';
 import 'package:dtnd/ui/screen/virtual_assistant/va_access_element.dart';
 import 'package:dtnd/ui/screen/virtual_assistant/va_filter/virtual_assistant_filter_screen.dart';
 import 'package:dtnd/ui/screen/virtual_assistant/va_home/va_controller.dart';

@@ -1,23 +1,22 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:dtnd/=models=/response/sec_event.dart';
-import 'package:dtnd/=models=/response/stock_model.dart';
+import 'package:dtnd/=models=/response/market/sec_event.dart';
+import 'package:dtnd/=models=/response/market/stock_model.dart';
 import 'package:dtnd/data/i_data_center_service.dart';
 import 'package:dtnd/data/implementations/data_center_service.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:dtnd/ui/widget/expanded_widget.dart';
 import 'package:dtnd/utilities/time_utils.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
-import '../../../../=models=/response/company_info.dart';
-import '../../../../=models=/response/news_model.dart';
-import '../../../../=models=/response/stock_news.dart';
+import '../../../../=models=/response/market/company_info.dart';
+import '../../../../=models=/response/market/news_model.dart';
+import '../../../../=models=/response/market/stock_news.dart';
 import '../../../../=models=/response/stock_trading_history.dart';
 import '../../../../config/service/app_services.dart';
 import '../../../../data/i_network_service.dart';
 import '../../../../data/implementations/network_service.dart';
-import '../../../../generated/l10n.dart';
+import '../../../../l10n/generated/l10n.dart';
 import '../../../theme/app_color.dart';
 import '../../../widget/news_card.dart';
 import '../../home/widget/home_section.dart';
@@ -96,7 +95,9 @@ class _OverviewTabState extends State<OverviewTab>
                       height: 63,
                       width: 63,
                       decoration: BoxDecoration(
-                          color: themeMode.isLight ? AppColors.neutral_06 : AppColors.neutral_01,
+                          color: themeMode.isLight
+                              ? AppColors.neutral_06
+                              : AppColors.neutral_01,
                           borderRadius: BorderRadius.circular(4)),
                     );
                   },
@@ -234,7 +235,9 @@ class _BasicIndexState extends State<BasicIndex> {
       margin: const EdgeInsets.all(16),
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-          color: themeMode.isLight ? AppColors.light_bg : AppColors.text_black_1, borderRadius: BorderRadius.circular(16)),
+          color:
+              themeMode.isLight ? AppColors.light_bg : AppColors.text_black_1,
+          borderRadius: BorderRadius.circular(16)),
       child: Column(
         children: [
           indexPrice(),
@@ -409,7 +412,9 @@ class _CompanyInfoWidgetState extends State<CompanyInfoWidget> {
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
                 borderRadius: const BorderRadius.all(Radius.circular(12)),
-                color: themeMode.isLight ? AppColors.neutral_06 : AppColors.text_black_1,
+                color: themeMode.isLight
+                    ? AppColors.neutral_06
+                    : AppColors.text_black_1,
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -591,11 +596,15 @@ class _ListNewsISheetState extends State<ListNewsISheet> {
                 child: Container(
                   padding: const EdgeInsets.all(3),
                   decoration: BoxDecoration(
-                      color: themeMode.isLight ? AppColors.primary_03 : AppColors.neutral_02,
+                      color: themeMode.isLight
+                          ? AppColors.primary_03
+                          : AppColors.neutral_02,
                       borderRadius: BorderRadius.circular(6)),
                   child: Icon(
                     Icons.clear,
-                    color: themeMode.isLight ? AppColors.text_black_1 : AppColors.neutral_07,
+                    color: themeMode.isLight
+                        ? AppColors.text_black_1
+                        : AppColors.neutral_07,
                     size: 20,
                   ),
                 ),

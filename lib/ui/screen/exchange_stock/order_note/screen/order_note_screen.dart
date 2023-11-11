@@ -1,4 +1,4 @@
-import 'package:dtnd/generated/l10n.dart';
+import 'package:dtnd/l10n/generated/l10n.dart';
 import 'package:dtnd/ui/screen/exchange_stock/order_note/tab/inday_order_tab.dart';
 import 'package:dtnd/ui/screen/exchange_stock/order_note/tab/order_history_tab.dart';
 import 'package:dtnd/ui/widget/appbar/simple_appbar.dart';

@@ -1,4 +1,4 @@
-import 'package:dtnd/=models=/response/filter_criterion.dart';
+import 'package:dtnd/=models=/response/market/filter_criterion.dart';
 import 'package:dtnd/config/service/app_services.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/widget/expanded_widget.dart';

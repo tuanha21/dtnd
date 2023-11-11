@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:dtnd/=models=/sign_up_success_data_model.dart';
-import 'package:dtnd/generated/l10n.dart';
+import 'package:dtnd/l10n/generated/l10n.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_textstyle.dart';
 import 'package:dtnd/ui/widget/app_snack_bar.dart';

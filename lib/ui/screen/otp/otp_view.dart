@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pinput/pinput.dart';
 
-import '../../../generated/l10n.dart';
+import '../../../l10n/generated/l10n.dart';
 import '../../../utilities/logger.dart';
 import '../../../utilities/responsive.dart';
 import '../../theme/app_color.dart';

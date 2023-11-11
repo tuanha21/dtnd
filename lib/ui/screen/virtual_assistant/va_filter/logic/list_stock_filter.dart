@@ -14,7 +14,7 @@ import 'package:linked_scroll_controller/linked_scroll_controller.dart';
 
 import '../../../../../data/i_network_service.dart';
 import '../../../../../data/implementations/network_service.dart';
-import '../../../../../generated/l10n.dart';
+import '../../../../../l10n/generated/l10n.dart';
 import '../../../../theme/app_color.dart';
 import '../../../../widget/expanded_widget.dart';
 import '../../../../widget/input/app_text_field.dart';

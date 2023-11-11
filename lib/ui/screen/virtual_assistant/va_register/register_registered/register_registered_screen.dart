@@ -1,4 +1,4 @@
-import 'package:dtnd/generated/l10n.dart';
+import 'package:dtnd/l10n/generated/l10n.dart';
 import 'package:dtnd/ui/screen/virtual_assistant/va_home/va_screen.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
@@ -24,7 +24,8 @@ class RegisterRegistered extends StatelessWidget {
           child: SizedBox.square(
             dimension: 32,
             child: InkWell(
-              onTap: () => Navigator.of(context).popUntil((route) => route.isFirst),
+              onTap: () =>
+                  Navigator.of(context).popUntil((route) => route.isFirst),
               borderRadius: const BorderRadius.all(Radius.circular(6)),
               child: Ink(
                 padding: const EdgeInsets.all(8),
@@ -75,10 +76,11 @@ class RegisterRegistered extends StatelessWidget {
             SizedBox(
               width: Responsive.getMaxWidth(context) - 32,
               child: TextButton(
-                onPressed: () { Navigator.of(context).push<void>(
-                  MaterialPageRoute(
-                      builder: (context) => const VaScreen()),
-                );},
+                onPressed: () {
+                  Navigator.of(context).push<void>(
+                    MaterialPageRoute(builder: (context) => const VaScreen()),
+                  );
+                },
                 style: const ButtonStyle(
                     padding: MaterialStatePropertyAll(EdgeInsets.all(14))),
                 child: Text(

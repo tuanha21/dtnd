@@ -1,7 +1,7 @@
 import 'package:dtnd/utilities/regex.dart';
 import 'package:dtnd/utilities/string_util.dart';
 
-import '../generated/l10n.dart';
+import '../l10n/generated/l10n.dart';
 
 mixin AppValidator {
   // static final RegExp _emailRegex =

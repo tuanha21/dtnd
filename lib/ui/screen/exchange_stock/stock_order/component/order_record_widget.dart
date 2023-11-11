@@ -5,7 +5,7 @@ import 'package:dtnd/data/i_exchange_service.dart';
 import 'package:dtnd/data/i_user_service.dart';
 import 'package:dtnd/data/implementations/exchange_service.dart';
 import 'package:dtnd/data/implementations/user_service.dart';
-import 'package:dtnd/generated/l10n.dart';
+import 'package:dtnd/l10n/generated/l10n.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:dtnd/ui/theme/app_textstyle.dart';
@@ -132,7 +132,8 @@ class _OrderRecordWidgetState extends State<OrderRecordWidget> {
                 const SizedBox(width: 8),
                 Text(
                   widget.data.symbol,
-                  style: textTheme.titleSmall?.copyWith(color: themeMode.isLight ? null : AppColors.neutral_07),
+                  style: textTheme.titleSmall?.copyWith(
+                      color: themeMode.isLight ? null : AppColors.neutral_07),
                 ),
                 const SizedBox(width: 6),
                 Text(
@@ -170,8 +171,10 @@ class _OrderRecordWidgetState extends State<OrderRecordWidget> {
                       Text(
                         TimeUtilities.onlyHourFormat
                             .format(widget.data.orderTime),
-                        style: AppTextStyle.labelSmall_10
-                            .copyWith(color: themeMode.isLight ? AppColors.neutral_01 : AppColors.neutral_07),
+                        style: AppTextStyle.labelSmall_10.copyWith(
+                            color: themeMode.isLight
+                                ? AppColors.neutral_01
+                                : AppColors.neutral_07),
                       ),
                     ],
                   ),
@@ -209,12 +212,13 @@ class _OrderRecordWidgetState extends State<OrderRecordWidget> {
                           const SizedBox(height: 6),
                           Text(
                             widget.data.showPrice ?? "-",
-                            style: AppTextStyle.labelSmall_10
-                                .copyWith(color: themeMode.isLight ? AppColors.neutral_01 : AppColors.neutral_07),
+                            style: AppTextStyle.labelSmall_10.copyWith(
+                                color: themeMode.isLight
+                                    ? AppColors.neutral_01
+                                    : AppColors.neutral_07),
                           ),
                         ],
                       )
-
                     ],
                   ),
                 ),
@@ -233,12 +237,13 @@ class _OrderRecordWidgetState extends State<OrderRecordWidget> {
                           const SizedBox(height: 6),
                           Text(
                             NumUtils.formatDouble(widget.data.matchPrice, "-"),
-                            style: AppTextStyle.labelSmall_10
-                                .copyWith(color:  themeMode.isLight ? AppColors.neutral_01 : AppColors.neutral_07),
+                            style: AppTextStyle.labelSmall_10.copyWith(
+                                color: themeMode.isLight
+                                    ? AppColors.neutral_01
+                                    : AppColors.neutral_07),
                           ),
                         ],
                       )
-
                     ],
                   ),
                 ),
@@ -256,8 +261,10 @@ class _OrderRecordWidgetState extends State<OrderRecordWidget> {
                         widget.data.matchVolume == 0.0
                             ? '-/${widget.data.volume}'
                             : '${widget.data.matchVolume}/${widget.data.volume!}',
-                        style: AppTextStyle.labelSmall_10
-                            .copyWith(color: themeMode.isLight ? AppColors.neutral_01 : AppColors.neutral_07),
+                        style: AppTextStyle.labelSmall_10.copyWith(
+                            color: themeMode.isLight
+                                ? AppColors.neutral_01
+                                : AppColors.neutral_07),
                       ),
                     ],
                   ),

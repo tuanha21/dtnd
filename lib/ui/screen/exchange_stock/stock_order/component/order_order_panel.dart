@@ -1,7 +1,7 @@
-import 'package:dtnd/=models=/response/stock.dart';
-import 'package:dtnd/=models=/response/stock_model.dart';
+import 'package:dtnd/=models=/response/market/stock.dart';
+import 'package:dtnd/=models=/response/market/stock_model.dart';
 import 'package:dtnd/data/implementations/data_center_service.dart';
-import 'package:dtnd/generated/l10n.dart';
+import 'package:dtnd/l10n/generated/l10n.dart';
 import 'package:dtnd/ui/screen/search/search_screen.dart';
 import 'package:dtnd/ui/screen/stock_detail/widget/three_price.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
@@ -10,6 +10,7 @@ import 'package:dtnd/ui/theme/app_textstyle.dart';
 import 'package:dtnd/utilities/num_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:tutorial_coach_mark/tutorial_coach_mark.dart';
 
 import '../../../../../config/service/app_services.dart';
 import 'overbought_sell_widget.dart';
@@ -22,10 +23,12 @@ class OrderOrderPanel extends StatelessWidget {
       {super.key,
       this.stockModel,
       required this.onChangeStock,
-      required this.onValidate});
+      required this.onValidate,
+      this.getTargets});
   final StockModel? stockModel;
   final void Function(StockModel) onChangeStock;
   final ValueChanged<String?> onValidate;
+  final void Function(List<TargetFocus>)? getTargets;
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
@@ -85,7 +88,9 @@ class OrderOrderPanel extends StatelessWidget {
                       border: border,
                       borderRadius:
                           const BorderRadius.vertical(top: Radius.circular(12)),
-                      color: themeMode.isLight ? AppColors.neutral_05 : AppColors.neutral_01  ,
+                      color: themeMode.isLight
+                          ? AppColors.neutral_05
+                          : AppColors.neutral_01,
                     ),
                     child: Row(
                       children: [
@@ -93,7 +98,10 @@ class OrderOrderPanel extends StatelessWidget {
                           children: [
                             Text(
                               "${stockModel?.stock.stockCode ?? "-"} (${stockModel?.stock.postTo?.name ?? "-"})",
-                              style: textTheme.titleSmall?.copyWith(color: themeMode.isLight ? null : AppColors.neutral_07),
+                              style: textTheme.titleSmall?.copyWith(
+                                  color: themeMode.isLight
+                                      ? null
+                                      : AppColors.neutral_07),
                             ),
                             const SizedBox(width: 4),
                             SizedBox.square(
@@ -145,7 +153,9 @@ class OrderOrderPanel extends StatelessWidget {
                                                 "-"),
                                             style: AppTextStyle.labelSmall_10
                                                 .copyWith(
-                                              color: themeMode.isLight ? AppColors.neutral_02 : AppColors.neutral_07,
+                                              color: themeMode.isLight
+                                                  ? AppColors.neutral_02
+                                                  : AppColors.neutral_07,
                                               fontWeight: FontWeight.w500,
                                             ),
                                           ),
@@ -166,7 +176,9 @@ class OrderOrderPanel extends StatelessWidget {
                                                 "-"),
                                             style: AppTextStyle.labelSmall_10
                                                 .copyWith(
-                                              color: themeMode.isLight ? AppColors.neutral_02 : AppColors.neutral_07,
+                                              color: themeMode.isLight
+                                                  ? AppColors.neutral_02
+                                                  : AppColors.neutral_07,
                                               fontWeight: FontWeight.w500,
                                             ),
                                           ),

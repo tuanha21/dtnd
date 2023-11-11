@@ -1,4 +1,4 @@
-import 'package:dtnd/generated/l10n.dart';
+import 'package:dtnd/l10n/generated/l10n.dart';
 import 'package:dtnd/ui/screen/exercise_right/business/rights_info_flow.dart';
 import 'package:dtnd/ui/screen/exercise_right/sheet/registration_rights_sheet.dart';
 import 'package:flutter/material.dart';

@@ -1,8 +1,7 @@
 import 'package:dtnd/=models=/response/order_model/i_order_model.dart';
 import 'package:dtnd/=models=/side.dart';
 import 'package:dtnd/=models=/ui_model/user_cmd.dart';
-import 'package:dtnd/config/service/app_services.dart';
-import 'package:dtnd/generated/l10n.dart';
+import 'package:dtnd/l10n/generated/l10n.dart';
 import 'package:dtnd/ui/screen/exchange_stock/order_note/data/order_filter_data.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/widget/button/single_color_text_button.dart';

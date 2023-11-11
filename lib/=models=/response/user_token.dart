@@ -2,33 +2,6 @@ import 'package:dtnd/=models=/core_response_model.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 part 'user_token.g.dart';
 
-// class UserEntity {
-//   late final String? oID;
-//   late final int rc;
-//   late final String? rs;
-//   UserToken? loginData;
-
-//   UserEntity({this.oID, this.rc = 0, this.rs, this.loginData});
-
-//   UserEntity.fromJson(Map<String, dynamic> json) {
-//     oID = json['oID'];
-//     rc = json['rc'] ?? 0;
-//     rs = json['rs'];
-//     loginData = json['data'] != null ? UserToken.fromJson(json['data']) : null;
-//   }
-
-//   Map<String, dynamic> toJson() {
-//     final Map<String, dynamic> data = <String, dynamic>{};
-//     data['oID'] = oID;
-//     data['rc'] = rc;
-//     data['rs'] = rs;
-//     if (loginData != null) {
-//       data['data'] = loginData!.toJson();
-//     }
-//     return data;
-//   }
-// }
-
 @HiveType(typeId: 0)
 class UserToken implements CoreResponseModel {
   @HiveField(0)

@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import '../../../../../data/i_user_service.dart';
 import '../../../../../data/implementations/user_service.dart';
 import '../../../home/home_controller.dart';
-import '../single_post.dart';
 import 'detail_profile.dart';
 
 class InfoUserScreen extends StatefulWidget {
@@ -69,7 +68,7 @@ class _InfoUserScreenState extends State<InfoUserScreen>
                   fit: FlexFit.loose,
                   child: TabBarView(controller: _tabController, children: [
                     PostScreen(scrollController),
-                    StatisticsScreen()
+                    const StatisticsScreen()
                   ]),
                 )
               ],
@@ -80,4 +79,3 @@ class _InfoUserScreenState extends State<InfoUserScreen>
     );
   }
 }
-

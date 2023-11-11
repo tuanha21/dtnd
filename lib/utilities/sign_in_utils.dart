@@ -1,5 +1,5 @@
 import 'package:dtnd/data/i_local_storage_service.dart';
-import 'package:dtnd/generated/l10n.dart';
+import 'package:dtnd/l10n/generated/l10n.dart';
 import 'package:dtnd/ui/screen/login/login_screen.dart';
 import 'package:dtnd/ui/widget/overlay/custom_dialog.dart';
 import 'package:flutter/material.dart';

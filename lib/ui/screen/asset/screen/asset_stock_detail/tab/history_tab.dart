@@ -4,7 +4,7 @@ import 'package:dtnd/data/i_exchange_service.dart';
 import 'package:dtnd/data/i_user_service.dart';
 import 'package:dtnd/data/implementations/exchange_service.dart';
 import 'package:dtnd/data/implementations/user_service.dart';
-import 'package:dtnd/generated/l10n.dart';
+import 'package:dtnd/l10n/generated/l10n.dart';
 import 'package:dtnd/ui/screen/asset/screen/asset_stock_detail/asset_stock_detail_controller.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
@@ -103,7 +103,9 @@ class _HistoryTabState extends State<HistoryTab>
                   initialDay: fromDay,
                   firstDay: firstDay,
                   lastDay: lastDay,
-                  color: themeMode.isLight ? AppColors.neutral_06 : AppColors.text_black_1,
+                  color: themeMode.isLight
+                      ? AppColors.neutral_06
+                      : AppColors.text_black_1,
                   onChanged: (value) {
                     setState(() {
                       fromDay = value;
@@ -120,7 +122,9 @@ class _HistoryTabState extends State<HistoryTab>
                   initialDay: toDay,
                   firstDay: firstDay,
                   lastDay: lastDay,
-                  color: themeMode.isLight ? AppColors.neutral_06 : AppColors.text_black_1,
+                  color: themeMode.isLight
+                      ? AppColors.neutral_06
+                      : AppColors.text_black_1,
                   onChanged: (value) {
                     setState(() {
                       toDay = value;
@@ -142,7 +146,9 @@ class _HistoryTabState extends State<HistoryTab>
             Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
-                  color: themeMode.isLight ? AppColors.neutral_06 : AppColors.text_black_1,
+                  color: themeMode.isLight
+                      ? AppColors.neutral_06
+                      : AppColors.text_black_1,
                   borderRadius: const BorderRadius.all(Radius.circular(12))),
               child: Column(
                 children: [
@@ -151,9 +157,10 @@ class _HistoryTabState extends State<HistoryTab>
                       children: [
                         if (i != 0)
                           Divider(
-                            height: 17,
-                            color: themeMode.isLight ? AppColors.neutral_02 : AppColors.neutral_05
-                          ),
+                              height: 17,
+                              color: themeMode.isLight
+                                  ? AppColors.neutral_02
+                                  : AppColors.neutral_05),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [

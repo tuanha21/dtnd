@@ -1,7 +1,7 @@
 import 'package:dtnd/=models=/exchange.dart';
 import 'package:dtnd/=models=/side.dart';
 import 'package:dtnd/=models=/ui_model/user_cmd.dart';
-import 'package:dtnd/generated/l10n.dart';
+import 'package:dtnd/l10n/generated/l10n.dart';
 import 'package:dtnd/ui/screen/exchange_stock/stock_order/business/stock_order_flow.dart';
 import 'package:dtnd/ui/screen/exchange_stock/stock_order/data/order_data.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
@@ -122,7 +122,9 @@ class _StockOrderSuccessSheetState extends State<StockOrderSuccessSheet> {
             Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
-                  color: themeMode.isLight ? AppColors.light_bg : AppColors.neutral_02,
+                  color: themeMode.isLight
+                      ? AppColors.light_bg
+                      : AppColors.neutral_02,
                   borderRadius: BorderRadius.circular(8)),
               child: Column(
                 children: [
@@ -241,7 +243,9 @@ class _Row extends StatelessWidget {
         Text(
           label,
           style: TextStyle(
-              color: themeMode.isLight ? AppColors.text_grey_1 : AppColors.neutral_05,
+              color: themeMode.isLight
+                  ? AppColors.text_grey_1
+                  : AppColors.neutral_05,
               fontSize: 14,
               fontWeight: FontWeight.w500,
               height: 1.4),

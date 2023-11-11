@@ -1,4 +1,4 @@
-import 'package:dtnd/generated/l10n.dart';
+import 'package:dtnd/l10n/generated/l10n.dart';
 import 'package:dtnd/ui/screen/accumulation/controller/accumulation_controller.dart';
 import 'package:dtnd/ui/screen/accumulation/widget/accumulator_book.dart';
 import 'package:dtnd/ui/screen/accumulation/widget/accumulator_header.dart';
@@ -6,8 +6,6 @@ import 'package:dtnd/ui/screen/accumulation/widget/accumulator_history.dart';
 import 'package:dtnd/ui/screen/accumulation/widget/accumulator_product.dart';
 import 'package:dtnd/ui/widget/appbar/simple_appbar.dart';
 import 'package:flutter/material.dart';
-
-import '../../../config/service/app_services.dart';
 
 class Accumlation extends StatefulWidget {
   const Accumlation({super.key, this.defaultab = 0});
@@ -36,7 +34,6 @@ class _AccumlationState extends State<Accumlation>
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
-    final themeMode = AppService.instance.themeMode.value;
 
     return Scaffold(
       appBar: SimpleAppbar(

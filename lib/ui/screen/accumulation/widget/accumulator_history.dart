@@ -1,4 +1,4 @@
-import 'package:dtnd/=models=/response/cash_transaction_model.dart';
+import 'package:dtnd/=models=/response/account/cash_transaction_model.dart';
 import 'package:dtnd/data/i_user_service.dart';
 import 'package:dtnd/data/implementations/user_service.dart';
 import 'package:dtnd/ui/screen/account/component/cash_transaction_component.dart';
@@ -84,7 +84,9 @@ class _AccumulatorHistoryState extends State<AccumulatorHistory> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             DayInput(
-              color: themeMode.isLight ? AppColors.neutral_06 : AppColors.text_black_1,
+              color: themeMode.isLight
+                  ? AppColors.neutral_06
+                  : AppColors.text_black_1,
               initialDay: fromDay,
               firstDay: firstDay,
               lastDay: lastDay,
@@ -97,7 +99,9 @@ class _AccumulatorHistoryState extends State<AccumulatorHistory> {
             ),
             const Text("  -  "),
             DayInput(
-              color: themeMode.isLight ? AppColors.neutral_06 : AppColors.text_black_1,
+              color: themeMode.isLight
+                  ? AppColors.neutral_06
+                  : AppColors.text_black_1,
               initialDay: toDay,
               firstDay: firstDay,
               lastDay: lastDay,

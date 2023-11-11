@@ -1,5 +1,5 @@
 import 'package:charts_flutter/flutter.dart' as charts;
-import 'package:dtnd/=models=/response/stock_model.dart';
+import 'package:dtnd/=models=/response/market/stock_model.dart';
 import 'package:dtnd/data/i_network_service.dart';
 import 'package:dtnd/data/implementations/network_service.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
@@ -7,10 +7,10 @@ import 'package:dtnd/utilities/charts_util.dart';
 import 'package:dtnd/utilities/num_utils.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../=models=/response/sec_trading.dart';
-import '../../../../=models=/response/stock_board.dart';
+import '../../../../=models=/response/market/sec_trading.dart';
+import '../../../../=models=/response/market/stock_board.dart';
 import '../../../../config/service/app_services.dart';
-import '../../../../generated/l10n.dart';
+import '../../../../l10n/generated/l10n.dart';
 
 class ForeignWidget extends StatefulWidget {
   final StockModel stockModel;

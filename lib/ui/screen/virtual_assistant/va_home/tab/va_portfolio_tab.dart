@@ -1,4 +1,4 @@
-import 'package:dtnd/=models=/response/stock.dart';
+import 'package:dtnd/=models=/response/market/stock.dart';
 import 'package:dtnd/ui/screen/search/search_screen.dart';
 import 'package:dtnd/ui/screen/virtual_assistant/va_home/va_controller.dart';
 import 'package:dtnd/ui/widget/button/async_button.dart';
@@ -6,14 +6,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
-import '../../../../../=models=/response/stock_model.dart';
+import '../../../../../=models=/response/market/stock_model.dart';
 import '../../../../../data/i_data_center_service.dart';
 import '../../../../../data/i_network_service.dart';
 import '../../../../../data/i_user_service.dart';
 import '../../../../../data/implementations/data_center_service.dart';
 import '../../../../../data/implementations/network_service.dart';
 import '../../../../../data/implementations/user_service.dart';
-import '../../../../../generated/l10n.dart';
+import '../../../../../l10n/generated/l10n.dart';
 import '../../../../../utilities/responsive.dart';
 import '../../../../../utilities/validator.dart';
 import '../../../../theme/app_color.dart';

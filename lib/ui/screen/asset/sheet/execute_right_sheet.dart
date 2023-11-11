@@ -1,9 +1,9 @@
 import 'package:dtnd/=models=/response/account/i_account.dart';
 import 'package:dtnd/=models=/response/account/unexecuted_right_model.dart';
-import 'package:dtnd/=models=/response/stock.dart';
+import 'package:dtnd/=models=/response/market/stock.dart';
 import 'package:dtnd/data/i_exchange_service.dart';
 import 'package:dtnd/data/implementations/exchange_service.dart';
-import 'package:dtnd/generated/l10n.dart';
+import 'package:dtnd/l10n/generated/l10n.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_textstyle.dart';
 import 'package:dtnd/ui/widget/button/single_color_text_button.dart';
@@ -134,7 +134,10 @@ class _ExecuteRightSheetState extends State<ExecuteRightSheet>
                           Text(
                             widget.unexecutedRightModel.cRECEIVESHARECODE ??
                                 "-",
-                            style: textTheme.titleSmall?.copyWith(color: themeMode.isLight ? null : AppColors.neutral_07),
+                            style: textTheme.titleSmall?.copyWith(
+                                color: themeMode.isLight
+                                    ? null
+                                    : AppColors.neutral_07),
                           ),
                         ],
                       ),
@@ -189,7 +192,9 @@ class _ExecuteRightSheetState extends State<ExecuteRightSheet>
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.all(Radius.circular(12)),
-                color: themeMode.isLight ? AppColors.neutral_06 : AppColors.bg_share_inside_nav,
+                color: themeMode.isLight
+                    ? AppColors.neutral_06
+                    : AppColors.bg_share_inside_nav,
               ),
               child: Column(
                 children: [

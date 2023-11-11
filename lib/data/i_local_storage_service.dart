@@ -1,6 +1,6 @@
 import 'package:dtnd/=models=/local/saved_catalog.dart';
 import 'package:dtnd/=models=/local/va_portfolio_model.dart';
-import 'package:dtnd/=models=/response/stock.dart';
+import 'package:dtnd/=models=/response/market/stock.dart';
 import 'package:dtnd/=models=/response/user_token.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:local_auth/local_auth.dart';
@@ -8,6 +8,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 abstract class ILocalStorageService {
   int get appAccessTime;
+
+  bool get firstTimeOpenApp;
 
   Box get box;
 

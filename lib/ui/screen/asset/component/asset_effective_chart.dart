@@ -6,6 +6,7 @@ import 'package:dtnd/=models=/response/stock_trading_history.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/utilities/charts/chart_data_mixin.dart';
 import 'package:dtnd/utilities/charts_util.dart';
+import 'package:dtnd/utilities/functional/invest_effect.dart';
 import 'package:dtnd/utilities/num_utils.dart';
 import 'package:dtnd/utilities/time_utils.dart';
 import 'package:flutter/material.dart';
@@ -29,7 +30,7 @@ class AssetEffectiveChart extends StatefulWidget {
 }
 
 class _AssetEffectiveChartState extends State<AssetEffectiveChart>
-    with ChartDatasMixin {
+    with ChartDatasMixin, InvestEffect {
   final math.Random random = math.Random();
   static const secondaryMeasureAxisId = 'secondaryMeasureAxisId';
 
@@ -65,10 +66,9 @@ class _AssetEffectiveChartState extends State<AssetEffectiveChart>
           start = datas.first.cTRADINGDATE;
           end = datas.last.cTRADINGDATE;
           firstAsset = datas.first.cNETVALUE;
-          assetPercents = [datas.first.cDAYPROFITRATE];
-          for (var element in datas) {
-            assetPercents.add(assetPercents.last + element.cDAYPROFITRATE);
-          }
+          final List<num> assetProfit =
+              datas.map<num>((e) => e.cDAYPROFITRATE).toList();
+          assetPercents = calculateEffect(assetProfit);
           min = assetPercents.reduce(math.min);
           max = assetPercents.reduce(math.max);
         }

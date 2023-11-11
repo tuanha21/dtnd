@@ -1,9 +1,9 @@
 import 'dart:ui';
 
-import 'package:dtnd/=models=/response/top_signal_stock_model.dart';
+import 'package:dtnd/=models=/response/market/top_signal_stock_model.dart';
 import 'package:dtnd/config/service/app_services.dart';
 import 'package:dtnd/data/implementations/data_center_service.dart';
-import 'package:dtnd/generated/l10n.dart';
+import 'package:dtnd/l10n/generated/l10n.dart';
 import 'package:dtnd/ui/screen/home/screen/signal/signal_screen.dart';
 import 'package:dtnd/ui/screen/home/screen/suggested_signal/suggested_signal_screen.dart';
 import 'package:dtnd/ui/screen/home/widget/home_simple_line_chart.dart';

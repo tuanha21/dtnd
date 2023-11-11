@@ -2,7 +2,7 @@ import 'package:dtnd/config/service/app_services.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:flutter/material.dart';
 
-import '../../../generated/l10n.dart';
+import '../../../l10n/generated/l10n.dart';
 
 class DisplayScreen extends StatefulWidget {
   const DisplayScreen({Key? key}) : super(key: key);
@@ -30,7 +30,8 @@ class _DisplayScreenState extends State<DisplayScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: themeMode.isLight ? AppColors.neutral_07 : AppColors.text_black_1,
+        backgroundColor:
+            themeMode.isLight ? AppColors.neutral_07 : AppColors.text_black_1,
         title: Text(
           S.of(context).interface,
           style: TextStyle(
@@ -41,14 +42,18 @@ class _DisplayScreenState extends State<DisplayScreen> {
         centerTitle: true,
       ),
       body: Container(
-        color: themeMode.isLight ? AppColors.neutral_07 : AppColors.text_black_1,
+        color:
+            themeMode.isLight ? AppColors.neutral_07 : AppColors.text_black_1,
         child: Column(
           children: [
             Container(
               margin: const EdgeInsets.symmetric(horizontal: 16),
               decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(12),
-                  color: themeMode.isLight ? AppColors.neutral_07 : AppColors.text_black_1,),
+                borderRadius: BorderRadius.circular(12),
+                color: themeMode.isLight
+                    ? AppColors.neutral_07
+                    : AppColors.text_black_1,
+              ),
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,

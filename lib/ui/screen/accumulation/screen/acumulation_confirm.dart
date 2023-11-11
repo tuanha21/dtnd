@@ -1,4 +1,4 @@
-import 'package:dtnd/=models=/response/account_info_model.dart';
+import 'package:dtnd/=models=/response/account/account_info_model.dart';
 import 'package:dtnd/=models=/response/accumulation/fee_rate_model.dart';
 import 'package:dtnd/data/i_user_service.dart';
 import 'package:dtnd/data/implementations/user_service.dart';
@@ -13,7 +13,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../config/service/app_services.dart';
-import '../../../../generated/l10n.dart';
+import '../../../../l10n/generated/l10n.dart';
 import '../widget/row_information.dart';
 
 class AccumulationConfirm extends StatefulWidget {
@@ -145,7 +145,9 @@ class _AccumulationConfirmState extends State<AccumulationConfirm> {
         children: [
           Container(
             decoration: BoxDecoration(
-              color: themeMode.isLight ? AppColors.neutral_07 : AppColors.neutral_01,
+              color: themeMode.isLight
+                  ? AppColors.neutral_07
+                  : AppColors.neutral_01,
               borderRadius: BorderRadius.circular(12),
             ),
             padding:
@@ -157,7 +159,8 @@ class _AccumulationConfirmState extends State<AccumulationConfirm> {
                     rightText: feeRate.productName.toString()),
                 RowInfomation(
                   leftText: S.of(context).profit,
-                  rightText: '${feeRate.feeRate.toString()}%/${S.of(context).year}',
+                  rightText:
+                      '${feeRate.feeRate.toString()}%/${S.of(context).year}',
                 ),
                 RowInfomation(
                     leftText: S.of(context).period,
@@ -176,7 +179,9 @@ class _AccumulationConfirmState extends State<AccumulationConfirm> {
             height: 90,
             padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
-              color: themeMode.isLight ? AppColors.neutral_07 : AppColors.neutral_01,
+              color: themeMode.isLight
+                  ? AppColors.neutral_07
+                  : AppColors.neutral_01,
               borderRadius: BorderRadius.circular(12),
             ),
             child: Column(
@@ -185,7 +190,9 @@ class _AccumulationConfirmState extends State<AccumulationConfirm> {
               children: [
                 Text(S.of(context).renewal_method,
                     style: textTheme.bodySmall?.copyWith(
-                      color: themeMode.isLight ? AppColors.neutral_02 : AppColors.neutral_05,
+                      color: themeMode.isLight
+                          ? AppColors.neutral_02
+                          : AppColors.neutral_05,
                     )),
                 const SizedBox(height: 4),
                 Row(
@@ -220,7 +227,9 @@ class _AccumulationConfirmState extends State<AccumulationConfirm> {
           Container(
             padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
-              color: themeMode.isLight ? AppColors.neutral_07 : AppColors.neutral_01,
+              color: themeMode.isLight
+                  ? AppColors.neutral_07
+                  : AppColors.neutral_01,
               borderRadius: BorderRadius.circular(12),
             ),
             child: Column(
@@ -236,7 +245,9 @@ class _AccumulationConfirmState extends State<AccumulationConfirm> {
                   alignment: Alignment.center,
                   padding: const EdgeInsets.symmetric(horizontal: 8),
                   decoration: BoxDecoration(
-                    color: themeMode.isLight ? AppColors.neutral_06 : AppColors.neutral_02,
+                    color: themeMode.isLight
+                        ? AppColors.neutral_06
+                        : AppColors.neutral_02,
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Row(
@@ -244,13 +255,17 @@ class _AccumulationConfirmState extends State<AccumulationConfirm> {
                     children: [
                       Text(
                         S.of(context).payment_required,
-                        style: textTheme.bodyMedium
-                            ?.copyWith(color: themeMode.isLight ? AppColors.neutral_02 : AppColors.neutral_07),
+                        style: textTheme.bodyMedium?.copyWith(
+                            color: themeMode.isLight
+                                ? AppColors.neutral_02
+                                : AppColors.neutral_07),
                       ),
                       Text('${NumUtils.formatInteger(widget.money)}đ',
                           style: textTheme.bodyLarge?.copyWith(
                               fontWeight: FontWeight.bold,
-                              color: themeMode.isLight ? AppColors.text_black : AppColors.neutral_07)),
+                              color: themeMode.isLight
+                                  ? AppColors.text_black
+                                  : AppColors.neutral_07)),
                     ],
                   ),
                 )
@@ -312,7 +327,9 @@ class _AccumulationConfirmState extends State<AccumulationConfirm> {
                           padding: const EdgeInsets.only(left: 20),
                           margin: const EdgeInsets.only(bottom: 16),
                           decoration: BoxDecoration(
-                              color: themeMode.isLight ? Colors.white : AppColors.bg_share_inside_nav,
+                              color: themeMode.isLight
+                                  ? Colors.white
+                                  : AppColors.bg_share_inside_nav,
                               borderRadius: BorderRadius.circular(12),
                               border: Border.all(
                                   color: _selectedMethod[index] == true

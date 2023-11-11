@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import '../../../../=models=/response/stock_model.dart';
+import '../../../../=models=/response/market/stock_model.dart';
 import '../../../../config/service/app_services.dart';
-import '../../../../generated/l10n.dart';
+import '../../../../l10n/generated/l10n.dart';
 import '../../../theme/app_color.dart';
 import '../widget/foreign_widget.dart';
 import '../widget/tab_matched_detail.dart';
@@ -30,7 +30,9 @@ class _TransactionTabState extends State<TransactionTab> {
             floating: true,
             flexibleSpace: SingleChildScrollView(
               child: Container(
-                color: themeMode.isLight ? AppColors.neutral_07 : AppColors.neutral_01,
+                color: themeMode.isLight
+                    ? AppColors.neutral_07
+                    : AppColors.neutral_01,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [

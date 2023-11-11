@@ -1,8 +1,8 @@
 import 'package:dtnd/=models=/response/share_transaction_model.dart';
-import 'package:dtnd/=models=/response/stock.dart';
+import 'package:dtnd/=models=/response/market/stock.dart';
 import 'package:dtnd/data/i_data_center_service.dart';
 import 'package:dtnd/data/implementations/data_center_service.dart';
-import 'package:dtnd/generated/l10n.dart';
+import 'package:dtnd/l10n/generated/l10n.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_textstyle.dart';
 import 'package:dtnd/ui/widget/icon/stock_icon.dart';
@@ -42,7 +42,8 @@ class _ShareTransactionComponentState extends State<ShareTransactionComponent> {
       margin: const EdgeInsets.symmetric(vertical: 4),
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: themeMode.isLight ? AppColors.neutral_06 : AppColors.text_black_1,
+        color:
+            themeMode.isLight ? AppColors.neutral_06 : AppColors.text_black_1,
         borderRadius: const BorderRadius.all(
           Radius.circular(12),
         ),
@@ -66,20 +67,29 @@ class _ShareTransactionComponentState extends State<ShareTransactionComponent> {
                         Expanded(
                           child: Text(
                             widget.data.cSHARECODE ?? "-",
-                            style: textTheme.titleSmall?.copyWith(color: themeMode.isLight ? AppColors.neutral_04 : AppColors.neutral_07,),
+                            style: textTheme.titleSmall?.copyWith(
+                              color: themeMode.isLight
+                                  ? AppColors.neutral_04
+                                  : AppColors.neutral_07,
+                            ),
                           ),
                         ),
                         Text(
                           widget.data.cSTATUSNODE ?? "-",
-                          style: textTheme.titleSmall?.copyWith(color: themeMode.isLight ? AppColors.neutral_04 : AppColors.neutral_07,),
+                          style: textTheme.titleSmall?.copyWith(
+                            color: themeMode.isLight
+                                ? AppColors.neutral_04
+                                : AppColors.neutral_07,
+                          ),
                         ),
                       ],
                     ),
                     Text(
                       stock?.nameShort ?? "",
                       overflow: TextOverflow.ellipsis,
-                      style: AppTextStyle.labelSmall_10
-                          .copyWith(color:   AppColors.neutral_03  ,),
+                      style: AppTextStyle.labelSmall_10.copyWith(
+                        color: AppColors.neutral_03,
+                      ),
                     ),
                     // Text(
                     //   "${(widget.volPc ?? 0).toStringAsFixed(2)}%",
@@ -101,14 +111,16 @@ class _ShareTransactionComponentState extends State<ShareTransactionComponent> {
                   Text(
                     S.of(context).time,
                     style: AppTextStyle.bodySmall_8.copyWith(
-                      color:  AppColors.neutral_04  ,
+                      color: AppColors.neutral_04,
                       fontWeight: FontWeight.w600,
                     ),
                   ),
                   Text(
                     widget.data.cDUEDATE ?? "",
-                    style:  AppTextStyle.bodySmall_12.copyWith(
-                      color: themeMode.isLight ? AppColors.neutral_01 : AppColors.neutral_07,
+                    style: AppTextStyle.bodySmall_12.copyWith(
+                      color: themeMode.isLight
+                          ? AppColors.neutral_01
+                          : AppColors.neutral_07,
                       fontWeight: FontWeight.w600,
                     ),
                   ),
@@ -120,7 +132,7 @@ class _ShareTransactionComponentState extends State<ShareTransactionComponent> {
                   Text(
                     S.of(context).increase_decrease_occurred,
                     style: AppTextStyle.bodySmall_8.copyWith(
-                      color:  AppColors.neutral_04  ,
+                      color: AppColors.neutral_04,
                       fontWeight: FontWeight.w600,
                     ),
                   ),
@@ -143,13 +155,17 @@ class _ShareTransactionComponentState extends State<ShareTransactionComponent> {
                       text: TextSpan(children: [
                         TextSpan(
                             text: "${S.of(context).detail}: ",
-                            style: AppTextStyle.labelSmall_10
-                                .copyWith(color: themeMode.isLight ? AppColors.neutral_01 : AppColors.neutral_03)),
+                            style: AppTextStyle.labelSmall_10.copyWith(
+                                color: themeMode.isLight
+                                    ? AppColors.neutral_01
+                                    : AppColors.neutral_03)),
                         TextSpan(
                             text: widget.data.cCONTENT,
                             style: AppTextStyle.labelSmall_10.copyWith(
                               fontWeight: FontWeight.w500,
-                              color: themeMode.isLight ? AppColors.neutral_03 : AppColors.neutral_07,
+                              color: themeMode.isLight
+                                  ? AppColors.neutral_03
+                                  : AppColors.neutral_07,
                             )),
                       ])))
             ],

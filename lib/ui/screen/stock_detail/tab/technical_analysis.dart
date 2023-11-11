@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
@@ -17,37 +15,56 @@ class TechnicalAnalysis extends StatefulWidget {
 
 class _TechnicalAnalysisState extends State<TechnicalAnalysis>
     with AutomaticKeepAliveClientMixin {
-  JavascriptChannel _toasterJavascriptChannel(BuildContext context) {
-    return JavascriptChannel(
-        name: 'Toaster',
-        onMessageReceived: (JavascriptMessage message) {
-          // ignore: deprecated_member_use
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(message.message)),
-          );
-        });
+  late final WebViewController controller;
+  late ThemeMode themeMode;
+  @override
+  void initState() {
+    super.initState();
+    controller = WebViewController()
+      ..setJavaScriptMode(JavaScriptMode.unrestricted)
+      ..addJavaScriptChannel('Toaster',
+          onMessageReceived: (JavaScriptMessage message) {
+        // ignore: deprecated_member_use
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(message.message)),
+        );
+      })
+      ..setBackgroundColor(Colors.transparent)
+      ..setBackgroundColor(const Color(0x00000000))
+      ..setNavigationDelegate(
+        NavigationDelegate(
+          onProgress: (int progress) {
+            // Update loading bar.
+          },
+          onPageStarted: (String url) {},
+          onPageFinished: (String url) {},
+          onWebResourceError: (WebResourceError error) {},
+          onNavigationRequest: (NavigationRequest request) {
+            if (request.url.startsWith('https://www.youtube.com/')) {
+              return NavigationDecision.prevent;
+            }
+            return NavigationDecision.navigate;
+          },
+        ),
+      );
+    themeMode = AppService.instance.themeMode.value;
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      controller.loadRequest(Uri.https(
+          "https://info.sbsi.vn/chart/?symbol=${widget.stockCode}&language=vi&theme=${themeMode.isDark ? "dark" : "light"}",
+          "chart", {
+        "symbol": widget.stockCode,
+        "language": "vi",
+        "theme": themeMode.isDark ? "dark" : "light"
+      }));
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    final ThemeMode themeMode = AppService.instance.themeMode.value;
     super.build(context);
-    return WebView(
-        javascriptMode: JavascriptMode.unrestricted,
-        backgroundColor: Colors.transparent,
-        javascriptChannels: <JavascriptChannel>{
-          _toasterJavascriptChannel(context),
-        },
-        initialUrl:
-            "https://info.sbsi.vn/chart/?symbol=${widget.stockCode}&language=vi&theme=${themeMode.isDark ? "dark" : "light"}");
+    return WebViewWidget(controller: controller);
   }
 
   @override
   bool get wantKeepAlive => true;
-
-  @override
-  void initState() {
-    super.initState();
-    if (Platform.isAndroid) WebView.platform = AndroidWebView();
-  }
 }

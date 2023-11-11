@@ -4,7 +4,7 @@ import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../config/service/app_services.dart';
-import '../../../../generated/l10n.dart';
+import '../../../../l10n/generated/l10n.dart';
 
 class SettlementSuccessDialog extends StatelessWidget {
   const SettlementSuccessDialog({super.key});
@@ -21,7 +21,8 @@ class SettlementSuccessDialog extends StatelessWidget {
       margin: EdgeInsets.symmetric(
           horizontal: width / 375 * 24, vertical: height / 812 * 180),
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12), color: themeMode.isLight ? Colors.white : AppColors.neutral_01),
+          borderRadius: BorderRadius.circular(12),
+          color: themeMode.isLight ? Colors.white : AppColors.neutral_01),
       child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
@@ -33,11 +34,16 @@ class SettlementSuccessDialog extends StatelessWidget {
             const SizedBox(height: 30),
             Text(S.of(context).successful_settlement,
                 style: textTheme.labelLarge?.copyWith(
-                    color: themeMode.isLight ? AppColors.text_black : AppColors.neutral_05, fontWeight: FontWeight.bold)),
+                    color: themeMode.isLight
+                        ? AppColors.text_black
+                        : AppColors.neutral_05,
+                    fontWeight: FontWeight.bold)),
             const SizedBox(height: 20),
             Text(S.of(context).you_have_completed_the_payment,
                 style: textTheme.bodyLarge?.copyWith(
-                  color: themeMode.isLight ? AppColors.neutral_02 : AppColors.neutral_05,
+                  color: themeMode.isLight
+                      ? AppColors.neutral_02
+                      : AppColors.neutral_05,
                 )),
             const SizedBox(height: 24),
             Row(

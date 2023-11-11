@@ -1,7 +1,7 @@
 import 'package:dtnd/=models=/ui_model/exception.dart';
 import 'package:dtnd/config/helper/app_service_helper.dart';
 import 'package:dtnd/data/i_network_service.dart';
-import 'package:dtnd/generated/l10n.dart';
+import 'package:dtnd/l10n/generated/l10n.dart';
 import 'package:dtnd/utilities/logger.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -78,10 +78,9 @@ class AppService {
 
   Future<ThemeMode> _changeThemeMode(ThemeMode themeMode) async {
     _themeMode.value = themeMode;
-    print(themeMode.name);
     await sharedPreferencesInstance.setString("ThemeMode", themeMode.name);
-    final getThemeMode = sharedPreferencesInstance.getString("ThemeMode");
-    print("getThemeMode $getThemeMode");
+    // final getThemeMode = sharedPreferencesInstance.getString("ThemeMode");
+    // print("getThemeMode $getThemeMode");
     return themeMode;
   }
 

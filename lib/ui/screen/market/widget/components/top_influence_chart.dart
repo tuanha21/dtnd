@@ -1,13 +1,8 @@
-// ignore_for_file: unused_field
-
 import 'package:charts_flutter/flutter.dart' as charts;
-import 'package:dtnd/=models=/response/top_influence_model.dart';
-import 'package:dtnd/generated/l10n.dart';
+import 'package:dtnd/=models=/response/market/top_influence_model.dart';
+import 'package:dtnd/l10n/generated/l10n.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
-import 'package:dtnd/utilities/charts_util.dart';
 import 'package:flutter/material.dart';
-
-import '../../../../../config/service/app_services.dart';
 
 class TopInfluenceChart extends StatefulWidget {
   final Future<List<TopInfluenceModel>> topInfluenceList;
@@ -21,8 +16,6 @@ class TopInfluenceChart extends StatefulWidget {
 class _TopInfluenceChartState extends State<TopInfluenceChart> {
   @override
   Widget build(BuildContext context) {
-    final ThemeMode themeMode = AppService.instance.themeMode.value;
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [

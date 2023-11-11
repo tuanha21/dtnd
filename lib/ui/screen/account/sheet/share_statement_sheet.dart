@@ -1,7 +1,7 @@
 import 'package:dtnd/=models=/response/share_transaction_model.dart';
 import 'package:dtnd/data/i_exchange_service.dart';
 import 'package:dtnd/data/implementations/exchange_service.dart';
-import 'package:dtnd/generated/l10n.dart';
+import 'package:dtnd/l10n/generated/l10n.dart';
 import 'package:dtnd/ui/screen/account/component/share_transaction_component.dart';
 import 'package:dtnd/ui/widget/appbar/simple_appbar.dart';
 import 'package:dtnd/ui/widget/calendar/day_input.dart';
@@ -94,7 +94,9 @@ class _ShareStatementSheetState extends State<ShareStatementSheet> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   DayInput(
-                    color: themeMode.isLight ? AppColors.neutral_06 : AppColors.text_black_1,
+                    color: themeMode.isLight
+                        ? AppColors.neutral_06
+                        : AppColors.text_black_1,
                     initialDay: fromDay,
                     firstDay: firstDay,
                     lastDay: lastDay,
@@ -107,7 +109,9 @@ class _ShareStatementSheetState extends State<ShareStatementSheet> {
                   ),
                   const Text("-"),
                   DayInput(
-                    color: themeMode.isLight ? AppColors.neutral_06 : AppColors.text_black_1,
+                    color: themeMode.isLight
+                        ? AppColors.neutral_06
+                        : AppColors.text_black_1,
                     initialDay: toDay,
                     firstDay: firstDay,
                     lastDay: lastDay,

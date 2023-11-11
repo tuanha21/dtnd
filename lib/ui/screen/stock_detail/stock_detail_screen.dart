@@ -2,7 +2,7 @@
 
 import 'dart:async';
 
-import 'package:dtnd/=models=/response/stock_model.dart';
+import 'package:dtnd/=models=/response/market/stock_model.dart';
 import 'package:dtnd/data/i_data_center_service.dart';
 import 'package:dtnd/data/i_local_storage_service.dart';
 import 'package:dtnd/data/i_user_service.dart';
@@ -23,7 +23,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../../../config/service/app_services.dart';
-import '../../../generated/l10n.dart';
+import '../../../l10n/generated/l10n.dart';
 import '../../widget/overlay/custom_dialog.dart';
 import '../exchange_stock/stock_order/business/stock_order_flow.dart';
 import 'tab/technical_analysis.dart';
@@ -197,9 +197,8 @@ class _StockDetailScreenState extends State<StockDetailScreen> {
                 ),
               )
             ]),
-      backgroundColor: themeMode.isLight
-          ? AppColors.bg_1
-          : AppColors.neutral_01,
+      backgroundColor:
+          themeMode.isLight ? AppColors.bg_1 : AppColors.neutral_01,
       floatingActionButton: SizedBox.square(
         dimension: 40,
         child: Material(

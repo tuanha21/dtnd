@@ -1,6 +1,6 @@
 import 'package:dtnd/data/i_user_service.dart';
 import 'package:dtnd/data/implementations/user_service.dart';
-import 'package:dtnd/generated/l10n.dart';
+import 'package:dtnd/l10n/generated/l10n.dart';
 import 'package:dtnd/ui/screen/accumulation/widget/accumulation_dialog.dart';
 import 'package:dtnd/ui/screen/accumulation/widget/error_register_dialog.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
@@ -45,7 +45,9 @@ class _AccumulationAutoRegisterDialogState
               padding: const EdgeInsets.only(
                   top: 40.0, left: 10.0, right: 10.0, bottom: 10.0),
               child: Material(
-                color: themeMode.isLight ? AppColors.light_bg : AppColors.text_black_1,
+                color: themeMode.isLight
+                    ? AppColors.light_bg
+                    : AppColors.text_black_1,
                 shape: const RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(
                     Radius.circular(10),
@@ -61,7 +63,9 @@ class _AccumulationAutoRegisterDialogState
                         Stack(
                           children: <Widget>[
                             Container(
-                              color: themeMode.isLight ? AppColors.light_bg : AppColors.text_black_1,
+                              color: themeMode.isLight
+                                  ? AppColors.light_bg
+                                  : AppColors.text_black_1,
                               child: Container(
                                 padding: EdgeInsets.zero,
                                 width: MediaQuery.of(context).size.width,
@@ -84,8 +88,9 @@ class _AccumulationAutoRegisterDialogState
                                                     .confirm_registration,
                                             style: AppTextStyle.labelLarge_18
                                                 .copyWith(
-                                                    color:
-                                                    themeMode.isLight ? AppColors.neutral_01 : AppColors.neutral_07),
+                                                    color: themeMode.isLight
+                                                        ? AppColors.neutral_01
+                                                        : AppColors.neutral_07),
                                           )
                                         ],
                                       ),
@@ -95,11 +100,17 @@ class _AccumulationAutoRegisterDialogState
                                             left: 16, right: 16),
                                         child: Text(
                                           widget.isRegister
-                                              ? S.of(context).are_you_sure_you_want_to_unsubscribe_from_automatic_accrual_products
-                                              : S.of(context).are_you_sure_you_want_to_sign_up_for_automatic_accrual_products,
+                                              ? S
+                                                  .of(context)
+                                                  .are_you_sure_you_want_to_unsubscribe_from_automatic_accrual_products
+                                              : S
+                                                  .of(context)
+                                                  .are_you_sure_you_want_to_sign_up_for_automatic_accrual_products,
                                           style: AppTextStyle.bodyMedium_14
                                               .copyWith(
-                                                  color: themeMode.isLight ? AppColors.neutral_04 : AppColors.neutral_07),
+                                                  color: themeMode.isLight
+                                                      ? AppColors.neutral_04
+                                                      : AppColors.neutral_07),
                                           textAlign: TextAlign.center,
                                         ),
                                       ),
@@ -158,8 +169,12 @@ class _AccumulationAutoRegisterDialogState
                                                           AccumulationDialog(
                                                         content: widget
                                                                 .isRegister
-                                                            ? S.of(context).you_have_successfully_deleted_the_auto_registry
-                                                            :S.of(context).you_have_completed_the_automatic_accrual_registration,
+                                                            ? S
+                                                                .of(context)
+                                                                .you_have_successfully_deleted_the_auto_registry
+                                                            : S
+                                                                .of(context)
+                                                                .you_have_completed_the_automatic_accrual_registration,
                                                         title: widget.isRegister
                                                             ? S
                                                                 .of(context)

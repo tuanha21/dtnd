@@ -4,7 +4,7 @@ import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../config/service/app_services.dart';
-import '../../../../generated/l10n.dart';
+import '../../../../l10n/generated/l10n.dart';
 
 class ErrorRegisterDialog extends StatelessWidget {
   const ErrorRegisterDialog({super.key, required this.error});
@@ -36,12 +36,17 @@ class ErrorRegisterDialog extends StatelessWidget {
           const SizedBox(height: 30),
           Text(error,
               style: textTheme.labelLarge?.copyWith(
-                  color: themeMode.isLight ? AppColors.text_black : AppColors.neutral_05, fontWeight: FontWeight.bold)),
+                  color: themeMode.isLight
+                      ? AppColors.text_black
+                      : AppColors.neutral_05,
+                  fontWeight: FontWeight.bold)),
           const SizedBox(height: 20),
           Text(
             S.of(context).please_try_again,
             style: textTheme.bodyLarge?.copyWith(
-              color: themeMode.isLight ? AppColors.neutral_02 : AppColors.neutral_05,
+              color: themeMode.isLight
+                  ? AppColors.neutral_02
+                  : AppColors.neutral_05,
             ),
           ),
           const SizedBox(height: 24),

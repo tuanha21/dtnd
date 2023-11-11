@@ -4,7 +4,7 @@ import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../config/service/app_services.dart';
-import '../../../../generated/l10n.dart';
+import '../../../../l10n/generated/l10n.dart';
 
 class AccumulationDialog extends StatelessWidget {
   const AccumulationDialog(
@@ -25,7 +25,8 @@ class AccumulationDialog extends StatelessWidget {
       margin: EdgeInsets.symmetric(
           horizontal: width / 400 * 24, vertical: height / 880 * 180),
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12), color: themeMode.isLight ? Colors.white : AppColors.text_black_1),
+          borderRadius: BorderRadius.circular(12),
+          color: themeMode.isLight ? Colors.white : AppColors.text_black_1),
       child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
@@ -38,12 +39,17 @@ class AccumulationDialog extends StatelessWidget {
             Text(title,
                 textAlign: TextAlign.center,
                 style: textTheme.labelLarge?.copyWith(
-                    color: themeMode.isLight ? AppColors.text_black : AppColors.neutral_07, fontWeight: FontWeight.bold)),
+                    color: themeMode.isLight
+                        ? AppColors.text_black
+                        : AppColors.neutral_07,
+                    fontWeight: FontWeight.bold)),
             const SizedBox(height: 20),
             Text(content,
                 textAlign: TextAlign.center,
                 style: textTheme.bodyLarge?.copyWith(
-                  color: themeMode.isLight ? AppColors.neutral_02 : AppColors.neutral_07,
+                  color: themeMode.isLight
+                      ? AppColors.neutral_02
+                      : AppColors.neutral_07,
                 )),
             const SizedBox(height: 20),
             Row(
@@ -60,12 +66,14 @@ class AccumulationDialog extends StatelessWidget {
                               builder: (context) => const Accumlation()),
                           (r) => r.isFirst);
                     },
-                    child:   Text(S.of(context).product,
-                        style: const TextStyle(
-                            color: AppColors.text_blue,
-                            fontSize: 14,
-                            fontWeight: FontWeight.w700,
-                            height: 1.4),),
+                    child: Text(
+                      S.of(context).product,
+                      style: const TextStyle(
+                          color: AppColors.text_blue,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w700,
+                          height: 1.4),
+                    ),
                   ),
                 ),
                 const SizedBox(width: 8),

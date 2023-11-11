@@ -2,7 +2,7 @@ import 'package:get/get_rx/src/rx_types/rx_types.dart';
 
 import '../../../../../=models=/request/request_model.dart';
 import '../../../../../=models=/response/share_earned_model.dart';
-import '../../../../../=models=/response/stock_model.dart';
+import '../../../../../=models=/response/market/stock_model.dart';
 import '../../../../../data/i_data_center_service.dart';
 import '../../../../../data/i_local_storage_service.dart';
 import '../../../../../data/i_network_service.dart';

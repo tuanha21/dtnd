@@ -1,5 +1,6 @@
 import 'dart:ui';
-import '../../ui/screen/market/widget/industry_map.dart';
+
+import 'package:dtnd/ui/screen/market/widget/industry_map.dart';
 
 class IndContrib {
   String? dataDate;

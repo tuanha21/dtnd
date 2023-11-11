@@ -1,10 +1,10 @@
 import 'package:dtnd/=models=/algo/match_type.dart';
 import 'package:dtnd/=models=/algo/org_filter.dart';
 import 'package:dtnd/=models=/index.dart';
-import 'package:dtnd/=models=/response/indContrib.dart';
+import 'package:dtnd/=models=/response/market/ind_contrib.dart';
 import 'package:dtnd/data/i_data_center_service.dart';
 import 'package:dtnd/data/implementations/data_center_service.dart';
-import 'package:dtnd/generated/l10n.dart';
+import 'package:dtnd/l10n/generated/l10n.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:dtnd/utilities/num_utils.dart';
 import 'package:dtnd/utilities/time_utils.dart';
@@ -63,8 +63,7 @@ class _MarketAnalysisTabState extends State<MarketAnalysisTab>
           padding: const EdgeInsets.all(8),
           decoration: BoxDecoration(
               borderRadius: const BorderRadius.all(Radius.circular(12)),
-              color: ThemeMode.isLight ? AppColors.neutral_07 : AppColors.bg_2
-          ),
+              color: ThemeMode.isLight ? AppColors.neutral_07 : AppColors.bg_2),
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 8),
             child: Row(
@@ -77,7 +76,9 @@ class _MarketAnalysisTabState extends State<MarketAnalysisTab>
                       decoration: BoxDecoration(
                           borderRadius:
                               const BorderRadius.all(Radius.circular(8)),
-                          color: ThemeMode.isLight ? AppColors.neutral_07 : AppColors.text_black_1),
+                          color: ThemeMode.isLight
+                              ? AppColors.neutral_07
+                              : AppColors.text_black_1),
                       child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -163,7 +164,9 @@ class _MarketAnalysisTabState extends State<MarketAnalysisTab>
                       decoration: BoxDecoration(
                           borderRadius:
                               const BorderRadius.all(Radius.circular(8)),
-                          color: ThemeMode.isLight ? AppColors.neutral_07 : AppColors.text_black_1),
+                          color: ThemeMode.isLight
+                              ? AppColors.neutral_07
+                              : AppColors.text_black_1),
                       child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -233,7 +236,9 @@ class _MarketAnalysisTabState extends State<MarketAnalysisTab>
                     decoration: BoxDecoration(
                         borderRadius:
                             const BorderRadius.all(Radius.circular(8)),
-                        color: ThemeMode.isLight ? AppColors.neutral_07 : AppColors.text_black_1),
+                        color: ThemeMode.isLight
+                            ? AppColors.neutral_07
+                            : AppColors.text_black_1),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -320,11 +325,15 @@ class _MarketAnalysisTabState extends State<MarketAnalysisTab>
                   onTap: () => showDialog<String>(
                     context: context,
                     builder: (BuildContext context) => Dialog(
-                      backgroundColor: ThemeMode.isLight ? AppColors.light_bg : AppColors.neutral_01,
+                      backgroundColor: ThemeMode.isLight
+                          ? AppColors.light_bg
+                          : AppColors.neutral_01,
                       child: Container(
                         padding: const EdgeInsets.all(16),
                         decoration: BoxDecoration(
-                            color: ThemeMode.isLight ? AppColors.light_bg : AppColors.neutral_01,
+                            color: ThemeMode.isLight
+                                ? AppColors.light_bg
+                                : AppColors.neutral_01,
                             borderRadius: BorderRadius.circular(8)),
                         width: MediaQuery.of(context).size.width,
                         child: Text(
@@ -552,7 +561,7 @@ class _CheckBoxMarketState extends State<CheckBoxMarket> {
     final themeMode = AppService.instance.themeMode.value;
 
     return Material(
-      color: themeMode.isLight ? AppColors.neutral_07 : AppColors.neutral_01 ,
+      color: themeMode.isLight ? AppColors.neutral_07 : AppColors.neutral_01,
       child: ListTile(
         onTap: () {
           setState(() {
@@ -622,7 +631,7 @@ class _CheckBoxMatchTypeState extends State<CheckBoxMatchType> {
     final themeMode = AppService.instance.themeMode.value;
 
     return Material(
-      color : themeMode.isLight ? AppColors.neutral_07 : AppColors.neutral_01 ,
+      color: themeMode.isLight ? AppColors.neutral_07 : AppColors.neutral_01,
       child: ListTile(
         onTap: () {
           setState(() {

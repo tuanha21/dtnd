@@ -1,19 +1,25 @@
-import 'package:dtnd/=models=/response/top_signal_history_model.dart';
-import 'package:dtnd/generated/l10n.dart';
+import 'package:dtnd/=models=/response/market/top_signal_history_model.dart';
+import 'package:dtnd/l10n/generated/l10n.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_textstyle.dart';
 import 'package:dtnd/ui/widget/empty_list_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../../../../=models=/response/top_signal_detail_model.dart';
+import '../../../../../../=models=/response/market/top_signal_detail_model.dart';
 import '../../../../../../config/service/app_services.dart';
 import '../../../../../theme/app_image.dart';
 
 const List<String> _label = ["1W", "2W", "1M", "3M"];
 
 class SignalTradingHistory extends StatefulWidget {
-  const SignalTradingHistory({super.key, this.listHis,this.data,this.defaulPeriod,    required this.onChanged,});
+  const SignalTradingHistory({
+    super.key,
+    this.listHis,
+    this.data,
+    this.defaulPeriod,
+    required this.onChanged,
+  });
 
   final List<TopSignalHistoryModel>? listHis;
   final TopSignalDetailModel? data;
@@ -94,7 +100,9 @@ class _SignalTradingHistoryState extends State<SignalTradingHistory> {
                 )
             ],
           ),
-          const SizedBox(height: 8,),
+          const SizedBox(
+            height: 8,
+          ),
           const Divider(
             thickness: 1,
             color: AppColors.neutral_04,
@@ -130,12 +138,14 @@ class _SignalTradingHistoryState extends State<SignalTradingHistory> {
                         risk: his.volatility,
                       ),
                     ),
-                    index != widget.listHis!.length ? const Divider(
-                      thickness: 1,
-                      color: AppColors.neutral_04,
-                      indent: 16,
-                      endIndent: 16,
-                    ) : SizedBox(),
+                    index != widget.listHis!.length
+                        ? const Divider(
+                            thickness: 1,
+                            color: AppColors.neutral_04,
+                            indent: 16,
+                            endIndent: 16,
+                          )
+                        : SizedBox(),
                   ],
                 );
               },
@@ -176,7 +186,7 @@ class SignalTradingHistoryElement extends StatelessWidget {
         borderRadius: const BorderRadius.all(
           Radius.circular(12),
         ),
-        color: themeMode.isLight ? Colors.white :AppColors.text_black_1 ,
+        color: themeMode.isLight ? Colors.white : AppColors.text_black_1,
       ),
       child: Column(children: [
         Row(
@@ -328,7 +338,7 @@ class _Figure extends StatelessWidget {
         Text(
           data.label,
           style:
-          AppTextStyle.labelMedium_12.copyWith(color: AppColors.neutral_04),
+              AppTextStyle.labelMedium_12.copyWith(color: AppColors.neutral_04),
         ),
         const SizedBox(height: 4),
         Material(
@@ -343,7 +353,7 @@ class _Figure extends StatelessWidget {
                 borderRadius: const BorderRadius.all(Radius.circular(8)),
                 color: bgColor,
                 border:
-                selected ? Border.all(color: AppColors.neutral_04) : null,
+                    selected ? Border.all(color: AppColors.neutral_04) : null,
               ),
               child: Row(
                 mainAxisSize: MainAxisSize.min,

@@ -1,7 +1,7 @@
 import 'package:dtnd/config/service/app_services.dart';
 import 'package:dtnd/data/i_network_service.dart';
 import 'package:dtnd/data/implementations/network_service.dart';
-import 'package:dtnd/generated/l10n.dart';
+import 'package:dtnd/l10n/generated/l10n.dart';
 import 'package:dtnd/ui/screen/home/home_controller.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
@@ -98,7 +98,9 @@ class _LoadingScreenState extends State<LoadingScreen>
     return Scaffold(
       body: Container(
         decoration: BoxDecoration(
-          color: themeMode.isLight ? null : AppColors.bg_share_inside_nav,
+          color: themeMode.isDark
+              ? AppColors.bg_share_inside_nav
+              : AppColors.bg_light_1,
           image: const DecorationImage(
             image: AssetImage(AppImages.loading_light_bg),
             fit: BoxFit.contain,

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:dtnd/=models=/response/account/portfolio_status_model.dart';
-import 'package:dtnd/=models=/response/stock.dart';
+import 'package:dtnd/=models=/response/market/stock.dart';
 import 'package:dtnd/config/service/app_services.dart';
 import 'package:dtnd/data/i_data_center_service.dart';
 import 'package:dtnd/data/implementations/data_center_service.dart';
-import 'package:dtnd/generated/l10n.dart';
+import 'package:dtnd/l10n/generated/l10n.dart';
 import 'package:dtnd/ui/screen/asset/component/asset_catalog_ratio_chart.dart';
 import 'package:dtnd/ui/screen/asset/screen/asset_stock_detail/asset_stock_detail_screen.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
@@ -102,7 +102,9 @@ class _InvestmentCatalogWidgetState extends State<InvestmentCatalogWidget> {
               decoration: BoxDecoration(
                 borderRadius:
                     const BorderRadius.vertical(top: Radius.circular(12)),
-                color: themeMode.isDark ? AppColors.text_black_1 : AppColors.neutral_06,
+                color: themeMode.isDark
+                    ? AppColors.text_black_1
+                    : AppColors.neutral_06,
               ),
               child: Column(
                 children: [
@@ -160,7 +162,13 @@ class _InvestmentCatalogWidgetState extends State<InvestmentCatalogWidget> {
                                               children: [
                                                 Text(
                                                   widget.data?.symbol ?? "-",
-                                                  style: textTheme.titleSmall?.copyWith(color: themeMode.isLight ? null : AppColors.neutral_07),
+                                                  style: textTheme.titleSmall
+                                                      ?.copyWith(
+                                                          color: themeMode
+                                                                  .isLight
+                                                              ? null
+                                                              : AppColors
+                                                                  .neutral_07),
                                                 ),
                                                 const SizedBox(width: 8),
                                                 Text.rich(
@@ -239,8 +247,9 @@ class _InvestmentCatalogWidgetState extends State<InvestmentCatalogWidget> {
                                             S.of(context).stock_code,
                                             style: AppTextStyle.labelSmall_10
                                                 .copyWith(
-                                                    color:
-                                                        themeMode.isLight ? AppColors.neutral_01 : AppColors.neutral_07),
+                                                    color: themeMode.isLight
+                                                        ? AppColors.neutral_01
+                                                        : AppColors.neutral_07),
                                           ),
                                           const SizedBox(height: 4),
                                           Text(
@@ -249,8 +258,10 @@ class _InvestmentCatalogWidgetState extends State<InvestmentCatalogWidget> {
                                                 .textTheme
                                                 .titleSmall!
                                                 .copyWith(
-                                                    fontWeight:
-                                                        FontWeight.w600,color: themeMode.isLight ? null : AppColors.neutral_07),
+                                                    fontWeight: FontWeight.w600,
+                                                    color: themeMode.isLight
+                                                        ? null
+                                                        : AppColors.neutral_07),
                                           ),
                                         ],
                                       ),
@@ -312,8 +323,11 @@ class _InvestmentCatalogWidgetState extends State<InvestmentCatalogWidget> {
                                                 style: AppTextStyle
                                                     .labelMedium_12
                                                     .copyWith(
-                                                        color: themeMode.isLight ? AppColors
-                                                            .neutral_03 : AppColors.neutral_07),
+                                                        color: themeMode.isLight
+                                                            ? AppColors
+                                                                .neutral_03
+                                                            : AppColors
+                                                                .neutral_07),
                                               ),
                                             ],
                                           ),
@@ -335,9 +349,12 @@ class _InvestmentCatalogWidgetState extends State<InvestmentCatalogWidget> {
                       height: 40,
                       margin: const EdgeInsets.symmetric(vertical: 8),
                       padding: const EdgeInsets.all(4),
-                      decoration:  BoxDecoration(
-                        borderRadius: const BorderRadius.all(Radius.circular(12)),
-                        color: themeMode.isLight ? AppColors.neutral_06 : AppColors.text_black_1,
+                      decoration: BoxDecoration(
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(12)),
+                        color: themeMode.isLight
+                            ? AppColors.neutral_06
+                            : AppColors.text_black_1,
                       ),
                       child: Column(
                         children: [
@@ -351,7 +368,9 @@ class _InvestmentCatalogWidgetState extends State<InvestmentCatalogWidget> {
                                       S.of(context).owned,
                                       style: AppTextStyle.labelSmall_10
                                           .copyWith(
-                                              color: themeMode.isLight ? AppColors.neutral_01 : AppColors.neutral_07),
+                                              color: themeMode.isLight
+                                                  ? AppColors.neutral_01
+                                                  : AppColors.neutral_07),
                                     ),
                                     const SizedBox(height: 4),
                                     Text(
@@ -359,7 +378,9 @@ class _InvestmentCatalogWidgetState extends State<InvestmentCatalogWidget> {
                                           widget.data?.actualVol),
                                       style: AppTextStyle.labelMedium_12
                                           .copyWith(
-                                              color: themeMode.isLight ? AppColors.neutral_03 : AppColors.neutral_07 ),
+                                              color: themeMode.isLight
+                                                  ? AppColors.neutral_03
+                                                  : AppColors.neutral_07),
                                     ),
                                   ],
                                 ),
@@ -392,7 +413,9 @@ class _InvestmentCatalogWidgetState extends State<InvestmentCatalogWidget> {
                                       S.of(context).profit_and_loss,
                                       style: AppTextStyle.labelSmall_10
                                           .copyWith(
-                                              color: themeMode.isLight ? AppColors.neutral_01 : AppColors.neutral_07),
+                                              color: themeMode.isLight
+                                                  ? AppColors.neutral_01
+                                                  : AppColors.neutral_07),
                                     ),
                                     const SizedBox(height: 4),
                                     Text(
@@ -429,7 +452,9 @@ class _InvestmentCatalogWidgetState extends State<InvestmentCatalogWidget> {
               decoration: BoxDecoration(
                 borderRadius:
                     const BorderRadius.vertical(bottom: Radius.circular(12)),
-                color: themeMode.isDark ? AppColors.text_black_1 : AppColors.neutral_05,
+                color: themeMode.isDark
+                    ? AppColors.text_black_1
+                    : AppColors.neutral_05,
               ),
               child: Center(
                 child: AnimatedRotation(
@@ -444,7 +469,12 @@ class _InvestmentCatalogWidgetState extends State<InvestmentCatalogWidget> {
             ),
           ),
         ),
-        themeMode.isDark ? const Divider(height: 10,color: AppColors.bg_1,) :const SizedBox()
+        themeMode.isDark
+            ? const Divider(
+                height: 10,
+                color: AppColors.bg_1,
+              )
+            : const SizedBox()
       ],
     );
   }

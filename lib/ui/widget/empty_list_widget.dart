@@ -1,7 +1,7 @@
 import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:flutter/material.dart';
 
-import '../../generated/l10n.dart';
+import '../../l10n/generated/l10n.dart';
 
 class EmptyListWidget extends StatelessWidget {
   const EmptyListWidget({super.key, this.title});

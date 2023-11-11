@@ -1,4 +1,4 @@
-import 'package:dtnd/generated/l10n.dart';
+import 'package:dtnd/l10n/generated/l10n.dart';
 import 'package:dtnd/ui/screen/accumulation/controller/accumulation_controller.dart';
 import 'package:dtnd/ui/screen/accumulation/screen/accumulation_auto_contract.dart';
 import 'package:dtnd/ui/screen/accumulation/screen/accumulation_product_detail.dart';
@@ -23,7 +23,6 @@ class _AccumulatorProductState extends State<AccumulatorProduct> {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
-    final ThemeMode themeMode = AppService.instance.themeMode.value;
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -112,7 +111,8 @@ class ItemBuilder extends StatelessWidget {
 
     return Container(
       decoration: BoxDecoration(
-        color: themeMode.isLight ? AppColors.neutral_07 : AppColors.text_black_1,
+        color:
+            themeMode.isLight ? AppColors.neutral_07 : AppColors.text_black_1,
         borderRadius: BorderRadius.circular(12),
       ),
       margin: const EdgeInsets.only(top: 12),
@@ -156,7 +156,7 @@ class ItemBuilder extends StatelessWidget {
                     : Text(title,
                         style: const TextStyle(fontWeight: FontWeight.bold)),
                 const Spacer(),
-                  SizedBox(
+                SizedBox(
                   child: Icon(
                     Icons.chevron_right,
                     color: themeData.colorScheme.onBackground,
@@ -190,7 +190,9 @@ class ItemBuilder extends StatelessWidget {
                   height: 60,
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   decoration: BoxDecoration(
-                    color: themeMode.isLight ? AppColors.neutral_07 : AppColors.bg_share_inside_nav,
+                    color: themeMode.isLight
+                        ? AppColors.neutral_07
+                        : AppColors.bg_share_inside_nav,
                     borderRadius: const BorderRadius.only(
                       topRight: Radius.circular(12),
                       bottomRight: Radius.circular(12),

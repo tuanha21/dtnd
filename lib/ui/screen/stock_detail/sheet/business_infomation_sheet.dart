@@ -1,5 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:dtnd/=models=/response/stock_model.dart';
+import 'package:dtnd/=models=/response/market/stock_model.dart';
 import 'package:dtnd/data/i_data_center_service.dart';
 import 'package:dtnd/data/i_network_service.dart';
 import 'package:dtnd/data/implementations/data_center_service.dart';
@@ -8,9 +8,9 @@ import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:flutter/material.dart';
 import 'package:html/parser.dart' show parse;
 
-import '../../../../=models=/response/introduct_company.dart';
+import '../../../../=models=/response/market/introduct_company.dart';
 import '../../../../config/service/app_services.dart';
-import '../../../../generated/l10n.dart';
+import '../../../../l10n/generated/l10n.dart';
 import '../../home/widget/home_section.dart';
 import '../tab/general_info_tab.dart';
 import '../tab/subsidiaries_info_tab.dart';
@@ -65,7 +65,9 @@ class _BusinessInformationSheetState extends State<BusinessInformationSheet>
       color: themeMode.isLight ? AppColors.light_bg : AppColors.bg_2,
       child: Container(
         decoration: BoxDecoration(
-            color: themeMode.isLight ? AppColors.light_bg : AppColors.bg_share_inside_nav,
+            color: themeMode.isLight
+                ? AppColors.light_bg
+                : AppColors.bg_share_inside_nav,
             borderRadius: const BorderRadius.only(
                 topRight: Radius.circular(12), topLeft: Radius.circular(12))),
         child: DefaultTabController(
@@ -89,11 +91,15 @@ class _BusinessInformationSheetState extends State<BusinessInformationSheet>
                       child: Container(
                         padding: const EdgeInsets.all(3),
                         decoration: BoxDecoration(
-                            color: themeMode.isLight ? AppColors.primary_03 : AppColors.neutral_02,
+                            color: themeMode.isLight
+                                ? AppColors.primary_03
+                                : AppColors.neutral_02,
                             borderRadius: BorderRadius.circular(6)),
                         child: Icon(
                           Icons.clear,
-                          color: themeMode.isLight ? AppColors.text_black_1 : AppColors.neutral_07,
+                          color: themeMode.isLight
+                              ? AppColors.text_black_1
+                              : AppColors.neutral_07,
                           size: 20,
                         ),
                       ),
@@ -103,7 +109,9 @@ class _BusinessInformationSheetState extends State<BusinessInformationSheet>
               ),
               Divider(
                 height: 36,
-                color: themeMode.isLight ? AppColors.light_tabBar_bg : AppColors.neutral_02,
+                color: themeMode.isLight
+                    ? AppColors.light_tabBar_bg
+                    : AppColors.neutral_02,
                 indent: 16,
                 endIndent: 16,
                 thickness: 1,
@@ -209,7 +217,9 @@ class _BusinessInformationSheetState extends State<BusinessInformationSheet>
                       padding: const EdgeInsets.all(4),
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(12),
-                          color: themeMode.isLight ? AppColors.light_tabBar_bg  : AppColors.neutral_01),
+                          color: themeMode.isLight
+                              ? AppColors.light_tabBar_bg
+                              : AppColors.neutral_01),
                       child: TabBar(
                         unselectedLabelStyle: Theme.of(context)
                             .textTheme

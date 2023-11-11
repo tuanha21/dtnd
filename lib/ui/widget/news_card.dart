@@ -1,6 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:dtnd/=models=/response/stock_news.dart';
-import 'package:dtnd/generated/l10n.dart';
+import 'package:dtnd/=models=/response/market/stock_news.dart';
+import 'package:dtnd/l10n/generated/l10n.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_textstyle.dart';
 import 'package:flutter/material.dart';
@@ -53,7 +53,8 @@ class NewsCard extends StatelessWidget {
                     stockNews.title ?? "Title",
                     maxLines: 2,
                     textAlign: TextAlign.left,
-                    style: Theme.of(context).textTheme.titleSmall?.copyWith(color: themeMode.isLight ? null : AppColors.neutral_07),
+                    style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                        color: themeMode.isLight ? null : AppColors.neutral_07),
                   ),
                 ),
                 Text(DateFormat("dd/MM/yyyy").format(stockNews.dateTime!),

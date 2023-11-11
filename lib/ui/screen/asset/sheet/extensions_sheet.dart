@@ -1,28 +1,15 @@
 import 'package:dtnd/config/service/app_services.dart';
-import 'package:dtnd/generated/l10n.dart';
+import 'package:dtnd/l10n/generated/l10n.dart';
 import 'package:dtnd/ui/screen/asset/sheet/sheet_flow.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:dtnd/ui/widget/icon/sheet_header.dart';
 import 'package:flutter/material.dart';
 
-class ExtensionsSheet extends StatefulWidget {
+class ExtensionsSheet extends StatelessWidget {
   const ExtensionsSheet({
     super.key,
   });
-  @override
-  State<ExtensionsSheet> createState() => _ExtensionsSheetState();
-}
-
-class _ExtensionsSheetState extends State<ExtensionsSheet> {
-  final TextEditingController controller = TextEditingController();
-  final GlobalKey<FormState> key = GlobalKey<FormState>();
-  final FocusNode node = FocusNode();
-  @override
-  void initState() {
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
     final ThemeMode themeMode = AppService.instance.themeMode.value;

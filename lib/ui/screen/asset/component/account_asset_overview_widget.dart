@@ -1,6 +1,6 @@
 import 'package:dtnd/=models=/response/account/base_margin_plus_account_model.dart';
 import 'package:dtnd/config/service/app_services.dart';
-import 'package:dtnd/generated/l10n.dart';
+import 'package:dtnd/l10n/generated/l10n.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:dtnd/ui/theme/app_textstyle.dart';
@@ -27,7 +27,6 @@ class _AccountAssetOverviewWidgetState
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
-    final ThemeData themeData = Theme.of(context);
     final themeMode = AppService.instance.themeMode.value;
 
     return Column(
@@ -36,7 +35,9 @@ class _AccountAssetOverviewWidgetState
           padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(
             borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
-            color: themeMode.isLight ? AppColors.neutral_07 : AppColors.text_black_1,
+            color: themeMode.isLight
+                ? AppColors.neutral_07
+                : AppColors.text_black_1,
           ),
           // height: 186,
           child: Column(
@@ -95,7 +96,12 @@ class _AccountAssetOverviewWidgetState
                   ),
                 ],
               ),
-              Divider(height: 33,color: themeMode.isLight ? AppColors.neutral_04 : AppColors.neutral_03,),
+              Divider(
+                height: 33,
+                color: themeMode.isLight
+                    ? AppColors.neutral_04
+                    : AppColors.neutral_03,
+              ),
               // Row(
               //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
               //   children: [
@@ -138,9 +144,12 @@ class _AccountAssetOverviewWidgetState
                     child: Container(
                       padding: const EdgeInsets.only(
                           left: 24, right: 8, top: 10, bottom: 10),
-                      decoration:  BoxDecoration(
-                        borderRadius: const BorderRadius.all(Radius.circular(8)),
-                        color: themeMode.isLight ? AppColors.neutral_06 : AppColors.neutral_01,
+                      decoration: BoxDecoration(
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(8)),
+                        color: themeMode.isLight
+                            ? AppColors.neutral_06
+                            : AppColors.neutral_01,
                       ),
                       child: Column(
                         children: [
@@ -162,7 +171,9 @@ class _AccountAssetOverviewWidgetState
                               Container(
                                 height: 80,
                                 width: 2,
-                                color: themeMode.isLight ? Color(0xFFD8EBFD) : AppColors.bg_share_inside_nav,
+                                color: themeMode.isLight
+                                    ? const Color(0xFFD8EBFD)
+                                    : AppColors.bg_share_inside_nav,
                               ),
                               const SizedBox(width: 14),
                               Expanded(
@@ -269,8 +280,11 @@ class _AccountAssetOverviewWidgetState
                       padding: const EdgeInsets.only(
                           left: 24, right: 8, top: 10, bottom: 10),
                       decoration: BoxDecoration(
-                        borderRadius: const BorderRadius.all(Radius.circular(8)),
-                        color: themeMode.isLight ? AppColors.neutral_06 : AppColors.neutral_01,
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(8)),
+                        color: themeMode.isLight
+                            ? AppColors.neutral_06
+                            : AppColors.neutral_01,
                       ),
                       child: Column(
                         children: [
@@ -292,7 +306,9 @@ class _AccountAssetOverviewWidgetState
                               Container(
                                 height: 56,
                                 width: 2,
-                                color: themeMode.isLight ? Color(0xFFD8EBFD) : AppColors.bg_share_inside_nav,
+                                color: themeMode.isLight
+                                    ? const Color(0xFFD8EBFD)
+                                    : AppColors.bg_share_inside_nav,
                               ),
                               const SizedBox(width: 14),
                               Expanded(

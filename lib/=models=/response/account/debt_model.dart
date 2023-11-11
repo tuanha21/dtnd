@@ -1,7 +1,7 @@
 import 'package:dtnd/=models=/core_response_model.dart';
 import 'package:dtnd/=models=/stock_status.dart';
 
-class GetDebtModel extends StockStatus implements CoreResponseModel {
+class DebtModel extends StockStatus implements CoreResponseModel {
   String? cLOANID;
   String? cACCOUNTCODE;
   String? cBANKCODE;
@@ -17,7 +17,7 @@ class GetDebtModel extends StockStatus implements CoreResponseModel {
   num? cCOUNTDAY;
   String? expireDate;
 
-  GetDebtModel(
+  DebtModel(
       {this.cLOANID,
       this.cACCOUNTCODE,
       this.cBANKCODE,
@@ -33,7 +33,7 @@ class GetDebtModel extends StockStatus implements CoreResponseModel {
       this.cCOUNTDAY,
       this.expireDate});
 
-  GetDebtModel.fromJson(Map<String, dynamic> json) {
+  DebtModel.fromJson(Map<String, dynamic> json) {
     cLOANID = json['C_LOAN_ID'];
     cACCOUNTCODE = json['C_ACCOUNT_CODE'];
     cBANKCODE = json['C_BANK_CODE'];

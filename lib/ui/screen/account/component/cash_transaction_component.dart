@@ -1,5 +1,5 @@
-import 'package:dtnd/=models=/response/cash_transaction_model.dart';
-import 'package:dtnd/generated/l10n.dart';
+import 'package:dtnd/=models=/response/account/cash_transaction_model.dart';
+import 'package:dtnd/l10n/generated/l10n.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_textstyle.dart';
 import 'package:dtnd/utilities/num_utils.dart';
@@ -22,7 +22,6 @@ class _CashTransactionComponentState extends State<CashTransactionComponent> {
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
     final ThemeMode themeMode = AppService.instance.themeMode.value;
-    final ThemeData themeData = Theme.of(context);
 
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 4),

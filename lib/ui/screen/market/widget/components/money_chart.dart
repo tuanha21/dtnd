@@ -1,5 +1,5 @@
 import 'package:charts_flutter/flutter.dart' as charts;
-import 'package:dtnd/=models=/response/index_board.dart';
+import 'package:dtnd/=models=/response/market/index_board.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:dtnd/utilities/charts_util.dart';
 import 'package:dtnd/utilities/num_utils.dart';
@@ -8,7 +8,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../../config/service/app_services.dart';
-import '../../../../../generated/l10n.dart';
+import '../../../../../l10n/generated/l10n.dart';
 import '../../../../theme/app_color.dart';
 
 class MoneyChart extends StatefulWidget {
@@ -220,28 +220,31 @@ class _MoneyChartState extends State<MoneyChart> {
                         rightMarginSpec: charts.MarginSpec.fixedPixel(0),
                         bottomMarginSpec: charts.MarginSpec.fixedPixel(0),
                       ),
-                      secondaryMeasureAxis:   charts.NumericAxisSpec(
+                      secondaryMeasureAxis: charts.NumericAxisSpec(
                         viewport: const charts.NumericExtents(0, 100),
-                        tickProviderSpec: const charts.BasicNumericTickProviderSpec(
-                            desiredTickCount: 5
-                        ),
+                        tickProviderSpec:
+                            const charts.BasicNumericTickProviderSpec(
+                                desiredTickCount: 5),
                         renderSpec: charts.GridlineRendererSpec(
                           axisLineStyle: charts.LineStyleSpec(
                             dashPattern: [4],
                             thickness: 1,
-                            color: charts.ColorUtil.fromDartColor(AppColors.neutral_03),
+                            color: charts.ColorUtil.fromDartColor(
+                                AppColors.neutral_03),
                           ),
                           labelStyle: charts.TextStyleSpec(
                             fontSize: 8,
                             color: themeMode.isLight
                                 ? null
-                                : charts.ColorUtil.fromDartColor(AppColors.neutral_07),
+                                : charts.ColorUtil.fromDartColor(
+                                    AppColors.neutral_07),
                           ),
                           lineStyle: charts.LineStyleSpec(
                             dashPattern: [4],
                             color: themeMode.isLight
                                 ? null
-                                : charts.ColorUtil.fromDartColor(AppColors.neutral_02),
+                                : charts.ColorUtil.fromDartColor(
+                                    AppColors.neutral_02),
                           ),
                         ),
                       ),

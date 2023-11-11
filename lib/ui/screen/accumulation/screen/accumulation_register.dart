@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:dtnd/generated/l10n.dart';
+import 'package:dtnd/l10n/generated/l10n.dart';
 import 'package:dtnd/ui/screen/accumulation/controller/accumulation_controller.dart';
 import 'package:dtnd/ui/screen/accumulation/screen/acumulation_confirm.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
@@ -263,7 +263,9 @@ class _AccumulationRegisterState extends State<AccumulationRegister> {
                             width: MediaQuery.of(context).size.width / 375 * 95,
                             alignment: Alignment.center,
                             decoration: BoxDecoration(
-                              color: themeMode.isLight ? AppColors.neutral_07 : AppColors.bg_share_inside_nav,
+                              color: themeMode.isLight
+                                  ? AppColors.neutral_07
+                                  : AppColors.bg_share_inside_nav,
                               borderRadius: BorderRadius.circular(12),
                               border: Border.all(
                                 color: _selectedMethod[index] == true

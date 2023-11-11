@@ -1,4 +1,4 @@
-import 'package:dtnd/=models=/response/stock_model.dart';
+import 'package:dtnd/=models=/response/market/stock_model.dart';
 import 'package:dtnd/config/service/app_services.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_textstyle.dart';
@@ -62,7 +62,9 @@ class FinancialIndex extends StatelessWidget {
     return Container(
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
-          color: themeMode.isDark ? AppColors.bg_share_inside_nav : AppColors.neutral_06,
+          color: themeMode.isDark
+              ? AppColors.bg_share_inside_nav
+              : AppColors.neutral_06,
           borderRadius: const BorderRadius.all(
             Radius.circular(8),
           ),

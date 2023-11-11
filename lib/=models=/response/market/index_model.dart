@@ -1,5 +1,5 @@
 import 'package:dtnd/=models=/index.dart';
-import 'package:dtnd/=models=/response/index_detail.dart';
+import 'package:dtnd/=models=/response/market/index_detail.dart';
 import 'package:dtnd/=models=/response/stock_trading_history.dart';
 import 'package:dtnd/data/i_data_center_service.dart';
 import 'package:get/get.dart';

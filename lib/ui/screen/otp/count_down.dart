@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../generated/l10n.dart';
+import '../../../l10n/generated/l10n.dart';
 import '../../theme/app_color.dart';
 
 class TimeCountDown extends StatefulWidget {

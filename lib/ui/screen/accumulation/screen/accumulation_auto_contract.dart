@@ -1,7 +1,7 @@
 import 'package:dtnd/=models=/response/accumulation/fee_rate_model.dart';
 import 'package:dtnd/data/i_user_service.dart';
 import 'package:dtnd/data/implementations/user_service.dart';
-import 'package:dtnd/generated/l10n.dart';
+import 'package:dtnd/l10n/generated/l10n.dart';
 import 'package:dtnd/ui/screen/accumulation/controller/accumulation_controller.dart';
 import 'package:dtnd/ui/screen/accumulation/screen/accumulation_auto_register_dialog.dart';
 import 'package:dtnd/ui/screen/accumulation/widget/accumulator_header.dart';
@@ -63,7 +63,9 @@ class _AccumulationAutoContractState extends State<AccumulationAutoContract> {
               Container(
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
-                    color: themeMode.isLight ? Colors.white : AppColors.bg_share_inside_nav,
+                    color: themeMode.isLight
+                        ? Colors.white
+                        : AppColors.bg_share_inside_nav,
                     borderRadius: BorderRadius.circular(8)),
                 child: Column(
                   children: [
@@ -82,7 +84,8 @@ class _AccumulationAutoContractState extends State<AccumulationAutoContract> {
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text('${S.of(context).you_can_begin_whenever_you_want}} 💯',
+                                  Text(
+                                      '${S.of(context).you_can_begin_whenever_you_want}} 💯',
                                       style: textTheme.bodyMedium?.copyWith(
                                           color: AppColors.text_blue)),
                                   const SizedBox(height: 4),
@@ -105,7 +108,9 @@ class _AccumulationAutoContractState extends State<AccumulationAutoContract> {
                               ),
                               const SizedBox(width: 15),
                               Text(
-                                isRegister ? S.of(context).registered : S.of(context).not_registered,
+                                isRegister
+                                    ? S.of(context).registered
+                                    : S.of(context).not_registered,
                                 style: const TextStyle(
                                     fontWeight: FontWeight.bold),
                               ),
@@ -116,13 +121,16 @@ class _AccumulationAutoContractState extends State<AccumulationAutoContract> {
                       padding:
                           const EdgeInsets.only(top: 12, left: 10, right: 10),
                       decoration: BoxDecoration(
-                          color: themeMode.isLight ? Colors.white : AppColors.text_black_1,
+                          color: themeMode.isLight
+                              ? Colors.white
+                              : AppColors.text_black_1,
                           borderRadius: BorderRadius.circular(8)),
                       child: Column(
                         children: [
                           RowInfomation(
                               leftText: S.of(context).profit,
-                              rightText: '${feeRate.feeRate.toString()}%/${S.of(context).year}'),
+                              rightText:
+                                  '${feeRate.feeRate.toString()}%/${S.of(context).year}'),
                           RowInfomation(
                               leftText: S.of(context).period,
                               rightText: feeRate.termName.toString()),

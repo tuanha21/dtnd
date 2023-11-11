@@ -9,10 +9,10 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:syncfusion_flutter_treemap/treemap.dart';
 
-import '../../../../../=models=/response/stock_industry.dart';
+import '../../../../../=models=/response/market/stock_industry.dart';
 import '../../../../../data/i_data_center_service.dart';
 import '../../../../../data/implementations/data_center_service.dart';
-import '../../../../../generated/l10n.dart';
+import '../../../../../l10n/generated/l10n.dart';
 
 class HeapMapWidget extends StatefulWidget {
   const HeapMapWidget({super.key});

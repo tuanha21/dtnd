@@ -1,4 +1,4 @@
-import 'package:dtnd/generated/l10n.dart';
+import 'package:dtnd/l10n/generated/l10n.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:flutter/material.dart';
 
@@ -23,7 +23,8 @@ class SuccessSignUpPage extends StatelessWidget {
         padding: const EdgeInsets.only(
             top: 40.0, left: 10.0, right: 10.0, bottom: 10.0),
         child: Material(
-          color: themeMode.isLight ? AppColors.light_bg : AppColors.text_black_1,
+          color:
+              themeMode.isLight ? AppColors.light_bg : AppColors.text_black_1,
           shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.all(
               Radius.circular(10),
@@ -37,7 +38,9 @@ class SuccessSignUpPage extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
                   Container(
-                    color: themeMode.isLight ? AppColors.light_bg : AppColors.text_black_1,
+                    color: themeMode.isLight
+                        ? AppColors.light_bg
+                        : AppColors.text_black_1,
                     child: Container(
                       padding: EdgeInsets.zero,
                       width: MediaQuery.of(context).size.width,
@@ -59,7 +62,9 @@ class SuccessSignUpPage extends StatelessWidget {
                                     fontSize: 16,
                                     height: 1.4,
                                     fontWeight: FontWeight.w500,
-                                    color: themeMode.isLight ? AppColors.text_grey_1 : AppColors.neutral_07),
+                                    color: themeMode.isLight
+                                        ? AppColors.text_grey_1
+                                        : AppColors.neutral_07),
                                 textAlign: TextAlign.center,
                               ),
                             ),

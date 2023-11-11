@@ -1,4 +1,4 @@
-import 'package:dtnd/=models=/response/stock_model.dart';
+import 'package:dtnd/=models=/response/market/stock_model.dart';
 import 'package:dtnd/data/i_data_center_service.dart';
 import 'package:dtnd/data/implementations/data_center_service.dart';
 import 'package:dtnd/ui/screen/stock_detail/stock_detail_screen.dart';
@@ -9,9 +9,9 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
 import 'package:syncfusion_flutter_treemap/treemap.dart';
 
-import '../../../../../=models=/ui_model/field_tree_element_model.dart';
+import '../../../../../=models=/response/market/field_tree_element_model.dart';
 import '../../../../../config/service/app_services.dart';
-import '../../../../../generated/l10n.dart';
+import '../../../../../l10n/generated/l10n.dart';
 import '../../../../../utilities/num_utils.dart';
 import '../../../../theme/app_color.dart';
 
@@ -182,7 +182,9 @@ class _HeapMapKLState extends State<HeapMapKL> {
                             const SizedBox(height: 5),
                             Expanded(
                               child: Container(
-                                  color: themeMode.isLight ? AppColors.bg_1 : AppColors.neutral_01,
+                                  color: themeMode.isLight
+                                      ? AppColors.bg_1
+                                      : AppColors.neutral_01,
                                   child: SfTreemap(
                                     dataCount: listStock.length,
                                     weightValueMapper: (int index) {
@@ -215,7 +217,9 @@ class _HeapMapKLState extends State<HeapMapKL> {
                                           return Container(
                                             padding: const EdgeInsets.all(2.5),
                                             decoration: BoxDecoration(
-                                                color: themeMode.isLight ? AppColors.bg_1 : AppColors.neutral_01),
+                                                color: themeMode.isLight
+                                                    ? AppColors.bg_1
+                                                    : AppColors.neutral_01),
                                             child: Text(
                                               '${tile.group} : ${NumUtils.formatInteger(tile.weight * 10)}',
                                               overflow: TextOverflow.ellipsis,

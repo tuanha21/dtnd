@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../../../../../=models=/fake/summary_model.dart';
-import '../../../../../generated/l10n.dart';
+import '../../../../../l10n/generated/l10n.dart';
 import '../../../../../utilities/num_utils.dart';
 import '../../../../theme/app_color.dart';
 import '../../../../theme/app_image.dart';
@@ -23,13 +23,13 @@ class _SummaryChartPageState extends State<SummaryChartPage> {
         widget.data.contentFull?.foreignRoomSummary?.topBuyNetValue;
 
     List<Map<String, dynamic>>? topBuyNetValuesMap =
-    topBuyNetValues?.map((item) => item.toJson()).toList();
+        topBuyNetValues?.map((item) => item.toJson()).toList();
 
     List<TopSeLLNetValue>? topSeLLNetValues =
         widget.data.contentFull?.foreignRoomSummary?.topSeLLNetValue;
 
     List<Map<String, dynamic>>? topSeLLNetValuesMap =
-    topSeLLNetValues?.map((item) => item.toJson()).toList();
+        topSeLLNetValues?.map((item) => item.toJson()).toList();
 
     return Scaffold(
       appBar: AppBar(
@@ -156,7 +156,7 @@ class _SummaryChartPageState extends State<SummaryChartPage> {
                           if (snapshot.data == null) return const SizedBox();
                           var list = topBuyNetValuesMap;
                           list?.sort(
-                                (a, b) {
+                            (a, b) {
                               num? numA = a["value"];
                               num? numB = b["value"];
                               return numB!.compareTo(numA!);
@@ -168,7 +168,7 @@ class _SummaryChartPageState extends State<SummaryChartPage> {
                               height: list!.length * 30,
                               child: Padding(
                                 padding:
-                                const EdgeInsets.symmetric(horizontal: 16),
+                                    const EdgeInsets.symmetric(horizontal: 16),
                                 child: charts.BarChart(
                                   [
                                     charts.Series<Map<String, dynamic>, String>(
@@ -177,33 +177,33 @@ class _SummaryChartPageState extends State<SummaryChartPage> {
                                           .MaterialPalette.blue.shadeDefault,
                                       domainFn:
                                           (Map<String, dynamic> model, _) =>
-                                      model['security'],
+                                              model['security'],
                                       measureFn:
                                           (Map<String, dynamic> model, _) =>
-                                      model['value'],
+                                              model['value'],
                                       fillColorFn:
                                           (Map<String, dynamic> model, _) =>
-                                          charts.ColorUtil.fromDartColor(
-                                            model['value'] > 0
-                                                ? AppColors.semantic_01
-                                                : AppColors.semantic_03,
-                                          ),
+                                              charts.ColorUtil.fromDartColor(
+                                        model['value'] > 0
+                                            ? AppColors.semantic_01
+                                            : AppColors.semantic_03,
+                                      ),
                                       labelAccessorFn: (Map<String, dynamic>
-                                      model,
-                                          _) =>
-                                      "${model['value'].toStringAsFixed(2)}",
+                                                  model,
+                                              _) =>
+                                          "${model['value'].toStringAsFixed(2)}",
                                       data: list,
                                     )
                                   ],
                                   animate: true,
                                   vertical: false,
                                   primaryMeasureAxis:
-                                  const charts.NumericAxisSpec(
+                                      const charts.NumericAxisSpec(
                                     showAxisLine: false,
                                     renderSpec: charts.NoneRenderSpec(),
                                   ),
                                   secondaryMeasureAxis:
-                                  const charts.NumericAxisSpec(
+                                      const charts.NumericAxisSpec(
                                     showAxisLine: false,
                                     renderSpec: charts.NoneRenderSpec(),
                                   ),
@@ -212,16 +212,16 @@ class _SummaryChartPageState extends State<SummaryChartPage> {
                                     renderSpec: charts.SmallTickRendererSpec(
                                       minimumPaddingBetweenLabelsPx: 0,
                                       labelJustification:
-                                      charts.TickLabelJustification.outside,
+                                          charts.TickLabelJustification.outside,
                                       labelStyle:
-                                      charts.TextStyleSpec(fontSize: 10),
+                                          charts.TextStyleSpec(fontSize: 10),
                                       lineStyle: charts.LineStyleSpec(),
                                     ),
                                   ),
                                   barRendererDecorator:
-                                  charts.BarLabelDecorator<String>(
+                                      charts.BarLabelDecorator<String>(
                                     labelPosition:
-                                    charts.BarLabelPosition.outside,
+                                        charts.BarLabelPosition.outside,
                                     labelPadding: 4,
                                     insideLabelStyleSpec: charts.TextStyleSpec(
                                       fontSize: 10,
@@ -238,7 +238,7 @@ class _SummaryChartPageState extends State<SummaryChartPage> {
                                   behaviors: [
                                     charts.SelectNearest(
                                         eventTrigger:
-                                        charts.SelectionTrigger.tapAndDrag),
+                                            charts.SelectionTrigger.tapAndDrag),
                                   ],
                                 ),
                               ),
@@ -271,7 +271,7 @@ class _SummaryChartPageState extends State<SummaryChartPage> {
                             height: list!.length * 30,
                             child: Padding(
                               padding:
-                              const EdgeInsets.symmetric(horizontal: 16),
+                                  const EdgeInsets.symmetric(horizontal: 16),
                               child: charts.BarChart(
                                 [
                                   charts.Series<Map<String, dynamic>, String>(
@@ -279,28 +279,28 @@ class _SummaryChartPageState extends State<SummaryChartPage> {
                                     colorFn: (_, __) => charts
                                         .MaterialPalette.blue.shadeDefault,
                                     domainFn: (Map<String, dynamic> model, _) =>
-                                    model['security'],
+                                        model['security'],
                                     measureFn:
                                         (Map<String, dynamic> model, _) =>
-                                    model['value'],
+                                            model['value'],
                                     fillColorFn:
                                         (Map<String, dynamic> model, _) =>
-                                        charts.ColorUtil.fromDartColor(
-                                          model['value'] > 0
-                                              ? AppColors.semantic_03
-                                              : AppColors.semantic_03,
-                                        ),
+                                            charts.ColorUtil.fromDartColor(
+                                      model['value'] > 0
+                                          ? AppColors.semantic_03
+                                          : AppColors.semantic_03,
+                                    ),
                                     labelAccessorFn: (Map<String, dynamic>
-                                    model,
-                                        _) =>
-                                    "${model['value'].toStringAsFixed(2)}",
+                                                model,
+                                            _) =>
+                                        "${model['value'].toStringAsFixed(2)}",
                                     data: list,
                                   )
                                 ],
                                 animate: true,
                                 vertical: false,
                                 primaryMeasureAxis:
-                                const charts.NumericAxisSpec(
+                                    const charts.NumericAxisSpec(
                                   showAxisLine: false,
                                   renderSpec: charts.NoneRenderSpec(),
                                 ),
@@ -309,14 +309,14 @@ class _SummaryChartPageState extends State<SummaryChartPage> {
                                   renderSpec: charts.SmallTickRendererSpec(
                                     minimumPaddingBetweenLabelsPx: 1,
                                     labelStyle:
-                                    charts.TextStyleSpec(fontSize: 10),
+                                        charts.TextStyleSpec(fontSize: 10),
                                     lineStyle: charts.LineStyleSpec(),
                                   ),
                                 ),
                                 barRendererDecorator:
-                                charts.BarLabelDecorator<String>(
+                                    charts.BarLabelDecorator<String>(
                                   labelPosition:
-                                  charts.BarLabelPosition.outside,
+                                      charts.BarLabelPosition.outside,
                                   insideLabelStyleSpec: charts.TextStyleSpec(
                                     fontSize: 10,
                                     color: charts.ColorUtil.fromDartColor(
@@ -331,7 +331,7 @@ class _SummaryChartPageState extends State<SummaryChartPage> {
                                 behaviors: [
                                   charts.SelectNearest(
                                       eventTrigger:
-                                      charts.SelectionTrigger.tapAndDrag),
+                                          charts.SelectionTrigger.tapAndDrag),
                                 ],
                               ),
                             ),
@@ -465,7 +465,7 @@ class _SummaryChartPageState extends State<SummaryChartPage> {
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                        const Text(
+                      const Text(
                         "Lũy kế ròng NN : ",
                         style: TextStyle(
                             color: AppColors.text_summary, fontSize: 12),

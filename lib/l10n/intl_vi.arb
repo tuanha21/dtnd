@@ -511,7 +511,7 @@
   "please_enter_the_content_of_the_post": "Hãy nhập nội dung bài đăng",
   "create_a_post": "Tạo bài viết",
   "post_created_successfully": "Tạo bài viết thành công",
-  "Post_creation_failed": "Tạo bài viết thất bại, hãy thử lại",
+  "post_creation_failed": "Tạo bài viết thất bại, hãy thử lại",
   "choose_the_topic": "Chọn chủ đề bài đăng",
   "article_details": "Chi tiết bài viết",
   "comment": "Bình luận",
@@ -644,6 +644,17 @@
 
   "vietnamese": "Tiếng Việt",
   "english": "Tiếng Anh",
+
+  "skip": "Bỏ qua",
+  "welcome_overlay_qoute1": "Chào mừng bạn tới với ứng dụng IFIS.",
+  "welcome_overlay_qoute2": "Hãy để chúng tôi giới thiệu một vài chức năng cơ bản tới bạn.",
+  "tour_guide1": "Bạn có thể trải nghiệm phần mềm mà không cần Đăng ký, để có thể sử dụng đầy đủ tính năng bạn cần phải có tài khoản và Đăng nhập",
+  "tour_guide2": "Bảng chứa các chỉ số cơ bản của một mã chứng khoán",
+  "tour_guide3": "Sức mua tài khoản của bạn và số lượng tối đa mã chứng khoán hiện tại bạn có thể mua/bán",
+  "tour_guide4": "Các loại giá có bạn có thể đặt cho mã hiện tại",
+  "tour_guide5": "Tỷ lệ ký quỹ cho lệnh mua mã chứng khoán hiện tại. Click để chọn",
+  "tour_guide6": "Sửa giá và khối lượng theo ý của bạn",
+  "tour_guide7": "Cuối cùng, chọn đặt lệnh mua hoặc lệnh bán",
 
   "end" : "Kết thúc"
 }
