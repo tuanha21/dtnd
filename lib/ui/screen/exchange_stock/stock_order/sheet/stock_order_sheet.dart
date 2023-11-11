@@ -21,6 +21,8 @@ import 'package:dtnd/ui/screen/exchange_stock/stock_order/component/order_order_
 import 'package:dtnd/ui/screen/exchange_stock/stock_order/component/order_order_panel.dart';
 import 'package:dtnd/ui/screen/exchange_stock/stock_order/component/order_owned_stock_panel.dart';
 import 'package:dtnd/ui/screen/exchange_stock/stock_order/data/order_data.dart';
+import 'package:dtnd/ui/screen/tour_guide/app_tutorial.dart';
+import 'package:dtnd/ui/screen/tour_guide/widget/target_focus_builder.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:dtnd/ui/theme/app_textstyle.dart';
@@ -124,153 +126,49 @@ class _StockOrderSheetState extends State<StockOrderSheet>
         tabController.animateTo(widget.defaultTab!);
       }
       if (widget.onGuide != null) {
-        final List<TargetFocus> targets = [
-          TargetFocus(
-            identify: "panelKey",
+        final List<TargetFocusBuilder> targets = [
+          TargetFocusBuilder(
             keyTarget: panelKey,
-            alignSkip: Alignment.topRight,
-            enableOverlayTab: true,
+            align: ContentAlign.top,
+            content: S.of(context).tour_guide2,
             shape: ShapeLightFocus.RRect,
-            contents: [
-              TargetContent(
-                align: ContentAlign.top,
-                builder: (context, controller) {
-                  return Column(
-                    // mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Text(
-                        S.of(context).tour_guide2,
-                        style: AppTextStyle.bodyLarge_16,
-                      ),
-                    ],
-                  );
-                },
-              ),
-            ],
           ),
-          TargetFocus(
-            identify: "eeKey",
+          TargetFocusBuilder(
             keyTarget: eeKey,
-            alignSkip: Alignment.topRight,
-            enableOverlayTab: true,
+            align: ContentAlign.top,
+            content: S.of(context).tour_guide3,
             shape: ShapeLightFocus.RRect,
-            contents: [
-              TargetContent(
-                align: ContentAlign.top,
-                builder: (context, controller) {
-                  return Column(
-                    // mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Text(
-                        S.of(context).tour_guide3,
-                        style: AppTextStyle.bodyLarge_16,
-                      ),
-                    ],
-                  );
-                },
-              ),
-            ],
           ),
-          TargetFocus(
-            identify: "priceTypeKey",
+          TargetFocusBuilder(
             keyTarget: priceTypeKey,
-            alignSkip: Alignment.topRight,
-            enableOverlayTab: true,
+            align: ContentAlign.top,
+            content: S.of(context).tour_guide4,
             shape: ShapeLightFocus.RRect,
-            contents: [
-              TargetContent(
-                align: ContentAlign.top,
-                builder: (context, controller) {
-                  return Column(
-                    // mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Text(
-                        S.of(context).tour_guide4,
-                        style: AppTextStyle.bodyLarge_16,
-                      ),
-                    ],
-                  );
-                },
-              ),
-            ],
           ),
-          TargetFocus(
-            identify: "marginKey",
+          TargetFocusBuilder(
             keyTarget: marginKey,
-            alignSkip: Alignment.topRight,
-            enableOverlayTab: true,
+            align: ContentAlign.top,
+            content: S.of(context).tour_guide5,
             shape: ShapeLightFocus.RRect,
-            contents: [
-              TargetContent(
-                align: ContentAlign.top,
-                builder: (context, controller) {
-                  return Column(
-                    // mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Text(
-                        S.of(context).tour_guide5,
-                        style: AppTextStyle.bodyLarge_16,
-                      ),
-                    ],
-                  );
-                },
-              ),
-            ],
           ),
-          TargetFocus(
-            identify: "priceVolKey",
+          TargetFocusBuilder(
             keyTarget: priceVolKey,
-            alignSkip: Alignment.topRight,
-            enableOverlayTab: true,
+            align: ContentAlign.top,
+            content: S.of(context).tour_guide6,
             shape: ShapeLightFocus.RRect,
-            contents: [
-              TargetContent(
-                align: ContentAlign.top,
-                builder: (context, controller) {
-                  return Column(
-                    // mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Text(
-                        S.of(context).tour_guide6,
-                        style: AppTextStyle.bodyLarge_16,
-                      ),
-                    ],
-                  );
-                },
-              ),
-            ],
           ),
-          TargetFocus(
-            identify: "buySellKey",
+          TargetFocusBuilder(
             keyTarget: buySellKey,
-            alignSkip: Alignment.topRight,
-            enableOverlayTab: true,
+            align: ContentAlign.top,
+            content: S.of(context).tour_guide7,
             shape: ShapeLightFocus.RRect,
-            contents: [
-              TargetContent(
-                align: ContentAlign.top,
-                builder: (context, controller) {
-                  return Column(
-                    // mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Text(
-                        S.of(context).tour_guide7,
-                        style: AppTextStyle.bodyLarge_16,
-                      ),
-                    ],
-                  );
-                },
-              ),
-            ],
           ),
         ];
-        widget.onGuide!.call(targets);
+
+        AppTutorial.addTargets(targets);
+
+        Future.delayed(const Duration(milliseconds: 300),
+            () => AppTutorial.showTutorial(context));
       }
     });
   }

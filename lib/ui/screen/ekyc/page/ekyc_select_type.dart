@@ -1,4 +1,6 @@
+import 'package:dtnd/l10n/generated/l10n.dart';
 import 'package:dtnd/ui/screen/ekyc/page/validator_identity.dart';
+import 'package:dtnd/ui/widget/app_snack_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -61,13 +63,15 @@ class _EkycSelectTypeState extends State<EkycSelectType> {
               title: 'CMND/CCCD',
               onTap: () {
                 // Get.find<EkycLogic>().nextStep();
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => const ValidatorIdentity(
-                      style: 1,
-                    ),
-                  ),
-                );
+                AppSnackBar.showInfo(context,
+                    message: S.of(context).developing_feature);
+                // Navigator.of(context).push(
+                //   MaterialPageRoute(
+                //     builder: (context) => const ValidatorIdentity(
+                //       style: 1,
+                //     ),
+                //   ),
+                // );
               },
             ),
             const SizedBox(height: 16),
@@ -76,13 +80,15 @@ class _EkycSelectTypeState extends State<EkycSelectType> {
               title: 'Hộ chiếu',
               onTap: () {
                 // Get.find<EkycLogic>().nextStep();
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => const ValidatorIdentity(
-                      style: 2,
-                    ),
-                  ),
-                );
+                AppSnackBar.showInfo(context,
+                    message: S.of(context).developing_feature);
+                // Navigator.of(context).push(
+                //   MaterialPageRoute(
+                //     builder: (context) => const ValidatorIdentity(
+                //       style: 2,
+                //     ),
+                //   ),
+                // );
               },
             ),
             const SizedBox(height: 16),
@@ -91,13 +97,15 @@ class _EkycSelectTypeState extends State<EkycSelectType> {
               title: 'Bằng lái xe',
               onTap: () {
                 // Get.find<EkycLogic>().nextStep();
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => const ValidatorIdentity(
-                      style: 3,
-                    ),
-                  ),
-                );
+                AppSnackBar.showInfo(context,
+                    message: S.of(context).developing_feature);
+                // Navigator.of(context).push(
+                //   MaterialPageRoute(
+                //     builder: (context) => const ValidatorIdentity(
+                //       style: 3,
+                //     ),
+                //   ),
+                // );
               },
             )
           ],
@@ -122,7 +130,8 @@ class CardTitle extends StatelessWidget {
 
     return ListTile(
       onTap: onTap,
-      tileColor: themeMode.isLight ? AppColors.neutral_06 : AppColors.neutral_01,
+      tileColor:
+          themeMode.isLight ? AppColors.neutral_06 : AppColors.neutral_01,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
       leading: Container(
         height: 40,

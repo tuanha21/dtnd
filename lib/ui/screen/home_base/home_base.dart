@@ -18,6 +18,8 @@ import 'package:dtnd/ui/screen/home_base/widget/home_base_bottom_nav.dart';
 import 'package:dtnd/ui/screen/home_base/widget/home_base_nav.dart';
 import 'package:dtnd/ui/screen/login/login_screen.dart';
 import 'package:dtnd/ui/screen/market/market_screen.dart';
+import 'package:dtnd/ui/screen/tour_guide/app_tutorial.dart';
+import 'package:dtnd/ui/screen/tour_guide/widget/target_focus_builder.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
 import 'package:dtnd/ui/theme/app_textstyle.dart';
@@ -41,7 +43,7 @@ class HomeBase extends StatefulWidget {
 }
 
 class _HomeBaseState extends State<HomeBase> with WidgetsBindingObserver {
-  final String identify = "tour_guide1";
+  final String identify = "login_required_id";
   final INetworkService networkService = NetworkService();
   final IUserService userService = UserService();
   final Rx<HomeNav> currentHomeNav = Rx<HomeNav>(HomeNav.home);
@@ -105,8 +107,9 @@ class _HomeBaseState extends State<HomeBase> with WidgetsBindingObserver {
       ..addObserver(this)
       ..addPostFrameCallback((timeStamp) {
         networkService.regSessionExpiredCallback(onSessionExpired);
-        // if (localStorageService.firstTimeOpenApp) {
-        startTourrGuide();
+        if (localStorageService.firstTimeOpenApp) {
+          startTourrGuide();
+        }
       });
   }
 
@@ -125,8 +128,8 @@ class _HomeBaseState extends State<HomeBase> with WidgetsBindingObserver {
       ),
       body: Scaffold(
         body: ObxValue<Rx<HomeNav>>(
-          (currentHomeNav) {
-            return routeBuilders[currentHomeNav.value] ??
+          (current) {
+            return routeBuilders[current.value] ??
                 HomeScreen(
                   navigateTab: _selectTab,
                 );
@@ -246,44 +249,33 @@ class _HomeBaseState extends State<HomeBase> with WidgetsBindingObserver {
   }
 
   void startTourrGuide() {
-    TourGuide.showWelcome(
+    AppTutorial.showWelcome(
       context,
       onNext: () {
-        TourGuide.add(
-          TargetFocus(
+        final List<TargetFocusBuilder> targets = [
+          TargetFocusBuilder(
             identify: identify,
             keyTarget: fabKey,
-            alignSkip: Alignment.topRight,
-            enableOverlayTab: true,
-            contents: [
-              TargetContent(
-                align: ContentAlign.top,
-                builder: (context, controller) {
-                  return Column(
-                    // mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Text(
-                        S.of(context).tour_guide1,
-                        style: AppTextStyle.bodyLarge_16,
-                      ),
-                    ],
-                  );
-                },
-              ),
-            ],
+            align: ContentAlign.top,
+            content: S.of(context).tour_guide1,
+            shape: ShapeLightFocus.RRect,
+            nextLabel: S.of(context).login,
           ),
-        );
-        TourGuide.showTutorial(
+        ];
+
+        AppTutorial.addTargets(targets);
+
+        AppTutorial.showTutorial(
           context,
+          onBuildNext: (p0) {
+            return _onFABTapped(
+              onTourGuide: (targets) {},
+            );
+          },
           onClickTarget: (target) {
             if (target.identify == identify) {
               _onFABTapped(
-                onTourGuide: (targets) {
-                  TourGuide.clear();
-                  TourGuide.addAll(targets);
-                  TourGuide.showTutorial(context);
-                },
+                onTourGuide: (targets) {},
               );
             }
           },

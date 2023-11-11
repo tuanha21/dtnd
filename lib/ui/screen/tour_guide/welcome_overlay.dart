@@ -46,43 +46,54 @@ class WelcomeOverlay extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 16),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Flexible(
-                      child: InkWell(
-                    onTap: onNext,
-                    child: Text(
-                      "${S.of(context).next} >>",
-                      textAlign: TextAlign.center,
-                      style: AppTextStyle.labelLarge_18,
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Expanded(
+                      child: TextButton(
+                        onPressed: onSkip,
+                        style: TextButton.styleFrom(
+                            backgroundColor: AppColors.text_black,
+                            foregroundColor: Colors.white),
+                        child: Text(S.of(context).skip),
+                      ),
                     ),
-                  ))
-                ],
-              ),
+                    const SizedBox(width: 20),
+                    Expanded(
+                      child: TextButton(
+                          onPressed: onNext,
+                          style: TextButton.styleFrom(
+                              backgroundColor: AppColors.text_black,
+                              foregroundColor: AppColors.primary_01),
+                          child: Text(S.of(context).next)),
+                    ),
+                  ],
+                ),
+              )
             ],
           ),
         ),
-        _buildSkip(context)
       ],
     );
   }
 
-  Widget _buildSkip(BuildContext context) {
-    return Align(
-      alignment: Alignment.topRight,
-      child: SafeArea(
-        child: InkWell(
-          onTap: onSkip,
-          child: Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Text(
-              S.of(context).skip.toUpperCase(),
-              style: const TextStyle(color: Colors.white),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
+  // Widget _buildSkip(BuildContext context) {
+  //   return Align(
+  //     alignment: Alignment.topRight,
+  //     child: SafeArea(
+  //       child: InkWell(
+  //         onTap: onSkip,
+  //         child: Padding(
+  //           padding: const EdgeInsets.all(20.0),
+  //           child: Text(
+  //             S.of(context).skip.toUpperCase(),
+  //             style: const TextStyle(color: Colors.white),
+  //           ),
+  //         ),
+  //       ),
+  //     ),
+  //   );
+  // }
 }

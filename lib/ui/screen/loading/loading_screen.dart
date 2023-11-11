@@ -98,9 +98,11 @@ class _LoadingScreenState extends State<LoadingScreen>
 
     return Scaffold(
       body: Container(
-        decoration: const BoxDecoration(
-          color: AppColors.bg_share_inside_nav,
-          image: DecorationImage(
+        decoration: BoxDecoration(
+          color: themeMode.isDark
+              ? AppColors.bg_share_inside_nav
+              : AppColors.bg_light_1,
+          image: const DecorationImage(
             image: AssetImage(AppImages.loading_light_bg),
             fit: BoxFit.contain,
           ),

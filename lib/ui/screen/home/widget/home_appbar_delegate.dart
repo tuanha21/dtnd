@@ -78,7 +78,7 @@ class HomeAppbarDelegate extends SliverPersistentHeaderDelegate {
       }
       if (userService.userInfo.value != null) {}
       return GestureDetector(
-        onTap: () => Scaffold.of(context).openDrawer(),
+        onTap: homeBaseKey.currentState!.openDrawer,
         child: Row(
           children: [
             avatar,
