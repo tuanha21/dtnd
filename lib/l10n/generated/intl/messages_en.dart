@@ -901,7 +901,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "total_vol": MessageLookupByLibrary.simpleMessage("Total vol"),
         "total_wvalue": m9,
         "tour_guide1": MessageLookupByLibrary.simpleMessage(
-            "To make a stock order, click here, but you must first log in to your account"),
+            "You can experience the software without registration, to be able to use full features you need to have an account and login information."),
         "tour_guide2": MessageLookupByLibrary.simpleMessage(
             "Bảng chứa các chỉ số cơ bản của một mã chứng khoán"),
         "tour_guide3": MessageLookupByLibrary.simpleMessage(

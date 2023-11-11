@@ -1,4 +1,3 @@
-import 'package:dtnd/ui/functional/tour_guide/tour_guide.dart';
 import 'package:dtnd/ui/screen/home_base/widget/home_base_nav.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/widget/bottom_sheet/floating_bottom_navigation_bar.dart';
@@ -11,9 +10,7 @@ class HomeBaseBottomNav extends StatefulWidget {
     super.key,
     required this.currentHomeNav,
     this.onTapped,
-    required this.add,
   });
-  final TutorialAdd add;
   final Rx<HomeNav> currentHomeNav;
   final ValueChanged<HomeNav>? onTapped;
   @override

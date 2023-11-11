@@ -6264,10 +6264,10 @@ class S {
     );
   }
 
-  /// `Để đặt lệnh chứng khoán, hãy nhấn vào đây, nhưng trước tiên bạn phải đăng nhập vào tài khoản`
+  /// `Bạn có thể trải nghiệm phần mềm mà không cần Đăng ký, để có thể sử dụng đầy đủ tính năng bạn cần phải có tài khoản và Đăng nhập`
   String get tour_guide1 {
     return Intl.message(
-      'Để đặt lệnh chứng khoán, hãy nhấn vào đây, nhưng trước tiên bạn phải đăng nhập vào tài khoản',
+      'Bạn có thể trải nghiệm phần mềm mà không cần Đăng ký, để có thể sử dụng đầy đủ tính năng bạn cần phải có tài khoản và Đăng nhập',
       name: 'tour_guide1',
       desc: '',
       args: [],

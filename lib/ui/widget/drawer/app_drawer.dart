@@ -171,11 +171,11 @@ class _AppDrawerState extends State<AppDrawer> {
             FunctionData(
               title: S.of(context).interface,
               // function: () => onDeveloping(),
-              function: () => Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => const DisplayScreen(),
-                ),
-              ),
+              // function: () => Navigator.of(context).push(
+              //   MaterialPageRoute(
+              //     builder: (context) => const DisplayScreen(),
+              //   ),
+              // ),
             ),
           ],
         ),
