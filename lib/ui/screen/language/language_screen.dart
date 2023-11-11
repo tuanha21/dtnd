@@ -48,23 +48,27 @@ class _LanguagesScreenState extends State<LanguagesScreen> {
         ),
         centerTitle: true,
       ),
-      body: Column(
-        children: <Widget>[
-          _buildLanguageOption(
-            context,
-            S.of(context).vietnamese,
-            Colors.red,
-            _backgroundColor,
-            'vi',
-          ),
-          _buildLanguageOption(
-            context,
-            S.of(context).english,
-            Colors.green,
-            _backgroundColor,
-            'en',
-          ),
-        ],
+      body: Container(
+        color:
+            themeMode.isLight ? AppColors.neutral_07 : AppColors.text_black_1,
+        child: Column(
+          children: <Widget>[
+            _buildLanguageOption(
+              context,
+              S.of(context).vietnamese,
+              Colors.red,
+              _backgroundColor,
+              'vi',
+            ),
+            _buildLanguageOption(
+              context,
+              S.of(context).english,
+              Colors.green,
+              _backgroundColor,
+              'en',
+            ),
+          ],
+        ),
       ),
     );
   }

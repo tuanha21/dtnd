@@ -49,7 +49,7 @@ class AppService {
     _themeMode = Rx<ThemeMode>(ThemeMode.light);
     if (themeMode == null) {
       await sharedPreferencesInstance.setString(
-          "ThemeMode", ThemeMode.dark.name);
+          "ThemeMode", ThemeMode.light.name);
       _themeMode.value = ThemeMode.light;
     } else {
       _themeMode.value = ThemeModeHelper.fromString(themeMode);

@@ -874,7 +874,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "total_vol": MessageLookupByLibrary.simpleMessage("Tổng KL"),
         "total_wvalue": m9,
         "tour_guide1": MessageLookupByLibrary.simpleMessage(
-            "Để đặt lệnh chứng khoán, hãy nhấn vào đây, nhưng trước tiên bạn phải đăng nhập vào tài khoản"),
+            "Bạn có thể trải nghiệm phần mềm mà không cần Đăng ký, để có thể sử dụng đầy đủ tính năng bạn cần phải có tài khoản và Đăng nhập"),
         "tour_guide2": MessageLookupByLibrary.simpleMessage(
             "Bảng chứa các chỉ số cơ bản của một mã chứng khoán"),
         "tour_guide3": MessageLookupByLibrary.simpleMessage(

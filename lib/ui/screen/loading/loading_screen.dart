@@ -95,7 +95,6 @@ class _LoadingScreenState extends State<LoadingScreen>
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     final ThemeMode themeMode = AppService.instance.themeMode.value;
-
     return Scaffold(
       body: Container(
         decoration: BoxDecoration(

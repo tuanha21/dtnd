@@ -8,7 +8,6 @@ import 'package:dtnd/data/implementations/local_storage_service.dart';
 import 'package:dtnd/data/implementations/network_service.dart';
 import 'package:dtnd/data/implementations/user_service.dart';
 import 'package:dtnd/l10n/generated/l10n.dart';
-import 'package:dtnd/ui/functional/tour_guide/tour_guide.dart';
 import 'package:dtnd/ui/screen/asset/asset_screen.dart';
 import 'package:dtnd/ui/screen/community/community_screen.dart';
 import 'package:dtnd/ui/screen/exchange_stock/stock_order/business/stock_order_flow.dart';
@@ -166,7 +165,6 @@ class _HomeBaseState extends State<HomeBase> with WidgetsBindingObserver {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: HomeBaseBottomNav(
-        add: targets.add,
         currentHomeNav: currentHomeNav,
         onTapped: _selectTab,
       ),
