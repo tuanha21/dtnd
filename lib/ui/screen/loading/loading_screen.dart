@@ -95,12 +95,11 @@ class _LoadingScreenState extends State<LoadingScreen>
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     final ThemeMode themeMode = AppService.instance.themeMode.value;
-
     return Scaffold(
       body: Container(
-        decoration: const BoxDecoration(
-          color: AppColors.bg_share_inside_nav,
-          image: DecorationImage(
+        decoration: BoxDecoration(
+          color: themeMode.isLight ? null : AppColors.bg_share_inside_nav,
+          image: const DecorationImage(
             image: AssetImage(AppImages.loading_light_bg),
             fit: BoxFit.contain,
           ),
@@ -114,7 +113,9 @@ class _LoadingScreenState extends State<LoadingScreen>
                 width: MediaQuery.of(context).size.width * 0.6,
                 child: Column(
                   children: [
-                    const SizedBox(height: 10,),
+                    const SizedBox(
+                      height: 10,
+                    ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
@@ -126,7 +127,9 @@ class _LoadingScreenState extends State<LoadingScreen>
                               ?.copyWith(
                                   fontWeight: FontWeight.w700,
                                   fontSize: 50,
-                                  color: themeMode.isLight ? AppColors.loading_text : AppColors.linear_01),
+                                  color: themeMode.isLight
+                                      ? AppColors.loading_text
+                                      : AppColors.linear_01),
                         ),
                         SizedBox(
                           height: 85,
@@ -144,13 +147,17 @@ class _LoadingScreenState extends State<LoadingScreen>
                       S.of(context).loading_quote1,
                       style: Theme.of(context).textTheme.labelLarge?.copyWith(
                           fontWeight: FontWeight.w700,
-                          color: themeMode.isLight ? AppColors.loading_text : AppColors.linear_01 ),
+                          color: themeMode.isLight
+                              ? AppColors.loading_text
+                              : AppColors.linear_01),
                     ),
                     Text(
                       S.of(context).loading_quote2,
                       style: Theme.of(context).textTheme.labelLarge?.copyWith(
                           fontWeight: FontWeight.w700,
-                          color: themeMode.isLight ? AppColors.loading_text : AppColors.linear_01),
+                          color: themeMode.isLight
+                              ? AppColors.loading_text
+                              : AppColors.linear_01),
                     )
                   ],
                 ),

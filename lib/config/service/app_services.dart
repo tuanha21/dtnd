@@ -46,11 +46,10 @@ class AppService {
   Future<void> initialize(SharedPreferences sharedPreferences) async {
     sharedPreferencesInstance = sharedPreferences;
     final themeMode = sharedPreferencesInstance.getString("ThemeMode");
-    print("themeMode $themeMode");
     _themeMode = Rx<ThemeMode>(ThemeMode.light);
     if (themeMode == null) {
       await sharedPreferencesInstance.setString(
-          "ThemeMode", ThemeMode.dark.name);
+          "ThemeMode", ThemeMode.light.name);
       _themeMode.value = ThemeMode.light;
     } else {
       _themeMode.value = ThemeModeHelper.fromString(themeMode);
@@ -61,8 +60,6 @@ class AppService {
       await sharedPreferencesInstance.setString("Locale", "vi");
       _locale = Rx<Locale>(const Locale("vi", "VN"));
     } else {
-      print(languageCode);      print(LocaleHelper.fromLanguageCode(languageCode).toString());
-
       _locale = Rx<Locale>(LocaleHelper.fromLanguageCode(languageCode));
     }
   }

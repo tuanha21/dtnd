@@ -172,13 +172,14 @@ class _AppDrawerState extends State<AppDrawer> {
               ),
             ),
             FunctionData(
-                title: S.of(context).interface, function: () => onDeveloping()
-                // function: () => Navigator.of(context).push(
-                //   MaterialPageRoute(
-                //     builder: (context) => const DisplayScreen(),
-                //   ),
-                // ),
+              title: S.of(context).interface,
+              // function: () => onDeveloping(),
+              function: () => Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => const DisplayScreen(),
                 ),
+              ),
+            ),
           ],
         ),
       ];
@@ -251,13 +252,15 @@ class _AppDrawerState extends State<AppDrawer> {
           const SizedBox(height: 4),
           Text(
             userService.userInfo.value?.customerCode ?? "",
-            style:
-                AppTextStyle.bodySmall_12.copyWith(color: themeMode.isLight ? AppColors.neutral_03 : AppColors.neutral_07),
+            style: AppTextStyle.bodySmall_12.copyWith(
+                color: themeMode.isLight
+                    ? AppColors.neutral_03
+                    : AppColors.neutral_07),
           ),
           const SizedBox(height: 16),
           isLogin
               ? Material(
-              color: Colors.transparent,
+                  color: Colors.transparent,
                   child: InkWell(
                     onTap: () {},
                     child: Ink(
@@ -339,7 +342,11 @@ class _AppDrawerState extends State<AppDrawer> {
               // }
             },
             text: isLogin ? S.of(context).logout : S.of(context).login,
-            color: isLogin ? themeMode.isLight ? AppColors.neutral_05 : AppColors.bg_share_inside_nav : AppColors.primary_01,
+            color: isLogin
+                ? themeMode.isLight
+                    ? AppColors.neutral_05
+                    : AppColors.bg_share_inside_nav
+                : AppColors.primary_01,
             textStyle: AppTextStyle.titleSmall_14
                 .copyWith(color: isLogin ? AppColors.primary_01 : Colors.white),
           ),
