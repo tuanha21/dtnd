@@ -4,8 +4,6 @@ import 'package:dtnd/data/i_user_service.dart';
 
 enum RequestType { string, cursor, none }
 
-extension RequestTypeX on RequestType {}
-
 class RequestModel {
   String? group;
   String? user;

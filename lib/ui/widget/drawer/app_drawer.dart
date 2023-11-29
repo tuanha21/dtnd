@@ -3,6 +3,7 @@ import 'package:dtnd/data/i_user_service.dart';
 import 'package:dtnd/data/implementations/local_storage_service.dart';
 import 'package:dtnd/data/implementations/user_service.dart';
 import 'package:dtnd/l10n/generated/l10n.dart';
+import 'package:dtnd/ui/screen/display/display_screen.dart';
 import 'package:dtnd/ui/screen/exchange_stock/stock_order/business/stock_order_util.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_textstyle.dart';
@@ -171,11 +172,11 @@ class _AppDrawerState extends State<AppDrawer> {
             FunctionData(
               title: S.of(context).interface,
               // function: () => onDeveloping(),
-              // function: () => Navigator.of(context).push(
-              //   MaterialPageRoute(
-              //     builder: (context) => const DisplayScreen(),
-              //   ),
-              // ),
+              function: () => Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => const DisplayScreen(),
+                ),
+              ),
             ),
           ],
         ),

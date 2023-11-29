@@ -73,27 +73,6 @@ class _StockDetailChartState extends State<StockDetailChart>
     }
   }
 
-  // void getListEvent() {
-  //   listEvent.clear();
-  //   for (SecEvent event in widget.listEvent ?? <SecEvent>[]) {
-  //     if (event.dateTime == null ||
-  //         event.dateTime!.isBefore(timeSeries.dateTime)) {
-  //       continue;
-  //     } else {
-  //       listEvent.add(event);
-  //     }
-  //   }
-  //   setState(() {});
-  // }
-
-  @override
-  void didUpdateWidget(StockDetailChart oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    // if (widget.listEvent?.length != oldWidget.listEvent?.length) {
-    //   getListEvent();
-    // }
-  }
-
   num max = 2;
   num min = 0;
 
@@ -235,7 +214,6 @@ class _StockDetailChartState extends State<StockDetailChart>
                   datas.add(
                       "Giá    ${model.selectedDatum.elementAt(1).datum.value}");
                   final String title;
-                  print(event.title?.length);
                   if ((event.title?.length ?? 0) > 30) {
                     title = "${event.title?.substring(0, 30) ?? ""}...";
                   } else {
