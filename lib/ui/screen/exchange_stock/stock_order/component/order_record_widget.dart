@@ -179,24 +179,6 @@ class _OrderRecordWidgetState extends State<OrderRecordWidget> {
                     ],
                   ),
                 ),
-                // Expanded(
-                //   child: Column(
-                //     crossAxisAlignment: CrossAxisAlignment.start,
-                //     children: [
-                //       Text(
-                //         S.of(context).margin,
-                //         style: AppTextStyle.labelSmall_10
-                //             .copyWith(color: AppColors.neutral_04),
-                //       ),
-                //       const SizedBox(height: 6),
-                //       Text(
-                //         "0%",
-                //         style: AppTextStyle.labelSmall_10
-                //             .copyWith(color: AppColors.neutral_01),
-                //       ),
-                //     ],
-                //   ),
-                // ),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,

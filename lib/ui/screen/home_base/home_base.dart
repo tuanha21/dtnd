@@ -21,7 +21,6 @@ import 'package:dtnd/ui/screen/tour_guide/app_tutorial.dart';
 import 'package:dtnd/ui/screen/tour_guide/widget/target_focus_builder.dart';
 import 'package:dtnd/ui/theme/app_color.dart';
 import 'package:dtnd/ui/theme/app_image.dart';
-import 'package:dtnd/ui/theme/app_textstyle.dart';
 import 'package:dtnd/ui/widget/drawer/app_drawer.dart';
 import 'package:dtnd/ui/widget/overlay/custom_dialog.dart';
 import 'package:dtnd/ui/widget/overlay/dialog_utilities.dart';

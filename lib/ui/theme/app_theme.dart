@@ -300,7 +300,7 @@ const ColorScheme _lightColorScheme = ColorScheme(
   onSurface: Colors.white,
 );
 const ColorScheme _darkColorScheme = ColorScheme(
-  brightness: Brightness.light,
+  brightness: Brightness.dark,
   primary: AppColors.primary_01,
   onPrimary: AppColors.neutral_07,
   secondary: AppColors.secondary,
